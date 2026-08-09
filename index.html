@@ -262,7 +262,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.0.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1139,19 +1139,28 @@ $("t-settings").onclick = openSettings;
 $("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
 
 /* ============ PWA: INSTALL + SERVICE WORKER ============ */
+function inStandalone(){
+  return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+}
 window.addEventListener("beforeinstallprompt", function(e){
   e.preventDefault();
   installPrompt = e;
-  $("t-install").style.display = "block";
 });
 window.addEventListener("appinstalled", function(){
   installPrompt = null;
   $("t-install").style.display = "none";
 });
+if(location.protocol === "https:" && !inStandalone()){
+  $("t-install").style.display = "block";
+}
 $("t-install").onclick = function(){
-  if(!installPrompt) return;
-  installPrompt.prompt();
-  installPrompt.userChoice.then(function(){ installPrompt = null; $("t-install").style.display = "none"; });
+  if(installPrompt){
+    installPrompt.prompt();
+    installPrompt.userChoice.then(function(){ installPrompt = null; $("t-install").style.display = "none"; });
+  } else {
+    document.querySelector("#t-install small").textContent =
+      "In Chrome: click the install icon at the right end of the address bar \u2014 or \u22ee menu \u2192 Cast, save and share \u2192 Install MUDSKIPPERS.";
+  }
 };
 if("serviceWorker" in navigator && location.protocol === "https:"){
   window.addEventListener("load", function(){
