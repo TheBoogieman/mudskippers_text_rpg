@@ -262,7 +262,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.0.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.0.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -453,6 +453,7 @@ var BIBLE = [
 "",
 "FORMAT RULES — CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
+"- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
 "- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\"}",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Mia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
 "- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time; do NOT resolve big arcs in one turn. End every turn with the floor open.",
@@ -637,11 +638,41 @@ function askAI(msgs){
   return settings.style === "anthropic" ? askAnthropic(msgs) : askOpenAI(msgs, false);
 }
 
+function repairJSON(s){
+  var out = "", inStr = false, i, c, j, nxt;
+  for(i=0;i<s.length;i++){
+    c = s[i];
+    if(!inStr){
+      if(c === '"') inStr = true;
+      out += c;
+    } else {
+      if(c === "\\"){ out += c + (s[i+1]||""); i++; continue; }
+      if(c === "\n"){ out += "\\n"; continue; }
+      if(c === "\t"){ out += "\\t"; continue; }
+      if(c === '"'){
+        j = i+1;
+        while(j < s.length && (s[j]===" "||s[j]==="\n"||s[j]==="\r"||s[j]==="\t")) j++;
+        nxt = j < s.length ? s[j] : null;
+        if(nxt === null || nxt === "," || nxt === "}" || nxt === "]" || nxt === ":"){ inStr = false; out += c; }
+        else { out += '\\"'; }
+        continue;
+      }
+      out += c;
+    }
+  }
+  return out;
+}
 function parseScene(raw){
   var clean = (raw||"").replace(/```json|```/g,"").trim();
   var a = clean.indexOf("{"), b = clean.lastIndexOf("}");
   if(a<0||b<0) throw new Error("the DM answered in tongues");
-  return { json: clean.slice(a,b+1), data: JSON.parse(clean.slice(a,b+1)) };
+  var slice = clean.slice(a,b+1);
+  try{
+    return { json: slice, data: JSON.parse(slice) };
+  }catch(e){
+    var fixed = repairJSON(slice);
+    return { json: fixed, data: JSON.parse(fixed) };
+  }
 }
 
 /* ============ GAME LOOP ============ */
