@@ -1,0 +1,15 @@
+{
+  "name": "MUDSKIPPERS — The Courier's Run",
+  "short_name": "MUDSKIPPERS",
+  "description": "A cozy-cyberpunk story game. Bring your own AI. Nothing leaves your machine.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#16110d",
+  "theme_color": "#16110d",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
