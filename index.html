@@ -145,6 +145,15 @@
   .spoiler-gate{text-align:center;padding:20px 0}
   .spoiler-gate p{color:var(--ink-dim);font-style:italic;margin-bottom:16px;line-height:1.6}
   #vaultbody{display:none}
+  .runrow{
+    display:flex;align-items:center;gap:10px;border:1px solid var(--line);
+    border-radius:3px;padding:10px 12px;margin-bottom:8px;background:#1c150e;flex-wrap:wrap;
+  }
+  .runrow.active{border-color:var(--sodium)}
+  .runinfo{flex:1;min-width:180px}
+  .runname{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--granny);letter-spacing:.06em}
+  .runsub{font-size:12px;color:var(--ink-dim);font-style:italic;margin-top:2px}
+  .runsrc{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--ink-dim);letter-spacing:.12em}
   @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -157,6 +166,8 @@
     <span>DAY <b id="hud-day">1</b></span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
+    <button class="small" id="guidebtn" title="How to play, in three steps">GUIDE</button>
+    <button class="small" id="runsbtn" title="Your saved runs">RUNS</button>
     <button class="small" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
     <button class="small" id="vaultbtn" title="The canon run — heavy spoilers">CANON VAULT</button>
     <button class="small" id="setbtn">SETTINGS</button>
@@ -176,6 +187,42 @@
     <button id="mudbtn">MUDSKIPPER MOMENT</button>
   </div>
 </div></div>
+
+<!-- WELCOME MODAL -->
+<div class="modal" id="welmodal">
+  <div class="card">
+    <div class="cardhead">WELCOME TO THE RAIN</div>
+    <div class="cardsub">A story game where an AI plays the world and you play the courier. Three steps and you're in.</div>
+    <div class="ep">
+      <h3>STEP 1 — CONNECT AN AI (the storyteller)</h3>
+      <p>The game needs an AI to narrate. Easiest paid option: an Anthropic or OpenAI key — make one on their website, paste it into Settings. Free option: install <b>Ollama</b> from ollama.com and the game runs entirely on your own computer, no account needed.</p>
+      <div class="btnrow"><button class="btn" id="wel-settings">OPEN SETTINGS</button></div>
+    </div>
+    <div class="ep">
+      <h3>STEP 2 — PICK A SAVE FOLDER (optional, recommended)</h3>
+      <p>Choose any folder on your computer and the game keeps your saves there, plus a readable story-log of everything that happens. Skip this and saves live in your browser instead — also fine.</p>
+      <div class="btnrow"><button class="btn ghost" id="wel-folder">CHOOSE FOLDER</button></div>
+    </div>
+    <div class="ep">
+      <h3>STEP 3 — PLAY</h3>
+      <p>Pick a numbered choice each turn — or type absolutely anything into the gold bar and hit MUDSKIPPER MOMENT. The story bends around you. That's the whole game.</p>
+    </div>
+    <button class="btn" style="display:block;margin:6px auto 0" id="wel-close">INTO THE RAIN</button>
+  </div>
+</div>
+
+<!-- RUNS / SAVE MANAGER MODAL -->
+<div class="modal" id="runmodal">
+  <div class="card">
+    <div class="cardhead">YOUR RUNS</div>
+    <div class="cardsub">Every playthrough, one list. Load one, or retire it.</div>
+    <div id="runlist"></div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn" id="run-new">START A NEW RUN</button>
+      <button class="btn ghost" id="run-close">CLOSE</button>
+    </div>
+  </div>
+</div>
 
 <!-- SETTINGS MODAL -->
 <div class="modal" id="setmodal">
@@ -328,7 +375,7 @@ var PRESETS = {
   openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-4.5", needsKey:true,
     hint:"One key, any model. openrouter.ai."},
   ollama:{style:"openai", base:"http://localhost:11434/v1", model:"llama3.1", needsKey:false,
-    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* so this page may connect."},
+    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* (or \"file://*\") so this page may connect."},
   lmstudio:{style:"openai", base:"http://localhost:1234/v1", model:"local-model", needsKey:false,
     hint:"Fully offline. In LM Studio: load a model, start the local server, enable CORS in server settings."},
   custom:{style:"openai", base:"", model:"", needsKey:true,
@@ -336,7 +383,7 @@ var PRESETS = {
 };
 
 /* ============ STATE ============ */
-var history = [];
+var chatLog = [];
 var feedLog = [];
 var busy = false;
 var runSlug = null;
@@ -433,8 +480,8 @@ function showError(msg){
 
 /* ============ AI CALL (provider-agnostic) ============ */
 function trimmedHistory(){
-  if(history.length <= 28) return history;
-  return history.slice(0,2).concat(history.slice(-24));
+  if(chatLog.length <= 28) return chatLog;
+  return chatLog.slice(0,2).concat(chatLog.slice(-24));
 }
 
 function askAnthropic(msgs){
@@ -500,7 +547,7 @@ function takeAction(text, isMud){
   var userMsg = isMud
     ? "MUDSKIPPER MOMENT (custom off-script action by the courier - bend the world around it): " + text.trim()
     : "The courier chooses: " + text.trim();
-  history.push({role:"user", content:userMsg});
+  chatLog.push({role:"user", content:userMsg});
   callDM();
 }
 
@@ -509,7 +556,7 @@ function callDM(){
   pendingRetry = callDM;
   askAI(trimmedHistory()).then(function(raw){
     var parsed = parseScene(raw);
-    history.push({role:"assistant", content:parsed.json});
+    chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
     showScene(parsed.data, true);
   }).catch(function(e){
@@ -581,6 +628,7 @@ function restoreFolder(){
     return h.queryPermission({mode:"readwrite"}).then(function(p){
       if(p === "granted"){ dirHandle = h; }
       else {
+        // needs a user gesture to re-grant; offer via the folder button
         $("folderbtn").textContent = "RECONNECT FOLDER";
         $("folderbtn").onclick = function(){
           h.requestPermission({mode:"readwrite"}).then(function(p2){
@@ -606,7 +654,7 @@ function writeFile(name, content){
 
 function saveBlob(){
   return JSON.stringify({
-    v:1, slug:runSlug, history:history, feedLog:feedLog,
+    v:1, slug:runSlug, updated:new Date().toISOString(), history:chatLog, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText
   });
@@ -623,8 +671,28 @@ function writeFiles(){
   writeFile("mudskippers-ledger-"+runSlug+".md", ledgerText);
 }
 
+function loadRunsMap(){
+  try{ return JSON.parse(localStorage.getItem("mud-runs")||"{}"); }catch(e){ return {}; }
+}
+function saveRunsMap(mm){ try{ localStorage.setItem("mud-runs", JSON.stringify(mm)); }catch(e){} }
+function migrateLegacy(){
+  try{
+    var old = localStorage.getItem("mud-run");
+    if(old){
+      var s = JSON.parse(old);
+      if(s && s.slug){ var mm = loadRunsMap(); if(!mm[s.slug]) mm[s.slug]=old; saveRunsMap(mm);
+        if(!localStorage.getItem("mud-active")) localStorage.setItem("mud-active", s.slug); }
+      localStorage.removeItem("mud-run");
+    }
+  }catch(e){}
+}
 function persistAll(choices){
-  try{ localStorage.setItem("mud-run", saveBlob()); }catch(e){}
+  try{
+    var mm = loadRunsMap();
+    mm[runSlug] = saveBlob();
+    saveRunsMap(mm);
+    localStorage.setItem("mud-active", runSlug);
+  }catch(e){}
   writeFiles();
 }
 
@@ -699,21 +767,135 @@ $("vaultbtn").onclick = function(){ $("vaultmodal").classList.add("open"); };
 $("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); };
 $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
 document.addEventListener("keydown", function(e){
-  if(e.key==="Escape"){ $("vaultmodal").classList.remove("open"); $("setmodal").classList.remove("open"); }
+  if(e.key==="Escape"){ ["vaultmodal","setmodal","welmodal","runmodal"].forEach(function(id){ $(id).classList.remove("open"); }); }
 });
+
+
+/* ============ WELCOME GUIDE ============ */
+function maybeWelcome(){
+  var seen = false;
+  try{ seen = !!localStorage.getItem("mud-seen"); }catch(e){}
+  var needsKey = (PRESETS[settings.provider]||{}).needsKey;
+  if(!seen || (needsKey && !settings.key)) $("welmodal").classList.add("open");
+}
+$("guidebtn").onclick = function(){ $("welmodal").classList.add("open"); };
+$("wel-close").onclick = function(){
+  try{ localStorage.setItem("mud-seen","1"); }catch(e){}
+  $("welmodal").classList.remove("open");
+  var needsKey = (PRESETS[settings.provider]||{}).needsKey;
+  if(needsKey && !settings.key) openSettings();
+};
+$("wel-settings").onclick = function(){
+  try{ localStorage.setItem("mud-seen","1"); }catch(e){}
+  $("welmodal").classList.remove("open"); openSettings();
+};
+$("wel-folder").onclick = function(){ chooseFolder(); };
+
+/* ============ SAVE MANAGER ============ */
+function summarize(blobStr){
+  try{
+    var s = JSON.parse(blobStr);
+    return {slug:s.slug, day:s.day||"?", loc:s.loc||"?", updated:s.updated||"", turns:(s.feedLog||[]).length};
+  }catch(e){ return null; }
+}
+function scanFolderSaves(){
+  if(!dirHandle || !dirHandle.entries) return Promise.resolve({});
+  var out = {};
+  var it = dirHandle.entries();
+  function step(){
+    return it.next().then(function(r){
+      if(r.done) return out;
+      var nm = r.value[0], h = r.value[1];
+      if(h.kind==="file" && /^mudskippers-save-.*\.json$/.test(nm)){
+        return h.getFile().then(function(f){ return f.text(); }).then(function(t){
+          var s = summarize(t);
+          if(s && s.slug) out[s.slug] = {blob:t, src:"folder", file:nm, info:s};
+        }).catch(function(){}).then(step);
+      }
+      return step();
+    });
+  }
+  return step().catch(function(){ return out; });
+}
+function gatherRuns(){
+  var runsOut = {};
+  var mm = loadRunsMap();
+  Object.keys(mm).forEach(function(slug){
+    var s = summarize(mm[slug]);
+    if(s) runsOut[slug] = {blob:mm[slug], src:"browser", info:s};
+  });
+  return scanFolderSaves().then(function(folderRuns){
+    Object.keys(folderRuns).forEach(function(slug){ runsOut[slug] = folderRuns[slug]; });
+    return runsOut;
+  });
+}
+function fmtWhen(iso){
+  if(!iso) return "";
+  try{ return new Date(iso).toLocaleString(); }catch(e){ return iso; }
+}
+function renderRuns(){
+  var list = $("runlist");
+  list.innerHTML = '<div class="hint">Looking through the ledgers\u2026</div>';
+  gatherRuns().then(function(runsOut){
+    var slugs = Object.keys(runsOut).sort().reverse();
+    if(!slugs.length){
+      list.innerHTML = '<div class="hint">No runs yet. The rain is waiting.</div>';
+      return;
+    }
+    list.innerHTML = "";
+    slugs.forEach(function(slug){
+      var r = runsOut[slug];
+      var row = document.createElement("div");
+      row.className = "runrow" + (slug===runSlug ? " active" : "");
+      var info = document.createElement("div"); info.className="runinfo";
+      info.innerHTML = '<div class="runname">Day '+esc(String(r.info.day))+' \u2014 '+esc(String(r.info.loc))
+        + (slug===runSlug ? ' \u00b7 CURRENT' : '')+'</div>'
+        + '<div class="runsub">'+esc(String(r.info.turns))+' entries'
+        + (r.info.updated ? ' \u00b7 last played '+esc(fmtWhen(r.info.updated)) : '')+'</div>'
+        + '<div class="runsrc">'+(r.src==="folder"?"SAVED IN YOUR FOLDER":"SAVED IN THIS BROWSER")+'</div>';
+      var loadB = document.createElement("button"); loadB.className="small"; loadB.textContent="LOAD";
+      loadB.onclick = function(){
+        try{
+          if(restoreFromBlob(JSON.parse(r.blob))){
+            persistAll([]);
+            $("runmodal").classList.remove("open");
+          }
+        }catch(e){ alert("That save wouldn't open."); }
+      };
+      var delB = document.createElement("button"); delB.className="small"; delB.textContent="RETIRE";
+      delB.onclick = function(){
+        if(!confirm("Retire this run? The save is deleted. Any story-log (.md) in your folder is kept \u2014 the chronicle survives the courier.")) return;
+        var m2 = loadRunsMap(); delete m2[slug]; saveRunsMap(m2);
+        var done = Promise.resolve();
+        if(r.src==="folder" && dirHandle && r.file){
+          done = dirHandle.removeEntry(r.file).catch(function(){});
+        }
+        done.then(function(){
+          if(slug===runSlug){ $("runmodal").classList.remove("open"); newRun(false); }
+          else renderRuns();
+        });
+      };
+      row.appendChild(info); row.appendChild(loadB); row.appendChild(delB);
+      list.appendChild(row);
+    });
+  });
+}
+$("runsbtn").onclick = function(){ $("runmodal").classList.add("open"); renderRuns(); };
+$("run-close").onclick = function(){ $("runmodal").classList.remove("open"); };
+$("run-new").onclick = function(){ $("runmodal").classList.remove("open"); newRun(true); };
 
 /* ============ NEW GAME / RESTORE ============ */
 function newRun(confirmFirst){
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
-  history = []; feedLog = [];
+  chatLog = []; feedLog = [];
   $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
     + "\n\n_The rain in Lower Veldt Market doesn't fall so much as leak._";
-  history.push({role:"user", content:"(Begin a fresh run at Day 1. The opening scene below has already been shown to the player.)"});
-  history.push({role:"assistant", content:JSON.stringify(OPENING)});
+  chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The opening scene below has already been shown to the player.)"});
+  chatLog.push({role:"assistant", content:JSON.stringify(OPENING)});
   showScene(OPENING, true);
 }
 $("newgame").onclick = function(){ newRun(true); };
@@ -721,7 +903,7 @@ $("newgame").onclick = function(){ newRun(true); };
 function restoreFromBlob(s){
   if(!s || !s.feedLog || !s.feedLog.length) return false;
   runSlug = s.slug || "restored";
-  history = s.history||[];
+  chatLog = s.history||s.chatLog||[];
   ledgerText = s.ledgerText||"";
   feedLog = [];
   $("feedinner").innerHTML = "";
@@ -734,19 +916,22 @@ function restoreFromBlob(s){
 }
 
 /* ============ BOOT ============ */
+function finishBoot(){
+  var restored = false;
+  try{
+    migrateLegacy();
+    var active = localStorage.getItem("mud-active");
+    var runsM = loadRunsMap();
+    if(active && runsM[active]) restored = restoreFromBlob(JSON.parse(runsM[active]));
+  }catch(e){}
+  if(!restored) newRun(false);
+  setLedgerStatus();
+  maybeWelcome();
+}
 (function boot(){
-  loadSettings();
-  restoreFolder().then(function(){
-    var restored = false;
-    try{
-      var s = JSON.parse(localStorage.getItem("mud-run")||"null");
-      if(s) restored = restoreFromBlob(s);
-    }catch(e){}
-    if(!restored) newRun(false);
-    setLedgerStatus();
-    var needsKey = (PRESETS[settings.provider]||{}).needsKey;
-    if(needsKey && !settings.key) openSettings();
-  });
+  try{ loadSettings(); }catch(e){}
+  var p; try{ p = restoreFolder(); }catch(e){ p = Promise.resolve(); }
+  Promise.resolve(p).then(finishBoot, finishBoot);
 })();
 </script>
 </body>

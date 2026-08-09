@@ -15,6 +15,9 @@ Data shards do not hum.
 (Chrome, Edge, or Brave recommended: they let the game write save files to a real
 folder. Firefox/Safari work too, with manual export instead.)
 
+First visit? The game walks you through setup itself — a three-step **GUIDE** opens
+automatically, and lives in the header afterward.
+
 ## Hook up your AI
 
 Settings opens automatically the first time:
@@ -38,6 +41,9 @@ Pick a save folder (SAVE FOLDER button). After every turn the game writes two fi
 
 - `mudskippers-save-<timestamp>.json` — the full run, resumable
 - `mudskippers-ledger-<timestamp>.md` — a readable chronicle of everything that happened
+
+The **RUNS** button is the save manager: every playthrough in one list — load any
+of them, or retire one (the story-log stays; the chronicle survives the courier).
 
 The ledger is designed to be handed to any AI assistant ("here's my run, pick up as
 the DM"). Everything needed to continue a run lives in that one readable file.
