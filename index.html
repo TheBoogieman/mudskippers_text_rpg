@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16110d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <title>MUDSKIPPERS — The Courier's Run</title>
 <style>
   :root{
@@ -136,6 +139,8 @@
   .btn:hover{background:#4a3818}
   .btn.ghost{background:none;border-color:var(--line);color:var(--ink-dim)}
   .btn.ghost:hover{border-color:var(--sodium);color:var(--sodium)}
+  .btn.gold{border-color:var(--gold);color:var(--gold)}
+  .btn.gold:hover{background:#4a3818;box-shadow:0 0 14px rgba(242,193,78,.2)}
   .ok{color:var(--seven);font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:10px}
   .bad{color:#e08b8b;font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:10px}
   .ep{margin-bottom:22px;border-left:2px solid var(--line);padding-left:16px}
@@ -154,8 +159,65 @@
   .runname{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--granny);letter-spacing:.06em}
   .runsub{font-size:12px;color:var(--ink-dim);font-style:italic;margin-top:2px}
   .runsrc{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--ink-dim);letter-spacing:.12em}
+
+  /* connect tiles */
+  .tiles{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+  .tile{
+    display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+    background:#1c150e;border:1px solid var(--line);border-radius:3px;
+    padding:13px 16px;cursor:pointer;color:var(--ink);font-family:Georgia,serif;
+  }
+  .tile:hover{border-color:var(--sodium)}
+  .tile.hot{border-color:var(--gold)}
+  .tile .t-big{font-size:15px;color:var(--ink)}
+  .tile .t-sub{font-size:12px;color:var(--ink-dim);font-style:italic;margin-top:2px}
+  .tile .t-mark{
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.15em;
+    color:var(--gold);border:1px solid #6b5326;border-radius:2px;padding:3px 7px;white-space:nowrap;
+  }
+  .orbar{display:flex;align-items:center;gap:12px;margin:16px 0;color:#5c4a33;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.3em}
+  .orbar:before,.orbar:after{content:"";flex:1;border-top:1px solid var(--line)}
+
+  /* TITLE SCREEN */
+  #titlescreen{
+    display:none;position:fixed;inset:0;z-index:40;
+    background:var(--bg);
+    background-image:radial-gradient(ellipse at 50% 20%, #2b2013 0%, var(--bg) 60%);
+    overflow-y:auto;
+  }
+  #titlescreen.open{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+  .rain{position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0 46px, rgba(232,161,60,.05) 46px 47px),
+      repeating-linear-gradient(115deg, transparent 0 89px, rgba(239,230,216,.04) 89px 90px);
+    animation:rainfall 1.1s linear infinite;
+  }
+  @keyframes rainfall{from{background-position:0 0,0 0}to{background-position:-46px 98px,-89px 190px}}
+  .t-wordmark{
+    position:relative;font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+    letter-spacing:.5em;font-size:clamp(22px,6vw,44px);color:var(--sodium);font-weight:700;
+    text-shadow:0 0 30px rgba(232,161,60,.45);text-align:center;padding-left:.5em;
+  }
+  .t-tag{position:relative;font-style:italic;color:var(--ink-dim);font-size:14px;margin:10px 0 34px;text-align:center}
+  .t-menu{position:relative;display:flex;flex-direction:column;gap:10px;width:min(340px,88vw)}
+  .menu-btn{
+    background:linear-gradient(180deg,#241b11,#1c150e);border:1px solid var(--line);
+    color:var(--ink);padding:13px 18px;font-family:ui-monospace,Menlo,monospace;
+    font-size:12px;letter-spacing:.22em;cursor:pointer;border-radius:3px;text-align:center;
+    transition:all .12s;
+  }
+  .menu-btn:hover{border-color:var(--sodium);color:var(--sodium);transform:translateX(3px)}
+  .menu-btn.primary{border-color:var(--sodium);color:var(--sodium)}
+  .menu-btn.gold{border-color:var(--gold);color:var(--gold)}
+  .menu-btn small{display:block;letter-spacing:.06em;font-size:10.5px;color:var(--ink-dim);margin-top:4px;text-transform:none;font-style:italic;font-family:Georgia,serif}
+  .t-foot{position:relative;margin-top:30px;color:#5c4a33;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;text-align:center;line-height:2}
+  #ledg-body{
+    white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;line-height:1.7;
+    color:var(--ink);background:#1c150e;border:1px solid var(--line);border-radius:3px;
+    padding:16px 18px;max-height:55vh;overflow-y:auto;
+  }
   @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rain{display:none}}
 </style>
 </head>
 <body>
@@ -166,12 +228,9 @@
     <span>DAY <b id="hud-day">1</b></span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
-    <button class="small" id="guidebtn" title="How to play, in three steps">GUIDE</button>
-    <button class="small" id="runsbtn" title="Your saved runs">RUNS</button>
+    <button class="small" id="menubtn" title="Back to the title screen">MENU</button>
     <button class="small" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
-    <button class="small" id="vaultbtn" title="The canon run — heavy spoilers">CANON VAULT</button>
     <button class="small" id="setbtn">SETTINGS</button>
-    <button class="small" id="newgame">NEW GAME</button>
   </div>
 </header>
 
@@ -188,6 +247,24 @@
   </div>
 </div></div>
 
+<!-- TITLE SCREEN -->
+<div id="titlescreen">
+  <div class="rain"></div>
+  <div class="t-wordmark">MUDSKIPPERS</div>
+  <div class="t-tag">The Courier's Run — a story game with your AI at the table</div>
+  <div class="t-menu">
+    <button class="menu-btn primary" id="t-continue" style="display:none">CONTINUE<small id="t-continue-sub"></small></button>
+    <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
+    <button class="menu-btn" id="t-runs">RUNS</button>
+    <button class="menu-btn" id="t-ledger">LEDGER</button>
+    <button class="menu-btn" id="t-vault">CANON VAULT</button>
+    <button class="menu-btn" id="t-settings">SETTINGS</button>
+    <button class="menu-btn" id="t-guide">GUIDE</button>
+    <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
+  </div>
+  <div class="t-foot">v2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+</div>
+
 <!-- WELCOME MODAL -->
 <div class="modal" id="welmodal">
   <div class="card">
@@ -195,7 +272,7 @@
     <div class="cardsub">A story game where an AI plays the world and you play the courier. Three steps and you're in.</div>
     <div class="ep">
       <h3>STEP 1 — CONNECT AN AI (the storyteller)</h3>
-      <p>The game needs an AI to narrate. Easiest paid option: an Anthropic or OpenAI key — make one on their website, paste it into Settings. Free option: install <b>Ollama</b> from ollama.com and the game runs entirely on your own computer, no account needed.</p>
+      <p>Fastest: one click with OpenRouter — no key-pasting, you approve on their site and you're connected. Free and private: install <b>Ollama</b> from ollama.com and the game runs entirely on your own computer. Or paste an Anthropic/OpenAI key if you have one.</p>
       <div class="btnrow"><button class="btn" id="wel-settings">OPEN SETTINGS</button></div>
     </div>
     <div class="ep">
@@ -224,11 +301,44 @@
   </div>
 </div>
 
+<!-- LEDGER VIEWER MODAL -->
+<div class="modal" id="ledgmodal">
+  <div class="card">
+    <div class="cardhead">THE LEDGER</div>
+    <div class="cardsub">The chronicle of the current run, as it will be written.</div>
+    <div id="ledg-body"></div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
+      <button class="btn ghost" id="ledg-close">CLOSE</button>
+    </div>
+  </div>
+</div>
+
 <!-- SETTINGS MODAL -->
 <div class="modal" id="setmodal">
   <div class="card">
     <div class="cardhead">HOOK UP YOUR AI</div>
     <div class="cardsub">Your key, your model, your machine. Nothing routes anywhere you didn't point it.</div>
+
+    <div class="tiles">
+      <button class="tile hot" id="or-connect">
+        <div style="flex:1">
+          <div class="t-big">Connect with OpenRouter</div>
+          <div class="t-sub">One click. Approve on their site, come back connected. Any model, including Claude. Nothing pasted.</div>
+        </div>
+        <span class="t-mark">EASIEST</span>
+      </button>
+      <button class="tile" id="local-connect">
+        <div style="flex:1">
+          <div class="t-big">Use a local AI <span id="local-found" style="color:var(--seven);font-size:12px"></span></div>
+          <div class="t-sub">Ollama or LM Studio on this computer. Free, private, offline. The game checks for one when you click.</div>
+        </div>
+        <span class="t-mark">FREE</span>
+      </button>
+    </div>
+    <div id="tile-status"></div>
+    <div class="orbar">OR CONFIGURE MANUALLY</div>
+
     <div class="fld">
       <label>PROVIDER</label>
       <select id="s-provider">
@@ -321,7 +431,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · standalone shareable edition
+   MUDSKIPPERS — THE COURIER'S RUN · v2.0 "The Launcher Update"
+   PWA install · title menu · one-click OpenRouter · local AI detect
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -373,9 +484,9 @@ var PRESETS = {
   openai:{style:"openai", base:"https://api.openai.com/v1", model:"gpt-4o", needsKey:true,
     hint:"Get a key at platform.openai.com."},
   openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-4.5", needsKey:true,
-    hint:"One key, any model. openrouter.ai."},
+    hint:"One key, any model. Or use the one-click Connect button above — no pasting."},
   ollama:{style:"openai", base:"http://localhost:11434/v1", model:"llama3.1", needsKey:false,
-    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* (or \"file://*\") so this page may connect."},
+    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* so this page may connect."},
   lmstudio:{style:"openai", base:"http://localhost:1234/v1", model:"local-model", needsKey:false,
     hint:"Fully offline. In LM Studio: load a model, start the local server, enable CORS in server settings."},
   custom:{style:"openai", base:"", model:"", needsKey:true,
@@ -391,6 +502,7 @@ var ledgerText = "";
 var pendingRetry = null;
 var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic"};
 var dirHandle = null;
+var installPrompt = null;
 
 var COLORS = {
   Narration:"", Courier:"var(--you)", Nine:"var(--nine)", Seven:"var(--seven)",
@@ -535,6 +647,7 @@ function parseScene(raw){
 /* ============ GAME LOOP ============ */
 function takeAction(text, isMud){
   if(busy || !text || !text.trim()) return;
+  if(!runSlug){ newRun(false); }
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
     openSettings(); return;
   }
@@ -628,7 +741,6 @@ function restoreFolder(){
     return h.queryPermission({mode:"readwrite"}).then(function(p){
       if(p === "granted"){ dirHandle = h; }
       else {
-        // needs a user gesture to re-grant; offer via the folder button
         $("folderbtn").textContent = "RECONNECT FOLDER";
         $("folderbtn").onclick = function(){
           h.requestPermission({mode:"readwrite"}).then(function(p2){
@@ -703,6 +815,9 @@ function loadSettings(){
     if(s && s.base) settings = s;
   }catch(e){}
 }
+function saveSettings(){
+  try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
+}
 function fillSettingsForm(){
   $("s-provider").value = settings.provider;
   $("s-base").value = settings.base;
@@ -728,7 +843,7 @@ $("s-save").onclick = function(){
   settings.base = $("s-base").value.trim();
   settings.model = $("s-model").value.trim();
   settings.key = $("s-key").value.trim();
-  try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
+  saveSettings();
   $("s-status").innerHTML = '<div class="ok">Saved. Your key lives in this browser only.</div>';
 };
 $("s-test").onclick = function(){
@@ -742,6 +857,89 @@ $("s-test").onclick = function(){
     $("s-status").innerHTML = '<div class="bad">Failed: '+esc(e.message||"unknown")+'</div>';
   });
 };
+
+/* ============ ONE-CLICK: OPENROUTER OAUTH (PKCE) ============ */
+function b64url(buf){
+  var s = ""; var bytes = new Uint8Array(buf);
+  for(var i=0;i<bytes.length;i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function randVerifier(){
+  var a = new Uint8Array(48); crypto.getRandomValues(a); return b64url(a.buffer);
+}
+function connectOpenRouter(){
+  var cb = location.origin + location.pathname;
+  if(location.protocol === "file:"){
+    $("tile-status").innerHTML = '<div class="bad">One-click connect needs the hosted version (it has to send you back here). Open the game at its web address, or paste an OpenRouter key below.</div>';
+    return;
+  }
+  var v = randVerifier();
+  try{ sessionStorage.setItem("or-verifier", v); }catch(e){}
+  if(crypto.subtle && crypto.subtle.digest){
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(v)).then(function(hash){
+      location.href = "https://openrouter.ai/auth?callback_url=" + encodeURIComponent(cb)
+        + "&code_challenge=" + b64url(hash) + "&code_challenge_method=S256";
+    });
+  } else {
+    location.href = "https://openrouter.ai/auth?callback_url=" + encodeURIComponent(cb);
+  }
+}
+$("or-connect").onclick = connectOpenRouter;
+
+function handleOAuthReturn(){
+  var code = null;
+  try{ code = new URLSearchParams(location.search).get("code"); }catch(e){}
+  if(!code) return Promise.resolve(false);
+  var v = "";
+  try{ v = sessionStorage.getItem("or-verifier") || ""; }catch(e){}
+  var body = {code: code};
+  if(v){ body.code_verifier = v; body.code_challenge_method = "S256"; }
+  return fetch("https://openrouter.ai/api/v1/auth/keys", {
+    method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)
+  }).then(function(r){ return r.json(); }).then(function(d){
+    try{ history.replaceState(null, "", location.pathname); }catch(e){}
+    if(d && d.key){
+      settings = {provider:"openrouter", style:"openai", base:"https://openrouter.ai/api/v1",
+                  model:"anthropic/claude-sonnet-4.5", key:d.key};
+      saveSettings();
+      return true;
+    }
+    return false;
+  }).catch(function(){ return false; });
+}
+
+/* ============ ONE-CLICK: LOCAL AI DETECT ============ */
+function probeLocal(base){
+  return new Promise(function(res){
+    var ctl = new AbortController();
+    var t = setTimeout(function(){ ctl.abort(); res(null); }, 1500);
+    fetch(base + "/models", {signal: ctl.signal}).then(function(r){ return r.json(); }).then(function(d){
+      clearTimeout(t);
+      var model = null;
+      if(d && d.data && d.data.length) model = d.data[0].id;
+      res({base: base, model: model});
+    }).catch(function(){ clearTimeout(t); res(null); });
+  });
+}
+function connectLocal(){
+  $("tile-status").innerHTML = '<div class="hint">Listening for a local AI\u2026</div>';
+  probeLocal("http://localhost:11434/v1").then(function(ollama){
+    if(ollama) return ollama;
+    return probeLocal("http://localhost:1234/v1");
+  }).then(function(found){
+    if(found){
+      var isOllama = found.base.indexOf("11434") !== -1;
+      settings = {provider: isOllama ? "ollama" : "lmstudio", style:"openai",
+                  base: found.base, model: found.model || (isOllama ? "llama3.1" : "local-model"), key:""};
+      saveSettings(); fillSettingsForm();
+      $("tile-status").innerHTML = '<div class="ok">Found ' + (isOllama ? "Ollama" : "LM Studio")
+        + (found.model ? " \u2014 model: " + esc(found.model) : "") + '. Connected. The table is set.</div>';
+    } else {
+      $("tile-status").innerHTML = '<div class="bad">No local AI answered. Ollama: install from ollama.com, run \u201collama pull llama3.1\u201d, then start it with OLLAMA_ORIGINS=* so this page may connect. LM Studio: start the local server and enable CORS.</div>';
+    }
+  });
+}
+$("local-connect").onclick = connectLocal;
 
 /* export / import for non-Chromium browsers */
 function download(name, text, type){
@@ -757,33 +955,37 @@ $("imp-save").onclick = function(){ $("imp-file").click(); };
 $("imp-file").onchange = function(){
   var f = $("imp-file").files[0]; if(!f) return;
   f.text().then(function(t){
-    try{ restoreFromBlob(JSON.parse(t)); $("setmodal").classList.remove("open"); }
+    try{
+      if(restoreFromBlob(JSON.parse(t))){
+        persistAll([]);
+        $("setmodal").classList.remove("open");
+        closeTitle();
+      }
+    }
     catch(e){ $("s-status").innerHTML = '<div class="bad">Bad save file.</div>'; }
   });
+  $("imp-file").value = "";
 };
 
 /* ============ CANON VAULT ============ */
-$("vaultbtn").onclick = function(){ $("vaultmodal").classList.add("open"); };
 $("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); };
 $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
 document.addEventListener("keydown", function(e){
-  if(e.key==="Escape"){ ["vaultmodal","setmodal","welmodal","runmodal"].forEach(function(id){ $(id).classList.remove("open"); }); }
+  if(e.key==="Escape"){
+    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    if(runSlug) closeTitle();
+  }
 });
-
 
 /* ============ WELCOME GUIDE ============ */
 function maybeWelcome(){
   var seen = false;
   try{ seen = !!localStorage.getItem("mud-seen"); }catch(e){}
-  var needsKey = (PRESETS[settings.provider]||{}).needsKey;
-  if(!seen || (needsKey && !settings.key)) $("welmodal").classList.add("open");
+  if(!seen) $("welmodal").classList.add("open");
 }
-$("guidebtn").onclick = function(){ $("welmodal").classList.add("open"); };
 $("wel-close").onclick = function(){
   try{ localStorage.setItem("mud-seen","1"); }catch(e){}
   $("welmodal").classList.remove("open");
-  var needsKey = (PRESETS[settings.provider]||{}).needsKey;
-  if(needsKey && !settings.key) openSettings();
 };
 $("wel-settings").onclick = function(){
   try{ localStorage.setItem("mud-seen","1"); }catch(e){}
@@ -859,6 +1061,7 @@ function renderRuns(){
           if(restoreFromBlob(JSON.parse(r.blob))){
             persistAll([]);
             $("runmodal").classList.remove("open");
+            closeTitle();
           }
         }catch(e){ alert("That save wouldn't open."); }
       };
@@ -880,9 +1083,81 @@ function renderRuns(){
     });
   });
 }
-$("runsbtn").onclick = function(){ $("runmodal").classList.add("open"); renderRuns(); };
+function openRuns(){ $("runmodal").classList.add("open"); renderRuns(); }
 $("run-close").onclick = function(){ $("runmodal").classList.remove("open"); };
 $("run-new").onclick = function(){ $("runmodal").classList.remove("open"); newRun(true); };
+
+/* ============ LEDGER VIEWER ============ */
+function openLedger(){
+  $("ledg-body").textContent = ledgerText
+    ? ledgerText
+    : "No chronicle yet. The rain is waiting; the first line writes itself the moment you step into it.";
+  $("ledgmodal").classList.add("open");
+}
+$("ledg-close").onclick = function(){ $("ledgmodal").classList.remove("open"); };
+$("ledg-dl").onclick = function(){
+  if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown");
+};
+
+/* ============ TITLE SCREEN ============ */
+function refreshTitle(){
+  if(runSlug){
+    $("t-continue").style.display = "block";
+    $("t-continue-sub").textContent = "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
+  } else {
+    var active = null, mm = null;
+    try{ active = localStorage.getItem("mud-active"); mm = loadRunsMap(); }catch(e){}
+    if(active && mm && mm[active]){
+      var s = summarize(mm[active]);
+      if(s){
+        $("t-continue").style.display = "block";
+        $("t-continue-sub").textContent = "Day " + s.day + " \u2014 " + s.loc;
+        return;
+      }
+    }
+    $("t-continue").style.display = "none";
+  }
+}
+function openTitle(){ refreshTitle(); $("titlescreen").classList.add("open"); }
+function closeTitle(){ $("titlescreen").classList.remove("open"); }
+$("menubtn").onclick = openTitle;
+$("t-continue").onclick = function(){
+  if(!runSlug){
+    try{
+      var active = localStorage.getItem("mud-active");
+      var mm = loadRunsMap();
+      if(active && mm[active]) restoreFromBlob(JSON.parse(mm[active]));
+    }catch(e){}
+  }
+  if(runSlug) closeTitle(); else newRun(false);
+};
+$("t-new").onclick = function(){ newRun(true); };
+$("t-runs").onclick = openRuns;
+$("t-ledger").onclick = openLedger;
+$("t-vault").onclick = function(){ $("vaultmodal").classList.add("open"); };
+$("t-settings").onclick = openSettings;
+$("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
+
+/* ============ PWA: INSTALL + SERVICE WORKER ============ */
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  installPrompt = e;
+  $("t-install").style.display = "block";
+});
+window.addEventListener("appinstalled", function(){
+  installPrompt = null;
+  $("t-install").style.display = "none";
+});
+$("t-install").onclick = function(){
+  if(!installPrompt) return;
+  installPrompt.prompt();
+  installPrompt.userChoice.then(function(){ installPrompt = null; $("t-install").style.display = "none"; });
+};
+if("serviceWorker" in navigator && location.protocol === "https:"){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
 
 /* ============ NEW GAME / RESTORE ============ */
 function newRun(confirmFirst){
@@ -897,8 +1172,8 @@ function newRun(confirmFirst){
   chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The opening scene below has already been shown to the player.)"});
   chatLog.push({role:"assistant", content:JSON.stringify(OPENING)});
   showScene(OPENING, true);
+  closeTitle();
 }
-$("newgame").onclick = function(){ newRun(true); };
 
 function restoreFromBlob(s){
   if(!s || !s.feedLog || !s.feedLog.length) return false;
@@ -916,7 +1191,7 @@ function restoreFromBlob(s){
 }
 
 /* ============ BOOT ============ */
-function finishBoot(){
+function finishBoot(orConnected){
   var restored = false;
   try{
     migrateLegacy();
@@ -924,14 +1199,19 @@ function finishBoot(){
     var runsM = loadRunsMap();
     if(active && runsM[active]) restored = restoreFromBlob(JSON.parse(runsM[active]));
   }catch(e){}
-  if(!restored) newRun(false);
   setLedgerStatus();
+  openTitle();
+  if(orConnected){
+    document.querySelector(".t-tag").textContent = "OpenRouter connected \u2713 \u2014 your AI is at the table";
+  }
   maybeWelcome();
 }
 (function boot(){
   try{ loadSettings(); }catch(e){}
-  var p; try{ p = restoreFolder(); }catch(e){ p = Promise.resolve(); }
-  Promise.resolve(p).then(finishBoot, finishBoot);
+  handleOAuthReturn().then(function(orConnected){
+    var p; try{ p = restoreFolder(); }catch(e){ p = Promise.resolve(); }
+    Promise.resolve(p).then(function(){ finishBoot(orConnected); }, function(){ finishBoot(orConnected); });
+  });
 })();
 </script>
 </body>
