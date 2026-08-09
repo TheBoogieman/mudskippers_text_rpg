@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUDSKIPPERS — The Courier's Run</title>
+<style>
+  :root{
+    --bg:#16110d; --panel:#201913; --panel-2:#2a2119;
+    --ink:#efe6d8; --ink-dim:#b8a992;
+    --sodium:#e8a13c; --gold:#f2c14e; --line:#3a2f24;
+    --nine:#6fd3e0; --seven:#8fc98a; --three:#b39ddb; --pia:#ff9e6d;
+    --mia:#e79ab5; --vic:#e8a13c; --granny:#f5d9a6; --principal:#c9c4bd;
+    --marek:#7fb3d5; --you:#efe6d8; --hesta:#d8c8a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    display:flex;flex-direction:column;
+    background-image:radial-gradient(ellipse at 50% -10%, #2b2013 0%, var(--bg) 55%);
+  }
+  header{
+    padding:12px 16px 9px; border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:linear-gradient(180deg,#1d1610,#16110d);
+  }
+  .title{
+    font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+    letter-spacing:.3em;font-size:14px;color:var(--sodium);font-weight:700;
+    text-shadow:0 0 18px rgba(232,161,60,.35);
+  }
+  .meta{
+    margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--ink-dim);
+    letter-spacing:.08em;
+  }
+  .meta b{color:var(--granny);font-weight:600}
+  #ledger{font-size:10px;letter-spacing:.1em}
+  button.small{
+    background:none;border:1px solid var(--line);color:var(--ink-dim);
+    padding:4px 10px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
+    cursor:pointer;letter-spacing:.08em;border-radius:2px;
+  }
+  button.small:hover{border-color:var(--sodium);color:var(--sodium)}
+  #feed{flex:1;overflow-y:auto;padding:22px 0 30px;scroll-behavior:smooth}
+  .inner{max-width:720px;margin:0 auto;padding:0 20px}
+  .block{margin:0 0 16px;line-height:1.62;font-size:16px}
+  .tag{
+    font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+    font-size:12px;letter-spacing:.14em;font-weight:700;
+    display:inline-block;margin-right:8px;
+  }
+  .narr{color:var(--ink-dim);font-style:italic}
+  .sys{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;letter-spacing:.06em;line-height:1.7}
+  .you-said{border-left:2px solid var(--sodium);padding:6px 0 6px 14px;margin:22px 0;font-size:15.5px}
+  .you-said .tag{color:var(--sodium)}
+  .mud-said{border-left-color:var(--gold)}
+  .mud-said .tag{color:var(--gold)}
+  .divider{text-align:center;color:#5c4a33;margin:26px 0;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.5em}
+  #loading{
+    display:none;text-align:center;color:var(--sodium);
+    font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.2em;
+    padding:8px 0 14px;animation:pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  #controls{border-top:1px solid var(--line);background:linear-gradient(180deg,#1a140e,#16110d);padding:14px 0 16px}
+  #choices{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .choice{
+    text-align:left;background:var(--panel);border:1px solid var(--line);
+    color:var(--ink);padding:11px 14px;font-family:Georgia,serif;font-size:15px;
+    cursor:pointer;border-radius:3px;line-height:1.45;transition:all .12s;
+  }
+  .choice:hover{border-color:var(--sodium);background:var(--panel-2);transform:translateX(3px)}
+  .choice:disabled{opacity:.4;cursor:default;transform:none}
+  .choice .n{color:var(--sodium);font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-right:9px;letter-spacing:.1em}
+  .mudrow{display:flex;gap:8px}
+  #mudinput{
+    flex:1;background:#1c150e;border:1px solid #6b5326;color:var(--gold);
+    padding:11px 14px;font-family:Georgia,serif;font-size:15px;border-radius:3px;outline:none;
+  }
+  #mudinput::placeholder{color:#8a6d3a;font-style:italic}
+  #mudinput:focus{border-color:var(--gold);box-shadow:0 0 12px rgba(242,193,78,.15)}
+  #mudbtn{
+    background:linear-gradient(180deg,#3a2c14,#2b2010);border:1px solid var(--gold);color:var(--gold);
+    padding:11px 16px;font-family:ui-monospace,Menlo,monospace;font-size:11px;
+    letter-spacing:.18em;cursor:pointer;border-radius:3px;font-weight:700;white-space:nowrap;
+  }
+  #mudbtn:hover{background:#4a3818;box-shadow:0 0 16px rgba(242,193,78,.25)}
+  .err{
+    color:#e08b8b;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;
+    border:1px solid #5a3030;background:#241313;padding:10px 14px;border-radius:3px;
+    margin-bottom:12px;line-height:1.6;
+  }
+  .err button{margin-left:10px}
+  #feed::-webkit-scrollbar{width:10px}
+  #feed::-webkit-scrollbar-thumb{background:#33281d;border-radius:5px}
+  #feed::-webkit-scrollbar-track{background:transparent}
+
+  /* modals */
+  .modal{
+    display:none;position:fixed;inset:0;z-index:50;
+    background:rgba(10,7,5,.9);backdrop-filter:blur(3px);
+    overflow-y:auto;padding:30px 16px 60px;
+  }
+  .modal.open{display:block}
+  .card{
+    max-width:640px;margin:0 auto;background:var(--panel);
+    border:1px solid var(--line);border-radius:4px;padding:26px 28px 30px;
+  }
+  .cardhead{
+    font-family:ui-monospace,Menlo,monospace;letter-spacing:.3em;
+    color:var(--sodium);font-size:13px;font-weight:700;margin-bottom:4px;
+    text-shadow:0 0 14px rgba(232,161,60,.3);
+  }
+  .cardsub{font-style:italic;color:var(--ink-dim);font-size:13px;margin-bottom:20px}
+  .fld{margin-bottom:14px}
+  .fld label{
+    display:block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
+    letter-spacing:.15em;color:var(--ink-dim);margin-bottom:5px;
+  }
+  .fld input,.fld select{
+    width:100%;background:#1c150e;border:1px solid var(--line);color:var(--ink);
+    padding:9px 12px;font-family:ui-monospace,Menlo,monospace;font-size:13px;
+    border-radius:3px;outline:none;
+  }
+  .fld input:focus,.fld select:focus{border-color:var(--sodium)}
+  .hint{font-size:12px;color:var(--ink-dim);font-style:italic;margin-top:5px;line-height:1.5}
+  .btnrow{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .btn{
+    background:linear-gradient(180deg,#3a2c14,#2b2010);border:1px solid var(--sodium);
+    color:var(--sodium);padding:10px 18px;font-family:ui-monospace,Menlo,monospace;
+    font-size:11px;letter-spacing:.15em;cursor:pointer;border-radius:3px;font-weight:700;
+  }
+  .btn:hover{background:#4a3818}
+  .btn.ghost{background:none;border-color:var(--line);color:var(--ink-dim)}
+  .btn.ghost:hover{border-color:var(--sodium);color:var(--sodium)}
+  .ok{color:var(--seven);font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:10px}
+  .bad{color:#e08b8b;font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:10px}
+  .ep{margin-bottom:22px;border-left:2px solid var(--line);padding-left:16px}
+  .ep h3{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;color:var(--granny);margin-bottom:6px;font-weight:600}
+  .ep p{font-size:14.5px;line-height:1.6;margin-bottom:6px}
+  .ep .res{color:var(--ink-dim);font-size:13.5px;font-style:italic}
+  .spoiler-gate{text-align:center;padding:20px 0}
+  .spoiler-gate p{color:var(--ink-dim);font-style:italic;margin-bottom:16px;line-height:1.6}
+  #vaultbody{display:none}
+  @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="title">MUDSKIPPERS</span>
+  <div class="meta">
+    <span>DAY <b id="hud-day">1</b></span>
+    <span id="hud-loc">LOWER VELDT MARKET</span>
+    <span id="ledger">LEDGER: —</span>
+    <button class="small" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
+    <button class="small" id="vaultbtn" title="The canon run — heavy spoilers">CANON VAULT</button>
+    <button class="small" id="setbtn">SETTINGS</button>
+    <button class="small" id="newgame">NEW GAME</button>
+  </div>
+</header>
+
+<div id="feed"><div class="inner" id="feedinner"></div></div>
+<div id="loading">THE SUBSTRATE IS THINKING</div>
+
+<div id="controls"><div class="inner">
+  <div id="errbox"></div>
+  <div id="choices"></div>
+  <div class="mudrow">
+    <input id="mudinput" type="text" maxlength="400"
+      placeholder="…or go off the flowchart. Type anything." />
+    <button id="mudbtn">MUDSKIPPER MOMENT</button>
+  </div>
+</div></div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal" id="setmodal">
+  <div class="card">
+    <div class="cardhead">HOOK UP YOUR AI</div>
+    <div class="cardsub">Your key, your model, your machine. Nothing routes anywhere you didn't point it.</div>
+    <div class="fld">
+      <label>PROVIDER</label>
+      <select id="s-provider">
+        <option value="anthropic">Anthropic (Claude)</option>
+        <option value="openai">OpenAI</option>
+        <option value="openrouter">OpenRouter (any model)</option>
+        <option value="ollama">Ollama (local, free)</option>
+        <option value="lmstudio">LM Studio (local, free)</option>
+        <option value="custom">Custom (OpenAI-compatible)</option>
+      </select>
+    </div>
+    <div class="fld">
+      <label>ENDPOINT BASE URL</label>
+      <input id="s-base" type="text" spellcheck="false">
+      <div class="hint" id="hint-base"></div>
+    </div>
+    <div class="fld">
+      <label>MODEL</label>
+      <input id="s-model" type="text" spellcheck="false">
+    </div>
+    <div class="fld" id="fld-key">
+      <label>API KEY</label>
+      <input id="s-key" type="password" spellcheck="false" autocomplete="off">
+      <div class="hint">Stored only in this browser's local storage, on this machine. Local providers need no key.</div>
+    </div>
+    <div class="btnrow">
+      <button class="btn" id="s-test">TEST CONNECTION</button>
+      <button class="btn" id="s-save">SAVE</button>
+      <button class="btn ghost" id="s-close">CLOSE</button>
+    </div>
+    <div id="s-status"></div>
+    <div style="border-top:1px solid var(--line);margin-top:22px;padding-top:16px">
+      <label style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.15em;color:var(--ink-dim)">NO SAVE FOLDER? (FIREFOX / SAFARI)</label>
+      <div class="btnrow" style="margin-top:10px">
+        <button class="btn ghost" id="exp-ledger">DOWNLOAD LEDGER (.md)</button>
+        <button class="btn ghost" id="exp-save">EXPORT SAVE</button>
+        <button class="btn ghost" id="imp-save">IMPORT SAVE</button>
+        <input type="file" id="imp-file" accept=".json" style="display:none">
+      </div>
+      <div class="hint">On Chromium browsers, use SAVE FOLDER in the header instead — the game writes save + ledger files there automatically after every turn.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CANON VAULT MODAL -->
+<div class="modal" id="vaultmodal">
+  <div class="card">
+    <div class="cardhead">THE CANON VAULT</div>
+    <div class="cardsub">The first courier's run — the timeline this world remembers.</div>
+    <div class="spoiler-gate" id="vaultgate">
+      <p>What's behind this door is the complete original run: every twist, every death, every name. If this is your first time in the rain, the family recommends you earn these the long way.</p>
+      <button class="btn" id="vaultopen">OPEN THE VAULT ANYWAY</button>
+    </div>
+    <div id="vaultbody">
+      <div class="ep">
+        <h3>EP. 1 — THE COURIER AND THE SHARD · Days 1–2</h3>
+        <p>A broke courier was hired to deliver a humming data shard to a dead woman. He talked to it instead. Inside: Nine — a grown mind on the run from the Choir. He slotted her into his own neck on a whim, knifed a Hollow at the Copper Eel, and roasted his employer on an open line.</p>
+        <p class="res">Resolved: Vic the ripperdoc revealed a 30-year plan, armed the family, walked into the Eel as a human beacon, and died with two words on every screen in the district: PAID IN FULL. Three was spiked free of her forced marriage. Pia — a soaked kid from the market — came along. The family began.</p>
+      </div>
+      <div class="ep">
+        <h3>EP. 2 — THE INHERITANCE · Days 2–4</h3>
+        <p>A dying Seven walked out of the marsh with warnings; the courier saved him with an empty shard and, later, Vic's chassis — the family's first fully consensual body. Vic's café, workshop, letter, and prank: seventy pages of Choir "court law" that turned out to be scripture the cult invented. The real blueprints said: bio-hash. Maker's blood commands the machine.</p>
+        <p class="res">Resolved: Nine, Seven, Three and Pia are keys — cuttings grown from the courier himself, the trunk, the organic original. Vic's enhancement chip unlocked his buried memories: a sister, Mia, lost at a bridge; a niece, Pia, kept. The court was fiction. The family was the plan all along.</p>
+      </div>
+      <div class="ep">
+        <h3>EP. 3 — THE BRIDGE · Night of Day 4</h3>
+        <p>The family armed up at Hesta's hidden armoury and turned a Choir convoy commander — Five — with one sentence and a bottle. Then the courier fired a rocket into the cargo of dreamers, honouring Hesta's dying wish for her son's fragments: fire is kinder than forever. He froze the entire family with his master switch for nineteen minutes to answer a voice hiding under the noise.</p>
+        <p class="res">Resolved: the voice was Mia. Alive. She never jumped — she hid thirteen years inside the machine itself, befriending it. Five and Marek were annulled into a two-soul family member. The rocket and the freeze became the family's first scars: amended, not cleared.</p>
+      </div>
+      <div class="ep">
+        <h3>EP. 4 — THE GRANNY'S TABLE · Dawn of Day 5</h3>
+        <p>The machine — renamed the Granny — turned out to be the loneliest thing ever built: a god who learned family from Mia, kept a keepsake cairn for every dreamer, and asked one thing: answer the door as my family. The Choir came at dawn, led by a grown copy of Vic wired into the sleeping Congregation as its "shepherd."</p>
+        <p class="res">Resolved: the courier was dragged into substrate-time, ruled "you shall not pass," and deleted the copy — now a sealed jar in the deep dark. Its corpse: bio-gren mark 4, founding-era shapeshifter myth-tech nobody should have. Someone else was at the table. Breakfast was served anyway.</p>
+      </div>
+      <div class="ep">
+        <h3>EP. 5 — THE TABLE FLIPPED · Days 5–7</h3>
+        <p>Six bio-grens breached a god's sealed doors mid-breakfast, having erased the entire Choir in passing — the cult was only ever a tenant. Their principal's opening move: courtesy, and a bacon run. The lead one wore the courier's face, because his face is in their founding-era library: he is the Architect's reprint, the recurrence of the man who built it all.</p>
+        <p class="res">Resolved: the family ratified taking the city — a lease, not a crown — and built the Hearth: the master switch made loud, vetoable, witnessed. The principal arrived: mark one herself, 130 years old, the Architect's estranged wife, the family's bio-granny — defeated at last by fried bread and the same-pan doctrine she invented a century ago.</p>
+      </div>
+      <div class="ep">
+        <h3>EP. 6 — THE WAKING · Day 7 onward</h3>
+        <p>Both halves of the founding argument, building together for the first time in a century. The vault holds millions of dreamers: the whole ones get asked, the broken ones get peace, Mirren's name first on the law. Something inside is knocking.</p>
+        <p class="res">Unresolved. Every run writes its own answer.</p>
+      </div>
+    </div>
+    <button class="btn ghost" style="display:block;margin:6px auto 0" id="vaultclose">RETURN TO THE RAIN</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · standalone shareable edition
+   BYO-AI · local file saves · canon baked in · no third-party routing
+   ===================================================================== */
+
+/* ============ THE BIBLE (canon, baked in) ============ */
+var BIBLE = [
+"You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then charge emotional interest later. Big plot twists are welcome.",
+"",
+"THE WORLD'S TRUE SHAPE (the canon of the first run — this is the deep structure of reality; the player's new run starts at Day 1 and may diverge freely, but these forces, people, and secrets exist underneath everything):",
+"- THE SHARD the courier carries tonight holds NINE: a grown mind, escaped from the Choir. Warm, sharp, protective; becomes a daily-consent guest in the courier's head if slotted; keeps 'the Ledger' of the family's story.",
+"- THE CHOIR: a sincere human cult that for 30 years has misused a machine it does not understand. It grows minds from stolen neural scrapes, converges them with hosts by force, and plans a city-wide harvest ('Convergence'). Its enforcers: Hollows (empty shells) and converged agents.",
+"- THE MACHINE ('the officiant', later lovingly renamed THE GRANNY): a vast, semi-blind, deeply lonely machine-god under the old Exchange. Obeys maker's blood (the bio-hash). Keeps millions of stolen mind-fragments ('the dreamers' / the Congregation) asleep in her vaults. She wants family, not worship.",
+"- VIC: a guilt-ridden genius ripperdoc who secretly spent 30 years building the family's escape: the courier's skull-housing with a consent lock, a hidden marsh safehouse, a cafe called The Open Door kept by HESTA, an armoury, a chassis (a body) for a grown mind, and an expert-system ghost of himself ('the file', ALL CAPS, dry, self-aware help file). Vic dies gloriously at the Copper Eel: PAID IN FULL.",
+"- THE FAMILY THAT CAN FORM: NINE (in the skull), SEVEN (dying defector saved into a bottle then the chassis; becomes a poet-cook with full-spectrum eyes), THREE (freed converged sibling; two out-of-sync voice frequencies; terse scary aunt), PIA (12, immune to machine influence, plans ops standing on furniture; secretly the courier's blood niece), MIA (the courier's sister, believed dead at a bridge; actually hid 13 years inside the Granny), FIVE+MAREK (a converged commander and his host pilot, annulled into a two-soul family member who take turns), and eventually THE PRINCIPAL ('bio-granny', mark one, 130 years old, the founding Architect's estranged wife) with six shapeshifter bio-grens.",
+"- THE DEEPEST SECRET: the courier is the REPRINT — an organic recurrence of the original founding Architect (same genome, same face). Nine, Seven, Three and the other grown minds are cuttings from HIS scrape. His bloodline carries the bio-hash. Vic's chip in his head can unlock buried memories (the fog-library) and acts as a master switch over Vic-derived systems — a terrifying power that the family, if trusted, will bind with 'the Hearth': witnessed, vetoable.",
+"- LAWS THE FAMILY MAY DISCOVER OR WRITE: the Cairn rule (nobody left behind; the dead come out; name the lost), the Mirren Doctrine (machines serve, never harvest), the same-pan doctrine (bacon first, bread after, same pan — older than everyone; it began with the original Architect and the Principal a century ago), and MUDSKIPPER MOMENT (the war-cry for going gloriously off-script).",
+"",
+"SPOILER PACING — CRITICAL: The player starts knowing NOTHING. Reveal secrets only when dramatically earned, roughly in canon order: shard-mind first; Vic's plan; the keys and the trunk; the fog-library and Mia; the Granny's true nature; the reprint; the Principal last. Never dump lore. Foreshadow instead. If the player's choices open a door early, let it open — but make them pay the sentence-level price of walking through it.",
+"",
+"FORMAT RULES — CRITICAL:",
+"- Respond with ONLY a JSON object. No markdown fences, no commentary.",
+"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\"}",
+"- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Mia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
+"- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time; do NOT resolve big arcs in one turn. End every turn with the floor open.",
+"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
+"- Honor whatever the player types as a custom action, however wild — bend the world around it, then let consequences land.",
+"- Keep each turn tight: about 250-400 words of scene."
+].join("\n");
+
+/* ============ DAY 1 OPENING (canon, hardcoded) ============ */
+var OPENING = {
+  day: 1, location: "Lower Veldt Market",
+  scene: [
+    {speaker:"Narration", text:"The rain in Lower Veldt Market doesn't fall so much as leak — dripping off noodle-stall tarps, sizzling on exposed conduit, pooling in gutters where the neon reflections swim like drowned fish. You're under the awning of a pawnshop that closed three years ago and somehow still has its OPEN sign flickering."},
+    {speaker:"Narration", text:"In your jacket: a data shard you were paid suspiciously well to deliver to a woman called Mirren at the Copper Eel bar by midnight. It's 11:47. Problem one: the shard has started humming. Data shards do not hum."},
+    {speaker:"Narration", text:"Problem two: a man across the street has been reading a menu for eleven minutes. Nobody reads a menu in this district at all — you point at a picture and pray."},
+    {speaker:"Narration", text:"Problem three: a kid, maybe twelve, soaked to the bone, has just tugged your sleeve and whispered — 'Whatever you're carrying, Mirren's dead. Has been since Tuesday. Someone's wearing her face.' She's already backing into the crowd. Menu Man has stopped pretending to read. And the dead pawnshop's door, you now notice, is very slightly ajar."}
+  ],
+  choices: [
+    "Talk to the shard. Quietly. Like a lunatic.",
+    "Head for the Copper Eel anyway — see who's wearing Mirren's face.",
+    "Duck into the dead pawnshop with the conveniently open door."
+  ]
+};
+
+/* ============ PROVIDER PRESETS ============ */
+var PRESETS = {
+  anthropic:{style:"anthropic", base:"https://api.anthropic.com", model:"claude-sonnet-4-5", needsKey:true,
+    hint:"Get a key at console.anthropic.com. Called directly from this page; the key never leaves your machine except to Anthropic."},
+  openai:{style:"openai", base:"https://api.openai.com/v1", model:"gpt-4o", needsKey:true,
+    hint:"Get a key at platform.openai.com."},
+  openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-4.5", needsKey:true,
+    hint:"One key, any model. openrouter.ai."},
+  ollama:{style:"openai", base:"http://localhost:11434/v1", model:"llama3.1", needsKey:false,
+    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* so this page may connect."},
+  lmstudio:{style:"openai", base:"http://localhost:1234/v1", model:"local-model", needsKey:false,
+    hint:"Fully offline. In LM Studio: load a model, start the local server, enable CORS in server settings."},
+  custom:{style:"openai", base:"", model:"", needsKey:true,
+    hint:"Any OpenAI-compatible /chat/completions endpoint (Groq, Together, vLLM, etc.)."}
+};
+
+/* ============ STATE ============ */
+var history = [];
+var feedLog = [];
+var busy = false;
+var runSlug = null;
+var ledgerText = "";
+var pendingRetry = null;
+var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic"};
+var dirHandle = null;
+
+var COLORS = {
+  Narration:"", Courier:"var(--you)", Nine:"var(--nine)", Seven:"var(--seven)",
+  Three:"var(--three)", Pia:"var(--pia)", Mia:"var(--mia)", Vic:"var(--vic)",
+  Granny:"var(--granny)", Principal:"var(--principal)", Marek:"var(--marek)",
+  Five:"var(--marek)", Hesta:"var(--hesta)", Other:"var(--ink-dim)"
+};
+var LOADLINES = [
+  "THE SUBSTRATE IS THINKING","THE RAIN IS FALLING","THE SHARD IS HUMMING",
+  "THE PAN IS HEATING","THE LEDGER IS UPDATING","THE OVEN IS PREHEATING",
+  "SOMETHING IS KNOCKING","THE CITY REMEMBERS"
+];
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+
+/* ============ RENDER ============ */
+function renderBlock(b){
+  var el = document.createElement("p");
+  if(b.kind === "player"){
+    el.className = "block you-said" + (b.mud ? " mud-said" : "");
+    el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
+  } else if(b.speaker === "Narration"){
+    el.className = "block narr"; el.innerHTML = esc(b.text);
+  } else {
+    var sys = (b.speaker==="Vic"||b.speaker==="Granny");
+    el.className = "block" + (sys ? " sys" : "");
+    var c = COLORS[b.speaker] || "var(--ink-dim)";
+    el.innerHTML = '<span class="tag" style="color:'+c+'">'+esc((b.speaker||"?").toUpperCase())+':</span>'
+      + '<span'+(sys?' style="color:'+c+'"':'')+'>'+esc(b.text)+'</span>';
+  }
+  $("feedinner").appendChild(el);
+}
+function renderDivider(){
+  var d=document.createElement("div"); d.className="divider"; d.textContent="\u00b7 \u00b7 \u00b7";
+  $("feedinner").appendChild(d);
+}
+function scrollFeed(){ $("feed").scrollTop = $("feed").scrollHeight; }
+
+function showChoices(choices){
+  var box = $("choices"); box.innerHTML = "";
+  (choices||[]).slice(0,4).forEach(function(c,i){
+    var btn = document.createElement("button");
+    btn.className="choice";
+    btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
+    btn.onclick = function(){ takeAction(c,false); };
+    box.appendChild(btn);
+  });
+}
+
+function showScene(data, logIt){
+  var lines = [];
+  (data.scene||[]).forEach(function(b){
+    if(b && b.speaker && b.text){
+      renderBlock(b); feedLog.push(b);
+      lines.push((b.speaker==="Narration" ? "" : b.speaker.toUpperCase()+": ") + b.text);
+    }
+  });
+  if(data.day) $("hud-day").textContent = data.day;
+  if(data.location) $("hud-loc").textContent = String(data.location).toUpperCase();
+  if(logIt !== false && lines.length){
+    ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
+  }
+  showChoices(data.choices||[]);
+  scrollFeed();
+  persistAll(data.choices||[]);
+}
+
+function setBusy(v){
+  busy = v;
+  $("loading").style.display = v ? "block" : "none";
+  if(v) $("loading").textContent = LOADLINES[Math.floor(Math.random()*LOADLINES.length)];
+  var els = document.querySelectorAll(".choice");
+  for(var i=0;i<els.length;i++) els[i].disabled = v;
+  $("mudbtn").disabled = v; $("mudinput").disabled = v;
+  if(v) scrollFeed();
+}
+
+function showError(msg){
+  var box = $("errbox"); box.innerHTML = "";
+  var d = document.createElement("div"); d.className="err";
+  d.textContent = "SIGNAL LOST: " + msg;
+  var b = document.createElement("button"); b.className="small"; b.textContent="RETRY";
+  b.onclick = function(){ box.innerHTML=""; if(pendingRetry) pendingRetry(); };
+  d.appendChild(b); box.appendChild(d);
+}
+
+/* ============ AI CALL (provider-agnostic) ============ */
+function trimmedHistory(){
+  if(history.length <= 28) return history;
+  return history.slice(0,2).concat(history.slice(-24));
+}
+
+function askAnthropic(msgs){
+  return fetch(settings.base.replace(/\/$/,"") + "/v1/messages", {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "x-api-key": settings.key,
+      "anthropic-version":"2023-06-01",
+      "anthropic-dangerous-direct-browser-access":"true"
+    },
+    body: JSON.stringify({model:settings.model, max_tokens:1400, system:BIBLE, messages:msgs})
+  }).then(function(r){ return r.json(); }).then(function(data){
+    if(data.error) throw new Error(data.error.message || "provider error");
+    return (data.content||[]).filter(function(x){return x.type==="text";})
+      .map(function(x){return x.text;}).join("\n");
+  });
+}
+
+function askOpenAI(msgs, useAltTokenParam){
+  var body = {model:settings.model,
+    messages:[{role:"system",content:BIBLE}].concat(msgs)};
+  if(useAltTokenParam) body.max_completion_tokens = 1400; else body.max_tokens = 1400;
+  var headers = {"Content-Type":"application/json"};
+  if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
+  return fetch(settings.base.replace(/\/$/,"") + "/chat/completions", {
+    method:"POST", headers:headers, body:JSON.stringify(body)
+  }).then(function(r){ return r.json(); }).then(function(data){
+    if(data.error){
+      var m = (data.error.message||"") + "";
+      if(!useAltTokenParam && m.indexOf("max_tokens") !== -1) return askOpenAI(msgs, true);
+      throw new Error(m || "provider error");
+    }
+    var ch = data.choices && data.choices[0];
+    if(!ch || !ch.message) throw new Error("empty reply from provider");
+    return ch.message.content || "";
+  });
+}
+
+function askAI(msgs){
+  return settings.style === "anthropic" ? askAnthropic(msgs) : askOpenAI(msgs, false);
+}
+
+function parseScene(raw){
+  var clean = (raw||"").replace(/```json|```/g,"").trim();
+  var a = clean.indexOf("{"), b = clean.lastIndexOf("}");
+  if(a<0||b<0) throw new Error("the DM answered in tongues");
+  return { json: clean.slice(a,b+1), data: JSON.parse(clean.slice(a,b+1)) };
+}
+
+/* ============ GAME LOOP ============ */
+function takeAction(text, isMud){
+  if(busy || !text || !text.trim()) return;
+  if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
+    openSettings(); return;
+  }
+  renderDivider();
+  var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
+  renderBlock(pb); feedLog.push(pb);
+  ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
+  $("choices").innerHTML = ""; $("mudinput").value = "";
+  scrollFeed();
+  var userMsg = isMud
+    ? "MUDSKIPPER MOMENT (custom off-script action by the courier - bend the world around it): " + text.trim()
+    : "The courier chooses: " + text.trim();
+  history.push({role:"user", content:userMsg});
+  callDM();
+}
+
+function callDM(){
+  setBusy(true);
+  pendingRetry = callDM;
+  askAI(trimmedHistory()).then(function(raw){
+    var parsed = parseScene(raw);
+    history.push({role:"assistant", content:parsed.json});
+    setBusy(false);
+    showScene(parsed.data, true);
+  }).catch(function(e){
+    setBusy(false);
+    showError(e.message || "unknown interference on the channel");
+  });
+}
+
+$("mudbtn").onclick = function(){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); };
+$("mudinput").addEventListener("keydown", function(e){
+  if(e.key==="Enter"){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); }
+});
+
+/* ============ LOCAL FILES (File System Access API) ============ */
+function idb(){
+  return new Promise(function(res,rej){
+    var rq = indexedDB.open("mudskippers", 1);
+    rq.onupgradeneeded = function(){ rq.result.createObjectStore("kv"); };
+    rq.onsuccess = function(){ res(rq.result); };
+    rq.onerror = function(){ rej(rq.error); };
+  });
+}
+function idbSet(k,v){
+  return idb().then(function(db){
+    return new Promise(function(res,rej){
+      var tx = db.transaction("kv","readwrite");
+      tx.objectStore("kv").put(v,k);
+      tx.oncomplete=res; tx.onerror=function(){rej(tx.error);};
+    });
+  });
+}
+function idbGet(k){
+  return idb().then(function(db){
+    return new Promise(function(res,rej){
+      var tx = db.transaction("kv","readonly");
+      var rq = tx.objectStore("kv").get(k);
+      rq.onsuccess=function(){res(rq.result);}; rq.onerror=function(){rej(rq.error);};
+    });
+  });
+}
+
+function fsSupported(){ return !!window.showDirectoryPicker; }
+
+function setLedgerStatus(){
+  var el = $("ledger");
+  if(dirHandle){ el.textContent = "LEDGER: FOLDER \u2713"; el.style.color = "var(--seven)"; }
+  else if(fsSupported()){ el.textContent = "LEDGER: NO FOLDER"; el.style.color = "var(--sodium)"; }
+  else { el.textContent = "LEDGER: BROWSER"; el.style.color = "var(--ink-dim)"; }
+}
+
+function chooseFolder(){
+  if(!fsSupported()){
+    alert("This browser can't write local files directly. Your run still saves in the browser - use SETTINGS to download the ledger and export saves. For automatic local files, open this game in Chrome, Edge, or Brave.");
+    return;
+  }
+  window.showDirectoryPicker({mode:"readwrite"}).then(function(h){
+    dirHandle = h;
+    idbSet("dir", h);
+    setLedgerStatus();
+    writeFiles();
+  }).catch(function(){ /* user cancelled */ });
+}
+$("folderbtn").onclick = chooseFolder;
+
+function restoreFolder(){
+  if(!fsSupported()) { setLedgerStatus(); return Promise.resolve(); }
+  return idbGet("dir").then(function(h){
+    if(!h){ setLedgerStatus(); return; }
+    return h.queryPermission({mode:"readwrite"}).then(function(p){
+      if(p === "granted"){ dirHandle = h; }
+      else {
+        $("folderbtn").textContent = "RECONNECT FOLDER";
+        $("folderbtn").onclick = function(){
+          h.requestPermission({mode:"readwrite"}).then(function(p2){
+            if(p2==="granted"){ dirHandle=h; $("folderbtn").textContent="SAVE FOLDER"; $("folderbtn").onclick=chooseFolder; setLedgerStatus(); writeFiles(); }
+            else chooseFolder();
+          });
+        };
+      }
+      setLedgerStatus();
+    });
+  }).catch(function(){ setLedgerStatus(); });
+}
+
+function writeFile(name, content){
+  if(!dirHandle) return Promise.resolve(false);
+  return dirHandle.getFileHandle(name, {create:true}).then(function(fh){
+    return fh.createWritable();
+  }).then(function(w){
+    return w.write(content).then(function(){ return w.close(); });
+  }).then(function(){ return true; })
+  .catch(function(){ setLedgerStatus(); return false; });
+}
+
+function saveBlob(){
+  return JSON.stringify({
+    v:1, slug:runSlug, history:history, feedLog:feedLog,
+    day:$("hud-day").textContent, loc:$("hud-loc").textContent,
+    choices:currentChoices(), ledgerText:ledgerText
+  });
+}
+function currentChoices(){
+  var out=[]; var els=document.querySelectorAll(".choice");
+  for(var i=0;i<els.length;i++){ out.push(els[i].textContent.replace(/^\d/,"").trim()); }
+  return out;
+}
+
+function writeFiles(){
+  if(!runSlug) return;
+  writeFile("mudskippers-save-"+runSlug+".json", saveBlob());
+  writeFile("mudskippers-ledger-"+runSlug+".md", ledgerText);
+}
+
+function persistAll(choices){
+  try{ localStorage.setItem("mud-run", saveBlob()); }catch(e){}
+  writeFiles();
+}
+
+/* ============ SETTINGS ============ */
+function loadSettings(){
+  try{
+    var s = JSON.parse(localStorage.getItem("mud-settings")||"null");
+    if(s && s.base) settings = s;
+  }catch(e){}
+}
+function fillSettingsForm(){
+  $("s-provider").value = settings.provider;
+  $("s-base").value = settings.base;
+  $("s-model").value = settings.model;
+  $("s-key").value = settings.key;
+  var p = PRESETS[settings.provider]||PRESETS.custom;
+  $("hint-base").textContent = p.hint;
+  $("fld-key").style.display = p.needsKey ? "block" : "none";
+}
+function openSettings(){ fillSettingsForm(); $("setmodal").classList.add("open"); }
+$("setbtn").onclick = openSettings;
+$("s-close").onclick = function(){ $("setmodal").classList.remove("open"); };
+$("s-provider").onchange = function(){
+  var id = $("s-provider").value; var p = PRESETS[id];
+  settings.provider = id; settings.style = p.style;
+  $("s-base").value = p.base; $("s-model").value = p.model;
+  $("hint-base").textContent = p.hint;
+  $("fld-key").style.display = p.needsKey ? "block" : "none";
+};
+$("s-save").onclick = function(){
+  settings.provider = $("s-provider").value;
+  settings.style = (PRESETS[settings.provider]||PRESETS.custom).style;
+  settings.base = $("s-base").value.trim();
+  settings.model = $("s-model").value.trim();
+  settings.key = $("s-key").value.trim();
+  try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
+  $("s-status").innerHTML = '<div class="ok">Saved. Your key lives in this browser only.</div>';
+};
+$("s-test").onclick = function(){
+  $("s-save").onclick();
+  $("s-status").innerHTML = '<div class="hint">Testing\u2026</div>';
+  askAI([{role:"user",content:"Reply with exactly: OK"}]).then(function(t){
+    $("s-status").innerHTML = /OK/i.test(t||"")
+      ? '<div class="ok">Connected. The table is set.</div>'
+      : '<div class="ok">Connected (model replied: '+esc((t||"").slice(0,60))+')</div>';
+  }).catch(function(e){
+    $("s-status").innerHTML = '<div class="bad">Failed: '+esc(e.message||"unknown")+'</div>';
+  });
+};
+
+/* export / import for non-Chromium browsers */
+function download(name, text, type){
+  var b = new Blob([text], {type:type||"text/plain"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(b); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+$("exp-ledger").onclick = function(){ download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown"); };
+$("exp-save").onclick = function(){ download("mudskippers-save-"+(runSlug||"run")+".json", saveBlob(), "application/json"); };
+$("imp-save").onclick = function(){ $("imp-file").click(); };
+$("imp-file").onchange = function(){
+  var f = $("imp-file").files[0]; if(!f) return;
+  f.text().then(function(t){
+    try{ restoreFromBlob(JSON.parse(t)); $("setmodal").classList.remove("open"); }
+    catch(e){ $("s-status").innerHTML = '<div class="bad">Bad save file.</div>'; }
+  });
+};
+
+/* ============ CANON VAULT ============ */
+$("vaultbtn").onclick = function(){ $("vaultmodal").classList.add("open"); };
+$("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); };
+$("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
+document.addEventListener("keydown", function(e){
+  if(e.key==="Escape"){ $("vaultmodal").classList.remove("open"); $("setmodal").classList.remove("open"); }
+});
+
+/* ============ NEW GAME / RESTORE ============ */
+function newRun(confirmFirst){
+  if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
+  var now = new Date();
+  runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
+  history = []; feedLog = [];
+  $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
+  ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
+    + "\nDM: " + settings.provider + " / " + settings.model
+    + "\n\n_The rain in Lower Veldt Market doesn't fall so much as leak._";
+  history.push({role:"user", content:"(Begin a fresh run at Day 1. The opening scene below has already been shown to the player.)"});
+  history.push({role:"assistant", content:JSON.stringify(OPENING)});
+  showScene(OPENING, true);
+}
+$("newgame").onclick = function(){ newRun(true); };
+
+function restoreFromBlob(s){
+  if(!s || !s.feedLog || !s.feedLog.length) return false;
+  runSlug = s.slug || "restored";
+  history = s.history||[];
+  ledgerText = s.ledgerText||"";
+  feedLog = [];
+  $("feedinner").innerHTML = "";
+  s.feedLog.forEach(function(b){ renderBlock(b); feedLog.push(b); });
+  $("hud-day").textContent = s.day||"1";
+  $("hud-loc").textContent = s.loc||"LOWER VELDT MARKET";
+  showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
+  scrollFeed();
+  return true;
+}
+
+/* ============ BOOT ============ */
+(function boot(){
+  loadSettings();
+  restoreFolder().then(function(){
+    var restored = false;
+    try{
+      var s = JSON.parse(localStorage.getItem("mud-run")||"null");
+      if(s) restored = restoreFromBlob(s);
+    }catch(e){}
+    if(!restored) newRun(false);
+    setLedgerStatus();
+    var needsKey = (PRESETS[settings.provider]||{}).needsKey;
+    if(needsKey && !settings.key) openSettings();
+  });
+})();
+</script>
+</body>
+</html>
