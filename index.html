@@ -275,6 +275,8 @@
   }
   .w-day{font-family:ui-monospace,Menlo,monospace;font-size:10px;color:var(--granny);letter-spacing:.06em}
   .w-day b{color:var(--gold);font-weight:700}
+  .w-time{font-family:ui-monospace,Menlo,monospace;font-size:7.5px;color:var(--seven);letter-spacing:.02em;max-width:34px;text-align:center;line-height:1.25;word-break:break-word}
+  .w-amb{width:9px;height:9px;border-radius:2px;background:var(--sodium);box-shadow:0 0 6px currentColor;opacity:.85;transition:background .9s ease}
   .w-dot{width:5px;height:5px;border-radius:50%;background:var(--seven);box-shadow:0 0 7px var(--seven);animation:wpulse 3.4s ease-in-out infinite}
   .w-dot.busy{background:var(--gold);box-shadow:0 0 7px var(--gold);animation-duration:1s}
   @keyframes wpulse{0%,100%{opacity:.35}50%{opacity:1}}
@@ -286,6 +288,22 @@
     font-size:11.5px;line-height:1.6;color:var(--ink-dim);font-style:italic;
     border-left:2px solid var(--line);padding:6px 10px;margin-bottom:14px;
   }
+  /* the fix: where the courier is, and when */
+  #term-fix{
+    display:flex;flex-wrap:wrap;gap:1px;margin-bottom:12px;
+    border:1px solid #26301f;border-radius:3px;overflow:hidden;background:#26301f;
+  }
+  .fix-cell{flex:1 1 90px;background:#141a15;padding:7px 10px}
+  .fix-k{
+    font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.2em;
+    color:#6d7f68;display:block;margin-bottom:3px;
+  }
+  .fix-v{
+    font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em;
+    color:var(--seven);display:block;line-height:1.35;
+  }
+  .fix-v.amb{display:flex;align-items:center;gap:6px}
+  .fix-v i{width:8px;height:8px;border-radius:2px;box-shadow:0 0 6px currentColor;flex:none}
   .term-h{
     font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;
     color:var(--sodium);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;
@@ -339,6 +357,8 @@
     <span class="w-line">MUD//OS</span>
     <span class="w-strap"></span>
     <span class="w-day">D<b id="w-day">1</b></span>
+    <span class="w-time" id="w-time">11:47pm</span>
+    <span class="w-amb" id="w-amb" title="the weather on the glass"></span>
     <span class="w-dot" id="w-dot"></span>
   </span>
 </button>
@@ -347,6 +367,7 @@
   <span class="title">MUDSKIPPERS</span>
   <div class="meta">
     <span>DAY <b id="hud-day">1</b></span>
+    <span id="hud-time">11:47PM</span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
     <button class="small" id="castbtn" title="Character sheets, written by the story">CAST</button>
@@ -387,7 +408,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.5.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.6.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -448,6 +469,7 @@
   <div class="card term">
     <div class="cardhead">COURIER'S TERMINAL</div>
     <div class="cardsub">Strapped to your wrist since the first job. It remembers what you can't.</div>
+    <div id="term-fix"></div>
     <div id="term-now"></div>
     <div class="term-h">RUN CANON <span>what this run has made true</span></div>
     <ol id="term-canon"></ol>
@@ -647,8 +669,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.5.1 "The Statute Book"
-   vessels are fates · the Choir's one machine, three fates · the founding
+   MUDSKIPPERS — THE COURIER'S RUN · v2.6.0 "The Lighting Rig"
+   weather, clock and place on every turn · dissolving ambience · the fix panel
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -661,6 +683,7 @@ var BIBLE = [
 "- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
+"- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "MECHANICS - HOW THINGS WORK (hard rules, never break, never hand-wave):",
@@ -715,13 +738,16 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"]}",
+"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"]}",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
-"- ambience: exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits the scene's light and weather.",
+"- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
+"- ambience: REQUIRED. Exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever matches the light and weather where the scene is ACTUALLY happening right now. rain-neon: streets, markets, rooftops, anywhere under open sky at night. marsh-fog: the marsh, the reeds, the safehouse approach, anywhere wet and low and green. interior-warm: any room with a light on and a door shut - kitchens, cafes, workshops, the table. substrate-dark: inside the machine, the deep dark, the vaults, cable-work, anywhere the substrate is close. dawn: first light and the hour after it, whatever the location. danger: overrides all of the above whenever the scene is actively hostile - Hollows closing, a gun out, a room that has stopped being safe. Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see.",
+"- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
 "- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
 "- canon: REQUIRED ON EVERY TURN. An array of 1 to 4 short telegraphic strings - durable facts newly established THIS TURN: a named character introduced, a decision made, a place entered, a law written, a promise given, a threat revealed, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Even a quiet turn establishes something - a mood set, a door left open, a question asked and dodged. Never send an empty array.",
 "- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
-"- day: follow the fiction - advance it only when nights actually pass in-scene. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
+"- day: REQUIRED. Follow the fiction - advance it only when a night actually passes in-scene, and when it does, advance it in the same turn the sun comes up rather than silently later. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
+"- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
 "- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
@@ -731,7 +757,7 @@ var BIBLE = [
 
 /* ============ DAY 1 OPENING (canon, hardcoded) ============ */
 var OPENING = {
-  day: 1, location: "Lower Veldt Market",
+  day: 1, time: "11:47pm", location: "Lower Veldt Market", ambience: "rain-neon",
   scene: [
     {speaker:"Narration", text:"The rain in Lower Veldt Market doesn't fall so much as leak — dripping off noodle-stall tarps, sizzling on exposed conduit, pooling in gutters where the neon reflections swim like drowned fish. You're under the awning of a pawnshop that closed three years ago and somehow still has its OPEN sign flickering."},
     {speaker:"Narration", text:"In your jacket: a data shard you were paid suspiciously well to deliver to a woman called Mirren at the Copper Eel bar by midnight. It's 11:47. Problem one: the shard has started humming. Data shards do not hum."},
@@ -784,6 +810,18 @@ var installPrompt = null;
 var currentAmbience = "rain-neon";
 var currentArc = 1;
 var nowText = "";
+var nowTime = "11:47pm";
+
+/* The six ambiences, as the courier's terminal reports them. These are the whole
+   of this game's graphics, so the terminal names the one currently on the glass. */
+var AMBIENCE = {
+  "rain-neon":      {label:"RAIN · NEON",   tint:"var(--sodium)"},
+  "marsh-fog":      {label:"MARSH FOG",     tint:"var(--seven)"},
+  "interior-warm":  {label:"INTERIOR · WARM", tint:"var(--gold)"},
+  "substrate-dark": {label:"SUBSTRATE",     tint:"var(--nine)"},
+  "dawn":           {label:"DAWN",          tint:"var(--pia)"},
+  "danger":         {label:"DANGER",        tint:"#e08b8b"}
+};
 var revealToken = 0;
 var revealTimer = null;
 var skipReveal = null;
@@ -874,7 +912,9 @@ function setAmbience(name){
     kids[i].classList.remove("on");
     if(kids[i].getAttribute("data-amb") === name) kids[i].classList.add("on");
   }
-  if(changed && fxRunning) fxSeed();
+  if(changed) fxTransitionTo(name);
+  renderNow();                                  /* the clock strip carries the weather */
+  if($("termmodal") && $("termmodal").classList.contains("open")) renderTerminal();
 }
 function scrollToTurn(el){
   if(!el){ scrollFeed(); return; }
@@ -885,7 +925,13 @@ function renderNow(){
   var st = $("nowstrip");
   if(nowText){ st.textContent = nowText; st.style.display = "block"; }
   else { st.style.display = "none"; }
+  var amb = AMBIENCE[currentAmbience] || AMBIENCE["rain-neon"];
+  $("hud-time").textContent = nowTime ? nowTime.toUpperCase() : "";
   $("w-day").textContent = $("hud-day").textContent;
+  $("w-time").textContent = nowTime || "";
+  $("w-amb").style.background = amb.tint;
+  $("w-amb").style.color = amb.tint;
+  $("w-amb").title = "on the glass: " + amb.label.toLowerCase();
 }
 function endCard(){
   var d = document.createElement("div");
@@ -938,6 +984,7 @@ function showScene(data, logIt, instant){
     }
   });
   if(data.day){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
+  if(typeof data.time === "string" && data.time.trim()) nowTime = data.time.trim();
   if(data.location) $("hud-loc").textContent = String(data.location).toUpperCase();
   if(data.ambience) setAmbience(data.ambience);
   if(data.arc) currentArc = data.arc;
@@ -1376,8 +1423,8 @@ function saveBlob(){
     history:chatLog.slice(-HISTORY_KEEP), trimmed:true, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
-    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets, canon:runCanon,
-    sync:turnsSinceSync
+    now:nowText, time:nowTime, amb:currentAmbience, arc:currentArc,
+    cast:castSheets, canon:runCanon, sync:turnsSinceSync
   });
 }
 function currentChoices(){
@@ -1762,6 +1809,17 @@ $("t-cast").onclick = openCast;
 
 /* ============ THE COURIER'S TERMINAL ============ */
 function renderTerminal(){
+  var amb = AMBIENCE[currentAmbience] || AMBIENCE["rain-neon"];
+  $("term-fix").innerHTML =
+      '<div class="fix-cell"><span class="fix-k">LOCATION</span><span class="fix-v">'
+        + esc($("hud-loc").textContent || "—") + '</span></div>'
+    + '<div class="fix-cell"><span class="fix-k">DAY</span><span class="fix-v">'
+        + esc($("hud-day").textContent || "1") + '</span></div>'
+    + '<div class="fix-cell"><span class="fix-k">TIME</span><span class="fix-v">'
+        + esc(nowTime || "—") + '</span></div>'
+    + '<div class="fix-cell"><span class="fix-k">CONDITIONS</span><span class="fix-v amb" style="color:'
+        + amb.tint + '"><i style="background:' + amb.tint + '"></i>' + esc(amb.label) + '</span></div>';
+
   $("term-now").textContent = nowText
     ? nowText
     : "Nothing on the strip yet. The rain is still deciding what tonight is.";
@@ -1888,6 +1946,10 @@ var fxPanel={l:0,t:0,r:0,w:0};
 var fxMX=-9999, fxMY=-9999;
 var fxCap=120, fxDegrade=1;
 var fxDawn=0, fxDangerT=9000, fxWarm=1, fxWarmV=0, fxMeasureT=0;
+/* fxMode is what the canvas is currently painting. It lags currentAmbience during a
+   change so the weather dissolves out and the new weather dissolves in, instead of
+   the particles teleporting. */
+var fxMode="rain-neon", fxNext=null, fxAlpha=1, fxFadeDir=0;
 
 /* Density scales with the viewport - a fixed count that reads as rain on a laptop
    disappears on a 4K panel. 93 per megapixel reproduces the old fixed 120 at
@@ -1940,11 +2002,21 @@ function fxNewDrop(spread){
     lands: Math.random() < 0.22
   };
 }
+/* Dissolve the old weather out, swap at the floor, dissolve the new one in. */
+function fxTransitionTo(name){
+  if(!fxCanvas) return;
+  if(!fxRunning){ fxMode = name; fxNext = null; fxAlpha = 1; fxFadeDir = 0; return; }
+  if(fxMode === name && fxFadeDir >= 0){ fxNext = null; return; }
+  fxNext = name;
+  fxFadeDir = -1;
+}
 function fxSeed(){
   fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[];
   fxDawn = 0; fxDangerT = 6000 + Math.random()*4000;
+  var ctl = $("controls");
+  if(ctl && fxMode !== "danger") ctl.classList.remove("pulse");
   if(!fxCanvas || !fxW) return;
-  var m = currentAmbience, i;
+  var m = fxMode, i;
   if(m === "rain-neon"){
     for(i=0;i<fxCap;i++) fxDrops.push(fxNewDrop(true));
   } else if(m === "marsh-fog"){
@@ -1966,7 +2038,20 @@ function fxSeed(){
   }
 }
 function fxUpdate(dt){
-  var s = dt/1000, i, m = currentAmbience;
+  if(fxFadeDir < 0){
+    fxAlpha -= dt/600;
+    if(fxAlpha <= 0){
+      fxAlpha = 0;
+      if(fxNext){ fxMode = fxNext; fxNext = null; }
+      fxSeed();
+      fxFadeDir = 1;
+    }
+  } else if(fxFadeDir > 0){
+    fxAlpha += dt/900;
+    if(fxAlpha >= 1){ fxAlpha = 1; fxFadeDir = 0; }
+  }
+  if(fxAlpha > 1) fxAlpha = 1; else if(fxAlpha < 0) fxAlpha = 0;
+  var s = dt/1000, i, m = fxMode;
   if(m === "rain-neon"){
     while(fxDrops.length < fxCap) fxDrops.push(fxNewDrop(false));
     if(fxDrops.length > fxCap) fxDrops.length = fxCap;
@@ -2025,12 +2110,13 @@ function fxUpdate(dt){
 function fxDraw(){
   var c = fxCtx, o = fxOctx, i;
   c.clearRect(0,0,fxW,fxH); o.clearRect(0,0,fxW,fxH);
-  var m = currentAmbience;
+  if(fxAlpha <= 0) return;                  /* mid-dissolve: nothing to paint */
+  var m = fxMode;
   if(m === "rain-neon"){
     c.lineWidth = 1;
     for(i=0;i<fxDrops.length;i++){
       var d = fxDrops[i];
-      c.globalAlpha = Math.min(0.35, d.a);
+      c.globalAlpha = Math.min(0.35, d.a) * fxAlpha;
       c.strokeStyle = d.warm ? "rgba(232,161,60,1)" : "rgba(214,225,238,1)";
       c.beginPath();
       c.moveTo(d.x, d.y);
@@ -2044,10 +2130,10 @@ function fxDraw(){
       o.lineWidth = 1; o.strokeStyle = "rgba(232,161,60,1)";
       for(i=0;i<fxDrips.length;i++){
         var r = fxDrips[i];
-        o.globalAlpha = 0.25 * Math.max(0, Math.min(1, r.life/r.ttl));
+        o.globalAlpha = 0.25 * Math.max(0, Math.min(1, r.life/r.ttl)) * fxAlpha;
         o.beginPath(); o.moveTo(r.x, r.y0); o.lineTo(r.x, r.y); o.stroke();
         if(r.ttl - r.life < 160){                       /* the landing tick */
-          o.globalAlpha = 0.25;
+          o.globalAlpha = 0.25 * fxAlpha;
           o.beginPath(); o.moveTo(r.x - 2, r.y0 + 0.5); o.lineTo(r.x + 2, r.y0 + 0.5); o.stroke();
         }
       }
@@ -2057,7 +2143,7 @@ function fxDraw(){
     for(i=0;i<fxBlobs.length;i++){
       var b = fxBlobs[i];
       var g = c.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
-      g.addColorStop(0, "rgba(" + b.tint + "," + b.a.toFixed(3) + ")");
+      g.addColorStop(0, "rgba(" + b.tint + "," + (b.a*fxAlpha).toFixed(3) + ")");
       g.addColorStop(1, "rgba(" + b.tint + ",0)");
       c.fillStyle = g;
       c.fillRect(b.x-b.r, b.y-b.r, b.r*2, b.r*2);
@@ -2065,14 +2151,14 @@ function fxDraw(){
   } else if(m === "interior-warm"){
     var cx = fxW*0.5, cy = fxH*0.46, rr = Math.max(fxW,fxH)*0.55;
     var hg = c.createRadialGradient(cx,cy,0,cx,cy,rr);
-    hg.addColorStop(0, "rgba(242,193,78," + (0.05*fxWarm).toFixed(4) + ")");
+    hg.addColorStop(0, "rgba(242,193,78," + (0.05*fxWarm*fxAlpha).toFixed(4) + ")");
     hg.addColorStop(1, "rgba(242,193,78,0)");
     c.fillStyle = hg; c.fillRect(0,0,fxW,fxH);
   } else if(m === "substrate-dark"){
     c.fillStyle = "rgba(111,211,224,1)";
     for(i=0;i<fxMotes.length;i++){
       var mo = fxMotes[i];
-      c.globalAlpha = mo.a * (0.55 + 0.45*Math.sin(mo.ph));
+      c.globalAlpha = mo.a * (0.55 + 0.45*Math.sin(mo.ph)) * fxAlpha;
       c.beginPath(); c.arc(mo.x, mo.y, mo.s, 0, 6.283); c.fill();
     }
     c.globalAlpha = 1;
@@ -2081,8 +2167,8 @@ function fxDraw(){
     if(t < 42) k = t/42; else k = 1 - Math.min(1,(t-42)/18)*0.28;
     var bandH = fxH*0.42;
     var dg = c.createLinearGradient(0,0,0,bandH);
-    dg.addColorStop(0, "rgba(231,154,181," + (0.10*k).toFixed(4) + ")");
-    dg.addColorStop(0.55, "rgba(242,193,78," + (0.06*k).toFixed(4) + ")");
+    dg.addColorStop(0, "rgba(231,154,181," + (0.10*k*fxAlpha).toFixed(4) + ")");
+    dg.addColorStop(0.55, "rgba(242,193,78," + (0.06*k*fxAlpha).toFixed(4) + ")");
     dg.addColorStop(1, "rgba(242,193,78,0)");
     c.fillStyle = dg; c.fillRect(0,0,fxW,bandH);
   }
@@ -2092,6 +2178,9 @@ function fxLoop(ts){
   fxRAF = requestAnimationFrame(fxLoop);
   var dt = fxLast ? (ts - fxLast) : 16;
   fxLast = ts;
+  /* never integrate a negative or absurd step: a clock that jumps backwards would
+     run every animation in reverse, including the ambience dissolve. */
+  if(!(dt > 0)) dt = 16;
   if(dt > 200) dt = 200;
   fxFrames++;
   if(fxFrames > 20 && dt > 40 && fxCap > 12){      /* the machine is struggling: thin the weather */
@@ -2116,6 +2205,7 @@ function fxStart(){
   fxCanvas.style.display = "block"; fxOver.style.display = "block";
   if(!fxRunning){
     fxRunning = true; fxLast = 0; fxFrames = 0; fxMeasureT = 0;
+    fxMode = currentAmbience; fxNext = null; fxAlpha = 1; fxFadeDir = 0;
     fxMeasurePanel(); fxApplyCap(); fxSeed();
   }
   fxLast = 0;                                  /* don't integrate the gap since the last frame */
@@ -2158,7 +2248,7 @@ function newRun(confirmFirst){
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
   $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
-  nowText = ""; currentArc = 1; castSheets = {};
+  nowText = ""; nowTime = OPENING.time; currentArc = 1; castSheets = {};
   runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
   turnsSinceSync = 0;
   rehydDismissed = false; $("rehydbox").innerHTML = "";
@@ -2184,6 +2274,7 @@ function restoreFromBlob(s){
   $("hud-day").textContent = s.day||"1";
   $("hud-loc").textContent = s.loc||"LOWER VELDT MARKET";
   nowText = s.now||"";
+  nowTime = s.time||"";          /* pre-v2.6 saves simply have no clock yet */
   currentArc = s.arc||1;
   setAmbience(s.amb||"rain-neon");
   castSheets = s.cast||{};
