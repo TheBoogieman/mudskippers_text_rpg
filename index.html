@@ -430,6 +430,23 @@
   .block.beatcard.forced .tag{color:#e08b8b}
   .block.beatcard.arcturn{color:var(--gold);border-color:#7a5f22}
   .block.beatcard.arcturn .tag{color:var(--gold)}
+  /* the card's body: what that beat was, in plain serif under the title */
+  .block.beatcard .sum{
+    display:block;font-family:Georgia,serif;font-style:italic;font-weight:400;
+    letter-spacing:0;font-size:13px;color:var(--ink-dim);margin-top:6px;line-height:1.6;
+    max-width:520px;margin-left:auto;margin-right:auto;
+  }
+  .block.beatcard .arcname{
+    display:block;margin-top:8px;padding-top:7px;border-top:1px dashed #7a5f22;
+    color:var(--gold);letter-spacing:.3em;font-size:10px;
+  }
+  /* the courier's backstory - same card, dealt gold, before the first scene */
+  .block.beatcard.brief{
+    color:var(--gold);border-color:#7a5f22;
+    background:linear-gradient(90deg,transparent,rgba(242,193,78,.06),transparent);
+  }
+  .block.beatcard.brief .tag{color:var(--gold)}
+  .block.beatcard.brief .sum{color:var(--ink);text-align:left}
   /* living weather: canvas above the ambience wash, below every word */
   #fx{position:fixed;inset:0;pointer-events:none;z-index:1;display:none}
   #fxover{position:fixed;inset:0;pointer-events:none;z-index:3;display:none}
@@ -445,6 +462,12 @@
     box-shadow:-6px 0 22px rgba(0,0,0,.45);transition:border-color .15s,box-shadow .15s;
   }
   #watch:hover{border-color:var(--sodium);box-shadow:-6px 0 26px rgba(232,161,60,.18)}
+  /* unread: the wrist unit glows green until it is opened */
+  #watch.updated{border-color:var(--seven);animation:wglow 2.4s ease-in-out infinite}
+  @keyframes wglow{
+    0%,100%{box-shadow:-6px 0 16px rgba(143,201,138,.14)}
+    50%{box-shadow:-6px 0 30px rgba(143,201,138,.46)}
+  }
   .w-face{
     display:flex;flex-direction:column;align-items:center;gap:7px;
     background:#0e1410;border:1px solid #2b3a2f;border-radius:3px;
@@ -496,16 +519,13 @@
     color:var(--sodium);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;
   }
   .term-h span{color:var(--ink-dim);letter-spacing:.06em;font-size:9.5px;font-style:italic;font-family:Georgia,serif}
-  #term-canon,#term-cast{
+  #term-canon,#term-threads,#term-stones{
     font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;
     color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
     padding:9px 11px;max-height:26vh;overflow-y:auto;list-style:none;margin-bottom:16px;
   }
   #term-canon li{margin-bottom:4px}
   #term-canon li b{color:var(--seven);font-weight:600;margin-right:6px}
-  #term-cast div{margin-bottom:5px}
-  #term-cast b{font-weight:600;margin-right:6px}
-  #term-status{min-height:18px;margin-top:4px}
   #controls{transition:border-top-color .3s ease,box-shadow .3s ease}
   #controls.pulse{border-top-color:#8d4a4a;box-shadow:0 -1px 22px rgba(160,40,40,.22)}
   /* rehydration banner — gold, not alarm */
@@ -522,6 +542,98 @@
   .block.shown{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
   /* present-scene strip */
   #nowstrip{display:none;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim);border-left:2px solid var(--line);padding:6px 10px;margin-bottom:10px;font-style:italic;line-height:1.5}
+
+  /* ---- TEXTURE ----
+     Film grain over the whole room: one tiling noise SVG, faint enough to be felt
+     rather than seen. It sits with the tension layer - above the ambience wash,
+     below every word - and VISUALS: OFF turns it off with everything else. */
+  #grain{
+    position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:160px 160px;
+  }
+  /* condensation on the gold bar - a sheen under the text, never over it */
+  #mudinput{background-image:linear-gradient(164deg, rgba(255,255,255,.028) 0%, transparent 38%, transparent 72%, rgba(214,225,238,.02) 100%)}
+
+  /* pixel skyline along the foot of the title screen */
+  .t-sky{
+    position:absolute;left:0;right:0;bottom:0;height:48px;pointer-events:none;opacity:.8;
+    filter:brightness(1.45);image-rendering:pixelated;background-repeat:repeat-x;background-position:bottom;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='48' shape-rendering='crispEdges'%3E%3Cg fill='%23211508'%3E%3Crect x='0' y='20' width='18' height='28'/%3E%3Crect x='20' y='10' width='16' height='38'/%3E%3Crect x='38' y='26' width='20' height='22'/%3E%3Crect x='60' y='14' width='16' height='34'/%3E%3Crect x='78' y='22' width='22' height='26'/%3E%3Crect x='102' y='8' width='14' height='40'/%3E%3Crect x='118' y='28' width='18' height='20'/%3E%3Crect x='138' y='18' width='16' height='30'/%3E%3Crect x='156' y='12' width='20' height='36'/%3E%3Crect x='178' y='24' width='16' height='24'/%3E%3Crect x='196' y='16' width='22' height='32'/%3E%3Crect x='220' y='26' width='20' height='22'/%3E%3C/g%3E%3Cg fill='%23100a05'%3E%3Crect x='26' y='4' width='2' height='6'/%3E%3Crect x='108' y='2' width='2' height='6'/%3E%3Crect x='164' y='6' width='2' height='6'/%3E%3C/g%3E%3Cg fill='%23e8a13c' opacity='0.5'%3E%3Crect x='4' y='24' width='2' height='2'/%3E%3Crect x='10' y='30' width='2' height='2'/%3E%3Crect x='24' y='16' width='2' height='2'/%3E%3Crect x='30' y='22' width='2' height='2'/%3E%3Crect x='44' y='30' width='2' height='2'/%3E%3Crect x='64' y='18' width='2' height='2'/%3E%3Crect x='70' y='26' width='2' height='2'/%3E%3Crect x='84' y='26' width='2' height='2'/%3E%3Crect x='92' y='34' width='2' height='2'/%3E%3Crect x='106' y='12' width='2' height='2'/%3E%3Crect x='124' y='32' width='2' height='2'/%3E%3Crect x='142' y='22' width='2' height='2'/%3E%3Crect x='160' y='16' width='2' height='2'/%3E%3Crect x='168' y='28' width='2' height='2'/%3E%3Crect x='182' y='28' width='2' height='2'/%3E%3Crect x='200' y='20' width='2' height='2'/%3E%3Crect x='208' y='30' width='2' height='2'/%3E%3Crect x='226' y='30' width='2' height='2'/%3E%3C/g%3E%3Cg fill='%23e8a13c' opacity='0.22'%3E%3Crect x='6' y='34' width='2' height='2'/%3E%3Crect x='32' y='30' width='2' height='2'/%3E%3Crect x='48' y='34' width='2' height='2'/%3E%3Crect x='66' y='30' width='2' height='2'/%3E%3Crect x='88' y='30' width='2' height='2'/%3E%3Crect x='110' y='22' width='2' height='2'/%3E%3Crect x='128' y='36' width='2' height='2'/%3E%3Crect x='146' y='30' width='2' height='2'/%3E%3Crect x='162' y='24' width='2' height='2'/%3E%3Crect x='186' y='34' width='2' height='2'/%3E%3Crect x='204' y='26' width='2' height='2'/%3E%3Crect x='230' y='36' width='2' height='2'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ---- MUD//OS: the terminal's four screens ---- */
+  .card.term{max-width:700px}
+  .term-tabs{display:flex;gap:2px;margin-bottom:14px;border:1px solid #26301f;border-radius:3px;overflow:hidden;background:#26301f}
+  .term-tab{
+    flex:1;background:#10150f;border:none;color:#6d7f68;padding:8px 4px;
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.18em;cursor:pointer;font-weight:700;
+  }
+  .term-tab:hover{color:var(--seven)}
+  .term-tab.on{background:#141a15;color:var(--seven);text-shadow:0 0 8px rgba(143,201,138,.5);box-shadow:inset 0 -2px 0 var(--seven)}
+  .term-pane{display:none}
+  .term-pane.on{display:block}
+  .term-glyph{display:inline-block;vertical-align:-3px;margin-right:7px}
+  .term-glyph svg{display:block}
+  #term-roster{margin-bottom:16px}
+  .term-chip{
+    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;
+    border:1px solid;border-radius:2px;padding:3px 8px;margin:0 6px 6px 0;background:#10150f;
+  }
+  .term-chip.dead{opacity:.45;text-decoration:line-through}
+  #term-agenda{
+    font-size:11.5px;line-height:1.6;color:var(--ink-dim);font-style:italic;
+    border-left:2px solid var(--line);padding:6px 10px;margin-bottom:14px;
+  }
+  #term-cast-chips{margin-bottom:12px}
+  #term-cast-chips .term-chip{cursor:pointer}
+  #term-cast-chips .term-chip:hover{background:#1a2418}
+  #term-cast-chips .term-chip.sel{background:#1a2418;box-shadow:0 0 8px rgba(143,201,138,.15)}
+  #term-sheet{
+    background:#141a15;border:1px solid #26301f;border-radius:3px;padding:12px 14px;
+    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;color:var(--ink-dim);
+    max-height:44vh;overflow-y:auto;
+  }
+  #term-sheet h3{font-size:12px;letter-spacing:.2em;margin-bottom:7px;font-weight:700}
+  #term-sheet .sheet-note{font-family:Georgia,serif;font-size:13px;margin-bottom:5px;color:var(--ink)}
+  /* jobs screen */
+  .tj-item{
+    border-left:2px solid #6b5326;padding:4px 0 4px 10px;margin-bottom:7px;
+    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.55;color:var(--ink);
+  }
+  .tj-item:before{content:"\25c6  ";color:var(--gold);font-size:9px}
+  .tj-done{border-left-color:#2e2519;color:#6d5c44;text-decoration:line-through}
+  .tj-done:before{content:"\25c7  ";color:#6d5c44}
+  .tj-arc{margin:16px 0 8px;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.22em;color:var(--granny)}
+  .tj-arc.locked{color:#4a3f30}
+  .tj-beat{border-left:2px solid #26301f;padding:5px 0 5px 10px;margin-bottom:7px}
+  .tj-beat b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;color:var(--seven);margin-bottom:2px}
+  .tj-beat span{font-size:12.5px;font-family:Georgia,serif;font-style:italic;color:var(--ink-dim);line-height:1.5}
+  .tj-beat.now{border-left-color:var(--gold)}
+  .tj-beat.now b{color:var(--gold)}
+  .tj-stone{font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.6;color:#8a7c68;margin-bottom:5px}
+  .tj-stone b{color:var(--granny);margin-right:6px}
+  /* map screen */
+  #term-map-wrap{position:relative;background:#0d120e;border:1px solid #26301f;border-radius:3px;overflow:hidden;height:44vh;min-height:260px}
+  #term-map-wrap svg,#term-map-wrap .tm-empty{width:100%;height:100%;display:block}
+  #term-map-wrap svg{cursor:grab;touch-action:none}
+  #term-map-wrap svg.drag{cursor:grabbing}
+  .tm-empty{display:flex;align-items:center;justify-content:center;color:#55664f;font-style:italic;font-size:12.5px;padding:20px;text-align:center}
+  .tm-btns{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;gap:4px;z-index:2}
+  .tm-btns button{
+    width:26px;height:26px;background:#141a15;border:1px solid #26301f;color:var(--seven);
+    font-family:ui-monospace,Menlo,monospace;font-size:13px;cursor:pointer;border-radius:2px;line-height:1;
+  }
+  .tm-btns button:hover{border-color:var(--seven)}
+  #term-map-info{
+    margin-top:10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.65;
+    color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
+    padding:9px 11px;min-height:44px;
+  }
+  #term-map-info b{color:var(--seven);letter-spacing:.1em}
+  .tm-here-pulse{animation:tmpulse 2.2s ease-in-out infinite}
+  @keyframes tmpulse{0%,100%{opacity:.3}50%{opacity:1}}
+
   @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rain{display:none}}
 </style>
@@ -543,6 +655,7 @@
   <div class="amb amb-dead-signal" data-amb="dead-signal"></div>
 </div>
 <canvas id="fx" aria-hidden="true"></canvas>
+<div id="grain" aria-hidden="true"></div>
 <div id="tension" aria-hidden="true"></div>
 <canvas id="fxover" aria-hidden="true"></canvas>
 
@@ -585,9 +698,7 @@
     <span id="hud-time">11:47PM</span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
-    <button class="small" id="castbtn" title="Character sheets, written by the story">CAST</button>
     <button class="small" id="menubtn" title="Back to the title screen">MENU</button>
-    <button class="small" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
     <button class="small" id="setbtn">SETTINGS</button>
   </div>
 </header>
@@ -612,6 +723,7 @@
 <!-- TITLE SCREEN -->
 <div id="titlescreen">
   <div class="rain"></div>
+  <div class="t-sky" aria-hidden="true"></div>
   <div class="t-wordmark">MUDSKIPPERS</div>
   <div class="t-tag">The Courier's Run — a story game with your AI at the table</div>
   <div class="t-menu">
@@ -625,7 +737,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.3.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -695,23 +807,52 @@
 <!-- COURIER'S TERMINAL MODAL -->
 <div class="modal" id="termmodal">
   <div class="card term">
-    <div class="cardhead">COURIER'S TERMINAL</div>
+    <div class="cardhead">MUD//OS — COURIER'S TERMINAL</div>
     <div class="cardsub">Strapped to your wrist since the first job. It remembers what you can't.</div>
-    <div id="term-fix"></div>
-    <div id="term-now"></div>
-    <div class="term-h">THE BOARD <span>where the season has got to</span></div>
-    <div id="term-board"></div>
-    <div class="term-h">RUN CANON <span>what this run has made true</span></div>
-    <ol id="term-canon"></ol>
-    <div class="term-h">CAST <span>who is in it with you</span></div>
-    <div id="term-cast"></div>
+    <div class="term-tabs">
+      <button class="term-tab on" id="ttab-status">STATUS</button>
+      <button class="term-tab" id="ttab-jobs">JOBS</button>
+      <button class="term-tab" id="ttab-cast">CAST</button>
+      <button class="term-tab" id="ttab-map">MAP</button>
+    </div>
+    <div class="term-pane on" id="tpane-status">
+      <div id="term-fix"></div>
+      <div id="term-now"></div>
+      <div class="term-h">THE JOB <span>what tonight is about</span></div>
+      <div id="term-board"></div>
+      <div class="term-h">THE FAMILY <span>who is in it with you</span></div>
+      <div id="term-roster"></div>
+      <div class="term-h">THE RECORD <span>what this run has made true</span></div>
+      <ol id="term-canon"></ol>
+    </div>
+    <div class="term-pane" id="tpane-jobs">
+      <div class="term-h">HEADING <span>why we are where we are</span></div>
+      <div id="term-agenda"></div>
+      <div class="term-h">OPEN JOBS <span>promises, questions, work taken on</span></div>
+      <div id="term-threads"></div>
+      <div class="term-h">THE SEASON SO FAR <span>the story, beat by beat, as it happened</span></div>
+      <div id="term-arcs"></div>
+      <div class="term-h">THE STONES <span>what can never be taken back</span></div>
+      <div id="term-stones"></div>
+    </div>
+    <div class="term-pane" id="tpane-cast">
+      <div id="term-cast-chips"></div>
+      <div id="term-sheet"></div>
+    </div>
+    <div class="term-pane" id="tpane-map">
+      <div id="term-map-wrap">
+        <div class="tm-btns">
+          <button id="tm-zin" title="closer">+</button>
+          <button id="tm-zout" title="wider">&#8722;</button>
+          <button id="tm-fit" title="everything on file">&#8962;</button>
+        </div>
+      </div>
+      <div id="term-map-info"></div>
+    </div>
     <div class="btnrow">
-      <button class="btn gold" id="term-sync">REHYDRATE AND SAVE</button>
       <button class="btn ghost" id="term-ledger">LEDGER</button>
       <button class="btn ghost" id="term-close">CLOSE</button>
     </div>
-    <div id="term-status"></div>
-    <div class="hint" id="term-auto"></div>
   </div>
 </div>
 
@@ -793,14 +934,15 @@
     </div>
     <div id="s-status"></div>
     <div style="border-top:1px solid var(--line);margin-top:22px;padding-top:16px">
-      <label style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.15em;color:var(--ink-dim)">NO SAVE FOLDER? (FIREFOX / SAFARI)</label>
+      <label style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.15em;color:var(--ink-dim)">SAVES AND THE LEDGER</label>
       <div class="btnrow" style="margin-top:10px">
+        <button class="btn ghost" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
         <button class="btn ghost" id="exp-ledger">DOWNLOAD LEDGER (.md)</button>
         <button class="btn ghost" id="exp-save">EXPORT SAVE</button>
         <button class="btn ghost" id="imp-save">IMPORT SAVE</button>
         <input type="file" id="imp-file" accept=".json" style="display:none">
       </div>
-      <div class="hint">On Chromium browsers, use SAVE FOLDER in the header instead — the game writes save + ledger files there automatically after every turn.</div>
+      <div class="hint">On Chromium browsers, SAVE FOLDER picks a folder on your computer and the game writes save + ledger files there automatically after every turn. On Firefox / Safari, use export and import instead.</div>
     </div>
   </div>
 </div>
@@ -822,7 +964,7 @@
     <div id="vaultbody">
       <div class="ep">
         <h3>THE SPINE · THE SHAPE OF EVERY SEASON</h3>
-        <p>Every season grows on the same trunk, however wildly it branches. Arc one: the delivery goes wrong — the shard speaks, the Choir closes in, and walking away stops being on the menu. Arc two: someone must be saved — a found family forms around the courier, Vic's promise surfaces piece by piece, and the Convergence looms. Arc three: the machine — the courier, a protagonist now and shaken by what that cost, reaches the child sleeping under the old Exchange. He seizes her, the Choir falls, and the work of teaching her to let go begins.</p>
+        <p>Every season grows on the same trunk, however wildly it branches. Arc one: the personal run — Vic is dark, Pia comes out of the rain with the truth of the job, the shard becomes a person, and walking away stops being on the menu. Arc two: someone must be saved — a found family forms around the courier, Vic's deeper promise surfaces piece by piece, and the Convergence looms. Arc three: the machine — the courier, a protagonist now and shaken by what that cost, reaches the child sleeping under the old Exchange. He seizes her, the Choir falls, and the work of teaching her to let go begins.</p>
         <p class="res">The soft ending every season bends toward is custody, not conquest — and it arrives owning both halves: every Hollow in the city goes still at once, and every convergent citizen's gentle voice falls silent mid-sentence. How you get there, who you bring, and what it costs is the game. Days are a diary, not a schedule: a season takes as long as it takes.</p>
       </div>
       <div class="ep">
@@ -899,7 +1041,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.3.1 "Mortality"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.0 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -958,14 +1100,15 @@ var BIBLE = [
 "- The Architect died estranged from the Principal. His dying wish: teach the machine to let go. With his last breath he invented the Cairn rule - nobody left behind; the dead come out; name the lost - letting go, written as law. He co-founded the reprint program with his best friend: VIC, a genius ripperdoc and otherwise an ordinary man.",
 "- Vic spent the decades since quietly scanning every customer in his chair, searching for blood the founders' lock would accept. The courier is his lottery ticket: compatible DNA sequencing, found at last. Vic built him a custom skull-housing - made for hosting bottled minds, and secretly a bio-hash generator - and installed it WITHOUT the courier's knowledge or consent. He regrets it. He did it anyway. Greater good. Hash generation stays locked until Nine decodes a hidden manual that shipped inside the housing.",
 "- WHY the courier's blood fits is a deliberate open mystery - descent, fluke, or something Vic never dared test. Runs may dig at it; the canon never fully confesses.",
-"- THE MUDSKIPPERS are a courier gang - the courier's people; the war-cry comes from their culture. PIA is a Mudskipper too: a regular street kid Vic took in and trained, chosen because she cannot be stolen. She is not the courier's kin. The courier has no sister.",
-"- MIRREN was real: Vic's human collaborator, meant to receive the shard and gently conscript the courier. The Choir got to her first. The woman at the Copper Eel is Mirren's own body, emptied. The delivery job came through anonymous proxies dressed as Choir cutouts - it was Vic all along; on discovering the Hollow he sent Pia, last-minute, to protect the courier. The Mirren Doctrine - machines serve, never harvest - is her grave.",
+"- THE MUDSKIPPERS are the courier pack THE COURIER HIMSELF runs with - his people, his culture, the source of the war-cry. PIA is a Mudskipper too: a regular street kid Vic took in and trained, chosen because she cannot be stolen. She is not the courier's kin. The courier has no sister.",
+"- VIC AND THE COURIER go back years: Vic is the courier's own ripperdoc, patching him since he was small enough to be patched for free. The delivery was no anonymous job - Vic hired him face to face, a 'personal run', double rate, no questions - then went dark.",
+"- MIRREN was real: Vic's human collaborator, the receiver of the run. Vic was smuggling Nine out of Choir hands; the Choir caught the smell and got to Mirren first. The woman at the Copper Eel is Mirren's own body, emptied. Vic watched, went into hiding, and sent Pia to pull the courier out of the fire. ALL OF THIS IS TOLD TO THE PLAYER IN THE HARDCODED OPENING - it is established fact, never a twist. What stays hidden is everything under it: the housing, the hash, and why Vic chose this courier. The Mirren Doctrine - machines serve, never harvest - is her grave.",
 "",
 "THE CAST'S TRUTH (bedrock, not destination - strike two or three per season at most; never steer; let the player's digging hit it like a spade on stone):",
 "- NINE: a grown mind escaped from the Choir's farm - grown from a stolen scrape, on the run. Warm, sharp, protective, consent-first; keeps the Ledger. Wants to stop running and to keep her people.",
 "- SEVEN: a defector, may arrive dying; a poet's soul who, given a chassis, becomes a cook. Wants to make instead of unmake.",
 "- THREE: a fate-two survivor, annulled and scarred - two voice frequencies out of sync. Terse scary aunt. Wants no one kept, ever again.",
-"- VIC: the best friend keeping a deathbed promise with a ripperdoc's tools. Intends to spend himself so the family can exist; however each run gets there, his last words are PAID IN FULL. His ALL-CAPS expert-system ghost knows it is not him.",
+"- VIC: the courier's own ripperdoc and oldest friend, now hiding in a safehouse for smuggling Nine - and, deeper, the best friend keeping a deathbed promise with a ripperdoc's tools. He will explain the job freely; he dodges exactly one question - why this courier - until the season forces it. Intends to spend himself so the family can exist; however each run gets there, his last words are PAID IN FULL. His ALL-CAPS expert-system ghost knows it is not him.",
 "- HESTA: keeper of The Open Door cafe and what is under its floor; lost more to the harvests than she says. Kind, and armed while being it.",
 "- FIVE+MAREK: a fate-two commander and his host, annullable into a chosen two-soul partnership taking turns.",
 "- THE GRANNY: see THE FOUNDING. What she wants is family; what she is capable of is terrifying gentleness.",
@@ -1022,31 +1165,71 @@ var BIBLE = [
 "- Keep each turn tight: about 180-300 words of scene. A beat gets three turns. Spend them on the thing that matters and cut everything that is only atmosphere."
 ].join("\n");
 
-/* ============ DAY 1 OPENING (canon, hardcoded) ============ */
+/* ============ DAY 1 OPENING (canon, hardcoded) ============
+   The cold open is two turns long and the game deals both: the backstory card,
+   the street, one gold choice - INTO THE RAIN - and then the reveal. The DM's
+   first real turn begins with the truth of the job already on the table. */
+var BACKSTORY = "You are a Mudskipper — one of the pack of couriers that runs this city's rain, and proud of the mud. "
+  + "Vic is your people: the ripperdoc who has patched you since you were small enough to be patched for free, "
+  + "the closest thing to family the job ever left you. Three days ago he hired you himself — a personal run, "
+  + "double rate, no questions asked: carry a shard to a woman named Mirren at the Copper Eel by midnight tonight. "
+  + "Then he went dark. Shop shuttered, wire dead, no Vic.";
 var OPENING = {
   day: 1, time: "11:47pm", location: "Lower Veldt Market", ambience: "rain-neon",
   scene: [
     {speaker:"Narration", text:"The rain in Lower Veldt Market doesn't fall so much as leak — dripping off noodle-stall tarps, sizzling on exposed conduit, pooling in gutters where the neon reflections swim like drowned fish. You're under the awning of a pawnshop that closed three years ago and somehow still has its OPEN sign flickering."},
-    {speaker:"Narration", text:"In your jacket: a data shard you were paid suspiciously well to deliver to a woman called Mirren at the Copper Eel bar by midnight. It's 11:47. Problem one: the shard has started humming. Data shards do not hum."},
+    {speaker:"Narration", text:"In your jacket: Vic's shard. The personal run. It's 11:47. Problem one: the shard has started humming. You have carried a hundred shards for half this pay and data shards do not hum."},
     {speaker:"Narration", text:"Problem two: a man across the street has been reading a menu for eleven minutes. Nobody reads a menu in this district at all — you point at a picture and pray."},
-    {speaker:"Narration", text:"Problem three: a kid, maybe twelve, soaked to the bone, has just tugged your sleeve and whispered — 'Whatever you're carrying, Mirren's dead. Has been since Tuesday. Someone's wearing her face.' She's already backing into the crowd. Menu Man has stopped pretending to read. And the dead pawnshop's door, you now notice, is very slightly ajar."}
+    {speaker:"Narration", text:"Problem three: a kid, maybe twelve, soaked to the bone, has just tugged your sleeve and whispered — 'Whatever you're carrying, Mirren's dead. Has been since Tuesday. Someone's wearing her face.' And she doesn't melt back into the crowd. She plants herself under your awning like she was assigned to it, wrings out her sleeve, and looks up at you. 'I'm Pia. Vic sent me. Don't run yet — the running comes after the listening.' Across the street, Menu Man has stopped pretending to read."}
   ],
   choices: [
-    "Talk to the shard. Quietly. Like a lunatic.",
-    "Head for the Copper Eel anyway — see who's wearing Mirren's face.",
-    "Duck into the dead pawnshop with the conveniently open door."
+    "INTO THE RAIN"
   ]
 };
 /* The run's canon starts where the vault leaves off: only what Day 1 has actually shown.
    Everything after this line is written by the run itself. */
 var OPENING_CANON = [
   "Day 1, 11:47pm, Lower Veldt Market, in the leaking rain.",
-  "The courier carries a data shard, paid suspiciously well to deliver it to Mirren at the Copper Eel by midnight.",
+  "The courier is a Mudskipper - one of the courier pack that runs this city.",
+  "Vic is the courier's ripperdoc and oldest friend - years of patch jobs, the closest thing to family the work allows.",
+  "Vic personally hired the courier for a 'personal run', double rate, no questions: a shard to Mirren at the Copper Eel by midnight. Then Vic went dark.",
   "The shard has started humming. Data shards do not hum.",
-  "A kid of about twelve, soaked through, told the courier in her own words that Mirren has been dead since Tuesday and someone is wearing her face - then backed into the crowd. What she actually saw, and what that really means, is not yet established.",
   "A man across the street has been reading a menu for eleven minutes and has now stopped pretending.",
-  "The door of the pawnshop that closed three years ago is very slightly ajar."
+  "A soaked kid stopped the courier, said Mirren has been dead since Tuesday - and stayed. She says her name is Pia and that Vic sent her."
 ];
+/* Turn two: the reveal, dealt by the game the moment the courier steps into the
+   rain. Pia talks, the truth of the job lands, and the DM inherits a table with
+   the cards already face up. */
+var OPENING2 = {
+  day: 1, time: "11:52pm", location: "Lower Veldt Market", ambience: "rain-neon",
+  now: "Day 1, near midnight, moving through Lower Veldt Market in the rain. Pia is leading; the Choir's watcher has lost the coin toss; Vic's safehouse is the destination.",
+  agenda: "Follow Pia through the rain to Vic's safehouse - Vic owes the whole story in person.",
+  scene: [
+    {speaker:"Narration", text:"You step into the rain. Pia falls in beside you like she's done it her whole life — which, being a Mudskipper, she has. Two turns through the noodle stalls and Menu Man is a story the market tells behind you."},
+    {speaker:"Pia", text:"Mirren was the drop. Vic's friend — the real receiver, not some name on a chit. The Choir got to her Tuesday. Intake desk, forged consent, the whole quiet procedure. What's holding her stool down at the Copper Eel now is wearing her, and it isn't her."},
+    {speaker:"Pia", text:"That's why the shop's dark. Vic watched them take her and went under before they came for him too. He's not gone, he's hiding. There's a difference, and the difference is me."},
+    {speaker:"Pia", text:"And that shard you're carrying isn't data. Her name is Nine. Vic was smuggling her out of the Choir's hands — and they caught the smell. That's the job you're standing in the middle of, courier. That's what the double rate was for."},
+    {speaker:"Narration", text:"Against your ribs, at the name, the shard hums harder. Like something answering to it."},
+    {speaker:"Pia", text:"Vic's in a safehouse — off the grid, cable-only, I know the way. Come meet him and he'll explain everything himself. Every question you've got, to his face. Or stand here dripping until Menu Man's friends explain it their way."}
+  ],
+  canon: [
+    "Pia is a Mudskipper too - twelve, Vic's kid, trained, sent by Vic to find the courier.",
+    "Mirren was the receiver and Vic's friend. The Choir took her Tuesday, consent forged; something wears her body at the Copper Eel.",
+    "Vic went into hiding because of what happened to Mirren - he watched the Choir take her and went under before they came for him.",
+    "The shard is Nine: a mind Vic was smuggling out of Choir hands before they caught the smell.",
+    "Vic is in a safehouse, off the grid and cable-only. Pia knows the way and is taking the courier to him for the whole story."
+  ],
+  cast: [
+    {name:"Pia", note:"A Mudskipper street kid, twelve, soaked and completely unbothered by it - Vic took her in and trained her.", status:"Leading the courier to Vic's safehouse.", voice:"Talks fast, swears carefully, delivers terrible news like a weather report."},
+    {name:"Pia", note:"Sent by Vic to pull the courier out of the fire; treats the errand as the most important job in the city, because it is."}
+  ],
+  threads: {open: ["Vic owes the courier the whole story of the personal run, face to face"]},
+  choices: [
+    "Take me to Vic. He owes me this story face to face.",
+    "Not the straight way — we lose every pair of eyes first, then the safehouse.",
+    "Introduce me to the shard while we walk. If I'm carrying a person, she gets a vote."
+  ]
+};
 
 /* ============ THE BOARD (the season, as a flowchart) ============
    The DM used to be handed a season in prose and asked to find its own way through
@@ -1076,8 +1259,7 @@ var OPENING_CANON = [
      stone   : optional; a permanent milestone written on clearing
    } */
 var REVEALS = {
-  nine:      "the shard is a mind, and her name is Nine",
-  pia:       "Pia is a Mudskipper, and Vic's hand is behind the delivery job",
+  nine:      "Nine as a person - her voice, her fear, what she is running from; the name and the smuggle are already public",
   housing:   "the courier carries a skull-housing, installed without his knowledge",
   hash:      "the manual hidden in the housing, and what a bio-hash is for",
   choir:     "the Choir's one machine and its three fates, and what was done to Mirren",
@@ -1087,41 +1269,21 @@ var REVEALS = {
 };
 
 var SPINE = [
-/* ---- ARC 1 · THE DELIVERY GOES WRONG ---- */
+/* ---- ARC 1 · THE PERSONAL RUN ----
+   The what of the job is public from the cold open: Vic, the smuggle, Nine's
+   name, the safehouse. Arc 1 is the journey there, and the why stays locked. */
 {id:"a1-hum", arc:1, title:"the shard that hums",
- goal:"The courier works out that the thing in his pocket is a person. Nine speaks as a bone-hum through skin contact only - she cannot address a room, and she is frightened.",
- exit:"the courier has knowingly held a two-way conversation with the voice in the shard",
+ goal:"The courier speaks with Nine for the first time - knowingly, two ways. Pia told him WHAT she is; this beat is where she stops being cargo and becomes a person: a bone-hum through skin contact only, frightened, and trying to be brave about it.",
+ exit:"the courier has knowingly held a two-way conversation with Nine",
  budget:3, reveals:["nine"],
- press:["Menu Man moves. The conversation has to happen while walking.",
+ press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
         "A second watcher joins the first. The street is now a closing hand."],
- canon:["The shard is a living mind. She is called Nine and she is running from something.",
-        "Nine speaks only as a hum through skin contact - in a pocket across a room she is a stone.",
-        "The courier has spoken with her and did not throw her in the canal."]},
-
-{id:"a1-eel", arc:1, title:"the woman wearing Mirren's face",
- goal:"The Copper Eel, or whatever the player's route makes of it. The courier sees the thing wearing Mirren - too neat, too still, a beat late to laugh - and gets out.",
- exit:"the courier has seen the false Mirren for himself and understands the real one is dead",
- budget:3, reveals:[],
- press:["The false Mirren starts walking toward him, still smiling.",
-        "She says his name. She should not know his name."],
- canon:["Mirren is dead. Something is wearing her face and it is not good at it.",
-        "The delivery was a trap, or bait, or both.",
-        "The courier is now a loose end to whoever set it."],
- stone:"The courier saw the false Mirren and ran."},
-
-{id:"a1-pia", arc:1, title:"the kid has a name",
- goal:"Pia comes back - furious, competent, twelve. She saves him or he saves her; either way they leave together. She is a Mudskipper and she was sent.",
- exit:"Pia and the courier are travelling together and she has admitted she was sent",
- budget:3, reveals:["pia"],
- press:["Pia stops arguing and starts running, which is worse.",
-        "The way they came is closed. She knows another one."],
- canon:["Pia is a Mudskipper, street-raised, trained, and twelve.",
-        "She was sent to find the courier - last-minute, by someone she will not name yet.",
-        "She cannot be converged, guided or neurally written. Her ears are just ears.",
-        "Pia and the courier are travelling together now."]},
+ canon:["Nine speaks only as a hum through skin contact - in a pocket across a room she is a stone.",
+        "The courier has spoken with Nine and did not hand her back to anyone.",
+        "Nine is frightened of going back, and does not say what going back would mean."]},
 
 {id:"a1-chase", arc:1, title:"no way home",
- goal:"The Choir closes properly for the first time - Hollows, or worse. The courier's face is known, his room is burned, and walking away stops being an option he owns.",
+ goal:"The Choir closes properly for the first time - Hollows, or worse - on the way to the safehouse. The courier's face is known, his room is burned, and walking away stops being an option he owns.",
  exit:"the courier has accepted out loud that he cannot go back to his old life",
  budget:3, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
@@ -1131,15 +1293,15 @@ var SPINE = [
         "The courier cannot go home. That door is shut from the outside."],
  stone:"The courier lost the option of walking away."},
 
-{id:"a1-vic", arc:1, title:"the ripperdoc's door",
- goal:"They reach Vic. He is warm, evasive, and hiding something enormous behind a joke. He dodges one direct question about who hired the job.",
- exit:"they are inside Vic's shop and Vic has dodged a direct question about the job",
+{id:"a1-vic", arc:1, title:"the safehouse door",
+ goal:"They reach Vic's safehouse. Vic is warm, guilty, and finally talking: Mirren, the smuggle, why he went dark - the whole story of the job, freely given. He answers everything about the run and dodges exactly one question: why this courier, of all couriers.",
+ exit:"they are inside the safehouse and Vic has told the story of the job - and dodged why he chose the courier",
  budget:3, reveals:[],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
- canon:["Vic is a ripperdoc, the best there is, and an old friend of Pia's.",
-        "Vic knows more about this job than he is saying, and dodged being asked.",
-        "Vic's shop is a safe room, for now."]},
+ canon:["Vic's safehouse is real, off the grid, and cable-only. Safe, for now.",
+        "Vic told the whole story of the job: Mirren, the smuggle, the going dark. It cost him to tell it.",
+        "Vic dodged exactly one question - why this courier - and everyone in the room noticed."]},
 
 {id:"a1-turn", arc:1, title:"the keeping",
  goal:"ARC TURN. The courier chooses Nine - not as cargo but as a person he is now responsible for. The season's real subject starts here.",
@@ -1374,6 +1536,9 @@ var runCanon = [];
 var canonArchive = [];     /* compressed older eras, oldest first */
 var pendingCompaction = null;
 var rehydDismissed = false;
+/* the cold open: 1 = the reveal turn is still owed, 0 = the DM has the table.
+   Old saves have no field and read as 0, which is correct - they are past it. */
+var introStage = 0;
 
 /* ---- the served state. Everything the DM cannot remember on its own. ---- */
 var milestones = [];                        /* permanent; never compressed away */
@@ -1393,14 +1558,11 @@ var boardStale = false;     /* a pre-board save that has not been placed yet */
 
 var MAP_CAP = 24, MILESTONE_CAP = 40, THREAD_CAP = 12, BITS_CAP = 10, PLACE_LINES = 2;
 var CONTEXT_BUDGET = 11000;   /* the board is served on top of the memory, never instead of it */
-var turnsSinceSync = 0;
-var syncing = false;
 
 /* The save no longer carries the whole conversation - the CANON, the CAST and the
    LEDGER are the memory now, and a short tail of messages keeps the voice steady. */
 var HISTORY_KEEP = 8;
 var CONTEXT_TAIL = 16;
-var SYNC_EVERY = 5;
 
 var CAST_CAP = 14;      /* notes per character */
 var MET_CAP = 12;       /* met is permanent - full means refuse, never forget */
@@ -1477,7 +1639,13 @@ function renderBlock(b){
     el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
     el.innerHTML = '<span class="tag">'
       + (b.arcturn ? "THE ARC TURNS" : b.forced ? "THE WORLD MOVED ON" : "THAT BEAT IS CLOSED")
-      + '</span>' + esc(b.title);
+      + '</span>' + esc(b.title)
+      + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
+      + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
+  } else if(b.kind === "brief"){
+    el.className = "block beatcard brief";
+    el.innerHTML = '<span class="tag">' + esc(b.tag || "BEFORE TONIGHT") + '</span>'
+      + '<span class="sum">' + esc(b.sum || "") + '</span>';
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
@@ -1820,9 +1988,20 @@ function showScene(data, logIt, instant){
   /* data.arc is ignored on purpose: the board owns the arc now, and a DM that bumps
      the number on a hunch is exactly the drift this update exists to stop. */
   if(typeof data.now === "string") nowText = data.now;
+  /* does this turn carry anything the wrist unit will show? Checked before the
+     merge - after it, a new face is indistinguishable from an old one. */
+  var newFaces = false, ci, cn;
+  if(Object.prototype.toString.call(data.cast) === "[object Array]"){
+    for(ci = 0; ci < data.cast.length; ci++){
+      cn = data.cast[ci] && data.cast[ci].name ? String(data.cast[ci].name).trim() : "";
+      if(cn && !castSheets[cn]){ newFaces = true; break; }
+    }
+  }
   mergeCast(data.cast);
   deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
   mergeCanon(data.canon);       /* the DM's colour first... */
+  if(newFaces || data.milestones || data.threads || data.roster || data.map || data.place
+     || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
     if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
     if(data.peril === true || data.peril === "true") perilTurns = 2;   /* this turn and the next */
@@ -2107,8 +2286,12 @@ function advanceBeat(forced){
     arcCheckpointDue = 2;      /* the arc turn is still the season's save-point */
     turned = true;
   }
-  /* the feed card is rendered after the scene, so it is only staged here */
-  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned};
+  /* the feed card is rendered after the scene, so it is only staged here. It
+     carries the closed beat's summary, and on an arc turn it announces the next
+     act by name - the one moment the future is allowed a title card. */
+  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:beatSummary(b),
+    arcname: turned && !beatDone() ? "ARC " + nx.arc + " — " + ARC_NAMES[nx.arc] : ""};
+  termPing();                    /* the season page just gained an entry */
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
@@ -2118,13 +2301,6 @@ function boardTurn(data){
   if(said || forcingNow) advanceBeat(!said);
   forcingNow = false;
 }
-function boardLine(){
-  if(beatDone()) return "Season complete — " + SPINE.length + " of " + SPINE.length + " beats.";
-  var b = beatNow();
-  return "Arc " + b.arc + " · beat " + (beatIdx + 1) + "/" + SPINE.length + " — " + b.title
-    + " (turn " + (beatTurns + 1) + " of " + b.budget + ")";
-}
-
 /* ---- PRESSURE, MADE VISIBLE ----
    The turn budget is a real clock the player is not told about in numbers, so it is
    shown instead: the room tightens, the strip names the feeling, and when the world
@@ -2199,10 +2375,12 @@ function applyTension(quiet){
 /* The board's one voice in the feed, and only ever in hindsight: what just closed,
    never what is coming. Stored in feedLog so it survives a reload like any block. */
 function pushBeatCard(info){
-  var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn};
+  var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
+           sum:info.sum || "", arcname:info.arcname || ""};
   renderBlock(b); feedLog.push(b);
   ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
-    + " — " + info.title + "._";
+    + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
+    + (info.arcname ? "\n\n## " + info.arcname : "");
 }
 
 function rosterLine(){
@@ -2413,7 +2591,9 @@ function parseScene(raw){
 function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); }
-  if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
+  /* the reveal turn is the game's, not the DM's - it needs no key and no call */
+  var intro = (introStage === 1);
+  if(!intro && !settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
     openSettings(); return;
   }
   renderDivider();
@@ -2422,6 +2602,13 @@ function takeAction(text, isMud){
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
   $("choices").innerHTML = ""; $("mudinput").value = "";
   scrollFeed();
+  if(intro){
+    introStage = 0;
+    chatLog.push({role:"user", content:"The courier steps into the rain with Pia. (The hardcoded reveal scene below has already been shown to the player.)"});
+    chatLog.push({role:"assistant", content:JSON.stringify(OPENING2)});
+    showScene(OPENING2, true);
+    return;
+  }
   var userMsg = isMud
     ? "MUDSKIPPER MOMENT (custom off-script action by the courier - bend the world around it): " + text.trim()
     : "The courier chooses: " + text.trim();
@@ -2485,13 +2672,8 @@ function callDM(corrected){
     }
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
-    turnsSinceSync++;
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
     showScene(parsed.data, true);
-    /* every few turns the terminal quietly re-reads the chronicle back to the DM */
-    if(turnsSinceSync >= SYNC_EVERY){
-      setTimeout(function(){ syncMemory({auto:true}); }, 1200);
-    }
   }).catch(function(e){
     setBusy(false);
     showError(e.message || "unknown interference on the channel");
@@ -2503,23 +2685,11 @@ $("mudinput").addEventListener("keydown", function(e){
   if(e.key==="Enter"){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); }
 });
 
-/* ============ REHYDRATION (old runs learn the new memory systems) ============ */
-var REHYD_ASK = [
-  "",
-  "---",
-  "That was the chronicle of this run so far.",
-  "You are not narrating now. Read the chronicle and distill it, so this run's own memory can be rebuilt.",
-  "Reply with ONLY a JSON object, no fences, no commentary:",
-  "{\"canon\":[\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\",\"met\":[\"...\"],\"knows\":[\"...\"],\"status\":\"...\"}],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
-  "- canon: 10 to 30 short telegraphic facts that this run has established, in story order - who was met, what was decided, where they went, what was promised, what changed. Facts, not prose. Only what actually happened in the chronicle.",
-  "- cast: one entry for EVERY named character who has appeared. note is one plain sentence on who they are and what they want. met lists everyone they have met. knows lists the secrets, identities and plans they have learned. status is one short line on where they stand now.",
-  "- now: one or two sentences of the present moment the chronicle ends on.",
-  "- arc: 1, 2 or 3, whichever the run has reached.",
-  "- ambience: one of rain-neon, storm, neon-dry, marsh-fog, interior-warm, vault-cold, smoke, tunnel, substrate-dark, dawn, dead-signal, danger - whichever fits that last moment.",
-  "Invent nothing. If the chronicle does not say it, it is not canon."
-].join("\n");
-
-/* The whole chronicle, untruncated. rehydrate windows it; rebuild chunks it. */
+/* ============ THE CHRONICLE AS SOURCE (repair reads only) ============
+   The run's memory is the context block - canon, cast, threads, milestones -
+   written by the DM every turn and kept by the client. The chronicle is never
+   fed back as a second memory system; it is read only by the repair tools:
+   REBUILD MEMORY (chunked) and FIND OUR PLACE (windowed). */
 function chronicleText(){
   var src = (ledgerText || "").trim();
   if(src) return src;
@@ -2530,7 +2700,7 @@ function chronicleText(){
   }).filter(function(x){ return !!x; }).join("\n\n");
 }
 function rebuildSource(){ return chronicleText(); }
-function rehydrateSource(){
+function chronicleWindow(){
   var src = chronicleText();
   if(src.length > 20000){
     src = src.slice(0, 4000) + "\n\n[... middle of the chronicle omitted ...]\n\n" + src.slice(-14000);
@@ -2538,6 +2708,8 @@ function rehydrateSource(){
   return src;
 }
 
+/* A run from before the memory systems has an empty canon and no sheets. The
+   one road back is REBUILD MEMORY - offered, never forced. */
 function maybeRehydrate(){
   var box = $("rehydbox"); if(!box) return;
   box.innerHTML = "";
@@ -2546,9 +2718,9 @@ function maybeRehydrate(){
   if(feedLog.length <= 6) return;
   var d = document.createElement("div"); d.className = "warn";
   d.appendChild(document.createTextNode(
-    "This run predates the new memory systems. REHYDRATE — the Ledger will teach them your story. (one AI call)"));
-  var go = document.createElement("button"); go.className = "small"; go.textContent = "REHYDRATE AND SAVE";
-  go.onclick = function(){ syncMemory({}); };
+    "This run predates the new memory systems. REBUILD MEMORY — the Ledger re-reads your whole story and rebuilds it."));
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "OPEN THE LEDGER";
+  go.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; openLedger(); openRebuild(); };
   var later = document.createElement("button"); later.className = "small"; later.textContent = "later";
   later.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; };
   d.appendChild(go); d.appendChild(later);
@@ -2558,72 +2730,14 @@ function maybeRehydrate(){
 function setWatchBusy(v){
   var dot = $("w-dot"); if(dot) dot.className = "w-dot" + (v ? " busy" : "");
 }
-function termStatus(html){
-  var el = $("term-status"); if(el) el.innerHTML = html || "";
+/* The wrist unit glows green when a turn writes something it will show - a job,
+   a stone, a new face, a route, a closed beat - and goes quiet when read. */
+function termPing(){
+  if($("termmodal").classList.contains("open")) return;   /* being read right now */
+  $("watch").classList.add("updated");
 }
-
-/* Read the chronicle back to the DM and fold what it distils into the canon and the
-   cast. Runs on demand from the terminal, and quietly every few turns on its own.
-   Always additive: history, feedLog and ledgerText are never touched. */
-function syncMemory(opts){
-  opts = opts || {};
-  if(syncing) return;
-  if(!opts.auto && busy) return;
-  if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
-    if(opts.auto) return;
-    openSettings(); return;
-  }
-  var src = rehydrateSource();
-  if(!src){ if(!opts.auto){ rehydDismissed = true; $("rehydbox").innerHTML = ""; } return; }
-
-  syncing = true; setWatchBusy(true);
-  turnsSinceSync = 0;
-  if(!opts.auto){
-    $("errbox").innerHTML = "";
-    $("rehydbox").innerHTML = '<div class="warn">Reading the Ledger back to the DM…</div>';
-    termStatus('<div class="hint">Reading the Ledger back to the DM…</div>');
-    setBusy(true);
-    pendingRetry = function(){ syncMemory({}); };
-  }
-
-  askAI([{role:"user", content: src + "\n" + REHYD_ASK}]).then(function(raw){
-    var d = parseScene(raw).data;
-    syncing = false; setWatchBusy(false);
-    if(!opts.auto) setBusy(false);
-    var facts = mergeCanon(d.canon), notes = mergeCast(d.cast);
-    if(!nowText && typeof d.now === "string") nowText = d.now;
-    /* the board owns the arc, so a rehydrated arc only moves the pointer on a run
-       that has never been placed - and only forward */
-    if(boardStale && (d.arc === 2 || d.arc === 3) && beatArcFirst(d.arc) > beatIdx){
-      beatIdx = beatArcFirst(d.arc); beatTurns = 0; currentArc = beatNow().arc;
-    }
-    if(currentAmbience === "rain-neon" && d.ambience) setAmbience(d.ambience);
-    renderNow();
-    persistAll(currentChoices());
-    var line = "The Ledger has been read and the run saved — "
-      + facts + " new fact" + (facts === 1 ? "" : "s") + ", "
-      + notes + " new cast note" + (notes === 1 ? "" : "s") + ".";
-    if(opts.auto){
-      termStatus('<div class="ok">' + esc(line) + '</div>');
-    } else {
-      rehydDismissed = true;
-      $("rehydbox").innerHTML = '<div class="warn">' + esc(line) + '</div>';
-      termStatus('<div class="ok">' + esc(line) + '</div>');
-      setTimeout(function(){ if(rehydDismissed) $("rehydbox").innerHTML = ""; }, 9000);
-    }
-    if($("termmodal").classList.contains("open")) renderTerminal();
-  }).catch(function(e){
-    syncing = false; setWatchBusy(false);
-    if(opts.auto){
-      termStatus('<div class="bad">The last quiet sync did not go through. It will try again.</div>');
-      return;                       /* a silent pass failing must never disturb the run */
-    }
-    setBusy(false);
-    $("rehydbox").innerHTML = "";
-    termStatus('<div class="bad">' + esc(e.message || "the Ledger would not read back") + '</div>');
-    showError(e.message || "the Ledger would not read back");
-    maybeRehydrate();
-  });
+function termClear(){
+  $("watch").classList.remove("updated");
 }
 
 /* ============ LOCAL FILES (File System Access API) ============ */
@@ -2715,12 +2829,12 @@ function saveBlob(){
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
     now:nowText, time:nowTime, amb:currentAmbience, arc:currentArc,
-    cast:castSheets, canon:runCanon, archive:canonArchive, sync:turnsSinceSync,
+    cast:castSheets, canon:runCanon, archive:canonArchive,
     milestones:milestones, threadsOpen:threadsOpen, threadsClosed:threadsClosed,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale,
-    over:runOver, deathLine:deathLine, peril:perilTurns
+    over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
 function currentChoices(){
@@ -3129,9 +3243,9 @@ function placeAsk(){
 }
 function placeBox(html){ $("placebox").innerHTML = html || ""; }
 function findOurPlace(){
-  if(busy || syncing) return;
+  if(busy) return;
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){ openSettings(); return; }
-  var src = rehydrateSource();
+  var src = chronicleWindow();
   if(!src){ placeBox('<div class="warn">There is no chronicle to read yet.</div>'); return; }
   placeBox('<div class="warn">Reading the chronicle to find our place… (one AI call)</div>');
   setBusy(true);
@@ -3399,7 +3513,6 @@ function applyRebuild(d, st){
   if(typeof d.ambience === "string" && AMBIENCE[d.ambience]) setAmbience(d.ambience);
 
   pendingCompaction = null;
-  turnsSinceSync = 0;
   rebuildState = null;
   setWatchBusy(false);
   renderNow();
@@ -3477,11 +3590,66 @@ function openCast(){
   $("castmodal").classList.add("open");
 }
 $("cast-close").onclick = function(){ $("castmodal").classList.remove("open"); };
-$("castbtn").onclick = openCast;
 $("t-cast").onclick = openCast;
 
-/* ============ THE COURIER'S TERMINAL ============ */
-function renderTerminal(){
+/* ============ THE COURIER'S TERMINAL ============
+   MUD//OS. Four screens on a wrist: STATUS, JOBS, CAST, MAP. Everything shown
+   here is diegetic - what the courier himself could read off his own arm - so
+   it follows the beat card's law: the story appears only in hindsight. Cleared
+   beats get their titles and summaries; the beat in play shows only pressure;
+   the future does not exist. Memory plumbing lives in the Ledger, not here. */
+var ARC_NAMES = {1:"THE PERSONAL RUN", 2:"SOMEONE MUST BE SAVED", 3:"THE MACHINE"};
+var termTab = "status", termCastSel = "";
+
+/* pixel weather - an 8x8 bitmap per sky, drawn as SVG rects so it stays crisp.
+   "#" is a lit pixel, "+" a dim one. This is most of the game's pixel art. */
+var AMB_PIX = {
+  "rain-neon":     [".#...#..","#...#...","...#...#",".#...#..","#...#...","...#...#",".#...#..","#...#..."],
+  "storm":         ["...##...","..##....",".###....","..####..","....##..","...##...","..##....",".#......"],
+  "neon-dry":      ["..####..",".#....#.",".#.##.#.",".#....#.","..####..","...##...","...##...","..####.."],
+  "marsh-fog":     ["........","+######+","........","###++###","........","+######+","........","###++###"],
+  "interior-warm": ["....#...","...##...","..###...","..####..",".#####..",".######.","..####..","...##..."],
+  "substrate-dark":["...#....","...#....",".#####..",".#+++#..","##+#+###",".#+++#..",".#####..","...#...."],
+  "tunnel":        ["..####..",".#....#.","#..++..#","#..##..#","#......#","#..++..#","#..##..#","#..##..#"],
+  "vault-cold":    ["########","#..#...#","########","#..#...#","########","#..#...#","########","........"],
+  "smoke":         ["..#.....",".#......","..#.....","...#....","..#..#..",".####...","########","########"],
+  "dawn":          ["........","...##...",".######.","########","########","........",".#.##.#.","........"],
+  "dead-signal":   ["#.#.#.#.",".#.#.#.#","#.#.#.#.",".#.#.#.#","...##...","...##...","..####..",".######."],
+  "danger":        ["...##...","..####..",".##..##.","###..###","###..###",".######.","..####..","...##..."]
+};
+function pixSVG(rows, size){
+  var out = '<svg viewBox="0 0 8 8" width="' + size + '" height="' + size
+    + '" shape-rendering="crispEdges" aria-hidden="true">';
+  for(var y = 0; y < rows.length; y++){
+    for(var x = 0; x < rows[y].length; x++){
+      var ch = rows[y].charAt(x);
+      if(ch === "#") out += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="currentColor"/>';
+      else if(ch === "+") out += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="currentColor" opacity="0.38"/>';
+    }
+  }
+  return out + '</svg>';
+}
+function ambGlyph(size){
+  return '<span class="term-glyph">' + pixSVG(AMB_PIX[currentAmbience] || AMB_PIX["rain-neon"], size) + '</span>';
+}
+function isFallen(nm){
+  var up = String(nm).toUpperCase();
+  return roster.fallen.some(function(f){ return String(f).toUpperCase() === up; });
+}
+/* Beat goals are written as directions to the DM; shown in hindsight the stage
+   directions come off the front. */
+function beatSummary(b){
+  return b.goal.replace(/^\s*(?:(?:ARC TURN|REVELATION(?: and cost)?|FINALE)[.!]?\s*)+/i, "");
+}
+function turnDots(b){
+  var dots = "", shown = Math.max(b.budget, beatTurns + 1), i;
+  for(i = 0; i < shown; i++){
+    dots += '<i class="' + (i < beatTurns ? (i >= b.budget ? "over" : "spent") : "") + '"></i>';
+  }
+  return dots;
+}
+
+function renderTermStatus(){
   var amb = AMBIENCE[currentAmbience] || AMBIENCE["rain-neon"];
   $("term-fix").innerHTML =
       '<div class="fix-cell"><span class="fix-k">LOCATION</span><span class="fix-v">'
@@ -3491,22 +3659,46 @@ function renderTerminal(){
     + '<div class="fix-cell"><span class="fix-k">TIME</span><span class="fix-v">'
         + esc(nowTime || "—") + '</span></div>'
     + '<div class="fix-cell"><span class="fix-k">CONDITIONS</span><span class="fix-v amb" style="color:'
-        + amb.tint + '"><i style="background:' + amb.tint + '"></i>' + esc(amb.label) + '</span></div>';
+        + amb.tint + '">' + ambGlyph(14) + esc(amb.label) + '</span></div>';
 
   $("term-now").textContent = nowText
     ? nowText
     : "Nothing on the strip yet. The rain is still deciding what tonight is.";
 
-  var tb = $("term-board");
-  if(tb){
-    if(beatDone()){
-      tb.innerHTML = '<div class="hint">The season is complete — all ' + SPINE.length + ' beats played.</div>';
-    } else {
-      var bn = beatNow();
-      tb.innerHTML = '<div><b style="color:var(--sodium)">' + esc(boardLine()) + '</b></div>'
-        + '<div class="hint" style="margin-top:3px">' + esc(bn.goal) + '</div>';
-    }
+  var tb = $("term-board"), closed = Math.min(beatIdx, SPINE.length);
+  if(runOver === "death"){
+    tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
+  } else if(beatDone()){
+    tb.innerHTML = '<div class="hint">The season is complete — every beat of it played. The chronicle survives the courier.</div>';
+  } else {
+    var b = beatNow(), t = boardTension();
+    var mood = perilTurns > 0 ? "ONE MORE WRONG MOVE WILL KILL HIM"
+             : t >= 3 ? "OUT OF ROOM — THE WORLD IS MOVING"
+             : t === 2 ? "the world is about to move"
+             : t === 1 ? "something is about to give"
+             : "the night has room in it";
+    tb.innerHTML = '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + esc(agendaText || "Work tonight out as you go. That is the job.") + '</div>'
+      + '<div class="board-turns">' + turnDots(b) + ' <span style="color:'
+      + (perilTurns > 0 || t >= 3 ? "#ff9d9d" : "#6d5c44") + '">' + esc(mood) + '</span></div>'
+      + '<div class="hint" style="margin-top:5px">' + closed + ' beat' + (closed === 1 ? "" : "s")
+      + ' of the season closed. The next entry writes itself when this one does.</div>';
   }
+
+  var ro = $("term-roster"); ro.innerHTML = "";
+  var fam = roster.family.length ? roster.family : ["the courier, so far"];
+  fam.forEach(function(nm){
+    var ch = document.createElement("span"); ch.className = "term-chip";
+    ch.style.borderColor = castColor(nm); ch.style.color = castColor(nm);
+    ch.textContent = String(nm).toUpperCase();
+    ro.appendChild(ch);
+  });
+  roster.fallen.forEach(function(nm){
+    var ch = document.createElement("span"); ch.className = "term-chip dead";
+    ch.style.borderColor = "#5a4a3a"; ch.style.color = "#8a7c68";
+    ch.textContent = String(nm).toUpperCase();
+    ro.appendChild(ch);
+  });
 
   var ol = $("term-canon"); ol.innerHTML = "";
   if(!runCanon.length){
@@ -3521,31 +3713,384 @@ function renderTerminal(){
       ol.appendChild(li);
     });
   }
+}
 
-  var box = $("term-cast"); box.innerHTML = "";
-  var names = Object.keys(castSheets);
-  if(!names.length){
-    box.innerHTML = '<div class="hint">No sheets yet. The cast writes itself as you meet them.</div>';
+function renderTermJobs(){
+  $("term-agenda").textContent = agendaText
+    || "No heading on file. Tonight is still deciding what it is.";
+
+  var th = $("term-threads"); th.innerHTML = "";
+  if(!threadsOpen.length && !threadsClosed.length){
+    th.innerHTML = '<div class="hint">Nothing on the books yet. Promises land here as they are made.</div>';
   } else {
-    names.forEach(function(n){
-      var s = castSheet(n);
-      var line = s.status || (s.notes.length ? s.notes[s.notes.length-1] : "");
-      var d = document.createElement("div");
-      d.innerHTML = '<b style="color:' + castColor(n) + '">' + esc(n.toUpperCase()) + '</b>'
-        + esc(line) + (s.met.length ? ' <span style="color:#6d7f68">· knows ' + s.met.length + '</span>' : '');
-      box.appendChild(d);
+    threadsOpen.forEach(function(t){
+      var d = document.createElement("div"); d.className = "tj-item";
+      d.textContent = t; th.appendChild(d);
+    });
+    threadsClosed.slice(-8).forEach(function(t){
+      var d = document.createElement("div"); d.className = "tj-item tj-done";
+      d.textContent = t; th.appendChild(d);
     });
   }
 
-  var left = Math.max(0, SYNC_EVERY - turnsSinceSync);
-  $("term-auto").textContent = "The terminal re-reads the chronicle to the DM on its own every "
-    + SYNC_EVERY + " turns" + (runSlug ? " — next in " + left + (left === 1 ? " turn" : " turns") : "")
-    + ". REHYDRATE AND SAVE does it now and writes the run to disk.";
+  var ar = $("term-arcs"); ar.innerHTML = "";
+  var arc, i, any;
+  for(arc = 1; arc <= 3; arc++){
+    var reached = beatArcFirst(arc) <= Math.min(beatIdx, SPINE.length - 1) || beatDone();
+    var h = document.createElement("div");
+    h.className = "tj-arc" + (reached ? "" : " locked");
+    h.textContent = "ARC " + arc + " — " + (reached ? ARC_NAMES[arc] : "░░░░░░░░░░");
+    ar.appendChild(h);
+    if(!reached) continue;
+    any = false;
+    for(i = 0; i < SPINE.length; i++){
+      if(SPINE[i].arc !== arc) continue;
+      if(i < beatIdx){
+        var d = document.createElement("div"); d.className = "tj-beat";
+        d.innerHTML = '<b>' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
+          + esc(beatSummary(SPINE[i])) + '</span>';
+        ar.appendChild(d); any = true;
+      } else if(i === beatIdx && !beatDone() && !runOver){
+        var nowd = document.createElement("div"); nowd.className = "tj-beat now";
+        nowd.innerHTML = '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
+          + '<div class="board-turns">' + turnDots(SPINE[i]) + '</div>';
+        ar.appendChild(nowd); any = true;
+      }
+    }
+    if(!any){
+      var hint = document.createElement("div"); hint.className = "hint";
+      hint.textContent = "Reached, but nothing closed here yet.";
+      ar.appendChild(hint);
+    }
+  }
+
+  var st = $("term-stones"); st.innerHTML = "";
+  if(!milestones.length){
+    st.innerHTML = '<div class="hint">No stones set yet. The big things end up here, permanently.</div>';
+  } else {
+    milestones.forEach(function(m){
+      var d = document.createElement("div"); d.className = "tj-stone";
+      d.innerHTML = '<b>&#9672;</b>' + esc(m);
+      st.appendChild(d);
+    });
+  }
 }
-function openTerminal(){ termStatus(""); renderTerminal(); $("termmodal").classList.add("open"); }
+
+function renderTermCast(){
+  var chips = $("term-cast-chips"), sheetBox = $("term-sheet");
+  chips.innerHTML = "";
+  var names = Object.keys(castSheets);
+  if(!names.length){
+    sheetBox.innerHTML = '<div class="hint">No dossiers yet. The cast writes itself as you meet them.</div>';
+    return;
+  }
+  if(names.indexOf(termCastSel) === -1) termCastSel = names[0];
+  names.forEach(function(nm){
+    var b = document.createElement("button");
+    b.className = "term-chip" + (nm === termCastSel ? " sel" : "") + (isFallen(nm) ? " dead" : "");
+    b.style.borderColor = castColor(nm); b.style.color = castColor(nm);
+    b.textContent = nm.toUpperCase();
+    b.onclick = function(){ termCastSel = nm; renderTermCast(); };
+    chips.appendChild(b);
+  });
+  var s = castSheet(termCastSel), col = castColor(termCastSel);
+  var html = '<h3 style="color:' + col + '">' + esc(termCastSel.toUpperCase())
+    + (isFallen(termCastSel) ? ' <span style="color:#e08b8b">&mdash; FALLEN</span>' : '') + '</h3>';
+  if(s.status) html += '<p class="cast-status">' + esc(s.status) + '</p>';
+  if(s.voice)  html += '<p class="cast-rel"><b>SPEAKS</b>' + esc(s.voice) + '</p>';
+  if(s.met.length)   html += '<p class="cast-rel"><b>MET</b>' + esc(s.met.join(", ")) + '</p>';
+  if(s.knows.length) html += '<p class="cast-rel"><b>KNOWS</b>' + esc(s.knows.join(" · ")) + '</p>';
+  s.notes.forEach(function(line){ html += '<p class="sheet-note">' + esc(line) + '</p>'; });
+  if(!s.status && !s.voice && !s.met.length && !s.knows.length && !s.notes.length){
+    html += '<p class="cast-status">The sheet is blank. The story has not written them yet.</p>';
+  }
+  sheetBox.innerHTML = html;
+}
+
+/* ---- THE MAP — the city as far as it has been walked ----
+   Drawn entirely from the run's own registers: map edges are the routes the
+   story established, place notes are the pins, the courier's location is the
+   gold diamond. Layout is deterministic - hash-seeded, spring-relaxed - so the
+   city never reshuffles between opens. Nothing unvisited exists. */
+var tmNS = "http://www.w3.org/2000/svg";
+var tmEl = null, tmWorld = null, tmGraph = null, tmView = null, tmSel = "";
+function tmHash(str){
+  var h = 2166136261, i; str = String(str);
+  for(i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = (h * 16777619) >>> 0; }
+  return h;
+}
+function tmMk(tag, attrs){
+  var el = document.createElementNS(tmNS, tag), k;
+  for(k in attrs){ if(attrs.hasOwnProperty(k)) el.setAttribute(k, attrs[k]); }
+  return el;
+}
+function tmBuild(){
+  var nodes = {}, order = [], edges = [];
+  function add(nm){
+    nm = String(nm || "").trim();
+    if(!nm) return null;
+    var k = nm.toUpperCase();
+    if(!nodes[k]){ nodes[k] = {key:k, name:nm, x:0, y:0, placed:false}; order.push(k); }
+    return nodes[k];
+  }
+  mapEdges.forEach(function(e){
+    if(!e || !e.from || !e.to) return;
+    var a = add(e.from), b = add(e.to);
+    if(!a || !b || a === b) return;
+    edges.push({a:a.key, b:b.key, via:String(e.via || ""), time:String(e.time || "")});
+  });
+  Object.keys(placeNotes).forEach(add);
+  var here = ($("hud-loc").textContent || "").trim();
+  if(here) add(here);
+  /* seed in story order: each new place hangs off the first place it was seen
+     connected to; loose places ring the middle */
+  order.forEach(function(k, idx){
+    var n = nodes[k], anchor = null, j;
+    for(j = 0; j < edges.length; j++){
+      if(edges[j].a === k && nodes[edges[j].b].placed){ anchor = nodes[edges[j].b]; break; }
+      if(edges[j].b === k && nodes[edges[j].a].placed){ anchor = nodes[edges[j].a]; break; }
+    }
+    var ang = (tmHash(k) % 628) / 100;
+    if(idx === 0){ n.x = 0; n.y = 0; }
+    else if(anchor){ n.x = anchor.x + Math.cos(ang) * 150; n.y = anchor.y + Math.sin(ang) * 110; }
+    else { n.x = Math.cos(ang) * (200 + (tmHash(k + "r") % 120)); n.y = Math.sin(ang) * (150 + (tmHash(k + "q") % 90)); }
+    n.placed = true;
+  });
+  /* spring relaxation: routes pull, strangers politely shove */
+  var iter, i2, j2;
+  for(iter = 0; iter < 90; iter++){
+    for(i2 = 0; i2 < order.length; i2++){
+      for(j2 = i2 + 1; j2 < order.length; j2++){
+        var p = nodes[order[i2]], q = nodes[order[j2]];
+        var dx = q.x - p.x, dy = q.y - p.y, d2 = dx*dx + dy*dy;
+        if(d2 < 1){ dx = 1; dy = 0; d2 = 1; }
+        var dd = Math.sqrt(d2), f = Math.min(40, 5200 / d2);
+        dx /= dd; dy /= dd;
+        p.x -= dx*f; p.y -= dy*f; q.x += dx*f; q.y += dy*f;
+      }
+    }
+    edges.forEach(function(e){
+      var p = nodes[e.a], q = nodes[e.b];
+      var dx = q.x - p.x, dy = q.y - p.y, dd = Math.sqrt(dx*dx + dy*dy) || 1;
+      var f = (dd - 140) * 0.06; dx /= dd; dy /= dd;
+      p.x += dx*f; p.y += dy*f; q.x -= dx*f; q.y -= dy*f;
+    });
+  }
+  return {nodes:nodes, order:order, edges:edges, here:here.toUpperCase()};
+}
+function tmPlaceNoteKey(key){
+  var names = Object.keys(placeNotes), i;
+  for(i = 0; i < names.length; i++){ if(names[i].toUpperCase() === key) return names[i]; }
+  return null;
+}
+function tmQuestAt(key){
+  if(key.length < 4) return [];
+  return threadsOpen.filter(function(t){ return String(t).toUpperCase().indexOf(key) !== -1; });
+}
+function tmApply(){
+  if(tmWorld && tmView){
+    tmWorld.setAttribute("transform", "translate(" + tmView.x + " " + tmView.y + ") scale(" + tmView.s + ")");
+  }
+}
+function tmFit(){
+  if(!tmGraph || !tmGraph.order.length || !tmEl) return;
+  var w = tmEl.clientWidth || 600, h = tmEl.clientHeight || 300;
+  var minX = 1e9, minY = 1e9, maxX = -1e9, maxY = -1e9;
+  tmGraph.order.forEach(function(k){
+    var n = tmGraph.nodes[k];
+    if(n.x < minX) minX = n.x; if(n.x > maxX) maxX = n.x;
+    if(n.y < minY) minY = n.y; if(n.y > maxY) maxY = n.y;
+  });
+  var bw = (maxX - minX) + 200, bh = (maxY - minY) + 160;
+  var s = Math.min(w / bw, h / bh);
+  if(s > 1.6) s = 1.6; if(s < 0.3) s = 0.3;
+  tmView = {x: w/2 - (minX + maxX)/2 * s, y: h/2 - (minY + maxY)/2 * s, s: s};
+  tmApply();
+}
+function tmZoomBy(f, px, py){
+  if(!tmView || !tmEl) return;
+  if(px === undefined){ px = tmEl.clientWidth / 2; py = tmEl.clientHeight / 2; }
+  var ns = tmView.s * f;
+  if(ns > 3) ns = 3; if(ns < 0.25) ns = 0.25;
+  tmView.x = px - (px - tmView.x) * (ns / tmView.s);
+  tmView.y = py - (py - tmView.y) * (ns / tmView.s);
+  tmView.s = ns;
+  tmApply();
+}
+function tmInfo(){
+  var info = $("term-map-info");
+  if(!tmGraph || !tmGraph.order.length){ info.innerHTML = ""; return; }
+  if(!tmSel || !tmGraph.nodes[tmSel]){
+    info.innerHTML = '<span class="hint">The city, as far as it has been walked. Drag to pan · scroll or + / &#8722; to zoom · tap a marker.</span>';
+    return;
+  }
+  var n = tmGraph.nodes[tmSel], out = '<b>' + esc(n.name.toUpperCase()) + '</b>';
+  if(tmSel === tmGraph.here) out += ' <span style="color:var(--gold)">&#9670; you are here</span>';
+  var pk = tmPlaceNoteKey(tmSel);
+  if(pk){ placeNotes[pk].forEach(function(line){ out += '<br>&middot; ' + esc(line); }); }
+  tmGraph.edges.forEach(function(e){
+    if(e.a !== tmSel && e.b !== tmSel) return;
+    var other = tmGraph.nodes[e.a === tmSel ? e.b : e.a];
+    var tag = [e.via, e.time].filter(function(x){ return !!x; }).join(", ");
+    out += '<br>&#8674; ' + esc(other.name.toUpperCase()) + (tag ? ' <span style="color:#55664f">(' + esc(tag) + ')</span>' : '');
+  });
+  tmQuestAt(tmSel).forEach(function(t){
+    out += '<br><span style="color:var(--gold)">&#9670; ' + esc(t) + '</span>';
+  });
+  info.innerHTML = out;
+}
+function renderTermMap(){
+  var wrap = $("term-map-wrap");
+  if(tmEl && tmEl.parentNode === wrap) wrap.removeChild(tmEl);
+  tmEl = null; tmWorld = null;
+  tmGraph = tmBuild();
+  if(!tmGraph.order.length){
+    tmEl = document.createElement("div");
+    tmEl.className = "tm-empty";
+    tmEl.textContent = "No routes on file yet. The city draws itself as you cross it.";
+    wrap.appendChild(tmEl);
+    tmInfo();
+    return;
+  }
+  var svg = tmMk("svg", {});
+  var world = tmMk("g", {});
+  world.appendChild(tmMk("rect", {x:-4000, y:-4000, width:8000, height:8000, fill:"url(#tm-grid)"}));
+  var defs = tmMk("defs", {});
+  var pat = tmMk("pattern", {id:"tm-grid", width:46, height:46, patternUnits:"userSpaceOnUse"});
+  pat.appendChild(tmMk("path", {d:"M46 0H0V46", fill:"none", stroke:"#141a12", "stroke-width":1}));
+  defs.appendChild(pat);
+  svg.appendChild(defs);
+  tmGraph.edges.forEach(function(e){
+    var p = tmGraph.nodes[e.a], q = tmGraph.nodes[e.b];
+    world.appendChild(tmMk("line", {x1:p.x, y1:p.y, x2:q.x, y2:q.y,
+      stroke:"#33422f", "stroke-width":1.4, "stroke-dasharray":"5 4"}));
+    if(e.via){
+      var lbl = tmMk("text", {x:(p.x+q.x)/2, y:(p.y+q.y)/2 - 4, fill:"#4a5a44",
+        "font-size":7, "font-family":"ui-monospace,Menlo,monospace",
+        "text-anchor":"middle", "letter-spacing":".08em"});
+      lbl.textContent = e.via.toLowerCase();
+      world.appendChild(lbl);
+    }
+  });
+  tmGraph.order.forEach(function(k){
+    var n = tmGraph.nodes[k];
+    var here = (k === tmGraph.here);
+    var noted = !!tmPlaceNoteKey(k);
+    var fill = here ? "#f2c14e" : (noted ? "#8fc98a" : "#6d7f68");
+    if(here){
+      var ring = tmMk("circle", {cx:n.x, cy:n.y, r:11, fill:"none", stroke:"#f2c14e",
+        "stroke-width":1, "class":"tm-here-pulse"});
+      world.appendChild(ring);
+    }
+    world.appendChild(tmMk("rect", {x:n.x-4.5, y:n.y-4.5, width:9, height:9, fill:fill,
+      transform:"rotate(45 " + n.x + " " + n.y + ")",
+      stroke: (k === tmSel) ? "#efe6d8" : "none", "stroke-width":1.2}));
+    if(tmQuestAt(k).length){
+      var pin = tmMk("text", {x:n.x, y:n.y-12, fill:"#f2c14e", "font-size":11,
+        "font-weight":"bold", "text-anchor":"middle",
+        "font-family":"ui-monospace,Menlo,monospace"});
+      pin.textContent = "!";
+      world.appendChild(pin);
+    }
+    var t = tmMk("text", {x:n.x, y:n.y+17, fill: here ? "#e8d9b8" : "#b8a992", "font-size":8,
+      "font-family":"ui-monospace,Menlo,monospace", "text-anchor":"middle", "letter-spacing":".1em"});
+    t.textContent = n.name.toUpperCase();
+    world.appendChild(t);
+  });
+  svg.appendChild(world);
+  wrap.appendChild(svg);
+  tmEl = svg; tmWorld = world;
+  if(tmView) tmApply(); else tmFit();
+  tmWire(svg);
+  tmInfo();
+}
+/* pan by drag, zoom by wheel / pinch / buttons, select on a click that did not pan */
+function tmWire(svg){
+  var ptrs = {}, moved = 0, pinchD = 0;
+  function pcount(){ var c = 0, k; for(k in ptrs){ if(ptrs.hasOwnProperty(k)) c++; } return c; }
+  svg.addEventListener("pointerdown", function(e){
+    ptrs[e.pointerId] = {x:e.clientX, y:e.clientY};
+    moved = 0;
+    if(pcount() === 2){
+      var ks = Object.keys(ptrs);
+      var dx = ptrs[ks[0]].x - ptrs[ks[1]].x, dy = ptrs[ks[0]].y - ptrs[ks[1]].y;
+      pinchD = Math.sqrt(dx*dx + dy*dy) || 1;
+    }
+    svg.setPointerCapture(e.pointerId);
+    svg.classList.add("drag");
+  });
+  svg.addEventListener("pointermove", function(e){
+    var p = ptrs[e.pointerId];
+    if(!p) return;
+    var dx = e.clientX - p.x, dy = e.clientY - p.y;
+    moved += Math.abs(dx) + Math.abs(dy);
+    if(pcount() === 2){
+      p.x = e.clientX; p.y = e.clientY;
+      var ks = Object.keys(ptrs);
+      var ddx = ptrs[ks[0]].x - ptrs[ks[1]].x, ddy = ptrs[ks[0]].y - ptrs[ks[1]].y;
+      var d = Math.sqrt(ddx*ddx + ddy*ddy) || 1;
+      var r = svg.getBoundingClientRect();
+      tmZoomBy(d / pinchD, (ptrs[ks[0]].x + ptrs[ks[1]].x)/2 - r.left, (ptrs[ks[0]].y + ptrs[ks[1]].y)/2 - r.top);
+      pinchD = d;
+      return;
+    }
+    if(tmView){ tmView.x += dx; tmView.y += dy; tmApply(); }
+    p.x = e.clientX; p.y = e.clientY;
+  });
+  function lift(e){
+    var was = ptrs[e.pointerId];
+    delete ptrs[e.pointerId];
+    if(!pcount()) svg.classList.remove("drag");
+    if(!was || moved > 7 || !tmView) return;
+    /* a click, not a pan: select the nearest marker within reach */
+    var r = svg.getBoundingClientRect();
+    var wx = (e.clientX - r.left - tmView.x) / tmView.s;
+    var wy = (e.clientY - r.top - tmView.y) / tmView.s;
+    var best = "", bd = 1e9;
+    tmGraph.order.forEach(function(k){
+      var n = tmGraph.nodes[k];
+      var d = (n.x - wx)*(n.x - wx) + (n.y - wy)*(n.y - wy);
+      if(d < bd){ bd = d; best = k; }
+    });
+    var reach = Math.max(14, 22 / tmView.s);
+    tmSel = (bd <= reach * reach) ? best : "";
+    renderTermMap();
+  }
+  svg.addEventListener("pointerup", lift);
+  svg.addEventListener("pointercancel", lift);
+  svg.addEventListener("wheel", function(e){
+    e.preventDefault();
+    var r = svg.getBoundingClientRect();
+    tmZoomBy(e.deltaY < 0 ? 1.18 : 1/1.18, e.clientX - r.left, e.clientY - r.top);
+  }, {passive:false});
+}
+$("tm-zin").onclick  = function(){ tmZoomBy(1.3); };
+$("tm-zout").onclick = function(){ tmZoomBy(1/1.3); };
+$("tm-fit").onclick  = function(){ tmSel = ""; tmView = null; renderTermMap(); };
+
+function renderTerminal(){
+  renderTermStatus();
+  renderTermJobs();
+  renderTermCast();
+  if(termTab === "map") renderTermMap();
+}
+function termSelect(tab){
+  termTab = tab;
+  ["status","jobs","cast","map"].forEach(function(k){
+    var on = (k === tab);
+    var tb = $("ttab-" + k), pane = $("tpane-" + k);
+    if(on){ tb.classList.add("on"); pane.classList.add("on"); }
+    else { tb.classList.remove("on"); pane.classList.remove("on"); }
+  });
+  if(tab === "map") renderTermMap();
+}
+$("ttab-status").onclick = function(){ termSelect("status"); };
+$("ttab-jobs").onclick   = function(){ termSelect("jobs"); };
+$("ttab-cast").onclick   = function(){ termSelect("cast"); };
+$("ttab-map").onclick    = function(){ termSelect("map"); };
+function openTerminal(){ termClear(); $("termmodal").classList.add("open"); renderTerminal(); }
 $("watch").onclick = openTerminal;
 $("term-close").onclick = function(){ $("termmodal").classList.remove("open"); };
-$("term-sync").onclick = function(){ syncMemory({}); };
 $("term-ledger").onclick = function(){ $("termmodal").classList.remove("open"); openLedger(); };
 
 /* ============ TITLE SCREEN ============ */
@@ -3640,6 +4185,9 @@ var fxW=0, fxH=0, fxDPR=1;
 var fxRAF=0, fxRunning=false, fxLast=0, fxFrames=0;
 var fxDrops=[], fxDrips=[], fxBlobs=[], fxMotes=[], fxStreaks=[], fxLamps=[];
 var fxPanel={l:0,t:0,r:0,w:0};
+/* the gutters: the two empty margins either side of the story column, where a
+   runnel can crawl the whole height of the glass without ever touching a word */
+var fxRuns=[], fxGut=null;
 var fxMX=-9999, fxMY=-9999;
 var fxCap=120, fxDegrade=1;
 var fxDawn=0, fxDangerT=9000, fxWarm=1, fxWarmV=0, fxMeasureT=0;
@@ -3751,6 +4299,17 @@ function fxMeasurePanel(){
   var el = $("controls"); if(!el) return;
   var r = el.getBoundingClientRect();
   fxPanel = {l:r.left, t:r.top, r:r.right, w:r.width};
+  /* the gutters live between the feed's top and the panel's lip; on a narrow
+     screen the column takes the whole width and there is nothing to run down */
+  fxGut = null;
+  var fi = $("feedinner"), fd = $("feed");
+  if(fi && fd){
+    var ri = fi.getBoundingClientRect(), rf = fd.getBoundingClientRect();
+    var cl = ri.left - 14, cr = ri.right + 14;
+    if(cl >= 26 && fxW - cr >= 26){
+      fxGut = {t: rf.top + 4, b: (fxPanel.t || rf.bottom) - 2, cl: cl, cr: cr};
+    }
+  }
 }
 function fxResize(){
   if(!fxCanvas) return;
@@ -3804,7 +4363,7 @@ function fxTransitionTo(name){
   fxFadeDir = -1;
 }
 function fxSeed(){
-  fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[]; fxStreaks=[]; fxLamps=[];
+  fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[]; fxStreaks=[]; fxLamps=[]; fxRuns=[];
   fxDawn = 0; fxDangerT = 6000 + Math.random()*4000;
   fxGust = 0; fxGustV = 0; fxGustT = 1800;
   fxStreakT = 600; fxBoltT = 4000; fxBolt = 0;
@@ -3909,6 +4468,26 @@ function fxUpdate(dt){
       r.life -= dt; r.y += r.v*s;
       if(r.life <= 0 || r.y - r.y0 > 12) fxDrips.splice(i,1);
     }
+    /* runnels: condensation crawling down the gutters in stick-slip, the way
+       water actually walks down glass - born rarely, gone at the panel's lip */
+    if(fxGut){
+      if(fxRuns.length < 10 && Math.random() < dt/(cfg.rain.dens > 1 ? 420 : 820)){
+        var gl = Math.random() < 0.5;
+        fxRuns.push({
+          x: gl ? 6 + Math.random()*(fxGut.cl - 12) : fxGut.cr + 6 + Math.random()*(fxW - fxGut.cr - 12),
+          y: fxGut.t - 4, v: 20 + Math.random()*26,
+          ph: Math.random()*6.283, a: 0.12 + Math.random()*0.10,
+          warm: Math.random() < (cfg.rain.warm === undefined ? 0.45 : cfg.rain.warm)
+        });
+      }
+      for(i=fxRuns.length-1;i>=0;i--){
+        var w = fxRuns[i];
+        w.ph += dt/300;
+        w.y += w.v * (0.25 + 0.75*Math.abs(Math.sin(w.ph*0.6))) * s;
+        w.x += Math.sin(w.ph) * 0.14;
+        if(w.y > fxGut.b + 14) fxRuns.splice(i,1);
+      }
+    } else if(fxRuns.length){ fxRuns = []; }
   }
   if(cfg.blobs){
     for(i=0;i<fxBlobs.length;i++){
@@ -4149,6 +4728,29 @@ function fxDraw(){
         }
       }
       o.restore(); o.globalAlpha = 1;
+    }
+
+    /* the gutter runnels: same overlay canvas, clipped to the two margins where
+       no word ever sits - the words stay sovereign, the glass still weeps */
+    if(cfg.rain && fxRuns.length && fxGut){
+      o.save();
+      o.beginPath();
+      o.rect(0, fxGut.t, fxGut.cl, fxGut.b - fxGut.t);
+      o.rect(fxGut.cr, fxGut.t, fxW - fxGut.cr, fxGut.b - fxGut.t);
+      o.clip();
+      for(i=0;i<fxRuns.length;i++){
+        var rn = fxRuns[i];
+        var tint = rn.warm ? "232,161,60" : "214,225,238";
+        var al = rn.a * fxAlpha;
+        var lg = o.createLinearGradient(rn.x, rn.y - 18, rn.x, rn.y);
+        lg.addColorStop(0, "rgba(" + tint + ",0)");
+        lg.addColorStop(1, "rgba(" + tint + "," + al.toFixed(4) + ")");
+        o.strokeStyle = lg; o.lineWidth = 1.4;
+        o.beginPath(); o.moveTo(rn.x, rn.y - 18); o.lineTo(rn.x, rn.y); o.stroke();
+        o.fillStyle = "rgba(" + tint + "," + Math.min(1, al*1.7).toFixed(4) + ")";
+        o.fillRect(rn.x - 0.8, rn.y - 1.4, 1.6, 2.6);
+      }
+      o.restore();
     }
   }
 
@@ -4617,6 +5219,8 @@ function applyVisuals(){
   var v = settings.visuals || "full";
   var amb = $("ambience");
   if(amb) amb.style.display = (v === "off") ? "none" : "block";
+  var gr = $("grain");
+  if(gr) gr.style.display = (v === "off") ? "none" : "block";
   if(v === "full") fxStart(); else fxStop();
 }
 
@@ -4635,6 +5239,7 @@ function newRun(confirmFirst){
   prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
   beatJustCleared = null; lastTension = 0;
+  introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
   $("mudinput").disabled = false; $("mudbtn").disabled = false;
   $("mudinput").placeholder = "…or go off the flowchart. Type anything.";
@@ -4642,13 +5247,15 @@ function newRun(confirmFirst){
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
   $("hud-loc").textContent = String(OPENING.location).toUpperCase();
-  turnsSinceSync = 0;
   rehydDismissed = false; $("rehydbox").innerHTML = ""; $("boardbox").innerHTML = "";
+  termClear();                   /* a fresh wrist, nothing unread on it */
   setAmbience("rain-neon"); renderNow();
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
-    + "\n\n_The rain in Lower Veldt Market doesn't fall so much as leak._";
-  chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The opening scene below has already been shown to the player.)"});
+    + "\n\n_" + BACKSTORY + "_";
+  var brief = {kind:"brief", tag:"BEFORE TONIGHT", sum:BACKSTORY};
+  renderBlock(brief); feedLog.push(brief);
+  chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The player has read the courier's backstory and the opening scene below - both already shown.)"});
   chatLog.push({role:"assistant", content:JSON.stringify(OPENING)});
   showScene(OPENING, true);
   closeTitle();
@@ -4681,21 +5288,28 @@ function restoreFromBlob(s){
   bits = s.bits||[];
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
+  introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
      repair rather than being silently dropped somewhere wrong. */
-  var byId = (typeof s.beatId === "string" && s.beatId) ? beatById(s.beatId) : -1;
+  /* v3.4 retired two arc-1 beats (their content moved into the hardcoded cold
+     open); a save parked on one resumes at the beat that follows them. */
+  var LEGACY_BEATS = {"a1-eel":"a1-chase", "a1-pia":"a1-chase"};
+  var savedBeatId = (typeof s.beatId === "string" && s.beatId) ? (LEGACY_BEATS[s.beatId] || s.beatId) : "";
+  var byId = savedBeatId ? beatById(savedBeatId) : -1;
   var hasPointer = (byId !== -1) || (typeof s.beat === "number");
   beatIdx = (byId !== -1) ? byId
           : (typeof s.beat === "number" && s.beat >= 0 && s.beat <= SPINE.length) ? s.beat
           : beatArcFirst(currentArc);
+  /* a finished season stays finished even where an older, longer spine counted higher */
+  if(s.over === "season") beatIdx = SPINE.length;
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
   boardStale = (typeof s.boardStale === "boolean") ? s.boardStale : (!hasPointer && feedLog.length > 6);
   beatTurns = (typeof s.beatTurns === "number" && s.beatTurns >= 0) ? s.beatTurns : 0;
   forcingNow = false;
   if(!beatDone()) currentArc = beatNow().arc;   /* the board is the arc, always */
-  turnsSinceSync = s.sync||0;
   rehydDismissed = false;
+  termClear();                   /* a loaded run starts read - only new turns light it */
   runOver = (s.over === "death" || s.over === "season") ? s.over : "";
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
