@@ -430,6 +430,24 @@
     from{box-shadow:0 0 60px rgba(190,52,44,.7);filter:brightness(1.6)}
     to{box-shadow:0 0 22px rgba(190,52,44,.25);filter:brightness(1)}
   }
+  /* the same voice, but inviting: the green box that baits the trap */
+  .block.dmaside.invite{
+    color:var(--seven);border-color:#3f6b3a;background:#101f0e;
+    box-shadow:0 0 22px rgba(143,201,138,.22), inset 0 0 40px rgba(143,201,138,.06);
+    animation:dminvite .6s ease-out;
+  }
+  .block.dmaside.invite .tag{color:var(--seven)}
+  @keyframes dminvite{
+    from{box-shadow:0 0 60px rgba(143,201,138,.6);filter:brightness(1.5)}
+    to{box-shadow:0 0 22px rgba(143,201,138,.22);filter:brightness(1)}
+  }
+  /* the gold bar wears the lure only while the invitation stands */
+  #mudinput.lure{border-color:var(--seven);animation:lurepulse 2.2s ease-in-out infinite}
+  #mudinput.lure::placeholder{color:#6f8f68}
+  @keyframes lurepulse{
+    0%,100%{box-shadow:0 0 10px rgba(143,201,138,.18)}
+    50%{box-shadow:0 0 20px rgba(143,201,138,.45)}
+  }
   /* the beat card — the only place the board speaks in the feed, and only in hindsight */
   .block.beatcard{
     font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;
@@ -751,7 +769,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.3 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.4 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1055,7 +1073,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.3 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.4 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1553,6 +1571,9 @@ var rehydDismissed = false;
 /* the cold open: 1 = the reveal turn is still owed, 0 = the DM has the table.
    Old saves have no field and read as 0, which is correct - they are past it. */
 var introStage = 0;
+/* runs once, after the current scene finishes revealing - the cold open uses it
+   to deal the DM's green invitation only when the whole table is visible */
+var afterRevealHook = null;
 
 /* ---- the served state. Everything the DM cannot remember on its own. ---- */
 var milestones = [];                        /* permanent; never compressed away */
@@ -1661,7 +1682,7 @@ function renderBlock(b){
     el.innerHTML = '<span class="tag">' + esc(b.tag || "BEFORE TONIGHT") + '</span>'
       + '<span class="sum">' + esc(b.sum || "") + '</span>';
   } else if(b.kind === "dmaside"){
-    el.className = "block dmaside";
+    el.className = "block dmaside" + (b.invite ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
@@ -2050,6 +2071,7 @@ function showScene(data, logIt, instant){
       persistAll([]);
       return;
     }
+    if(afterRevealHook){ var hook = afterRevealHook; afterRevealHook = null; hook(); }
     showChoices(choices);
     if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
@@ -2627,7 +2649,24 @@ function openBar(){
    INTO THE RAIN remains the only door. Nothing here reaches the ledger, the
    chatLog, or the intro state - the DM never hears about it, and the story
    never happened. */
-var DM_ASIDE = "Oh, not so fast, buddy. I've set a whole table for you; taste the menu first before ordering fast food.";
+var DM_ASIDE = "We've got a wild one here. Good, we could use some improv. First, the rain. "
+  + "I've set up a whole table for you, you know, to sample the menu before ordering breakfast. "
+  + "And remember, being nice beats debating Bane in a story-driven game with fictional characters "
+  + "and going on racist tirades. The shard is watching Mr TOGAN.";
+var DM_INVITE = "Go on, try going off the rails. Type anything down there.";
+/* the lure: the gold bar glows green only while the invitation stands */
+function lureBar(on){
+  var mi = $("mudinput");
+  if(!mi) return;
+  if(on) mi.classList.add("lure"); else mi.classList.remove("lure");
+}
+/* dealt when the opening finishes revealing: the DM baits the trap out loud */
+function introInvite(){
+  var inv = {kind:"dmaside", invite:true, text:DM_INVITE};
+  renderBlock(inv); feedLog.push(inv);
+  lureBar(true);
+  scrollFeed();
+}
 function dmAside(attempt){
   $("mudinput").value = "";
   var pb = {kind:"player", text:attempt, mud:true, speaker:"__player"};
@@ -2654,6 +2693,7 @@ function takeAction(text, isMud){
   scrollFeed();
   if(intro){
     introStage = 0;
+    lureBar(false);               /* the invitation is spent; the bar goes back to gold */
     chatLog.push({role:"user", content:"The courier steps into the rain with Pia. (The hardcoded reveal scene below has already been shown to the player.)"});
     chatLog.push({role:"assistant", content:JSON.stringify(OPENING2)});
     showScene(OPENING2, true);
@@ -5307,6 +5347,7 @@ function newRun(confirmFirst){
   renderBlock(brief); feedLog.push(brief);
   chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The player has read the courier's backstory and the opening scene below - both already shown.)"});
   chatLog.push({role:"assistant", content:JSON.stringify(OPENING)});
+  afterRevealHook = introInvite;   /* the green box waits for the table to be fully laid */
   showScene(OPENING, true);
   closeTitle();
   applyVisuals();          /* rain in the very first scene */
@@ -5339,7 +5380,9 @@ function restoreFromBlob(s){
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
   introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
+  afterRevealHook = null;        /* a hook staged by an abandoned new run must not fire here */
   openBar();                     /* re-arms the bar after a dead run's lock; lockRun re-shuts ended runs below */
+  lureBar(introStage === 1);     /* the green lure follows the invitation, both ways */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
      repair rather than being silently dropped somewhere wrong. */
