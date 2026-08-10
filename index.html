@@ -737,7 +737,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1041,7 +1041,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.1 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.2 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2069,7 +2069,8 @@ function setBusy(v){
   if(v){ var pool=(LOADPOOLS[currentAmbience]||[]).concat(LOADPOOLS.generic); $("loading").textContent = pool[Math.floor(Math.random()*pool.length)]; }
   var els = document.querySelectorAll(".choice");
   for(var i=0;i<els.length;i++) els[i].disabled = v;
-  $("mudbtn").disabled = v || !!runOver; $("mudinput").disabled = v || !!runOver;
+  var shut = v || !!runOver || introStage === 1;
+  $("mudbtn").disabled = shut; $("mudinput").disabled = shut;
   if(v) scrollFeed();
 }
 
@@ -2599,9 +2600,22 @@ function parseScene(raw){
 }
 
 /* ============ GAME LOOP ============ */
+/* During the cold open the gold bar is shut: the only door is INTO THE RAIN.
+   Anything else fired mid-reveal would orphan the opening and deal the second
+   turn's choices into the first - the flowchart opens after the rain. */
+function introLock(on){
+  var mi = $("mudinput"), mb = $("mudbtn");
+  if(mi){
+    mi.disabled = on;
+    mi.placeholder = on ? "…the rain first. The flowchart after."
+                        : "…or go off the flowchart. Type anything.";
+  }
+  if(mb) mb.disabled = on;
+}
 function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
-  if(!runSlug){ newRun(false); }
+  if(introStage === 1 && isMud) return;    /* the bar is shut during the cold open, full stop */
+  if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
   /* the reveal turn is the game's, not the DM's - it needs no key and no call */
   var intro = (introStage === 1);
   if(!intro && !settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
@@ -2615,6 +2629,7 @@ function takeAction(text, isMud){
   scrollFeed();
   if(intro){
     introStage = 0;
+    introLock(false);
     chatLog.push({role:"user", content:"The courier steps into the rain with Pia. (The hardcoded reveal scene below has already been shown to the player.)"});
     chatLog.push({role:"assistant", content:JSON.stringify(OPENING2)});
     showScene(OPENING2, true);
@@ -5252,8 +5267,7 @@ function newRun(confirmFirst){
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
-  $("mudinput").disabled = false; $("mudbtn").disabled = false;
-  $("mudinput").placeholder = "…or go off the flowchart. Type anything.";
+  introLock(true);               /* the cold open owns the bar until the reveal is dealt */
   applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
@@ -5300,6 +5314,7 @@ function restoreFromBlob(s){
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
   introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
+  introLock(introStage === 1);   /* a run reloaded mid-open keeps the bar shut; lockRun overrides for ended runs */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
      repair rather than being silently dropped somewhere wrong. */
