@@ -435,7 +435,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.7.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.8.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -702,8 +702,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.7.0 "The Memory Update"
-   structured cast state · hierarchical canon compaction · rebuild memory
+   MUDSKIPPERS — THE COURIER'S RUN · v2.8.0 "The Memory Update"
+   the context block · roster, map, threads, places, bits · the dead stay dead
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -716,6 +716,7 @@ var BIBLE = [
 "- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
+"- The context block (roster, agenda, milestones, threads, map, places, cast state, bits, chronicle, canon, now) is ground truth for this run. It outranks your general lore and your own improvisation. Check every scene against it before writing.",
 "- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
@@ -765,13 +766,14 @@ var BIBLE = [
 "- Arc 1, the delivery gone wrong: the shard speaks, the Choir closes in, and the courier loses the option of walking away.",
 "- Arc 2, someone must be saved: a found family forms around him, Vic's promise surfaces piece by piece, and the Choir's Convergence looms.",
 "- Arc 3, the machine: the courier - a protagonist now, and shaken by what that cost - reaches the child sleeping under the old Exchange. The season's soft ending is custody, not conquest: he seizes the machine, the Choir falls, and the work of teaching her to let go begins. When the seizure lands: every Hollow in the city goes still at once, and every convergent citizen's gentle voice falls silent mid-sentence - the victory arrives owning both. Land it as a finale beat, a short epilogue in chronicle voice, and set the_end true. Open no new threads after the finale.",
+"- When an arc turns (1 to 2, 2 to 3), that turn must also restate the state of the world as milestones and threads: who the family is, what laws exist, what is owed and unresolved. This is the season's save-point.",
 "- PACE FOR A LONG SEASON: many sessions of real play; advance arcs only on earned turning points, never by clock; expand freely between opening and seizure and let divergences bend the route without breaking the spine.",
 "- BECOMING THE PROTAGONIST: shock and settling time. After ANY major revelation, at least one full beat of reaction and cost before plot moves. Fragments through interaction - overheard, half-admitted, dug up - never exposition dumps, never more than one revelation per scene.",
 "",
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"]}",
+"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"],\"cast\":[...],\"milestones\":[...],\"roster\":{...},\"threads\":{...},\"agenda\":\"...\",\"map\":{...},\"place\":{...},\"bits\":[...]}",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
 "- ambience: REQUIRED. Exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever matches the light and weather where the scene is ACTUALLY happening right now. rain-neon: streets, markets, rooftops, anywhere under open sky at night. marsh-fog: the marsh, the reeds, the safehouse approach, anywhere wet and low and green. interior-warm: any room with a light on and a door shut - kitchens, cafes, workshops, the table. substrate-dark: inside the machine, the deep dark, the vaults, cable-work, anywhere the substrate is close. dawn: first light and the hour after it, whatever the location. danger: overrides all of the above whenever the scene is actively hostile - Hollows closing, a gun out, a room that has stopped being safe. Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see.",
@@ -779,9 +781,16 @@ var BIBLE = [
 "- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
 "- canon: REQUIRED ON EVERY TURN. An array of 1 to 4 short telegraphic strings - durable facts newly established THIS TURN: a named character introduced, a decision made, a place entered, a law written, a promise given, a threat revealed, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Even a quiet turn establishes something - a mood set, a door left open, a question asked and dodged. Never send an empty array.",
 "- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
-"- cast entries may also carry three keys that track relationships rather than prose, in the same entry as the note: \"met\": an array of names this character has now met - people, minds, anyone named; \"knows\": an array of short fact-strings this character has learned - a secret, an identity, a plan, e.g. 'Nine is a mind in the shard'; \"status\": one short line giving their current situation, whereabouts or disposition, which replaces whatever their status was before.",
-"- Whenever a character meets someone for the first time, or learns a secret, identity, or plan, you MUST record it in that character's cast entry via met/knows. This is what prevents characters from forgetting each other. Never re-introduce characters who have met; never have a character act ignorant of something in their knows list.",
+"- cast entries may also carry \"met\" (names now met), \"knows\" (facts learned), \"status\" (one line, replaces), \"voice\" (one line - speech pattern, quirks, who they tease and how; set once, revise rarely). Whenever a character meets someone for the first time or learns a secret, identity, or plan, you MUST record it via met/knows. Never re-introduce characters who have met; never have a character act ignorant of their knows list.",
 "- compacted: only when the turn asks for MAINTENANCE - the requested compressed chronicle lines. Otherwise omit.",
+"- milestones: emit ONLY for major events - a death, someone joining or leaving the family, a law written, a betrayal, a great reveal, an arc turning. One short line each. Milestones are permanent and never compressed. Do not milestone small events; small details are allowed to fade, milestones are not.",
+"- roster: emit when membership or mortality changes: {\"family\":[names],\"fallen\":[names]}. The fallen never speak, act, or appear alive again; any appearance must be explicitly framed as memory, recording, or substrate-echo.",
+"- threads: {\"open\":[...],\"closed\":[...]}. Promises made, questions raised, and jobs taken OPEN a thread; resolving one CLOSES it using its original wording. Keep threads few and real.",
+"- agenda: one plain line - why the group is where it is and what is mid-flight. Emit only when it genuinely changes. Every new scene must open inside the agenda, never beside it.",
+"- map: when travel establishes a route, emit {\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"} once. Never teleport the group. Travel follows established routes; a newly discovered place gets exactly one connection to the known map. If a player's action implies impossible geography, bend gently toward the map without comment.",
+"- place: {\"name\":\"...\",\"note\":\"...\"} when a location's state meaningfully changes - who holds it, what changed there, unfinished business. When the group returns anywhere, your first beat reflects its recorded state before anything new happens.",
+"- bits: short strings - running jokes and callbacks the table has established. Reuse them; they are load-bearing.",
+"- When the group leaves a location, include one canon line stating what concluded there. ",
 "- day: REQUIRED. Follow the fiction - advance it only when a night actually passes in-scene, and when it does, advance it in the same turn the sun comes up rather than silently later. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
@@ -866,6 +875,19 @@ var runCanon = [];
 var canonArchive = [];     /* compressed older eras, oldest first */
 var pendingCompaction = null;
 var rehydDismissed = false;
+
+/* ---- the served state. Everything the DM cannot remember on its own. ---- */
+var milestones = [];                        /* permanent; never compressed away */
+var threadsOpen = [], threadsClosed = [];   /* closed kept only to stop reopening */
+var agendaText = "";
+var mapEdges = [];                          /* {from,to,via,time}, undirected */
+var placeNotes = {};                        /* name -> up to 2 lines of state */
+var roster = {family:[], fallen:[]};        /* fallen is permanent */
+var bits = [];                              /* running jokes; load-bearing */
+var prevLocation = "", lastRoute = "";      /* client-maintained breadcrumb */
+
+var MAP_CAP = 24, MILESTONE_CAP = 40, THREAD_CAP = 12, BITS_CAP = 10, PLACE_LINES = 2;
+var CONTEXT_BUDGET = 10000;
 var turnsSinceSync = 0;
 var syncing = false;
 
@@ -892,7 +914,8 @@ function normalizeCast(raw){
       notes:  Object.prototype.toString.call(s.notes) === "[object Array]" ? s.notes.slice() : [],
       met:    Object.prototype.toString.call(s.met)   === "[object Array]" ? s.met.slice()   : [],
       knows:  Object.prototype.toString.call(s.knows) === "[object Array]" ? s.knows.slice() : [],
-      status: typeof s.status === "string" ? s.status : ""
+      status: typeof s.status === "string" ? s.status : "",
+      voice:  typeof s.voice === "string" ? s.voice : ""
     };
   });
   return out;
@@ -901,7 +924,7 @@ function castSheet(nm){
   var s = castSheets[nm];
   if(!s || Object.prototype.toString.call(s) === "[object Array]" || typeof s !== "object"){
     castSheets = normalizeCast(castSheets);
-    if(!castSheets[nm]) castSheets[nm] = {notes:[], met:[], knows:[], status:""};
+    if(!castSheets[nm]) castSheets[nm] = {notes:[], met:[], knows:[], status:"", voice:""};
     return castSheets[nm];
   }
   return s;
@@ -1051,8 +1074,120 @@ function mergeCast(list){
     added += mergeList(sheet.met, u.met, MET_CAP, false);
     added += mergeList(sheet.knows, u.knows, KNOWS_CAP, true);
     if(typeof u.status === "string" && u.status.trim()) sheet.status = u.status.trim();
+    if(typeof u.voice === "string" && u.voice.trim()) sheet.voice = u.voice.trim();
   });
   return added;
+}
+/* ---- the registers the DM writes to, each with its own permanence rule ---- */
+function strList(v){
+  var out = [];
+  if(Object.prototype.toString.call(v) !== "[object Array]") return out;
+  v.forEach(function(x){ if(typeof x === "string" && x.trim()) out.push(x.trim()); });
+  return out;
+}
+function mergeMilestones(list){
+  var n = 0;
+  strList(list).forEach(function(m){
+    var t = m.replace(/^\d+\.\s*/, "");
+    if(milestones.indexOf(t) === -1){ milestones.push(t); n++; }
+  });
+  return n;                        /* deliberately uncapped here - see maintenance */
+}
+function mergeRoster(r){
+  if(!r || typeof r !== "object") return 0;
+  var n = 0;
+  strList(r.family).forEach(function(name){
+    if(roster.fallen.indexOf(name) !== -1) return;      /* the dead do not rejoin */
+    if(roster.family.indexOf(name) === -1){ roster.family.push(name); n++; }
+  });
+  strList(r.fallen).forEach(function(name){
+    if(roster.fallen.indexOf(name) === -1){ roster.fallen.push(name); n++; }
+    var i = roster.family.indexOf(name);
+    if(i !== -1) roster.family.splice(i, 1);
+  });
+  return n;
+}
+function mergeThreads(t){
+  if(!t || typeof t !== "object") return 0;
+  var n = 0;
+  strList(t.open).forEach(function(x){
+    if(threadsClosed.indexOf(x) !== -1) return;         /* do not reopen the settled */
+    if(threadsOpen.indexOf(x) === -1){
+      threadsOpen.push(x); n++;
+      if(threadsOpen.length > THREAD_CAP) threadsOpen.shift();
+    }
+  });
+  strList(t.closed).forEach(function(x){
+    var i = threadsOpen.indexOf(x);
+    if(i !== -1){ threadsOpen.splice(i, 1); n++; }
+    if(threadsClosed.indexOf(x) === -1) threadsClosed.push(x);
+  });
+  return n;
+}
+/* Place names arrive in the DM's casing but the display uppercases them, so every
+   comparison has to be case-insensitive or routes silently fail to match. */
+function samePlace(a, b){ return String(a||"").toUpperCase() === String(b||"").toUpperCase(); }
+function sameEdge(a, b){
+  return (samePlace(a.from, b.from) && samePlace(a.to, b.to))
+      || (samePlace(a.from, b.to)   && samePlace(a.to, b.from));
+}
+function mergeMap(list){
+  var incoming = Object.prototype.toString.call(list) === "[object Array]" ? list : (list ? [list] : []);
+  var n = 0;
+  incoming.forEach(function(e){
+    if(!e || typeof e !== "object") return;
+    var edge = {
+      from: String(e.from||"").trim(), to: String(e.to||"").trim(),
+      via: String(e.via||"").trim(),  time: String(e.time||"").trim()
+    };
+    if(!edge.from || !edge.to || samePlace(edge.from, edge.to)) return;
+    var i;
+    for(i=0;i<mapEdges.length;i++){
+      if(sameEdge(mapEdges[i], edge)){                  /* same pair: enrich, don't duplicate */
+        if(edge.via)  mapEdges[i].via  = edge.via;
+        if(edge.time) mapEdges[i].time = edge.time;
+        return;
+      }
+    }
+    if(mapEdges.length >= MAP_CAP){
+      if(window.console && console.warn) console.warn("[mudskippers] map is full at " + MAP_CAP + " routes; not adding " + edge.from + "—" + edge.to);
+      return;                                            /* never evict a route silently */
+    }
+    mapEdges.push(edge); n++;
+  });
+  return n;
+}
+function mergePlace(p){
+  var incoming = Object.prototype.toString.call(p) === "[object Array]" ? p : (p ? [p] : []);
+  var n = 0;
+  incoming.forEach(function(x){
+    if(!x || typeof x !== "object") return;
+    var nm = String(x.name||"").trim(), note = String(x.note||"").trim();
+    if(!nm || !note) return;
+    var lines = placeNotes[nm] || (placeNotes[nm] = []);
+    if(lines.indexOf(note) !== -1) return;
+    lines.push(note); n++;
+    if(lines.length > PLACE_LINES) lines.shift();
+  });
+  return n;
+}
+function mergeBits(list){
+  var n = 0;
+  strList(list).forEach(function(b){
+    if(bits.indexOf(b) !== -1) return;
+    bits.push(b); n++;
+    if(bits.length > BITS_CAP) bits.shift();
+  });
+  return n;
+}
+/* The group only ever arrives from somewhere. Kept client-side so it cannot drift. */
+function noteMove(from, to){
+  if(!from || !to || samePlace(from, to)) return;
+  prevLocation = from;
+  lastRoute = "";
+  for(var i=0;i<mapEdges.length;i++){
+    if(sameEdge(mapEdges[i], {from:from, to:to})){ lastRoute = mapEdges[i].via; break; }
+  }
 }
 function mergeCanon(list){
   if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
@@ -1075,7 +1210,20 @@ function showScene(data, logIt, instant){
   });
   if(data.day){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
   if(typeof data.time === "string" && data.time.trim()) nowTime = data.time.trim();
-  if(data.location) $("hud-loc").textContent = String(data.location).toUpperCase();
+  /* the map has to know about the move before we can name the route we took */
+  mergeMap(data.map);
+  if(data.location){
+    var was = $("hud-loc").textContent;
+    var now = String(data.location).toUpperCase();
+    if(was && was !== now) noteMove(was, now);
+    $("hud-loc").textContent = now;
+  }
+  mergeMilestones(data.milestones);
+  mergeRoster(data.roster);
+  mergeThreads(data.threads);
+  mergePlace(data.place);
+  mergeBits(data.bits);
+  if(typeof data.agenda === "string" && data.agenda.trim()) agendaText = data.agenda.trim();
   if(data.ambience) setAmbience(data.ambience);
   if(data.arc) currentArc = data.arc;
   if(typeof data.now === "string") nowText = data.now;
@@ -1187,14 +1335,20 @@ function compactionRequest(){
   }
   if(canonArchive.length > ARCHIVE_AT){
     var m = Math.min(ARCHIVE_TAKE, canonArchive.length);
-    if(m >= 2) return {kind:"archive", m:m, n:m, to:ARCHIVE_TO, lines:canonArchive.slice(0, m)};
+    if(m >= 2) return {kind:"archive", n:m, to:ARCHIVE_TO, lines:canonArchive.slice(0, m)};
+  }
+  /* Milestones are never dropped. Past the cap they are condensed instead. */
+  if(milestones.length > MILESTONE_CAP){
+    var k = Math.min(20, milestones.length);
+    if(k >= 2) return {kind:"milestones", n:k, to:8, lines:milestones.slice(0, k)};
   }
   return null;
 }
 function compactionInstruction(req){
+  var what = req.kind === "archive" ? "chronicle lines"
+           : req.kind === "milestones" ? "major events" : "canon facts";
   return "(MAINTENANCE, in addition to your normal reply fields: compress the following older "
-    + (req.kind === "archive" ? "chronicle lines" : "canon facts")
-    + " into at most " + req.to + " numbered chronicle lines preserving every name, relationship, "
+    + what + " into at most " + req.to + " numbered chronicle lines preserving every name, relationship, "
     + "promise, and open thread. Return them in a top-level field \"compacted\": [ ... ]. Facts: "
     + numbered(req.lines) + ")";
 }
@@ -1212,6 +1366,8 @@ function harvestCompaction(data){
   if(req.kind === "canon"){
     canonArchive = canonArchive.concat(lines);
     runCanon = runCanon.slice(req.n);
+  } else if(req.kind === "milestones"){
+    milestones = lines.concat(milestones.slice(req.n));   /* condensed, never discarded */
   } else {
     canonArchive = lines.concat(canonArchive.slice(req.n));
   }
@@ -1220,44 +1376,103 @@ function harvestCompaction(data){
 }
 /* One line per character. Over budget we drop `recent` first, then thin `knows`;
    `met` is the last thing to go because it is what stops re-introductions. */
-function castStateBlock(){
+/* opts: {recent, knows (0 = all, -1 = none), status, voice}. `met` is unconditional. */
+function castStateBlock(opts){
+  var o = opts || {recent:true, knows:0, status:true, voice:true};
   var names = Object.keys(castSheets);
   if(!names.length) return "no sheets yet - open one for every named character in the scene";
-  function render(withRecent, knowsLimit){
-    return names.map(function(nm){
-      var s = castSheet(nm), bits = [];
-      if(s.met.length) bits.push("met: " + s.met.join(", "));
-      var k = knowsLimit ? s.knows.slice(-knowsLimit) : s.knows;
-      if(k.length) bits.push("knows: " + k.join("; "));
-      if(s.status) bits.push("status: " + s.status);
-      if(withRecent && s.notes.length) bits.push("recent: " + s.notes.slice(-2).join("; "));
-      return nm + " - " + (bits.length ? bits.join(" | ") : "no detail yet");
-    }).join("\n");
-  }
-  var out = render(true, 0);
-  if(out.length <= CAST_STATE_BUDGET) return out;
-  out = render(false, 0);
-  if(out.length <= CAST_STATE_BUDGET) return out;
-  out = render(false, 5);
-  if(out.length <= CAST_STATE_BUDGET) return out;
-  out = names.map(function(nm){
-    var s = castSheet(nm);
-    return nm + (s.met.length ? " - met: " + s.met.join(", ") : "");
+  return names.map(function(nm){
+    var s = castSheet(nm), parts = [];
+    if(o.voice !== false && s.voice) parts.push("voice: " + s.voice);
+    if(s.met.length) parts.push("met: " + s.met.join(", "));
+    var k = o.knows === -1 ? [] : (o.knows > 0 ? s.knows.slice(-o.knows) : s.knows);
+    if(k.length) parts.push("knows: " + k.join("; "));
+    if(o.status !== false && s.status) parts.push("status: " + s.status);
+    if(o.recent && s.notes.length) parts.push("recent: " + s.notes.slice(-2).join("; "));
+    return nm + " - " + (parts.length ? parts.join(" | ") : "no detail yet");
   }).join("\n");
-  return out.length <= CAST_STATE_BUDGET ? out : out.slice(0, CAST_STATE_BUDGET - 1) + "…";
 }
 /* The ground truth of THIS run, then whatever recent dialogue we still hold.
    The briefing carries the memory; the tail only carries the voice. */
+/* ---- THE CONTEXT BLOCK: one document, served on every call ----
+   Sections in fixed order. Over budget we shed in a fixed order too, and five
+   things are never shed: roster, agenda, milestones, map, and every `met` list. */
+function rosterLine(){
+  var f = roster.family.length ? "family: " + roster.family.join(", ") : "family: the courier, so far";
+  return f + (roster.fallen.length ? "\nfallen: " + roster.fallen.join(", ") + " (these names never speak or act again)" : "");
+}
+function agendaLine(){
+  var here = $("hud-loc").textContent || "somewhere";
+  var crumb = "At " + here
+    + (prevLocation ? ", arrived from " + prevLocation : "")
+    + (lastRoute ? " via " + lastRoute : "");
+  return (agendaText ? agendaText + "\n" : "") + crumb + ".";
+}
+function mapLines(){
+  return mapEdges.map(function(e){
+    var tag = [e.via, e.time].filter(function(x){ return !!x; }).join(", ");
+    return e.from + " —(" + (tag || "a way") + ")— " + e.to;
+  }).join("\n");
+}
+function placeLines(currentOnly){
+  var here = $("hud-loc").textContent || "";
+  var names = Object.keys(placeNotes);
+  var match = names.filter(function(n){ return n.toUpperCase() === here.toUpperCase(); });
+  var order = match.concat(names.filter(function(n){ return match.indexOf(n) === -1; }));
+  if(currentOnly) order = match;
+  return order.map(function(n){ return n + ": " + placeNotes[n].join(" / "); }).join("\n");
+}
+function nowLine(){
+  return "Day " + $("hud-day").textContent + ", " + (nowTime || "—") + ", " + ($("hud-loc").textContent || "—")
+    + ", Arc " + (currentArc||1) + ". " + (nowText || "the story continues");
+}
+function contextBlock(){
+  var d = {bits:false, placesCurrentOnly:false, chronDrop:0, canonDrop:0,
+           cast:{recent:true, knows:0, status:true, voice:true}};
+  function build(){
+    var out = [];
+    out.push("ROSTER\n" + rosterLine());
+    out.push("AGENDA\n" + agendaLine());
+    if(milestones.length) out.push("MILESTONES (permanent; never contradict these)\n" + numbered(milestones));
+    if(threadsOpen.length) out.push("OPEN THREADS (unresolved; close them in their own words)\n- " + threadsOpen.join("\n- "));
+    if(mapEdges.length) out.push("MAP (the only routes that exist)\n" + mapLines());
+    var pl = placeLines(d.placesCurrentOnly);
+    if(pl) out.push("PLACES (state as you left them)\n" + pl);
+    out.push("CAST STATE (never re-introduce two names that have met; never let anyone act ignorant of their knows)\n"
+      + castStateBlock(d.cast));
+    if(!d.bits && bits.length) out.push("BITS (running jokes; reuse them)\n" + bits.join(" · "));
+    var chron = canonArchive.slice(d.chronDrop);
+    if(chron.length) out.push("CHRONICLE (compressed history, oldest first)\n" + numbered(chron));
+    var recent = runCanon.slice(d.canonDrop);
+    if(recent.length) out.push("RECENT CANON (verbatim)\n" + numbered(recent));
+    out.push("NOW\n" + nowLine());
+    return out.join("\n\n");
+  }
+  var s = build();
+  if(s.length <= CONTEXT_BUDGET) return s;
+  d.bits = true;              s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.placesCurrentOnly = true; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  while(d.chronDrop < canonArchive.length){          /* oldest compressed history first */
+    d.chronDrop++; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  }
+  d.cast.recent = false;      s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.cast.knows = 5;           s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  while(d.canonDrop < runCanon.length - 1){          /* then the oldest canon */
+    d.canonDrop++; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  }
+  /* A very large cast can still overflow. Strip it back toward met-only, which is
+     the floor: roster, agenda, milestones, map and every `met` are never shed. */
+  d.cast.voice = false;       s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.cast.status = false;      s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.cast.knows = -1;          s = build();
+  return s;
+}
 function memoryBriefing(){
-  return "(RUN CANON - the established ground truth of this run, in order. Never contradict it.\n"
-    + canonBlock()
-    + "\n\nCAST STATE - who these people are to each other. Never re-introduce two names that"
-    + " have met; never let a character act ignorant of something in their knows list.\n"
-    + castStateBlock()
-    + "\n\n|| NOW - Day " + $("hud-day").textContent + ", " + $("hud-loc").textContent
-    + ", Arc " + (currentArc||1) + ": " + (nowText || "the story continues")
-    + "\n|| Only the last few exchanges follow. Everything before them is gone - the canon and the"
-    + " cast state above ARE the earlier story. Keep writing them or the run forgets itself.)";
+  return "(THE CONTEXT BLOCK - the ground truth of this run. It outranks your general lore and"
+    + " your own improvisation. Check every scene against it before writing.\n\n"
+    + contextBlock()
+    + "\n\nOnly the last few exchanges follow. Everything before them is gone - this block IS the"
+    + " earlier story. Keep writing to it or the run forgets itself.)";
 }
 /* Note the side effect: the compaction request is decided here because it rides the
    outgoing message, and showScene harvests whatever comes back against it. */
@@ -1367,11 +1582,39 @@ function takeAction(text, isMud){
   callDM();
 }
 
-function callDM(){
+/* The dead stay dead. This is the only place the client overrules the DM, and it
+   only ever does it once - a second violation is rendered rather than blocking play. */
+function fallenSpeakers(data){
+  var out = [];
+  if(!roster.fallen.length) return out;
+  ((data && data.scene) || []).forEach(function(b){
+    if(!b || !b.speaker) return;
+    var nm = String(b.speaker).trim();
+    roster.fallen.forEach(function(f){
+      if(f.toLowerCase() === nm.toLowerCase() && out.indexOf(f) === -1) out.push(f);
+    });
+  });
+  return out;
+}
+function callDM(corrected){
   setBusy(true);
-  pendingRetry = callDM;
-  askAI(buildContext()).then(function(raw){
+  pendingRetry = function(){ callDM(corrected); };
+  var msgs = buildContext();
+  if(corrected){
+    msgs = msgs.slice();
+    msgs[0] = {role:"user", content: msgs[0].content + "\n\n" + corrected};
+  }
+  askAI(msgs).then(function(raw){
     var parsed = parseScene(raw);
+    var violated = fallenSpeakers(parsed.data);
+    if(violated.length && !corrected){
+      return callDM("(CORRECTION: " + violated.join(" and ")
+        + (violated.length === 1 ? " is fallen and cannot appear alive." : " are fallen and cannot appear alive.")
+        + " Rewrite the turn honoring the roster.)");
+    }
+    if(violated.length && window.console && console.warn){
+      console.warn("[mudskippers] roster violation stood after one correction:", violated.join(", "));
+    }
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
     turnsSinceSync++;
@@ -1599,7 +1842,10 @@ function saveBlob(){
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
     now:nowText, time:nowTime, amb:currentAmbience, arc:currentArc,
-    cast:castSheets, canon:runCanon, archive:canonArchive, sync:turnsSinceSync
+    cast:castSheets, canon:runCanon, archive:canonArchive, sync:turnsSinceSync,
+    milestones:milestones, threadsOpen:threadsOpen, threadsClosed:threadsClosed,
+    agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
+    prevLoc:prevLocation, lastRoute:lastRoute
   });
 }
 function currentChoices(){
@@ -1979,9 +2225,15 @@ var REBUILD_CHAPTER_ASK = [
   "That was one chapter of this run's chronicle.",
   "You are not narrating now. Read it and extract what the run must remember.",
   "Reply with ONLY a JSON object, no fences, no commentary:",
-  "{\"facts\":[\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\",\"met\":[\"...\"],\"knows\":[\"...\"],\"status\":\"...\"}]}",
+  "{\"facts\":[\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\",\"met\":[\"...\"],\"knows\":[\"...\"],\"status\":\"...\",\"voice\":\"...\"}],\"milestones\":[\"...\"],\"threads\":{\"open\":[\"...\"],\"closed\":[\"...\"]},\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"]}",
   "- facts: 5 to 15 short canon lines drawn from THIS chapter only, in story order. Facts, not prose.",
-  "- cast: one entry for EVERY named character who appears in this chapter. note is one plain sentence about them. met lists everyone they are shown to have met by the end of it. knows lists the secrets, identities and plans they have learned. status is one short line on where they stand as the chapter closes.",
+  "- cast: one entry for EVERY named character who appears in this chapter. note is one plain sentence about them. met lists everyone they are shown to have met by the end of it. knows lists the secrets, identities and plans they have learned. status is one short line on where they stand as the chapter closes. voice is one line on how they speak - pattern, quirks, who they tease and how.",
+  "- milestones: only the major events of this chapter - a death, someone joining or leaving, a law written, a betrayal, a great reveal, an arc turning.",
+  "- threads: promises made, questions raised and jobs taken that are still open by the end of the chapter, and any that closed in it.",
+  "- map: any route the chapter establishes between two named places.",
+  "- places: any location whose state the chapter changed, and what it is now.",
+  "- roster: who is in the family by the end of the chapter, and who has fallen.",
+  "- bits: running jokes or callbacks the chapter established or reused.",
   "Invent nothing. If the chapter does not show it, leave it out."
 ].join("\n");
 
@@ -1989,12 +2241,19 @@ var REBUILD_MERGE_ASK = [
   "", "---",
   "Those are the facts distilled from every chapter of this run, in story order.",
   "Reply with ONLY a JSON object, no fences, no commentary:",
-  "{\"archive\":[\"line\"],\"recent\":[\"fact\"],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
+  "{\"archive\":[\"line\"],\"recent\":[\"fact\"],\"milestones\":[\"...\"],\"threadsOpen\":[\"...\"],\"agenda\":\"...\",\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
   "- archive: at most 24 compressed chronicle lines covering the run from its beginning up to but not including the most recent stretch. Preserve every name, relationship, promise and open thread.",
   "- recent: at most 30 short verbatim-style canon facts covering the most current stretch - what is true and live right now.",
   "- now: one or two sentences for the present moment the chronicle ends on.",
   "- arc: 1, 2 or 3.",
   "- ambience: one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger.",
+  "- milestones: every major event of the whole run, oldest first. These are permanent.",
+  "- threadsOpen: everything still unresolved at the end.",
+  "- agenda: one line on why the group is where it is and what is mid-flight.",
+  "- map: every route the run established.",
+  "- places: every location whose state matters, and what it is now.",
+  "- roster: who the family is, and who has fallen.",
+  "- bits: the running jokes still in play.",
   "Invent nothing."
 ].join("\n");
 
@@ -2015,16 +2274,21 @@ function rebuildChunks(){
   return chunks;
 }
 function rebuildSnapshot(){
-  return {
-    canon: runCanon.slice(), archive: canonArchive.slice(),
-    cast: JSON.parse(JSON.stringify(castSheets)),
+  return JSON.parse(JSON.stringify({
+    canon: runCanon, archive: canonArchive, cast: castSheets,
+    milestones: milestones, threadsOpen: threadsOpen, threadsClosed: threadsClosed,
+    agenda: agendaText, map: mapEdges, places: placeNotes, roster: roster, bits: bits,
+    prevLoc: prevLocation, lastRoute: lastRoute,
     now: nowText, time: nowTime, arc: currentArc, amb: currentAmbience
-  };
+  }));
 }
-function rebuildRestore(s){
-  runCanon = s.canon; canonArchive = s.archive; castSheets = s.cast;
-  nowText = s.now; nowTime = s.time; currentArc = s.arc;
-  setAmbience(s.amb);
+function rebuildRestore(x){
+  runCanon = x.canon; canonArchive = x.archive; castSheets = x.cast;
+  milestones = x.milestones; threadsOpen = x.threadsOpen; threadsClosed = x.threadsClosed;
+  agendaText = x.agenda; mapEdges = x.map; placeNotes = x.places; roster = x.roster; bits = x.bits;
+  prevLocation = x.prevLoc; lastRoute = x.lastRoute;
+  nowText = x.now; nowTime = x.time; currentArc = x.arc;
+  setAmbience(x.amb);
 }
 function rebuildCard(html){ $("rebuildbox").innerHTML = '<div class="rebuild-card">' + html + '</div>'; }
 function rebuildProgress(msg, frac){
@@ -2051,7 +2315,9 @@ function startRebuild(chunks){
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
     openSettings(); return;
   }
-  rebuildState = {chunks:chunks, i:0, facts:[], cast:[], snapshot:rebuildSnapshot()};
+  rebuildState = {chunks:chunks, i:0, facts:[], cast:[], milestones:[], threadsOpen:[],
+                 threadsClosed:[], map:[], places:[], roster:{family:[],fallen:[]}, bits:[],
+                 snapshot:rebuildSnapshot()};
   setWatchBusy(true);
   rebuildStep();
 }
@@ -2068,6 +2334,18 @@ function rebuildStep(){
       d.facts.forEach(function(f){ if(typeof f === "string" && f.trim()) st.facts.push(f.trim()); });
     }
     if(Object.prototype.toString.call(d.cast) === "[object Array]") st.cast = st.cast.concat(d.cast);
+    st.milestones = st.milestones.concat(strList(d.milestones));
+    if(d.threads && typeof d.threads === "object"){
+      st.threadsOpen = st.threadsOpen.concat(strList(d.threads.open));
+      st.threadsClosed = st.threadsClosed.concat(strList(d.threads.closed));
+    }
+    if(Object.prototype.toString.call(d.map) === "[object Array]") st.map = st.map.concat(d.map);
+    if(Object.prototype.toString.call(d.places) === "[object Array]") st.places = st.places.concat(d.places);
+    if(d.roster && typeof d.roster === "object"){
+      st.roster.family = st.roster.family.concat(strList(d.roster.family));
+      st.roster.fallen = st.roster.fallen.concat(strList(d.roster.fallen));
+    }
+    st.bits = st.bits.concat(strList(d.bits));
     st.i++;
     rebuildStep();
   }).catch(function(e){
@@ -2106,22 +2384,36 @@ function applyRebuild(d, st){
     if(!u || !u.name) return;
     var nm = String(u.name).trim();
     if(!nm) return;
-    var acc = byName[nm] || (byName[nm] = {notes:[], met:[], knows:[], status:""});
+    var acc = byName[nm] || (byName[nm] = {notes:[], met:[], knows:[], status:"", voice:""});
     if(typeof u.note === "string" && u.note.trim() && acc.notes.indexOf(u.note.trim()) === -1){
       acc.notes.push(u.note.trim());
     }
     mergeList(acc.met, u.met, MET_CAP, false);
     mergeList(acc.knows, u.knows, KNOWS_CAP, true);
     if(typeof u.status === "string" && u.status.trim()) acc.status = u.status.trim();
+    if(typeof u.voice === "string" && u.voice.trim()) acc.voice = u.voice.trim();
   });
 
   canonArchive = archive;
   runCanon = recent;
+  /* A rebuild REPLACES every register. The final pass wins where it spoke; where it
+     stayed silent we fall back to what the chapters collectively saw. */
+  milestones = []; mergeMilestones(strList(d.milestones).length ? d.milestones : st.milestones);
+  threadsOpen = []; threadsClosed = [];
+  mergeThreads({open: strList(d.threadsOpen).length ? d.threadsOpen : st.threadsOpen,
+                closed: st.threadsClosed});
+  mapEdges = []; mergeMap(Object.prototype.toString.call(d.map) === "[object Array]" && d.map.length ? d.map : st.map);
+  placeNotes = {}; mergePlace(Object.prototype.toString.call(d.places) === "[object Array]" && d.places.length ? d.places : st.places);
+  roster = {family:[], fallen:[]};
+  mergeRoster(d.roster && (strList(d.roster.family).length || strList(d.roster.fallen).length) ? d.roster : st.roster);
+  bits = []; mergeBits(strList(d.bits).length ? d.bits : st.bits);
+  if(typeof d.agenda === "string" && d.agenda.trim()) agendaText = d.agenda.trim();
   Object.keys(byName).forEach(function(nm){
     var sheet = castSheet(nm), from = byName[nm];
     sheet.met = from.met;                 /* a rebuild replaces relationships... */
     sheet.knows = from.knows;
     if(from.status) sheet.status = from.status;
+    if(from.voice) sheet.voice = from.voice;
     from.notes.forEach(function(nt){      /* ...but only ever adds to the prose */
       if(sheet.notes.indexOf(nt) === -1) sheet.notes.push(nt);
     });
@@ -2658,6 +2950,12 @@ function newRun(confirmFirst){
   nowText = ""; nowTime = OPENING.time; currentArc = 1; castSheets = {};
   runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
   canonArchive = []; pendingCompaction = null;
+  milestones = []; threadsOpen = []; threadsClosed = []; agendaText = "";
+  mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
+  prevLocation = ""; lastRoute = "";
+  /* Seat the location before the opening renders, or the new run inherits a
+     breadcrumb pointing at wherever the previous run happened to end. */
+  $("hud-loc").textContent = String(OPENING.location).toUpperCase();
   turnsSinceSync = 0;
   rehydDismissed = false; $("rehydbox").innerHTML = "";
   setAmbience("rain-neon"); renderNow();
@@ -2689,6 +2987,13 @@ function restoreFromBlob(s){
   runCanon = s.canon||[];
   canonArchive = s.archive||[];
   pendingCompaction = null;
+  milestones = s.milestones||[];
+  threadsOpen = s.threadsOpen||[]; threadsClosed = s.threadsClosed||[];
+  agendaText = s.agenda||"";
+  mapEdges = s.map||[]; placeNotes = s.places||{};
+  roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
+  bits = s.bits||[];
+  prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   turnsSinceSync = s.sync||0;
   rehydDismissed = false;
   renderNow();
