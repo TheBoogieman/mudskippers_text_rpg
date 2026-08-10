@@ -416,6 +416,20 @@
   #shardsay.vis{opacity:1;transform:none}
   @media (max-width:600px){ #shard{width:22px;height:39px} }
 
+  /* THE DM, OUT LOUD — a hardcoded fourth-wall interruption. Red, unmissable,
+     and deliberately nothing like the fiction's own furniture. */
+  .block.dmaside{
+    font-family:ui-monospace,Menlo,monospace;font-size:12.5px;letter-spacing:.04em;line-height:1.7;
+    color:#ff9d9d;border:1px solid #8d3a3a;background:#2b1111;border-radius:3px;
+    padding:12px 16px;margin:20px 0;
+    box-shadow:0 0 22px rgba(190,52,44,.25), inset 0 0 40px rgba(190,52,44,.08);
+    animation:dmflash .6s ease-out;
+  }
+  .block.dmaside .tag{display:block;color:#e08b8b;font-size:9px;letter-spacing:.34em;margin-bottom:6px}
+  @keyframes dmflash{
+    from{box-shadow:0 0 60px rgba(190,52,44,.7);filter:brightness(1.6)}
+    to{box-shadow:0 0 22px rgba(190,52,44,.25);filter:brightness(1)}
+  }
   /* the beat card — the only place the board speaks in the feed, and only in hindsight */
   .block.beatcard{
     font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;
@@ -737,7 +751,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.3 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1041,7 +1055,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.2 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.3 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1646,6 +1660,9 @@ function renderBlock(b){
     el.className = "block beatcard brief";
     el.innerHTML = '<span class="tag">' + esc(b.tag || "BEFORE TONIGHT") + '</span>'
       + '<span class="sum">' + esc(b.sum || "") + '</span>';
+  } else if(b.kind === "dmaside"){
+    el.className = "block dmaside";
+    el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
@@ -2069,8 +2086,7 @@ function setBusy(v){
   if(v){ var pool=(LOADPOOLS[currentAmbience]||[]).concat(LOADPOOLS.generic); $("loading").textContent = pool[Math.floor(Math.random()*pool.length)]; }
   var els = document.querySelectorAll(".choice");
   for(var i=0;i<els.length;i++) els[i].disabled = v;
-  var shut = v || !!runOver || introStage === 1;
-  $("mudbtn").disabled = shut; $("mudinput").disabled = shut;
+  $("mudbtn").disabled = v || !!runOver; $("mudinput").disabled = v || !!runOver;
   if(v) scrollFeed();
 }
 
@@ -2600,22 +2616,31 @@ function parseScene(raw){
 }
 
 /* ============ GAME LOOP ============ */
-/* During the cold open the gold bar is shut: the only door is INTO THE RAIN.
-   Anything else fired mid-reveal would orphan the opening and deal the second
-   turn's choices into the first - the flowchart opens after the rain. */
-function introLock(on){
+function openBar(){
   var mi = $("mudinput"), mb = $("mudbtn");
-  if(mi){
-    mi.disabled = on;
-    mi.placeholder = on ? "…the rain first. The flowchart after."
-                        : "…or go off the flowchart. Type anything.";
-  }
-  if(mb) mb.disabled = on;
+  if(mi){ mi.disabled = false; mi.placeholder = "…or go off the flowchart. Type anything."; }
+  if(mb) mb.disabled = false;
+}
+/* THE SECRET IN THE FIRST SECTION. The gold bar looks open during the cold
+   open - that is the bait. Going off the flowchart before entering it gets a
+   hardcoded fourth-wall interruption in a red box, and the table stays set:
+   INTO THE RAIN remains the only door. Nothing here reaches the ledger, the
+   chatLog, or the intro state - the DM never hears about it, and the story
+   never happened. */
+var DM_ASIDE = "Oh, not so fast, buddy. I've set a whole table for you; taste the menu first before ordering fast food.";
+function dmAside(attempt){
+  $("mudinput").value = "";
+  var pb = {kind:"player", text:attempt, mud:true, speaker:"__player"};
+  renderBlock(pb); feedLog.push(pb);
+  var aside = {kind:"dmaside", text:DM_ASIDE};
+  renderBlock(aside); feedLog.push(aside);
+  scrollFeed();
+  persistAll(currentChoices());   /* the attempt and the interruption both survive a reload */
 }
 function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
-  if(introStage === 1 && isMud) return;    /* the bar is shut during the cold open, full stop */
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
+  if(introStage === 1 && isMud){ dmAside(text.trim()); return; }
   /* the reveal turn is the game's, not the DM's - it needs no key and no call */
   var intro = (introStage === 1);
   if(!intro && !settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
@@ -2629,7 +2654,6 @@ function takeAction(text, isMud){
   scrollFeed();
   if(intro){
     introStage = 0;
-    introLock(false);
     chatLog.push({role:"user", content:"The courier steps into the rain with Pia. (The hardcoded reveal scene below has already been shown to the player.)"});
     chatLog.push({role:"assistant", content:JSON.stringify(OPENING2)});
     showScene(OPENING2, true);
@@ -2740,6 +2764,7 @@ function maybeRehydrate(){
   var box = $("rehydbox"); if(!box) return;
   box.innerHTML = "";
   if(rehydDismissed) return;
+  if(introStage === 1) return;   /* a cold open has no sheets YET - that is newness, not damage */
   if(runCanon.length !== 0 && Object.keys(castSheets).length !== 0) return;
   if(feedLog.length <= 6) return;
   var d = document.createElement("div"); d.className = "warn";
@@ -5267,7 +5292,7 @@ function newRun(confirmFirst){
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
-  introLock(true);               /* the cold open owns the bar until the reveal is dealt */
+  openBar();                     /* looks open during the cold open - that is the trap */
   applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
@@ -5314,7 +5339,7 @@ function restoreFromBlob(s){
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
   introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
-  introLock(introStage === 1);   /* a run reloaded mid-open keeps the bar shut; lockRun overrides for ended runs */
+  openBar();                     /* re-arms the bar after a dead run's lock; lockRun re-shuts ended runs below */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
      repair rather than being silently dropped somewhere wrong. */
