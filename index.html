@@ -625,7 +625,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.3.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.3.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -899,7 +899,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.3.0 "Mortality"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.3.1 "Mortality"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1905,6 +1905,8 @@ function showError(msg){
 
 /* ============ AI CALL (provider-agnostic) ============ */
 var CANON_BUDGET = 6000;   /* characters of canon we are willing to spend per call */
+var REPLY_TOKENS = 3000;   /* output ceiling, not a spend - only the reply that would
+                              have died mid-array costs more than it used to */
 
 /* Compressed history first, then the verbatim working set. Nothing is folded away
    destructively any more - old eras are compacted by the DM, in-band, and kept. */
@@ -2336,9 +2338,10 @@ function askAnthropic(msgs){
       "anthropic-version":"2023-06-01",
       "anthropic-dangerous-direct-browser-access":"true"
     },
-    body: JSON.stringify({model:settings.model, max_tokens:1400, system:BIBLE, messages:msgs})
+    body: JSON.stringify({model:settings.model, max_tokens:REPLY_TOKENS, system:BIBLE, messages:msgs})
   }).then(function(r){ return r.json(); }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
+    if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
     return (data.content||[]).filter(function(x){return x.type==="text";})
       .map(function(x){return x.text;}).join("\n");
   });
@@ -2347,7 +2350,7 @@ function askAnthropic(msgs){
 function askOpenAI(msgs, useAltTokenParam){
   var body = {model:settings.model,
     messages:[{role:"system",content:BIBLE}].concat(msgs)};
-  if(useAltTokenParam) body.max_completion_tokens = 1400; else body.max_tokens = 1400;
+  if(useAltTokenParam) body.max_completion_tokens = REPLY_TOKENS; else body.max_tokens = REPLY_TOKENS;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
   return fetch(settings.base.replace(/\/$/,"") + "/chat/completions", {
@@ -2360,6 +2363,7 @@ function askOpenAI(msgs, useAltTokenParam){
     }
     var ch = data.choices && data.choices[0];
     if(!ch || !ch.message) throw new Error("empty reply from provider");
+    if(ch.finish_reason === "length") throw new Error("the reply hit the token ceiling and was cut off");
     return ch.message.content || "";
   });
 }
