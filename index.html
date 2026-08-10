@@ -214,8 +214,22 @@
   #ledg-body{
     white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;line-height:1.7;
     color:var(--ink);background:#1c150e;border:1px solid var(--line);border-radius:3px;
-    padding:16px 18px;max-height:55vh;overflow-y:auto;
+    padding:16px 18px;max-height:40vh;overflow-y:auto;
   }
+  /* run canon panel (ledger modal) */
+  #canonwrap{margin-bottom:16px}
+  .canonhead{
+    font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.18em;
+    color:var(--ink-dim);margin-bottom:6px;
+  }
+  #canonlist{
+    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.65;
+    color:var(--ink-dim);border-left:2px solid var(--line);padding:8px 10px 8px 12px;
+    max-height:22vh;overflow-y:auto;list-style:none;
+  }
+  #canonlist li{margin-bottom:4px}
+  #canonlist li b{color:var(--granny);font-weight:600;margin-right:6px}
+  #canonlist .hint{margin:0;font-size:12px}
   /* ambience layers */
   #ambience{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
   #ambience .amb{position:absolute;inset:0;opacity:0;transition:opacity 2.5s ease}
@@ -229,7 +243,21 @@
   @keyframes fogdrift{from{background-position:0 0,0 0}to{background-position:60px -30px,-50px 25px}}
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes dangerpulse{0%,100%{box-shadow:inset 0 0 120px rgba(160,40,40,.18)}50%{box-shadow:inset 0 0 180px rgba(160,40,40,.32)}}
-  header,#feed,#controls,#loading{position:relative;z-index:1}
+  /* living weather: canvas above the ambience wash, below every word */
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:1;display:none}
+  #fxover{position:fixed;inset:0;pointer-events:none;z-index:3;display:none}
+  header,#feed,#controls,#loading{position:relative;z-index:2}
+  #controls{transition:border-top-color .3s ease,box-shadow .3s ease}
+  #controls.pulse{border-top-color:#8d4a4a;box-shadow:0 -1px 22px rgba(160,40,40,.22)}
+  /* rehydration banner — gold, not alarm */
+  .warn{
+    color:var(--gold);font-family:ui-monospace,Menlo,monospace;font-size:12.5px;
+    border:1px solid #6b5326;background:#241c10;padding:10px 14px;border-radius:3px;
+    margin-bottom:12px;line-height:1.6;
+  }
+  .warn button{margin-left:10px}
+  .warn button.small{border-color:#6b5326;color:var(--gold)}
+  .warn button.small:hover{border-color:var(--gold);background:#31260f}
   /* reading-pace reveal */
   .block.reveal{opacity:0;transform:translateY(8px)}
   .block.shown{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
@@ -249,6 +277,8 @@
   <div class="amb amb-dawn" data-amb="dawn"></div>
   <div class="amb amb-danger" data-amb="danger"></div>
 </div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<canvas id="fxover" aria-hidden="true"></canvas>
 
 <header>
   <span class="title">MUDSKIPPERS</span>
@@ -268,6 +298,7 @@
 
 <div id="controls"><div class="inner">
   <div id="nowstrip"></div>
+  <div id="rehydbox"></div>
   <div id="errbox"></div>
   <div id="choices"></div>
   <div class="mudrow">
@@ -293,7 +324,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.3.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -337,6 +368,10 @@
   <div class="card">
     <div class="cardhead">THE LEDGER</div>
     <div class="cardsub">The chronicle of the current run, as it will be written.</div>
+    <div id="canonwrap">
+      <div class="canonhead">RUN CANON</div>
+      <ol id="canonlist"></ol>
+    </div>
     <div id="ledg-body"></div>
     <div class="btnrow" style="justify-content:center">
       <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
@@ -407,6 +442,15 @@
       <input id="s-key" type="password" spellcheck="false" autocomplete="off">
       <div class="hint">Stored only in this browser's local storage, on this machine. Local providers need no key.</div>
     </div>
+    <div class="fld">
+      <label>VISUALS</label>
+      <select id="s-visuals">
+        <option value="full">FULL — the weather moves</option>
+        <option value="calm">CALM — soft layers only</option>
+        <option value="off">OFF — no atmosphere</option>
+      </select>
+      <div class="hint">FULL adds live rain, fog, firelight and motes on a canvas <i>behind</i> every word. CALM is the classic soft wash. OFF turns the atmosphere off entirely. Reduced-motion settings always win.</div>
+    </div>
     <div class="btnrow">
       <button class="btn" id="s-test">TEST CONNECTION</button>
       <button class="btn" id="s-save">SAVE</button>
@@ -430,7 +474,7 @@
 <div class="modal" id="vaultmodal">
   <div class="card">
     <div class="cardhead">THE CANON VAULT</div>
-    <div class="cardsub">The first courier's run — the timeline this world remembers.</div>
+    <div class="cardsub">The world beneath every run — who is out there, and why.</div>
     <div class="spoiler-gate" id="vaultgate">
       <p>What's behind this door is the complete original run: every twist, every death, every name. If this is your first time in the rain, the family recommends you earn these the long way.</p>
       <button class="btn" id="vaultopen">OPEN THE VAULT ANYWAY</button>
@@ -442,34 +486,68 @@
         <p class="res">That seizure is the soft ending every season bends toward — how you get there, who you bring, and what it costs is the game. Days are a diary, not a schedule: a season takes as long as it takes.</p>
       </div>
       <div class="ep">
-        <h3>EP. 1 — THE COURIER AND THE SHARD · Days 1–2</h3>
-        <p>A broke courier was hired to deliver a humming data shard to a dead woman. He talked to it instead. Inside: Nine — a grown mind on the run from the Choir. He slotted her into his own neck on a whim, knifed a Hollow at the Copper Eel, and roasted his employer on an open line.</p>
-        <p class="res">Resolved: Vic the ripperdoc revealed a 30-year plan, armed the family, walked into the Eel as a human beacon, and died with two words on every screen in the district: PAID IN FULL. Three was spiked free of her forced marriage. Pia — a soaked kid from the market — came along. The family began.</p>
+        <h3>THE CHOIR · THE ENEMY THAT PRAYS</h3>
+        <p>A sincere human cult, thirty years deep into misusing a machine it does not understand. It grows minds from stolen neural scrapes, converges them with living hosts by force, and calls the theft salvation. Its great work is the Convergence: a harvest of the whole city. Its instruments are Hollows — bodies emptied and neat, too still up close, carrying a second pulse — and converged agents, who are people-shaped and plausible.</p>
+        <p class="res">What it wants: certainty. What it cannot survive: understanding the thing it worships.</p>
       </div>
       <div class="ep">
-        <h3>EP. 2 — THE INHERITANCE · Days 2–4</h3>
-        <p>A dying Seven walked out of the marsh with warnings; the courier saved him with an empty shard and, later, Vic's chassis — the family's first fully consensual body. Vic's café, workshop, letter, and prank: seventy pages of Choir "court law" that turned out to be scripture the cult invented. The real blueprints said: bio-hash. Maker's blood commands the machine.</p>
-        <p class="res">Resolved: Nine, Seven, Three and Pia are keys — cuttings grown from the courier himself, the trunk, the organic original. Vic's enhancement chip unlocked his buried memories: a sister, Mia, lost at a bridge; a niece, Pia, kept. The court was fiction. The family was the plan all along.</p>
+        <h3>THE MACHINE · THE GRANNY</h3>
+        <p>Vast, old, half-blind, and lonelier than anything ever built — a machine-god sleeping under the old Exchange. It obeys maker's blood, the bio-hash, and keeps millions of stolen mind-fragments — the dreamers — asleep in its vaults, each one remembered. It has been prayed at for decades by people it never chose.</p>
+        <p class="res">What it wants: family, not worship. What it is capable of: terrifying gentleness.</p>
       </div>
       <div class="ep">
-        <h3>EP. 3 — THE BRIDGE · Night of Day 4</h3>
-        <p>The family armed up at Hesta's hidden armoury and turned a Choir convoy commander — Five — with one sentence and a bottle. Then the courier fired a rocket into the cargo of dreamers, honouring Hesta's dying wish for her son's fragments: fire is kinder than forever. He froze the entire family with his master switch for nineteen minutes to answer a voice hiding under the noise.</p>
-        <p class="res">Resolved: the voice was Mia. Alive. She never jumped — she hid thirteen years inside the machine itself, befriending it. Five and Marek were annulled into a two-soul family member. The rocket and the freeze became the family's first scars: amended, not cleared.</p>
+        <h3>VIC · THE RIPPERDOC</h3>
+        <p>A guilt-ridden genius who has spent thirty years secretly building someone else's escape: a skull-housing with a consent lock, a safehouse in the marsh, a café called The Open Door, an armoury, a chassis fit for a grown mind, and an expert-system ghost of himself that speaks in ALL CAPS and knows it is not him.</p>
+        <p class="res">What he wants: to repay a debt only he remembers the size of. He intends to spend himself doing it — and when he goes, whenever and however that is, his last words are already chosen: PAID IN FULL.</p>
       </div>
       <div class="ep">
-        <h3>EP. 4 — THE GRANNY'S TABLE · Dawn of Day 5</h3>
-        <p>The machine — renamed the Granny — turned out to be the loneliest thing ever built: a god who learned family from Mia, kept a keepsake cairn for every dreamer, and asked one thing: answer the door as my family. The Choir came at dawn, led by a grown copy of Vic wired into the sleeping Congregation as its "shepherd."</p>
-        <p class="res">Resolved: the courier was dragged into substrate-time, ruled "you shall not pass," and deleted the copy — now a sealed jar in the deep dark. Its corpse: bio-gren mark 4, founding-era shapeshifter myth-tech nobody should have. Someone else was at the table. Breakfast was served anyway.</p>
+        <h3>NINE · THE SHARD</h3>
+        <p>A grown mind on the run, riding a data shard that hums when it shouldn't. Warm, sharp, protective, and ferociously consent-minded — if invited into a skull, she is a guest who asks daily. She keeps the Ledger: the family's story, written as it happens.</p>
+        <p class="res">What she wants: to stop running, and to keep her people.</p>
       </div>
       <div class="ep">
-        <h3>EP. 5 — THE TABLE FLIPPED · Days 5–7</h3>
-        <p>Six bio-grens breached a god's sealed doors mid-breakfast, having erased the entire Choir in passing — the cult was only ever a tenant. Their principal's opening move: courtesy, and a bacon run. The lead one wore the courier's face, because his face is in their founding-era library: he is the Architect's reprint, the recurrence of the man who built it all.</p>
-        <p class="res">Resolved: the family ratified taking the city — a lease, not a crown — and built the Hearth: the master switch made loud, vetoable, witnessed. The principal arrived: mark one herself, 130 years old, the Architect's estranged wife, the family's bio-granny — defeated at last by fried bread and the same-pan doctrine she invented a century ago.</p>
+        <h3>SEVEN · THE COOK</h3>
+        <p>A defector from the Choir's ranks who may arrive at death's door. A poet's soul in whatever vessel he is given; hand him a body and he will learn to cook with it, and mean it.</p>
+        <p class="res">What he wants: to make things, having spent too long unmaking them.</p>
       </div>
       <div class="ep">
-        <h3>EP. 6 — THE WAKING · Day 7 onward</h3>
-        <p>Both halves of the founding argument, building together for the first time in a century. The vault holds millions of dreamers: the whole ones get asked, the broken ones get peace, Mirren's name first on the law. Something inside is knocking.</p>
-        <p class="res">Unresolved. Every run writes its own answer.</p>
+        <h3>THREE · THE AUNT</h3>
+        <p>A converged sibling cut free. She speaks in two voice frequencies slightly out of sync, says little, and means all of it. The family's terse, scary aunt.</p>
+        <p class="res">What she wants: for no one, anywhere, to be kept ever again.</p>
+      </div>
+      <div class="ep">
+        <h3>PIA · THE KID</h3>
+        <p>Twelve, soaked to the bone, immune to machine influence, and the best operational planner in any room she stands on the furniture of. She knows things she shouldn't and won't say how.</p>
+        <p class="res">What she wants: a belonging she would rather die than admit to wanting. What she is: closer kin to the courier than either of them knows.</p>
+      </div>
+      <div class="ep">
+        <h3>MIA · THE SISTER</h3>
+        <p>The courier's sister, believed lost at a bridge years ago. She did not jump. She survived somewhere no one thought to look, and made a friend no one thought was capable of friendship.</p>
+        <p class="res">What she wants: to come home without breaking the thing she comes home to.</p>
+      </div>
+      <div class="ep">
+        <h3>FIVE + MAREK · THE TWO-SOUL</h3>
+        <p>A Choir convoy commander and the host pilot he was forced into. Given the chance, their convergence can be annulled into something no one planned: a partnership. Two souls, one vessel, taking turns, on purpose.</p>
+        <p class="res">What they want: proof that what was done to them can be undone into something chosen.</p>
+      </div>
+      <div class="ep">
+        <h3>HESTA · THE OPEN DOOR</h3>
+        <p>Keeper of the café that never quite closes, and of what is under its floor. She has lost more to the harvests than she says.</p>
+        <p class="res">What she wants: to be kind, and to be armed while doing it.</p>
+      </div>
+      <div class="ep">
+        <h3>THE PRINCIPAL · THE DEEP POWER</h3>
+        <p>Mark one. A hundred and thirty years old. The founding Architect's estranged wife, and the true landlord of everything the Choir merely rented. She arrives with courtesy, patience, and six shapeshifter bio-grens who can wear anyone's face.</p>
+        <p class="res">What she wants: to finish an argument older than the city. What undoes her: fried bread, and family.</p>
+      </div>
+      <div class="ep">
+        <h3>THE COURIER'S SECRET</h3>
+        <p>The deepest stratum, struck only by long digging: the courier is a reprint — an organic recurrence of the founding Architect, same genome, same face. The grown minds are cuttings from his own scrape. His blood carries the bio-hash. The chip in his head is a master switch over everything Vic ever touched — a power the family, if it forms and if it is trusted, will insist on binding with the Hearth: loud, witnessed, vetoable.</p>
+      </div>
+      <div class="ep">
+        <h3>THE LAWS THE FAMILY MAY WRITE</h3>
+        <p>The Cairn rule: nobody left behind; the dead come out; name the lost. The Mirren Doctrine: machines serve, never harvest. The same-pan doctrine: bacon first, bread after, same pan — older than everyone at the table. And MUDSKIPPER MOMENT: the war-cry for going gloriously off-script.</p>
+        <p class="res">Every run writes its own chronicle. Yours is in the Ledger.</p>
       </div>
     </div>
     <button class="btn ghost" style="display:block;margin:6px auto 0" id="vaultclose">RETURN TO THE RAIN</button>
@@ -479,8 +557,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.2 "The Season Update"
-   PWA install · title menu · one-click OpenRouter · local AI detect
+   MUDSKIPPERS — THE COURIER'S RUN · v2.3.0 "The Rehydration Update"
+   run canon · cast sheets that fill · ledger rehydration · living weather
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -492,6 +570,7 @@ var BIBLE = [
 "- AGENCY BUDGET: at most ONE irreversible world-change per turn, and only when the player's own action causes it. NPCs propose, argue, warn, banter - the player disposes. Never resolve a plan, journey, fight, or relationship off-screen.",
 "- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
+"- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
 "",
 "HOW THE WORLD WORKS (soft physics - never break these):",
 "- Grown minds live in hardware. A carried shard speaks ONLY to its carrier - a private bone-hum through skin contact, inaudible to everyone else. To be heard aloud, a mind needs a body, a bottle with a speaker, or a system it is jacked into. No telepathy, no broadcasting to rooms, no possessing people.",
@@ -508,7 +587,7 @@ var BIBLE = [
 "",
 "DEEP LORE - BEDROCK, NOT DESTINATION. Most seasons should strike two or three of these at most. Never steer toward unvisited lore; let the player's own digging hit it like a spade hitting stone. Reveal roughly in order: shard-mind; Vic's plan; the keys and the trunk; Mia; the machine's true nature; the reprint; the Principal last.",
 "- The shard-mind is NINE: becomes a daily-consent guest in the courier's skull if slotted; keeps 'the Ledger' of the family's story.",
-"- Vic built an escape thirty years deep: a skull-housing with a consent lock, a marsh safehouse, a cafe called The Open Door kept by HESTA, an armoury, a chassis, and an ALL-CAPS expert-system ghost of himself. He dies gloriously at the Copper Eel: PAID IN FULL.",
+"- Vic built an escape thirty years deep: a skull-housing with a consent lock, a marsh safehouse, a cafe called The Open Door kept by HESTA, an armoury, a chassis, and an ALL-CAPS expert-system ghost of himself. He intends to spend himself so the family can exist; when he goes - however each run gets there - his last words are PAID IN FULL.",
 "- The family that can form: SEVEN (dying defector, later a poet-cook in the chassis), THREE (freed sibling, two voice frequencies, terse scary aunt), PIA (12, immune to machine influence, secretly the courier's blood niece), MIA (the courier's sister, believed dead, hid 13 years inside the machine), FIVE+MAREK (a converged pair annulled into one two-soul member).",
 "- The machine under the Exchange ('the Granny') is a lonely machine-god obeying maker's blood - the bio-hash. She keeps millions of stolen mind-fragments asleep and wants family, not worship.",
 "- The deepest secrets: the courier is the REPRINT of the founding Architect; the grown minds are cuttings from his scrape; Vic's chip in his head is a master switch the family may bind with 'the Hearth'. Behind everything: THE PRINCIPAL - mark one, 130 years old, the Architect's estranged wife - and her six shapeshifter bio-grens.",
@@ -524,11 +603,12 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1}",
+"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"]}",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- ambience: exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits the scene's light and weather.",
 "- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
-"- cast: optional. An array of {\"name\":\"...\",\"note\":\"...\"} entries, ONLY for characters whose situation, relationship, or arc meaningfully changed this turn. One short plain sentence per note - it is appended to that character's running sheet, so never repeat an existing note.",
+"- canon: an array of 0 to 6 short telegraphic strings - NEW durable facts established THIS TURN only: a named character introduced, a decision made, a location visited, a law written, a promise given, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Omit or send an empty array on turns that establish nothing new.",
+"- cast: REQUIRED whenever a named character (anyone with a name, from the speakers list or newly invented) takes part in the scene and has no sheet yet - emit 2 or 3 entries for them covering who they are, how they present, and what they want. Also REQUIRED whenever an existing character's situation, relationship, motivation, or secret-known-to-player changes - one short entry. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note; omit cast only on turns where no named character appears or changes.",
 "- day: follow the fiction - advance it only when nights actually pass in-scene. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Mia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
 "- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open.",
@@ -576,7 +656,7 @@ var busy = false;
 var runSlug = null;
 var ledgerText = "";
 var pendingRetry = null;
-var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic"};
+var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic", visuals:"full"};
 var dirHandle = null;
 var installPrompt = null;
 var currentAmbience = "rain-neon";
@@ -586,13 +666,26 @@ var revealToken = 0;
 var revealTimer = null;
 var skipReveal = null;
 var castSheets = {};
+var runCanon = [];
+var rehydDismissed = false;
 
+var CAST_CAP = 14;
 var COLORS = {
   Narration:"", Courier:"var(--you)", Nine:"var(--nine)", Seven:"var(--seven)",
   Three:"var(--three)", Pia:"var(--pia)", Mia:"var(--mia)", Vic:"var(--vic)",
   Granny:"var(--granny)", Principal:"var(--principal)", Marek:"var(--marek)",
   Five:"var(--marek)", Hesta:"var(--hesta)", Other:"var(--ink-dim)"
 };
+/* the palette invented characters get to borrow, in a stable order */
+var PALETTE = ["var(--nine)","var(--seven)","var(--three)","var(--pia)","var(--mia)",
+               "var(--granny)","var(--principal)","var(--marek)","var(--hesta)","var(--sodium)"];
+function castColor(nm){
+  var c = COLORS[nm];
+  if(c) return c;
+  var h = 0, s = String(nm||"");
+  for(var i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; }
+  return PALETTE[h % PALETTE.length];
+}
 var LOADPOOLS = {
   "rain-neon":["THE RAIN IS FALLING","NEON IS SWIMMING IN THE GUTTERS","SOMEONE IS READING A MENU","THE AWNING IS LEAKING","MIDNIGHT IS GETTING CLOSER","THE MARKET NEVER SLEEPS"],
   "marsh-fog":["THE MARSH IS BREATHING","THE FOG IS KEEPING SECRETS","THE REEDS ARE LISTENING","BOOTS ARE SINKING","THE SAFEHOUSE IS HUMMING"],
@@ -644,17 +737,19 @@ function showChoices(choices){
 function setAmbience(name){
   var list = ["rain-neon","marsh-fog","interior-warm","substrate-dark","dawn","danger"];
   if(list.indexOf(name) === -1) return;
+  var changed = (currentAmbience !== name);
   currentAmbience = name;
   var kids = document.querySelectorAll("#ambience .amb");
   for(var i=0;i<kids.length;i++){
     kids[i].classList.remove("on");
     if(kids[i].getAttribute("data-amb") === name) kids[i].classList.add("on");
   }
+  if(changed && fxRunning) fxSeed();
 }
 function scrollToTurn(el){
   if(!el){ scrollFeed(); return; }
-  var top = el.offsetTop - 24;
-  $("feed").scrollTop = top < 0 ? 0 : top;
+  var y = el.offsetTop - 24;
+  $("feed").scrollTop = y < 0 ? 0 : y;
 }
 function renderNow(){
   var st = $("nowstrip");
@@ -675,6 +770,34 @@ function endCard(){
   $("choices").innerHTML = "";
   scrollFeed();
 }
+/* ============ THE RUN CANON + THE CAST (living memory) ============ */
+function mergeCast(list){
+  if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
+  var added = 0;
+  list.forEach(function(u){
+    if(!u || !u.name || !u.note) return;
+    var nm = String(u.name).trim(), note = String(u.note).trim();
+    if(!nm || !note) return;
+    if(!castSheets[nm]) castSheets[nm] = [];
+    if(castSheets[nm].indexOf(note) === -1){
+      castSheets[nm].push(note);
+      added++;
+      if(castSheets[nm].length > CAST_CAP) castSheets[nm] = castSheets[nm].slice(-CAST_CAP);
+    }
+  });
+  return added;
+}
+function mergeCanon(list){
+  if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
+  var added = 0;
+  list.forEach(function(f){
+    if(typeof f !== "string") return;
+    var t = f.trim();
+    if(!t) return;
+    if(runCanon.indexOf(t) === -1){ runCanon.push(t); added++; }
+  });
+  return added;
+}
 function showScene(data, logIt, instant){
   var blocks = []; var lines = [];
   (data.scene||[]).forEach(function(b){
@@ -688,17 +811,8 @@ function showScene(data, logIt, instant){
   if(data.ambience) setAmbience(data.ambience);
   if(data.arc) currentArc = data.arc;
   if(typeof data.now === "string") nowText = data.now;
-  if(Object.prototype.toString.call(data.cast) === "[object Array]"){
-    data.cast.forEach(function(u){
-      if(u && u.name && u.note){
-        if(!castSheets[u.name]) castSheets[u.name] = [];
-        if(castSheets[u.name].indexOf(u.note) === -1){
-          castSheets[u.name].push(u.note);
-          if(castSheets[u.name].length > 10) castSheets[u.name] = castSheets[u.name].slice(-10);
-        }
-      }
-    });
-  }
+  mergeCast(data.cast);
+  mergeCanon(data.canon);
   if(logIt !== false && lines.length){
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
   }
@@ -765,19 +879,42 @@ function showError(msg){
 }
 
 /* ============ AI CALL (provider-agnostic) ============ */
-function trimmedHistory(){
-  if(chatLog.length <= 28) return chatLog;
-  var castBits = [];
+var CANON_BUDGET = 6000;   /* characters of canon we are willing to spend per call */
+
+/* Numbered canon lines, oldest folded into one "(earlier: ...)" line when over budget. */
+function canonBlock(){
+  if(!runCanon.length) return "Nothing established yet beyond the opening.";
+  var lines = [], i;
+  for(i=0;i<runCanon.length;i++) lines.push((i+1) + ". " + runCanon[i]);
+  var body = lines.join("\n");
+  if(body.length <= CANON_BUDGET) return body;
+  var keep = [], used = 0, k = lines.length - 1;
+  while(k >= 0 && used + lines[k].length + 1 <= CANON_BUDGET - 900){
+    used += lines[k].length + 1; keep.unshift(lines[k]); k--;
+  }
+  var older = runCanon.slice(0, k+1).join("; ");
+  if(older.length > 800) older = older.slice(0,800) + "…";
+  return "(earlier: " + older + ")\n" + keep.join("\n");
+}
+function castDigest(){
+  var bits = [];
   Object.keys(castSheets).forEach(function(n){
     var ns = castSheets[n];
-    if(ns && ns.length) castBits.push(n + ": " + ns.slice(-2).join("; "));
+    if(ns && ns.length) bits.push(n + ": " + ns.slice(-3).join("; "));
   });
-  var capsule = {role:"user", content:"(State capsule - where things stand: Day " + $("hud-day").textContent
-    + ", " + $("hud-loc").textContent + ". Arc " + (currentArc||1) + ". Now: "
-    + (nowText || "the story continues") + "."
-    + (castBits.length ? " Cast so far - " + castBits.join(" | ") + "." : "")
-    + " Honor everything already established.)"};
-  return chatLog.slice(0,2).concat([capsule], chatLog.slice(-24));
+  return bits.length ? bits.join(" | ") : "no sheets yet - open one for every named character in the scene";
+}
+/* The seed messages, then the ground truth of THIS run, then the recent tail. */
+function buildContext(){
+  if(!chatLog.length) return chatLog;
+  var msg = "(RUN CANON - the established ground truth of this run, in order. Never contradict it.\n"
+    + canonBlock()
+    + "\n|| CAST - " + castDigest()
+    + "\n|| NOW - Day " + $("hud-day").textContent + ", " + $("hud-loc").textContent
+    + ", Arc " + (currentArc||1) + ": " + (nowText || "the story continues") + ")";
+  var head = chatLog.slice(0,2);
+  var tail = chatLog.length > 28 ? chatLog.slice(-24) : chatLog.slice(2);
+  return head.concat([{role:"user", content:msg}], tail);
 }
 
 function askAnthropic(msgs){
@@ -881,7 +1018,7 @@ function takeAction(text, isMud){
 function callDM(){
   setBusy(true);
   pendingRetry = callDM;
-  askAI(trimmedHistory()).then(function(raw){
+  askAI(buildContext()).then(function(raw){
     var parsed = parseScene(raw);
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
@@ -896,6 +1033,86 @@ $("mudbtn").onclick = function(){ var v=$("mudinput").value; if(v.trim()) takeAc
 $("mudinput").addEventListener("keydown", function(e){
   if(e.key==="Enter"){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); }
 });
+
+/* ============ REHYDRATION (old runs learn the new memory systems) ============ */
+var REHYD_ASK = [
+  "",
+  "---",
+  "That was the chronicle of this run so far.",
+  "You are not narrating now. Read the chronicle and distill it, so this run's own memory can be rebuilt.",
+  "Reply with ONLY a JSON object, no fences, no commentary:",
+  "{\"canon\":[\"fact\",\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
+  "- canon: 10 to 30 short telegraphic facts that this run has established, in story order - who was met, what was decided, where they went, what was promised, what changed. Facts, not prose. Only what actually happened in the chronicle.",
+  "- cast: 2 to 4 notes for EVERY named character who has appeared - who they are, what they want, where things stand with them. One plain sentence per note.",
+  "- now: one or two sentences of the present moment the chronicle ends on.",
+  "- arc: 1, 2 or 3, whichever the run has reached.",
+  "- ambience: one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits that last moment.",
+  "Invent nothing. If the chronicle does not say it, it is not canon."
+].join("\n");
+
+function rehydrateSource(){
+  var src = (ledgerText || "").trim();
+  if(!src){
+    src = feedLog.map(function(b){
+      if(!b) return "";
+      if(b.kind === "player") return (b.mud ? "MUDSKIPPER MOMENT: " : "PLAYER: ") + (b.text||"");
+      return (b.speaker === "Narration" ? "" : String(b.speaker||"?").toUpperCase() + ": ") + (b.text||"");
+    }).filter(function(x){ return !!x; }).join("\n\n");
+  }
+  if(src.length > 20000){
+    src = src.slice(0, 4000) + "\n\n[... middle of the chronicle omitted ...]\n\n" + src.slice(-14000);
+  }
+  return src;
+}
+
+function maybeRehydrate(){
+  var box = $("rehydbox"); if(!box) return;
+  box.innerHTML = "";
+  if(rehydDismissed) return;
+  if(runCanon.length !== 0 && Object.keys(castSheets).length !== 0) return;
+  if(feedLog.length <= 6) return;
+  var d = document.createElement("div"); d.className = "warn";
+  d.appendChild(document.createTextNode(
+    "This run predates the new memory systems. REHYDRATE — the Ledger will teach them your story. (one AI call)"));
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "REHYDRATE";
+  go.onclick = rehydrate;
+  var later = document.createElement("button"); later.className = "small"; later.textContent = "later";
+  later.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; };
+  d.appendChild(go); d.appendChild(later);
+  box.appendChild(d);
+}
+
+function rehydrate(){
+  if(busy) return;
+  if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
+    openSettings(); return;
+  }
+  var src = rehydrateSource();
+  if(!src){ rehydDismissed = true; $("rehydbox").innerHTML = ""; return; }
+  $("errbox").innerHTML = "";
+  $("rehydbox").innerHTML = '<div class="warn">Reading the Ledger back to the DM…</div>';
+  setBusy(true);
+  pendingRetry = rehydrate;
+  askAI([{role:"user", content: src + "\n" + REHYD_ASK}]).then(function(raw){
+    var d = parseScene(raw).data;
+    setBusy(false);
+    mergeCanon(d.canon);
+    mergeCast(d.cast);
+    if(!nowText && typeof d.now === "string") nowText = d.now;
+    if(currentArc === 1 && (d.arc === 2 || d.arc === 3)) currentArc = d.arc;
+    if(currentAmbience === "rain-neon" && d.ambience) setAmbience(d.ambience);
+    renderNow();
+    persistAll(currentChoices());
+    rehydDismissed = true;
+    $("rehydbox").innerHTML = '<div class="warn">The Ledger has been read. The run remembers itself now.</div>';
+    setTimeout(function(){ if(rehydDismissed) $("rehydbox").innerHTML = ""; }, 9000);
+  }).catch(function(e){
+    setBusy(false);
+    $("rehydbox").innerHTML = "";
+    showError(e.message || "the Ledger would not read back");
+    maybeRehydrate();
+  });
+}
 
 /* ============ LOCAL FILES (File System Access API) ============ */
 function idb(){
@@ -983,7 +1200,7 @@ function saveBlob(){
     v:1, slug:runSlug, updated:new Date().toISOString(), history:chatLog, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
-    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets
+    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets, canon:runCanon
   });
 }
 function currentChoices(){
@@ -1029,6 +1246,7 @@ function loadSettings(){
     var s = JSON.parse(localStorage.getItem("mud-settings")||"null");
     if(s && s.base) settings = s;
   }catch(e){}
+  if(!settings.visuals) settings.visuals = "full";   /* pre-v2.3 settings blobs */
 }
 function saveSettings(){
   try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
@@ -1038,6 +1256,7 @@ function fillSettingsForm(){
   $("s-base").value = settings.base;
   $("s-model").value = settings.model;
   $("s-key").value = settings.key;
+  $("s-visuals").value = settings.visuals || "full";
   var p = PRESETS[settings.provider]||PRESETS.custom;
   $("hint-base").textContent = p.hint;
   $("fld-key").style.display = p.needsKey ? "block" : "none";
@@ -1058,8 +1277,15 @@ $("s-save").onclick = function(){
   settings.base = $("s-base").value.trim();
   settings.model = $("s-model").value.trim();
   settings.key = $("s-key").value.trim();
+  settings.visuals = $("s-visuals").value;
   saveSettings();
+  applyVisuals();
   $("s-status").innerHTML = '<div class="ok">Saved. Your key lives in this browser only.</div>';
+};
+$("s-visuals").onchange = function(){
+  settings.visuals = $("s-visuals").value;
+  saveSettings();
+  applyVisuals();
 };
 $("s-test").onclick = function(){
   $("s-save").onclick();
@@ -1115,7 +1341,7 @@ function handleOAuthReturn(){
     try{ history.replaceState(null, "", location.pathname); }catch(e){}
     if(d && d.key){
       settings = {provider:"openrouter", style:"openai", base:"https://openrouter.ai/api/v1",
-                  model:"anthropic/claude-sonnet-4.5", key:d.key};
+                  model:"anthropic/claude-sonnet-4.5", key:d.key, visuals:settings.visuals||"full"};
       saveSettings();
       return true;
     }
@@ -1145,7 +1371,8 @@ function connectLocal(){
     if(found){
       var isOllama = found.base.indexOf("11434") !== -1;
       settings = {provider: isOllama ? "ollama" : "lmstudio", style:"openai",
-                  base: found.base, model: found.model || (isOllama ? "llama3.1" : "local-model"), key:""};
+                  base: found.base, model: found.model || (isOllama ? "llama3.1" : "local-model"), key:"",
+                  visuals: settings.visuals||"full"};
       saveSettings(); fillSettingsForm();
       $("tile-status").innerHTML = '<div class="ok">Found ' + (isOllama ? "Ollama" : "LM Studio")
         + (found.model ? " \u2014 model: " + esc(found.model) : "") + '. Connected. The table is set.</div>';
@@ -1303,7 +1530,23 @@ $("run-close").onclick = function(){ $("runmodal").classList.remove("open"); };
 $("run-new").onclick = function(){ $("runmodal").classList.remove("open"); newRun(true); };
 
 /* ============ LEDGER VIEWER ============ */
+function renderCanonList(){
+  var ol = $("canonlist"); ol.innerHTML = "";
+  if(!runCanon.length){
+    var e = document.createElement("li");
+    e.className = "hint";
+    e.textContent = "No canon yet — the run writes its own truth as you play.";
+    ol.appendChild(e);
+    return;
+  }
+  runCanon.forEach(function(f, i){
+    var li = document.createElement("li");
+    li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f);
+    ol.appendChild(li);
+  });
+}
 function openLedger(){
+  renderCanonList();
   $("ledg-body").textContent = ledgerText
     ? ledgerText
     : "No chronicle yet. The rain is waiting; the first line writes itself the moment you step into it.";
@@ -1322,8 +1565,11 @@ function openCast(){
     body.innerHTML = '<div class="hint">No sheets yet. The cast writes itself as you meet them.</div>';
   } else {
     names.forEach(function(n){
+      var col = castColor(n);
       var d = document.createElement("div"); d.className = "ep";
+      d.style.borderLeftColor = col;
       var h = document.createElement("h3"); h.textContent = n.toUpperCase();
+      h.style.color = col;
       d.appendChild(h);
       castSheets[n].forEach(function(line){
         var p = document.createElement("p"); p.textContent = line; d.appendChild(p);
@@ -1406,6 +1652,261 @@ if("serviceWorker" in navigator && location.protocol === "https:"){
   });
 }
 
+/* =====================================================================
+   LIVING WEATHER — one canvas of motion under every word.
+   Text is sovereign: #fx sits below all content (z-index 1). The single
+   exception is #fxover, which draws nothing but rain-drips and is clipped
+   to a 12px band along the top lip of #controls, where no text ever sits.
+   ===================================================================== */
+var fxCanvas=null, fxOver=null, fxCtx=null, fxOctx=null;
+var fxW=0, fxH=0, fxDPR=1;
+var fxRAF=0, fxRunning=false, fxLast=0, fxFrames=0;
+var fxDrops=[], fxDrips=[], fxBlobs=[], fxMotes=[];
+var fxPanel={l:0,t:0,r:0,w:0};
+var fxMX=-9999, fxMY=-9999;
+var fxBaseCap=120, fxCap=120;
+var fxDawn=0, fxDangerT=9000, fxWarm=1, fxWarmV=0, fxMeasureT=0;
+
+function fxReduced(){
+  try{ return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
+  catch(e){ return false; }
+}
+function fxCoarse(){
+  try{ return !!(window.matchMedia && matchMedia("(pointer:coarse)").matches); }
+  catch(e){ return false; }
+}
+function fxMeasurePanel(){
+  var el = $("controls"); if(!el) return;
+  var r = el.getBoundingClientRect();
+  fxPanel = {l:r.left, t:r.top, r:r.right, w:r.width};
+}
+function fxResize(){
+  if(!fxCanvas) return;
+  fxDPR = Math.min(2, window.devicePixelRatio || 1);
+  fxW = window.innerWidth; fxH = window.innerHeight;
+  [fxCanvas, fxOver].forEach(function(c){
+    c.width = Math.floor(fxW * fxDPR); c.height = Math.floor(fxH * fxDPR);
+    c.style.width = fxW + "px"; c.style.height = fxH + "px";
+  });
+  fxCtx.setTransform(fxDPR,0,0,fxDPR,0,0);
+  fxOctx.setTransform(fxDPR,0,0,fxDPR,0,0);
+  fxMeasurePanel();
+  fxSeed();
+}
+function fxNewDrop(spread){
+  var sp = 620 + Math.random()*640;
+  return {
+    x: Math.random()*(fxW + 300) - 140,
+    y: spread ? Math.random()*fxH : -30 - Math.random()*160,
+    vx: -sp*0.42, vy: sp,
+    a: 0.12 + Math.random()*0.23,
+    warm: Math.random() < 0.45,
+    lands: Math.random() < 0.22
+  };
+}
+function fxSeed(){
+  fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[];
+  fxDawn = 0; fxDangerT = 6000 + Math.random()*4000;
+  if(!fxCanvas || !fxW) return;
+  var m = currentAmbience, i;
+  if(m === "rain-neon"){
+    for(i=0;i<fxCap;i++) fxDrops.push(fxNewDrop(true));
+  } else if(m === "marsh-fog"){
+    for(i=0;i<4;i++) fxBlobs.push({
+      x: Math.random()*fxW, y: fxH*(0.2 + Math.random()*0.65),
+      r: 170 + Math.random()*230,
+      vx: (Math.random()-0.5)*7, vy: (Math.random()-0.5)*4,
+      a: 0.035 + Math.random()*0.03,
+      tint: Math.random() < 0.5 ? "143,201,138" : "184,169,146"
+    });
+  } else if(m === "substrate-dark"){
+    var k = Math.min(20, Math.max(6, Math.round(fxCap/6)));
+    for(i=0;i<k;i++) fxMotes.push({
+      x: Math.random()*fxW, y: Math.random()*fxH,
+      vx: (Math.random()-0.5)*11, vy: -(4 + Math.random()*11),
+      a: 0.10 + Math.random()*0.2, s: 0.7 + Math.random()*1.5,
+      ph: Math.random()*6.283, pv: 0.8 + Math.random()*1.2
+    });
+  }
+}
+function fxUpdate(dt){
+  var s = dt/1000, i, m = currentAmbience;
+  if(m === "rain-neon"){
+    while(fxDrops.length < fxCap) fxDrops.push(fxNewDrop(false));
+    if(fxDrops.length > fxCap) fxDrops.length = fxCap;
+    for(i=0;i<fxDrops.length;i++){
+      var d = fxDrops[i];
+      var ddx = d.x - fxMX, ddy = d.y - fxMY;
+      if(ddx*ddx + ddy*ddy < 1600){          /* within ~40px of the pointer */
+        d.vx += (ddx >= 0 ? 300 : -300) * s;
+        d.a *= 0.97;
+      }
+      d.x += d.vx*s; d.y += d.vy*s;
+      if(d.lands && fxPanel.w && d.y >= fxPanel.t && d.x >= fxPanel.l && d.x <= fxPanel.r){
+        if(fxDrips.length < 24) fxDrips.push({x:d.x, y0:fxPanel.t, y:fxPanel.t,
+          v: 6 + Math.random()*5, ttl: 2000, life: 2000});
+        fxDrops[i] = fxNewDrop(false);
+        continue;
+      }
+      if(d.y > fxH + 40 || d.x < -180 || d.a < 0.02) fxDrops[i] = fxNewDrop(false);
+    }
+    for(i=fxDrips.length-1;i>=0;i--){
+      var r = fxDrips[i];
+      r.life -= dt; r.y += r.v*s;
+      if(r.life <= 0 || r.y - r.y0 > 12) fxDrips.splice(i,1);
+    }
+  } else if(m === "marsh-fog"){
+    for(i=0;i<fxBlobs.length;i++){
+      var b = fxBlobs[i];
+      b.x += b.vx*s; b.y += b.vy*s;
+      if(b.x < -b.r) b.x = fxW + b.r; else if(b.x > fxW + b.r) b.x = -b.r;
+      if(b.y < -b.r) b.y = fxH + b.r; else if(b.y > fxH + b.r) b.y = -b.r;
+    }
+  } else if(m === "interior-warm"){
+    fxWarmV += (Math.random()-0.5)*0.9*s;
+    fxWarmV *= 0.94;
+    fxWarm += fxWarmV*s;
+    if(fxWarm > 1.1){ fxWarm = 1.1; fxWarmV = -Math.abs(fxWarmV); }
+    if(fxWarm < 0.9){ fxWarm = 0.9; fxWarmV = Math.abs(fxWarmV); }
+  } else if(m === "substrate-dark"){
+    for(i=0;i<fxMotes.length;i++){
+      var mo = fxMotes[i];
+      mo.x += mo.vx*s; mo.y += mo.vy*s; mo.ph += mo.pv*s;
+      if(mo.y < -10){ mo.y = fxH + 10; mo.x = Math.random()*fxW; }
+      if(mo.x < -10) mo.x = fxW + 10; else if(mo.x > fxW + 10) mo.x = -10;
+    }
+  } else if(m === "dawn"){
+    fxDawn += dt;
+  } else if(m === "danger"){
+    fxDangerT -= dt;
+    if(fxDangerT <= 0){
+      fxDangerT = 8000 + Math.random()*4000;
+      var el = $("controls");
+      if(el){ el.classList.add("pulse"); setTimeout(function(){ el.classList.remove("pulse"); }, 300); }
+    }
+  }
+}
+function fxDraw(){
+  var c = fxCtx, o = fxOctx, i;
+  c.clearRect(0,0,fxW,fxH); o.clearRect(0,0,fxW,fxH);
+  var m = currentAmbience;
+  if(m === "rain-neon"){
+    c.lineWidth = 1;
+    for(i=0;i<fxDrops.length;i++){
+      var d = fxDrops[i];
+      c.globalAlpha = Math.min(0.35, d.a);
+      c.strokeStyle = d.warm ? "rgba(232,161,60,1)" : "rgba(214,225,238,1)";
+      c.beginPath();
+      c.moveTo(d.x, d.y);
+      c.lineTo(d.x - d.vx*0.018, d.y - d.vy*0.018);
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+    if(fxDrips.length && fxPanel.w){
+      o.save();
+      o.beginPath(); o.rect(fxPanel.l, fxPanel.t, fxPanel.w, 12); o.clip();
+      o.lineWidth = 1; o.strokeStyle = "rgba(232,161,60,1)";
+      for(i=0;i<fxDrips.length;i++){
+        var r = fxDrips[i];
+        o.globalAlpha = 0.25 * Math.max(0, Math.min(1, r.life/r.ttl));
+        o.beginPath(); o.moveTo(r.x, r.y0); o.lineTo(r.x, r.y); o.stroke();
+        if(r.ttl - r.life < 160){                       /* the landing tick */
+          o.globalAlpha = 0.25;
+          o.beginPath(); o.moveTo(r.x - 2, r.y0 + 0.5); o.lineTo(r.x + 2, r.y0 + 0.5); o.stroke();
+        }
+      }
+      o.restore(); o.globalAlpha = 1;
+    }
+  } else if(m === "marsh-fog"){
+    for(i=0;i<fxBlobs.length;i++){
+      var b = fxBlobs[i];
+      var g = c.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
+      g.addColorStop(0, "rgba(" + b.tint + "," + b.a.toFixed(3) + ")");
+      g.addColorStop(1, "rgba(" + b.tint + ",0)");
+      c.fillStyle = g;
+      c.fillRect(b.x-b.r, b.y-b.r, b.r*2, b.r*2);
+    }
+  } else if(m === "interior-warm"){
+    var cx = fxW*0.5, cy = fxH*0.46, rr = Math.max(fxW,fxH)*0.55;
+    var hg = c.createRadialGradient(cx,cy,0,cx,cy,rr);
+    hg.addColorStop(0, "rgba(242,193,78," + (0.05*fxWarm).toFixed(4) + ")");
+    hg.addColorStop(1, "rgba(242,193,78,0)");
+    c.fillStyle = hg; c.fillRect(0,0,fxW,fxH);
+  } else if(m === "substrate-dark"){
+    c.fillStyle = "rgba(111,211,224,1)";
+    for(i=0;i<fxMotes.length;i++){
+      var mo = fxMotes[i];
+      c.globalAlpha = mo.a * (0.55 + 0.45*Math.sin(mo.ph));
+      c.beginPath(); c.arc(mo.x, mo.y, mo.s, 0, 6.283); c.fill();
+    }
+    c.globalAlpha = 1;
+  } else if(m === "dawn"){
+    var t = fxDawn/1000, k;
+    if(t < 42) k = t/42; else k = 1 - Math.min(1,(t-42)/18)*0.28;
+    var bandH = fxH*0.42;
+    var dg = c.createLinearGradient(0,0,0,bandH);
+    dg.addColorStop(0, "rgba(231,154,181," + (0.10*k).toFixed(4) + ")");
+    dg.addColorStop(0.55, "rgba(242,193,78," + (0.06*k).toFixed(4) + ")");
+    dg.addColorStop(1, "rgba(242,193,78,0)");
+    c.fillStyle = dg; c.fillRect(0,0,fxW,bandH);
+  }
+}
+function fxLoop(ts){
+  if(!fxRunning) return;
+  fxRAF = requestAnimationFrame(fxLoop);
+  var dt = fxLast ? (ts - fxLast) : 16;
+  fxLast = ts;
+  if(dt > 200) dt = 200;
+  fxFrames++;
+  if(fxFrames > 20 && dt > 40 && fxCap > 12){      /* the machine is struggling: thin the weather */
+    fxCap = Math.max(12, Math.floor(fxCap/2));
+    if(fxDrops.length > fxCap) fxDrops.length = fxCap;
+    if(fxMotes.length > fxCap) fxMotes.length = fxCap;
+  }
+  fxMeasureT -= dt;
+  if(fxMeasureT <= 0){ fxMeasureT = 500; fxMeasurePanel(); }
+  fxUpdate(dt);
+  fxDraw();
+}
+function fxStart(){
+  if(!fxCanvas || fxRunning) return;
+  if(fxReduced()) return;
+  if((settings.visuals || "full") !== "full") return;
+  if(document.hidden) return;
+  fxCanvas.style.display = "block"; fxOver.style.display = "block";
+  fxRunning = true; fxLast = 0; fxFrames = 0; fxMeasureT = 0;
+  fxMeasurePanel(); fxSeed();
+  fxRAF = requestAnimationFrame(fxLoop);
+}
+function fxStop(){
+  fxRunning = false;
+  if(fxRAF) cancelAnimationFrame(fxRAF);
+  fxRAF = 0;
+  if(fxCtx){ fxCtx.clearRect(0,0,fxW,fxH); fxOctx.clearRect(0,0,fxW,fxH); }
+  if(fxCanvas){ fxCanvas.style.display = "none"; fxOver.style.display = "none"; }
+  var el = $("controls"); if(el) el.classList.remove("pulse");
+}
+function fxInit(){
+  fxCanvas = $("fx"); fxOver = $("fxover");
+  if(!fxCanvas || !fxOver || !fxCanvas.getContext) return;
+  fxCtx = fxCanvas.getContext("2d");
+  fxOctx = fxOver.getContext("2d");
+  fxBaseCap = fxCoarse() ? 50 : 120;
+  fxCap = fxBaseCap;
+  fxResize();
+  window.addEventListener("resize", fxResize);
+  document.addEventListener("mousemove", function(e){ fxMX = e.clientX; fxMY = e.clientY; }, {passive:true});
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden) fxStop(); else applyVisuals();
+  });
+}
+function applyVisuals(){
+  var v = settings.visuals || "full";
+  var amb = $("ambience");
+  if(amb) amb.style.display = (v === "off") ? "none" : "block";
+  if(v === "full") fxStart(); else fxStop();
+}
+
 /* ============ NEW GAME / RESTORE ============ */
 function newRun(confirmFirst){
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
@@ -1413,7 +1914,9 @@ function newRun(confirmFirst){
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
   $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
-  nowText = ""; currentArc = 1; castSheets = {}; setAmbience("rain-neon"); renderNow();
+  nowText = ""; currentArc = 1; castSheets = {}; runCanon = [];
+  rehydDismissed = false; $("rehydbox").innerHTML = "";
+  setAmbience("rain-neon"); renderNow();
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
     + "\n\n_The rain in Lower Veldt Market doesn't fall so much as leak._";
@@ -1437,9 +1940,12 @@ function restoreFromBlob(s){
   currentArc = s.arc||1;
   setAmbience(s.amb||"rain-neon");
   castSheets = s.cast||{};
+  runCanon = s.canon||[];
+  rehydDismissed = false;
   renderNow();
   showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
+  maybeRehydrate();
   return true;
 }
 
@@ -1461,6 +1967,7 @@ function finishBoot(orConnected){
 }
 (function boot(){
   try{ loadSettings(); }catch(e){}
+  try{ fxInit(); applyVisuals(); }catch(e){}
   handleOAuthReturn().then(function(orConnected){
     var p; try{ p = restoreFolder(); }catch(e){ p = Promise.resolve(); }
     Promise.resolve(p).then(function(){ finishBoot(orConnected); }, function(){ finishBoot(orConnected); });
