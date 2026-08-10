@@ -53,6 +53,30 @@ On Firefox/Safari, saves live in the browser and the ledger downloads on demand.
 The ledger is designed to be handed to any AI assistant ("here's my run, pick up as
 the DM"). Everything needed to continue a run lives in that one readable file.
 
+### How a run remembers itself
+
+The AI is stateless between turns, so the game keeps the memory rather than the
+transcript. Three things carry a run forward:
+
+- **RUN CANON** — short factual lines the DM writes each turn. Older eras get
+  compressed into a **CHRONICLE** by the DM itself, during a normal turn, so a
+  three-hundred-turn season costs no more context than a thirty-turn one.
+- **CAST STATE** — per character: who they have **met**, what they **know**, and
+  their current **status**. This is what stops people re-introducing themselves to
+  family they have known for a hundred turns.
+- **The ledger** — the readable chronicle, never touched by any of the above.
+
+**REBUILD MEMORY** (in the LEDGER panel) has the AI re-read the whole chronicle
+chapter by chapter and rebuild canon and relationships from it. Useful for runs
+started before this system existed. It tells you how many AI calls it will cost
+before it starts, and it never alters a word of your story.
+
+> **Save compatibility.** Saves from v2.7 onward store cast sheets as structured
+> objects. Older saves load fine and are migrated on the spot, but a v2.7 save is
+> **not** readable by a pre-v2.7 client. This only matters if you hand a folder-save
+> JSON to an old cached copy of the game — the hosted version and the installed app
+> both update themselves.
+
 ## New Game
 
 Starts a completely fresh run at **Day 1** — and creates a brand-new save + ledger
