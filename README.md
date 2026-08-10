@@ -80,6 +80,23 @@ The DM does not decide the plot and cannot wander off it:
 The **LEDGER** panel and the courier's terminal both show the board: which beat you
 are on, which arc, how many turns it has left, and how far along the season you are.
 
+### The courier can die
+
+He is mortal now, and it is permanent. No resurrection, no substrate copy, no
+last-minute save — his death ends the season on the spot and the only way on is a
+new game.
+
+But it is never a coin flip. The game itself enforces the one rule that makes real
+stakes fair: **nothing kills him that you were not warned about.** Before death is
+possible the DM must declare **peril** — the threat named plainly in the prose, the
+room gone red, a strip above your choices reading **ONE MORE WRONG MOVE**, and at
+least one of the three choices a genuine way out. Only then, and only for two turns,
+can the wrong answer be fatal. A death sent without that warning is rejected: the DM
+is told to write the turn again, and if it insists, the death is dropped and you live.
+
+Mudskipper moments are still safe. Being wild is not fatal; knowingly walking into
+the thing that was just named as lethal is.
+
 ### Pressure you can see
 
 You are never told a turn count — you're shown one. As a beat runs out of room the

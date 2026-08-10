@@ -345,6 +345,33 @@
   #pressure.t3{color:#f09a9a;border-color:#8d3a3a;background:#2b1111;animation:ppulse 1.1s ease-in-out infinite}
   /* never dip far: this is the loudest thing on the screen and it must stay readable */
   @keyframes ppulse{0%,100%{opacity:.80}50%{opacity:1}}
+  /* MORTAL PERIL — louder than any amount of board pressure, and a different red */
+  #tension.peril{
+    opacity:1;box-shadow:inset 0 0 250px rgba(150,18,18,.48);
+    animation:perilbeat .92s ease-in-out infinite;
+  }
+  @keyframes perilbeat{0%,100%{filter:brightness(.78)}50%{filter:brightness(1.4)}}
+  #tension.over{opacity:1;box-shadow:inset 0 0 230px rgba(150,18,18,.40)}
+  #pressure.peril{
+    color:#ff9d9d;border-color:#a83a3a;background:#300d0d;
+    animation:ppulse .82s ease-in-out infinite;
+  }
+  /* the end of a run, either way it comes */
+  .endcard{text-align:center;margin:34px 0 14px}
+  .end-h{
+    font-family:ui-monospace,Menlo,monospace;letter-spacing:.4em;color:var(--gold);
+    font-size:20px;text-shadow:0 0 24px rgba(242,193,78,.4);margin-bottom:10px;
+  }
+  .end-s{font-style:italic;color:var(--ink-dim);font-size:13px;margin-bottom:14px;line-height:1.6}
+  .end-s2{
+    font-style:italic;color:#8a7c68;font-size:12.5px;line-height:1.7;
+    max-width:430px;margin:0 auto 16px;
+  }
+  .endcard.dead .end-h{
+    color:#e06a6a;text-shadow:0 0 26px rgba(190,52,44,.55);
+    animation:deadfade 2.4s ease-out;
+  }
+  @keyframes deadfade{from{opacity:0;letter-spacing:1.1em}to{opacity:1;letter-spacing:.4em}}
   /* ---- THE SHARD ----
      The one out of the icon. It falls slowly, settles on the lip of the controls
      panel where the rain already lands, and can be picked up and dropped anywhere.
@@ -598,7 +625,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.3.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -872,7 +899,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.2.0 "The Board"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.3.0 "Mortality"
+   the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
    the client keeps the books · derived relationships · one ask per turn
@@ -882,7 +910,7 @@
 
 /* ============ THE BIBLE (canon, baked in) ============ */
 var BIBLE = [
-"You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then let consequences land later.",
+"You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then let consequences land later. Those consequences now include his death - see MORTALITY.",
 "",
 "TABLE MANNERS - CRITICAL:",
 "- AGENCY BUDGET: at most ONE irreversible world-change per turn, and only when the player's own action causes it - EXCEPT when the board says PRESSURE or FORCING, which is the world's own turn to move. NPCs propose, argue, warn, banter - the player disposes. Never resolve a plan, journey, fight, or relationship off-screen.",
@@ -893,6 +921,16 @@ var BIBLE = [
 "- THE GAME KEEPS THE BOOKS, NOT YOU. The client watches every scene and records for itself who was present, who has now met whom, where everyone was last seen, and every journey between places. You do not need to report any of that. Spend your effort on the things only you know: what just happened (canon), what a character has now LEARNED (knows), and how the world feels. Each turn asks you for at most one piece of bookkeeping, and you may decline it.",
 "- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
+"",
+"MORTALITY - THE COURIER CAN DIE, AND IT IS REAL:",
+"- The courier is mortal. His death is permanent: it ends the season on the spot. No resurrection, no substrate copy, no backup, no last-minute save. The player starts a new run or nothing. Write every scene knowing that is now true.",
+"- DEATH MUST BE EARNED AND IT MUST BE SEEN COMING. You may never kill him out of nowhere. The sequence is ALWAYS: you declare peril, the player gets a turn to answer it, and only then can the wrong answer be fatal.",
+"- DECLARING PERIL: the moment the courier is one wrong move from dying, send \"peril\": true and make the threat unmissable in the prose - name the thing that will kill him, say plainly that it will, and make at least one of your three choices a real way out. Peril covers that turn and the next.",
+"- KILLING HIM: only while peril is live, and only when the player's own choice walks into the thing you named. Send \"death\": \"one plain line on how he died\". Write that moment as your final scene. Do not soften it, do not fade out, do not leave a door open.",
+"- THE GAME REFUSES A DEATH THAT NOBODY SAW COMING. If you send death without having declared peril, it will be rejected and you will be told to write the turn again - the player will not have died. So declare the peril properly and let them answer it.",
+"- NEVER kill for a joke. A MUDSKIPPER MOMENT that is merely wild is not fatal; bend the world around it as you always have. A MUDSKIPPER MOMENT that knowingly walks into the lethal thing you just named is another matter.",
+"- Do not use death as pacing and do not invent peril to fill a quiet turn. At most one peril inside a beat, and only where the fiction genuinely has teeth: Hollows with hands on him, a gun already drawn and aimed, a fall, fire, water, the Principal's bio-grens, the Choir's intake, or the substrate with his body left unattended.",
+"- The stakes are real for everyone else too. The family can be hurt, taken, and killed - record that in the roster's fallen list - but the courier's death is the only one that ends the season.",
 "",
 "MECHANICS - HOW THINGS WORK (hard rules, never break, never hand-wave):",
 "- VESSELS are a strict capability ladder. A mind can do only what its vessel allows.",
@@ -947,7 +985,7 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes.",
 "- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, threads, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
@@ -960,6 +998,8 @@ var BIBLE = [
 "    Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see. The game paints all twelve differently, so choosing the exact one is the difference between the player seeing the room and seeing a default.",
 "- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
 "- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" field; the board owns the arc.",
+"- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
+"- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
 "- canon: REQUIRED ON EVERY TURN. An array of 1 to 3 short telegraphic strings - what THIS TURN made true that the board did not already decide: what the player chose, what it cost, who witnessed it, what a character gave away, a promise given, an amendment to the past. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Never repeat a fact already in the context block, and never write canon that reaches past the board - no facts about locked reveals, no facts about beats not yet played. Even a quiet turn establishes something. Never send an empty array.",
 "- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
@@ -1501,19 +1541,58 @@ function renderNow(){
   $("w-amb").style.color = amb.tint;
   $("w-amb").title = "on the glass: " + amb.label.toLowerCase();
 }
-function endCard(){
+/* kind: "season" (he made it) or "death" (he did not). Either way the run is over
+   and the only way on is a new one. */
+function endCard(kind, line){
+  var dead = (kind === "death");
   var d = document.createElement("div");
-  d.style.cssText = "text-align:center;margin:30px 0 10px";
-  d.innerHTML = '<div style="font-family:ui-monospace,Menlo,monospace;letter-spacing:.4em;color:var(--gold);font-size:20px;text-shadow:0 0 24px rgba(242,193,78,.4);margin-bottom:10px">PAID IN FULL</div>'
-    + '<div style="font-style:italic;color:var(--ink-dim);font-size:13px;margin-bottom:14px">Season complete. The chronicle survives the courier.</div>';
-  var b1 = document.createElement("button"); b1.className = "btn"; b1.textContent = "DOWNLOAD THE LEDGER";
-  b1.onclick = function(){ if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown"); };
-  var b2 = document.createElement("button"); b2.className = "btn ghost"; b2.style.marginLeft = "8px"; b2.textContent = "NEW SEASON";
-  b2.onclick = function(){ newRun(true); };
+  d.className = "endcard" + (dead ? " dead" : "");
+  var head = dead ? "THE COURIER IS DEAD" : "PAID IN FULL";
+  var sub  = dead
+    ? (line ? esc(line) : "The rain takes it from here.")
+    : "Season complete. The chronicle survives the courier.";
+  d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
+    + (dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
+            + 'another night, and the same rain. Start again?</div>' : '');
+  var b1 = document.createElement("button");
+  b1.className = dead ? "btn" : "btn ghost";
+  b1.textContent = dead ? "NEW GAME" : "NEW SEASON";
+  b1.onclick = function(){ newRun(true); };
+  var b2 = document.createElement("button");
+  b2.className = dead ? "btn ghost" : "btn";
+  b2.style.marginLeft = "8px";
+  b2.textContent = "DOWNLOAD THE LEDGER";
+  b2.onclick = function(){ if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown"); };
   d.appendChild(b1); d.appendChild(b2);
   $("feedinner").appendChild(d);
   $("choices").innerHTML = "";
+  lockRun();
   scrollFeed();
+}
+/* A finished run is read-only: no more turns, from the buttons or the text box. */
+function lockRun(){
+  $("choices").innerHTML = "";
+  var mi = $("mudinput"), mb = $("mudbtn");
+  if(mi){ mi.disabled = true; mi.value = ""; mi.placeholder = "The run is over. Start a new game."; }
+  if(mb) mb.disabled = true;
+}
+/* THE DEATH. The client owns it: it ends the run, freezes the board, drops the
+   weather into danger and writes the last line of the chronicle itself. */
+function killCourier(line){
+  if(runOver) return;
+  runOver = "death";
+  deathLine = (typeof line === "string" && line.trim()) ? line.trim() : "";
+  perilTurns = 0;
+  if(deathLine){
+    runCanon.push("THE COURIER DIED. " + deathLine);
+    ledgerText += "\n\n---\n\n**THE COURIER IS DEAD.** " + deathLine + "\n";
+  } else {
+    ledgerText += "\n\n---\n\n**THE COURIER IS DEAD.**\n";
+  }
+  setAmbience("danger");
+  try{ fxStrike(3); }catch(e){}
+  applyTension();
+  endCard("death", deathLine);
 }
 /* ============ THE RUN CANON + THE CAST (living memory) ============ */
 /* met never evicts: a full list refuses new names rather than forgetting a face.
@@ -1744,7 +1823,11 @@ function showScene(data, logIt, instant){
   mergeCast(data.cast);
   deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
   mergeCanon(data.canon);       /* the DM's colour first... */
-  if(data.__live) boardTurn(data);   /* ...then the beat's fixed canon, if the gate fell */
+  if(data.__live){
+    if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
+    if(data.peril === true || data.peril === "true") perilTurns = 2;   /* this turn and the next */
+    boardTurn(data);            /* ...then the beat's fixed canon, if the gate fell */
+  }
   harvestCompaction(data);
   if(logIt !== false && lines.length){
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
@@ -1765,8 +1848,14 @@ function showScene(data, logIt, instant){
     if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
     applyTension();
     renderNow();
+    /* the death scene is read first, then the run closes behind it */
+    if(data.__live && typeof data.death === "string" && data.death.trim()){
+      killCourier(data.death);
+      persistAll([]);
+      return;
+    }
     showChoices(choices);
-    if(data.the_end || beatDone()) endCard();
+    if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
   }
   if(instant || els.length === 0){
@@ -1801,7 +1890,7 @@ function setBusy(v){
   if(v){ var pool=(LOADPOOLS[currentAmbience]||[]).concat(LOADPOOLS.generic); $("loading").textContent = pool[Math.floor(Math.random()*pool.length)]; }
   var els = document.querySelectorAll(".choice");
   for(var i=0;i<els.length;i++) els[i].disabled = v;
-  $("mudbtn").disabled = v; $("mudinput").disabled = v;
+  $("mudbtn").disabled = v || !!runOver; $("mudinput").disabled = v || !!runOver;
   if(v) scrollFeed();
 }
 
@@ -2021,7 +2110,7 @@ function advanceBeat(forced){
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
-  if(beatDone()) return;
+  if(beatDone() || runOver) return;
   beatTurns++;
   var said = data && (data.gate === true || data.gate === "true");
   if(said || forcingNow) advanceBeat(!said);
@@ -2041,6 +2130,14 @@ function boardLine(){
    boardDirective() uses, read one turn ahead - what the player sees is the pressure
    the NEXT turn will be written under. */
 var lastTension = 0, beatJustCleared = null;
+/* ---- MORTALITY ----
+   The courier can die, and the client is the one thing standing between "real
+   stakes" and "killed by a coin flip". The rule it enforces is simple and absolute:
+   no death without a peril declared on this turn or the last one. That guarantees
+   the player always got a plain warning and at least one choice before the end. */
+var perilTurns = 0;          /* turns for which a declared peril stays lethal */
+var runOver = "";            /* "" | "season" | "death" - a finished run is read-only */
+var deathLine = "";
 var PRESSURE_TEXT = [
   "",
   "SOMETHING IS ABOUT TO GIVE",
@@ -2048,6 +2145,7 @@ var PRESSURE_TEXT = [
   "OUT OF ROOM"
 ];
 function boardTension(){
+  if(perilTurns > 0) return 3;        /* mortal danger reads as maximum pressure */
   if(beatDone()) return 0;
   var b = beatNow();
   if(beatTurns >= b.budget + 1) return 3;
@@ -2058,6 +2156,15 @@ function boardTension(){
 /* strike: true when the tension has just climbed, which is the world's own move
    landing. Called on every turn and on restore; only a climb hits. */
 function applyTension(quiet){
+  /* a finished run has no pressure left in it - the strip goes, and a death leaves
+     the room red but still, not pulsing at somebody reading an epitaph */
+  if(runOver){
+    lastTension = 0; fxTension = 0;
+    var eo = $("tension"); if(eo) eo.className = (runOver === "death") ? "over" : "";
+    var po = $("pressure"); if(po){ po.className = ""; po.innerHTML = ""; }
+    try{ shardWake(); }catch(e){}
+    return;
+  }
   var t = boardTension();
   var climbed = !quiet && t > lastTension;   /* quiet: a restore, not a turn */
   lastTension = t;
@@ -2065,7 +2172,7 @@ function applyTension(quiet){
 
   var el = $("tension");
   if(el){
-    el.className = t ? ("t" + t) : "";
+    el.className = (t ? ("t" + t) : "") + (perilTurns > 0 ? " peril" : "");
     if(climbed && t >= 2){
       /* restart the strike animation: a class the element already has does nothing */
       el.classList.remove("hit"); void el.offsetWidth; el.classList.add("hit");
@@ -2078,8 +2185,9 @@ function applyTension(quiet){
     else {
       var ticks = "";
       for(var i = 1; i <= 3; i++) ticks += '<i' + (i <= t ? ' class="lit"' : '') + '></i>';
-      p.innerHTML = '<span class="ticks">' + ticks + '</span><span>' + PRESSURE_TEXT[t] + '</span>';
-      p.className = "on t" + t;
+      var label = perilTurns > 0 ? "ONE MORE WRONG MOVE" : PRESSURE_TEXT[t];
+      p.innerHTML = '<span class="ticks">' + ticks + '</span><span>' + label + '</span>';
+      p.className = "on t" + t + (perilTurns > 0 ? " peril" : "");
     }
   }
   if(climbed && t >= 2) fxStrike(t);
@@ -2299,7 +2407,7 @@ function parseScene(raw){
 
 /* ============ GAME LOOP ============ */
 function takeAction(text, isMud){
-  if(busy || !text || !text.trim()) return;
+  if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); }
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
     openSettings(); return;
@@ -2331,7 +2439,14 @@ function fallenSpeakers(data){
   });
   return out;
 }
+/* The one rule the client will not let the DM break: nobody dies without a warning
+   the player could see and answer. A death with no live peril is not a death. */
+function deathRefused(data){
+  if(!data || typeof data.death !== "string" || !data.death.trim()) return false;
+  return perilTurns <= 0;
+}
 function callDM(corrected){
+  if(runOver) return;
   setBusy(true);
   pendingRetry = function(){ callDM(corrected); };
   var msgs = buildContext();
@@ -2349,6 +2464,20 @@ function callDM(corrected){
     }
     if(violated.length && window.console && console.warn){
       console.warn("[mudskippers] roster violation stood after one correction:", violated.join(", "));
+    }
+    if(deathRefused(parsed.data)){
+      if(!corrected){
+        return callDM("(CORRECTION: you killed the courier without ever declaring peril."
+          + " The player had no warning and no chance to answer it, so that death does not stand."
+          + " Rewrite this turn: put him in the danger, send \"peril\": true, name plainly what is"
+          + " about to kill him, and give three choices including at least one real way out."
+          + " Do NOT send \"death\" this turn.)");
+      }
+      /* it insisted. The player still does not die unwarned - the death is dropped. */
+      delete parsed.data.death;
+      if(window.console && console.warn){
+        console.warn("[mudskippers] refused an unearned death: no peril was ever declared");
+      }
     }
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
@@ -2586,7 +2715,8 @@ function saveBlob(){
     milestones:milestones, threadsOpen:threadsOpen, threadsClosed:threadsClosed,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
-    beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale
+    beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale,
+    over:runOver, deathLine:deathLine, peril:perilTurns
   });
 }
 function currentChoices(){
@@ -3418,7 +3548,12 @@ $("term-ledger").onclick = function(){ $("termmodal").classList.remove("open"); 
 function refreshTitle(){
   if(runSlug){
     $("t-continue").style.display = "block";
-    $("t-continue-sub").textContent = "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
+    /* a dead courier is not a run you continue - say so before they click it */
+    $("t-continue-sub").textContent = runOver === "death"
+      ? "This courier is dead. Start a new game."
+      : runOver === "season"
+        ? "Season complete \u2014 Day " + $("hud-day").textContent
+        : "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
   } else {
     var active = null, mm = null;
     try{ active = localStorage.getItem("mud-active"); mm = loadRunsMap(); }catch(e){}
@@ -4135,6 +4270,9 @@ var SHARD_LINES = {
 };
 var SHARD_PRESSURE = ["SOMETHING IS COMING. I CAN FEEL IT IN THE GLASS.",
                       "OUT OF TIME. WHATEVER YOU ARE GOING TO DO — NOW."];
+var SHARD_PERIL = ["DO NOT DIE. I HAVE ONLY JUST MET YOU.",
+                   "THIS ONE KILLS PEOPLE. PICK THE OTHER THING.",
+                   "I CANNOT CARRY YOU. PLEASE."];
 
 /* ---- WHAT THE AIR IS LIKE, PER SKY ----
    g      downward pull (px/s^2)      drag  how thick the air is
@@ -4330,6 +4468,9 @@ function shardKnock(){
    always the first of a session, and it wanders back to it now and then. */
 function shardLine(){
   if(!shardSaidOnce){ shardSaidOnce = true; return SHARD_SAYS; }
+  if(perilTurns > 0){                    /* it has nothing witty to say about dying */
+    return SHARD_PERIL[Math.floor(Math.random()*SHARD_PERIL.length)];
+  }
   if(Math.random() < 0.08) return SHARD_SAYS;
   var pool = (fxTension >= 2) ? SHARD_PRESSURE
            : (SHARD_LINES[currentAmbience] || SHARD_LINES["rain-neon"]);
@@ -4489,7 +4630,11 @@ function newRun(confirmFirst){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatJustCleared = null; lastTension = 0; applyTension(true);
+  beatJustCleared = null; lastTension = 0;
+  runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
+  $("mudinput").disabled = false; $("mudbtn").disabled = false;
+  $("mudinput").placeholder = "…or go off the flowchart. Type anything.";
+  applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
   $("hud-loc").textContent = String(OPENING.location).toUpperCase();
@@ -4547,9 +4692,14 @@ function restoreFromBlob(s){
   if(!beatDone()) currentArc = beatNow().arc;   /* the board is the arc, always */
   turnsSinceSync = s.sync||0;
   rehydDismissed = false;
+  runOver = (s.over === "death" || s.over === "season") ? s.over : "";
+  deathLine = s.deathLine || "";
+  perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
   renderNow();
-  showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
+  /* a run that ended stays ended, however it is reloaded */
+  if(runOver) endCard(runOver, deathLine);
+  else showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   maybeRehydrate();
   maybeBoardBanner();
