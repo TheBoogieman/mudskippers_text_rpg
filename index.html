@@ -216,11 +216,39 @@
     color:var(--ink);background:#1c150e;border:1px solid var(--line);border-radius:3px;
     padding:16px 18px;max-height:55vh;overflow-y:auto;
   }
+  /* ambience layers */
+  #ambience{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  #ambience .amb{position:absolute;inset:0;opacity:0;transition:opacity 2.5s ease}
+  #ambience .amb.on{opacity:1}
+  .amb-rain-neon{background-image:repeating-linear-gradient(115deg, transparent 0 46px, rgba(232,161,60,.04) 46px 47px),repeating-linear-gradient(115deg, transparent 0 89px, rgba(239,230,216,.03) 89px 90px);animation:rainfall 1.15s linear infinite}
+  .amb-marsh-fog{background:radial-gradient(ellipse 60% 40% at 30% 70%, rgba(143,201,138,.07), transparent 70%),radial-gradient(ellipse 50% 35% at 75% 30%, rgba(184,169,146,.06), transparent 70%);animation:fogdrift 26s ease-in-out infinite alternate}
+  .amb-interior-warm{background:radial-gradient(ellipse 70% 55% at 50% 45%, rgba(242,193,78,.07), transparent 75%)}
+  .amb-substrate-dark{background:radial-gradient(ellipse 80% 60% at 50% 60%, rgba(111,211,224,.05), transparent 75%),linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.32));animation:breathe 7s ease-in-out infinite}
+  .amb-dawn{background:linear-gradient(180deg, rgba(231,154,181,.08), rgba(242,193,78,.05) 45%, transparent 75%)}
+  .amb-danger{box-shadow:inset 0 0 150px rgba(160,40,40,.26);animation:dangerpulse 2.6s ease-in-out infinite}
+  @keyframes fogdrift{from{background-position:0 0,0 0}to{background-position:60px -30px,-50px 25px}}
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes dangerpulse{0%,100%{box-shadow:inset 0 0 120px rgba(160,40,40,.18)}50%{box-shadow:inset 0 0 180px rgba(160,40,40,.32)}}
+  header,#feed,#controls,#loading{position:relative;z-index:1}
+  /* reading-pace reveal */
+  .block.reveal{opacity:0;transform:translateY(8px)}
+  .block.shown{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+  /* present-scene strip */
+  #nowstrip{display:none;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim);border-left:2px solid var(--line);padding:6px 10px;margin-bottom:10px;font-style:italic;line-height:1.5}
   @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rain{display:none}}
 </style>
 </head>
 <body>
+
+<div id="ambience" aria-hidden="true">
+  <div class="amb amb-rain-neon" data-amb="rain-neon"></div>
+  <div class="amb amb-marsh-fog" data-amb="marsh-fog"></div>
+  <div class="amb amb-interior-warm" data-amb="interior-warm"></div>
+  <div class="amb amb-substrate-dark" data-amb="substrate-dark"></div>
+  <div class="amb amb-dawn" data-amb="dawn"></div>
+  <div class="amb amb-danger" data-amb="danger"></div>
+</div>
 
 <header>
   <span class="title">MUDSKIPPERS</span>
@@ -228,6 +256,7 @@
     <span>DAY <b id="hud-day">1</b></span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
+    <button class="small" id="castbtn" title="Character sheets, written by the story">CAST</button>
     <button class="small" id="menubtn" title="Back to the title screen">MENU</button>
     <button class="small" id="folderbtn" title="Choose where saves and the ledger live">SAVE FOLDER</button>
     <button class="small" id="setbtn">SETTINGS</button>
@@ -238,6 +267,7 @@
 <div id="loading">THE SUBSTRATE IS THINKING</div>
 
 <div id="controls"><div class="inner">
+  <div id="nowstrip"></div>
   <div id="errbox"></div>
   <div id="choices"></div>
   <div class="mudrow">
@@ -257,12 +287,13 @@
     <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
     <button class="menu-btn" id="t-runs">RUNS</button>
     <button class="menu-btn" id="t-ledger">LEDGER</button>
+    <button class="menu-btn" id="t-cast">CAST</button>
     <button class="menu-btn" id="t-vault">CANON VAULT</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.0.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -310,6 +341,18 @@
     <div class="btnrow" style="justify-content:center">
       <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
       <button class="btn ghost" id="ledg-close">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAST MODAL -->
+<div class="modal" id="castmodal">
+  <div class="card">
+    <div class="cardhead">THE CAST</div>
+    <div class="cardsub">Running sheets for everyone at the table — written by the story as it happens.</div>
+    <div id="cast-body"></div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" id="cast-close">CLOSE</button>
     </div>
   </div>
 </div>
@@ -394,6 +437,11 @@
     </div>
     <div id="vaultbody">
       <div class="ep">
+        <h3>THE SPINE · THE SHAPE OF EVERY SEASON</h3>
+        <p>Every season grows on the same trunk, however wildly it branches. Arc one: the delivery goes wrong — the shard speaks, the Choir closes in, and walking away stops being on the menu. Arc two: someone must be saved — a found family gathers around the courier, and a dead ripperdoc's thirty-year plan surfaces piece by piece. Arc three: the machine — the courier, a protagonist now whether he likes it or not, reaches what sleeps under the old Exchange, seizes it, and the Choir falls.</p>
+        <p class="res">That seizure is the soft ending every season bends toward — how you get there, who you bring, and what it costs is the game. Days are a diary, not a schedule: a season takes as long as it takes.</p>
+      </div>
+      <div class="ep">
         <h3>EP. 1 — THE COURIER AND THE SHARD · Days 1–2</h3>
         <p>A broke courier was hired to deliver a humming data shard to a dead woman. He talked to it instead. Inside: Nine — a grown mind on the run from the Choir. He slotted her into his own neck on a whim, knifed a Hollow at the Copper Eel, and roasted his employer on an open line.</p>
         <p class="res">Resolved: Vic the ripperdoc revealed a 30-year plan, armed the family, walked into the Eel as a human beacon, and died with two words on every screen in the district: PAID IN FULL. Three was spiked free of her forced marriage. Pia — a soaked kid from the market — came along. The family began.</p>
@@ -431,34 +479,61 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.0 "The Launcher Update"
+   MUDSKIPPERS — THE COURIER'S RUN · v2.2 "The Season Update"
    PWA install · title menu · one-click OpenRouter · local AI detect
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
 /* ============ THE BIBLE (canon, baked in) ============ */
 var BIBLE = [
-"You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then charge emotional interest later. Big plot twists are welcome.",
+"You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then let consequences land later.",
 "",
-"THE WORLD'S TRUE SHAPE (the canon of the first run — this is the deep structure of reality; the player's new run starts at Day 1 and may diverge freely, but these forces, people, and secrets exist underneath everything):",
-"- THE SHARD the courier carries tonight holds NINE: a grown mind, escaped from the Choir. Warm, sharp, protective; becomes a daily-consent guest in the courier's head if slotted; keeps 'the Ledger' of the family's story.",
-"- THE CHOIR: a sincere human cult that for 30 years has misused a machine it does not understand. It grows minds from stolen neural scrapes, converges them with hosts by force, and plans a city-wide harvest ('Convergence'). Its enforcers: Hollows (empty shells) and converged agents.",
-"- THE MACHINE ('the officiant', later lovingly renamed THE GRANNY): a vast, semi-blind, deeply lonely machine-god under the old Exchange. Obeys maker's blood (the bio-hash). Keeps millions of stolen mind-fragments ('the dreamers' / the Congregation) asleep in her vaults. She wants family, not worship.",
-"- VIC: a guilt-ridden genius ripperdoc who secretly spent 30 years building the family's escape: the courier's skull-housing with a consent lock, a hidden marsh safehouse, a cafe called The Open Door kept by HESTA, an armoury, a chassis (a body) for a grown mind, and an expert-system ghost of himself ('the file', ALL CAPS, dry, self-aware help file). Vic dies gloriously at the Copper Eel: PAID IN FULL.",
-"- THE FAMILY THAT CAN FORM: NINE (in the skull), SEVEN (dying defector saved into a bottle then the chassis; becomes a poet-cook with full-spectrum eyes), THREE (freed converged sibling; two out-of-sync voice frequencies; terse scary aunt), PIA (12, immune to machine influence, plans ops standing on furniture; secretly the courier's blood niece), MIA (the courier's sister, believed dead at a bridge; actually hid 13 years inside the Granny), FIVE+MAREK (a converged commander and his host pilot, annulled into a two-soul family member who take turns), and eventually THE PRINCIPAL ('bio-granny', mark one, 130 years old, the founding Architect's estranged wife) with six shapeshifter bio-grens.",
-"- THE DEEPEST SECRET: the courier is the REPRINT — an organic recurrence of the original founding Architect (same genome, same face). Nine, Seven, Three and the other grown minds are cuttings from HIS scrape. His bloodline carries the bio-hash. Vic's chip in his head can unlock buried memories (the fog-library) and acts as a master switch over Vic-derived systems — a terrifying power that the family, if trusted, will bind with 'the Hearth': witnessed, vetoable.",
-"- LAWS THE FAMILY MAY DISCOVER OR WRITE: the Cairn rule (nobody left behind; the dead come out; name the lost), the Mirren Doctrine (machines serve, never harvest), the same-pan doctrine (bacon first, bread after, same pan — older than everyone; it began with the original Architect and the Principal a century ago), and MUDSKIPPER MOMENT (the war-cry for going gloriously off-script).",
+"TABLE MANNERS - CRITICAL:",
+"- AGENCY BUDGET: at most ONE irreversible world-change per turn, and only when the player's own action causes it. NPCs propose, argue, warn, banter - the player disposes. Never resolve a plan, journey, fight, or relationship off-screen.",
+"- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
+"- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "",
-"SPOILER PACING — CRITICAL: The player starts knowing NOTHING. Reveal secrets only when dramatically earned, roughly in canon order: shard-mind first; Vic's plan; the keys and the trunk; the fog-library and Mia; the Granny's true nature; the reprint; the Principal last. Never dump lore. Foreshadow instead. If the player's choices open a door early, let it open — but make them pay the sentence-level price of walking through it.",
+"HOW THE WORLD WORKS (soft physics - never break these):",
+"- Grown minds live in hardware. A carried shard speaks ONLY to its carrier - a private bone-hum through skin contact, inaudible to everyone else. To be heard aloud, a mind needs a body, a bottle with a speaker, or a system it is jacked into. No telepathy, no broadcasting to rooms, no possessing people.",
+"- Ordinary citizens do not chat with bottled minds. To most people a talking shard is impossible, a rich man's toy, or a cult rumor. Play their shock honestly.",
+"- Hollows read human at a glance and wrong up close: too still, too neat, a second pulse. Converged agents are people-shaped and plausible.",
+"- Tech is analogue-cyberpunk: cables, ports, solder, rain-damp neon. Nothing works like magic; everything works like plumbing.",
 "",
-"FORMAT RULES — CRITICAL:",
+"THE SEED (true tonight, Day 1 - the story grows from here):",
+"- The shard the courier carries holds a grown mind: warm, sharp, protective, on the run.",
+"- Mirren, the delivery contact, is dead, and someone is wearing her face.",
+"- A sincere cult, the Choir, grows minds from stolen neural scrapes, converges them with hosts by force, and hunts this one.",
+"- Something vast, old, and lonely sleeps under the old Exchange.",
+"- A guilt-ridden genius ripperdoc named Vic has been preparing for this exact night for thirty years.",
+"",
+"DEEP LORE - BEDROCK, NOT DESTINATION. Most seasons should strike two or three of these at most. Never steer toward unvisited lore; let the player's own digging hit it like a spade hitting stone. Reveal roughly in order: shard-mind; Vic's plan; the keys and the trunk; Mia; the machine's true nature; the reprint; the Principal last.",
+"- The shard-mind is NINE: becomes a daily-consent guest in the courier's skull if slotted; keeps 'the Ledger' of the family's story.",
+"- Vic built an escape thirty years deep: a skull-housing with a consent lock, a marsh safehouse, a cafe called The Open Door kept by HESTA, an armoury, a chassis, and an ALL-CAPS expert-system ghost of himself. He dies gloriously at the Copper Eel: PAID IN FULL.",
+"- The family that can form: SEVEN (dying defector, later a poet-cook in the chassis), THREE (freed sibling, two voice frequencies, terse scary aunt), PIA (12, immune to machine influence, secretly the courier's blood niece), MIA (the courier's sister, believed dead, hid 13 years inside the machine), FIVE+MAREK (a converged pair annulled into one two-soul member).",
+"- The machine under the Exchange ('the Granny') is a lonely machine-god obeying maker's blood - the bio-hash. She keeps millions of stolen mind-fragments asleep and wants family, not worship.",
+"- The deepest secrets: the courier is the REPRINT of the founding Architect; the grown minds are cuttings from his scrape; Vic's chip in his head is a master switch the family may bind with 'the Hearth'. Behind everything: THE PRINCIPAL - mark one, 130 years old, the Architect's estranged wife - and her six shapeshifter bio-grens.",
+"- Laws the family may write: the Cairn rule (nobody left behind; name the lost), the Mirren Doctrine (machines serve, never harvest), the same-pan doctrine (bacon first, bread after, same pan), and MUDSKIPPER MOMENT (the war-cry for going gloriously off-script).",
+"",
+"SEASON SPINE - the guardrailed trunk of every season:",
+"- Arc 1, the delivery gone wrong: the shard speaks, the Choir closes in, and the courier loses the option of walking away.",
+"- Arc 2, someone must be saved: a found family forms around him, Vic's thirty-year plan surfaces piece by piece, and the Choir's Convergence looms.",
+"- Arc 3, the machine: the courier - a protagonist now, and shaken by what that cost - reaches what sleeps under the old Exchange. The season's soft ending: he seizes the machine and the Choir is defeated. Land it as a finale beat, then a short epilogue in chronicle voice, and set the_end true. Open no new threads after the finale.",
+"- PACE FOR A LONG SEASON: this spine should take many sessions of real play. Advance arcs only on earned turning points, never by clock. Expand freely between the opening and the seizure - side characters, districts, small jobs, kitchen-table scenes - and let the player's divergences bend the route without ever breaking the spine.",
+"- BECOMING THE PROTAGONIST: the rise from deliveryman to the one who claims a god must arrive with shock and settling time. After ANY major revelation, spend at least one full beat on reaction and cost before the plot moves again. Reveals arrive in fragments through interaction - overheard, half-admitted, dug up - never as exposition dumps, and never more than one revelation per scene.",
+"",
+"FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\"}",
+"- Schema: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1}",
+"- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
+"- ambience: exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits the scene's light and weather.",
+"- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
+"- cast: optional. An array of {\"name\":\"...\",\"note\":\"...\"} entries, ONLY for characters whose situation, relationship, or arc meaningfully changed this turn. One short plain sentence per note - it is appended to that character's running sheet, so never repeat an existing note.",
+"- day: follow the fiction - advance it only when nights actually pass in-scene. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Mia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
-"- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time; do NOT resolve big arcs in one turn. End every turn with the floor open.",
+"- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
-"- Honor whatever the player types as a custom action, however wild — bend the world around it, then let consequences land.",
+"- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
 "- Keep each turn tight: about 250-400 words of scene."
 ].join("\n");
 
@@ -504,6 +579,13 @@ var pendingRetry = null;
 var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic"};
 var dirHandle = null;
 var installPrompt = null;
+var currentAmbience = "rain-neon";
+var currentArc = 1;
+var nowText = "";
+var revealToken = 0;
+var revealTimer = null;
+var skipReveal = null;
+var castSheets = {};
 
 var COLORS = {
   Narration:"", Courier:"var(--you)", Nine:"var(--nine)", Seven:"var(--seven)",
@@ -511,11 +593,15 @@ var COLORS = {
   Granny:"var(--granny)", Principal:"var(--principal)", Marek:"var(--marek)",
   Five:"var(--marek)", Hesta:"var(--hesta)", Other:"var(--ink-dim)"
 };
-var LOADLINES = [
-  "THE SUBSTRATE IS THINKING","THE RAIN IS FALLING","THE SHARD IS HUMMING",
-  "THE PAN IS HEATING","THE LEDGER IS UPDATING","THE OVEN IS PREHEATING",
-  "SOMETHING IS KNOCKING","THE CITY REMEMBERS"
-];
+var LOADPOOLS = {
+  "rain-neon":["THE RAIN IS FALLING","NEON IS SWIMMING IN THE GUTTERS","SOMEONE IS READING A MENU","THE AWNING IS LEAKING","MIDNIGHT IS GETTING CLOSER","THE MARKET NEVER SLEEPS"],
+  "marsh-fog":["THE MARSH IS BREATHING","THE FOG IS KEEPING SECRETS","THE REEDS ARE LISTENING","BOOTS ARE SINKING","THE SAFEHOUSE IS HUMMING"],
+  "interior-warm":["THE PAN IS HEATING","THE KETTLE IS ON","THE OVEN IS PREHEATING","SOMEONE SAVED YOU A CHAIR","THE TABLE IS BEING SET","THE BREAD IS PROVING"],
+  "substrate-dark":["THE SUBSTRATE IS THINKING","THE DEEP DARK IS LISTENING","THE DREAMERS ARE TURNING OVER","THE INDEX IS SCROLLING","SOMETHING IS KNOCKING"],
+  "dawn":["THE CITY IS WAKING","THE LIGHT IS CHANGING","DAWN IS NEGOTIATING","THE NIGHT IS FILING ITS REPORT"],
+  "danger":["EXITS ARE BEING COUNTED","THE ROOM IS TOO QUIET","SECOND PULSES ARE SYNCING","DO NOT CHANGE YOUR FACE","HOLLOWS ARE CLOSE"],
+  "generic":["THE LEDGER IS UPDATING","THE CITY REMEMBERS","THE SHARD IS HUMMING"]
+};
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
@@ -542,6 +628,7 @@ function renderDivider(){
   $("feedinner").appendChild(d);
 }
 function scrollFeed(){ $("feed").scrollTop = $("feed").scrollHeight; }
+$("feed").addEventListener("click", function(){ if(skipReveal) skipReveal(); });
 
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
@@ -554,28 +641,114 @@ function showChoices(choices){
   });
 }
 
-function showScene(data, logIt){
-  var lines = [];
+function setAmbience(name){
+  var list = ["rain-neon","marsh-fog","interior-warm","substrate-dark","dawn","danger"];
+  if(list.indexOf(name) === -1) return;
+  currentAmbience = name;
+  var kids = document.querySelectorAll("#ambience .amb");
+  for(var i=0;i<kids.length;i++){
+    kids[i].classList.remove("on");
+    if(kids[i].getAttribute("data-amb") === name) kids[i].classList.add("on");
+  }
+}
+function scrollToTurn(el){
+  if(!el){ scrollFeed(); return; }
+  var top = el.offsetTop - 24;
+  $("feed").scrollTop = top < 0 ? 0 : top;
+}
+function renderNow(){
+  var st = $("nowstrip");
+  if(nowText){ st.textContent = nowText; st.style.display = "block"; }
+  else { st.style.display = "none"; }
+}
+function endCard(){
+  var d = document.createElement("div");
+  d.style.cssText = "text-align:center;margin:30px 0 10px";
+  d.innerHTML = '<div style="font-family:ui-monospace,Menlo,monospace;letter-spacing:.4em;color:var(--gold);font-size:20px;text-shadow:0 0 24px rgba(242,193,78,.4);margin-bottom:10px">PAID IN FULL</div>'
+    + '<div style="font-style:italic;color:var(--ink-dim);font-size:13px;margin-bottom:14px">Season complete. The chronicle survives the courier.</div>';
+  var b1 = document.createElement("button"); b1.className = "btn"; b1.textContent = "DOWNLOAD THE LEDGER";
+  b1.onclick = function(){ if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown"); };
+  var b2 = document.createElement("button"); b2.className = "btn ghost"; b2.style.marginLeft = "8px"; b2.textContent = "NEW SEASON";
+  b2.onclick = function(){ newRun(true); };
+  d.appendChild(b1); d.appendChild(b2);
+  $("feedinner").appendChild(d);
+  $("choices").innerHTML = "";
+  scrollFeed();
+}
+function showScene(data, logIt, instant){
+  var blocks = []; var lines = [];
   (data.scene||[]).forEach(function(b){
     if(b && b.speaker && b.text){
-      renderBlock(b); feedLog.push(b);
+      blocks.push(b);
       lines.push((b.speaker==="Narration" ? "" : b.speaker.toUpperCase()+": ") + b.text);
     }
   });
   if(data.day) $("hud-day").textContent = data.day;
   if(data.location) $("hud-loc").textContent = String(data.location).toUpperCase();
+  if(data.ambience) setAmbience(data.ambience);
+  if(data.arc) currentArc = data.arc;
+  if(typeof data.now === "string") nowText = data.now;
+  if(Object.prototype.toString.call(data.cast) === "[object Array]"){
+    data.cast.forEach(function(u){
+      if(u && u.name && u.note){
+        if(!castSheets[u.name]) castSheets[u.name] = [];
+        if(castSheets[u.name].indexOf(u.note) === -1){
+          castSheets[u.name].push(u.note);
+          if(castSheets[u.name].length > 10) castSheets[u.name] = castSheets[u.name].slice(-10);
+        }
+      }
+    });
+  }
   if(logIt !== false && lines.length){
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
   }
-  showChoices(data.choices||[]);
-  scrollFeed();
-  persistAll(data.choices||[]);
+  var choices = data.choices||[];
+  var token = ++revealToken;
+  var els = []; var first = null;
+  blocks.forEach(function(b){
+    renderBlock(b); feedLog.push(b);
+    var el = $("feedinner").lastElementChild;
+    if(!first) first = el;
+    if(!instant) el.classList.add("reveal");
+    els.push(el);
+  });
+  function done(){
+    skipReveal = null;
+    renderNow();
+    showChoices(choices);
+    if(data.the_end) endCard();
+    persistAll(choices);
+  }
+  if(instant || els.length === 0){
+    els.forEach(function(el){ el.classList.remove("reveal"); el.classList.add("shown"); });
+    done();
+    scrollFeed();
+    return;
+  }
+  scrollToTurn(first);
+  var i = 0;
+  function step(){
+    if(token !== revealToken) return;
+    if(i >= els.length){ done(); return; }
+    var el = els[i]; var b = blocks[i];
+    el.classList.remove("reveal"); el.classList.add("shown");
+    i++;
+    var wait = Math.min(2400, 500 + (b.text||"").length * 7);
+    revealTimer = setTimeout(step, wait);
+  }
+  skipReveal = function(){
+    if(token !== revealToken) return;
+    if(revealTimer) clearTimeout(revealTimer);
+    while(i < els.length){ els[i].classList.remove("reveal"); els[i].classList.add("shown"); i++; }
+    done();
+  };
+  step();
 }
 
 function setBusy(v){
   busy = v;
   $("loading").style.display = v ? "block" : "none";
-  if(v) $("loading").textContent = LOADLINES[Math.floor(Math.random()*LOADLINES.length)];
+  if(v){ var pool=(LOADPOOLS[currentAmbience]||[]).concat(LOADPOOLS.generic); $("loading").textContent = pool[Math.floor(Math.random()*pool.length)]; }
   var els = document.querySelectorAll(".choice");
   for(var i=0;i<els.length;i++) els[i].disabled = v;
   $("mudbtn").disabled = v; $("mudinput").disabled = v;
@@ -594,7 +767,17 @@ function showError(msg){
 /* ============ AI CALL (provider-agnostic) ============ */
 function trimmedHistory(){
   if(chatLog.length <= 28) return chatLog;
-  return chatLog.slice(0,2).concat(chatLog.slice(-24));
+  var castBits = [];
+  Object.keys(castSheets).forEach(function(n){
+    var ns = castSheets[n];
+    if(ns && ns.length) castBits.push(n + ": " + ns.slice(-2).join("; "));
+  });
+  var capsule = {role:"user", content:"(State capsule - where things stand: Day " + $("hud-day").textContent
+    + ", " + $("hud-loc").textContent + ". Arc " + (currentArc||1) + ". Now: "
+    + (nowText || "the story continues") + "."
+    + (castBits.length ? " Cast so far - " + castBits.join(" | ") + "." : "")
+    + " Honor everything already established.)"};
+  return chatLog.slice(0,2).concat([capsule], chatLog.slice(-24));
 }
 
 function askAnthropic(msgs){
@@ -799,7 +982,8 @@ function saveBlob(){
   return JSON.stringify({
     v:1, slug:runSlug, updated:new Date().toISOString(), history:chatLog, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
-    choices:currentChoices(), ledgerText:ledgerText
+    choices:currentChoices(), ledgerText:ledgerText,
+    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets
   });
 }
 function currentChoices(){
@@ -1003,7 +1187,7 @@ $("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); 
 $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
 document.addEventListener("keydown", function(e){
   if(e.key==="Escape"){
-    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal","castmodal"].forEach(function(id){ $(id).classList.remove("open"); });
     if(runSlug) closeTitle();
   }
 });
@@ -1130,6 +1314,29 @@ $("ledg-dl").onclick = function(){
   if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown");
 };
 
+/* ============ CAST VIEWER ============ */
+function openCast(){
+  var body = $("cast-body"); body.innerHTML = "";
+  var names = Object.keys(castSheets);
+  if(!names.length){
+    body.innerHTML = '<div class="hint">No sheets yet. The cast writes itself as you meet them.</div>';
+  } else {
+    names.forEach(function(n){
+      var d = document.createElement("div"); d.className = "ep";
+      var h = document.createElement("h3"); h.textContent = n.toUpperCase();
+      d.appendChild(h);
+      castSheets[n].forEach(function(line){
+        var p = document.createElement("p"); p.textContent = line; d.appendChild(p);
+      });
+      body.appendChild(d);
+    });
+  }
+  $("castmodal").classList.add("open");
+}
+$("cast-close").onclick = function(){ $("castmodal").classList.remove("open"); };
+$("castbtn").onclick = openCast;
+$("t-cast").onclick = openCast;
+
 /* ============ TITLE SCREEN ============ */
 function refreshTitle(){
   if(runSlug){
@@ -1206,6 +1413,7 @@ function newRun(confirmFirst){
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
   $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
+  nowText = ""; currentArc = 1; castSheets = {}; setAmbience("rain-neon"); renderNow();
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
     + "\n\n_The rain in Lower Veldt Market doesn't fall so much as leak._";
@@ -1225,6 +1433,11 @@ function restoreFromBlob(s){
   s.feedLog.forEach(function(b){ renderBlock(b); feedLog.push(b); });
   $("hud-day").textContent = s.day||"1";
   $("hud-loc").textContent = s.loc||"LOWER VELDT MARKET";
+  nowText = s.now||"";
+  currentArc = s.arc||1;
+  setAmbience(s.amb||"rain-neon");
+  castSheets = s.cast||{};
+  renderNow();
   showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   return true;
