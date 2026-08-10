@@ -769,7 +769,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.4 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.5 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1073,7 +1073,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.4 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.5 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1512,11 +1512,11 @@ var SPINE = [
 
 /* ============ PROVIDER PRESETS ============ */
 var PRESETS = {
-  anthropic:{style:"anthropic", base:"https://api.anthropic.com", model:"claude-sonnet-4-5", needsKey:true,
+  anthropic:{style:"anthropic", base:"https://api.anthropic.com", model:"claude-sonnet-5", needsKey:true,
     hint:"Get a key at console.anthropic.com. Called directly from this page; the key never leaves your machine except to Anthropic."},
   openai:{style:"openai", base:"https://api.openai.com/v1", model:"gpt-4o", needsKey:true,
     hint:"Get a key at platform.openai.com."},
-  openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-4.5", needsKey:true,
+  openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-5", needsKey:true,
     hint:"One key, any model. Or use the one-click Connect button above — no pasting."},
   ollama:{style:"openai", base:"http://localhost:11434/v1", model:"llama3.1", needsKey:false,
     hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* so this page may connect."},
@@ -1597,7 +1597,9 @@ var CONTEXT_BUDGET = 11000;   /* the board is served on top of the memory, never
 /* The save no longer carries the whole conversation - the CANON, the CAST and the
    LEDGER are the memory now, and a short tail of messages keeps the voice steady. */
 var HISTORY_KEEP = 8;
-var CONTEXT_TAIL = 16;
+/* 12 messages = the last 6 exchanges. The context block is the memory; the tail
+   only keeps the voice steady, and it is the second-largest cost of every turn. */
+var CONTEXT_TAIL = 12;
 
 var CAST_CAP = 14;      /* notes per character */
 var MET_CAP = 12;       /* met is permanent - full means refuse, never forget */
@@ -2555,7 +2557,12 @@ function askAnthropic(msgs){
       "anthropic-version":"2023-06-01",
       "anthropic-dangerous-direct-browser-access":"true"
     },
-    body: JSON.stringify({model:settings.model, max_tokens:REPLY_TOKENS, system:BIBLE, messages:msgs})
+    /* the BIBLE never changes, so it is marked cacheable: reads of the cached
+       prefix bill at ~10% of input price whenever turns land inside the cache
+       window, which is exactly how this game is played */
+    body: JSON.stringify({model:settings.model, max_tokens:REPLY_TOKENS,
+      system:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}],
+      messages:msgs})
   }).then(function(r){ return r.json(); }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
     if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
@@ -2566,8 +2573,13 @@ function askAnthropic(msgs){
 
 function askOpenAI(msgs, useAltTokenParam, capTokens){
   var cap = capTokens || REPLY_TOKENS;
+  /* OpenRouter passes cache_control through to Anthropic models (and ignores it
+     elsewhere); local and generic endpoints get the plain string they expect */
+  var sysMsg = (settings.provider === "openrouter")
+    ? {role:"system", content:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}]}
+    : {role:"system", content:BIBLE};
   var body = {model:settings.model,
-    messages:[{role:"system",content:BIBLE}].concat(msgs)};
+    messages:[sysMsg].concat(msgs)};
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
@@ -2972,6 +2984,16 @@ function loadSettings(){
     if(s && s.base) settings = s;
   }catch(e){}
   if(!settings.visuals) settings.visuals = "full";   /* pre-v2.3 settings blobs */
+  /* players still on an old DEFAULT model ride along to the current one; a model
+     the player typed themselves is never touched */
+  var OLD_DEFAULT_MODELS = {
+    "claude-sonnet-4-5": "claude-sonnet-5",
+    "anthropic/claude-sonnet-4.5": "anthropic/claude-sonnet-5"
+  };
+  if(OLD_DEFAULT_MODELS[settings.model]){
+    settings.model = OLD_DEFAULT_MODELS[settings.model];
+    saveSettings();
+  }
 }
 function saveSettings(){
   try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
@@ -3066,7 +3088,7 @@ function handleOAuthReturn(){
     try{ history.replaceState(null, "", location.pathname); }catch(e){}
     if(d && d.key){
       settings = {provider:"openrouter", style:"openai", base:"https://openrouter.ai/api/v1",
-                  model:"anthropic/claude-sonnet-4.5", key:d.key, visuals:settings.visuals||"full"};
+                  model:"anthropic/claude-sonnet-5", key:d.key, visuals:settings.visuals||"full"};
       saveSettings();
       return true;
     }
