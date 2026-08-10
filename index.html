@@ -737,7 +737,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.4.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1041,7 +1041,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.0 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.4.1 "MUD//OS"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2525,10 +2525,11 @@ function askAnthropic(msgs){
   });
 }
 
-function askOpenAI(msgs, useAltTokenParam){
+function askOpenAI(msgs, useAltTokenParam, capTokens){
+  var cap = capTokens || REPLY_TOKENS;
   var body = {model:settings.model,
     messages:[{role:"system",content:BIBLE}].concat(msgs)};
-  if(useAltTokenParam) body.max_completion_tokens = REPLY_TOKENS; else body.max_tokens = REPLY_TOKENS;
+  if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
   return fetch(settings.base.replace(/\/$/,"") + "/chat/completions", {
@@ -2536,12 +2537,22 @@ function askOpenAI(msgs, useAltTokenParam){
   }).then(function(r){ return r.json(); }).then(function(data){
     if(data.error){
       var m = (data.error.message||"") + "";
-      if(!useAltTokenParam && m.indexOf("max_tokens") !== -1) return askOpenAI(msgs, true);
+      /* OpenRouter refuses the whole request when the CEILING outruns the key's
+         remaining credit, and names the affordable number. Take the hint once:
+         retry with a cap that fits. Checked before the alt-param fallback,
+         because this message also happens to contain "max_tokens". */
+      var aff = m.match(/afford (\d+)/i);
+      if(aff && !capTokens){
+        var fits = Math.floor(parseInt(aff[1], 10) * 0.95);
+        if(fits >= 700) return askOpenAI(msgs, useAltTokenParam, fits);
+      }
+      if(!useAltTokenParam && m.indexOf("max_tokens") !== -1) return askOpenAI(msgs, true, capTokens);
       throw new Error(m || "provider error");
     }
     var ch = data.choices && data.choices[0];
     if(!ch || !ch.message) throw new Error("empty reply from provider");
-    if(ch.finish_reason === "length") throw new Error("the reply hit the token ceiling and was cut off");
+    if(ch.finish_reason === "length") throw new Error("the reply hit the token ceiling and was cut off"
+      + (capTokens ? " - the ceiling was lowered to fit this key's remaining credit, so topping up will also fix this" : ""));
     return ch.message.content || "";
   });
 }
