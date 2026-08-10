@@ -247,6 +247,60 @@
   #fx{position:fixed;inset:0;pointer-events:none;z-index:1;display:none}
   #fxover{position:fixed;inset:0;pointer-events:none;z-index:3;display:none}
   header,#feed,#controls,#loading{position:relative;z-index:2}
+
+  /* THE COURIER'S TERMINAL — a wrist unit clipped to the right edge.
+     Thematic: everything it opens is also reachable from the header. */
+  #watch{
+    position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:4;
+    background:linear-gradient(180deg,#241b11,#171009);
+    border:1px solid var(--line);border-right:none;border-radius:6px 0 0 6px;
+    padding:12px 7px 12px 8px;cursor:pointer;display:flex;
+    box-shadow:-6px 0 22px rgba(0,0,0,.45);transition:border-color .15s,box-shadow .15s;
+  }
+  #watch:hover{border-color:var(--sodium);box-shadow:-6px 0 26px rgba(232,161,60,.18)}
+  .w-face{
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    background:#0e1410;border:1px solid #2b3a2f;border-radius:3px;
+    padding:10px 6px;position:relative;overflow:hidden;
+  }
+  .w-face:before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(180deg,transparent 0 2px,rgba(0,0,0,.35) 2px 3px);
+  }
+  .w-strap{width:100%;height:4px;background:#2a2119;border-radius:2px;margin:5px 0}
+  .w-line{
+    font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.14em;
+    color:var(--seven);writing-mode:vertical-rl;text-orientation:mixed;
+    text-shadow:0 0 6px rgba(143,201,138,.5);
+  }
+  .w-day{font-family:ui-monospace,Menlo,monospace;font-size:10px;color:var(--granny);letter-spacing:.06em}
+  .w-day b{color:var(--gold);font-weight:700}
+  .w-dot{width:5px;height:5px;border-radius:50%;background:var(--seven);box-shadow:0 0 7px var(--seven);animation:wpulse 3.4s ease-in-out infinite}
+  .w-dot.busy{background:var(--gold);box-shadow:0 0 7px var(--gold);animation-duration:1s}
+  @keyframes wpulse{0%,100%{opacity:.35}50%{opacity:1}}
+  @media (max-width:700px){ #watch{padding:9px 5px 9px 6px} .w-line{font-size:7.5px} }
+
+  /* terminal modal */
+  .term{font-family:ui-monospace,Menlo,monospace}
+  #term-now{
+    font-size:11.5px;line-height:1.6;color:var(--ink-dim);font-style:italic;
+    border-left:2px solid var(--line);padding:6px 10px;margin-bottom:14px;
+  }
+  .term-h{
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;
+    color:var(--sodium);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;
+  }
+  .term-h span{color:var(--ink-dim);letter-spacing:.06em;font-size:9.5px;font-style:italic;font-family:Georgia,serif}
+  #term-canon,#term-cast{
+    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;
+    color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
+    padding:9px 11px;max-height:26vh;overflow-y:auto;list-style:none;margin-bottom:16px;
+  }
+  #term-canon li{margin-bottom:4px}
+  #term-canon li b{color:var(--seven);font-weight:600;margin-right:6px}
+  #term-cast div{margin-bottom:5px}
+  #term-cast b{font-weight:600;margin-right:6px}
+  #term-status{min-height:18px;margin-top:4px}
   #controls{transition:border-top-color .3s ease,box-shadow .3s ease}
   #controls.pulse{border-top-color:#8d4a4a;box-shadow:0 -1px 22px rgba(160,40,40,.22)}
   /* rehydration banner — gold, not alarm */
@@ -279,6 +333,15 @@
 </div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <canvas id="fxover" aria-hidden="true"></canvas>
+
+<button id="watch" title="The courier's terminal — canon, cast, ledger">
+  <span class="w-face">
+    <span class="w-line">MUD//OS</span>
+    <span class="w-strap"></span>
+    <span class="w-day">D<b id="w-day">1</b></span>
+    <span class="w-dot" id="w-dot"></span>
+  </span>
+</button>
 
 <header>
   <span class="title">MUDSKIPPERS</span>
@@ -324,7 +387,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.3.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v2.4.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -377,6 +440,26 @@
       <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
       <button class="btn ghost" id="ledg-close">CLOSE</button>
     </div>
+  </div>
+</div>
+
+<!-- COURIER'S TERMINAL MODAL -->
+<div class="modal" id="termmodal">
+  <div class="card term">
+    <div class="cardhead">COURIER'S TERMINAL</div>
+    <div class="cardsub">Strapped to your wrist since the first job. It remembers what you can't.</div>
+    <div id="term-now"></div>
+    <div class="term-h">RUN CANON <span>what this run has made true</span></div>
+    <ol id="term-canon"></ol>
+    <div class="term-h">CAST <span>who is in it with you</span></div>
+    <div id="term-cast"></div>
+    <div class="btnrow">
+      <button class="btn gold" id="term-sync">REHYDRATE AND SAVE</button>
+      <button class="btn ghost" id="term-ledger">LEDGER</button>
+      <button class="btn ghost" id="term-close">CLOSE</button>
+    </div>
+    <div id="term-status"></div>
+    <div class="hint" id="term-auto"></div>
   </div>
 </div>
 
@@ -550,6 +633,7 @@
         <p class="res">Every run writes its own chronicle. Yours is in the Ledger.</p>
       </div>
     </div>
+    <div class="hint" style="text-align:center;margin:4px 0 14px">This vault is where every run <i>starts</i> — the world as it stands before you touch it. What your run makes of it is a separate document: the RUN CANON and the chronicle, both in the courier's terminal.</div>
     <button class="btn ghost" style="display:block;margin:6px auto 0" id="vaultclose">RETURN TO THE RAIN</button>
   </div>
 </div>
@@ -557,8 +641,8 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.3.0 "The Rehydration Update"
-   run canon · cast sheets that fill · ledger rehydration · living weather
+   MUDSKIPPERS — THE COURIER'S RUN · v2.4.0 "The Terminal Update"
+   the courier's terminal · canon + cast as the save · rain you can see
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -571,6 +655,7 @@ var BIBLE = [
 "- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
+"- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "HOW THE WORLD WORKS (soft physics - never break these):",
 "- Grown minds live in hardware. A carried shard speaks ONLY to its carrier - a private bone-hum through skin contact, inaudible to everyone else. To be heard aloud, a mind needs a body, a bottle with a speaker, or a system it is jacked into. No telepathy, no broadcasting to rooms, no possessing people.",
@@ -607,8 +692,8 @@ var BIBLE = [
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- ambience: exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits the scene's light and weather.",
 "- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
-"- canon: an array of 0 to 6 short telegraphic strings - NEW durable facts established THIS TURN only: a named character introduced, a decision made, a location visited, a law written, a promise given, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Omit or send an empty array on turns that establish nothing new.",
-"- cast: REQUIRED whenever a named character (anyone with a name, from the speakers list or newly invented) takes part in the scene and has no sheet yet - emit 2 or 3 entries for them covering who they are, how they present, and what they want. Also REQUIRED whenever an existing character's situation, relationship, motivation, or secret-known-to-player changes - one short entry. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note; omit cast only on turns where no named character appears or changes.",
+"- canon: REQUIRED ON EVERY TURN. An array of 1 to 4 short telegraphic strings - durable facts newly established THIS TURN: a named character introduced, a decision made, a place entered, a law written, a promise given, a threat revealed, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Even a quiet turn establishes something - a mood set, a door left open, a question asked and dodged. Never send an empty array.",
+"- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
 "- day: follow the fiction - advance it only when nights actually pass in-scene. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Mia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
 "- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open.",
@@ -632,6 +717,16 @@ var OPENING = {
     "Duck into the dead pawnshop with the conveniently open door."
   ]
 };
+/* The run's canon starts where the vault leaves off: only what Day 1 has actually shown.
+   Everything after this line is written by the run itself. */
+var OPENING_CANON = [
+  "Day 1, 11:47pm, Lower Veldt Market, in the leaking rain.",
+  "The courier carries a data shard, paid suspiciously well to deliver it to Mirren at the Copper Eel by midnight.",
+  "The shard has started humming. Data shards do not hum.",
+  "A kid of about twelve, soaked through, warned that Mirren has been dead since Tuesday and someone is wearing her face - then backed into the crowd.",
+  "A man across the street has been reading a menu for eleven minutes and has now stopped pretending.",
+  "The door of the pawnshop that closed three years ago is very slightly ajar."
+];
 
 /* ============ PROVIDER PRESETS ============ */
 var PRESETS = {
@@ -668,6 +763,14 @@ var skipReveal = null;
 var castSheets = {};
 var runCanon = [];
 var rehydDismissed = false;
+var turnsSinceSync = 0;
+var syncing = false;
+
+/* The save no longer carries the whole conversation - the CANON, the CAST and the
+   LEDGER are the memory now, and a short tail of messages keeps the voice steady. */
+var HISTORY_KEEP = 8;
+var CONTEXT_TAIL = 16;
+var SYNC_EVERY = 5;
 
 var CAST_CAP = 14;
 var COLORS = {
@@ -755,6 +858,7 @@ function renderNow(){
   var st = $("nowstrip");
   if(nowText){ st.textContent = nowText; st.style.display = "block"; }
   else { st.style.display = "none"; }
+  $("w-day").textContent = $("hud-day").textContent;
 }
 function endCard(){
   var d = document.createElement("div");
@@ -806,7 +910,7 @@ function showScene(data, logIt, instant){
       lines.push((b.speaker==="Narration" ? "" : b.speaker.toUpperCase()+": ") + b.text);
     }
   });
-  if(data.day) $("hud-day").textContent = data.day;
+  if(data.day){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
   if(data.location) $("hud-loc").textContent = String(data.location).toUpperCase();
   if(data.ambience) setAmbience(data.ambience);
   if(data.arc) currentArc = data.arc;
@@ -904,17 +1008,20 @@ function castDigest(){
   });
   return bits.length ? bits.join(" | ") : "no sheets yet - open one for every named character in the scene";
 }
-/* The seed messages, then the ground truth of THIS run, then the recent tail. */
-function buildContext(){
-  if(!chatLog.length) return chatLog;
-  var msg = "(RUN CANON - the established ground truth of this run, in order. Never contradict it.\n"
+/* The ground truth of THIS run, then whatever recent dialogue we still hold.
+   The briefing carries the memory; the tail only carries the voice. */
+function memoryBriefing(){
+  return "(RUN CANON - the established ground truth of this run, in order. Never contradict it.\n"
     + canonBlock()
     + "\n|| CAST - " + castDigest()
     + "\n|| NOW - Day " + $("hud-day").textContent + ", " + $("hud-loc").textContent
-    + ", Arc " + (currentArc||1) + ": " + (nowText || "the story continues") + ")";
-  var head = chatLog.slice(0,2);
-  var tail = chatLog.length > 28 ? chatLog.slice(-24) : chatLog.slice(2);
-  return head.concat([{role:"user", content:msg}], tail);
+    + ", Arc " + (currentArc||1) + ": " + (nowText || "the story continues")
+    + "\n|| Only the last few exchanges follow. Everything before them is gone - the canon and the"
+    + " cast above ARE the earlier story. Keep writing them or the run forgets itself.)";
+}
+function buildContext(){
+  if(!chatLog.length) return chatLog;
+  return [{role:"user", content:memoryBriefing()}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
 function askAnthropic(msgs){
@@ -1022,7 +1129,12 @@ function callDM(){
     var parsed = parseScene(raw);
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
+    turnsSinceSync++;
     showScene(parsed.data, true);
+    /* every few turns the terminal quietly re-reads the chronicle back to the DM */
+    if(turnsSinceSync >= SYNC_EVERY){
+      setTimeout(function(){ syncMemory({auto:true}); }, 1200);
+    }
   }).catch(function(e){
     setBusy(false);
     showError(e.message || "unknown interference on the channel");
@@ -1074,41 +1186,76 @@ function maybeRehydrate(){
   var d = document.createElement("div"); d.className = "warn";
   d.appendChild(document.createTextNode(
     "This run predates the new memory systems. REHYDRATE — the Ledger will teach them your story. (one AI call)"));
-  var go = document.createElement("button"); go.className = "small"; go.textContent = "REHYDRATE";
-  go.onclick = rehydrate;
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "REHYDRATE AND SAVE";
+  go.onclick = function(){ syncMemory({}); };
   var later = document.createElement("button"); later.className = "small"; later.textContent = "later";
   later.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; };
   d.appendChild(go); d.appendChild(later);
   box.appendChild(d);
 }
 
-function rehydrate(){
-  if(busy) return;
+function setWatchBusy(v){
+  var dot = $("w-dot"); if(dot) dot.className = "w-dot" + (v ? " busy" : "");
+}
+function termStatus(html){
+  var el = $("term-status"); if(el) el.innerHTML = html || "";
+}
+
+/* Read the chronicle back to the DM and fold what it distils into the canon and the
+   cast. Runs on demand from the terminal, and quietly every few turns on its own.
+   Always additive: history, feedLog and ledgerText are never touched. */
+function syncMemory(opts){
+  opts = opts || {};
+  if(syncing) return;
+  if(!opts.auto && busy) return;
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
+    if(opts.auto) return;
     openSettings(); return;
   }
   var src = rehydrateSource();
-  if(!src){ rehydDismissed = true; $("rehydbox").innerHTML = ""; return; }
-  $("errbox").innerHTML = "";
-  $("rehydbox").innerHTML = '<div class="warn">Reading the Ledger back to the DM…</div>';
-  setBusy(true);
-  pendingRetry = rehydrate;
+  if(!src){ if(!opts.auto){ rehydDismissed = true; $("rehydbox").innerHTML = ""; } return; }
+
+  syncing = true; setWatchBusy(true);
+  turnsSinceSync = 0;
+  if(!opts.auto){
+    $("errbox").innerHTML = "";
+    $("rehydbox").innerHTML = '<div class="warn">Reading the Ledger back to the DM…</div>';
+    termStatus('<div class="hint">Reading the Ledger back to the DM…</div>');
+    setBusy(true);
+    pendingRetry = function(){ syncMemory({}); };
+  }
+
   askAI([{role:"user", content: src + "\n" + REHYD_ASK}]).then(function(raw){
     var d = parseScene(raw).data;
-    setBusy(false);
-    mergeCanon(d.canon);
-    mergeCast(d.cast);
+    syncing = false; setWatchBusy(false);
+    if(!opts.auto) setBusy(false);
+    var facts = mergeCanon(d.canon), notes = mergeCast(d.cast);
     if(!nowText && typeof d.now === "string") nowText = d.now;
     if(currentArc === 1 && (d.arc === 2 || d.arc === 3)) currentArc = d.arc;
     if(currentAmbience === "rain-neon" && d.ambience) setAmbience(d.ambience);
     renderNow();
     persistAll(currentChoices());
-    rehydDismissed = true;
-    $("rehydbox").innerHTML = '<div class="warn">The Ledger has been read. The run remembers itself now.</div>';
-    setTimeout(function(){ if(rehydDismissed) $("rehydbox").innerHTML = ""; }, 9000);
+    var line = "The Ledger has been read and the run saved — "
+      + facts + " new fact" + (facts === 1 ? "" : "s") + ", "
+      + notes + " new cast note" + (notes === 1 ? "" : "s") + ".";
+    if(opts.auto){
+      termStatus('<div class="ok">' + esc(line) + '</div>');
+    } else {
+      rehydDismissed = true;
+      $("rehydbox").innerHTML = '<div class="warn">' + esc(line) + '</div>';
+      termStatus('<div class="ok">' + esc(line) + '</div>');
+      setTimeout(function(){ if(rehydDismissed) $("rehydbox").innerHTML = ""; }, 9000);
+    }
+    if($("termmodal").classList.contains("open")) renderTerminal();
   }).catch(function(e){
+    syncing = false; setWatchBusy(false);
+    if(opts.auto){
+      termStatus('<div class="bad">The last quiet sync did not go through. It will try again.</div>');
+      return;                       /* a silent pass failing must never disturb the run */
+    }
     setBusy(false);
     $("rehydbox").innerHTML = "";
+    termStatus('<div class="bad">' + esc(e.message || "the Ledger would not read back") + '</div>');
     showError(e.message || "the Ledger would not read back");
     maybeRehydrate();
   });
@@ -1196,11 +1343,14 @@ function writeFile(name, content){
 }
 
 function saveBlob(){
+  /* history is a short tail on purpose - the canon, the cast and the ledger are the memory */
   return JSON.stringify({
-    v:1, slug:runSlug, updated:new Date().toISOString(), history:chatLog, feedLog:feedLog,
+    v:1, slug:runSlug, updated:new Date().toISOString(),
+    history:chatLog.slice(-HISTORY_KEEP), trimmed:true, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
-    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets, canon:runCanon
+    now:nowText, amb:currentAmbience, arc:currentArc, cast:castSheets, canon:runCanon,
+    sync:turnsSinceSync
   });
 }
 function currentChoices(){
@@ -1414,7 +1564,7 @@ $("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); 
 $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
 document.addEventListener("keydown", function(e){
   if(e.key==="Escape"){
-    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal","castmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal","castmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
     if(runSlug) closeTitle();
   }
 });
@@ -1583,6 +1733,51 @@ $("cast-close").onclick = function(){ $("castmodal").classList.remove("open"); }
 $("castbtn").onclick = openCast;
 $("t-cast").onclick = openCast;
 
+/* ============ THE COURIER'S TERMINAL ============ */
+function renderTerminal(){
+  $("term-now").textContent = nowText
+    ? nowText
+    : "Nothing on the strip yet. The rain is still deciding what tonight is.";
+
+  var ol = $("term-canon"); ol.innerHTML = "";
+  if(!runCanon.length){
+    var e = document.createElement("li");
+    e.className = "hint";
+    e.textContent = "No canon yet — the run writes its own truth as you play.";
+    ol.appendChild(e);
+  } else {
+    runCanon.forEach(function(f, i){
+      var li = document.createElement("li");
+      li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f);
+      ol.appendChild(li);
+    });
+  }
+
+  var box = $("term-cast"); box.innerHTML = "";
+  var names = Object.keys(castSheets);
+  if(!names.length){
+    box.innerHTML = '<div class="hint">No sheets yet. The cast writes itself as you meet them.</div>';
+  } else {
+    names.forEach(function(n){
+      var ns = castSheets[n] || [];
+      var d = document.createElement("div");
+      d.innerHTML = '<b style="color:' + castColor(n) + '">' + esc(n.toUpperCase()) + '</b>'
+        + esc(ns.length ? ns[ns.length-1] : "");
+      box.appendChild(d);
+    });
+  }
+
+  var left = Math.max(0, SYNC_EVERY - turnsSinceSync);
+  $("term-auto").textContent = "The terminal re-reads the chronicle to the DM on its own every "
+    + SYNC_EVERY + " turns" + (runSlug ? " — next in " + left + (left === 1 ? " turn" : " turns") : "")
+    + ". REHYDRATE AND SAVE does it now and writes the run to disk.";
+}
+function openTerminal(){ termStatus(""); renderTerminal(); $("termmodal").classList.add("open"); }
+$("watch").onclick = openTerminal;
+$("term-close").onclick = function(){ $("termmodal").classList.remove("open"); };
+$("term-sync").onclick = function(){ syncMemory({}); };
+$("term-ledger").onclick = function(){ $("termmodal").classList.remove("open"); openLedger(); };
+
 /* ============ TITLE SCREEN ============ */
 function refreshTitle(){
   if(runSlug){
@@ -1664,8 +1859,19 @@ var fxRAF=0, fxRunning=false, fxLast=0, fxFrames=0;
 var fxDrops=[], fxDrips=[], fxBlobs=[], fxMotes=[];
 var fxPanel={l:0,t:0,r:0,w:0};
 var fxMX=-9999, fxMY=-9999;
-var fxBaseCap=120, fxCap=120;
+var fxCap=120, fxDegrade=1;
 var fxDawn=0, fxDangerT=9000, fxWarm=1, fxWarmV=0, fxMeasureT=0;
+
+/* Density scales with the viewport - a fixed count that reads as rain on a laptop
+   disappears on a 4K panel. fxDegrade is the auto-thinning factor for slow machines. */
+function fxTargetCap(){
+  var megapixels = (fxW * fxH) / 1000000;
+  var n = Math.round(megapixels * 105);
+  return fxCoarse() ? Math.max(40, Math.min(140, n)) : Math.max(100, Math.min(600, n));
+}
+function fxApplyCap(){
+  fxCap = Math.max(12, Math.round(fxTargetCap() * fxDegrade));
+}
 
 function fxReduced(){
   try{ return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
@@ -1691,6 +1897,7 @@ function fxResize(){
   fxCtx.setTransform(fxDPR,0,0,fxDPR,0,0);
   fxOctx.setTransform(fxDPR,0,0,fxDPR,0,0);
   fxMeasurePanel();
+  fxApplyCap();
   fxSeed();
 }
 function fxNewDrop(spread){
@@ -1699,7 +1906,7 @@ function fxNewDrop(spread){
     x: Math.random()*(fxW + 300) - 140,
     y: spread ? Math.random()*fxH : -30 - Math.random()*160,
     vx: -sp*0.42, vy: sp,
-    a: 0.12 + Math.random()*0.23,
+    a: 0.20 + Math.random()*0.15,
     warm: Math.random() < 0.45,
     lands: Math.random() < 0.22
   };
@@ -1859,7 +2066,8 @@ function fxLoop(ts){
   if(dt > 200) dt = 200;
   fxFrames++;
   if(fxFrames > 20 && dt > 40 && fxCap > 12){      /* the machine is struggling: thin the weather */
-    fxCap = Math.max(12, Math.floor(fxCap/2));
+    fxDegrade = Math.max(0.05, fxDegrade / 2);
+    fxApplyCap();
     if(fxDrops.length > fxCap) fxDrops.length = fxCap;
     if(fxMotes.length > fxCap) fxMotes.length = fxCap;
   }
@@ -1868,15 +2076,21 @@ function fxLoop(ts){
   fxUpdate(dt);
   fxDraw();
 }
+/* Idempotent on purpose: calling it while already running re-arms the frame request.
+   A tab that loads in the background has its pending rAF dropped by the browser, and
+   without this the loop would sit with fxRunning true and never paint again. */
 function fxStart(){
-  if(!fxCanvas || fxRunning) return;
+  if(!fxCanvas) return;
   if(fxReduced()) return;
   if((settings.visuals || "full") !== "full") return;
   if(document.hidden) return;
   fxCanvas.style.display = "block"; fxOver.style.display = "block";
-  fxRunning = true; fxLast = 0; fxFrames = 0; fxMeasureT = 0;
-  fxMeasurePanel(); fxSeed();
-  fxRAF = requestAnimationFrame(fxLoop);
+  if(!fxRunning){
+    fxRunning = true; fxLast = 0; fxFrames = 0; fxMeasureT = 0;
+    fxMeasurePanel(); fxApplyCap(); fxSeed();
+  }
+  fxLast = 0;                                  /* don't integrate the gap since the last frame */
+  if(!fxRAF) fxRAF = requestAnimationFrame(fxLoop);
 }
 function fxStop(){
   fxRunning = false;
@@ -1891,14 +2105,15 @@ function fxInit(){
   if(!fxCanvas || !fxOver || !fxCanvas.getContext) return;
   fxCtx = fxCanvas.getContext("2d");
   fxOctx = fxOver.getContext("2d");
-  fxBaseCap = fxCoarse() ? 50 : 120;
-  fxCap = fxBaseCap;
   fxResize();
   window.addEventListener("resize", fxResize);
   document.addEventListener("mousemove", function(e){ fxMX = e.clientX; fxMY = e.clientY; }, {passive:true});
   document.addEventListener("visibilitychange", function(){
     if(document.hidden) fxStop(); else applyVisuals();
   });
+  /* belt and braces: a window that regains focus without a visibilitychange still repaints */
+  window.addEventListener("focus", function(){ if(!document.hidden) applyVisuals(); });
+  window.addEventListener("pageshow", function(){ if(!document.hidden) applyVisuals(); });
 }
 function applyVisuals(){
   var v = settings.visuals || "full";
@@ -1914,7 +2129,9 @@ function newRun(confirmFirst){
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
   $("feedinner").innerHTML = ""; $("errbox").innerHTML="";
-  nowText = ""; currentArc = 1; castSheets = {}; runCanon = [];
+  nowText = ""; currentArc = 1; castSheets = {};
+  runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
+  turnsSinceSync = 0;
   rehydDismissed = false; $("rehydbox").innerHTML = "";
   setAmbience("rain-neon"); renderNow();
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
@@ -1924,6 +2141,7 @@ function newRun(confirmFirst){
   chatLog.push({role:"assistant", content:JSON.stringify(OPENING)});
   showScene(OPENING, true);
   closeTitle();
+  applyVisuals();          /* rain in the very first scene */
 }
 
 function restoreFromBlob(s){
@@ -1941,11 +2159,13 @@ function restoreFromBlob(s){
   setAmbience(s.amb||"rain-neon");
   castSheets = s.cast||{};
   runCanon = s.canon||[];
+  turnsSinceSync = s.sync||0;
   rehydDismissed = false;
   renderNow();
   showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   maybeRehydrate();
+  applyVisuals();          /* the weather follows the run into the scene */
   return true;
 }
 
