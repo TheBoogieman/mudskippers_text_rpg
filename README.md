@@ -55,8 +55,17 @@ the DM"). Everything needed to continue a run lives in that one readable file.
 
 ### How a run remembers itself
 
-The AI is stateless between turns, so the game keeps the memory rather than the
-transcript. Three things carry a run forward:
+The AI is stateless between turns — it loses the thread on almost every call — so
+the game keeps the memory rather than the transcript, and keeps as much of it as
+possible *without asking*. The client watched every scene, so it records for
+itself who was present, who has now met whom, where everyone was last seen, and
+every journey between two places. Even a storyteller that sends nothing but prose
+will still build a cast, a relationship graph and a map.
+
+What only the AI can know — what just happened, and what a character has now
+*worked out* — it is asked for every turn. Everything else is asked for one
+register at a time, in rotation, and it is free to decline. Three things carry a
+run forward:
 
 - **RUN CANON** — short factual lines the DM writes each turn. Older eras get
   compressed into a **CHRONICLE** by the DM itself, during a normal turn, so a
