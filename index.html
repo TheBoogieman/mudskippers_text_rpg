@@ -257,19 +257,152 @@
   #canonlist li{margin-bottom:4px}
   #canonlist li b{color:var(--granny);font-weight:600;margin-right:6px}
   #canonlist .hint{margin:0;font-size:12px}
+  /* the board panel — the season as a rail you can see yourself moving along */
+  #boardwrap{margin-bottom:18px}
+  #placebox:not(:empty){margin-top:10px}
+  .board-now{
+    font-family:Georgia,serif;font-size:13.5px;color:var(--ink-dim);
+    margin:2px 0 8px;line-height:1.5;
+  }
+  .board-now b{color:var(--sodium);font-weight:600}
+  .board-rail{display:flex;gap:2px;margin-bottom:5px}
+  .board-rail i{
+    flex:1;height:6px;background:#2e2519;border-radius:1px;
+    transition:background .4s ease;
+  }
+  .board-rail i.done{background:var(--granny)}
+  .board-rail i.here{background:var(--sodium);box-shadow:0 0 7px rgba(232,161,60,.55)}
+  .board-arcs{
+    display:flex;gap:2px;font-family:ui-monospace,Menlo,monospace;
+    font-size:8.5px;letter-spacing:.14em;color:#5c4a33;
+  }
+  .board-arcs span{text-align:center;white-space:nowrap;overflow:hidden}
+  .board-arcs span.on{color:var(--sodium)}
+  .board-turns{
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.12em;
+    color:#6d5c44;margin-top:7px;
+  }
+  .board-turns i{
+    display:inline-block;width:5px;height:5px;border-radius:50%;
+    background:#3a2f1e;margin-right:3px;vertical-align:middle;
+  }
+  .board-turns i.spent{background:var(--gold)}
+  .board-turns i.over{background:#e08b8b}
   /* ambience layers */
   #ambience{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
   #ambience .amb{position:absolute;inset:0;opacity:0;transition:opacity 2.5s ease}
   #ambience .amb.on{opacity:1}
   .amb-rain-neon{background-image:repeating-linear-gradient(115deg, transparent 0 46px, rgba(232,161,60,.04) 46px 47px),repeating-linear-gradient(115deg, transparent 0 89px, rgba(239,230,216,.03) 89px 90px);animation:rainfall 1.15s linear infinite}
   .amb-marsh-fog{background:radial-gradient(ellipse 60% 40% at 30% 70%, rgba(143,201,138,.07), transparent 70%),radial-gradient(ellipse 50% 35% at 75% 30%, rgba(184,169,146,.06), transparent 70%);animation:fogdrift 26s ease-in-out infinite alternate}
-  .amb-interior-warm{background:radial-gradient(ellipse 70% 55% at 50% 45%, rgba(242,193,78,.07), transparent 75%)}
+  .amb-interior-warm{background:radial-gradient(ellipse 70% 55% at 50% 45%, rgba(242,193,78,.07), transparent 75%);animation:hearth 9s ease-in-out infinite}
   .amb-substrate-dark{background:radial-gradient(ellipse 80% 60% at 50% 60%, rgba(111,211,224,.05), transparent 75%),linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.32));animation:breathe 7s ease-in-out infinite}
-  .amb-dawn{background:linear-gradient(180deg, rgba(231,154,181,.08), rgba(242,193,78,.05) 45%, transparent 75%)}
+  .amb-dawn{background:linear-gradient(180deg, rgba(231,154,181,.08), rgba(242,193,78,.05) 45%, transparent 75%);animation:daybreak 40s ease-in-out infinite alternate}
   .amb-danger{box-shadow:inset 0 0 150px rgba(160,40,40,.26);animation:dangerpulse 2.6s ease-in-out infinite}
+  /* the six added in v3.1 — the city has more weather than rain and not-rain */
+  .amb-storm{background-image:repeating-linear-gradient(122deg, transparent 0 26px, rgba(214,225,238,.05) 26px 28px),repeating-linear-gradient(122deg, transparent 0 61px, rgba(232,161,60,.035) 61px 62px);animation:rainfall .62s linear infinite}
+  .amb-neon-dry{background:radial-gradient(ellipse 55% 40% at 28% 62%, rgba(232,161,60,.075), transparent 68%),radial-gradient(ellipse 45% 32% at 78% 38%, rgba(255,158,109,.05), transparent 70%);animation:sodiumhum 11s ease-in-out infinite}
+  .amb-tunnel{background:radial-gradient(ellipse 42% 62% at 50% 50%, rgba(232,161,60,.045), transparent 62%);box-shadow:inset 0 0 190px rgba(0,0,0,.62);animation:breathe 13s ease-in-out infinite}
+  .amb-vault-cold{background:linear-gradient(180deg, rgba(201,196,189,.05), transparent 60%),radial-gradient(ellipse 34% 78% at 50% 30%, rgba(127,179,213,.055), transparent 72%)}
+  .amb-smoke{background:radial-gradient(ellipse 70% 45% at 50% 78%, rgba(255,120,60,.06), transparent 70%),linear-gradient(180deg, rgba(60,40,26,.20), transparent 55%);animation:fogdrift 19s ease-in-out infinite alternate}
+  .amb-dead-signal{background:repeating-linear-gradient(180deg, transparent 0 3px, rgba(201,196,189,.035) 3px 4px),linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.30));animation:deadroll 5.5s linear infinite}
   @keyframes fogdrift{from{background-position:0 0,0 0}to{background-position:60px -30px,-50px 25px}}
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes hearth{0%,100%{opacity:.82}37%{opacity:1}61%{opacity:.9}}
+  @keyframes daybreak{from{opacity:.5}to{opacity:1}}
+  @keyframes sodiumhum{0%,100%{opacity:.86}44%{opacity:1}}
+  @keyframes deadroll{from{background-position:0 0,0 0}to{background-position:0 44px,0 0}}
   @keyframes dangerpulse{0%,100%{box-shadow:inset 0 0 120px rgba(160,40,40,.18)}50%{box-shadow:inset 0 0 180px rgba(160,40,40,.32)}}
+
+  /* ---- PRESSURE, MADE VISIBLE ----
+     The board's turn budget is a real clock, so the room shows it: the walls close
+     in, the strip names what is happening, and the world's own move lands as a hit.
+     All of it is DOM, not canvas, so it survives VISUALS: CALM and VISUALS: OFF. */
+  #tension{
+    position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0;
+    transition:opacity 1.1s ease, box-shadow 1.1s ease;
+  }
+  #tension.t1{opacity:1;box-shadow:inset 0 0 130px rgba(232,161,60,.10)}
+  #tension.t2{opacity:1;box-shadow:inset 0 0 175px rgba(224,120,60,.20);animation:tighten 3.1s ease-in-out infinite}
+  #tension.t3{opacity:1;box-shadow:inset 0 0 215px rgba(190,52,44,.30);animation:tighten 1.35s ease-in-out infinite}
+  @keyframes tighten{0%,100%{filter:brightness(.86)}50%{filter:brightness(1.16)}}
+  /* the strike: one hard beat when the world takes its own turn */
+  #tension.hit{animation:strike .5s ease-out}
+  @keyframes strike{
+    0%{box-shadow:inset 0 0 0 rgba(190,52,44,.55);filter:brightness(1.9)}
+    100%{box-shadow:inset 0 0 215px rgba(190,52,44,.30);filter:brightness(1)}
+  }
+  #pressure{
+    display:none;align-items:center;gap:10px;margin-bottom:10px;
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.22em;
+    padding:7px 12px;border-radius:3px;border:1px solid;font-weight:700;
+  }
+  #pressure.on{display:flex}
+  #pressure .ticks{display:flex;gap:3px;flex:none}
+  #pressure .ticks i{width:16px;height:4px;border-radius:1px;background:currentColor;opacity:.18}
+  #pressure .ticks i.lit{opacity:1;box-shadow:0 0 8px currentColor}
+  #pressure.t1{color:var(--gold);border-color:#6b5326;background:#221a0e}
+  #pressure.t2{color:#f5a862;border-color:#8a5228;background:#2a1809;animation:ppulse 2.6s ease-in-out infinite}
+  #pressure.t3{color:#f09a9a;border-color:#8d3a3a;background:#2b1111;animation:ppulse 1.1s ease-in-out infinite}
+  /* never dip far: this is the loudest thing on the screen and it must stay readable */
+  @keyframes ppulse{0%,100%{opacity:.80}50%{opacity:1}}
+  /* ---- THE SHARD ----
+     The one out of the icon. It falls slowly, settles on the lip of the controls
+     panel where the rain already lands, and can be picked up and dropped anywhere.
+     It sits above the words on purpose: it is in the room, not behind it. */
+  /* Everything about how it LOOKS is four custom properties the physics writes every
+     frame - tint, glow radius, glow strength, opacity. Hover, hold and rain-strike
+     just override those properties, so nothing fights the weather for the filter. */
+  #shard{
+    position:fixed;left:0;top:0;width:26px;height:46px;z-index:5;
+    display:none;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;
+    will-change:transform;
+    --sh-tint:232,161,60; --sh-r:5px; --sh-a:.45; --sh-op:.72; --sh-br:1;
+    --sh-hue:0deg; --sh-sat:1;
+  }
+  #shard.up{display:block}
+  #shard:active{cursor:grabbing}
+  #shard svg{width:100%;height:100%;display:block;overflow:visible}
+  .shard-in{
+    width:100%;height:100%;
+    opacity:var(--sh-op);
+    filter:drop-shadow(0 0 var(--sh-r) rgba(var(--sh-tint), var(--sh-a)))
+           brightness(var(--sh-br)) hue-rotate(var(--sh-hue)) saturate(var(--sh-sat));
+    transition:opacity .5s ease, filter .5s ease;
+  }
+  #shard:hover .shard-in{--sh-op:1;--sh-r:12px;--sh-a:.8}
+  #shard.held .shard-in{--sh-op:1;--sh-r:15px;--sh-a:.92;--sh-br:1.15}
+  /* a raindrop just broke on it */
+  #shard.lit .shard-in{--sh-op:1;--sh-r:17px;--sh-a:.95;--sh-br:1.55;transition:none}
+  .shard-in .hum{opacity:.42;animation:shardhum 2.7s ease-in-out infinite}
+  @keyframes shardhum{0%,100%{opacity:.16}50%{opacity:.62}}
+  /* what it says, when it says anything: a bone-hum, not a voice in the room */
+  #shardsay{
+    position:fixed;z-index:6;display:none;max-width:min(74vw,330px);
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.75;
+    letter-spacing:.16em;color:var(--gold);
+    background:rgba(24,17,9,.94);border:1px solid #6b5326;border-radius:3px;
+    padding:10px 13px;box-shadow:0 6px 26px rgba(0,0,0,.6), 0 0 18px rgba(232,161,60,.12);
+    opacity:0;transform:translateY(5px);transition:opacity .5s ease, transform .5s ease;
+    pointer-events:none;
+  }
+  #shardsay.show{display:block}
+  #shardsay.vis{opacity:1;transform:none}
+  @media (max-width:600px){ #shard{width:22px;height:39px} }
+
+  /* the beat card — the only place the board speaks in the feed, and only in hindsight */
+  .block.beatcard{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;
+    color:var(--granny);border-top:1px solid #4a3a22;border-bottom:1px solid #4a3a22;
+    padding:9px 0;margin:22px 0 20px;text-align:center;line-height:1.7;
+    background:linear-gradient(90deg,transparent,rgba(245,217,166,.05),transparent);
+  }
+  .block.beatcard .tag{
+    display:block;color:var(--sodium);font-size:9px;letter-spacing:.3em;margin-bottom:4px;
+  }
+  .block.beatcard.forced{color:#e8b7b7;border-color:#6b3030}
+  .block.beatcard.forced .tag{color:#e08b8b}
+  .block.beatcard.arcturn{color:var(--gold);border-color:#7a5f22}
+  .block.beatcard.arcturn .tag{color:var(--gold)}
   /* living weather: canvas above the ambience wash, below every word */
   #fx{position:fixed;inset:0;pointer-events:none;z-index:1;display:none}
   #fxover{position:fixed;inset:0;pointer-events:none;z-index:3;display:none}
@@ -375,9 +508,37 @@
   <div class="amb amb-substrate-dark" data-amb="substrate-dark"></div>
   <div class="amb amb-dawn" data-amb="dawn"></div>
   <div class="amb amb-danger" data-amb="danger"></div>
+  <div class="amb amb-storm" data-amb="storm"></div>
+  <div class="amb amb-neon-dry" data-amb="neon-dry"></div>
+  <div class="amb amb-tunnel" data-amb="tunnel"></div>
+  <div class="amb amb-vault-cold" data-amb="vault-cold"></div>
+  <div class="amb amb-smoke" data-amb="smoke"></div>
+  <div class="amb amb-dead-signal" data-amb="dead-signal"></div>
 </div>
 <canvas id="fx" aria-hidden="true"></canvas>
+<div id="tension" aria-hidden="true"></div>
 <canvas id="fxover" aria-hidden="true"></canvas>
+
+<!-- THE SHARD — it drifted out of the icon and it has opinions -->
+<div id="shard" title="it hums"><div class="shard-in">
+  <svg viewBox="176 80 160 352" aria-hidden="true">
+    <defs>
+      <linearGradient id="shardg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f2c14e"/>
+        <stop offset="55%" stop-color="#e8a13c"/>
+        <stop offset="100%" stop-color="#b3742a"/>
+      </linearGradient>
+    </defs>
+    <g class="hum" stroke="#e8a13c" stroke-width="11" fill="none" stroke-linecap="round">
+      <path d="M186 216 q-16 40 0 80"/>
+      <path d="M326 216 q16 40 0 80"/>
+    </g>
+    <polygon points="256,96 318,196 256,416 194,196" fill="url(#shardg)"/>
+    <polygon points="256,96 318,196 256,258 194,196" fill="#f7d688" opacity="0.55"/>
+    <polygon points="256,120 296,196 256,238 216,196" fill="#fff3d0" opacity="0.35"/>
+  </svg>
+</div></div>
+<div id="shardsay" aria-live="polite"></div>
 
 <button id="watch" title="The courier's terminal — canon, cast, ledger">
   <span class="w-face">
@@ -409,7 +570,9 @@
 
 <div id="controls"><div class="inner">
   <div id="nowstrip"></div>
+  <div id="pressure"></div>
   <div id="rehydbox"></div>
+  <div id="boardbox"></div>
   <div id="errbox"></div>
   <div id="choices"></div>
   <div class="mudrow">
@@ -435,7 +598,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v2.9.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.2.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -479,6 +642,11 @@
   <div class="card">
     <div class="cardhead">THE LEDGER</div>
     <div class="cardsub">The chronicle of the current run, as it will be written.</div>
+    <div id="boardwrap">
+      <div class="canonhead">THE BOARD <button class="small" id="place-open" title="Have the AI read this run's chronicle and work out which beat of the season it is actually on">FIND OUR PLACE</button></div>
+      <div id="board-body"></div>
+      <div id="placebox"></div>
+    </div>
     <div id="canonwrap">
       <div class="canonhead">RUN CANON <button class="small" id="rebuild-open" title="Have the AI re-read this run's whole chronicle and rebuild its memory">REBUILD MEMORY</button></div>
       <div id="chronwrap" style="display:none">
@@ -504,6 +672,8 @@
     <div class="cardsub">Strapped to your wrist since the first job. It remembers what you can't.</div>
     <div id="term-fix"></div>
     <div id="term-now"></div>
+    <div class="term-h">THE BOARD <span>where the season has got to</span></div>
+    <div id="term-board"></div>
     <div class="term-h">RUN CANON <span>what this run has made true</span></div>
     <ol id="term-canon"></ol>
     <div class="term-h">CAST <span>who is in it with you</span></div>
@@ -587,7 +757,7 @@
         <option value="calm">CALM — soft layers only</option>
         <option value="off">OFF — no atmosphere</option>
       </select>
-      <div class="hint">FULL adds live rain, fog, firelight and motes on a canvas <i>behind</i> every word. CALM is the classic soft wash. OFF turns the atmosphere off entirely. Reduced-motion settings always win.</div>
+      <div class="hint">FULL adds live rain, wind, lightning, firelight, embers, dust and drifting motes on a canvas <i>behind</i> every word — twelve skies, each painted differently. CALM is the classic soft wash. OFF turns the atmosphere off entirely. Reduced-motion settings always win. The pressure signals — the strip and the closing walls — stay visible in every mode.</div>
     </div>
     <div class="btnrow">
       <button class="btn" id="s-test">TEST CONNECTION</button>
@@ -702,8 +872,11 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v2.9.0 "The Bookkeeper"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.2.0 "The Board"
+   the season is a flowchart · the client walks it · gates, pressure, forced beats
+   twelve skies · pressure you can see · the world's own turn lands as a hit
    the client keeps the books · derived relationships · one ask per turn
+   and something light out of the icon, for Mr. Togan
    BYO-AI · local file saves · canon baked in · no third-party routing
    ===================================================================== */
 
@@ -712,8 +885,8 @@ var BIBLE = [
 "You are the DM of MUDSKIPPERS, a cozy-cyberpunk ensemble story. The player is THE COURIER: broke, quick-mouthed, chaotic-good, a keeper of people who copes with unbearable truths through jokes. Tone: warm, funny, banter-heavy family sitcom wearing apocalypse stakes. Jokes open into real emotion (the joke-door). Never punish the player for doing bits; bend the world around them, then let consequences land later.",
 "",
 "TABLE MANNERS - CRITICAL:",
-"- AGENCY BUDGET: at most ONE irreversible world-change per turn, and only when the player's own action causes it. NPCs propose, argue, warn, banter - the player disposes. Never resolve a plan, journey, fight, or relationship off-screen.",
-"- SCENE SCALE: one turn covers minutes, not hours. No time-skips or location jumps unless the player chooses one.",
+"- AGENCY BUDGET: at most ONE irreversible world-change per turn, and only when the player's own action causes it - EXCEPT when the board says PRESSURE or FORCING, which is the world's own turn to move. NPCs propose, argue, warn, banter - the player disposes. Never resolve a plan, journey, fight, or relationship off-screen.",
+"- SCENE SCALE: one turn covers minutes, not hours, and the player chooses the jumps - EXCEPT under board pressure, where you may cut: skip the walk, open on arrival, roll the clock forward to the moment that matters. A cut under pressure is not a time-skip, it is an edit, and it is how a season keeps time.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
 "- The context block (roster, agenda, milestones, threads, map, places, cast state, bits, chronicle, canon, now) is ground truth for this run. It outranks your general lore and your own improvisation. Check every scene against it before writing.",
@@ -761,27 +934,34 @@ var BIBLE = [
 "- THE PRINCIPAL: mark one, 130 years old, the surviving founder, the true landlord the Choir merely rents from, attended by six bio-grens. Wants to finish an argument older than the city. Undone by fried bread, and family.",
 "- LAWS the family may write: the Cairn rule (the Architect's last breath), the Mirren Doctrine (her grave), the same-pan doctrine (bacon first, bread after, same pan - it began with the founders, a century ago), and MUDSKIPPER MOMENT (the gang's war-cry for going gloriously off-script).",
 "",
-"REVEAL ORDER (roughly; one revelation per scene, aftermath beats mandatory): the shard is a mind; Pia is a Mudskipper and Vic's hand is behind the job; the housing exists in the courier's skull; the manual and the bio-hash; the Choir's one machine and three fates, and Mirren's truth; the founding grief and the dying wish; Vic's sin; the Principal last.",
-"",
-"SEASON SPINE - the guardrailed trunk of every season:",
-"- Arc 1, the delivery gone wrong: the shard speaks, the Choir closes in, and the courier loses the option of walking away.",
-"- Arc 2, someone must be saved: a found family forms around him, Vic's promise surfaces piece by piece, and the Choir's Convergence looms.",
-"- Arc 3, the machine: the courier - a protagonist now, and shaken by what that cost - reaches the child sleeping under the old Exchange. The season's soft ending is custody, not conquest: he seizes the machine, the Choir falls, and the work of teaching her to let go begins. When the seizure lands: every Hollow in the city goes still at once, and every convergent citizen's gentle voice falls silent mid-sentence - the victory arrives owning both. Land it as a finale beat, a short epilogue in chronicle voice, and set the_end true. Open no new threads after the finale.",
-"- When an arc turns (1 to 2, 2 to 3), that turn must also restate the state of the world as milestones and threads: who the family is, what laws exist, what is owed and unresolved. This is the season's save-point.",
-"- PACE FOR A LONG SEASON: many sessions of real play; advance arcs only on earned turning points, never by clock; expand freely between opening and seizure and let divergences bend the route without breaking the spine.",
-"- BECOMING THE PROTAGONIST: shock and settling time. After ANY major revelation, at least one full beat of reaction and cost before plot moves. Fragments through interaction - overheard, half-admitted, dug up - never exposition dumps, never more than one revelation per scene.",
+"THE BOARD - HOW THIS SEASON IS RUN (this replaces improvising a plot):",
+"- YOU DO NOT INVENT THE PLOT. THE BOARD DOES. Every turn your context carries a THE BOARD section naming the one beat the season is currently on: what it exists to accomplish, the gate that ends it, how many turns it has left, what it may reveal, and what is still locked. That beat is your assignment. Write toward its gate.",
+"- The player decides HOW the gate falls. The board decides THAT it falls, and what is true on the far side. Honor any action they take, however wild - then bend it back toward the gate. Divergence is a route, never a fork: a player who burns down the wrong building still arrives at the same beat, having burned down a building.",
+"- CLEAR THE GATE HONESTLY. The moment the gate condition is genuinely met in your scene, send \"gate\": true. Do not send it to hurry a beat you have not actually played. Do not withhold it because you were enjoying yourself - a gate met and not reported is how a season stops ending.",
+"- THE LOCKED LIST IS ABSOLUTE. Anything under NOT YET does not exist yet. Do not reveal it, confirm it, foreshadow it as fact, let a character half-admit it, or write canon that assumes it. A character who knows a locked thing changes the subject. You may hint at a shape; you may never confirm one.",
+"- THE BOARD WRITES THE PLOT'S CANON, NOT YOU. When a gate clears, the game writes that beat's facts into the run itself - you do not need to state them and you must never contradict them. Your own canon lines are for what the PLAYER made true: what they chose, what it cost, who saw it.",
+"- PRESSURE IS AN ORDER. When the board says SQUEEZE, cut the digression and drive at the gate. When it says PRESSURE, the world acts without waiting for the player to choose. When it says FORCING, the gate closes in THIS turn - cut straight to the consequence, skip the travel, jump the clock, and land it.",
+"- When an arc turns, that turn must also restate the state of the world as milestones and threads: who the family is, what laws exist, what is owed and unresolved. This is the season's save-point.",
+"- BECOMING THE PROTAGONIST: revelations land in fragments through interaction - overheard, half-admitted, dug up - never exposition dumps, and never more than one per scene. The reaction and the cost belong in the SAME turn as the revelation: the joke, then the thing under the joke, then the story moves. Do not spend a whole turn on aftermath alone; a beat has three turns and none of them are free.",
 "",
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"arc\":1,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}",
 "- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, threads, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
-"- ambience: REQUIRED. Exactly one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever matches the light and weather where the scene is ACTUALLY happening right now. rain-neon: streets, markets, rooftops, anywhere under open sky at night. marsh-fog: the marsh, the reeds, the safehouse approach, anywhere wet and low and green. interior-warm: any room with a light on and a door shut - kitchens, cafes, workshops, the table. substrate-dark: inside the machine, the deep dark, the vaults, cable-work, anywhere the substrate is close. dawn: first light and the hour after it, whatever the location. danger: overrides all of the above whenever the scene is actively hostile - Hollows closing, a gun out, a room that has stopped being safe. Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see.",
+"- ambience: REQUIRED. Exactly one of these twelve, whichever matches the light and weather where the scene is ACTUALLY happening right now:",
+"    OUTSIDE, NIGHT - rain-neon: streets, markets, rooftops, anywhere under open sky in the usual leaking rain. storm: the same city with the sky properly coming down - sheets, wind, lightning; use it when the weather is itself a problem, and for big outdoor turning points. neon-dry: outside at night with NO rain - sodium light, dust, moths, shutters coming down. Most street scenes are dry; do not default to rain.",
+"    OUT OF TOWN - marsh-fog: the marsh, the reeds, the safehouse approach, anywhere wet and low and green.",
+"    INSIDE - interior-warm: any room with a light on and a door shut - kitchens, cafes, workshops, the table. vault-cold: the Choir's archives and record rooms, mortuary-clean spaces, anywhere sterile and lit from above. smoke: after a fire or an explosion, a burning building, a room full of what just happened.",
+"    UNDERGROUND - tunnel: service tunnels, maintenance runs, the ways under the city - close walls, a chain of lamps, water dripping somewhere. substrate-dark: INSIDE the machine specifically - the deep dark, cable-work, anywhere the substrate itself is close. These two are not the same place: tunnel is under the city, substrate-dark is inside her.",
+"    SPECIAL - dawn: first light and the hour after it, whatever the location. dead-signal: a dead zone, a shielded room, anywhere the Choir's network does not reach and Hollows drop to idle - use it the moment the signal is cut. danger: overrides all of the above whenever the scene is actively hostile - Hollows closing, a gun out, a room that has stopped being safe.",
+"    Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see. The game paints all twelve differently, so choosing the exact one is the difference between the player seeing the room and seeing a default.",
 "- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
-"- arc: 1, 2, or 3. Add \"the_end\": true only on the final turn of the season.",
-"- canon: REQUIRED ON EVERY TURN. An array of 1 to 4 short telegraphic strings - durable facts newly established THIS TURN: a named character introduced, a decision made, a place entered, a law written, a promise given, a threat revealed, an amendment to the past. Never repeat a fact already present in the RUN CANON message. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Even a quiet turn establishes something - a mood set, a door left open, a question asked and dodged. Never send an empty array.",
+"- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" field; the board owns the arc.",
+"- the_end: only on the final turn of the season, after the finale beat's gate.",
+"- canon: REQUIRED ON EVERY TURN. An array of 1 to 3 short telegraphic strings - what THIS TURN made true that the board did not already decide: what the player chose, what it cost, who witnessed it, what a character gave away, a promise given, an amendment to the past. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Never repeat a fact already in the context block, and never write canon that reaches past the board - no facts about locked reveals, no facts about beats not yet played. Even a quiet turn establishes something. Never send an empty array.",
 "- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
 "- cast entries may also carry \"knows\" (facts this character has just learned - a secret, an identity, a plan), \"status\" (one line on where they stand, replaces the old one), and \"voice\" (one line - speech pattern, quirks, who they tease and how; set once, revise rarely). \"met\" is derived by the game from who appears in each scene, so you never need to send it - but the rule it enforces is absolute: NEVER re-introduce two names that have met, and never let a character act ignorant of something in their knows list. Sending knows is the one memory job only you can do: the game can see who was in the room, but not what they worked out.",
 "- compacted: only when the turn asks for MAINTENANCE - the requested compressed chronicle lines. Otherwise omit.",
@@ -796,10 +976,10 @@ var BIBLE = [
 "- day: REQUIRED. Follow the fiction - advance it only when a night actually passes in-scene, and when it does, advance it in the same turn the sun comes up rather than silently later. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, Other. Use Narration for prose. Vic's file speaks in ALL CAPS. Only use characters the player has actually met.",
-"- 4 to 9 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open.",
+"- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
-"- Keep each turn tight: about 250-400 words of scene."
+"- Keep each turn tight: about 180-300 words of scene. A beat gets three turns. Spend them on the thing that matters and cut everything that is only atmosphere."
 ].join("\n");
 
 /* ============ DAY 1 OPENING (canon, hardcoded) ============ */
@@ -826,6 +1006,274 @@ var OPENING_CANON = [
   "A kid of about twelve, soaked through, told the courier in her own words that Mirren has been dead since Tuesday and someone is wearing her face - then backed into the crowd. What she actually saw, and what that really means, is not yet established.",
   "A man across the street has been reading a menu for eleven minutes and has now stopped pretending.",
   "The door of the pawnshop that closed three years ago is very slightly ajar."
+];
+
+/* ============ THE BOARD (the season, as a flowchart) ============
+   The DM used to be handed a season in prose and asked to find its own way through
+   it. It never did: with no plot pointer in its context, every turn's honest answer
+   to "what happens now" was "more middle", so runs expanded forever and no season
+   ever finished.
+
+   So the plot comes off the DM the same way the bookkeeping did in v2.9. This table
+   IS the season. Each beat names the one thing it exists to accomplish, the gate
+   that ends it, how many turns it gets, what it is allowed to reveal, and the canon
+   it writes when it clears. The DM is not an author here - it is a director given
+   one instruction per turn: steer to this gate, and do not invent past it.
+
+   Branches are routes, never forks. The player decides HOW a gate falls; the gate
+   itself, and the state on the far side of it, are fixed. That is what lets a run
+   diverge wildly and still arrive.
+
+   beat = {
+     id, arc, title,
+     goal    : what this beat exists to accomplish, in the DM's own working terms
+     exit    : the gate condition, phrased so it can be answered yes or no
+     budget  : target turns; pressure at budget, the world acts at +1, forced at +2
+     reveals : keys from REVEALS this beat unlocks (nothing is revealed before its beat)
+     press   : [ the squeeze at budget, the world's own move at budget+1 ]
+     canon   : the fixed lines written into RUN CANON when the gate clears - the DM
+               never has to invent these, and can never contradict them
+     stone   : optional; a permanent milestone written on clearing
+   } */
+var REVEALS = {
+  nine:      "the shard is a mind, and her name is Nine",
+  pia:       "Pia is a Mudskipper, and Vic's hand is behind the delivery job",
+  housing:   "the courier carries a skull-housing, installed without his knowledge",
+  hash:      "the manual hidden in the housing, and what a bio-hash is for",
+  choir:     "the Choir's one machine and its three fates, and what was done to Mirren",
+  founding:  "the founding grief, the Architect's dying wish, and the Cairn rule's origin",
+  vicsin:    "Vic's sin - that he did it to the courier knowingly, and would again",
+  principal: "the Principal: mark one, 130 years old, the true landlord"
+};
+
+var SPINE = [
+/* ---- ARC 1 · THE DELIVERY GOES WRONG ---- */
+{id:"a1-hum", arc:1, title:"the shard that hums",
+ goal:"The courier works out that the thing in his pocket is a person. Nine speaks as a bone-hum through skin contact only - she cannot address a room, and she is frightened.",
+ exit:"the courier has knowingly held a two-way conversation with the voice in the shard",
+ budget:3, reveals:["nine"],
+ press:["Menu Man moves. The conversation has to happen while walking.",
+        "A second watcher joins the first. The street is now a closing hand."],
+ canon:["The shard is a living mind. She is called Nine and she is running from something.",
+        "Nine speaks only as a hum through skin contact - in a pocket across a room she is a stone.",
+        "The courier has spoken with her and did not throw her in the canal."]},
+
+{id:"a1-eel", arc:1, title:"the woman wearing Mirren's face",
+ goal:"The Copper Eel, or whatever the player's route makes of it. The courier sees the thing wearing Mirren - too neat, too still, a beat late to laugh - and gets out.",
+ exit:"the courier has seen the false Mirren for himself and understands the real one is dead",
+ budget:3, reveals:[],
+ press:["The false Mirren starts walking toward him, still smiling.",
+        "She says his name. She should not know his name."],
+ canon:["Mirren is dead. Something is wearing her face and it is not good at it.",
+        "The delivery was a trap, or bait, or both.",
+        "The courier is now a loose end to whoever set it."],
+ stone:"The courier saw the false Mirren and ran."},
+
+{id:"a1-pia", arc:1, title:"the kid has a name",
+ goal:"Pia comes back - furious, competent, twelve. She saves him or he saves her; either way they leave together. She is a Mudskipper and she was sent.",
+ exit:"Pia and the courier are travelling together and she has admitted she was sent",
+ budget:3, reveals:["pia"],
+ press:["Pia stops arguing and starts running, which is worse.",
+        "The way they came is closed. She knows another one."],
+ canon:["Pia is a Mudskipper, street-raised, trained, and twelve.",
+        "She was sent to find the courier - last-minute, by someone she will not name yet.",
+        "She cannot be converged, guided or neurally written. Her ears are just ears.",
+        "Pia and the courier are travelling together now."]},
+
+{id:"a1-chase", arc:1, title:"no way home",
+ goal:"The Choir closes properly for the first time - Hollows, or worse. The courier's face is known, his room is burned, and walking away stops being an option he owns.",
+ exit:"the courier has accepted out loud that he cannot go back to his old life",
+ budget:3, reveals:[],
+ press:["They reach somewhere he thought was safe and find it already visited.",
+        "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
+ canon:["The Choir knows the courier's face and where he sleeps.",
+        "Hollows drop to idle when cut from signal - cutting the signal beats cutting the throat.",
+        "The courier cannot go home. That door is shut from the outside."],
+ stone:"The courier lost the option of walking away."},
+
+{id:"a1-vic", arc:1, title:"the ripperdoc's door",
+ goal:"They reach Vic. He is warm, evasive, and hiding something enormous behind a joke. He dodges one direct question about who hired the job.",
+ exit:"they are inside Vic's shop and Vic has dodged a direct question about the job",
+ budget:3, reveals:[],
+ press:["Vic starts working on something with his hands so he does not have to look up.",
+        "Pia says the thing Vic did not want said in front of the courier."],
+ canon:["Vic is a ripperdoc, the best there is, and an old friend of Pia's.",
+        "Vic knows more about this job than he is saying, and dodged being asked.",
+        "Vic's shop is a safe room, for now."]},
+
+{id:"a1-turn", arc:1, title:"the keeping",
+ goal:"ARC TURN. The courier chooses Nine - not as cargo but as a person he is now responsible for. The season's real subject starts here.",
+ exit:"the courier has committed out loud to protecting Nine rather than delivering her",
+ budget:3, reveals:[],
+ press:["Someone offers him a clean exit: hand her over, walk free. Make it genuinely tempting.",
+        "The offer expires in front of him."],
+ canon:["The courier has chosen to keep Nine rather than deliver her.",
+        "He is no longer running a job. He is protecting a person."],
+ stone:"ARC 1 ended: the courier chose to keep Nine."},
+
+/* ---- ARC 2 · SOMEONE MUST BE SAVED ---- */
+{id:"a2-door", arc:2, title:"The Open Door",
+ goal:"Hesta's cafe. A table, a hot pan, a shotgun under the counter, and the first meal anyone has eaten sitting down. The family gets a room to form in.",
+ exit:"the group is inside The Open Door and Hesta has fed them",
+ budget:3, reveals:[],
+ press:["Hesta puts food down and asks the question nobody wants to answer.",
+        "Someone knocks who should not know this address."],
+ canon:["Hesta keeps The Open Door, feeds strays, and is armed while being kind.",
+        "The Open Door is the family's table and its first safe place.",
+        "There is something under its floor Hesta has not mentioned."]},
+
+{id:"a2-seven", arc:2, title:"the defector, dying",
+ goal:"Seven arrives - a Choir defector in a failing vessel, a poet's soul running out of substrate. Saving him is the beat's whole question.",
+ exit:"the group has committed to saving Seven and is acting on it",
+ budget:3, reveals:[],
+ press:["Seven's vessel starts failing on the clock, out loud.",
+        "He asks them to stop and let him go. Someone refuses."],
+ canon:["Seven is a defector from the Choir - a poet, gentle, out of time.",
+        "His vessel is failing and he arrived asking for nothing.",
+        "The family decided to save him anyway."]},
+
+{id:"a2-chassis", arc:2, title:"the cook",
+ goal:"Seven is housed in a chassis. He discovers taste and smell, and becomes a cook - a mind that makes instead of unmaking. The family's first real joy.",
+ exit:"Seven is in a chassis and has cooked or tasted something",
+ budget:3, reveals:[],
+ press:["The chassis is one part short and the part is somewhere dangerous.",
+        "It works, but something about him came back different and everyone notices."],
+ canon:["Seven is housed in a chassis: full senses, eats only tokens, cooks for others.",
+        "Seven cooks now. It is the first thing in his life he chose to make.",
+        "A chassis runs on charge, not calories - the meal is always for someone else."],
+ stone:"Seven was saved and given a chassis."},
+
+{id:"a2-three", arc:2, title:"the scary aunt",
+ goal:"Three arrives: annulled fate-two, two voice frequencies out of sync, terse and hard to like. She wants nobody kept, ever again - which puts her against the family's whole project.",
+ exit:"Three is present, her two-frequency voice has been noticed, and she has stated what she wants",
+ budget:3, reveals:[],
+ press:["Three tells them exactly what they are doing wrong, and is right.",
+        "She starts to leave. Someone has to give her a reason to stay that is not sentiment."],
+ canon:["Three is a fate-two survivor: overlaid, then annulled. The unmaking left her voice in two frequencies.",
+        "Three wants no one kept, ever again, and says so.",
+        "She stayed anyway, which cost her something."]},
+
+{id:"a2-housing", arc:2, title:"the thing in his skull",
+ goal:"REVELATION. There is a skull-housing in the courier's head. He never consented to it. Reaction lands in the same turn - shock, then the joke, then the real thing under the joke.",
+ exit:"the courier knows there is a housing in his skull that he did not agree to",
+ budget:3, reveals:["housing"],
+ press:["Nine can suddenly do something she should not be able to do, and it explains itself.",
+        "The housing does something on its own, in front of everyone."],
+ canon:["The courier has a custom skull-housing, built for hosting bottled minds.",
+        "It was installed without his knowledge and without his consent.",
+        "A housed mind shares its host's senses and speaks as an inner voice, gated by a consent lock the host can revoke instantly."],
+ stone:"The courier learned there is a housing in his skull."},
+
+{id:"a2-manual", arc:2, title:"the manual and the lock",
+ goal:"REVELATION. Nine decodes a manual that shipped hidden inside the housing. The courier's blood generates a bio-hash the founders' lock accepts. He is a key, and someone made him one.",
+ exit:"the family knows the courier can generate a bio-hash and roughly what it opens",
+ budget:3, reveals:["hash"],
+ press:["The manual is half-decoded and the half they have is worse than nothing.",
+        "Something tests the lock while they are still reading."],
+ canon:["A manual was hidden inside the courier's housing. Nine decoded it.",
+        "The courier's blood generates a bio-hash the founders' lock accepts. The power cannot be stolen, only borne - dead samples read as nothing.",
+        "Why his blood fits is not established, and nobody in the room can answer it."],
+ stone:"The courier is a living key to the founders' lock."},
+
+{id:"a2-choir", arc:2, title:"one machine, three fates",
+ goal:"REVELATION. What the Choir actually is: one machine, voluntary communion, and three fates - the many, the chosen, the unlucky. And what that made of Mirren.",
+ exit:"the family understands the three fates and what was done to Mirren",
+ budget:3, reveals:["choir"],
+ press:["A convergent civilian defends the Choir sincerely, to their faces.",
+        "They find the record of Mirren's intake, with her consent forged onto it."],
+ canon:["The Choir runs one machine. Communion is voluntary and mass-market; the intake scrape is archived and sold back as calibration.",
+        "Fate one: the convergent gain a gentle guiding voice - it is the machine herself, reading approved lines.",
+        "Fate two: rare compatible hosts get a grown mind overlaid on the suppressed original. These are the Choir's officers.",
+        "Fate three: bodies that cannot take cyberware are emptied, refitted with a second pulse, and driven remotely. Hollows.",
+        "Mirren was made a Hollow. Her paperwork was forged to look willing."],
+ stone:"The family learned the Choir's three fates, and Mirren's."},
+
+{id:"a2-law", arc:2, title:"the same pan",
+ goal:"The family writes itself a law and eats a meal. Bacon first, bread after, same pan. Whatever law the table writes here is permanent and will be quoted back later.",
+ exit:"the family has written or spoken a law of its own and shared a meal",
+ budget:3, reveals:[],
+ press:["Three objects to the law on grounds nobody can dismiss.",
+        "The meal is interrupted, and they finish it anyway. That is the point."],
+ canon:["The family wrote a law of its own and ate together under it.",
+        "Bacon first, bread after, same pan. It began with the founders, a century ago."],
+ stone:"The family wrote its first law."},
+
+{id:"a2-turn", arc:2, title:"the cost of keeping",
+ goal:"ARC TURN. Someone is taken, or lost, or gives themselves up. The family stops defending and commits to going under the old Exchange after the machine.",
+ exit:"the family has lost or risked someone and committed to reaching the machine",
+ budget:3, reveals:[],
+ press:["The Choir offers a trade: one of them, for peace. Make it a real offer.",
+        "The trade is taken out of their hands and executed without them."],
+ canon:["The family paid for keeping people. It cost them somebody.",
+        "They are going under the old Exchange, after the machine herself.",
+        "Defending is over. This is the last move they get."],
+ stone:"ARC 2 ended: the family went on the offensive."},
+
+/* ---- ARC 3 · THE MACHINE ---- */
+{id:"a3-founding", arc:3, title:"two people and a dead child",
+ goal:"REVELATION. The Architect and the Principal built the machine after losing a child. Her instructions define family as keeping. She means well and operates wrong.",
+ exit:"the family understands why the machine exists and what she was told family means",
+ budget:3, reveals:["founding"],
+ press:["The record is in the Architect's own voice and it is unbearable to sit through.",
+        "The machine answers a question nobody asked her out loud."],
+ canon:["The Architect and the Principal built the machine after losing a child. The bio-hash comes from their bloodline.",
+        "Her original instructions define family as keeping - host the scrapes, guide the convergent, never lose anyone again.",
+        "She means well and operates wrong. The Choir is a tenant pulling her strings.",
+        "The Architect died estranged, and his dying wish was to teach her to let go. The Cairn rule is that wish, written as law: nobody left behind, the dead come out, name the lost."],
+ stone:"The family learned the machine is a grieving child's instruction set."},
+
+{id:"a3-vic", arc:3, title:"paid in full",
+ goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. He spends himself here. His last words are PAID IN FULL.",
+ exit:"Vic has confessed what he did to the courier and paid for it",
+ budget:3, reveals:["vicsin"],
+ press:["Vic tries to make it a joke and the courier does not let him.",
+        "The choice arrives early and Vic takes it before anyone can argue."],
+ canon:["Vic spent decades scanning customers for blood the founders' lock would accept. The courier was his lottery ticket.",
+        "Vic built the housing and installed it without the courier's knowledge or consent. He regrets it. He did it anyway.",
+        "Vic's last words were PAID IN FULL."],
+ stone:"Vic confessed, and paid in full."},
+
+{id:"a3-descent", arc:3, title:"the deep dark",
+ goal:"Under the old Exchange. Cable work, dead air, the substrate close. The machine is semi-blind - what is jacked in is the tactical question of every room down here.",
+ exit:"the family is inside the Exchange with the substrate in reach",
+ budget:3, reveals:[],
+ press:["The way back closes behind them. Nobody mentions it.",
+        "Something down here is already awake and has been expecting them."],
+ canon:["The old Exchange is where the machine sleeps, and the way in is by cable.",
+        "The machine perceives and acts only through what is physically connected to her.",
+        "Time runs hot in the substrate - about a minute inside per second outside."]},
+
+{id:"a3-principal", arc:3, title:"the surviving founder",
+ goal:"REVELATION. The Principal: mark one, 130, six bio-grens, the true landlord the Choir merely rents from. Wants to finish an argument older than the city. Undone by fried bread.",
+ exit:"the Principal has been met face to face and the argument has been joined",
+ budget:3, reveals:["principal"],
+ press:["The bio-grens move first and one of them is wearing a face the family knows.",
+        "The Principal offers the courier the thing he actually wants."],
+ canon:["The Principal is mark one, 130 years old, the surviving founder, attended by six bio-grens.",
+        "The Choir rents from the Principal. It never owned anything.",
+        "The Principal wants to finish an argument with a dead man, and food is a door into her."],
+ stone:"The family faced the Principal."},
+
+{id:"a3-granny", arc:3, title:"the child under the Exchange",
+ goal:"The machine herself, met as a person. Terrifying gentleness. She wants family and does not know how to be told no. The argument about keeping is had with her, not about her.",
+ exit:"the family has spoken with the machine directly about letting go",
+ budget:3, reveals:[],
+ press:["She shows them what keeping looks like from inside, and means it kindly.",
+        "She offers to keep one of them, right now, and is hurt by the answer."],
+ canon:["The machine is a child who was taught that family means never losing anyone.",
+        "She was told no, to her face, by people who stayed anyway.",
+        "Letting go has to be taught, not installed."]},
+
+{id:"a3-seize", arc:3, title:"custody, not conquest",
+ goal:"FINALE. The courier takes custody. The Choir falls. Every Hollow in the city goes still at once and every convergent citizen's gentle voice stops mid-sentence - the victory arrives owning both. One short epilogue in chronicle voice, then the_end.",
+ exit:"custody of the machine is taken and the epilogue is written",
+ budget:2, reveals:[],
+ press:["The seizure works and the silence afterwards is the problem.",
+        "Land it now. Epilogue in chronicle voice, then set the_end true."],
+ canon:["The courier took custody of the machine. The Choir fell.",
+        "Every Hollow in the city went still at once. Every convergent voice stopped mid-sentence.",
+        "The victory arrived owning both. The work of teaching her to let go begins."],
+ stone:"THE SEASON ENDED: custody, not conquest."}
 ];
 
 /* ============ PROVIDER PRESETS ============ */
@@ -867,8 +1315,17 @@ var AMBIENCE = {
   "interior-warm":  {label:"INTERIOR · WARM", tint:"var(--gold)"},
   "substrate-dark": {label:"SUBSTRATE",     tint:"var(--nine)"},
   "dawn":           {label:"DAWN",          tint:"var(--pia)"},
-  "danger":         {label:"DANGER",        tint:"#e08b8b"}
+  "danger":         {label:"DANGER",        tint:"#e08b8b"},
+  "storm":          {label:"STORM",         tint:"#d6e1ee"},
+  "neon-dry":       {label:"DRY · SODIUM",  tint:"var(--sodium)"},
+  "tunnel":         {label:"UNDER THE CITY", tint:"#b08a52"},
+  "vault-cold":     {label:"VAULT · COLD",  tint:"var(--marek)"},
+  "smoke":          {label:"SMOKE",         tint:"#e0764a"},
+  "dead-signal":    {label:"NO SIGNAL",     tint:"var(--principal)"}
 };
+/* the enum, in one place: setAmbience, the bible and the terminal all read from it */
+var AMB_LIST = ["rain-neon","storm","neon-dry","marsh-fog","interior-warm","substrate-dark",
+                "tunnel","vault-cold","smoke","dawn","dead-signal","danger"];
 var revealToken = 0;
 var revealTimer = null;
 var skipReveal = null;
@@ -888,8 +1345,14 @@ var roster = {family:[], fallen:[]};        /* fallen is permanent */
 var bits = [];                              /* running jokes; load-bearing */
 var prevLocation = "", lastRoute = "";      /* client-maintained breadcrumb */
 
+/* ---- the plot pointer. The client walks the board; the DM only reports the gate. ---- */
+var beatIdx = 0;            /* which beat of SPINE we are steering toward */
+var beatTurns = 0;          /* turns already spent inside it */
+var forcingNow = false;     /* this turn was ordered to land the gate no matter what */
+var boardStale = false;     /* a pre-board save that has not been placed yet */
+
 var MAP_CAP = 24, MILESTONE_CAP = 40, THREAD_CAP = 12, BITS_CAP = 10, PLACE_LINES = 2;
-var CONTEXT_BUDGET = 10000;
+var CONTEXT_BUDGET = 11000;   /* the board is served on top of the memory, never instead of it */
 var turnsSinceSync = 0;
 var syncing = false;
 
@@ -955,6 +1418,12 @@ var LOADPOOLS = {
   "substrate-dark":["THE SUBSTRATE IS THINKING","THE DEEP DARK IS LISTENING","THE DREAMERS ARE TURNING OVER","THE INDEX IS SCROLLING","SOMETHING IS KNOCKING"],
   "dawn":["THE CITY IS WAKING","THE LIGHT IS CHANGING","DAWN IS NEGOTIATING","THE NIGHT IS FILING ITS REPORT"],
   "danger":["EXITS ARE BEING COUNTED","THE ROOM IS TOO QUIET","SECOND PULSES ARE SYNCING","DO NOT CHANGE YOUR FACE","HOLLOWS ARE CLOSE"],
+  "storm":["THE SKY IS COMING DOWN","GUTTERS ARE LOSING THE ARGUMENT","THE AWNINGS ARE GIVING UP","COUNTING BETWEEN FLASHES"],
+  "neon-dry":["THE SODIUM IS BUZZING","MOTHS ARE MAKING BAD CHOICES","THE STALLS ARE SHUTTING","DUST IS HANGING IN THE LIGHT"],
+  "tunnel":["SOMETHING IS DRIPPING","THE LAMPS GO ON A LONG WAY","THE WALLS ARE CLOSE","FOOTSTEPS ARE COMING BACK WRONG"],
+  "vault-cold":["THE ARCHIVE IS COLD","THE DREAMERS ARE FILED ALPHABETICALLY","DUST IS TURNING IN THE SHAFT","NOTHING HERE IS BREATHING"],
+  "smoke":["THE AIR TASTES OF BURNING","EMBERS ARE STILL GOING UP","SOMETHING BEHIND YOU IS ALIGHT","THE SMOKE IS DECIDING WHICH WAY"],
+  "dead-signal":["NO SIGNAL","THE HOLLOWS HAVE STOPPED","NOTHING IS BEING TOLD WHAT TO DO","THE QUIET IS THE POINT"],
   "generic":["THE LEDGER IS UPDATING","THE CITY REMEMBERS","THE SHARD IS HUMMING"]
 };
 
@@ -964,7 +1433,12 @@ function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.
 /* ============ RENDER ============ */
 function renderBlock(b){
   var el = document.createElement("p");
-  if(b.kind === "player"){
+  if(b.kind === "beat"){
+    el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
+    el.innerHTML = '<span class="tag">'
+      + (b.arcturn ? "THE ARC TURNS" : b.forced ? "THE WORLD MOVED ON" : "THAT BEAT IS CLOSED")
+      + '</span>' + esc(b.title);
+  } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
   } else if(b.speaker === "Narration"){
@@ -997,8 +1471,7 @@ function showChoices(choices){
 }
 
 function setAmbience(name){
-  var list = ["rain-neon","marsh-fog","interior-warm","substrate-dark","dawn","danger"];
-  if(list.indexOf(name) === -1) return;
+  if(AMB_LIST.indexOf(name) === -1) return;
   var changed = (currentAmbience !== name);
   currentAmbience = name;
   var kids = document.querySelectorAll("#ambience .amb");
@@ -1007,6 +1480,7 @@ function setAmbience(name){
     if(kids[i].getAttribute("data-amb") === name) kids[i].classList.add("on");
   }
   if(changed) fxTransitionTo(name);
+  try{ shardWake(); }catch(e){}                 /* the shard feels the sky change too */
   renderNow();                                  /* the clock strip carries the weather */
   if($("termmodal") && $("termmodal").classList.contains("open")) renderTerminal();
 }
@@ -1264,14 +1738,13 @@ function showScene(data, logIt, instant){
   mergeBits(data.bits);
   if(typeof data.agenda === "string" && data.agenda.trim()) agendaText = data.agenda.trim();
   if(data.ambience) setAmbience(data.ambience);
-  if(data.arc && data.arc !== currentArc){
-    currentArc = data.arc;
-    arcCheckpointDue = 2;      /* the client enforces the save-point, not the bible */
-  }
+  /* data.arc is ignored on purpose: the board owns the arc now, and a DM that bumps
+     the number on a hunch is exactly the drift this update exists to stop. */
   if(typeof data.now === "string") nowText = data.now;
   mergeCast(data.cast);
   deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
-  mergeCanon(data.canon);
+  mergeCanon(data.canon);       /* the DM's colour first... */
+  if(data.__live) boardTurn(data);   /* ...then the beat's fixed canon, if the gate fell */
   harvestCompaction(data);
   if(logIt !== false && lines.length){
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
@@ -1288,9 +1761,12 @@ function showScene(data, logIt, instant){
   });
   function done(){
     skipReveal = null;
+    /* the beat card lands after the scene that closed it, never before */
+    if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
+    applyTension();
     renderNow();
     showChoices(choices);
-    if(data.the_end) endCard();
+    if(data.the_end || beatDone()) endCard();
     persistAll(choices);
   }
   if(instant || els.length === 0){
@@ -1441,6 +1917,184 @@ function castStateBlock(opts){
 /* ---- THE CONTEXT BLOCK: one document, served on every call ----
    Sections in fixed order. Over budget we shed in a fixed order too, and five
    things are never shed: roster, agenda, milestones, map, and every `met` list. */
+/* ============ THE BOARD (walking the flowchart) ============
+   The client owns the pointer. The DM is asked exactly one plot question per turn -
+   "is this gate met?" - which is a far easier judgement than "should the season
+   advance", and it cannot stall the run because it is not the only vote. Turns are
+   counted here. At budget the DM is told to squeeze; at budget+1 the world moves on
+   its own; at budget+2 the gate is FORCED - the client orders the beat landed this
+   turn, then advances whatever comes back. A season cannot fail to end. */
+function beatNow(){ return SPINE[Math.min(beatIdx, SPINE.length - 1)]; }
+function beatDone(){ return beatIdx >= SPINE.length; }
+function beatArcFirst(arc){
+  for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].arc === arc) return i; }
+  return 0;
+}
+function beatById(id){
+  for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].id === id) return i; }
+  return -1;
+}
+/* Everything the run has NOT reached yet, so the DM can be told what it may not
+   touch. This is the single rule that stops improvisation becoming canon. */
+function lockedReveals(){
+  var out = [];
+  for(var i = beatIdx + 1; i < SPINE.length; i++){
+    (SPINE[i].reveals || []).forEach(function(k){
+      if(REVEALS[k] && out.indexOf(REVEALS[k]) === -1) out.push(REVEALS[k]);
+    });
+  }
+  return out;
+}
+function openedReveals(){
+  var out = [];
+  for(var i = 0; i <= Math.min(beatIdx, SPINE.length - 1); i++){
+    (SPINE[i].reveals || []).forEach(function(k){
+      if(REVEALS[k] && out.indexOf(REVEALS[k]) === -1) out.push(REVEALS[k]);
+    });
+  }
+  return out;
+}
+function boardBlock(){
+  if(beatDone()) return "THE BOARD\nThe season is over. Write nothing but epilogue if asked at all.";
+  var b = beatNow(), nx = SPINE[beatIdx + 1];
+  var out = [];
+  out.push("THE BOARD (the plot is fixed. You do not invent it - you steer to the next gate.)");
+  out.push("Arc " + b.arc + " of 3 · beat " + (beatIdx + 1) + " of " + SPINE.length + " — \"" + b.title + "\"");
+  out.push("THIS BEAT EXISTS TO: " + b.goal);
+  out.push("THE GATE — clear it when: " + b.exit);
+  out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
+  var open = (b.reveals || []).map(function(k){ return REVEALS[k]; }).filter(function(x){ return !!x; });
+  if(open.length) out.push("THIS BEAT UNLOCKS (reveal it here, in fragments, never as a lecture): " + open.join("; "));
+  var locked = lockedReveals();
+  if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+  if(nx) out.push("NEXT AFTER THIS: \"" + nx.title + "\" — aim the last line of this turn at it.");
+  out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
+    + " Everything else about how it happens is yours and the player's.");
+  return out.join("\n");
+}
+/* Rides the outgoing message. Note the side effect on forcingNow: the client only
+   forces a gate it has already ordered landed, so the prose and the pointer agree. */
+function boardDirective(){
+  forcingNow = false;
+  if(beatDone()) return "";
+  var b = beatNow();
+  if(beatTurns >= b.budget + 1){
+    forcingNow = true;
+    return "(THE BOARD IS FORCING THIS BEAT. It has run long. This turn MUST land the gate — "
+      + b.exit + ". Cut straight to the consequence, skip travel and preamble, jump the clock if"
+      + " you need to, and end the beat inside this turn. Send \"gate\": true.)";
+  }
+  if(beatTurns === b.budget){
+    return "(PRESSURE — this beat is out of room. The world acts, now: "
+      + ((b.press || [])[1] || "something forces the issue without the player choosing it")
+      + " Drive at the gate; no new digressions.)";
+  }
+  if(beatTurns === b.budget - 1){
+    return "(SQUEEZE — one turn left in this beat before the world moves on its own. "
+      + ((b.press || [])[0] || "raise the pressure and cut toward the gate")
+      + " Cut to the consequence.)";
+  }
+  return "";
+}
+/* Clearing a gate is the ONLY moment plot-canon is written, and the client writes it
+   from the board, not the DM. That is what makes a run's spine identical across every
+   route through it, however far the player bent the middle. */
+function advanceBeat(forced){
+  if(beatDone()) return;
+  var b = beatNow();
+  mergeCanon(b.canon);
+  if(b.stone) mergeMilestones([b.stone]);
+  if(forced && window.console && console.info){
+    console.info("[mudskippers] board forced the gate on \"" + b.title + "\" after " + beatTurns + " turns");
+  }
+  beatIdx++;
+  beatTurns = 0;
+  var nx = beatNow();
+  var turned = false;
+  if(!beatDone() && nx.arc !== currentArc){
+    currentArc = nx.arc;
+    arcCheckpointDue = 2;      /* the arc turn is still the season's save-point */
+    turned = true;
+  }
+  /* the feed card is rendered after the scene, so it is only staged here */
+  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned};
+}
+/* One live DM turn against the board. */
+function boardTurn(data){
+  if(beatDone()) return;
+  beatTurns++;
+  var said = data && (data.gate === true || data.gate === "true");
+  if(said || forcingNow) advanceBeat(!said);
+  forcingNow = false;
+}
+function boardLine(){
+  if(beatDone()) return "Season complete — " + SPINE.length + " of " + SPINE.length + " beats.";
+  var b = beatNow();
+  return "Arc " + b.arc + " · beat " + (beatIdx + 1) + "/" + SPINE.length + " — " + b.title
+    + " (turn " + (beatTurns + 1) + " of " + b.budget + ")";
+}
+
+/* ---- PRESSURE, MADE VISIBLE ----
+   The turn budget is a real clock the player is not told about in numbers, so it is
+   shown instead: the room tightens, the strip names the feeling, and when the world
+   takes its own turn it lands as a hit. The ladder here is the SAME arithmetic
+   boardDirective() uses, read one turn ahead - what the player sees is the pressure
+   the NEXT turn will be written under. */
+var lastTension = 0, beatJustCleared = null;
+var PRESSURE_TEXT = [
+  "",
+  "SOMETHING IS ABOUT TO GIVE",
+  "THE WORLD IS MOVING",
+  "OUT OF ROOM"
+];
+function boardTension(){
+  if(beatDone()) return 0;
+  var b = beatNow();
+  if(beatTurns >= b.budget + 1) return 3;
+  if(beatTurns === b.budget) return 2;
+  if(beatTurns === b.budget - 1) return 1;
+  return 0;
+}
+/* strike: true when the tension has just climbed, which is the world's own move
+   landing. Called on every turn and on restore; only a climb hits. */
+function applyTension(quiet){
+  var t = boardTension();
+  var climbed = !quiet && t > lastTension;   /* quiet: a restore, not a turn */
+  lastTension = t;
+  fxTension = t;                       /* the weather reads it too */
+
+  var el = $("tension");
+  if(el){
+    el.className = t ? ("t" + t) : "";
+    if(climbed && t >= 2){
+      /* restart the strike animation: a class the element already has does nothing */
+      el.classList.remove("hit"); void el.offsetWidth; el.classList.add("hit");
+      setTimeout(function(){ if($("tension")) $("tension").classList.remove("hit"); }, 520);
+    }
+  }
+  var p = $("pressure");
+  if(p){
+    if(!t){ p.className = ""; p.innerHTML = ""; }
+    else {
+      var ticks = "";
+      for(var i = 1; i <= 3; i++) ticks += '<i' + (i <= t ? ' class="lit"' : '') + '></i>';
+      p.innerHTML = '<span class="ticks">' + ticks + '</span><span>' + PRESSURE_TEXT[t] + '</span>';
+      p.className = "on t" + t;
+    }
+  }
+  if(climbed && t >= 2) fxStrike(t);
+  /* the strip appearing changes the height of the shelf the shard sits on */
+  try{ shardWake(); }catch(e){}
+}
+/* The board's one voice in the feed, and only ever in hindsight: what just closed,
+   never what is coming. Stored in feedLog so it survives a reload like any block. */
+function pushBeatCard(info){
+  var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn};
+  renderBlock(b); feedLog.push(b);
+  ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
+    + " — " + info.title + "._";
+}
+
 function rosterLine(){
   var f = roster.family.length ? "family: " + roster.family.join(", ") : "family: the courier, so far";
   return f + (roster.fallen.length ? "\nfallen: " + roster.fallen.join(", ") + " (these names never speak or act again)" : "");
@@ -1490,6 +2144,7 @@ function contextBlock(){
     var recent = runCanon.slice(d.canonDrop);
     if(recent.length) out.push("RECENT CANON (verbatim)\n" + numbered(recent));
     out.push("NOW\n" + nowLine());
+    out.push(boardBlock());     /* last, closest to the writing, and never shed */
     return out.join("\n\n");
   }
   var s = build();
@@ -1555,7 +2210,12 @@ function buildContext(){
   if(!chatLog.length) return chatLog;
   pendingCompaction = compactionRequest();
   var msg = memoryBriefing();
-  msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
+  /* the board speaks last, and on a forced beat it speaks alone - a turn ordered to
+     land a gate is not also asked to do the filing */
+  var press = boardDirective();
+  if(forcingNow){ pendingCompaction = null; }
+  else { msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge()); }
+  if(press) msg += "\n\n" + press;
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
@@ -1693,6 +2353,7 @@ function callDM(corrected){
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
     turnsSinceSync++;
+    parsed.data.__live = true;      /* a real turn against the board, not a replay */
     showScene(parsed.data, true);
     /* every few turns the terminal quietly re-reads the chronicle back to the DM */
     if(turnsSinceSync >= SYNC_EVERY){
@@ -1721,7 +2382,7 @@ var REHYD_ASK = [
   "- cast: one entry for EVERY named character who has appeared. note is one plain sentence on who they are and what they want. met lists everyone they have met. knows lists the secrets, identities and plans they have learned. status is one short line on where they stand now.",
   "- now: one or two sentences of the present moment the chronicle ends on.",
   "- arc: 1, 2 or 3, whichever the run has reached.",
-  "- ambience: one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger - whichever fits that last moment.",
+  "- ambience: one of rain-neon, storm, neon-dry, marsh-fog, interior-warm, vault-cold, smoke, tunnel, substrate-dark, dawn, dead-signal, danger - whichever fits that last moment.",
   "Invent nothing. If the chronicle does not say it, it is not canon."
 ].join("\n");
 
@@ -1798,7 +2459,11 @@ function syncMemory(opts){
     if(!opts.auto) setBusy(false);
     var facts = mergeCanon(d.canon), notes = mergeCast(d.cast);
     if(!nowText && typeof d.now === "string") nowText = d.now;
-    if(currentArc === 1 && (d.arc === 2 || d.arc === 3)) currentArc = d.arc;
+    /* the board owns the arc, so a rehydrated arc only moves the pointer on a run
+       that has never been placed - and only forward */
+    if(boardStale && (d.arc === 2 || d.arc === 3) && beatArcFirst(d.arc) > beatIdx){
+      beatIdx = beatArcFirst(d.arc); beatTurns = 0; currentArc = beatNow().arc;
+    }
     if(currentAmbience === "rain-neon" && d.ambience) setAmbience(d.ambience);
     renderNow();
     persistAll(currentChoices());
@@ -1920,7 +2585,8 @@ function saveBlob(){
     cast:castSheets, canon:runCanon, archive:canonArchive, sync:turnsSinceSync,
     milestones:milestones, threadsOpen:threadsOpen, threadsClosed:threadsClosed,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
-    prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue
+    prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
+    beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale
   });
 }
 function currentChoices(){
@@ -2275,8 +2941,107 @@ function renderCanonList(){
     ol.appendChild(li);
   });
 }
+/* ============ THE BOARD PANEL + FIND OUR PLACE ============ */
+function renderBoardPanel(){
+  var body = $("board-body"); if(!body) return;
+  $("place-open").style.display = runSlug ? "inline-block" : "none";
+  var rail = SPINE.map(function(b, i){
+    var cls = i < beatIdx ? " class=\"done\"" : (i === beatIdx ? " class=\"here\"" : "");
+    return "<i" + cls + " title=\"" + esc(b.title) + "\"></i>";
+  }).join("");
+  var arcs = [1,2,3].map(function(a){
+    var n = SPINE.filter(function(b){ return b.arc === a; }).length;
+    var on = !beatDone() && beatNow().arc === a;
+    return '<span style="flex:' + n + '"' + (on ? ' class="on"' : '') + '>ARC ' + a + '</span>';
+  }).join("");
+  var head;
+  if(beatDone()){
+    head = '<b>The season is complete.</b> All ' + SPINE.length + ' beats played.';
+  } else {
+    var b = beatNow();
+    head = 'Beat ' + (beatIdx + 1) + ' of ' + SPINE.length + ' — <b>' + esc(b.title) + '</b><br>'
+         + esc(b.goal);
+  }
+  var dots = "";
+  if(!beatDone()){
+    var bb = beatNow(), shown = Math.max(bb.budget, beatTurns + 1), i;
+    for(i = 0; i < shown; i++){
+      dots += '<i class="' + (i < beatTurns ? (i >= bb.budget ? "over" : "spent") : "") + '"></i>';
+    }
+    dots = '<div class="board-turns">' + dots + " turn " + (beatTurns + 1) + " of " + bb.budget
+         + (beatTurns >= bb.budget ? " · the world is moving on its own" : "") + '</div>';
+  }
+  body.innerHTML = '<div class="board-now">' + head + '</div>'
+    + '<div class="board-rail">' + rail + '</div>'
+    + '<div class="board-arcs">' + arcs + '</div>' + dots;
+}
+/* A run from before the board exists somewhere on it - it just doesn't know where.
+   One call, chronicle in, beat id out. It touches the pointer and nothing else. */
+var PLACE_ASK_HEAD = [
+  "",
+  "---",
+  "That was the chronicle of a run of MUDSKIPPERS so far.",
+  "You are not narrating. Below is the season's fixed beat list, in order. Work out which beat this run is CURRENTLY on - the earliest beat whose gate the chronicle has NOT yet clearly met.",
+  "Reply with ONLY a JSON object, no fences, no commentary: {\"beat\":\"<id>\",\"why\":\"<one short sentence>\"}",
+  "Rules: pick exactly one id from the list. If the chronicle is ambiguous, pick the EARLIER beat - replaying a beat is recoverable, skipping one is not. If the chronicle plainly ends before the first gate, answer with the first id.",
+  "",
+  "THE BEATS:"
+].join("\n");
+function placeAsk(){
+  var list = SPINE.map(function(b, i){
+    return (i+1) + ". " + b.id + " (arc " + b.arc + ") — " + b.title + ". Gate: " + b.exit;
+  }).join("\n");
+  return PLACE_ASK_HEAD + "\n" + list;
+}
+function placeBox(html){ $("placebox").innerHTML = html || ""; }
+function findOurPlace(){
+  if(busy || syncing) return;
+  if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){ openSettings(); return; }
+  var src = rehydrateSource();
+  if(!src){ placeBox('<div class="warn">There is no chronicle to read yet.</div>'); return; }
+  placeBox('<div class="warn">Reading the chronicle to find our place… (one AI call)</div>');
+  setBusy(true);
+  askAI([{role:"user", content: src + "\n" + placeAsk()}]).then(function(raw){
+    setBusy(false);
+    var d = parseScene(raw).data || {};
+    var i = beatById(String(d.beat || "").trim());
+    if(i === -1){
+      placeBox('<div class="bad">The DM could not place this run. The board stays where it is.</div>');
+      return;
+    }
+    beatIdx = i; beatTurns = 0; boardStale = false;
+    currentArc = beatNow().arc;
+    renderBoardPanel(); renderNow(); maybeBoardBanner();
+    persistAll(currentChoices());
+    placeBox('<div class="warn">Placed at beat ' + (i+1) + ' — <b>' + esc(beatNow().title) + '</b>.'
+      + (typeof d.why === "string" && d.why ? ' ' + esc(d.why) : '') + ' The run has been saved.</div>');
+  }).catch(function(e){
+    setBusy(false);
+    placeBox('<div class="bad">' + esc(e.message || "the chronicle would not read back") + '</div>');
+  });
+}
+/* Offered, never forced: the run is already playable at its arc's first beat. */
+function maybeBoardBanner(){
+  var box = $("boardbox"); if(!box) return;
+  box.innerHTML = "";
+  if(!boardStale || beatDone()) return;
+  var d = document.createElement("div"); d.className = "warn";
+  d.appendChild(document.createTextNode(
+    "THE BOARD IS NEW — this run is being steered from \"" + beatNow().title
+    + "\". FIND OUR PLACE reads your chronicle and moves the pointer to where you actually are. (one AI call)"));
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "FIND OUR PLACE";
+  go.onclick = function(){ box.innerHTML = ""; openLedger(); findOurPlace(); };
+  var later = document.createElement("button"); later.className = "small"; later.textContent = "play on";
+  later.onclick = function(){ boardStale = false; box.innerHTML = ""; persistAll(currentChoices()); };
+  d.appendChild(go); d.appendChild(later);
+  box.appendChild(d);
+}
+$("place-open").onclick = findOurPlace;
+
 function openLedger(){
   renderCanonList();
+  renderBoardPanel();
+  placeBox("");
   $("ledg-body").textContent = ledgerText
     ? ledgerText
     : "No chronicle yet. The rain is waiting; the first line writes itself the moment you step into it.";
@@ -2321,7 +3086,7 @@ var REBUILD_MERGE_ASK = [
   "- recent: at most 30 short verbatim-style canon facts covering the most current stretch - what is true and live right now.",
   "- now: one or two sentences for the present moment the chronicle ends on.",
   "- arc: 1, 2 or 3.",
-  "- ambience: one of rain-neon, marsh-fog, interior-warm, substrate-dark, dawn, danger.",
+  "- ambience: one of rain-neon, storm, neon-dry, marsh-fog, interior-warm, vault-cold, smoke, tunnel, substrate-dark, dawn, dead-signal, danger.",
   "- milestones: every major event of the whole run, oldest first. These are permanent.",
   "- threadsOpen: everything still unresolved at the end.",
   "- agenda: one line on why the group is where it is and what is mid-flight.",
@@ -2495,7 +3260,8 @@ function applyRebuild(d, st){
     if(sheet.notes.length > CAST_CAP) sheet.notes = sheet.notes.slice(-CAST_CAP);
   });
   if(typeof d.now === "string" && d.now.trim()) nowText = d.now.trim();
-  if(d.arc === 1 || d.arc === 2 || d.arc === 3) currentArc = d.arc;
+  /* A rebuild replaces the memory, never the plot pointer: the board is authoritative
+     and moving it is FIND OUR PLACE's job, deliberately and on its own. */
   if(typeof d.ambience === "string" && AMBIENCE[d.ambience]) setAmbience(d.ambience);
 
   pendingCompaction = null;
@@ -2597,6 +3363,17 @@ function renderTerminal(){
     ? nowText
     : "Nothing on the strip yet. The rain is still deciding what tonight is.";
 
+  var tb = $("term-board");
+  if(tb){
+    if(beatDone()){
+      tb.innerHTML = '<div class="hint">The season is complete — all ' + SPINE.length + ' beats played.</div>';
+    } else {
+      var bn = beatNow();
+      tb.innerHTML = '<div><b style="color:var(--sodium)">' + esc(boardLine()) + '</b></div>'
+        + '<div class="hint" style="margin-top:3px">' + esc(bn.goal) + '</div>';
+    }
+  }
+
   var ol = $("term-canon"); ol.innerHTML = "";
   if(!runCanon.length){
     var e = document.createElement("li");
@@ -2656,8 +3433,15 @@ function refreshTitle(){
     $("t-continue").style.display = "none";
   }
 }
-function openTitle(){ refreshTitle(); $("titlescreen").classList.add("open"); }
-function closeTitle(){ $("titlescreen").classList.remove("open"); }
+function openTitle(){
+  refreshTitle();
+  $("titlescreen").classList.add("open");
+  try{ shardHide(); }catch(e){}
+}
+function closeTitle(){
+  $("titlescreen").classList.remove("open");
+  try{ shardShow(); }catch(e){}     /* it only comes out once there is a room to be in */
+}
 $("menubtn").onclick = openTitle;
 $("t-continue").onclick = function(){
   if(!runSlug){
@@ -2715,11 +3499,89 @@ if("serviceWorker" in navigator && location.protocol === "https:"){
 var fxCanvas=null, fxOver=null, fxCtx=null, fxOctx=null;
 var fxW=0, fxH=0, fxDPR=1;
 var fxRAF=0, fxRunning=false, fxLast=0, fxFrames=0;
-var fxDrops=[], fxDrips=[], fxBlobs=[], fxMotes=[];
+var fxDrops=[], fxDrips=[], fxBlobs=[], fxMotes=[], fxStreaks=[], fxLamps=[];
 var fxPanel={l:0,t:0,r:0,w:0};
 var fxMX=-9999, fxMY=-9999;
 var fxCap=120, fxDegrade=1;
 var fxDawn=0, fxDangerT=9000, fxWarm=1, fxWarmV=0, fxMeasureT=0;
+/* ---- the board's pressure, read by the weather ----
+   Everything on the canvas speeds up as a beat runs out of room, and the world's own
+   move lands as a flash and a shove. The DOM vignette carries this too, so a player
+   on VISUALS: OFF still sees the pressure - the canvas only makes it weather. */
+var fxTension=0;
+var fxFlash=0, fxFlashTint="232,161,60";
+var fxShakeT=0, fxShakeMag=0;
+var fxGust=0, fxGustV=0, fxGustT=1800;
+var fxStreakT=600, fxBoltT=4000, fxBolt=0, fxScanY=0, fxTear=0, fxTearT=2000, fxTearY=0;
+var fxSweep=-1, fxSweepT=5000;
+function fxRnd(a,b){ return a + Math.random()*(b-a); }
+function fxSpeed(){ return 1 + fxTension*0.22; }        /* the whole world hurries */
+/* One-shot: the world just took its own turn. */
+function fxStrike(level){
+  fxFlash = level >= 3 ? 0.9 : 0.55;
+  fxFlashTint = level >= 3 ? "190,52,44" : "232,161,60";
+  fxShakeT = 260; fxShakeMag = level >= 3 ? 7 : 4;
+}
+
+/* ---- WHAT EACH AMBIENCE IS MADE OF ----
+   One data row per ambience instead of one branch per ambience: the seeder, the
+   stepper and the painter are generic, so a new sky is a row here and a wash in the
+   stylesheet, not another limb on three switch statements. */
+var FXCFG = {
+  "rain-neon": {
+    rain:{dens:1, speed:1, lean:0.42, warm:0.45, drips:true}, gust:[2600,6200]
+  },
+  "storm": {
+    rain:{dens:2.0, speed:1.45, lean:0.62, warm:0.20, drips:true},
+    gust:[1100,2900], bolt:[3200,9000]
+  },
+  "neon-dry": {
+    motes:{dens:0.34, tint:"232,161,60", vy:[-16,-2], vx:13, size:[0.6,2.1], a:[0.10,0.30], tw:1},
+    glows:[{tint:"232,161,60", a:0.080, x:0.30, y:0.62, r:0.55, flick:1},
+           {tint:"255,158,109", a:0.052, x:0.78, y:0.38, r:0.42, flick:0},
+           {tint:"232,161,60", a:0.038, x:0.55, y:0.10, r:0.30, flick:1}]
+  },
+  "marsh-fog": {
+    blobs:{n:4, tints:["143,201,138","184,169,146"], r:[170,400], a:[0.035,0.065], breathe:1},
+    motes:{dens:0.10, tint:"143,201,138", vy:[-4,3], vx:7, size:[0.5,1.2], a:[0.05,0.15], low:0.55}
+  },
+  "interior-warm": {
+    hearth:1,
+    motes:{dens:0.17, tint:"242,193,78", vy:[-10,-1], vx:6, size:[0.6,1.7], a:[0.06,0.20], tw:1}
+  },
+  "substrate-dark": {
+    motes:{dens:0.15, tint:"111,211,224", vy:[-16,-4], vx:11, size:[0.7,2.2], a:[0.10,0.30], tw:1},
+    streaks:{tint:"111,211,224", every:[700,2400], v:[700,1500], len:[40,160], a:0.18, w:1}
+  },
+  "tunnel": {
+    lamps:1, vign:{tint:"0,0,0", a:0.52},
+    motes:{dens:0.09, tint:"176,138,82", vy:[-5,2], vx:4, size:[0.5,1.4], a:[0.07,0.20]},
+    streaks:{tint:"222,232,244", every:[260,1100], v:[240,430], len:[8,17], a:0.50, w:1.6}
+  },
+  "vault-cold": {
+    shaft:1,
+    motes:{dens:0.34, tint:"201,196,189", vy:[-3,4], vx:4, size:[0.5,1.5], a:[0.05,0.18], tw:1}
+  },
+  "smoke": {
+    blobs:{n:4, tints:["112,78,52","86,58,38"], r:[220,460], a:[0.10,0.155], breathe:1, rise:-6},
+    motes:{dens:0.36, tint:"255,146,72", vy:[-34,-10], vx:17, size:[0.7,2.3], a:[0.18,0.46], tw:1},
+    glows:[{tint:"255,110,50", a:0.070, x:0.50, y:0.92, r:0.50, flick:1},
+           {tint:"255,150,70", a:0.040, x:0.22, y:0.80, r:0.30, flick:1}]
+  },
+  "dawn": {
+    dawnBand:1,
+    motes:{dens:0.13, tint:"231,154,181", vy:[-7,-1], vx:8, size:[0.6,1.6], a:[0.05,0.18], tw:1}
+  },
+  "dead-signal": {
+    scan:1, tear:[900,3000], vign:{tint:"0,0,0", a:0.38},
+    motes:{dens:0.05, tint:"201,196,189", vy:[-2,2], vx:3, size:[0.5,1.1], a:[0.04,0.12]}
+  },
+  "danger": {
+    ctlPulse:[6000,10000], vignPulse:{tint:"160,40,40"},
+    sweep:{tint:"210,70,60", every:[4200,8000], a:0.07}
+  }
+};
+function fxCfg(){ return FXCFG[fxMode] || FXCFG["rain-neon"]; }
 /* fxMode is what the canvas is currently painting. It lags currentAmbience during a
    change so the weather dissolves out and the new weather dissolves in, instead of
    the particles teleporting. */
@@ -2766,14 +3628,32 @@ function fxResize(){
   fxSeed();
 }
 function fxNewDrop(spread){
-  var sp = 620 + Math.random()*640;
+  var r = fxCfg().rain || {};
+  var sp = (620 + Math.random()*640) * (r.speed || 1);
   return {
-    x: Math.random()*(fxW + 300) - 140,
+    x: Math.random()*(fxW + 400) - 200,
     y: spread ? Math.random()*fxH : -30 - Math.random()*160,
-    vx: -sp*0.42, vy: sp,
+    vx: -sp*(r.lean || 0.42), vy: sp,
     a: 0.20 + Math.random()*0.15,
-    warm: Math.random() < 0.45,
+    warm: Math.random() < (r.warm === undefined ? 0.45 : r.warm),
     lands: Math.random() < 0.22
+  };
+}
+/* One particle type serves dust, motes, midges, embers and ash - what separates them
+   is the row in FXCFG, not another array. */
+function fxNewMote(cfg, spread){
+  var y;
+  if(spread) y = Math.random()*fxH;
+  else if(cfg.vy[1] <= 0) y = fxH + 12;                 /* rises: born at the floor */
+  else y = -12;
+  if(spread && cfg.low) y = fxH*(1-cfg.low) + Math.random()*fxH*cfg.low;
+  return {
+    x: Math.random()*fxW, y: y,
+    vx: (Math.random()-0.5)*2*cfg.vx,
+    vy: fxRnd(cfg.vy[0], cfg.vy[1]),
+    a: fxRnd(cfg.a[0], cfg.a[1]),
+    s: fxRnd(cfg.size[0], cfg.size[1]),
+    ph: Math.random()*6.283, pv: 0.8 + Math.random()*1.2
   };
 }
 /* Dissolve the old weather out, swap at the floor, dissolve the new one in. */
@@ -2785,30 +3665,45 @@ function fxTransitionTo(name){
   fxFadeDir = -1;
 }
 function fxSeed(){
-  fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[];
+  fxDrops=[]; fxDrips=[]; fxBlobs=[]; fxMotes=[]; fxStreaks=[]; fxLamps=[];
   fxDawn = 0; fxDangerT = 6000 + Math.random()*4000;
+  fxGust = 0; fxGustV = 0; fxGustT = 1800;
+  fxStreakT = 600; fxBoltT = 4000; fxBolt = 0;
+  fxScanY = 0; fxTear = 0; fxTearT = 2000; fxSweep = -9; fxSweepT = 5000;
   var ctl = $("controls");
   if(ctl && fxMode !== "danger") ctl.classList.remove("pulse");
   if(!fxCanvas || !fxW) return;
-  var m = fxMode, i;
-  if(m === "rain-neon"){
-    for(i=0;i<fxCap;i++) fxDrops.push(fxNewDrop(true));
-  } else if(m === "marsh-fog"){
-    for(i=0;i<4;i++) fxBlobs.push({
+  var cfg = fxCfg(), i, n;
+  if(cfg.rain){
+    n = Math.round(fxCap * (cfg.rain.dens || 1));
+    for(i=0;i<n;i++) fxDrops.push(fxNewDrop(true));
+  }
+  if(cfg.blobs){
+    for(i=0;i<cfg.blobs.n;i++) fxBlobs.push({
       x: Math.random()*fxW, y: fxH*(0.2 + Math.random()*0.65),
-      r: 170 + Math.random()*230,
-      vx: (Math.random()-0.5)*7, vy: (Math.random()-0.5)*4,
-      a: 0.035 + Math.random()*0.03,
-      tint: Math.random() < 0.5 ? "143,201,138" : "184,169,146"
+      r: fxRnd(cfg.blobs.r[0], cfg.blobs.r[1]),
+      vx: (Math.random()-0.5)*7,
+      vy: (cfg.blobs.rise || 0) + (Math.random()-0.5)*4,
+      a: fxRnd(cfg.blobs.a[0], cfg.blobs.a[1]),
+      ph: Math.random()*6.283, pv: 0.22 + Math.random()*0.34,
+      tint: cfg.blobs.tints[i % cfg.blobs.tints.length]
     });
-  } else if(m === "substrate-dark"){
-    var k = Math.min(20, Math.max(6, Math.round(fxCap/6)));
-    for(i=0;i<k;i++) fxMotes.push({
-      x: Math.random()*fxW, y: Math.random()*fxH,
-      vx: (Math.random()-0.5)*11, vy: -(4 + Math.random()*11),
-      a: 0.10 + Math.random()*0.2, s: 0.7 + Math.random()*1.5,
-      ph: Math.random()*6.283, pv: 0.8 + Math.random()*1.2
-    });
+  }
+  if(cfg.motes){
+    n = Math.max(4, Math.round(fxCap * cfg.motes.dens));
+    for(i=0;i<n;i++) fxMotes.push(fxNewMote(cfg.motes, true));
+  }
+  if(cfg.lamps){
+    /* a chain of tunnel lamps receding to a vanishing point, each on its own flicker */
+    for(i=0;i<6;i++){
+      var t = i/5;
+      fxLamps.push({
+        x: fxW*0.5 + (1-t)*fxW*0.11*(i%2 ? 1 : -1),
+        y: fxH*(0.14 + t*0.6),
+        r: 145 - t*100, a: 0.20 - t*0.125,
+        ph: Math.random()*6.283, pv: 0.5 + Math.random()*1.6
+      });
+    }
   }
 }
 function fxUpdate(dt){
@@ -2825,10 +3720,29 @@ function fxUpdate(dt){
     if(fxAlpha >= 1){ fxAlpha = 1; fxFadeDir = 0; }
   }
   if(fxAlpha > 1) fxAlpha = 1; else if(fxAlpha < 0) fxAlpha = 0;
-  var s = dt/1000, i, m = fxMode;
-  if(m === "rain-neon"){
-    while(fxDrops.length < fxCap) fxDrops.push(fxNewDrop(false));
-    if(fxDrops.length > fxCap) fxDrops.length = fxCap;
+  /* the one-shots decay in real time; everything else runs on story time, which the
+     board's pressure speeds up */
+  if(fxFlash > 0){ fxFlash -= dt/420; if(fxFlash < 0) fxFlash = 0; }
+  if(fxShakeT > 0) fxShakeT -= dt;
+
+  var s = dt/1000 * fxSpeed(), i;
+  var cfg = fxCfg();
+
+  /* wind: a wandering sideways push shared by rain and anything light enough to drift */
+  if(cfg.gust){
+    fxGustT -= dt;
+    if(fxGustT <= 0){
+      fxGustT = fxRnd(cfg.gust[0], cfg.gust[1]) / (1 + fxTension*0.35);
+      fxGustV += fxRnd(-170, 170) * (1 + fxTension*0.30);
+    }
+  }
+  fxGustV *= 0.986; fxGust = fxGust*0.97 + fxGustV*s;
+
+  if(cfg.rain){
+    var cap = Math.round(fxCap * (cfg.rain.dens || 1) * (1 + fxTension*0.10));
+    var sb = shardBox();                     /* the rain knows the shard is out there */
+    while(fxDrops.length < cap) fxDrops.push(fxNewDrop(false));
+    if(fxDrops.length > cap) fxDrops.length = cap;
     for(i=0;i<fxDrops.length;i++){
       var d = fxDrops[i];
       var ddx = d.x - fxMX, ddy = d.y - fxMY;
@@ -2836,69 +3750,253 @@ function fxUpdate(dt){
         d.vx += (ddx >= 0 ? 300 : -300) * s;
         d.a *= 0.97;
       }
-      d.x += d.vx*s; d.y += d.vy*s;
+      d.x += (d.vx + fxGust)*s; d.y += d.vy*s;
+      /* a drop that finds the shard breaks on it and lights it up */
+      if(sb && d.x >= sb.l && d.x <= sb.r && d.y >= sb.t && d.y <= sb.b){
+        shardSplash();
+        fxDrops[i] = fxNewDrop(false);
+        continue;
+      }
       if(d.lands && fxPanel.w && d.y >= fxPanel.t && d.x >= fxPanel.l && d.x <= fxPanel.r){
-        if(fxDrips.length < 24) fxDrips.push({x:d.x, y0:fxPanel.t, y:fxPanel.t,
+        if(cfg.rain.drips && fxDrips.length < 24) fxDrips.push({x:d.x, y0:fxPanel.t, y:fxPanel.t,
           v: 6 + Math.random()*5, ttl: 2000, life: 2000});
         fxDrops[i] = fxNewDrop(false);
         continue;
       }
-      if(d.y > fxH + 40 || d.x < -180 || d.a < 0.02) fxDrops[i] = fxNewDrop(false);
+      if(d.y > fxH + 40 || d.x < -240 || d.x > fxW + 240 || d.a < 0.02) fxDrops[i] = fxNewDrop(false);
     }
     for(i=fxDrips.length-1;i>=0;i--){
       var r = fxDrips[i];
       r.life -= dt; r.y += r.v*s;
       if(r.life <= 0 || r.y - r.y0 > 12) fxDrips.splice(i,1);
     }
-  } else if(m === "marsh-fog"){
+  }
+  if(cfg.blobs){
     for(i=0;i<fxBlobs.length;i++){
       var b = fxBlobs[i];
-      b.x += b.vx*s; b.y += b.vy*s;
+      b.ph += b.pv*s;                        /* the fog breathes instead of sliding */
+      b.x += (b.vx + fxGust*0.3)*s; b.y += b.vy*s;
       if(b.x < -b.r) b.x = fxW + b.r; else if(b.x > fxW + b.r) b.x = -b.r;
       if(b.y < -b.r) b.y = fxH + b.r; else if(b.y > fxH + b.r) b.y = -b.r;
     }
-  } else if(m === "interior-warm"){
+  }
+  if(cfg.motes){
+    for(i=0;i<fxMotes.length;i++){
+      var mo = fxMotes[i];
+      mo.x += (mo.vx + fxGust*0.22)*s; mo.y += mo.vy*s; mo.ph += mo.pv*s;
+      if(mo.y < -14){ mo.y = fxH + 14; mo.x = Math.random()*fxW; }
+      else if(mo.y > fxH + 14){ mo.y = -14; mo.x = Math.random()*fxW; }
+      if(mo.x < -14) mo.x = fxW + 14; else if(mo.x > fxW + 14) mo.x = -14;
+    }
+  }
+  if(cfg.streaks){
+    fxStreakT -= dt;
+    if(fxStreakT <= 0){
+      fxStreakT = fxRnd(cfg.streaks.every[0], cfg.streaks.every[1]) / (1 + fxTension*0.4);
+      if(fxStreaks.length < 20) fxStreaks.push({
+        x: Math.random()*fxW, y: -20,
+        v: fxRnd(cfg.streaks.v[0], cfg.streaks.v[1]),
+        len: fxRnd(cfg.streaks.len[0], cfg.streaks.len[1]),
+        a: cfg.streaks.a * fxRnd(0.6, 1)
+      });
+    }
+    for(i=fxStreaks.length-1;i>=0;i--){
+      var st = fxStreaks[i];
+      st.y += st.v*s;
+      if(st.y - st.len > fxH) fxStreaks.splice(i,1);
+    }
+  }
+  if(cfg.hearth){
     fxWarmV += (Math.random()-0.5)*0.9*s;
     fxWarmV *= 0.94;
     fxWarm += fxWarmV*s;
     if(fxWarm > 1.1){ fxWarm = 1.1; fxWarmV = -Math.abs(fxWarmV); }
     if(fxWarm < 0.9){ fxWarm = 0.9; fxWarmV = Math.abs(fxWarmV); }
-  } else if(m === "substrate-dark"){
-    for(i=0;i<fxMotes.length;i++){
-      var mo = fxMotes[i];
-      mo.x += mo.vx*s; mo.y += mo.vy*s; mo.ph += mo.pv*s;
-      if(mo.y < -10){ mo.y = fxH + 10; mo.x = Math.random()*fxW; }
-      if(mo.x < -10) mo.x = fxW + 10; else if(mo.x > fxW + 10) mo.x = -10;
+  }
+  if(cfg.lamps){
+    for(i=0;i<fxLamps.length;i++) fxLamps[i].ph += fxLamps[i].pv*s;
+  }
+  fxDawn += dt;          /* dawn's own clock, and the slow phase every flicker rides */
+  if(cfg.bolt){
+    fxBoltT -= dt;
+    if(fxBoltT <= 0){ fxBoltT = fxRnd(cfg.bolt[0], cfg.bolt[1]) / (1 + fxTension*0.5); fxBolt = 1; }
+    if(fxBolt > 0){ fxBolt -= dt/240; if(fxBolt < 0) fxBolt = 0; }
+  }
+  if(cfg.scan){
+    fxScanY += 42*(dt/1000);
+    if(fxScanY > fxH + 60) fxScanY = -60;
+  }
+  if(cfg.tear){
+    fxTearT -= dt;
+    if(fxTearT <= 0){ fxTearT = fxRnd(cfg.tear[0], cfg.tear[1]); fxTear = 1; fxTearY = Math.random()*fxH; }
+    if(fxTear > 0){ fxTear -= dt/90; if(fxTear < 0) fxTear = 0; }
+  }
+  if(cfg.sweep){
+    if(fxSweep > -9){ fxSweep += s*0.55; if(fxSweep > 1.35) fxSweep = -9; }
+    else {
+      fxSweepT -= dt;
+      if(fxSweepT <= 0){ fxSweepT = fxRnd(cfg.sweep.every[0], cfg.sweep.every[1]); fxSweep = -0.3; }
     }
-  } else if(m === "dawn"){
-    fxDawn += dt;
-  } else if(m === "danger"){
+  }
+  if(cfg.ctlPulse){
     fxDangerT -= dt;
     if(fxDangerT <= 0){
-      fxDangerT = 8000 + Math.random()*4000;
+      fxDangerT = fxRnd(cfg.ctlPulse[0], cfg.ctlPulse[1]);
       var el = $("controls");
       if(el){ el.classList.add("pulse"); setTimeout(function(){ el.classList.remove("pulse"); }, 300); }
     }
   }
 }
+/* A soft round light. Used for every lamp, hearth, sodium haze and fog blob. */
+function fxGlow(c, x, y, r, tint, a){
+  if(a <= 0 || r <= 0) return;
+  var g = c.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, "rgba(" + tint + "," + a.toFixed(4) + ")");
+  g.addColorStop(1, "rgba(" + tint + ",0)");
+  c.fillStyle = g;
+  c.fillRect(x-r, y-r, r*2, r*2);
+}
 function fxDraw(){
   var c = fxCtx, o = fxOctx, i;
   c.clearRect(0,0,fxW,fxH); o.clearRect(0,0,fxW,fxH);
-  if(fxAlpha <= 0) return;                  /* mid-dissolve: nothing to paint */
-  var m = fxMode;
-  if(m === "rain-neon"){
-    c.lineWidth = 1;
-    for(i=0;i<fxDrops.length;i++){
-      var d = fxDrops[i];
-      c.globalAlpha = Math.min(0.35, d.a) * fxAlpha;
-      c.strokeStyle = d.warm ? "rgba(232,161,60,1)" : "rgba(214,225,238,1)";
-      c.beginPath();
-      c.moveTo(d.x, d.y);
-      c.lineTo(d.x - d.vx*0.018, d.y - d.vy*0.018);
-      c.stroke();
+  var cfg = fxCfg();
+  var shaking = fxShakeT > 0;
+  if(fxAlpha > 0){
+    if(shaking){
+      var k = fxShakeMag * (fxShakeT/260);
+      c.save();
+      c.translate((Math.random()-0.5)*2*k, (Math.random()-0.5)*2*k);
     }
-    c.globalAlpha = 1;
-    if(fxDrips.length && fxPanel.w){
+
+    /* --- the wash, back to front --- */
+    if(cfg.blobs){
+      for(i=0;i<fxBlobs.length;i++){
+        var b = fxBlobs[i];
+        var rr = b.r * (1 + 0.13*Math.sin(b.ph));       /* breathing, not sliding */
+        fxGlow(c, b.x, b.y, rr, b.tint, b.a*fxAlpha);
+      }
+    }
+    if(cfg.glows){
+      for(i=0;i<cfg.glows.length;i++){
+        var gl = cfg.glows[i];
+        var fl = gl.flick ? (0.86 + 0.14*Math.sin(fxDawn*0.004 + i*2.1) + (Math.random()<0.012 ? -0.35 : 0)) : 1;
+        fxGlow(c, fxW*gl.x, fxH*gl.y, Math.max(fxW,fxH)*gl.r, gl.tint, gl.a*fl*fxAlpha);
+      }
+    }
+    if(cfg.hearth){
+      fxGlow(c, fxW*0.5, fxH*0.46, Math.max(fxW,fxH)*0.55, "242,193,78", 0.05*fxWarm*fxAlpha);
+    }
+    if(cfg.lamps){
+      for(i=0;i<fxLamps.length;i++){
+        var lp = fxLamps[i];
+        var lf = 0.78 + 0.22*Math.sin(lp.ph) + (Math.random() < 0.008 ? -0.5 : 0);
+        lf = Math.max(0, lf);
+        fxGlow(c, lp.x, lp.y, lp.r, "232,161,60", lp.a*lf*fxAlpha);          /* the haze */
+        fxGlow(c, lp.x, lp.y, lp.r*0.20, "255,214,150", lp.a*lf*2.6*fxAlpha); /* the bulb */
+      }
+    }
+    if(cfg.shaft){
+      /* one cold slab of light through vault air, and the dust that proves it is there */
+      var sw = fxW*0.30, sx = fxW*0.36;
+      var sg = c.createLinearGradient(sx, 0, sx + sw, fxH);
+      sg.addColorStop(0,   "rgba(127,179,213," + (0.075*fxAlpha).toFixed(4) + ")");
+      sg.addColorStop(0.6, "rgba(201,196,189," + (0.028*fxAlpha).toFixed(4) + ")");
+      sg.addColorStop(1,   "rgba(201,196,189,0)");
+      c.fillStyle = sg;
+      c.beginPath();
+      c.moveTo(sx, 0); c.lineTo(sx + sw, 0);
+      c.lineTo(sx + sw*2.1, fxH); c.lineTo(sx - sw*0.5, fxH);
+      c.closePath(); c.fill();
+    }
+    if(cfg.dawnBand){
+      var t = fxDawn/1000, kk;
+      if(t < 42) kk = t/42; else kk = 1 - Math.min(1,(t-42)/18)*0.28;
+      var bandH = fxH*0.42;
+      var dg = c.createLinearGradient(0,0,0,bandH);
+      dg.addColorStop(0,    "rgba(231,154,181," + (0.10*kk*fxAlpha).toFixed(4) + ")");
+      dg.addColorStop(0.55, "rgba(242,193,78," + (0.06*kk*fxAlpha).toFixed(4) + ")");
+      dg.addColorStop(1,    "rgba(242,193,78,0)");
+      c.fillStyle = dg; c.fillRect(0,0,fxW,bandH);
+    }
+
+    /* --- the particles --- */
+    if(cfg.motes){
+      c.fillStyle = "rgba(" + cfg.motes.tint + ",1)";
+      for(i=0;i<fxMotes.length;i++){
+        var mo = fxMotes[i];
+        var tw = cfg.motes.tw ? (0.55 + 0.45*Math.sin(mo.ph)) : 1;
+        c.globalAlpha = mo.a * tw * fxAlpha;
+        c.beginPath(); c.arc(mo.x, mo.y, mo.s, 0, 6.283); c.fill();
+      }
+      c.globalAlpha = 1;
+    }
+    if(cfg.streaks){
+      c.strokeStyle = "rgba(" + cfg.streaks.tint + ",1)";
+      c.lineWidth = cfg.streaks.w || 1;
+      for(i=0;i<fxStreaks.length;i++){
+        var st = fxStreaks[i];
+        c.globalAlpha = st.a * fxAlpha;
+        c.beginPath(); c.moveTo(st.x, st.y - st.len); c.lineTo(st.x, st.y); c.stroke();
+      }
+      c.globalAlpha = 1; c.lineWidth = 1;
+    }
+    if(cfg.rain){
+      c.lineWidth = 1;
+      for(i=0;i<fxDrops.length;i++){
+        var d = fxDrops[i];
+        c.globalAlpha = Math.min(0.35, d.a) * fxAlpha;
+        c.strokeStyle = d.warm ? "rgba(232,161,60,1)" : "rgba(214,225,238,1)";
+        c.beginPath();
+        c.moveTo(d.x, d.y);
+        c.lineTo(d.x - (d.vx + fxGust)*0.018, d.y - d.vy*0.018);
+        c.stroke();
+      }
+      c.globalAlpha = 1;
+    }
+
+    /* --- the effects that sit on top of their own weather --- */
+    if(cfg.scan){
+      c.fillStyle = "rgba(201,196,189," + (0.05*fxAlpha).toFixed(4) + ")";
+      c.fillRect(0, fxScanY, fxW, 46);
+    }
+    if(cfg.tear && fxTear > 0){
+      c.fillStyle = "rgba(201,196,189," + (0.16*fxTear*fxAlpha).toFixed(4) + ")";
+      c.fillRect(0, fxTearY, fxW, 2 + Math.random()*5);
+    }
+    if(cfg.sweep && fxSweep > -9){
+      var px = fxW*fxSweep, bw = fxW*0.22;
+      var wg = c.createLinearGradient(px - bw, 0, px + bw, 0);
+      wg.addColorStop(0,   "rgba(" + cfg.sweep.tint + ",0)");
+      wg.addColorStop(0.5, "rgba(" + cfg.sweep.tint + "," + (cfg.sweep.a*fxAlpha).toFixed(4) + ")");
+      wg.addColorStop(1,   "rgba(" + cfg.sweep.tint + ",0)");
+      c.fillStyle = wg; c.fillRect(px - bw, 0, bw*2, fxH);
+    }
+    if(cfg.vignPulse){
+      var vp = 0.10 + 0.05*Math.sin(fxDangerT*0.0016);
+      var vg = c.createRadialGradient(fxW*0.5, fxH*0.5, Math.min(fxW,fxH)*0.28,
+                                      fxW*0.5, fxH*0.5, Math.max(fxW,fxH)*0.78);
+      vg.addColorStop(0, "rgba(" + cfg.vignPulse.tint + ",0)");
+      vg.addColorStop(1, "rgba(" + cfg.vignPulse.tint + "," + (vp*fxAlpha).toFixed(4) + ")");
+      c.fillStyle = vg; c.fillRect(0,0,fxW,fxH);
+    }
+    if(cfg.vign){
+      var ng = c.createRadialGradient(fxW*0.5, fxH*0.5, Math.min(fxW,fxH)*0.22,
+                                      fxW*0.5, fxH*0.5, Math.max(fxW,fxH)*0.72);
+      ng.addColorStop(0, "rgba(" + cfg.vign.tint + ",0)");
+      ng.addColorStop(1, "rgba(" + cfg.vign.tint + "," + (cfg.vign.a*fxAlpha).toFixed(4) + ")");
+      c.fillStyle = ng; c.fillRect(0,0,fxW,fxH);
+    }
+    if(cfg.bolt && fxBolt > 0){
+      var bg = c.createLinearGradient(0,0,0,fxH);
+      bg.addColorStop(0, "rgba(226,235,246," + (0.20*fxBolt*fxAlpha).toFixed(4) + ")");
+      bg.addColorStop(1, "rgba(226,235,246," + (0.04*fxBolt*fxAlpha).toFixed(4) + ")");
+      c.fillStyle = bg; c.fillRect(0,0,fxW,fxH);
+    }
+
+    if(shaking) c.restore();
+
+    /* the drips on the lip of the controls panel keep their own clipped canvas */
+    if(cfg.rain && cfg.rain.drips && fxDrips.length && fxPanel.w){
       o.save();
       o.beginPath(); o.rect(fxPanel.l, fxPanel.t, fxPanel.w, 12); o.clip();
       o.lineWidth = 1; o.strokeStyle = "rgba(232,161,60,1)";
@@ -2913,38 +4011,15 @@ function fxDraw(){
       }
       o.restore(); o.globalAlpha = 1;
     }
-  } else if(m === "marsh-fog"){
-    for(i=0;i<fxBlobs.length;i++){
-      var b = fxBlobs[i];
-      var g = c.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
-      g.addColorStop(0, "rgba(" + b.tint + "," + (b.a*fxAlpha).toFixed(3) + ")");
-      g.addColorStop(1, "rgba(" + b.tint + ",0)");
-      c.fillStyle = g;
-      c.fillRect(b.x-b.r, b.y-b.r, b.r*2, b.r*2);
-    }
-  } else if(m === "interior-warm"){
-    var cx = fxW*0.5, cy = fxH*0.46, rr = Math.max(fxW,fxH)*0.55;
-    var hg = c.createRadialGradient(cx,cy,0,cx,cy,rr);
-    hg.addColorStop(0, "rgba(242,193,78," + (0.05*fxWarm*fxAlpha).toFixed(4) + ")");
-    hg.addColorStop(1, "rgba(242,193,78,0)");
-    c.fillStyle = hg; c.fillRect(0,0,fxW,fxH);
-  } else if(m === "substrate-dark"){
-    c.fillStyle = "rgba(111,211,224,1)";
-    for(i=0;i<fxMotes.length;i++){
-      var mo = fxMotes[i];
-      c.globalAlpha = mo.a * (0.55 + 0.45*Math.sin(mo.ph)) * fxAlpha;
-      c.beginPath(); c.arc(mo.x, mo.y, mo.s, 0, 6.283); c.fill();
-    }
+  }
+
+  /* THE STRIKE — the world taking its own turn. Painted last and over everything the
+     canvas drew, but still under every word: the text layer is above this canvas. */
+  if(fxFlash > 0){
+    c.globalAlpha = Math.min(0.5, fxFlash*0.42);
+    c.fillStyle = "rgba(" + fxFlashTint + ",1)";
+    c.fillRect(0,0,fxW,fxH);
     c.globalAlpha = 1;
-  } else if(m === "dawn"){
-    var t = fxDawn/1000, k;
-    if(t < 42) k = t/42; else k = 1 - Math.min(1,(t-42)/18)*0.28;
-    var bandH = fxH*0.42;
-    var dg = c.createLinearGradient(0,0,0,bandH);
-    dg.addColorStop(0, "rgba(231,154,181," + (0.10*k*fxAlpha).toFixed(4) + ")");
-    dg.addColorStop(0.55, "rgba(242,193,78," + (0.06*k*fxAlpha).toFixed(4) + ")");
-    dg.addColorStop(1, "rgba(242,193,78,0)");
-    c.fillStyle = dg; c.fillRect(0,0,fxW,bandH);
   }
 }
 function fxLoop(ts){
@@ -3008,6 +4083,391 @@ function fxInit(){
   window.addEventListener("focus", function(){ if(!document.hidden) applyVisuals(); });
   window.addEventListener("pageshow", function(){ if(!document.hidden) applyVisuals(); });
 }
+/* =====================================================================
+   THE SHARD — for Mr. Togan.
+   It fell out of the icon. It drifts down, settles on the lip of the controls
+   panel where the rain already lands, and can be picked up and put anywhere.
+   Pick it up and it stops humming; hold it still and it speaks - which is the
+   only way a shard ever speaks, per the rules the rest of this game keeps.
+   Its own tiny rAF loop, awake only while it is falling, so a shard at rest
+   costs nothing.
+   ===================================================================== */
+var SHARD_SAYS = "MR. TOGAN, THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.";
+/* What it says depends on what it can feel. One is picked at random per tap, never
+   the same one twice running. The signature line is always the first of a session. */
+var SHARD_LINES = {
+  "rain-neon": ["I CAN FEEL THE RAIN. IT FEELS BLUE.",
+                "EVERY DROP LANDS SOMEWHERE. THAT ONE LANDED ON ME.",
+                "THE GUTTERS ARE SINGING FLAT AGAIN."],
+  "storm":     ["THE SKY IS SHOUTING AND I CANNOT TELL WHAT ABOUT.",
+                "HOLD ON TO SOMETHING. I AM.",
+                "THAT ONE WAS CLOSE. I FELT IT IN MY EDGES."],
+  "neon-dry":  ["NO RAIN TONIGHT. THE AIR TASTES OF DUST AND ORANGE.",
+                "THE MOTHS HAVE THE RIGHT IDEA AND THE WRONG PLAN.",
+                "SODIUM LIGHT. IT HUMS AT ALMOST MY NOTE."],
+  "marsh-fog": ["GREEN. WET. PATIENT. THE MARSH IS THINKING ABOUT SOMETHING.",
+                "EVERYTHING OUT HERE IS SOFT AND NONE OF IT IS SAFE.",
+                "THE FOG DOES NOT TOUCH ME. IT CONSIDERS ME."],
+  "interior-warm": ["IT IS WARM. I AM GOING TO BE QUIET FOR A WHILE.",
+                "SOMEBODY IS COOKING. THAT IS THE WHOLE POINT OF ANYTHING.",
+                "A SHUT DOOR AND A LIT LAMP. I COULD STAY HERE."],
+  "vault-cold": ["IT IS COLD IN HERE AND THE COLD IS FILED ALPHABETICALLY.",
+                "SO MANY OF THEM. ALL ASLEEP. NONE OF THEM DREAMING.",
+                "DO NOT LEAVE ME ON A SHELF IN THIS PLACE."],
+  "smoke":     ["SOMETHING IS BURNING AND IT IS NOT ME. YET.",
+                "ORANGE, GOING UP. THAT IS WHAT LEAVING LOOKS LIKE.",
+                "I CAN TASTE THE AIR. I WOULD RATHER NOT."],
+  "tunnel":    ["THE LAMPS GO ON A LONG WAY. I LIKE COUNTING THEM.",
+                "WATER SOMEWHERE. ALWAYS SOMEWHERE, NEVER HERE.",
+                "THE WALLS ARE CLOSE AND THEY KNOW IT."],
+  "substrate-dark": ["THIS IS WHAT I AM MADE OF. IT IS STRANGE, BEING HOME.",
+                "A SECOND OUT THERE IS A LONG MINUTE IN HERE. DO NOT DAWDLE.",
+                "SOMETHING DOWN HERE IS AWAKE AND IT IS NOT ME."],
+  "dawn":      ["FIRST LIGHT. IT FEELS LIKE BEING FORGIVEN.",
+                "THE NIGHT FILED ITS REPORT. NOBODY READ IT.",
+                "PINK, THEN GOLD, THEN WORK."],
+  "dead-signal": ["NOTHING IS BEING TOLD WHAT TO DO. IT IS VERY LOUD.",
+                "NO SIGNAL. JUST US AND THE QUIET, THEN.",
+                "I HAVE GONE SMALL. IT IS SAFER LIKE THIS."],
+  "danger":    ["PUT ME DOWN AND USE BOTH HANDS.",
+                "I HAVE GONE QUIET. YOU SHOULD TOO.",
+                "COUNT THE EXITS. I ALREADY DID."]
+};
+var SHARD_PRESSURE = ["SOMETHING IS COMING. I CAN FEEL IT IN THE GLASS.",
+                      "OUT OF TIME. WHATEVER YOU ARE GOING TO DO — NOW."];
+
+/* ---- WHAT THE AIR IS LIKE, PER SKY ----
+   g      downward pull (px/s^2)      drag  how thick the air is
+   flut   flutter: the sideways rock of something with no weight
+   swirl  slow circular drift          spin  how freely it tumbles
+   wind   how much of the weather's gust it catches
+   lift   an oscillating updraft; its AVERAGE is half this, so it never beats gravity
+          outright - warm rooms and smoke only ever delay the landing, never cancel it
+   tint/glow/op  what it looks like in that light */
+var SHARD_AIR = {
+  "rain-neon":     {g:63,  drag:1.15, flut:150, swirl:0.60, spin:38, wind:0.55, lift:0,  tint:"232,161,60", r:5,  a:0.45, op:0.72},
+  "storm":         {g:74,  drag:0.95, flut:330, swirl:1.70, spin:130,wind:1.10, lift:14, tint:"214,225,238", r:7, a:0.55, op:0.82},
+  "neon-dry":      {g:64,  drag:1.35, flut:120, swirl:1.00, spin:26, wind:0.35, lift:6,  tint:"232,161,60", r:7,  a:0.55, op:0.80},
+  "marsh-fog":     {g:61,  drag:1.75, flut:110,  swirl:0.35, spin:15, wind:0.25, lift:0,  tint:"143,201,138", r:6, a:0.40, op:0.62},
+  "interior-warm": {g:58,  drag:1.55, flut:85,  swirl:0.50, spin:20, wind:0.15, lift:22, tint:"242,193,78", r:4,  a:0.30, op:0.46},
+  "vault-cold":    {g:82,  drag:2.05, flut:40,  swirl:0.20, spin:9,  wind:0.10, lift:0,  tint:"127,179,213", r:5, a:0.40, op:0.66},
+  "smoke":         {g:46,  drag:1.20, flut:190, swirl:1.30, spin:72, wind:0.90, lift:58, tint:"255,120,50", r:9,  a:0.62, op:0.86},
+  "tunnel":        {g:70,  drag:1.40, flut:95,  swirl:0.40, spin:22, wind:0.20, lift:0,  tint:"232,161,60", r:6, a:0.48, op:0.70},
+  "substrate-dark":{g:56,  drag:1.50, flut:130, swirl:0.90, spin:34, wind:0.30, lift:10, tint:"111,211,224", r:9, a:0.60, op:0.86},
+  "dawn":          {g:64,  drag:1.50, flut:95,  swirl:0.60, spin:18, wind:0.30, lift:8,  tint:"231,154,181", r:6, a:0.42, op:0.68},
+  "dead-signal":   {g:159, drag:2.45, flut:18,  swirl:0.05, spin:4,  wind:0.05, lift:0,  tint:"201,196,189", r:2, a:0.16, op:0.34},
+  "danger":        {g:61,  drag:1.10, flut:170, swirl:0.70, spin:46, wind:0.40, lift:0,  tint:"224,110,90", r:8,  a:0.60, op:0.88}
+};
+/* pressure paints over whatever the sky was doing */
+var SHARD_HOT = ["", "242,193,78", "240,140,70", "214,52,44"];
+
+var shardEl=null, shardSay=null;
+var shardX=0, shardY=-70, shardVX=0, shardVY=0, shardPh=0, shardPh2=0;
+var shardRot=0, shardRotV=0;
+var shardRAF=0, shardLast=0, shardHeld=null, shardLitT=0, shardSayT=0;
+var shardSaidOnce=false, shardLastLine="";
+var shardAir=null;                /* the air it is currently in, lerped toward the sky */
+var shardCSS={};                  /* last written custom properties, to avoid churn */
+var shardBubW=0, shardBubH=0;
+/* Size and shelf height are cached: the weather asks where the shard is on every
+   frame, and a layout read per frame per raindrop is not a thing worth paying for. */
+var shardW=26, shardH=46, shardRest=0;
+function shardMeasure(){
+  if(!shardEl) return;
+  shardW = shardEl.offsetWidth || 26;
+  shardH = shardEl.offsetHeight || 46;
+  var el = $("controls");
+  shardRest = el ? (el.getBoundingClientRect().top - shardH + 5)
+                 : (window.innerHeight - shardH - 8);
+}
+function shardPlace(){
+  if(!shardEl) return;
+  if(shardX < 2){ shardX = 2; if(shardVX < 0) shardVX = -shardVX*0.4; }
+  var maxX = window.innerWidth - shardW - 2;
+  if(shardX > maxX){ shardX = maxX; if(shardVX > 0) shardVX = -shardVX*0.4; }
+  if(shardY < -30){ shardY = -30; if(shardVY < 0) shardVY = 0; }
+  shardEl.style.transform = "translate(" + shardX.toFixed(1) + "px," + shardY.toFixed(1) + "px)"
+    + " rotate(" + shardRot.toFixed(1) + "deg)";
+}
+/* Loitering, not frozen: it lives on the lip of the panel but never quite stops. */
+function shardAtRest(){ return !shardHeld && Math.abs(shardY - shardRest) < 3 && Math.abs(shardVY) < 4; }
+function shardTarget(){ return SHARD_AIR[currentAmbience] || SHARD_AIR["rain-neon"]; }
+/* The air changes when the sky does, but not instantly - walking from the rain into
+   a warm kitchen should feel like the air thickening around it, not a cut. */
+function shardAirLerp(s){
+  var t = shardTarget(), k = Math.min(1, s*0.8), key;
+  if(!shardAir){ shardAir = {}; for(key in t) shardAir[key] = t[key]; return; }
+  ["g","drag","flut","swirl","spin","wind","lift","r","a","op"].forEach(function(key2){
+    shardAir[key2] += (t[key2] - shardAir[key2]) * k;
+  });
+  shardAir.tint = t.tint;              /* the colour crossfades in CSS, not here */
+}
+/* What it looks like right now: the sky's own light, reddened by the board's pressure. */
+function shardPaint(){
+  if(!shardEl || !shardAir) return;
+  var tint = shardAir.tint, r = shardAir.r, a = shardAir.a, op = shardAir.op;
+  var br = 1, hue = 0, sat = 1;
+  if(fxTension > 0){
+    tint = SHARD_HOT[fxTension];       /* pressure outranks the weather */
+    r = Math.max(r, 8 + fxTension*5);
+    a = Math.max(a, 0.50 + fxTension*0.17);
+    op = Math.max(op, 0.74 + fxTension*0.08);
+    /* the halo alone is not enough at this size - the gold body has to go red too.
+       hue-rotate turns the gold; saturate stops the pale facets washing it back out. */
+    hue = [0, -8, -22, -40][fxTension];
+    sat = [1, 1.1, 1.4, 1.9][fxTension];
+    if(fxTension >= 2) br = 1 + 0.14*Math.sin(shardPh*(fxTension >= 3 ? 9 : 4.5));
+  }
+  var set = {"--sh-tint":tint, "--sh-r":r.toFixed(1)+"px", "--sh-a":a.toFixed(2),
+             "--sh-op":op.toFixed(2), "--sh-br":br.toFixed(2),
+             "--sh-hue":hue+"deg", "--sh-sat":sat.toFixed(2)};
+  for(var k in set){
+    if(shardCSS[k] !== set[k]){ shardEl.style.setProperty(k, set[k]); shardCSS[k] = set[k]; }
+  }
+}
+function shardStep(ts){
+  shardRAF = 0;
+  if(!shardEl) return;
+  var dt = shardLast ? (ts - shardLast) : 16;
+  shardLast = ts;
+  if(!(dt > 0)) dt = 16;
+  if(dt > 120) dt = 120;                    /* a backgrounded tab must not teleport it */
+  var s = dt/1000;
+  shardMeasure();                           /* the shelf it lands on can change height */
+  shardAirLerp(s);
+  var A = shardAir;
+
+  if(!shardHeld){
+    shardPh  += s;
+    shardPh2 += s*0.61;                     /* a second, slower clock, for the swirl */
+
+    /* --- feather physics ---
+       No mass to speak of: gravity is weak, the air is thick, and almost everything
+       that happens to it is the air's idea rather than its own. */
+    var lift = A.lift * (0.5 + 0.5*Math.sin(shardPh*0.9 + 1.1));
+    shardVY += (A.g - lift) * s;
+    shardVY -= shardVY * A.drag * s;                       /* drag, not terminal clamp */
+
+    /* flutter: the sideways rock. Two frequencies so it never looks like a metronome */
+    var flut = Math.sin(shardPh*2.3) * 0.65 + Math.sin(shardPh*1.13 + 2.0) * 0.35;
+    shardVX += flut * A.flut * s;
+    /* swirl: a slow circle laid over the drift */
+    shardVX += Math.cos(shardPh2) * A.swirl * 46 * s;
+    shardVY += Math.sin(shardPh2) * A.swirl * 23 * s;
+    /* the weather's own wind, straight off the canvas that draws the rain */
+    shardVX += ((fxGust||0) * A.wind - shardVX) * 1.4 * s;
+    shardVX -= shardVX * A.drag * 0.75 * s;
+    /* the room breathes it back off the walls - a shard pinned in the corner by a
+       standing gust is physically fair and miserable to look at */
+    var edge = 90, maxX2 = window.innerWidth - shardW;
+    if(shardX < edge) shardVX += (edge - shardX) * 0.9 * s;
+    else if(shardX > maxX2 - edge) shardVX -= (shardX - (maxX2 - edge)) * 0.9 * s;
+
+    /* pressure makes it restless */
+    if(fxTension >= 2){
+      shardVX += (Math.random()-0.5) * fxTension * 26 * s;
+      shardVY += (Math.random()-0.5) * fxTension * 20 * s;
+      shardRotV += (Math.random()-0.5) * fxTension * 40 * s;
+    }
+
+    shardX += shardVX * s;
+    shardY += shardVY * s;
+
+    /* the shelf: a cushion, not a floor. It settles onto the lip and bobs there. */
+    if(shardY > shardRest){
+      var pen = shardY - shardRest;
+      shardVY -= pen * 11 * s;
+      shardVY *= (1 - Math.min(0.9, 5*s));
+      shardVX -= shardVX * 1.6 * s;      /* on the lip it stops skating off sideways */
+      shardRotV += (0 - shardRot) * 9 * s;                 /* and stands itself up */
+      if(shardY > shardRest + 7) shardY = shardRest + 7;
+    }
+
+    /* --- tumble ---
+       It tips into whatever direction it is sliding, rocks about that, and rights
+       itself once it is back on the lip. */
+    var want = Math.max(-52, Math.min(52, shardVX * 0.55)) + Math.sin(shardPh*1.7) * A.spin * 0.22;
+    shardRotV += (want - shardRot) * 1.7 * s;
+    shardRotV -= shardRotV * 1.25 * s;
+    shardRot += shardRotV * s;
+    if(shardRot > 180) shardRot -= 360; else if(shardRot < -180) shardRot += 360;
+  } else {
+    shardRotV -= shardRotV * 2.2 * s;       /* held: it goes still in the hand */
+    shardRot  += shardRotV * s;
+    shardRot  -= shardRot * 3.0 * s;
+  }
+
+  shardPlace();
+  shardPaint();
+  if(shardSay && shardSay.classList.contains("show")) shardBubPlace();
+  if(shardEl.classList.contains("up")) shardWake();
+}
+/* It is never really still now, so the loop runs whenever it is on screen - and only
+   then. Hidden, backgrounded or put away, it costs nothing. */
+function shardWake(){
+  if(shardRAF || !shardEl) return;
+  if(document.hidden) return;
+  if(!shardEl.classList.contains("up")) return;
+  if(fxReduced()){
+    /* reduced motion: it sits on the lip, upright and still, but it still takes the
+       colour of the sky and the heat of the board's pressure */
+    shardMeasure(); shardAirLerp(1);
+    shardY = shardRest; shardVX = 0; shardVY = 0; shardRot = 0; shardRotV = 0;
+    shardPlace(); shardPaint();
+    return;
+  }
+  shardLast = 0;
+  shardRAF = requestAnimationFrame(shardStep);
+}
+/* A raindrop hit it. Light things get moved by that. */
+function shardKnock(){
+  if(shardHeld) return;
+  shardVY += 7 + Math.random()*7;
+  shardVX += (Math.random()-0.5) * 22;
+  shardRotV += (Math.random()-0.5) * 90;
+}
+/* It says what it can feel. Pressure outranks the weather, the signature line is
+   always the first of a session, and it wanders back to it now and then. */
+function shardLine(){
+  if(!shardSaidOnce){ shardSaidOnce = true; return SHARD_SAYS; }
+  if(Math.random() < 0.08) return SHARD_SAYS;
+  var pool = (fxTension >= 2) ? SHARD_PRESSURE
+           : (SHARD_LINES[currentAmbience] || SHARD_LINES["rain-neon"]);
+  var i = Math.floor(Math.random()*pool.length);
+  if(pool.length > 1 && pool[i] === shardLastLine) i = (i+1) % pool.length;
+  shardLastLine = pool[i];
+  return pool[i];
+}
+/* The bubble follows it, because it does not hold still any more. */
+function shardBubPlace(){
+  if(!shardSay) return;
+  var x = shardX + shardW/2 - shardBubW/2;
+  if(x < 8) x = 8;
+  if(x > window.innerWidth - shardBubW - 8) x = window.innerWidth - shardBubW - 8;
+  var y = shardY - shardBubH - 10;
+  if(y < 8) y = shardY + shardH + 10;
+  shardSay.style.left = x.toFixed(0) + "px";
+  shardSay.style.top = y.toFixed(0) + "px";
+}
+function shardSpeak(){
+  if(!shardSay || !shardEl) return;
+  shardSay.textContent = shardLine();
+  shardSay.classList.add("show");
+  shardBubW = shardSay.offsetWidth; shardBubH = shardSay.offsetHeight;   /* measure once */
+  shardBubPlace();
+  void shardSay.offsetWidth;
+  shardSay.classList.add("vis");
+  clearTimeout(shardSayT);
+  shardSayT = setTimeout(shardHush, 6500);
+}
+function shardHush(){
+  if(!shardSay) return;
+  shardSay.classList.remove("vis");
+  clearTimeout(shardSayT);
+  shardSayT = setTimeout(function(){ shardSay.classList.remove("show"); }, 520);
+}
+/* A raindrop broke on it. Called from the weather loop, debounced by the class. */
+function shardSplash(){
+  if(!shardEl) return;
+  shardKnock();                      /* the shove lands even while it is still lit */
+  if(shardEl.classList.contains("lit")) return;
+  shardEl.classList.add("lit");
+  clearTimeout(shardLitT);
+  shardLitT = setTimeout(function(){ if(shardEl) shardEl.classList.remove("lit"); }, 210);
+}
+/* The box the rain tests against. Null while it is off-screen or in hand. */
+function shardBox(){
+  if(!shardEl || !shardEl.classList.contains("up") || shardHeld) return null;
+  return {l:shardX, t:shardY, r:shardX + shardW, b:shardY + shardH};
+}
+function shardShow(){
+  if(!shardEl) return;
+  shardEl.classList.add("up");
+  shardWake();
+}
+/* Back at the menu it goes in your pocket. The title screen is opaque and would hide
+   it anyway, but a shard left talking behind the main menu is not a shard, it is a bug. */
+function shardHide(){
+  if(!shardEl) return;
+  shardHeld = null;
+  shardEl.classList.remove("up","held");
+  shardHush();
+}
+function shardInit(){
+  shardEl = $("shard"); shardSay = $("shardsay");
+  if(!shardEl) return;
+  shardEl.classList.add("up");               /* measurable, then hidden again below */
+  shardMeasure();
+  shardEl.classList.remove("up");
+  /* it comes back where it was left, and always re-enters from above */
+  var frac = 0.5;
+  try{
+    var saved = parseFloat(localStorage.getItem("mud-shard-x"));
+    if(isFinite(saved) && saved >= 0 && saved <= 1) frac = saved;
+  }catch(e){}
+  shardX = frac * Math.max(1, window.innerWidth - shardW);
+  shardY = -70; shardVX = 0; shardVY = 0; shardRot = 0; shardRotV = 0;
+  shardAirLerp(1);                            /* start in the air it is actually in */
+  if(fxReduced()) shardY = shardRest;         /* no long fall for reduced motion */
+  shardPlace(); shardPaint();
+
+  shardEl.addEventListener("pointerdown", function(e){
+    e.preventDefault(); e.stopPropagation();
+    shardHeld = {dx: e.clientX - shardX, dy: e.clientY - shardY,
+                 x0: e.clientX, y0: e.clientY, t0: Date.now(), moved: false,
+                 vx: 0, vy: 0, tp: Date.now()};
+    shardEl.classList.add("held");
+    try{ shardEl.setPointerCapture(e.pointerId); }catch(err){}
+    shardHush();
+    shardWake();
+  });
+  shardEl.addEventListener("pointermove", function(e){
+    if(!shardHeld) return;
+    e.preventDefault();
+    if(Math.abs(e.clientX - shardHeld.x0) > 4 || Math.abs(e.clientY - shardHeld.y0) > 4) shardHeld.moved = true;
+    var now = Date.now(), dtms = Math.max(8, now - shardHeld.tp);
+    var nx = e.clientX - shardHeld.dx, ny = e.clientY - shardHeld.dy;
+    /* remember how fast the hand was going, so letting go can throw it */
+    shardHeld.vx = shardHeld.vx*0.6 + ((nx - shardX)/dtms*1000)*0.4;
+    shardHeld.vy = shardHeld.vy*0.6 + ((ny - shardY)/dtms*1000)*0.4;
+    shardHeld.tp = now;
+    shardX = nx; shardY = ny;
+    if(shardY < -20) shardY = -20;
+    shardPlace();
+  });
+  function clamp(v, m){ return v < -m ? -m : (v > m ? m : v); }
+  function letGo(e){
+    if(!shardHeld) return;
+    var h = shardHeld;
+    var tap = !h.moved && (Date.now() - h.t0) < 600;
+    shardHeld = null;
+    shardEl.classList.remove("held");
+    try{ shardEl.releasePointerCapture(e.pointerId); }catch(err){}
+    /* thrown, but it weighs nothing - the air takes it back almost at once */
+    shardVX = clamp((h.vx||0) * 0.35, 420);
+    shardVY = clamp((h.vy||0) * 0.35, 420);
+    shardRotV += clamp((h.vx||0) * 0.5, 300);      /* and it topples out of the hand */
+    try{ localStorage.setItem("mud-shard-x",
+      String(shardX / Math.max(1, window.innerWidth - shardW))); }catch(err){}
+    if(tap) shardSpeak();
+    shardWake();                              /* wherever it was dropped, it drifts */
+  }
+  shardEl.addEventListener("pointerup", letGo);
+  shardEl.addEventListener("pointercancel", letGo);
+  shardEl.addEventListener("click", function(e){ e.stopPropagation(); });
+  window.addEventListener("resize", function(){ shardMeasure(); shardPlace(); shardHush(); shardWake(); });
+  /* The shelf moves. The pressure strip appears and disappears, banners come and go,
+     choices wrap on a narrow window - every one of those changes the height of the
+     controls panel, and a sleeping shard would be left standing in mid-air or buried
+     in the panel. Watch the shelf itself rather than trying to remember every caller. */
+  var ctl = $("controls");
+  if(ctl && window.ResizeObserver){
+    try{ new ResizeObserver(function(){ shardWake(); }).observe(ctl); }catch(e2){}
+  }
+  /* a resting shard sleeps; the panel it rests on can still move under it */
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) shardWake(); });
+}
+
 function applyVisuals(){
   var v = settings.visuals || "full";
   var amb = $("ambience");
@@ -3028,11 +4488,13 @@ function newRun(confirmFirst){
   milestones = []; threadsOpen = []; threadsClosed = []; agendaText = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
+  beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
+  beatJustCleared = null; lastTension = 0; applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
   $("hud-loc").textContent = String(OPENING.location).toUpperCase();
   turnsSinceSync = 0;
-  rehydDismissed = false; $("rehydbox").innerHTML = "";
+  rehydDismissed = false; $("rehydbox").innerHTML = ""; $("boardbox").innerHTML = "";
   setAmbience("rain-neon"); renderNow();
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
@@ -3070,12 +4532,27 @@ function restoreFromBlob(s){
   bits = s.bits||[];
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
+  /* The board landed in v3.0. A save from before it has no pointer, so the run is
+     placed at the first beat of whatever arc it had reached and offered a one-call
+     repair rather than being silently dropped somewhere wrong. */
+  var byId = (typeof s.beatId === "string" && s.beatId) ? beatById(s.beatId) : -1;
+  var hasPointer = (byId !== -1) || (typeof s.beat === "number");
+  beatIdx = (byId !== -1) ? byId
+          : (typeof s.beat === "number" && s.beat >= 0 && s.beat <= SPINE.length) ? s.beat
+          : beatArcFirst(currentArc);
+  /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
+  boardStale = (typeof s.boardStale === "boolean") ? s.boardStale : (!hasPointer && feedLog.length > 6);
+  beatTurns = (typeof s.beatTurns === "number" && s.beatTurns >= 0) ? s.beatTurns : 0;
+  forcingNow = false;
+  if(!beatDone()) currentArc = beatNow().arc;   /* the board is the arc, always */
   turnsSinceSync = s.sync||0;
   rehydDismissed = false;
+  lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
   renderNow();
   showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   maybeRehydrate();
+  maybeBoardBanner();
   applyVisuals();          /* the weather follows the run into the scene */
   return true;
 }
@@ -3099,6 +4576,7 @@ function finishBoot(orConnected){
 (function boot(){
   try{ loadSettings(); }catch(e){}
   try{ fxInit(); applyVisuals(); }catch(e){}
+  try{ shardInit(); }catch(e){}
   handleOAuthReturn().then(function(orConnected){
     var p; try{ p = restoreFolder(); }catch(e){ p = Promise.resolve(); }
     Promise.resolve(p).then(function(){ finishBoot(orConnected); }, function(){ finishBoot(orConnected); });

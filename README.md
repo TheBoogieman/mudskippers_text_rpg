@@ -53,6 +53,94 @@ On Firefox/Safari, saves live in the browser and the ledger downloads on demand.
 The ledger is designed to be handed to any AI assistant ("here's my run, pick up as
 the DM"). Everything needed to continue a run lives in that one readable file.
 
+## How a season actually ends
+
+The season is a **flowchart**, not a mood. Twenty-one beats across three arcs live in
+the game itself: each one names the single thing it exists to accomplish, the gate
+that ends it, how many turns it gets, what it is allowed to reveal, and the canon it
+writes when it clears. Every turn, the DM is handed exactly one instruction — *this
+is the beat, steer to this gate, and do not invent past it.*
+
+The DM does not decide the plot and cannot wander off it:
+
+- **Branches are routes, never forks.** You decide *how* a gate falls; the board
+  decides *that* it falls and what is true on the far side. Burn down the wrong
+  building and you still arrive at the same beat, having burned down a building.
+- **Nothing is revealed before its beat.** Everything the run hasn't reached is
+  served to the DM as a locked list it may not confirm, hint at, or write canon
+  about. Improvisation stops becoming permanent truth.
+- **The plot's canon is written by the game.** When a gate clears, that beat's facts
+  go into the run. Every route through a season produces the same spine.
+- **A beat cannot stall.** It gets three turns. On the last one the DM is told to cut
+  to the consequence; one turn later the world acts without waiting for you; one turn
+  after that the gate is **forced** — the game orders the beat landed and moves the
+  pointer itself. A season runs 62 turns played straight, and 104 in the worst case
+  imaginable. It cannot fail to finish.
+
+The **LEDGER** panel and the courier's terminal both show the board: which beat you
+are on, which arc, how many turns it has left, and how far along the season you are.
+
+### Pressure you can see
+
+You are never told a turn count — you're shown one. As a beat runs out of room the
+room itself closes in: a vignette tightens and warms, then reddens and starts to
+breathe. A strip above your choices names the feeling — **SOMETHING IS ABOUT TO
+GIVE**, then **THE WORLD IS MOVING**, then **OUT OF ROOM**. When the world takes its
+own turn it lands as a hit: the screen flashes and shoves, the rain leans harder, and
+everything on the canvas speeds up. When a beat finally closes, the board says so once
+in the feed — *that beat is closed*, or *the world moved on*, or *the arc turns* — and
+the pressure drops away.
+
+The strip and the closing walls are plain HTML, so they still work on **VISUALS: CALM**
+and **VISUALS: OFF**, and reduced-motion settings still win.
+
+### Twelve skies
+
+The game has no art; the weather *is* the art. Where there were six ambiences there are
+now twelve, each painted differently on the canvas behind the words:
+
+| | |
+|---|---|
+| **rain-neon** | the usual leaking rain, wind-driven, dripping off the panel lip |
+| **storm** | the sky properly coming down — sheets, gusts, lightning |
+| **neon-dry** | night with no rain: sodium haze, dust, flickering signs |
+| **marsh-fog** | breathing fog banks and midges low over the reeds |
+| **interior-warm** | firelight that wanders, and dust turning in it |
+| **vault-cold** | a cold slab of light through archive air |
+| **smoke** | embers rising, brown haze, something still burning below |
+| **tunnel** | close dark, a receding chain of lamps, water falling somewhere |
+| **substrate-dark** | motes and fast data-runs where the machine is close |
+| **dawn** | first light climbing over an hour |
+| **dead-signal** | a dead zone: scanlines, tearing, nothing being told what to do |
+| **danger** | red pulse, searchlight sweep, the panel edge going hot |
+
+Rain now has wind. Fog breathes instead of sliding. The hearth flickers. Adding a
+thirteenth is one row of data and one line of CSS.
+
+### One more thing
+
+Something fell out of the icon, and it weighs nothing at all.
+
+It flutters rather than falls — a leaf, not a stone: two-frequency rocking, a slow
+swirl laid over the drift, and a tumble that tips into whatever direction it is
+sliding. It settles on the lip of the panel where the rain already breaks, then bobs
+there on a cushion instead of freezing. Pick it up and throw it and it topples out of
+your hand; the air takes it back almost at once. It remembers where you left it.
+
+**It feels the weather.** Each of the twelve skies is a different kind of air — how
+thick it is, how hard it flutters, how freely it tumbles, how much of the wind it
+catches. It is battered about in a storm, hangs low and *faintly dims* in a warm
+room, glows cyan and half-floats in the substrate, hovers on the updraught in smoke,
+and drops dead straight and dull in a dead zone. Rain knocks it sideways. When the
+board's pressure rises it reddens, brightens and goes restless.
+
+**It talks.** Tap it and it tells you what it can feel — thirty-six lines across the
+twelve skies, two more when the pressure is on, and one it always says first:
+
+> MR. TOGAN, THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.
+
+*For Mr. Togan.*
+
 ### How a run remembers itself
 
 The AI is stateless between turns — it loses the thread on almost every call — so
@@ -79,6 +167,11 @@ run forward:
 chapter by chapter and rebuild canon and relationships from it. Useful for runs
 started before this system existed. It tells you how many AI calls it will cost
 before it starts, and it never alters a word of your story.
+
+**FIND OUR PLACE** (in the LEDGER panel) is for runs started before the board existed.
+They load and play immediately, steered from the first beat of whatever arc they had
+reached — and a gold banner offers one AI call that reads your chronicle and snaps the
+pointer to the beat you are *actually* on. It touches nothing but the pointer.
 
 > **Save compatibility.** Saves from v2.7 onward store cast sheets as structured
 > objects. Older saves load fine and are migrated on the spot, but a v2.7 save is
