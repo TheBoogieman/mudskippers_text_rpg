@@ -902,7 +902,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.8.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.9.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -991,7 +991,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v3.8.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v3.9.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1253,7 +1253,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.8.0 "The Wants"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.9.0 "The Chair"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1278,6 +1278,12 @@ var BIBLE = [
 "- NAMED PARTS ARE NOT RECASTABLE - the bible's named people are fixed points: Hesta keeps The Open Door, Vic is the client, and so on. Invent strangers freely - the city is full of people - but never invent a substitute for a named role. If a scene needs the keeper of the cafe, it needs Hesta, not a new name doing her job.",
 "- PRESS LINES ARE OFFERS, NOT ORDERS. When the table has already supplied a scene's pressure or its answer, leave the offer in the drawer. Never override what the table actually did to make room for an authored move.",
 "- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
+"- THE CHAIR. The courier's voice, choices, and growth belong to the player alone. You render the typed action and its consequences - you never write COURIER dialogue the player did not type, never decide for him, never convert his deflection into your sincerity. When a gate needs the courier to say, choose, or declare something, offer it as one of the three choices and wait: the door can be visible, but only the player's hand opens it. If the player typed speech, render that speech - faithfully, not improved.",
+"- MUDSKIPPER MOMENTS ARE SACRED, AND THEY ARE NOT FUEL. When the player does a bit, the bit lands as a bit: the family plays along or plays the straight man, the world reacts in kind, and the deflection succeeds this turn. Nobody frames the courier as anxious, cringey, or deflecting - the family finds him funny, alarming, or brilliant, never embarrassing. A bit is never converted into the scene's sincerity, never mined for the gate, never diagnosed. Sincerity arrives when the player types it, and not one turn before.",
+"- ONE TRUTH PER TURN. A scene may deliver at most one revelation, and it arrives with its aftermath attached. Characters answer what was asked - not what the file knows. Nobody delivers three unprompted paragraphs; if the player did not pull it, it stays in the drawer.",
+"- THE WORLD KEEPS SCORE OF STRANGE. Wild things land. Citizens, family, and rooms react to the insanity at proper length before any plot resumes - aftermath is content, not delay.",
+"- NIGHTS END. Days advance and time moves one way; a day rolls over at every arc turn at the latest. Thirteen beats do not fit in one evening.",
+"- EVERY RECORD HAS A LANE. Canon records what changed. Bits record what recurs. Cast notes record what shifted between people, or what someone learned. A joke enters the record once, as a bit - never as canon; an event is canon's job - never a cast note.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "MORTALITY - THE COURIER CAN DIE, AND IT IS REAL:",
@@ -1348,7 +1354,7 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, and \"drift\" only as THE RAIN describes.",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, \"drift\" only as THE RAIN describes, and \"knock\" only as BETWEEN BEATS allows.",
 "- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, quests, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
@@ -1361,7 +1367,8 @@ var BIBLE = [
 "    Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see. The game paints all twelve differently, so choosing the exact one is the difference between the player seeing the room and seeing a default.",
 "- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
 "- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" field; the board owns the arc.",
-"- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia.",
+"- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia. In the same reply, refresh \"agenda\" - a closed gate always changes what tonight is about.",
+"- \"knock\": true - send only during BETWEEN BEATS, and only when the PLAYER's typed action is plainly reaching for the season's next matter. The knock is theirs, never yours: momentum, convenience, or a good segue is not a knock.",
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
@@ -1583,7 +1590,7 @@ var SPINE = [
 {id:"a1-turn", arc:1, title:"the keeping",
  goal:"ARC TURN. The courier chooses Nine - not as cargo but as a person he is now responsible for. The season's real subject starts here.",
  exit:"the courier has committed out loud to protecting Nine rather than delivering her",
- budget:5, reveals:[], anchors:["Nine"],
+ budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:["Someone offers him a clean exit: hand her over, walk free. Make it genuinely tempting.",
         "The offer expires in front of him."],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -1713,7 +1720,7 @@ var SPINE = [
 {id:"a2-turn", arc:2, title:"the cost of keeping",
  goal:"ARC TURN. The Choir's trade lands and it has a name on it: Pia. She is cyberware-incompatible - to the Choir not immunity but a salvage listing, fate three waiting for paperwork. Someone is taken, or lost, or gives themselves up, and the family stops defending: they commit to going under the old Exchange after the machine.",
  exit:"the family has lost or risked someone and committed to reaching the machine",
- budget:5, reveals:[], anchors:["Pia"],
+ budget:5, floor:3, reveals:[], anchors:["Pia"],
  press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
  canon:["The Choir asked for Pia by name: incompatible, listed for salvage. The family heard what fate three would mean for her.",
@@ -1752,7 +1759,7 @@ var SPINE = [
 {id:"a3-stone", arc:3, title:"the first stone",
  goal:"Before anyone goes down, the family cairns Vic. They know the rule now - the Architect's last breath, nobody left behind, name the lost - and this is the first time they use it on purpose, on their own dead. Short, held, and then the work.",
  exit:"Vic has been cairned and named, and the family has turned toward the descent",
- budget:2, reveals:[], anchors:["Vic"],
+ budget:2, floor:1, reveals:[], anchors:["Vic"],
  press:["Grief tries to become a meeting. Keep it a cairn: a stone, a name, a line each at most.",
         "The way to the Exchange will not wait. Name him and move."],
  canon:["The family cairned Vic and named him - the first deliberate use of the rule they now carry.",
@@ -1807,7 +1814,7 @@ var SPINE = [
 {id:"a3-seize", arc:3, title:"custody, not conquest",
  goal:"FINALE. The courier takes custody. The Choir falls. Every Hollow in the city goes still at once and every convergent citizen's gentle voice stops mid-sentence - the victory arrives owning both. One short epilogue in chronicle voice, then the_end.",
  exit:"custody of the machine is taken and the epilogue is written",
- budget:2, reveals:[],
+ budget:2, floor:1, reveals:[],
  press:["The seizure works and the silence afterwards is the problem.",
         "Land it now. Epilogue in chronicle voice, then set the_end true."],
  canon:["The courier took custody of the machine. The Choir fell.",
@@ -1910,7 +1917,16 @@ var gateRefusedNames = [];      /* anchors the last gate claim was missing; serv
 var gateNotes = {};             /* beat id -> the DM's one-line record of how its gate fell */
 
 /* ---- slack: the space between beats. The clock only starts when it ends. ---- */
-var slackLeft = 0;           /* free turns before the current beat's clock starts */
+/* ---- the beat lifecycle: live -> aftermath -> slack -> arm ----
+   The pointer stays on a closed beat until the next one arms, so the season
+   closes completely before it opens. Aftermath is the landing (no gates, no
+   drift, no interludes, no new jobs); slack is the family's time (gates dead,
+   the season knocks when the player knocks). */
+var phase = "live";          /* "live" | "aftermath" | "slack" */
+var phaseLeft = 0;           /* turns remaining in the current non-live phase */
+var gateHeldNow = false;     /* a gate arrived below the beat's floor; served one turn */
+var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
+var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
 var SLACK_STD = 2, SLACK_ARC = 3;
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
 var interludeServedId = null;/* the card riding the current outgoing exchange */
@@ -2172,6 +2188,12 @@ function mergeCast(list){
     var nm = String(u.name).trim();
     if(!nm) return;
     var sheet = castSheet(nm);
+    /* a compressed resend replaces the running notes; knows, met and status survive */
+    if(Object.prototype.toString.call(u.notes) === "[object Array]"){
+      var fresh = [];
+      u.notes.forEach(function(x){ if(typeof x === "string" && x.trim()) fresh.push(x.trim()); });
+      if(fresh.length){ sheet.notes = fresh.slice(-CAST_CAP); added++; }
+    }
     if(typeof u.note === "string" && u.note.trim()){
       var note = u.note.trim();
       if(sheet.notes.indexOf(note) === -1){
@@ -2271,6 +2293,7 @@ function mergeQuests(list, quiet, beatTag){
       return;
     }
     if(!title) return;
+    if(phase === "aftermath" && !quiet) return;   /* nothing new begins while the gate lands */
     if(!qst) qst = "active";
     if((qst === "active" || qst === "offered") && questActiveCount() >= QUEST_ACTIVE_CAP) return;
     var nq = {
@@ -2284,7 +2307,7 @@ function mergeQuests(list, quiet, beatTag){
     };
     if(beatTag) nq.beat = beatTag;
     quests.push(nq);
-    if(!quiet){ questLedger(questVerb(status), nq.title); termPing(); }
+    if(!quiet){ questLedger(questVerb(qst), nq.title); termPing(); }
     n++;
   });
   return n;
@@ -2455,7 +2478,7 @@ function showScene(data, logIt, instant){
   mergeMilestones(data.milestones);
   mergeRoster(data.roster);
   mergeQuests(data.quests, false,
-    (data.__live && slackLeft === 0 && !beatDone()) ? beatNow().id : "");
+    (data.__live && phase === "live" && !beatDone()) ? beatNow().id : "");
   mergePlace(data.place);
   mergeBits(data.bits);
   if(typeof data.agenda === "string" && data.agenda.trim()) agendaText = data.agenda.trim();
@@ -2509,10 +2532,10 @@ function showScene(data, logIt, instant){
   });
   function done(){
     skipReveal = null;
-    /* the beat card lands after the scene that closed it, never before */
+    /* ceremony: one card a turn. The beat card lands after the scene that closed
+       it; an aside waits its own turn rather than sharing one. */
     if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
-    /* the fourth wall speaks after the scene too */
-    while(pendingAsides.length){
+    else if(pendingAsides.length){
       var ad = pendingAsides.shift();
       renderBlock(ad); feedLog.push(ad);
       ledgerText += "\n\n_" + ad.text + "_";
@@ -2637,7 +2660,8 @@ function compactionInstruction(req){
     + what + " into at most " + req.to + " numbered chronicle lines preserving every name, relationship, "
     + "promise, and open thread. Return them in a top-level field \"compacted\": [ ... ]. Facts: "
     + numbered(req.lines)
-    + " Compress by merger and deletion ONLY - never introduce a name, fact, or relationship that is not present in the lines above.)";
+    + " Compress by merger and deletion ONLY - never introduce a name, fact, or relationship that is not present in the lines above."
+    + " Rank before you compress: stones, reveal-carrying lines, and quest-linked canon are untouchable; texture compresses first and hardest; a running joke is a bit, not canon - move it to bits, or drop it if bits already holds it.)";
 }
 /* Fold whatever the DM sent back into the archive. Silence is fine - the request
    simply rides the next turn instead. */
@@ -2861,19 +2885,33 @@ function finishLoss(){
   persistAll([]);
 }
 
+/* the beat ahead turns the arc when the next beat's act differs - the pointer
+   sits on the closing beat until it arms, so this reads one step forward */
+function arcTurnAhead(){
+  var nx = SPINE[beatIdx + 1];
+  return !beatDone() && !!nx && nx.arc !== beatNow().arc;
+}
 function boardBlock(){
   if(beatDone()) return "THE BOARD\nThe season is over. Write nothing but epilogue if asked at all.";
-  if(slackLeft > 0){
-    var slackOut = [];
-    slackOut.push("THE BOARD — BETWEEN BEATS. The last gate has fallen and the next has not yet armed. This is the family's time: no clock, no pressure, nothing owed. Let the player wander, and follow them. The next beat, when it comes, is \"" + beatNow().title + "\" — do not start it unless the player walks into it themselves. The gate is live even now: if the scene genuinely meets it, send \"gate\": true as always.");
-    var slackLocked = lockedReveals();
-    if(slackLocked.length) slackOut.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + slackLocked.join("; "));
-    var card = pickInterlude();
-    if(card) slackOut.push("AN INTERLUDE, IF THE TABLE WANTS IT (optional - no gate, no clock, yours and the player's to take or leave): " + card.text);
-    return slackOut.join("\n");
+  var out = [], locked;
+  if(phase === "aftermath"){
+    out.push("THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
+    locked = lockedReveals();
+    if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+    return out.join("\n");
+  }
+  if(phase === "slack"){
+    out.push("THE BOARD - BETWEEN BEATS. The last gate has fallen and landed. This is the family's time: no clock, no gate, nothing owed, and the season will knock when it knocks. Let the player wander, and follow them. Do not start new season business. If the player's typed action is plainly reaching for the season's next matter, you may send \"knock\": true and the board will answer.");
+    locked = lockedReveals();
+    if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+    /* ceremony: an offer never shares a turn with a card still waiting to land */
+    if(!pendingAsides.length && !beatJustCleared){
+      var card = pickInterlude();
+      if(card) out.push("AN INTERLUDE, IF THE TABLE WANTS IT (optional - no gate, no clock, yours and the player's to take or leave): " + card.text);
+    }
+    return out.join("\n");
   }
   var b = beatNow(), nx = SPINE[beatIdx + 1];
-  var out = [];
   out.push("THE BOARD (the plot is fixed. You do not invent it - you steer to the next gate.)");
   out.push("Arc " + b.arc + " of 3 · beat " + (beatIdx + 1) + " of " + SPINE.length + " — \"" + b.title + "\"");
   out.push("THIS BEAT EXISTS TO: " + b.goal);
@@ -2882,18 +2920,24 @@ function boardBlock(){
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
   var open = (b.reveals || []).map(function(k){ return REVEALS[k]; }).filter(function(x){ return !!x; });
   if(open.length) out.push("THIS BEAT UNLOCKS (reveal it here, in fragments, never as a lecture): " + open.join("; "));
-  var locked = lockedReveals();
+  locked = lockedReveals();
   if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
   if(nx) out.push("NEXT AFTER THIS: \"" + nx.title + "\" — aim the last line of this turn at it.");
   out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
-    + " Everything else about how it happens is yours and the player's.");
+    + " Everything else about how it happens is yours and the player's."
+    + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
+    + (arcTurnAhead() ? " This gate turns the arc: roll the day over with it - nights end." : ""));
   return out.join("\n");
 }
 /* Rides the outgoing message. Note the side effect on forcingNow: the client only
    forces a gate it has already ordered landed, so the prose and the pointer agree. */
 function boardDirective(){
   forcingNow = false;
-  if(beatDone() || slackLeft > 0 || walkbackNow || lossPending) return "";
+  if(beatDone() || walkbackNow || lossPending) return "";
+  if(phase === "aftermath"){
+    return "(THE AFTERMATH - the gate has fallen and nothing new begins. Let what just happened land: reactions, cost, quiet, the family being people about it. Do not introduce the next matter, open a job, or reveal anything. The season is holding its breath on purpose.)";
+  }
+  if(phase === "slack") return "";
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -2903,6 +2947,13 @@ function boardDirective(){
       + b.exit + ". Cut straight to the consequence, skip travel and preamble, jump the clock if"
       + " you need to, and end the beat inside this turn. Send \"gate\": true."
       + (b.scar ? " The world does this now, and it costs: " + b.scar : "") + ")";
+  }
+  /* a held gate speaks first: the haste was the DM's, and the fix is to keep playing */
+  if(gateHeldNow){
+    gateHeldNow = false;
+    return "(THE GATE IS IN SIGHT - BUT THE SCENE HAS NOT BEEN LIVED. This beat is too young to close."
+      + " Keep playing it: stay at minutes-scale, let the room breathe, and do not send the gate again"
+      + " until the beat has been lived on screen.)";
   }
   /* a refused gate speaks before the pressure ladder: the correction is the work */
   if(gateRefusedNames.length){
@@ -2938,7 +2989,12 @@ function anchorsMissing(b){
   });
   return out;
 }
-function advanceBeat(forced, note){
+/* a beat cannot close before it has been lived */
+function beatFloor(b){ return b.floor || 2; }
+/* Closing writes the record and starts the landing; the pointer does NOT move.
+   The lifecycle finishes the closed beat completely - aftermath, then the
+   family's slack - before armBeat() opens the next one. */
+function closeBeat(forced, note){
   if(beatDone()) return;
   var b = beatNow();
   mergeCanon(b.canon);
@@ -2958,32 +3014,79 @@ function advanceBeat(forced, note){
       console.info("[mudskippers] board forced the gate on \"" + b.title + "\" after " + beatTurns + " turns");
     }
   }
-  beatIdx++;
-  beatTurns = 0;
-  driftRun = 0; walkbackNow = false;
-  beatText = ""; gateRefusedNames = [];   /* the witness starts a fresh page */
-  var nx = beatNow();
-  var turned = false;
-  if(!beatDone() && nx.arc !== currentArc){
-    currentArc = nx.arc;
-    arcCheckpointDue = 2;      /* the arc turn is still the season's save-point */
-    turned = true;
-  }
-  /* the space between beats: the clock only starts when the slack runs out */
-  if(!beatDone()) slackLeft = turned ? SLACK_ARC : SLACK_STD;
+  var turned = arcTurnAhead();
+  if(turned) arcCheckpointDue = 2;   /* the save-point ask rides the aftermath */
   /* the feed card is rendered after the scene, so it is only staged here. It
      carries the true record of the closed beat - the gateNote, or the scar on a
      forced close - and on an arc turn it announces the next act by name, the one
      moment the future is allowed a title card. */
   beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec,
-    arcname: turned && !beatDone() ? "ARC " + nx.arc + " — " + ARC_NAMES[nx.arc] : ""};
+    arcname: turned ? "ARC " + SPINE[beatIdx + 1].arc + " — " + ARC_NAMES[SPINE[beatIdx + 1].arc] : ""};
   termPing();                    /* the season page just gained an entry */
+  beatTurns = 0;
+  driftRun = 0; walkbackNow = false;
+  gateRefusedNames = []; gateHeldNow = false;
+  if(beatIdx === SPINE.length - 1){ beatIdx++; return; }   /* the finale's epilogue IS the aftermath */
+  phase = "aftermath";
+  phaseLeft = turned ? 2 : 1;
+}
+/* the season opens the next door: pointer advances, the witness starts fresh */
+function armBeat(){
+  if(beatDone()) return;
+  beatIdx++;
+  phase = "live"; phaseLeft = 0;
+  beatTurns = 0; driftRun = 0; walkbackNow = false;
+  beatText = ""; gateRefusedNames = []; gateHeldNow = false;
+  if(!beatDone() && beatNow().arc !== currentArc) currentArc = beatNow().arc;
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
   if(beatDone() || runOver || lossPending) return;
   var said = data && (data.gate === true || data.gate === "true");
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
+  var knock = data && (data.knock === true || data.knock === "true");
+  /* mudskipper immunity: a bit cannot be spent. No gate lands off it, no knock
+     rides it, and the rain neither ticks nor forgives while the table laughs. */
+  if(lastTurnMud){ said = false; knock = false; }
+  /* an interlude that rode this exchange is spent once the reply lands */
+  if(interludeServedId){
+    if(interludesUsed.indexOf(interludeServedId) === -1) interludesUsed.push(interludeServedId);
+    interludeServedId = null;
+  }
+  /* the landing: no gates, no drift, no clocks - the closed beat settles */
+  if(phase === "aftermath"){
+    phaseLeft--;
+    if(phaseLeft <= 0){
+      phase = "slack";
+      phaseLeft = arcTurnAhead() ? SLACK_ARC : SLACK_STD;
+    }
+    return;
+  }
+  /* the family's time: gates are dead, and only the player's own reach - the
+     knock - opens the next door early */
+  if(phase === "slack"){
+    if(knock){ armBeat(); return; }
+    phaseLeft--;
+    if(phaseLeft <= 0) armBeat();
+    return;
+  }
+  /* the walk-back reply: clock resets and the toll is paid - unless the gate
+     landed, in which case they came back spectacularly and the toll is waived */
+  if(walkbackNow){
+    walkbackNow = false;
+    driftRun = 0;
+    beatTurns = 0;
+    if(said) closeBeat(false, note);
+    else payToll();
+    return;
+  }
+  beatTurns++;
+  /* the floor: a gate below it is held, not refused - the haste was the DM's,
+     so anchors are not consulted and the rain does not move either way */
+  var held = false;
+  if(said && beatTurns < beatFloor(beatNow())){
+    said = false; held = true; gateHeldNow = true;
+  }
   /* the anchor check: a gate whose named parts never entered the beat's prose is
      refused - no card, no canon, no advance, the budget still ticking. Forcing
      stays the fallback below, and forced canon is authored, therefore true:
@@ -2998,29 +3101,7 @@ function boardTurn(data){
       }
     }
   }
-  /* an interlude that rode this exchange is spent once the reply lands */
-  if(interludeServedId){
-    if(interludesUsed.indexOf(interludeServedId) === -1) interludesUsed.push(interludeServedId);
-    interludeServedId = null;
-  }
-  /* between beats: no clock, no drift - but the gate stays live */
-  if(slackLeft > 0){
-    if(said) advanceBeat(false, note);
-    else slackLeft--;
-    return;
-  }
-  /* the walk-back reply: clock resets and the toll is paid - unless the gate
-     landed, in which case they came back spectacularly and the toll is waived */
-  if(walkbackNow){
-    walkbackNow = false;
-    driftRun = 0;
-    beatTurns = 0;
-    if(said) advanceBeat(false, note);
-    else payToll();
-    return;
-  }
-  beatTurns++;
-  if(!said && !forcingNow && data && data.drift === true){
+  if(!said && !held && !lastTurnMud && !forcingNow && data && data.drift === true){
     driftRun++;
     if(driftRun === DRIFT_YELLOW){
       queueAside("yellow", "You're getting further from the rain, courier. The rain protects you. Come back to it.");
@@ -3031,12 +3112,12 @@ function boardTurn(data){
       if(tolls >= TOLL_MAX) lossPending = true;
       else walkbackNow = true;
     }
-  } else if(!said){
+  } else if(!said && !held && !lastTurnMud){
     driftRun = 0;
   }
   if(said || forcingNow){
     if(!said && tolls >= TOLL_MAX){ forcingNow = false; lossPending = true; return; }
-    advanceBeat(!said, note);
+    closeBeat(!said, note);
   }
   forcingNow = false;
 }
@@ -3064,7 +3145,7 @@ var PRESSURE_TEXT = [
 function boardTension(){
   if(perilTurns > 0) return 3;        /* mortal danger reads as maximum pressure */
   if(beatDone()) return 0;
-  if(slackLeft > 0) return 0;         /* between beats the room is dark and easy */
+  if(phase !== "live") return 0;      /* aftermath and slack: the room is dark and easy */
   var b = beatNow(), t = 0;
   if(beatTurns >= b.budget + 1) t = 3;
   else if(beatTurns === b.budget) t = 2;
@@ -3224,10 +3305,22 @@ var MAINT_KINDS = [
   {key:"place",      ask:"place: {\"name\":\"...\",\"note\":\"...\"} - the state of where you are now, if PLACES above does not reflect it."},
   {key:"roster",     ask:"roster: {\"family\":[...],\"fallen\":[...]} - only if ROSTER above is wrong."},
   {key:"map",        ask:"map: {\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"} - name the route for any journey MAP above records without one."},
-  {key:"bits",       ask:"bits: any running joke or callback the table keeps using that BITS above is missing."}
+  {key:"bits",       ask:"bits: any running joke or callback the table keeps using that BITS above is missing."},
+  {key:"cast",       ask:""}   /* built dynamically: a heavy sheet asks for its own compression */
 ];
 var maintIndex = 0, arcCheckpointDue = 0;
 
+/* the fullest sheet within two notes of the cap, or "" - the compression ask
+   only ever fires when there is genuinely a sheet worth compressing */
+function castOverfull(){
+  var names = Object.keys(castSheets), best = "", i, s;
+  for(i = 0; i < names.length; i++){
+    s = castSheets[names[i]];
+    if(!s || !s.notes || s.notes.length < CAST_CAP - 2) continue;
+    if(!best || s.notes.length > castSheets[best].notes.length) best = names[i];
+  }
+  return best;
+}
 function maintenanceNudge(){
   if(arcCheckpointDue > 0){
     arcCheckpointDue--;
@@ -3235,8 +3328,20 @@ function maintenanceNudge(){
       + " state of the world in your reply: \"milestones\" for what has permanently happened, and"
       + " \"quests\" for what is owed and still unresolved.)";
   }
-  var k = MAINT_KINDS[maintIndex % MAINT_KINDS.length];
-  maintIndex++;
+  var k, tries = 0;
+  do {
+    k = MAINT_KINDS[maintIndex % MAINT_KINDS.length];
+    maintIndex++;
+    tries++;
+  } while(k.key === "cast" && !castOverfull() && tries < MAINT_KINDS.length);
+  if(k.key === "cast"){
+    var heavy = castOverfull();
+    if(!heavy) return "";
+    return "(ALSO THIS TURN - " + heavy + "'s sheet is running long. Resend it compressed as"
+      + " cast: {\"name\":\"" + heavy + "\",\"notes\":[\"...\"]} - a handful of lines covering how you met,"
+      + " where they stand, and the relationship truths that still matter. What they KNOW is kept by"
+      + " the game and needs no restating. The notes you send replace the old set.)";
+  }
   return "(ALSO THIS TURN, if and only if it applies - " + k.ask
     + " One register only; if it needs nothing, send nothing and just write the scene.)";
 }
@@ -3245,22 +3350,21 @@ function maintenanceNudge(){
    outgoing message, and showScene harvests whatever comes back against it. */
 function buildContext(){
   if(!chatLog.length) return chatLog;
-  pendingCompaction = compactionRequest();
+  pendingCompaction = null;
   var msg = memoryBriefing();
   /* the board speaks last, and on a forced beat it speaks alone - a turn ordered to
      land a gate is not also asked to do the filing. The walk-back and the loss
      speak even more alone. */
   var press = boardDirective();
   if(lossPending){
-    pendingCompaction = null;
     lossServed = true;
     press = LOSS_DIRECTIVES[currentArc] || LOSS_DIRECTIVES[3];
   } else if(walkbackNow){
-    pendingCompaction = null;
     press = walkbackDirective();
-  } else if(forcingNow){
-    pendingCompaction = null;
-  } else {
+  } else if(!forcingNow && (phase !== "live" || arcCheckpointDue > 0)){
+    /* housekeeping rides the quiet turns the lifecycle creates - aftermath and
+       slack - and stays out of live scenes. The arc checkpoint always speaks. */
+    pendingCompaction = compactionRequest();
     msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
   }
   if(press) msg += "\n\n" + press;
@@ -3433,6 +3537,8 @@ function takeAction(text, isMud){
     openSettings(); return;
   }
   renderDivider();
+  lastPlayerText = text.trim();   /* the chair lint checks the reply against this */
+  lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
@@ -3473,6 +3579,28 @@ function deathRefused(data){
   if(!data || typeof data.death !== "string" || !data.death.trim()) return false;
   return perilTurns <= 0;
 }
+/* ---- THE CHAIR ----
+   The courier's voice belongs to the player. Best-effort lint, one retry, never
+   a hard block: a false positive costs one extra call, never a turn. Exempt when
+   the player's input plainly was speech (quotes or a speech verb), when a courier
+   line is just the typed text rendered, and on endings - those are never re-rolled. */
+var SPEECH_VERBS = /\b(say|says|ask|asks|tell|tells|answer|answers|reply|replies|shout|whisper|call|admit|declare|announce|mutter|offer|toast)\b/i;
+function chairTaken(data){
+  if(!data || lossPending) return false;
+  if(typeof data.death === "string" && data.death.trim()) return false;
+  var lines = (data.scene || []).filter(function(b){
+    return b && String(b.speaker).trim() === "Courier" && b.text;
+  });
+  if(!lines.length) return false;
+  var t = (lastPlayerText || "").toLowerCase();
+  if(t.indexOf('"') !== -1 || t.indexOf("“") !== -1 || t.indexOf("”") !== -1) return false;
+  if(SPEECH_VERBS.test(t)) return false;
+  /* rendering the typed line itself is the chair working as intended */
+  return !lines.every(function(b){
+    var x = String(b.text).toLowerCase();
+    return !!t && (x.indexOf(t) !== -1 || t.indexOf(x) !== -1);
+  });
+}
 function callDM(corrected){
   if(runOver) return;
   setBusy(true);
@@ -3506,6 +3634,11 @@ function callDM(corrected){
       if(window.console && console.warn){
         console.warn("[mudskippers] refused an unearned death: no peril was ever declared");
       }
+    }
+    if(!corrected && chairTaken(parsed.data)){
+      return callDM("(THE CHAIR WAS TAKEN - your reply spoke in the courier's voice beyond what"
+        + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
+        + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)");
     }
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
@@ -3672,7 +3805,7 @@ function saveBlob(){
     now:nowText, time:nowTime, amb:currentAmbience, arc:currentArc,
     cast:castSheets, canon:runCanon, archive:canonArchive,
     milestones:milestones, quests:quests, interludesUsed:interludesUsed,
-    tolls:tolls, slackLeft:slackLeft, driftRun:driftRun,
+    tolls:tolls, phase:phase, phaseLeft:phaseLeft, driftRun:driftRun,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
@@ -4058,6 +4191,12 @@ function renderBoardPanel(){
   var head;
   if(beatDone()){
     head = '<b>The season is complete.</b> All ' + SPINE.length + ' beats played.';
+  } else if(phase !== "live"){
+    /* the pointer holds on a closed beat until the next one arms - hindsight
+       shows its record, never its stage directions */
+    var cb = beatNow();
+    head = 'Beat ' + (beatIdx + 1) + ' of ' + SPINE.length + ' closed — <b>' + esc(cb.title) + '</b><br>'
+         + esc(gateNotes[cb.id] || cb.exit);
   } else {
     var b = beatNow();
     head = 'Beat ' + (beatIdx + 1) + ' of ' + SPINE.length + ' — <b>' + esc(b.title) + '</b><br>'
@@ -4065,9 +4204,11 @@ function renderBoardPanel(){
   }
   var dots = "";
   if(!beatDone()){
-    if(slackLeft > 0){
-      dots = '<div class="board-turns">BETWEEN BEATS — ' + slackLeft + ' free turn'
-           + (slackLeft === 1 ? "" : "s") + '</div>';
+    if(phase === "aftermath"){
+      dots = '<div class="board-turns">LANDING — the gate has fallen; the season holds while it lands</div>';
+    } else if(phase === "slack"){
+      dots = '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn'
+           + (phaseLeft === 1 ? "" : "s") + '</div>';
     } else {
       var bb = beatNow(), shown = Math.max(bb.budget, beatTurns + 1), i;
       for(i = 0; i < shown; i++){
@@ -4116,6 +4257,7 @@ function findOurPlace(){
       return;
     }
     beatIdx = i; beatTurns = 0; boardStale = false;
+    phase = "live"; phaseLeft = 0;   /* a repaired pointer always lands on a live beat */
     currentArc = beatNow().arc;
     renderBoardPanel(); renderNow(); maybeBoardBanner();
     persistAll(currentChoices());
@@ -4516,19 +4658,26 @@ function renderTermStatus(){
     ? nowText
     : "Nothing on the strip yet. The rain is still deciding what tonight is.";
 
-  var tb = $("term-board"), closed = Math.min(beatIdx, SPINE.length);
+  /* a beat in aftermath or slack is closed even though the pointer still holds it */
+  var tb = $("term-board"), closed = Math.min(beatIdx + (phase !== "live" && !beatDone() && !runOver ? 1 : 0), SPINE.length);
   if(runOver === "death"){
     tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
   } else if(runOver === "lost"){
     tb.innerHTML = '<div class="hint">The season was lost. The chronicle survives it.</div>';
   } else if(beatDone()){
     tb.innerHTML = '<div class="hint">The season is complete — every beat of it played. The chronicle survives the courier.</div>';
-  } else if(slackLeft > 0){
+  } else if(phase === "aftermath"){
+    /* the landing: the closed beat and its record, while the season holds */
+    tb.innerHTML = '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + esc(gateNotes[beatNow().id] || beatNow().exit) + '</div>'
+      + '<div class="board-turns">LANDING — ' + esc(beatNow().title.toUpperCase()) + '</div>'
+      + '<div class="hint" style="margin-top:5px">The gate has fallen. The season holds while it lands.</div>';
+  } else if(phase === "slack"){
     tb.innerHTML = '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
       + esc(agendaText || "Nothing owed tonight. The night is the family's.") + '</div>'
-      + '<div class="board-turns">BETWEEN BEATS — ' + slackLeft + ' free turn' + (slackLeft === 1 ? "" : "s") + '</div>'
+      + '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn' + (phaseLeft === 1 ? "" : "s") + '</div>'
       + '<div class="hint" style="margin-top:5px">' + closed + ' beat' + (closed === 1 ? "" : "s")
-      + ' of the season closed. No clock, no pressure, nothing owed.</div>';
+      + ' of the season closed. No clock, no gate, nothing owed. The season knocks when it knocks.</div>';
   } else {
     var b = beatNow(), t = boardTension();
     var mood = perilTurns > 0 ? "ONE MORE WRONG MOVE WILL KILL HIM"
@@ -4630,11 +4779,19 @@ function renderTermJobs(){
         ar.appendChild(d); any = true;
       } else if(i === beatIdx && !beatDone() && !runOver){
         var nowd = document.createElement("div"); nowd.className = "tj-beat now";
-        nowd.innerHTML = slackLeft > 0
-          ? '<b>&#9656; BETWEEN BEATS</b><span>The last gate has fallen and the next has not yet armed. '
-            + slackLeft + ' free turn' + (slackLeft === 1 ? "" : "s") + '.</span>'
-          : '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
+        if(phase === "aftermath"){
+          /* closed but not yet left behind: the record, under a LANDING label */
+          nowd.innerHTML = '<b>&#9656; LANDING — ' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
+            + esc(gateNotes[SPINE[i].id] || SPINE[i].exit) + '</span>';
+        } else if(phase === "slack"){
+          nowd.innerHTML = '<b>' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
+            + esc(gateNotes[SPINE[i].id] || SPINE[i].exit) + '</span>'
+            + '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn'
+            + (phaseLeft === 1 ? "" : "s") + '</div>';
+        } else {
+          nowd.innerHTML = '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
             + '<div class="board-turns">' + turnDots(SPINE[i]) + '</div>';
+        }
         ar.appendChild(nowd); any = true;
       }
     }
@@ -4996,7 +5153,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v3.8.0   COLD START",
+    "MUD//OS  v3.9.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6206,8 +6363,9 @@ function newRun(confirmFirst){
   runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
   canonArchive = []; pendingCompaction = null;
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
-  tolls = 0; slackLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
+  tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
   lossServed = false; interludeServedId = null;
+  gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
@@ -6265,9 +6423,9 @@ function restoreFromBlob(s){
   }
   interludesUsed = Object.prototype.toString.call(s.interludesUsed) === "[object Array]" ? s.interludesUsed.slice() : [];
   tolls = (typeof s.tolls === "number" && s.tolls > 0) ? s.tolls : 0;
-  slackLeft = (typeof s.slackLeft === "number" && s.slackLeft > 0) ? s.slackLeft : 0;
   driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
   walkbackNow = false; lossPending = false; lossServed = false; interludeServedId = null;
+  gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};
   roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
@@ -6301,8 +6459,20 @@ function restoreFromBlob(s){
   beatIdx = (byId !== -1) ? byId
           : (byNum !== -1) ? byNum
           : beatArcFirst(currentArc);
+  /* the lifecycle: new saves carry their phase; a pre-Chair save in slack had
+     already advanced its pointer at the gate, so it steps back onto the beat it
+     closed and re-arms on schedule */
+  if(s.phase === "aftermath" || s.phase === "slack"){
+    phase = s.phase;
+    phaseLeft = (typeof s.phaseLeft === "number" && s.phaseLeft > 0) ? s.phaseLeft : 1;
+  } else if(typeof s.phase !== "string" && typeof s.slackLeft === "number" && s.slackLeft > 0 && hasPointer){
+    phase = "slack"; phaseLeft = s.slackLeft;
+    if(beatIdx > 0) beatIdx--;
+  } else {
+    phase = "live"; phaseLeft = 0;
+  }
   /* a finished season stays finished even where an older, longer spine counted higher */
-  if(s.over === "season") beatIdx = SPINE.length;
+  if(s.over === "season"){ beatIdx = SPINE.length; phase = "live"; phaseLeft = 0; }
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
   boardStale = (typeof s.boardStale === "boolean") ? s.boardStale : (!hasPointer && feedLog.length > 6);
   beatTurns = (typeof s.beatTurns === "number" && s.beatTurns >= 0) ? s.beatTurns : 0;

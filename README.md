@@ -80,20 +80,47 @@ The DM does not decide the plot and cannot wander off it:
   about. Improvisation stops becoming permanent truth.
 - **The plot's canon is written by the game.** When a gate clears, that beat's facts
   go into the run. Every route through a season produces the same spine.
-- **A beat cannot stall.** Each carries its own budget — most get four turns, the big
-  ones five. Near the end the DM is told to angle toward the gate; at the budget the
-  world acts without waiting for you; one turn past it the gate is **forced** — the
-  game orders the beat landed and moves the pointer itself. A forced gate leaves a
-  **scar**: one canon line recording that it happened rougher than it should have.
-- **Between beats, the clock stops.** Every cleared gate opens a stretch of slack —
-  two free turns, three after an arc turn — with no pressure, no clock, nothing owed.
-  The family's time. Sometimes the game deals the DM an **interlude** there: a small
-  optional scene from a hand-authored deck — a paying run everyone insists on joining,
-  a ceremonial tasting, a rooftop where nothing happens on purpose. Suggestions, never
+- **A beat cannot stall — and cannot be rushed.** Each carries its own budget — most
+  get four turns, the big ones five. Near the end the DM is told to angle toward the
+  gate; at the budget the world acts without waiting for you; one turn past it the
+  gate is **forced** — the game orders the beat landed and moves the pointer itself.
+  A forced gate leaves a **scar**: one canon line recording that it happened rougher
+  than it should have. And every beat also has a **floor**: a gate sent before the
+  scene has been lived is held, and the DM is told to keep playing. The clock watches
+  the storyteller's speed as closely as it watches yours.
+- **A beat closes completely before the next one opens.** Every gate is followed by
+  the **landing** — a turn (two on an arc turn) where nothing new is allowed to
+  begin: reactions, cost, quiet, the family being people about what just happened.
+- **Then the clock stops.** After the landing comes slack — two free turns, three
+  after an arc turn — and during it **gates are dead**: no clock, no gate, nothing
+  owed, and the board doesn't even tell the DM what the next beat is. The family's
+  time. Sometimes the game deals the DM an **interlude** there: a small optional
+  scene from a hand-authored deck — a paying run everyone insists on joining, a
+  ceremonial tasting, a rooftop where nothing happens on purpose. Suggestions, never
   orders, and each one is dealt at most once a season.
+- **The season knocks when *you* knock.** If your typed action during the family's
+  time is plainly reaching for the next matter, the board answers and the next beat
+  arms at once. Momentum, convenience, or the DM's good segue is not a knock — only
+  the player's hand is.
 
-A season runs **95–100 turns played straight, ~145 played leisurely** — and it cannot
-fail to end: victory, death, or loss, always seen coming.
+A season runs **~95 turns driving with knocks, ~170 played leisurely** — capped in
+the low 190s if the world has to force every door, and the tolls end it well before
+that — and it cannot fail to end: victory, death, or loss, always seen coming.
+
+### The chair is yours
+
+Two promises, enforced by the game rather than asked of the storyteller:
+
+- **The game cannot speak for you.** The courier's voice, choices, and growth belong
+  to the player alone. A reply that puts words in the courier's mouth you never typed
+  is caught and sent back to be rewritten. When a gate needs the courier to say or
+  choose something, it must be offered as a choice and waited for — the door can be
+  visible, but only your hand opens it.
+- **Your bits cannot be spent.** A mudskipper moment lands as a bit: the family plays
+  along or plays the straight man, and nobody diagnoses you. Mechanically it is
+  immune — a gate cannot ride it, the rain neither ticks nor forgives on it, and no
+  amount of goofing can be converted into the scene's sincerity. Sincerity arrives
+  when you type it, and not one turn before.
 
 The **LEDGER** panel and the courier's terminal both show the board: which beat you
 are on, which arc, how many turns it has left, and how far along the season you are.
@@ -249,10 +276,11 @@ reached — and a gold banner offers one AI call that reads your chronicle and s
 pointer to the beat you are *actually* on. It touches nothing but the pointer.
 
 > **Save compatibility.** Saves from v2.7 onward store cast sheets as structured
-> objects; saves from v3.5 onward store quests and board ids. Older saves load fine
-> and are migrated on the spot — flat threads become quests, old board positions are
-> remapped onto the new spine — but a v3.5 save is **not** readable by an older
-> client. This only matters if you hand a folder-save JSON to an old cached copy of
+> objects; saves from v3.5 onward store quests and board ids; saves from v3.9 onward
+> store the beat lifecycle phase. Older saves load fine and are migrated on the spot
+> — flat threads become quests, old board positions are remapped onto the new spine,
+> a run saved between beats re-enters the lifecycle where it left off — but a newer
+> save is **not** readable by an older client. This only matters if you hand a folder-save JSON to an old cached copy of
 > the game — the hosted version and the installed app both update themselves.
 
 ## New Game
