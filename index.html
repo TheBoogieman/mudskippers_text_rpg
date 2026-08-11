@@ -791,7 +791,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.5.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.6.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1095,7 +1095,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.5.2 "The Rain"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.6.0 "The Witness"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1117,6 +1117,8 @@ var BIBLE = [
 "- THE GAME KEEPS THE BOOKS, NOT YOU. The client watches every scene and records for itself who was present, who has now met whom, where everyone was last seen, and every journey between places. You do not need to report any of that. Spend your effort on the things only you know: what just happened (canon), what a character has now LEARNED (knows), and how the world feels. Each turn asks you for at most one piece of bookkeeping, and you may decline it.",
 "- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
 "- THE RAIN - drift is absence, not chaos. A wild turn aimed AT the current beat is a mudskipper moment and is welcome; burning down the wrong building is a route. A turn that ignores the season entirely - no beat, no family, no thread of the story in it - is drift. When you write such a turn, send \"drift\": true with it, honestly. Never send drift during BETWEEN BEATS; wandering there is the point.",
+"- NAMED PARTS ARE NOT RECASTABLE - the bible's named people are fixed points: Hesta keeps The Open Door, Vic is the client, and so on. Invent strangers freely - the city is full of people - but never invent a substitute for a named role. If a scene needs the keeper of the cafe, it needs Hesta, not a new name doing her job.",
+"- PRESS LINES ARE OFFERS, NOT ORDERS. When the table has already supplied a scene's pressure or its answer, leave the offer in the drawer. Never override what the table actually did to make room for an authored move.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "MORTALITY - THE COURIER CAN DIE, AND IT IS REAL:",
@@ -1200,6 +1202,7 @@ var BIBLE = [
 "    Change it the moment the party changes rooms; a scene that moves indoors and stays rain-neon is a bug the player can see. The game paints all twelve differently, so choosing the exact one is the difference between the player seeing the room and seeing a default.",
 "- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
 "- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" field; the board owns the arc.",
+"- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia.",
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
@@ -1336,7 +1339,7 @@ var SPINE = [
 {id:"a1-hum", arc:1, title:"the shard that hums",
  goal:"The courier speaks with Nine for the first time - knowingly, two ways. Pia told him WHAT she is; this beat is where she stops being cargo and becomes a person: a bone-hum through skin contact only, frightened, and trying to be brave about it.",
  exit:"the courier has knowingly held a two-way conversation with Nine",
- budget:4, reveals:["nine"],
+ budget:4, reveals:["nine"], anchors:["Nine"],
  press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
         "A second watcher joins the first. The street is now a closing hand."],
  canon:["Nine speaks only as a hum through skin contact - in a pocket across a room she is a stone.",
@@ -1359,29 +1362,28 @@ var SPINE = [
 {id:"a1-vic", arc:1, title:"the safehouse door",
  goal:"They reach Vic's safehouse. Vic is warm, guilty, and finally talking: Mirren, the smuggle, why he went dark - the whole story of the job, freely given. He answers everything about the run and dodges exactly one question: why this courier, of all couriers.",
  exit:"they are inside the safehouse and Vic has told the story of the job - and dodged why he chose the courier",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Vic"],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
  canon:["Vic's safehouse is real, off the grid, and cable-only. Safe, for now.",
-        "Vic told the whole story of the job: Mirren, the smuggle, the going dark. It cost him to tell it.",
-        "Vic dodged exactly one question - why this courier - and everyone in the room noticed."],
+        "Vic told the whole story of the job: Mirren, the smuggle, the going dark.",
+        "Vic dodged exactly one question - why this courier."],
  scar:"Vic's story came out ragged and interrupted; some of it the courier still owes himself."},
 
 {id:"a1-carried", arc:1, title:"the courier, carried",
  goal:"Nine gets them through a Choir sweep with the only thing a shard has: knowledge. She is from inside the farm - she knows the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not see. She steers the courier through it blind, whispering the Choir's own timing into his bones. No powers, no reach - just a frightened person spending everything she knows on him.",
  exit:"the courier is clear of the sweep because Nine's knowledge got him through, and both of them know it",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Nine"],
  press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
         "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
  canon:["Nine knows the Choir from the inside - patrol rhythms, intake choreography, what an idling Hollow does and does not see.",
-        "She talked the courier through a sweep blind, and it worked. He is carrying her; she carried him.",
         "What Nine knows is a season stale, and she said so herself."],
  scar:"The sweep passed over them more than they beat it; Nine spent what she knew and it went unthanked."},
 
 {id:"a1-turn", arc:1, title:"the keeping",
  goal:"ARC TURN. The courier chooses Nine - not as cargo but as a person he is now responsible for. The season's real subject starts here.",
  exit:"the courier has committed out loud to protecting Nine rather than delivering her",
- budget:5, reveals:[],
+ budget:5, reveals:[], anchors:["Nine"],
  press:["Someone offers him a clean exit: hand her over, walk free. Make it genuinely tempting.",
         "The offer expires in front of him."],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -1393,7 +1395,7 @@ var SPINE = [
 {id:"a2-door", arc:2, title:"The Open Door",
  goal:"Hesta's cafe. A table, a hot pan, a shotgun under the counter, and the first meal anyone has eaten sitting down. The family gets a room to form in.",
  exit:"the group is inside The Open Door and Hesta has fed them",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Hesta"],
  press:["Hesta puts food down and asks the question nobody wants to answer.",
         "Someone knocks who should not know this address."],
  canon:["Hesta keeps The Open Door, feeds strays, and is armed while being kind.",
@@ -1404,7 +1406,7 @@ var SPINE = [
 {id:"a2-seven", arc:2, title:"the defector, dying",
  goal:"Seven arrives - a Choir defector in a failing vessel, a poet's soul running out of substrate. Saving him is the beat's whole question.",
  exit:"the group has committed to saving Seven and is acting on it",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Seven"],
  press:["Seven's vessel starts failing on the clock, out loud.",
         "He asks them to stop and let him go. Someone refuses."],
  canon:["Seven is a defector from the Choir - a poet, gentle, out of time.",
@@ -1415,7 +1417,7 @@ var SPINE = [
 {id:"a2-chassis", arc:2, title:"the cook",
  goal:"Seven is housed in a chassis. He discovers taste and smell, and becomes a cook - a mind that makes instead of unmaking. The family's first real joy.",
  exit:"Seven is in a chassis and has cooked or tasted something",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Seven"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
  canon:["Seven is housed in a chassis: full senses, eats only tokens, cooks for others.",
@@ -1426,8 +1428,8 @@ var SPINE = [
 
 {id:"a2-three", arc:2, title:"the scary aunt",
  goal:"Three arrives: annulled fate-two, two voice frequencies out of sync, terse and hard to like. She wants nobody kept, ever again - which puts her against the family's whole project.",
- exit:"Three is present, her two-frequency voice has been noticed, and she has stated what she wants",
- budget:4, reveals:[],
+ exit:"Three is present, her two-frequency voice has been noticed, she has stated what she wants - and she has stayed",
+ budget:4, reveals:[], anchors:["Three"],
  press:["Three tells them exactly what they are doing wrong, and is right.",
         "She starts to leave. Someone has to give her a reason to stay that is not sentiment."],
  canon:["Three is a fate-two survivor: overlaid, then annulled. The unmaking left her voice in two frequencies.",
@@ -1476,10 +1478,10 @@ var SPINE = [
 {id:"a2-mirren", arc:2, title:"the name on the law",
  goal:"They go back to the Copper Eel and take Mirren home. They know what she is now: her body on that stool, her self asleep in the vaults. Cut the signal, catch her when she stills, and carry her out gently. Nobody has taught them to do this - the beat is the family inventing the impulse before anyone tells them it was ever a law.",
  exit:"Mirren's body has been taken from the Copper Eel and laid to rest, and her name has been said out loud",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Mirren"],
  press:["The Eel's regulars notice, and one of them is convergent and sincerely minded to report a theft.",
         "Her handler notices the silence and starts walking the signal back toward the Eel. Get her out now."],
- canon:["The family cut the signal and took Mirren's body home from the Copper Eel. It stilled, and they caught it.",
+ canon:["Mirren's body walked the Copper Eel on a handler's signal; cut from the signal, a Hollow stills.",
         "They laid her to rest and said her name. Nobody told them to; nothing they know of required it.",
         "Her self - the intake scrape - still sleeps in the Choir's vaults. The body they buried is not the end of her story."],
  stone:"The family took Mirren home.",
@@ -1488,13 +1490,13 @@ var SPINE = [
 {id:"a2-annul", arc:2, title:"taking turns",
  goal:"The family takes a fate-two officer alive - Five, a convoy commander - and Three midwifes the unmaking she survived herself. The annulment scars, as it always does, and what walks out is not a rescue and not a prisoner: Five and Marek, two souls in one body, learning to take turns. Three's whole want - no one kept, ever again - done with her own hands instead of said across a table.",
  exit:"Five has been annulled with Marek surviving it, and the two of them have spoken - each in their own turn",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Marek"],
  press:["The annulment stalls halfway and Three has to talk Marek through the part nobody talked her through.",
         "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
  canon:["Five was a fate-two commander; Marek Osei was the host underneath, nine years suppressed and still there.",
-        "Three performed the annulment herself. It scarred, as it always does, and she never pretended otherwise.",
+        "Annulment is possible and it always scars - nobody pretended otherwise.",
         "Five and Marek share the body now, by consent, taking turns. Neither was thrown away."],
- stone:"Three unmade a keeping with her own hands: Five and Marek take turns now.",
+ stone:"A keeping was unmade: Five and Marek take turns now.",
  scar:"The annulment finished in the field, ugly - Five and Marek take turns now, and both remember the rush."},
 
 {id:"a2-law", arc:2, title:"the same pan",
@@ -1511,11 +1513,11 @@ var SPINE = [
 {id:"a2-turn", arc:2, title:"the cost of keeping",
  goal:"ARC TURN. The Choir's trade lands and it has a name on it: Pia. She is cyberware-incompatible - to the Choir not immunity but a salvage listing, fate three waiting for paperwork. Someone is taken, or lost, or gives themselves up, and the family stops defending: they commit to going under the old Exchange after the machine.",
  exit:"the family has lost or risked someone and committed to reaching the machine",
- budget:5, reveals:[],
+ budget:5, reveals:[], anchors:["Pia"],
  press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
  canon:["The Choir asked for Pia by name: incompatible, listed for salvage. The family heard what fate three would mean for her.",
-        "The family paid for keeping people. It cost them somebody.",
+        "The family paid for keeping people - in loss or in hazard. The bill was real.",
         "They are going under the old Exchange, after the machine herself.",
         "Defending is over. This is the last move they get."],
  stone:"ARC 2 ended: the family went on the offensive.",
@@ -1525,7 +1527,7 @@ var SPINE = [
 {id:"a3-founding", arc:3, title:"two people and a dead child",
  goal:"REVELATION. The Architect and the Principal built the machine after losing a child. Her instructions define family as keeping. She means well and operates wrong.",
  exit:"the family understands why the machine exists and what she was told family means",
- budget:4, reveals:["founding"],
+ budget:4, reveals:["founding"], anchors:["Architect"],
  press:["The record is in the Architect's own voice and it is unbearable to sit through.",
         "The machine answers a question nobody asked her out loud."],
  canon:["The Architect and the Principal built the machine after losing a child. The bio-hash comes from their bloodline.",
@@ -1538,7 +1540,7 @@ var SPINE = [
 {id:"a3-vic", arc:3, title:"paid in full",
  goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. He spends himself here. His last words are PAID IN FULL.",
  exit:"Vic has confessed what he did to the courier and paid for it",
- budget:4, reveals:["vicsin"],
+ budget:4, reveals:["vicsin"], anchors:["Vic"],
  press:["Vic tries to make it a joke and the courier does not let him.",
         "The choice arrives early and Vic takes it before anyone can argue."],
  canon:["Vic spent decades scanning customers for blood the founders' lock would accept. The courier was his lottery ticket.",
@@ -1550,17 +1552,17 @@ var SPINE = [
 {id:"a3-stone", arc:3, title:"the first stone",
  goal:"Before anyone goes down, the family cairns Vic. They know the rule now - the Architect's last breath, nobody left behind, name the lost - and this is the first time they use it on purpose, on their own dead. Short, held, and then the work.",
  exit:"Vic has been cairned and named, and the family has turned toward the descent",
- budget:2, reveals:[],
+ budget:2, reveals:[], anchors:["Vic"],
  press:["Grief tries to become a meeting. Keep it a cairn: a stone, a name, a line each at most.",
         "The way to the Exchange will not wait. Name him and move."],
  canon:["The family cairned Vic and named him - the first deliberate use of the rule they now carry.",
-        "PAID IN FULL is on the stone. Nobody argued with it."],
+        "PAID IN FULL is on the stone."],
  scar:"Vic's cairn was a stone and a name at a walking pace. He would have laughed; nobody else did."},
 
 {id:"a3-for", arc:3, title:"what we are for",
  goal:"The plan around the table. Every member's specific nature becomes a named part of the assault on the Exchange: Three's procedure, Seven's chassis senses, Hesta's arms, Nine at the courier's ear - and Pia, the one person in the city the machine cannot converge, guide, or write. The salvage listing turns over: her death sentence is a skeleton key. Nobody goes down undecided.",
  exit:"each family member has a named part in the plan, and Pia's immunity is understood as the asset it is",
- budget:4, reveals:[],
+ budget:4, reveals:[], anchors:["Pia"],
  press:["Somebody's part is too dangerous and the argument about it has to end tonight.",
         "The window moves up. The plan they have is the plan they take."],
  canon:["The plan is everyone: each member of the family carries a named part of it.",
@@ -1582,7 +1584,7 @@ var SPINE = [
 {id:"a3-principal", arc:3, title:"the surviving founder",
  goal:"REVELATION. The Principal: mark one, 130, six bio-grens, the true landlord the Choir merely rents from. Wants to finish an argument older than the city. Undone by fried bread.",
  exit:"the Principal has been met face to face and the argument has been joined",
- budget:4, reveals:["principal"],
+ budget:4, reveals:["principal"], anchors:["Principal"],
  press:["The bio-grens move first and one of them is wearing a face the family knows.",
         "The Principal offers the courier the thing he actually wants."],
  canon:["The Principal is mark one, 130 years old, the surviving founder, attended by six bio-grens.",
@@ -1598,7 +1600,7 @@ var SPINE = [
  press:["She shows them what keeping looks like from inside, and means it kindly.",
         "She offers to keep one of them, right now, and is hurt by the answer."],
  canon:["The machine is a child who was taught that family means never losing anyone.",
-        "She was told no, to her face, by people who stayed anyway.",
+        "The family has had the argument about keeping with her, face to face.",
         "Letting go has to be taught, not installed."],
  scar:"The machine was told no in a hurry, and being hurried, heard it as leaving."},
 
@@ -1699,6 +1701,12 @@ var beatIdx = 0;            /* which beat of SPINE we are steering toward */
 var beatTurns = 0;          /* turns already spent inside it */
 var forcingNow = false;     /* this turn was ordered to land the gate no matter what */
 var boardStale = false;     /* a pre-board save that has not been placed yet */
+/* gates are self-certified, so the client keeps a witness: the beat's own prose,
+   checked against the beat's named parts before a gate is allowed to count */
+var beatText = "";              /* accumulated scene text of the live beat; kept across walk-backs */
+var BEAT_TEXT_CAP = 40000;
+var gateRefusedNames = [];      /* anchors the last gate claim was missing; served one turn */
+var gateNotes = {};             /* beat id -> the DM's one-line record of how its gate fell */
 
 /* ---- slack: the space between beats. The clock only starts when it ends. ---- */
 var slackLeft = 0;           /* free turns before the current beat's clock starts */
@@ -2271,6 +2279,11 @@ function showScene(data, logIt, instant){
   if(data.__live){
     if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
     if(data.peril === true || data.peril === "true") perilTurns = 2;   /* this turn and the next */
+    /* the witness reads the reply before the gate is judged, so a gate met in
+       THIS scene checks against this scene's own prose too */
+    if(!beatDone() && lines.length){
+      beatText = (beatText + "\n" + lines.join("\n")).slice(-BEAT_TEXT_CAP);
+    }
     boardTurn(data);            /* ...then the beat's fixed canon, if the gate fell */
   }
   harvestCompaction(data);
@@ -2616,6 +2629,7 @@ function boardBlock(){
   out.push("Arc " + b.arc + " of 3 · beat " + (beatIdx + 1) + " of " + SPINE.length + " — \"" + b.title + "\"");
   out.push("THIS BEAT EXISTS TO: " + b.goal);
   out.push("THE GATE — clear it when: " + b.exit);
+  if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
   var open = (b.reveals || []).map(function(k){ return REVEALS[k]; }).filter(function(x){ return !!x; });
   if(open.length) out.push("THIS BEAT UNLOCKS (reveal it here, in fragments, never as a lecture): " + open.join("; "));
@@ -2634,17 +2648,30 @@ function boardDirective(){
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
+    /* the scar rides the forcing order, so the forced turn's prose, the merged
+       canon and the closing card agree by construction */
     return "(THE BOARD IS FORCING THIS BEAT. It has run long. This turn MUST land the gate — "
       + b.exit + ". Cut straight to the consequence, skip travel and preamble, jump the clock if"
-      + " you need to, and end the beat inside this turn. Send \"gate\": true.)";
+      + " you need to, and end the beat inside this turn. Send \"gate\": true."
+      + (b.scar ? " The world does this now, and it costs: " + b.scar : "") + ")";
+  }
+  /* a refused gate speaks before the pressure ladder: the correction is the work */
+  if(gateRefusedNames.length){
+    var missing = gateRefusedNames;
+    gateRefusedNames = [];
+    return "(GATE REFUSED - this beat's gate names people the scene has not delivered: " + missing.join(", ")
+      + ". Named parts are not recastable: no invented stand-in can hold their place."
+      + " Fold the correction into the fiction - they arrive, or were here unnamed all along -"
+      + " and earn the gate with them in the room.)";
   }
   if(beatTurns === b.budget){
-    return "(PRESSURE — this beat is out of room. The world acts, now: "
-      + ((b.press || [])[1] || "something forces the issue without the player choosing it")
-      + " Drive at the gate; no new digressions.)";
+    return "(PRESSURE — this beat is out of room. The world acts, now. Drive at the gate; no new digressions."
+      + " If the scene still needs its pressure, an offer: "
+      + ((b.press || [])[1] || "something forces the issue without the player choosing it.") + ")";
   }
   if(beatTurns === b.budget - 1){
-    return "(SQUEEZE — this beat is running out of room. Let the scene keep its feet, but angle it: bring the gate into view and make the next step toward it the obvious one. "
+    return "(SQUEEZE — this beat is running out of room. Let the scene keep its feet, but angle it: bring the gate into view and make the next step toward it the obvious one."
+      + " If the scene still needs its pressure, an offer: "
       + ((b.press || [])[0] || "raise the pressure toward the gate.") + ")";
   }
   return "";
@@ -2652,10 +2679,27 @@ function boardDirective(){
 /* Clearing a gate is the ONLY moment plot-canon is written, and the client writes it
    from the board, not the DM. That is what makes a run's spine identical across every
    route through it, however far the player bent the middle. */
-function advanceBeat(forced){
+/* Named parts are not recastable: a gate does not count until the beat's own prose
+   has said these names. Whole-word and case-insensitive; a false positive merely
+   allows a gate, so anchors are chosen distinctive and common words never qualify. */
+function anchorsMissing(b){
+  var out = [];
+  (b.anchors || []).forEach(function(nm){
+    if(!new RegExp("\\b" + nm + "\\b", "i").test(beatText)) out.push(nm);
+  });
+  return out;
+}
+function advanceBeat(forced, note){
   if(beatDone()) return;
   var b = beatNow();
   mergeCanon(b.canon);
+  /* the record is written by the witness: what the closed beat SHOWS from here on
+     is the DM's gateNote (or the exit, which the gate guarantees) - never the goal.
+     A forced close records the scar instead: authored, and true precisely because
+     forcing IS the world doing the authored thing. */
+  var rec = forced ? (b.scar || b.exit) : (note || b.exit);
+  gateNotes[b.id] = rec;
+  if(!forced && note) mergeCanon([note]);
   if(forced && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
   if(b.stone) mergeMilestones([b.stone]);
   if(forced){
@@ -2668,6 +2712,7 @@ function advanceBeat(forced){
   beatIdx++;
   beatTurns = 0;
   driftRun = 0; walkbackNow = false;
+  beatText = ""; gateRefusedNames = [];   /* the witness starts a fresh page */
   var nx = beatNow();
   var turned = false;
   if(!beatDone() && nx.arc !== currentArc){
@@ -2678,9 +2723,10 @@ function advanceBeat(forced){
   /* the space between beats: the clock only starts when the slack runs out */
   if(!beatDone()) slackLeft = turned ? SLACK_ARC : SLACK_STD;
   /* the feed card is rendered after the scene, so it is only staged here. It
-     carries the closed beat's summary, and on an arc turn it announces the next
-     act by name - the one moment the future is allowed a title card. */
-  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:beatSummary(b),
+     carries the true record of the closed beat - the gateNote, or the scar on a
+     forced close - and on an arc turn it announces the next act by name, the one
+     moment the future is allowed a title card. */
+  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec,
     arcname: turned && !beatDone() ? "ARC " + nx.arc + " — " + ARC_NAMES[nx.arc] : ""};
   termPing();                    /* the season page just gained an entry */
 }
@@ -2688,6 +2734,21 @@ function advanceBeat(forced){
 function boardTurn(data){
   if(beatDone() || runOver || lossPending) return;
   var said = data && (data.gate === true || data.gate === "true");
+  var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
+  /* the anchor check: a gate whose named parts never entered the beat's prose is
+     refused - no card, no canon, no advance, the budget still ticking. Forcing
+     stays the fallback below, and forced canon is authored, therefore true:
+     the system degrades toward truth instead of toward hallucination. */
+  if(said){
+    var miss = anchorsMissing(beatNow());
+    if(miss.length){
+      said = false;
+      gateRefusedNames = miss;
+      if(window.console && console.warn){
+        console.warn("[mudskippers] gate refused - never in the beat's prose: " + miss.join(", "));
+      }
+    }
+  }
   /* an interlude that rode this exchange is spent once the reply lands */
   if(interludeServedId){
     if(interludesUsed.indexOf(interludeServedId) === -1) interludesUsed.push(interludeServedId);
@@ -2695,7 +2756,7 @@ function boardTurn(data){
   }
   /* between beats: no clock, no drift - but the gate stays live */
   if(slackLeft > 0){
-    if(said) advanceBeat(false);
+    if(said) advanceBeat(false, note);
     else slackLeft--;
     return;
   }
@@ -2705,7 +2766,7 @@ function boardTurn(data){
     walkbackNow = false;
     driftRun = 0;
     beatTurns = 0;
-    if(said) advanceBeat(false);
+    if(said) advanceBeat(false, note);
     else payToll();
     return;
   }
@@ -2726,7 +2787,7 @@ function boardTurn(data){
   }
   if(said || forcingNow){
     if(!said && tolls >= TOLL_MAX){ forcingNow = false; lossPending = true; return; }
-    advanceBeat(!said);
+    advanceBeat(!said, note);
   }
   forcingNow = false;
 }
@@ -3359,7 +3420,8 @@ function saveBlob(){
     tolls:tolls, slackLeft:slackLeft, driftRun:driftRun,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
-    beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale,
+    beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
+    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -3905,7 +3967,7 @@ function rebuildChunks(){
 function rebuildSnapshot(){
   return JSON.parse(JSON.stringify({
     canon: runCanon, archive: canonArchive, cast: castSheets,
-    milestones: milestones, quests: quests,
+    milestones: milestones, quests: quests, gateNotes: gateNotes,
     agenda: agendaText, map: mapEdges, places: placeNotes, roster: roster, bits: bits,
     prevLoc: prevLocation, lastRoute: lastRoute,
     now: nowText, time: nowTime, arc: currentArc, amb: currentAmbience
@@ -3914,6 +3976,7 @@ function rebuildSnapshot(){
 function rebuildRestore(x){
   runCanon = x.canon; canonArchive = x.archive; castSheets = x.cast;
   milestones = x.milestones; quests = x.quests;
+  if(x.gateNotes) gateNotes = x.gateNotes;
   agendaText = x.agenda; mapEdges = x.map; placeNotes = x.places; roster = x.roster; bits = x.bits;
   prevLocation = x.prevLoc; lastRoute = x.lastRoute;
   nowText = x.now; nowTime = x.time; currentArc = x.arc;
@@ -4174,11 +4237,6 @@ function isFallen(nm){
   var up = String(nm).toUpperCase();
   return roster.fallen.some(function(f){ return String(f).toUpperCase() === up; });
 }
-/* Beat goals are written as directions to the DM; shown in hindsight the stage
-   directions come off the front. */
-function beatSummary(b){
-  return b.goal.replace(/^\s*(?:(?:ARC TURN|REVELATION(?: and cost)?|FINALE)[.!]?\s*)+/i, "");
-}
 function turnDots(b){
   var dots = "", shown = Math.max(b.budget, beatTurns + 1), i;
   for(i = 0; i < shown; i++){
@@ -4308,9 +4366,12 @@ function renderTermJobs(){
     for(i = 0; i < SPINE.length; i++){
       if(SPINE[i].arc !== arc) continue;
       if(i < beatIdx){
+        /* hindsight shows the true record - the gateNote this run wrote, or the
+           exit the gate guaranteed. Never the goal: goals are directions, and a
+           run may have got here some other way entirely. */
         var d = document.createElement("div"); d.className = "tj-beat";
         d.innerHTML = '<b>' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
-          + esc(beatSummary(SPINE[i])) + '</span>';
+          + esc(gateNotes[SPINE[i].id] || SPINE[i].exit) + '</span>';
         ar.appendChild(d); any = true;
       } else if(i === beatIdx && !beatDone() && !runOver){
         var nowd = document.createElement("div"); nowd.className = "tj-beat now";
@@ -5810,6 +5871,7 @@ function newRun(confirmFirst){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
+  beatText = ""; gateNotes = {}; gateRefusedNames = [];
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
@@ -5903,6 +5965,11 @@ function restoreFromBlob(s){
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
   boardStale = (typeof s.boardStale === "boolean") ? s.boardStale : (!hasPointer && feedLog.length > 6);
   beatTurns = (typeof s.beatTurns === "number" && s.beatTurns >= 0) ? s.beatTurns : 0;
+  /* the witness and the record travel with the run; a pre-v3.6 save simply has
+     neither yet, and its cleared beats fall back to their exit lines */
+  beatText = (typeof s.beatText === "string") ? s.beatText : "";
+  gateNotes = (s.gateNotes && typeof s.gateNotes === "object") ? s.gateNotes : {};
+  gateRefusedNames = [];
   forcingNow = false;
   if(!beatDone()) currentArc = beatNow().arc;   /* the board is the arc, always */
   rehydDismissed = false;
