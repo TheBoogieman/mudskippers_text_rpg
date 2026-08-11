@@ -62,13 +62,31 @@ game itself, word for word, no AI required — the DM inherits a table with the 
 already face up. (The gold bar looks open during the cold open. That is the bait.
 Try it.)
 
+## The game is a series now
+
+Three **seasons**, each a book of its own with three internal acts, a finale, and an
+end card: **THE PERSONAL RUN** (~80 turns), **SOMEONE MUST BE SAVED** (~110), **THE
+MACHINE** (~100). At each season finale the run performs the **archive ritual**: it
+distills itself once, ceremonially, into a **Season Record** — what happened, who we
+are now, what we carry, what it cost, where things stand — written from the run's own
+registers, no AI calls, and filed into the ledger under a season break. The record
+resets the working memory (jokes are family heirlooms; the best eight travel), zeroes
+the season's tolls, and becomes the next season's **PREVIOUSLY ON**: the new book
+opens with time having passed and the family where the record left them.
+
+Nothing distilled is truly gone. Everything the ritual retires drops into an
+entity-indexed archive, and **the game remembers on demand** — walk back into a place
+or say a name, and the run's own past is quoted back verbatim, never re-summarized.
+
+And one truth told spoiler-lightly: **the receiver did not stay put.**
+
 ## How a season actually ends
 
-The season is a **flowchart**, not a mood. Twenty-four beats across three arcs live
-in the game itself: each one names the single thing it exists to accomplish, the gate
-that ends it, its own turn budget, what it is allowed to reveal, and the canon it
-writes when it clears. Every turn, the DM is handed exactly one instruction — *this
-is the beat, steer to this gate, and do not invent past it.*
+Each season is a **flowchart**, not a mood. Thirty-three beats across the three
+seasons live in the game itself: each one names the single thing it exists to
+accomplish, the gate that ends it, its own turn budget, what it is allowed to reveal,
+and the canon it writes when it clears. Every turn, the DM is handed exactly one
+instruction — *this is the beat, steer to this gate, and do not invent past it.*
 
 The DM does not decide the plot and cannot wander off it:
 
@@ -103,9 +121,11 @@ The DM does not decide the plot and cannot wander off it:
   arms at once. Momentum, convenience, or the DM's good segue is not a knock — only
   the player's hand is.
 
-A season runs **~95 turns driving with knocks, ~170 played leisurely** — capped in
-the low 190s if the world has to force every door, and the tolls end it well before
-that — and it cannot fail to end: victory, death, or loss, always seen coming.
+The series runs **~80 / ~110 / ~100 turns per season — roughly 300 for all three
+books** played with intent, longer played leisurely — and it cannot fail to end:
+victory, death, or loss, always seen coming. Losing is season-shaped too: each book
+loses differently, the toll meter is season-long, and the grave re-closes at every
+season break.
 
 ### The chair is yours
 
@@ -277,10 +297,12 @@ pointer to the beat you are *actually* on. It touches nothing but the pointer.
 
 > **Save compatibility.** Saves from v2.7 onward store cast sheets as structured
 > objects; saves from v3.5 onward store quests and board ids; saves from v3.9 onward
-> store the beat lifecycle phase. Older saves load fine and are migrated on the spot
-> — flat threads become quests, old board positions are remapped onto the new spine,
-> a run saved between beats re-enters the lifecycle where it left off — but a newer
-> save is **not** readable by an older client. This only matters if you hand a folder-save JSON to an old cached copy of
+> store the beat lifecycle phase; saves from v4.0 onward store Season Records and the
+> retrieval archive. Older saves load fine and are migrated on the spot — flat
+> threads become quests, old board positions carry across the series reorder by beat
+> id, and a run already seasons deep is *offered* (never forced) a free record
+> rebuild for the seasons it played before the Archive existed — but a newer save is
+> **not** readable by an older client. This only matters if you hand a folder-save JSON to an old cached copy of
 > the game — the hosted version and the installed app both update themselves.
 
 ## New Game
