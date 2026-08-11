@@ -791,7 +791,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.5.1 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.5.2 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1095,7 +1095,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.5.1 "The Rain"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.5.2 "The Rain"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2952,6 +2952,16 @@ function buildContext(){
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
+/* adaptive thinking exists on the 4.6-and-later families; older models 400 on it */
+function dmThinking(body){
+  if(/sonnet-5|opus-5|opus-4-[678]|sonnet-4-6|fable|mythos/.test(settings.model||"")){
+    body.thinking = {type:"adaptive"};
+    body.output_config = {effort:"low"};
+  } else {
+    body.thinking = {type:"disabled"};
+  }
+  return body;
+}
 function askAnthropic(msgs){
   return fetch(settings.base.replace(/\/$/,"") + "/v1/messages", {
     method:"POST",
@@ -2963,13 +2973,13 @@ function askAnthropic(msgs){
     },
     /* the BIBLE never changes, so it is marked cacheable: reads of the cached
        prefix bill at ~10% of input price whenever turns land inside the cache
-       window, which is exactly how this game is played. Thinking is off: newer
-       models think by default, and a JSON-emitting DM pays for it in latency,
-       output tokens, and ceiling space without needing it. */
-    body: JSON.stringify({model:settings.model, max_tokens:REPLY_TOKENS,
-      thinking:{type:"disabled"},
+       window, which is exactly how this game is played. The DM gets a BIT of
+       reasoning - adaptive thinking at low effort, so it deliberates briefly on
+       the hard turns (gates, checkpoints) and skips it on routine ones. Models
+       too old for adaptive get thinking off, which is valid everywhere. */
+    body: JSON.stringify(dmThinking({model:settings.model, max_tokens:REPLY_TOKENS,
       system:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}],
-      messages:msgs})
+      messages:msgs}))
   }).then(function(r){ return r.json(); }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
     if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
@@ -2987,8 +2997,9 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
     : {role:"system", content:BIBLE};
   var body = {model:settings.model,
     messages:[sysMsg].concat(msgs)};
-  /* same reasoning-off as the native path, in OpenRouter's own dialect */
-  if(settings.provider === "openrouter") body.reasoning = {effort:"none"};
+  /* a bit of reasoning, in OpenRouter's own dialect - it maps effort to each
+     model's native thinking controls and ignores it where unsupported */
+  if(settings.provider === "openrouter") body.reasoning = {effort:"low"};
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
