@@ -902,7 +902,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.7.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.8.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -991,7 +991,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v3.7.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v3.8.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1253,7 +1253,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.7.0 "The Wrist Unit"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.8.0 "The Wants"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1277,6 +1277,7 @@ var BIBLE = [
 "- THE RAIN - drift is absence, not chaos. A wild turn aimed AT the current beat is a mudskipper moment and is welcome; burning down the wrong building is a route. A turn that ignores the season entirely - no beat, no family, no thread of the story in it - is drift. When you write such a turn, send \"drift\": true with it, honestly. Never send drift during BETWEEN BEATS; wandering there is the point.",
 "- NAMED PARTS ARE NOT RECASTABLE - the bible's named people are fixed points: Hesta keeps The Open Door, Vic is the client, and so on. Invent strangers freely - the city is full of people - but never invent a substitute for a named role. If a scene needs the keeper of the cafe, it needs Hesta, not a new name doing her job.",
 "- PRESS LINES ARE OFFERS, NOT ORDERS. When the table has already supplied a scene's pressure or its answer, leave the offer in the drawer. Never override what the table actually did to make room for an authored move.",
+"- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "MORTALITY - THE COURIER CAN DIE, AND IT IS REAL:",
@@ -1489,6 +1490,47 @@ var REVEALS = {
   vicsin:    "Vic's sin - that he did it to the courier knowingly, and would again",
   principal: "the Principal: mark one, 130 years old, the true landlord"
 };
+
+/* ---- THE WANTS: the cast's third tense ----
+   The bible is their past, cast state is their present, this is their future:
+   one served line per character stating what they want right now. Written as
+   desire, never outcome - a want is true even in the run where it never comes
+   to pass. The courier has no entry; that chair is the player's. The dead want
+   nothing. Per character the LAST matching entry serves, so post-reveal swaps
+   are listed after their base line and win. Conditions: arc is a minimum,
+   reveal must be open, afterBeat must be cleared, untilBeat retires the line.
+   inst entries (institutions, absences) skip the alive-and-met filter;
+   presentOnly walk-ons serve only while on stage. */
+var WANTS = [
+  {who:"Nine", arc:1, line:"NINE WANTS: to not go back, and to be spoken to like a person. WILL NOT: say what going back would mean."},
+  {who:"Nine", arc:2, line:"NINE WANTS: to earn her keeping and keep the family ahead of the Choir's clock. WILL NOT: be cargo again, for anyone."},
+  {who:"Nine", arc:2, reveal:"housing", line:"NINE WANTS: the manual read to its end and the courier's consent kept sacred. WILL NOT: use his senses uninvited."},
+  {who:"Nine", arc:3, line:"NINE WANTS: the machine faced, and the ones still sleeping remembered. WILL NOT: let the courier go down alone."},
+  {who:"Vic", arc:1, line:"VIC WANTS: the courier and the shard under his roof, alive. WILL NOT: say why he chose this courier."},
+  {who:"Vic", arc:2, line:"VIC WANTS: everyone he owes gathered under Hesta's roof, and the courier ready. WILL NOT: answer \"why this courier.\""},
+  {who:"Vic", arc:3, line:"VIC WANTS: the account settled in person, before the deep dark. WILL NOT: outlive the debt."},
+  {who:"Pia", arc:1, line:"PIA WANTS: the courier alive and her job done better than asked. WILL NOT: be benched for being twelve."},
+  {who:"Pia", arc:2, line:"PIA WANTS: a family that doesn't leave. WILL NOT: be the reason it breaks."},
+  {who:"Pia", arc:2, afterBeat:"a2-turn", line:"PIA WANTS: to matter more than what the list says she's worth. WILL NOT: be handed over quietly."},
+  {who:"Pia", arc:3, line:"PIA WANTS: to be the key, not the salvage. WILL NOT: wait outside."},
+  {who:"Hesta", arc:2, line:"HESTA WANTS: every stray at her table fed before questions. WILL NOT: speak of what is under the floor unasked."},
+  {who:"Hesta", arc:3, line:"HESTA WANTS: the harvests answered for, and her kept names honored. WILL NOT: bury another one quietly."},
+  {who:"Seven", arc:2, line:"SEVEN WANTS: to make instead of unmake, starting with dinner. WILL NOT: ask to be saved."},
+  {who:"Seven", arc:3, line:"SEVEN WANTS: to carry his weight into the dark. WILL NOT: let a war skip a meal."},
+  {who:"Three", arc:2, line:"THREE WANTS: every keeping in reach undone. WILL NOT: soften a true thing."},
+  {who:"Three", arc:3, line:"THREE WANTS: the machine to hear no and survive it. WILL NOT: leave anyone kept behind them."},
+  {who:"Five+Marek", names:["Five","Marek"], afterBeat:"a2-annul", line:"FIVE+MAREK WANT: to learn taking turns; the canals, someday, together. WILL NOT: take a turn that isn't theirs."},
+  {who:"Menu Man", presentOnly:true, line:"MENU MAN WANTS: his old corner back, and an apology from somebody. WILL NOT: admit he lost a coin toss."},
+  /* institutional and ambient: gated by the season, never by a sheet */
+  {who:"Mirren", inst:true, reveal:"choir", untilBeat:"a2-mirren", line:"MIRREN WANTS: nothing. That is what was taken. (Write her no dialogue, no glances, no ghosts - the absence is the character.)"},
+  {who:"The Machine", inst:true, arc:2, reveal:"choir", line:"THE MACHINE WANTS: the gentle voice to be enough for everyone. WILL NOT: doubt the lines she was given."},
+  {who:"The Machine", inst:true, arc:3, reveal:"choir", line:"THE MACHINE WANTS: family, the only way she was taught - keeping. WILL NOT: understand no the first time."},
+  {who:"The Principal", inst:true, reveal:"principal", line:"THE PRINCIPAL WANTS: an argument finished with a dead man, through whoever carries his key. WILL NOT: be rushed in her own house."},
+  {who:"The Choir", inst:true, arc:1, line:"THE CHOIR WANTS: its property back quietly, before anyone learns it can lose things. WILL NOT: make news."},
+  {who:"The Choir", inst:true, arc:2, line:"THE CHOIR WANTS: the family contained and the city kept calm. WILL NOT: spend officers cheaply."},
+  {who:"The Choir", inst:true, arc:2, afterBeat:"a2-turn", line:"THE CHOIR WANTS: the girl on its list, and the family broken over her. WILL NOT: honor a trade it can simply take."},
+  {who:"The Choir", inst:true, arc:3, line:"THE CHOIR WANTS: the lease held and the landlord kept asleep. WILL NOT: believe it was ever the tenant."}
+];
 
 var SPINE = [
 /* ---- ARC 1 · THE PERSONAL RUN ----
@@ -1853,6 +1895,7 @@ var placeNotes = {};                        /* name -> up to 2 lines of state */
 var roster = {family:[], fallen:[]};        /* fallen is permanent */
 var bits = [];                              /* running jokes; load-bearing */
 var prevLocation = "", lastRoute = "";      /* client-maintained breadcrumb */
+var lastPresent = [];                       /* who was on stage last turn - walk-on wants serve only while present */
 
 /* ---- the plot pointer. The client walks the board; the DM only reports the gate. ---- */
 var beatIdx = 0;            /* which beat of SPINE we are steering toward */
@@ -2431,6 +2474,12 @@ function showScene(data, logIt, instant){
   }
   mergeCast(data.cast);
   deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
+  /* who was on stage this turn: speakers plus cast entries, for the walk-on wants */
+  lastPresent = sceneCharacters(data);
+  (Object.prototype.toString.call(data.cast) === "[object Array]" ? data.cast : []).forEach(function(c){
+    var pn = c && c.name ? String(c.name).trim() : "";
+    if(pn && lastPresent.indexOf(pn) === -1) lastPresent.push(pn);
+  });
   mergeCanon(data.canon);       /* the DM's colour first... */
   if(newFaces || data.milestones || data.quests || data.roster || data.map || data.place
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
@@ -2663,6 +2712,47 @@ function lockedReveals(){
     });
   }
   return out;
+}
+/* a reveal is open the moment its beat is in play; only the strictly-future is locked */
+function revealOpen(key){
+  for(var i = 0; i <= Math.min(beatIdx, SPINE.length - 1); i++){
+    if((SPINE[i].reveals || []).indexOf(key) !== -1) return true;
+  }
+  return false;
+}
+/* ---- the wants engine: which line each character serves right now ---- */
+function wantOK(e){
+  if(e.arc && currentArc < e.arc) return false;
+  if(e.reveal && !revealOpen(e.reveal)) return false;
+  if(e.afterBeat){ var ai = beatById(e.afterBeat); if(ai === -1 || beatIdx <= ai) return false; }
+  if(e.untilBeat){ var ui = beatById(e.untilBeat); if(ui !== -1 && beatIdx > ui) return false; }
+  if(!e.inst){
+    var names = e.names || [e.who];
+    if(names.some(isFallen)) return false;
+    var here = names.some(function(n){ return lastPresent.indexOf(n) !== -1; });
+    var met = names.some(function(n){ return !!castSheets[n]; });
+    if(e.presentOnly ? !here : !(here || met)) return false;
+  }
+  return true;
+}
+/* the LAST matching entry serves - later means more specific */
+function wantForName(nm){
+  var pick = null;
+  WANTS.forEach(function(e){
+    if((e.names || [e.who]).indexOf(nm) !== -1 && wantOK(e)) pick = e;
+  });
+  return pick;
+}
+function wantLines(){
+  var seen = {}, personal = [], inst = [];
+  WANTS.forEach(function(e){
+    if(seen[e.who]) return;
+    seen[e.who] = 1;
+    var pick = null;
+    WANTS.forEach(function(x){ if(x.who === e.who && wantOK(x)) pick = x; });
+    if(pick) (pick.inst ? inst : personal).push(pick.line);
+  });
+  return personal.concat(inst);   /* people lean first; institutions last */
 }
 function openedReveals(){
   var out = [];
@@ -3065,7 +3155,7 @@ function nowLine(){
     + ", Arc " + (currentArc||1) + ". " + (nowText || "the story continues");
 }
 function contextBlock(){
-  var d = {bits:false, questsSettled:false, placesCurrentOnly:false, chronDrop:0, canonDrop:0,
+  var d = {bits:false, questsSettled:false, wants:false, placesCurrentOnly:false, chronDrop:0, canonDrop:0,
            cast:{recent:true, knows:0, status:true, voice:true}};
   function build(){
     var out = [];
@@ -3079,6 +3169,10 @@ function contextBlock(){
     if(pl) out.push("PLACES (state as you left them)\n" + pl);
     out.push("CAST STATE (never re-introduce two names that have met; never let anyone act ignorant of their knows)\n"
       + castStateBlock(d.cast));
+    if(!d.wants){
+      var wl = wantLines();
+      if(wl.length) out.push("THE CAST'S WANTS (gravity, not dialogue - people lean, they do not announce)\n" + wl.join("\n"));
+    }
     if(!d.bits && bits.length) out.push("BITS (running jokes; reuse them)\n" + bits.join(" · "));
     var chron = canonArchive.slice(d.chronDrop);
     if(chron.length) out.push("CHRONICLE (compressed history, oldest first)\n" + numbered(chron));
@@ -3092,6 +3186,7 @@ function contextBlock(){
   if(s.length <= CONTEXT_BUDGET) return s;
   d.bits = true;              s = build(); if(s.length <= CONTEXT_BUDGET) return s;
   d.questsSettled = true;     s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.wants = true;             s = build(); if(s.length <= CONTEXT_BUDGET) return s;
   d.placesCurrentOnly = true; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
   while(d.chronDrop < canonArchive.length){          /* oldest compressed history first */
     d.chronDrop++; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
@@ -4583,6 +4678,11 @@ function renderTermCast(){
   var html = '<h3 style="color:' + col + '">' + esc(termCastSel.toUpperCase())
     + (isFallen(termCastSel) ? ' <span style="color:#e08b8b">&mdash; FALLEN</span>' : '') + '</h3>';
   if(s.status) html += '<p class="cast-status">' + esc(s.status) + '</p>';
+  /* the served want, surface line only - the WILL NOT is the DM's teeth, not display */
+  var wf = wantForName(termCastSel);
+  if(wf && !wf.inst && !isFallen(termCastSel)){
+    html += '<p class="cast-rel"><b>WANTS</b>' + esc(wf.line.split(" WILL NOT:")[0].replace(/^[^:]*:\s*/, "")) + '</p>';
+  }
   if(s.voice)  html += '<p class="cast-rel"><b>SPEAKS</b>' + esc(s.voice) + '</p>';
   if(s.met.length)   html += '<p class="cast-rel"><b>MET</b>' + esc(s.met.join(", ")) + '</p>';
   if(s.knows.length) html += '<p class="cast-rel"><b>KNOWS</b>' + esc(s.knows.join(" · ")) + '</p>';
@@ -4896,7 +4996,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v3.7.0   COLD START",
+    "MUD//OS  v3.8.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6109,7 +6209,7 @@ function newRun(confirmFirst){
   tolls = 0; slackLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
   lossServed = false; interludeServedId = null;
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
-  prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
+  prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
   beatText = ""; gateNotes = {}; gateRefusedNames = [];
   beatJustCleared = null; lastTension = 0;
@@ -6173,6 +6273,7 @@ function restoreFromBlob(s){
   roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
   bits = s.bits||[];
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
+  lastPresent = [];              /* repopulates on the first live turn */
   maintIndex = s.maint||0; arcCheckpointDue = s.arcDue||0;
   introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
   afterRevealHook = null;        /* a hook staged by an abandoned new run must not fire here */
