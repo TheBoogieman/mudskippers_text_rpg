@@ -2012,6 +2012,9 @@ var boardStale = false;     /* a pre-board save that has not been placed yet */
 var seasonRecords = {};      /* season -> {season,happened,who,carry,cost,stand} */
 var archiveIndex = [];       /* {t:line, e:[entity names]} - this run only */
 var seasonBreakDue = false;  /* the break card renders after the scene that earned it */
+var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
+                                The card announces once - the banner and the wrist ARE
+                                the door, and both re-arm on reload. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
 var beatText = "";              /* accumulated scene text of the live beat; kept across walk-backs */
@@ -2210,6 +2213,7 @@ function renderNow(){
 /* kind: "season" (he made it) or "death" (he did not). Either way the run is over
    and the only way on is a new one. */
 function endCard(kind, line){
+  epilogueNow = false; renderSeasonBanner();   /* a finished run has no doors left */
   var dead = (kind === "death");
   var lost = (kind === "lost");
   var lc = LOSS_CARDS[currentSeason] || LOSS_CARDS[3];
@@ -3133,7 +3137,23 @@ function recordBlockLines(){
   return r.who.slice(0, 10).concat(r.carry.slice(0, 10));
 }
 
-/* ---- the season break: the end card with a door in it ---- */
+/* ---- the season break: the card announces; the banner and the wrist are the door ---- */
+function renderSeasonBanner(){
+  var box = $("boardbox"); if(!box) return;
+  if(!epilogueNow || runOver){
+    if(box.getAttribute("data-season-door")){ box.innerHTML = ""; box.removeAttribute("data-season-door"); }
+    return;
+  }
+  box.innerHTML = ""; box.setAttribute("data-season-door", "1");
+  var d = document.createElement("div"); d.className = "warn";
+  d.appendChild(document.createTextNode("SEASON " + currentSeason + " — " + SEASON_NAMES[currentSeason]
+    + " is complete. The epilogue is yours for as long as you want it; the record and season "
+    + (currentSeason + 1) + " wait on CONTINUE."));
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "CONTINUE";
+  go.onclick = seasonContinue;
+  d.appendChild(go);
+  box.appendChild(d);
+}
 function seasonBreakButtons(){
   var ch = $("choices"); ch.innerHTML = "";
   var n = currentSeason;
@@ -3148,6 +3168,7 @@ function seasonBreakButtons(){
   stay.onclick = function(){
     phase = "aftermath"; phaseLeft = 1;
     $("choices").innerHTML = "";
+    renderSeasonBanner();      /* the rail empties; the standing door remains */
     persistAll([]);
   };
   ch.appendChild(go); ch.appendChild(stay);
@@ -3162,11 +3183,14 @@ function seasonBreakCard(){
   scrollFeed();
 }
 function seasonContinue(){
-  if(busy) return;
+  if(busy || !epilogueNow) return;
   var opening = currentSeason + 1;
+  epilogueNow = false;
   runSeasonRitual();
   phase = "seasonopen"; phaseLeft = 0;
   $("choices").innerHTML = "";
+  renderSeasonBanner();        /* the door closes behind them */
+  if($("termmodal").classList.contains("open")){ $("termmodal").classList.remove("open"); }
   chatLog.push({role:"user", content:"(Season " + opening + " opens. Serve the re-establishment scene as directed.)"});
   persistAll([]);
   callDM();
@@ -3359,7 +3383,11 @@ function boardTurn(data){
     if(phaseLeft <= 0){
       if(seasonAhead()){
         phase = "seasonend";
-        seasonBreakDue = true;   /* the card lands after the scene, like all ceremony */
+        if(!epilogueNow){
+          seasonBreakDue = true;   /* the card announces once; the door stands after */
+          epilogueNow = true;
+        }
+        renderSeasonBanner();
       } else {
         phase = "slack";
         phaseLeft = actTurnAhead() ? SLACK_ARC : SLACK_STD;
@@ -4164,7 +4192,7 @@ function saveBlob(){
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
-    seasonRecords:seasonRecords, archiveIndex:archiveIndex,
+    seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -5068,6 +5096,15 @@ function renderTermStatus(){
   }
   tb.innerHTML += '<div class="toll-row">TOLLS ' + pips
     + (tolls >= TOLL_MAX && !runOver ? ' <span style="color:#ff9d9d">one more ends it</span>' : '') + '</div>';
+  /* the standing door: during the epilogue the wrist itself can open the next season */
+  if(epilogueNow && !runOver){
+    var cont = document.createElement("button");
+    cont.className = "small";
+    cont.style.cssText = "display:block;margin-top:9px;border-color:#4c6b46;color:#8fc98a";
+    cont.textContent = "CONTINUE — SEASON " + (currentSeason + 1);
+    cont.onclick = seasonContinue;
+    tb.appendChild(cont);
+  }
 
   var ro = $("term-roster"); ro.innerHTML = "";
   var fam = roster.family.length ? roster.family : ["the courier, so far"];
@@ -6745,7 +6782,7 @@ function newRun(confirmFirst){
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
   lossServed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
-  seasonRecords = {}; archiveIndex = []; seasonBreakDue = false;
+  seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
@@ -6854,6 +6891,7 @@ function restoreFromBlob(s){
   seasonRecords = (s.seasonRecords && typeof s.seasonRecords === "object") ? s.seasonRecords : {};
   archiveIndex = Object.prototype.toString.call(s.archiveIndex) === "[object Array]" ? s.archiveIndex : [];
   seasonBreakDue = false;
+  epilogueNow = s.epilogue === true || phase === "seasonend";   /* the door re-arms on reload */
   /* a finished season stays finished even where an older, longer spine counted higher */
   if(s.over === "season"){ beatIdx = SPINE.length; phase = "live"; phaseLeft = 0; }
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
@@ -6881,6 +6919,7 @@ function restoreFromBlob(s){
   maybeRehydrate();
   maybeBoardBanner();
   maybeRecordBanner();
+  renderSeasonBanner();          /* the standing door survives a reload */
   applyVisuals();          /* the weather follows the run into the scene */
   return true;
 }
