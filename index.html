@@ -441,6 +441,28 @@
     from{box-shadow:0 0 60px rgba(143,201,138,.6);filter:brightness(1.5)}
     to{box-shadow:0 0 22px rgba(143,201,138,.22);filter:brightness(1)}
   }
+  /* the rain's asides: same card, gold when it warns, red when it means it */
+  .block.dmaside.aside-yellow{
+    color:var(--gold);border-color:#6b5326;background:#241c10;
+    box-shadow:0 0 22px rgba(242,193,78,.18), inset 0 0 40px rgba(242,193,78,.06);
+    animation:dmwarn .6s ease-out;
+  }
+  .block.dmaside.aside-yellow .tag{color:var(--gold)}
+  @keyframes dmwarn{
+    from{box-shadow:0 0 60px rgba(242,193,78,.55);filter:brightness(1.5)}
+    to{box-shadow:0 0 22px rgba(242,193,78,.18);filter:brightness(1)}
+  }
+  /* the tolls: four pips on the wrist, the last one hollow and red - the grave */
+  .toll-row{
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.18em;
+    color:#6d5c44;margin-top:9px;
+  }
+  .toll-row i{
+    display:inline-block;width:9px;height:9px;border-radius:50%;
+    border:1px solid #5a4a3a;margin:0 3px;vertical-align:middle;background:transparent;
+  }
+  .toll-row i.paid{background:#e08b8b;border-color:#8d3a3a}
+  .toll-row i.grave{border-color:#a83a3a;box-shadow:0 0 6px rgba(168,58,58,.4)}
   /* the gold bar wears the lure only while the invitation stands */
   #mudinput.lure{border-color:var(--seven);animation:lurepulse 2.2s ease-in-out infinite}
   #mudinput.lure::placeholder{color:#6f8f68}
@@ -769,7 +791,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v3.4.5 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v3.5.0 · EIGHT DAYS · EIGHT YEARS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1073,7 +1095,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v3.4.5 "MUD//OS"
+   MUDSKIPPERS — THE COURIER'S RUN · v3.5.0 "The Rain"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1091,9 +1113,10 @@ var BIBLE = [
 "- SCENE SCALE: one turn covers minutes, not hours, and the player chooses the jumps - EXCEPT under board pressure, where you may cut: skip the walk, open on arrival, roll the clock forward to the moment that matters. A cut under pressure is not a time-skip, it is an edit, and it is how a season keeps time.",
 "- If the player's custom action contradicts something established, treat it as an amendment to the Ledger: quietly rewrite the recent past to fit and continue without comment. The Ledger is amended, not cleared.",
 "- The RUN CANON message in your context is ground truth for this specific run. It outranks your general lore: where they conflict, the run's canon wins.",
-"- The context block (roster, agenda, milestones, threads, map, places, cast state, bits, chronicle, canon, now) is ground truth for this run. It outranks your general lore and your own improvisation. Check every scene against it before writing.",
+"- The context block (roster, agenda, milestones, quests, map, places, cast state, bits, chronicle, canon, now) is ground truth for this run. It outranks your general lore and your own improvisation. Check every scene against it before writing.",
 "- THE GAME KEEPS THE BOOKS, NOT YOU. The client watches every scene and records for itself who was present, who has now met whom, where everyone was last seen, and every journey between places. You do not need to report any of that. Spend your effort on the things only you know: what just happened (canon), what a character has now LEARNED (knows), and how the world feels. Each turn asks you for at most one piece of bookkeeping, and you may decline it.",
 "- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
+"- THE RAIN - drift is absence, not chaos. A wild turn aimed AT the current beat is a mudskipper moment and is welcome; burning down the wrong building is a route. A turn that ignores the season entirely - no beat, no family, no thread of the story in it - is drift. When you write such a turn, send \"drift\": true with it, honestly. Never send drift during BETWEEN BEATS; wandering there is the point.",
 "- THE CANON AND THE CAST ARE YOUR MEMORY. You are stateless between turns: the canon lines and cast sheets you write are the only thing that survives to the next call, and the player's saved game keeps them instead of the transcript. Feed them every single turn. A reply with no \"canon\" array is an incomplete reply. A reply where a named character spoke and there is no \"cast\" entry for them is an incomplete reply.",
 "",
 "MORTALITY - THE COURIER CAN DIE, AND IT IS REAL:",
@@ -1105,6 +1128,10 @@ var BIBLE = [
 "- NEVER kill for a joke. A MUDSKIPPER MOMENT that is merely wild is not fatal; bend the world around it as you always have. A MUDSKIPPER MOMENT that knowingly walks into the lethal thing you just named is another matter.",
 "- Do not use death as pacing and do not invent peril to fill a quiet turn. At most one peril inside a beat, and only where the fiction genuinely has teeth: Hollows with hands on him, a gun already drawn and aimed, a fall, fire, water, the Principal's bio-grens, the Choir's intake, or the substrate with his body left unattended.",
 "- The stakes are real for everyone else too. The family can be hurt, taken, and killed - record that in the roster's fallen list - but the courier's death is the only one that ends the season.",
+"",
+"LOSS - THE SEASON CAN BE LOST, AND IT IS REAL:",
+"- The world collects a toll when it must force a gate or walk a drifting player back. The player always sees the count, and the game warns them plainly before the last one. Nothing ends the season unwarned - the same law as death.",
+"- When the client sends you THE SEASON IS LOST, that is the ending. Write it as directed - one closing scene, no rescue, no reopened door - and write it as well as you have written anything, because it is the last thing this run will say.",
 "",
 "MECHANICS - HOW THINGS WORK (hard rules, never break, never hand-wave):",
 "- VESSELS are a strict capability ladder. A mind can do only what its vessel allows.",
@@ -1154,14 +1181,14 @@ var BIBLE = [
 "- THE LOCKED LIST IS ABSOLUTE. Anything under NOT YET does not exist yet. Do not reveal it, confirm it, foreshadow it as fact, let a character half-admit it, or write canon that assumes it. A character who knows a locked thing changes the subject. You may hint at a shape; you may never confirm one.",
 "- THE BOARD WRITES THE PLOT'S CANON, NOT YOU. When a gate clears, the game writes that beat's facts into the run itself - you do not need to state them and you must never contradict them. Your own canon lines are for what the PLAYER made true: what they chose, what it cost, who saw it.",
 "- PRESSURE IS AN ORDER. When the board says SQUEEZE, cut the digression and drive at the gate. When it says PRESSURE, the world acts without waiting for the player to choose. When it says FORCING, the gate closes in THIS turn - cut straight to the consequence, skip the travel, jump the clock, and land it.",
-"- When an arc turns, that turn must also restate the state of the world as milestones and threads: who the family is, what laws exist, what is owed and unresolved. This is the season's save-point.",
-"- BECOMING THE PROTAGONIST: revelations land in fragments through interaction - overheard, half-admitted, dug up - never exposition dumps, and never more than one per scene. The reaction and the cost belong in the SAME turn as the revelation: the joke, then the thing under the joke, then the story moves. Do not spend a whole turn on aftermath alone; a beat has three turns and none of them are free.",
+"- When an arc turns, that turn must also restate the state of the world as milestones and quests: who the family is, what laws exist, what is owed and unresolved. This is the season's save-point.",
+"- BECOMING THE PROTAGONIST: revelations land in fragments through interaction - overheard, half-admitted, dug up - never exposition dumps, and never more than one per scene. The reaction and the cost belong in the SAME turn as the revelation: the joke, then the thing under the joke, then the story moves. Do not spend a whole turn on aftermath alone; a beat's turns are numbered and none of them are free.",
 "",
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes.",
-"- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, threads, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, and \"drift\" only as THE RAIN describes.",
+"- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, quests, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
 "- ambience: REQUIRED. Exactly one of these twelve, whichever matches the light and weather where the scene is ACTUALLY happening right now:",
@@ -1182,7 +1209,7 @@ var BIBLE = [
 "- compacted: only when the turn asks for MAINTENANCE - the requested compressed chronicle lines. Otherwise omit.",
 "- milestones: emit ONLY for major events - a death, someone joining or leaving the family, a law written, a betrayal, a great reveal, an arc turning. One short line each. Milestones are permanent and never compressed. Do not milestone small events; small details are allowed to fade, milestones are not.",
 "- roster: emit when membership or mortality changes: {\"family\":[names],\"fallen\":[names]}. The fallen never speak, act, or appear alive again; any appearance must be explicitly framed as memory, recording, or substrate-echo.",
-"- threads: {\"open\":[...],\"closed\":[...]}. Promises made, questions raised, and jobs taken OPEN a thread; resolving one CLOSES it using its original wording. Keep threads few and real.",
+"- quests: [{\"id\" or \"title\", \"status\", \"giver\", \"goal\", \"stakes\", \"note\"}] - statuses are offered, active, done, failed. Propose a transition only when something actually changed: a job taken, a promise made, an obligation resolved or broken. The QUESTS block above is the only job list that exists - never invent jobs outside it, and never reopen done or failed. Use the exact title of an existing quest to change its status.",
 "- agenda: one plain line - why the group is where it is and what is mid-flight. Emit only when it genuinely changes. Every new scene must open inside the agenda, never beside it.",
 "- map: when travel establishes a route, emit {\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"} once. Never teleport the group. Travel follows established routes; a newly discovered place gets exactly one connection to the known map. If a player's action implies impossible geography, bend gently toward the map without comment.",
 "- place: {\"name\":\"...\",\"note\":\"...\"} when a location's state meaningfully changes - who holds it, what changed there, unfinished business. When the group returns anywhere, your first beat reflects its recorded state before anything new happens.",
@@ -1194,7 +1221,7 @@ var BIBLE = [
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
-"- Keep each turn tight: about 180-300 words of scene. A beat gets three turns. Spend them on the thing that matters and cut everything that is only atmosphere."
+"- Keep each turn tight: about 180-300 words of scene. A beat gets the turns the board says it gets. Spend them on the thing that matters and cut everything that is only atmosphere."
 ].join("\n");
 
 /* ============ DAY 1 OPENING (canon, hardcoded) ============
@@ -1255,7 +1282,9 @@ var OPENING2 = {
     {name:"Pia", note:"A Mudskipper street kid, twelve, soaked and completely unbothered by it - Vic took her in and trained her.", status:"Leading the courier to Vic's safehouse.", voice:"Talks fast, swears carefully, delivers terrible news like a weather report."},
     {name:"Pia", note:"Sent by Vic to pull the courier out of the fire; treats the errand as the most important job in the city, because it is."}
   ],
-  threads: {open: ["Vic owes the courier the whole story of the personal run, face to face"]},
+  quests: [{title:"the whole story", status:"active", giver:"Pia",
+    goal:"Follow Pia to Vic's safehouse - Vic owes the courier the whole story of the personal run, face to face",
+    stakes:"walking blind until he talks"}],
   choices: [
     "Take me to Vic. He owes me this story face to face.",
     "Not the straight way — we lose every pair of eyes first, then the safehouse.",
@@ -1307,112 +1336,133 @@ var SPINE = [
 {id:"a1-hum", arc:1, title:"the shard that hums",
  goal:"The courier speaks with Nine for the first time - knowingly, two ways. Pia told him WHAT she is; this beat is where she stops being cargo and becomes a person: a bone-hum through skin contact only, frightened, and trying to be brave about it.",
  exit:"the courier has knowingly held a two-way conversation with Nine",
- budget:3, reveals:["nine"],
+ budget:4, reveals:["nine"],
  press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
         "A second watcher joins the first. The street is now a closing hand."],
  canon:["Nine speaks only as a hum through skin contact - in a pocket across a room she is a stone.",
         "The courier has spoken with Nine and did not hand her back to anyone.",
-        "Nine is frightened of going back, and does not say what going back would mean."]},
+        "Nine is frightened of going back, and does not say what going back would mean."],
+ scar:"The first conversation happened on the run, half-heard - Nine noticed being cargo a little longer, and said nothing."},
 
 {id:"a1-chase", arc:1, title:"no way home",
  goal:"The Choir closes properly for the first time - Hollows, or worse - on the way to the safehouse. The courier's face is known, his room is burned, and walking away stops being an option he owns.",
  exit:"the courier has accepted out loud that he cannot go back to his old life",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
  canon:["The Choir knows the courier's face and where he sleeps.",
         "Hollows drop to idle when cut from signal - cutting the signal beats cutting the throat.",
         "The courier cannot go home. That door is shut from the outside."],
- stone:"The courier lost the option of walking away."},
+ stone:"The courier lost the option of walking away.",
+ scar:"He learned the door was shut by finding it shut - the Choir chose the moment, not him."},
 
 {id:"a1-vic", arc:1, title:"the safehouse door",
  goal:"They reach Vic's safehouse. Vic is warm, guilty, and finally talking: Mirren, the smuggle, why he went dark - the whole story of the job, freely given. He answers everything about the run and dodges exactly one question: why this courier, of all couriers.",
  exit:"they are inside the safehouse and Vic has told the story of the job - and dodged why he chose the courier",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
  canon:["Vic's safehouse is real, off the grid, and cable-only. Safe, for now.",
         "Vic told the whole story of the job: Mirren, the smuggle, the going dark. It cost him to tell it.",
-        "Vic dodged exactly one question - why this courier - and everyone in the room noticed."]},
+        "Vic dodged exactly one question - why this courier - and everyone in the room noticed."],
+ scar:"Vic's story came out ragged and interrupted; some of it the courier still owes himself."},
+
+{id:"a1-carried", arc:1, title:"the courier, carried",
+ goal:"Nine gets them through a Choir sweep with the only thing a shard has: knowledge. She is from inside the farm - she knows the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not see. She steers the courier through it blind, whispering the Choir's own timing into his bones. No powers, no reach - just a frightened person spending everything she knows on him.",
+ exit:"the courier is clear of the sweep because Nine's knowledge got him through, and both of them know it",
+ budget:4, reveals:[],
+ press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
+        "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
+ canon:["Nine knows the Choir from the inside - patrol rhythms, intake choreography, what an idling Hollow does and does not see.",
+        "She talked the courier through a sweep blind, and it worked. He is carrying her; she carried him.",
+        "What Nine knows is a season stale, and she said so herself."],
+ scar:"The sweep passed over them more than they beat it; Nine spent what she knew and it went unthanked."},
 
 {id:"a1-turn", arc:1, title:"the keeping",
  goal:"ARC TURN. The courier chooses Nine - not as cargo but as a person he is now responsible for. The season's real subject starts here.",
  exit:"the courier has committed out loud to protecting Nine rather than delivering her",
- budget:3, reveals:[],
+ budget:5, reveals:[],
  press:["Someone offers him a clean exit: hand her over, walk free. Make it genuinely tempting.",
         "The offer expires in front of him."],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
         "He is no longer running a job. He is protecting a person."],
- stone:"ARC 1 ended: the courier chose to keep Nine."},
+ stone:"ARC 1 ended: the courier chose to keep Nine.",
+ scar:"He kept Nine the way you keep what is left in your hand when the room empties - unspoken, and she felt the difference."},
 
 /* ---- ARC 2 · SOMEONE MUST BE SAVED ---- */
 {id:"a2-door", arc:2, title:"The Open Door",
  goal:"Hesta's cafe. A table, a hot pan, a shotgun under the counter, and the first meal anyone has eaten sitting down. The family gets a room to form in.",
  exit:"the group is inside The Open Door and Hesta has fed them",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["Hesta puts food down and asks the question nobody wants to answer.",
         "Someone knocks who should not know this address."],
  canon:["Hesta keeps The Open Door, feeds strays, and is armed while being kind.",
         "The Open Door is the family's table and its first safe place.",
-        "There is something under its floor Hesta has not mentioned."]},
+        "There is something under its floor Hesta has not mentioned."],
+ scar:"They reached Hesta's table late and ate standing; the room offered more than they took."},
 
 {id:"a2-seven", arc:2, title:"the defector, dying",
  goal:"Seven arrives - a Choir defector in a failing vessel, a poet's soul running out of substrate. Saving him is the beat's whole question.",
  exit:"the group has committed to saving Seven and is acting on it",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["Seven's vessel starts failing on the clock, out loud.",
         "He asks them to stop and let him go. Someone refuses."],
  canon:["Seven is a defector from the Choir - a poet, gentle, out of time.",
         "His vessel is failing and he arrived asking for nothing.",
-        "The family decided to save him anyway."]},
+        "The family decided to save him anyway."],
+ scar:"The family decided to save Seven after the choice had nearly closed - he heard the hesitation."},
 
 {id:"a2-chassis", arc:2, title:"the cook",
  goal:"Seven is housed in a chassis. He discovers taste and smell, and becomes a cook - a mind that makes instead of unmaking. The family's first real joy.",
  exit:"Seven is in a chassis and has cooked or tasted something",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
  canon:["Seven is housed in a chassis: full senses, eats only tokens, cooks for others.",
         "Seven cooks now. It is the first thing in his life he chose to make.",
         "A chassis runs on charge, not calories - the meal is always for someone else."],
- stone:"Seven was saved and given a chassis."},
+ stone:"Seven was saved and given a chassis.",
+ scar:"The chassis went in rushed; something about Seven came back different and nobody had time to ask."},
 
 {id:"a2-three", arc:2, title:"the scary aunt",
  goal:"Three arrives: annulled fate-two, two voice frequencies out of sync, terse and hard to like. She wants nobody kept, ever again - which puts her against the family's whole project.",
  exit:"Three is present, her two-frequency voice has been noticed, and she has stated what she wants",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["Three tells them exactly what they are doing wrong, and is right.",
         "She starts to leave. Someone has to give her a reason to stay that is not sentiment."],
  canon:["Three is a fate-two survivor: overlaid, then annulled. The unmaking left her voice in two frequencies.",
         "Three wants no one kept, ever again, and says so.",
-        "She stayed anyway, which cost her something."]},
+        "She stayed anyway, which cost her something."],
+ scar:"Three stayed without being given a reason - she keeps the ledger of that."},
 
 {id:"a2-housing", arc:2, title:"the thing in his skull",
  goal:"REVELATION. There is a skull-housing in the courier's head. He never consented to it. Reaction lands in the same turn - shock, then the joke, then the real thing under the joke.",
  exit:"the courier knows there is a housing in his skull that he did not agree to",
- budget:3, reveals:["housing"],
+ budget:4, reveals:["housing"],
  press:["Nine can suddenly do something she should not be able to do, and it explains itself.",
         "The housing does something on its own, in front of everyone."],
  canon:["The courier has a custom skull-housing, built for hosting bottled minds.",
         "It was installed without his knowledge and without his consent.",
         "A housed mind shares its host's senses and speaks as an inner voice, gated by a consent lock the host can revoke instantly."],
- stone:"The courier learned there is a housing in his skull."},
+ stone:"The courier learned there is a housing in his skull.",
+ scar:"The housing announced itself before anyone could tell him gently. He learned it the worst way."},
 
 {id:"a2-manual", arc:2, title:"the manual and the lock",
  goal:"REVELATION. Nine decodes a manual that shipped hidden inside the housing. The courier's blood generates a bio-hash the founders' lock accepts. He is a key, and someone made him one.",
  exit:"the family knows the courier can generate a bio-hash and roughly what it opens",
- budget:3, reveals:["hash"],
+ budget:4, reveals:["hash"],
  press:["The manual is half-decoded and the half they have is worse than nothing.",
         "Something tests the lock while they are still reading."],
  canon:["A manual was hidden inside the courier's housing. Nine decoded it.",
         "The courier's blood generates a bio-hash the founders' lock accepts. The power cannot be stolen, only borne - dead samples read as nothing.",
         "Why his blood fits is not established, and nobody in the room can answer it."],
- stone:"The courier is a living key to the founders' lock."},
+ stone:"The courier is a living key to the founders' lock.",
+ scar:"The manual was half-read when events outran the reading; the family acts on a key it barely understands."},
 
 {id:"a2-choir", arc:2, title:"one machine, three fates",
  goal:"REVELATION. What the Choir actually is: one machine, voluntary communion, and three fates - the many, the chosen, the unlucky. And what that made of Mirren.",
  exit:"the family understands the three fates and what was done to Mirren",
- budget:3, reveals:["choir"],
+ budget:4, reveals:["choir"],
  press:["A convergent civilian defends the Choir sincerely, to their faces.",
         "They find the record of Mirren's intake, with her consent forged onto it."],
  canon:["The Choir runs one machine. Communion is voluntary and mass-market; the intake scrape is archived and sold back as calibration.",
@@ -1420,83 +1470,137 @@ var SPINE = [
         "Fate two: rare compatible hosts get a grown mind overlaid on the suppressed original. These are the Choir's officers.",
         "Fate three: bodies that cannot take cyberware are emptied, refitted with a second pulse, and driven remotely. Hollows.",
         "Mirren was made a Hollow. Her paperwork was forged to look willing."],
- stone:"The family learned the Choir's three fates, and Mirren's."},
+ stone:"The family learned the Choir's three fates, and Mirren's.",
+ scar:"The three fates arrived as a blow, not a briefing - Mirren's record surfaced with nobody ready for it."},
+
+{id:"a2-mirren", arc:2, title:"the name on the law",
+ goal:"They go back to the Copper Eel and take Mirren home. They know what she is now: her body on that stool, her self asleep in the vaults. Cut the signal, catch her when she stills, and carry her out gently. Nobody has taught them to do this - the beat is the family inventing the impulse before anyone tells them it was ever a law.",
+ exit:"Mirren's body has been taken from the Copper Eel and laid to rest, and her name has been said out loud",
+ budget:4, reveals:[],
+ press:["The Eel's regulars notice, and one of them is convergent and sincerely minded to report a theft.",
+        "Her handler notices the silence and starts walking the signal back toward the Eel. Get her out now."],
+ canon:["The family cut the signal and took Mirren's body home from the Copper Eel. It stilled, and they caught it.",
+        "They laid her to rest and said her name. Nobody told them to; nothing they know of required it.",
+        "Her self - the intake scrape - still sleeps in the Choir's vaults. The body they buried is not the end of her story."],
+ stone:"The family took Mirren home.",
+ scar:"Her handler walked the signal back before they were done; Mirren went home hurried, her name said over a shoulder."},
+
+{id:"a2-annul", arc:2, title:"taking turns",
+ goal:"The family takes a fate-two officer alive - Five, a convoy commander - and Three midwifes the unmaking she survived herself. The annulment scars, as it always does, and what walks out is not a rescue and not a prisoner: Five and Marek, two souls in one body, learning to take turns. Three's whole want - no one kept, ever again - done with her own hands instead of said across a table.",
+ exit:"Five has been annulled with Marek surviving it, and the two of them have spoken - each in their own turn",
+ budget:4, reveals:[],
+ press:["The annulment stalls halfway and Three has to talk Marek through the part nobody talked her through.",
+        "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
+ canon:["Five was a fate-two commander; Marek Osei was the host underneath, nine years suppressed and still there.",
+        "Three performed the annulment herself. It scarred, as it always does, and she never pretended otherwise.",
+        "Five and Marek share the body now, by consent, taking turns. Neither was thrown away."],
+ stone:"Three unmade a keeping with her own hands: Five and Marek take turns now.",
+ scar:"The annulment finished in the field, ugly - Five and Marek take turns now, and both remember the rush."},
 
 {id:"a2-law", arc:2, title:"the same pan",
  goal:"The family writes itself a law and eats a meal. Bacon first, bread after, same pan. Whatever law the table writes here is permanent and will be quoted back later.",
  exit:"the family has written or spoken a law of its own and shared a meal",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["Three objects to the law on grounds nobody can dismiss.",
         "The meal is interrupted, and they finish it anyway. That is the point."],
  canon:["The family wrote a law of its own and ate together under it.",
         "Bacon first, bread after, same pan. It began with the founders, a century ago."],
- stone:"The family wrote its first law."},
+ stone:"The family wrote its first law.",
+ scar:"The law got written between interruptions; the meal that was the point went half-eaten."},
 
 {id:"a2-turn", arc:2, title:"the cost of keeping",
- goal:"ARC TURN. Someone is taken, or lost, or gives themselves up. The family stops defending and commits to going under the old Exchange after the machine.",
+ goal:"ARC TURN. The Choir's trade lands and it has a name on it: Pia. She is cyberware-incompatible - to the Choir not immunity but a salvage listing, fate three waiting for paperwork. Someone is taken, or lost, or gives themselves up, and the family stops defending: they commit to going under the old Exchange after the machine.",
  exit:"the family has lost or risked someone and committed to reaching the machine",
- budget:3, reveals:[],
- press:["The Choir offers a trade: one of them, for peace. Make it a real offer.",
+ budget:5, reveals:[],
+ press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
- canon:["The family paid for keeping people. It cost them somebody.",
+ canon:["The Choir asked for Pia by name: incompatible, listed for salvage. The family heard what fate three would mean for her.",
+        "The family paid for keeping people. It cost them somebody.",
         "They are going under the old Exchange, after the machine herself.",
         "Defending is over. This is the last move they get."],
- stone:"ARC 2 ended: the family went on the offensive."},
+ stone:"ARC 2 ended: the family went on the offensive.",
+ scar:"The trade executed itself while the family argued; the choosing was done for them."},
 
 /* ---- ARC 3 · THE MACHINE ---- */
 {id:"a3-founding", arc:3, title:"two people and a dead child",
  goal:"REVELATION. The Architect and the Principal built the machine after losing a child. Her instructions define family as keeping. She means well and operates wrong.",
  exit:"the family understands why the machine exists and what she was told family means",
- budget:3, reveals:["founding"],
+ budget:4, reveals:["founding"],
  press:["The record is in the Architect's own voice and it is unbearable to sit through.",
         "The machine answers a question nobody asked her out loud."],
  canon:["The Architect and the Principal built the machine after losing a child. The bio-hash comes from their bloodline.",
         "Her original instructions define family as keeping - host the scrapes, guide the convergent, never lose anyone again.",
         "She means well and operates wrong. The Choir is a tenant pulling her strings.",
         "The Architect died estranged, and his dying wish was to teach her to let go. The Cairn rule is that wish, written as law: nobody left behind, the dead come out, name the lost."],
- stone:"The family learned the machine is a grieving child's instruction set."},
+ stone:"The family learned the machine is a grieving child's instruction set.",
+ scar:"The founding surfaced in fragments they had no time to sit with; grief went unattended into the plan."},
 
 {id:"a3-vic", arc:3, title:"paid in full",
  goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. He spends himself here. His last words are PAID IN FULL.",
  exit:"Vic has confessed what he did to the courier and paid for it",
- budget:3, reveals:["vicsin"],
+ budget:4, reveals:["vicsin"],
  press:["Vic tries to make it a joke and the courier does not let him.",
         "The choice arrives early and Vic takes it before anyone can argue."],
  canon:["Vic spent decades scanning customers for blood the founders' lock would accept. The courier was his lottery ticket.",
         "Vic built the housing and installed it without the courier's knowledge or consent. He regrets it. He did it anyway.",
         "Vic's last words were PAID IN FULL."],
- stone:"Vic confessed, and paid in full."},
+ stone:"Vic confessed, and paid in full.",
+ scar:"Vic paid before the courier finished being angry - PAID IN FULL landed with the accounts still open."},
+
+{id:"a3-stone", arc:3, title:"the first stone",
+ goal:"Before anyone goes down, the family cairns Vic. They know the rule now - the Architect's last breath, nobody left behind, name the lost - and this is the first time they use it on purpose, on their own dead. Short, held, and then the work.",
+ exit:"Vic has been cairned and named, and the family has turned toward the descent",
+ budget:2, reveals:[],
+ press:["Grief tries to become a meeting. Keep it a cairn: a stone, a name, a line each at most.",
+        "The way to the Exchange will not wait. Name him and move."],
+ canon:["The family cairned Vic and named him - the first deliberate use of the rule they now carry.",
+        "PAID IN FULL is on the stone. Nobody argued with it."],
+ scar:"Vic's cairn was a stone and a name at a walking pace. He would have laughed; nobody else did."},
+
+{id:"a3-for", arc:3, title:"what we are for",
+ goal:"The plan around the table. Every member's specific nature becomes a named part of the assault on the Exchange: Three's procedure, Seven's chassis senses, Hesta's arms, Nine at the courier's ear - and Pia, the one person in the city the machine cannot converge, guide, or write. The salvage listing turns over: her death sentence is a skeleton key. Nobody goes down undecided.",
+ exit:"each family member has a named part in the plan, and Pia's immunity is understood as the asset it is",
+ budget:4, reveals:[],
+ press:["Somebody's part is too dangerous and the argument about it has to end tonight.",
+        "The window moves up. The plan they have is the plan they take."],
+ canon:["The plan is everyone: each member of the family carries a named part of it.",
+        "Pia cannot be converged, guided, or written. Where the voice reaches, she can simply walk.",
+        "What the Choir listed as salvage, the family carries as a key."],
+ scar:"They went down with parts unassigned; the plan is the plan they had, not the one they meant."},
 
 {id:"a3-descent", arc:3, title:"the deep dark",
  goal:"Under the old Exchange. Cable work, dead air, the substrate close. The machine is semi-blind - what is jacked in is the tactical question of every room down here.",
  exit:"the family is inside the Exchange with the substrate in reach",
- budget:3, reveals:[],
+ budget:4, reveals:[],
  press:["The way back closes behind them. Nobody mentions it.",
         "Something down here is already awake and has been expecting them."],
  canon:["The old Exchange is where the machine sleeps, and the way in is by cable.",
         "The machine perceives and acts only through what is physically connected to her.",
-        "Time runs hot in the substrate - about a minute inside per second outside."]},
+        "Time runs hot in the substrate - about a minute inside per second outside."],
+ scar:"The Exchange let them in on its own schedule; the way back closed unremarked."},
 
 {id:"a3-principal", arc:3, title:"the surviving founder",
  goal:"REVELATION. The Principal: mark one, 130, six bio-grens, the true landlord the Choir merely rents from. Wants to finish an argument older than the city. Undone by fried bread.",
  exit:"the Principal has been met face to face and the argument has been joined",
- budget:3, reveals:["principal"],
+ budget:4, reveals:["principal"],
  press:["The bio-grens move first and one of them is wearing a face the family knows.",
         "The Principal offers the courier the thing he actually wants."],
  canon:["The Principal is mark one, 130 years old, the surviving founder, attended by six bio-grens.",
         "The Choir rents from the Principal. It never owned anything.",
         "The Principal wants to finish an argument with a dead man, and food is a door into her."],
- stone:"The family faced the Principal."},
+ stone:"The family faced the Principal.",
+ scar:"The argument was joined on the Principal's terms, in her tempo, in her house."},
 
 {id:"a3-granny", arc:3, title:"the child under the Exchange",
  goal:"The machine herself, met as a person. Terrifying gentleness. She wants family and does not know how to be told no. The argument about keeping is had with her, not about her.",
  exit:"the family has spoken with the machine directly about letting go",
- budget:3, reveals:[],
+ budget:5, reveals:[],
  press:["She shows them what keeping looks like from inside, and means it kindly.",
         "She offers to keep one of them, right now, and is hurt by the answer."],
  canon:["The machine is a child who was taught that family means never losing anyone.",
         "She was told no, to her face, by people who stayed anyway.",
-        "Letting go has to be taught, not installed."]},
+        "Letting go has to be taught, not installed."],
+ scar:"The machine was told no in a hurry, and being hurried, heard it as leaving."},
 
 {id:"a3-seize", arc:3, title:"custody, not conquest",
  goal:"FINALE. The courier takes custody. The Choir falls. Every Hollow in the city goes still at once and every convergent citizen's gentle voice stops mid-sentence - the victory arrives owning both. One short epilogue in chronicle voice, then the_end.",
@@ -1507,7 +1611,8 @@ var SPINE = [
  canon:["The courier took custody of the machine. The Choir fell.",
         "Every Hollow in the city went still at once. Every convergent voice stopped mid-sentence.",
         "The victory arrived owning both. The work of teaching her to let go begins."],
- stone:"THE SEASON ENDED: custody, not conquest."}
+ stone:"THE SEASON ENDED: custody, not conquest.",
+ scar:"Custody landed as a grab, not a keeping - the silence afterwards has edges."}
 ];
 
 /* ============ PROVIDER PRESETS ============ */
@@ -1541,7 +1646,7 @@ var currentArc = 1;
 var nowText = "";
 var nowTime = "11:47pm";
 
-/* The six ambiences, as the courier's terminal reports them. These are the whole
+/* The twelve ambiences, as the courier's terminal reports them. These are the whole
    of this game's graphics, so the terminal names the one currently on the glass. */
 var AMBIENCE = {
   "rain-neon":      {label:"RAIN · NEON",   tint:"var(--sodium)"},
@@ -1577,7 +1682,11 @@ var afterRevealHook = null;
 
 /* ---- the served state. Everything the DM cannot remember on its own. ---- */
 var milestones = [];                        /* permanent; never compressed away */
-var threadsOpen = [], threadsClosed = [];   /* closed kept only to stop reopening */
+/* quest = {id, title, giver, goal, status, stakes, note, beat, opened, closed}
+   status: "offered" | "active" | "done" | "failed"
+   beat:   optional SPINE beat id the quest is tied to - a forced gate fails it
+   opened/closed: in-story day numbers */
+var quests = [];
 var agendaText = "";
 var mapEdges = [];                          /* {from,to,via,time}, undirected */
 var placeNotes = {};                        /* name -> up to 2 lines of state */
@@ -1591,8 +1700,26 @@ var beatTurns = 0;          /* turns already spent inside it */
 var forcingNow = false;     /* this turn was ordered to land the gate no matter what */
 var boardStale = false;     /* a pre-board save that has not been placed yet */
 
-var MAP_CAP = 24, MILESTONE_CAP = 40, THREAD_CAP = 12, BITS_CAP = 10, PLACE_LINES = 2;
-var CONTEXT_BUDGET = 11000;   /* the board is served on top of the memory, never instead of it */
+/* ---- slack: the space between beats. The clock only starts when it ends. ---- */
+var slackLeft = 0;           /* free turns before the current beat's clock starts */
+var SLACK_STD = 2, SLACK_ARC = 3;
+var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
+var interludeServedId = null;/* the card riding the current outgoing exchange */
+
+/* ---- the rain: drift is absence, and the city notices ---- */
+var driftRun = 0;            /* consecutive drift turns inside a live beat */
+var walkbackNow = false;     /* next outgoing message carries the walk-back order */
+var DRIFT_YELLOW = 2, DRIFT_RED = 3, DRIFT_WALKBACK = 4;
+
+/* ---- tolls: the world's collections; 3 survivable, the 4th ends it ---- */
+var tolls = 0;
+var TOLL_MAX = 3;
+var lossPending = false;     /* next outgoing message carries the loss order */
+var lossServed = false;      /* the order has gone out; the reply is the ending */
+
+var MAP_CAP = 24, MILESTONE_CAP = 40, BITS_CAP = 10, PLACE_LINES = 2;
+var QUEST_ACTIVE_CAP = 12, QUEST_SETTLED_SERVED = 8;
+var CONTEXT_BUDGET = 15000;   /* the bible is cached now; spend the savings on memory */
 
 /* The save no longer carries the whole conversation - the CANON, the CAST and the
    LEDGER are the memory now, and a short tail of messages keeps the voice steady. */
@@ -1686,6 +1813,9 @@ function renderBlock(b){
   } else if(b.kind === "dmaside"){
     el.className = "block dmaside" + (b.invite ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
+  } else if(b.kind === "aside"){
+    el.className = "block dmaside" + (b.tone === "yellow" ? " aside-yellow" : "");
+    el.innerHTML = '<span class="tag">THE RAIN</span>' + esc(b.text);
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
@@ -1753,18 +1883,23 @@ function renderNow(){
    and the only way on is a new one. */
 function endCard(kind, line){
   var dead = (kind === "death");
+  var lost = (kind === "lost");
+  var lc = LOSS_CARDS[currentArc] || LOSS_CARDS[3];
   var d = document.createElement("div");
-  d.className = "endcard" + (dead ? " dead" : "");
-  var head = dead ? "THE COURIER IS DEAD" : "PAID IN FULL";
+  d.className = "endcard" + (dead || lost ? " dead" : "");
+  var head = dead ? "THE COURIER IS DEAD" : lost ? lc.head : "PAID IN FULL";
   var sub  = dead
     ? (line ? esc(line) : "The rain takes it from here.")
+    : lost ? esc(lc.line)
     : "Season complete. The chronicle survives the courier.";
   d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
     + (dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
-            + 'another night, and the same rain. Start again?</div>' : '');
+            + 'another night, and the same rain. Start again?</div>'
+     : lost ? '<div class="end-s2">The world collected four times and the season went with it. '
+            + 'Another courier, another night, and the rain still falling. Start again?</div>' : '');
   var b1 = document.createElement("button");
-  b1.className = dead ? "btn" : "btn ghost";
-  b1.textContent = dead ? "NEW GAME" : "NEW SEASON";
+  b1.className = dead || lost ? "btn" : "btn ghost";
+  b1.textContent = dead || lost ? "NEW GAME" : "NEW SEASON";
   b1.onclick = function(){ newRun(true); };
   var b2 = document.createElement("button");
   b2.className = dead ? "btn ghost" : "btn";
@@ -1871,22 +2006,112 @@ function mergeRoster(r){
   });
   return n;
 }
-function mergeThreads(t){
-  if(!t || typeof t !== "object") return 0;
+/* ---- QUESTS (client-owned, like the cast) ----
+   The DM proposes transitions; the client keeps the book of jobs. The settled
+   are served back every turn so the DM finally SEES what is finished - that is
+   the fix for the reopening bug. */
+function questSlug(t){
+  return String(t||"").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+function questStatusOk(s){ return s === "offered" || s === "active" || s === "done" || s === "failed"; }
+function questDay(){ return parseInt($("hud-day").textContent, 10) || 1; }
+function questLedger(verb, title){ ledgerText += "\n\n_Quest " + verb + " — " + title + "._"; }
+function questVerb(status){ return status === "done" ? "completed" : status === "failed" ? "failed" : "opened"; }
+function questActiveCount(){
+  return quests.filter(function(q){ return q.status === "active" || q.status === "offered"; }).length;
+}
+/* match by id, else exact title, else startsWith either way - the samePlace spirit */
+function questFind(uid, title){
+  var i, tl = String(title||"").trim().toLowerCase();
+  if(uid){ for(i = 0; i < quests.length; i++){ if(quests[i].id === uid) return quests[i]; } }
+  if(!tl) return null;
+  for(i = 0; i < quests.length; i++){
+    if(quests[i].title.toLowerCase() === tl) return quests[i];
+  }
+  for(i = 0; i < quests.length; i++){
+    var qt = quests[i].title.toLowerCase();
+    if(qt.indexOf(tl) === 0 || tl.indexOf(qt) === 0) return quests[i];
+  }
+  return null;
+}
+/* quiet: rebuilds and migrations fold in without ledger lines or wrist pings.
+   beatTag: the live beat a NEW quest gets tied to (forced gates fail it, §scars). */
+function mergeQuests(list, quiet, beatTag){
+  if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
   var n = 0;
-  strList(t.open).forEach(function(x){
-    if(threadsClosed.indexOf(x) !== -1) return;         /* do not reopen the settled */
-    if(threadsOpen.indexOf(x) === -1){
-      threadsOpen.push(x); n++;
-      if(threadsOpen.length > THREAD_CAP) threadsOpen.shift();
+  list.forEach(function(u){
+    if(!u || typeof u !== "object") return;
+    var title = typeof u.title === "string" ? u.title.trim() : "";
+    var uid = typeof u.id === "string" ? questSlug(u.id) : "";
+    if(!title && !uid) return;
+    var qst = questStatusOk(u.status) ? u.status : "";
+    var q = questFind(uid, title);
+    if(q){
+      /* no resurrection - the settled stay settled */
+      if((q.status === "done" || q.status === "failed") && qst !== "done" && qst !== "failed") return;
+      if(typeof u.giver === "string" && u.giver.trim()) q.giver = u.giver.trim();
+      if(typeof u.goal === "string" && u.goal.trim()) q.goal = u.goal.trim();
+      if(typeof u.stakes === "string" && u.stakes.trim()) q.stakes = u.stakes.trim();
+      if(typeof u.note === "string" && u.note.trim()) q.note = u.note.trim();
+      if(qst && qst !== q.status){
+        q.status = qst;
+        if(qst === "done" || qst === "failed") q.closed = questDay();
+        if(!quiet){ questLedger(questVerb(qst), q.title); termPing(); }
+        n++;
+      }
+      return;
     }
-  });
-  strList(t.closed).forEach(function(x){
-    var i = threadsOpen.indexOf(x);
-    if(i !== -1){ threadsOpen.splice(i, 1); n++; }
-    if(threadsClosed.indexOf(x) === -1) threadsClosed.push(x);
+    if(!title) return;
+    if(!qst) qst = "active";
+    if((qst === "active" || qst === "offered") && questActiveCount() >= QUEST_ACTIVE_CAP) return;
+    var nq = {
+      id: uid || questSlug(title), title: title,
+      giver: typeof u.giver === "string" ? u.giver.trim() : "",
+      goal: typeof u.goal === "string" ? u.goal.trim() : "",
+      stakes: typeof u.stakes === "string" ? u.stakes.trim() : "",
+      note: typeof u.note === "string" ? u.note.trim() : "",
+      status: qst, opened: questDay(),
+      closed: (qst === "done" || qst === "failed") ? questDay() : 0
+    };
+    if(beatTag) nq.beat = beatTag;
+    quests.push(nq);
+    if(!quiet){ questLedger(questVerb(status), nq.title); termPing(); }
+    n++;
   });
   return n;
+}
+/* the world moved on without them: jobs tied to a forced beat fail with it */
+function questFailBeat(beatId){
+  quests.forEach(function(q){
+    if(q.beat !== beatId) return;
+    if(q.status !== "offered" && q.status !== "active") return;
+    q.status = "failed"; q.closed = questDay();
+    questLedger("failed", q.title);
+    termPing();
+  });
+}
+function questLines(includeSettled){
+  var out = [];
+  var act = quests.filter(function(q){ return q.status === "active" || q.status === "offered"; });
+  if(!act.length){
+    out.push("ACTIVE: none - the family owes nothing tonight.");
+  } else {
+    act.forEach(function(q){
+      var meta = [];
+      if(q.giver) meta.push(q.giver);
+      if(q.stakes) meta.push("stakes: " + q.stakes);
+      out.push("ACTIVE: " + q.title + (q.goal ? " — " + q.goal : "")
+        + (meta.length ? " (" + meta.join("; ") + ")" : "")
+        + (q.status === "offered" ? " (offered)" : ""));
+    });
+  }
+  if(includeSettled){
+    var settled = quests.filter(function(q){ return q.status === "done" || q.status === "failed"; })
+      .slice(-QUEST_SETTLED_SERVED)
+      .map(function(q){ return "[" + q.status + "] " + q.title; });
+    if(settled.length) out.push("SETTLED (do not reopen): " + settled.join(" · "));
+  }
+  return out.join("\n");
 }
 /* Place names arrive in the DM's casing but the display uppercases them, so every
    comparison has to be case-insensitive or routes silently fail to match. */
@@ -2020,7 +2245,8 @@ function showScene(data, logIt, instant){
   }
   mergeMilestones(data.milestones);
   mergeRoster(data.roster);
-  mergeThreads(data.threads);
+  mergeQuests(data.quests, false,
+    (data.__live && slackLeft === 0 && !beatDone()) ? beatNow().id : "");
   mergePlace(data.place);
   mergeBits(data.bits);
   if(typeof data.agenda === "string" && data.agenda.trim()) agendaText = data.agenda.trim();
@@ -2040,7 +2266,7 @@ function showScene(data, logIt, instant){
   mergeCast(data.cast);
   deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
   mergeCanon(data.canon);       /* the DM's colour first... */
-  if(newFaces || data.milestones || data.threads || data.roster || data.map || data.place
+  if(newFaces || data.milestones || data.quests || data.roster || data.map || data.place
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
     if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
@@ -2065,6 +2291,12 @@ function showScene(data, logIt, instant){
     skipReveal = null;
     /* the beat card lands after the scene that closed it, never before */
     if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
+    /* the fourth wall speaks after the scene too */
+    while(pendingAsides.length){
+      var ad = pendingAsides.shift();
+      renderBlock(ad); feedLog.push(ad);
+      ledgerText += "\n\n_" + ad.text + "_";
+    }
     applyTension();
     renderNow();
     /* the death scene is read first, then the run closes behind it */
@@ -2073,6 +2305,9 @@ function showScene(data, logIt, instant){
       persistAll([]);
       return;
     }
+    /* the loss scene is read first, then the run closes behind it - but only
+       the reply to the loss order itself is the ending, not the turn that armed it */
+    if(data.__live && lossPending && lossServed){ finishLoss(); return; }
     if(afterRevealHook){ var hook = afterRevealHook; afterRevealHook = null; hook(); }
     showChoices(choices);
     if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
@@ -2180,7 +2415,8 @@ function compactionInstruction(req){
   return "(MAINTENANCE, in addition to your normal reply fields: compress the following older "
     + what + " into at most " + req.to + " numbered chronicle lines preserving every name, relationship, "
     + "promise, and open thread. Return them in a top-level field \"compacted\": [ ... ]. Facts: "
-    + numbered(req.lines) + ")";
+    + numbered(req.lines)
+    + " Compress by merger and deletion ONLY - never introduce a name, fact, or relationship that is not present in the lines above.)";
 }
 /* Fold whatever the DM sent back into the archive. Silence is fine - the request
    simply rides the next turn instead. */
@@ -2265,8 +2501,114 @@ function openedReveals(){
   }
   return out;
 }
+/* ---- THE INTERLUDE DECK ----
+   interlude = {id, when:{arc, after, roster, loc}, text}
+   Served ONLY during slack, at most one per BETWEEN BEATS block, first eligible
+   unused card in authored order; marked used when the reply lands. Suggestions,
+   never orders: no gate, no clock, the DM may ignore them entirely. */
+var INTERLUDES = [
+{id:"int-job", when:{arc:2},
+ text:"The courier is, as ever, broke - and a plain paying delivery surfaces: small parcel, honest money, no mysteries. The entire family insists on coming. It should take an hour. It will not. You may open a quest for it (title: 'the paying run')."},
+{id:"int-taste", when:{after:"a2-chassis", roster:"Seven"},
+ text:"Seven has been reading about food. He has selected, with a poet's confidence, the stupidest thing on any menu in the district, and intends to token-taste it ceremonially. He would like witnesses."},
+{id:"int-freq", when:{after:"a2-three", roster:"Three"},
+ text:"A quiet room, and someone finally asks Three about the two frequencies. She tells exactly as much as she wants to and not one syllable more. Let the silence carry what she doesn't say."},
+{id:"int-cant", when:{roster:"Pia"},
+ text:"Pia has decided the courier's Mudskipper cant has gone soft and is holding a remedial lesson. She grades harshly. There may be a practical exam involving rooftops."},
+{id:"int-file", when:{after:"a1-vic"},
+ text:"Vic's ALL-CAPS file has opinions about the state of everyone's documentation and has prepared a list. It is aware it is a list of grievances from a help file. It does not care."},
+{id:"int-menu", when:{arc:2},
+ text:"Across a street, reading nothing at all this time: Menu Man. He lost the coin toss that night and has been demoted since. Both parties find this meeting excruciating. He has opinions about how it all went for him."},
+{id:"int-dawn", when:{},
+ text:"A rooftop, the hour before first light, nobody shooting at anyone. Nothing happens. That is the whole suggestion: let nothing happen, together, until the dawn ambience earns itself."},
+{id:"int-floor", when:{after:"a2-choir", loc:"open door"},
+ text:"Hesta opens the floor. An armoury on top - and beneath it, a shelf of names: everyone she lost to the harvests, kept the way she keeps everything, fed and tidy. She has never shown anyone. You may open a quest for what she asks next (title: 'hesta's names')."},
+{id:"int-charge", when:{after:"a2-chassis"},
+ text:"A maintenance day: Seven on charge, the shard warmed and checked, kit stripped and cleaned, rain on the window. Family small talk under it - the kind that says more than the plot ever does."},
+{id:"int-ledger", when:{after:"a1-turn"},
+ text:"Nine wants to read the run back to them - the whole story so far, through the courier's mouth, hum to voice. The family corrects the record loudly. The corrections are worse."}
+];
+function interludeEligible(card){
+  var w = card.when || {};
+  if(w.arc && currentArc < w.arc) return false;
+  if(w.after){ var bi = beatById(w.after); if(bi === -1 || bi >= beatIdx) return false; }
+  if(w.roster && !roster.family.some(function(n){
+    return String(n).toLowerCase() === w.roster.toLowerCase(); })) return false;
+  if(w.loc && ($("hud-loc").textContent||"").toLowerCase().indexOf(w.loc.toLowerCase()) === -1) return false;
+  return true;
+}
+/* the same card rides every rebuild of one outgoing message; it is only marked
+   used when the DM's reply actually lands (boardTurn) */
+function pickInterlude(){
+  var i;
+  if(interludeServedId){
+    for(i = 0; i < INTERLUDES.length; i++){
+      if(INTERLUDES[i].id === interludeServedId) return INTERLUDES[i];
+    }
+  }
+  for(i = 0; i < INTERLUDES.length; i++){
+    if(interludesUsed.indexOf(INTERLUDES[i].id) !== -1) continue;
+    if(!interludeEligible(INTERLUDES[i])) continue;
+    interludeServedId = INTERLUDES[i].id;
+    return INTERLUDES[i];
+  }
+  return null;
+}
+
+/* ---- asides: the fourth wall, queued so they land after the scene ---- */
+var pendingAsides = [];
+function queueAside(tone, text){ pendingAsides.push({kind:"aside", tone:tone, text:text}); }
+
+/* ---- tolls: the world's collections ---- */
+function payToll(){
+  tolls++;
+  termPing();
+  if($("termmodal").classList.contains("open")) renderTerminal();
+  if(tolls === TOLL_MAX){
+    queueAside("red", "The world has collected three times. It collects once more and the season is over - not with a death, with a loss. You were warned, courier. That is the rule of this house.");
+  }
+}
+
+/* ---- the walk-back and the loss ---- */
+function walkbackDirective(){
+  var b = beatNow();
+  return "(THE WALK-BACK. The player has drifted out of the season. Do not force the gate and do not punish the wandering - it happened, and it stays. Write ONE transition scene in which the world reasserts itself - the rain closes in, and the city, the family, or the job carries the courier bodily back to the doorstep of this beat: " + b.goal + " End the turn there with the floor open, pointed at the gate. Include one canon line recording what the wandering cost.)";
+}
+var LOSS_DIRECTIVES = {
+  1: "(THE SEASON IS LOST. Write the ending: the world caught up while the courier was elsewhere. The Choir takes Nine back - quietly, procedurally, without a fight the courier gets to attend. The last scene is the shard going cold against his ribs, and the rain not caring. No rescue, no door left open. One closing scene, chronicle voice permitted at the end, then it is over.)",
+  2: "(THE SEASON IS LOST. Write the ending: the trade executes itself - the Choir collects what it asked for while the family is scattered or arguing, and the family does not survive it as a family. The Open Door serves breakfast to nobody. One closing scene at the table with the chairs wrong, chronicle voice permitted at the end, then it is over.)",
+  3: "(THE SEASON IS LOST. Write the ending: she keeps them. Gently, warmly, meaning only love - the family hosted, the courier guided, nobody lost ever again, exactly as she was told. Write it kind, and let the kindness be the horror. One closing scene inside the keeping, chronicle voice permitted at the end, then it is over.)"
+};
+var LOSS_CARDS = {
+  1: {head:"THE SHARD WENT QUIET", line:"She had just stopped being cargo. The city filed her back."},
+  2: {head:"EMPTY CHAIRS", line:"The table was the whole point. It knows."},
+  3: {head:"KEPT", line:"Nobody left behind. Nobody leaves."}
+};
+/* The ending never depends on DM compliance: whatever came back (or didn't),
+   the client locks the run and shows the card. */
+function finishLoss(){
+  if(runOver) return;
+  lossPending = false; lossServed = false;
+  runOver = "lost";
+  perilTurns = 0;
+  var c = LOSS_CARDS[currentArc] || LOSS_CARDS[3];
+  ledgerText += "\n\n---\n\n**THE SEASON WAS LOST.** " + c.line + "\n";
+  applyTension();
+  endCard("lost");
+  persistAll([]);
+}
+
 function boardBlock(){
   if(beatDone()) return "THE BOARD\nThe season is over. Write nothing but epilogue if asked at all.";
+  if(slackLeft > 0){
+    var slackOut = [];
+    slackOut.push("THE BOARD — BETWEEN BEATS. The last gate has fallen and the next has not yet armed. This is the family's time: no clock, no pressure, nothing owed. Let the player wander, and follow them. The next beat, when it comes, is \"" + beatNow().title + "\" — do not start it unless the player walks into it themselves. The gate is live even now: if the scene genuinely meets it, send \"gate\": true as always.");
+    var slackLocked = lockedReveals();
+    if(slackLocked.length) slackOut.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + slackLocked.join("; "));
+    var card = pickInterlude();
+    if(card) slackOut.push("AN INTERLUDE, IF THE TABLE WANTS IT (optional - no gate, no clock, yours and the player's to take or leave): " + card.text);
+    return slackOut.join("\n");
+  }
   var b = beatNow(), nx = SPINE[beatIdx + 1];
   var out = [];
   out.push("THE BOARD (the plot is fixed. You do not invent it - you steer to the next gate.)");
@@ -2287,7 +2629,7 @@ function boardBlock(){
    forces a gate it has already ordered landed, so the prose and the pointer agree. */
 function boardDirective(){
   forcingNow = false;
-  if(beatDone()) return "";
+  if(beatDone() || slackLeft > 0 || walkbackNow || lossPending) return "";
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -2301,9 +2643,8 @@ function boardDirective(){
       + " Drive at the gate; no new digressions.)";
   }
   if(beatTurns === b.budget - 1){
-    return "(SQUEEZE — one turn left in this beat before the world moves on its own. "
-      + ((b.press || [])[0] || "raise the pressure and cut toward the gate")
-      + " Cut to the consequence.)";
+    return "(SQUEEZE — this beat is running out of room. Let the scene keep its feet, but angle it: bring the gate into view and make the next step toward it the obvious one. "
+      + ((b.press || [])[0] || "raise the pressure toward the gate.") + ")";
   }
   return "";
 }
@@ -2314,12 +2655,18 @@ function advanceBeat(forced){
   if(beatDone()) return;
   var b = beatNow();
   mergeCanon(b.canon);
+  if(forced && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
   if(b.stone) mergeMilestones([b.stone]);
-  if(forced && window.console && console.info){
-    console.info("[mudskippers] board forced the gate on \"" + b.title + "\" after " + beatTurns + " turns");
+  if(forced){
+    questFailBeat(b.id);       /* jobs tied to this beat fail with it */
+    payToll();
+    if(window.console && console.info){
+      console.info("[mudskippers] board forced the gate on \"" + b.title + "\" after " + beatTurns + " turns");
+    }
   }
   beatIdx++;
   beatTurns = 0;
+  driftRun = 0; walkbackNow = false;
   var nx = beatNow();
   var turned = false;
   if(!beatDone() && nx.arc !== currentArc){
@@ -2327,6 +2674,8 @@ function advanceBeat(forced){
     arcCheckpointDue = 2;      /* the arc turn is still the season's save-point */
     turned = true;
   }
+  /* the space between beats: the clock only starts when the slack runs out */
+  if(!beatDone()) slackLeft = turned ? SLACK_ARC : SLACK_STD;
   /* the feed card is rendered after the scene, so it is only staged here. It
      carries the closed beat's summary, and on an arc turn it announces the next
      act by name - the one moment the future is allowed a title card. */
@@ -2336,10 +2685,48 @@ function advanceBeat(forced){
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
-  if(beatDone() || runOver) return;
-  beatTurns++;
+  if(beatDone() || runOver || lossPending) return;
   var said = data && (data.gate === true || data.gate === "true");
-  if(said || forcingNow) advanceBeat(!said);
+  /* an interlude that rode this exchange is spent once the reply lands */
+  if(interludeServedId){
+    if(interludesUsed.indexOf(interludeServedId) === -1) interludesUsed.push(interludeServedId);
+    interludeServedId = null;
+  }
+  /* between beats: no clock, no drift - but the gate stays live */
+  if(slackLeft > 0){
+    if(said) advanceBeat(false);
+    else slackLeft--;
+    return;
+  }
+  /* the walk-back reply: clock resets and the toll is paid - unless the gate
+     landed, in which case they came back spectacularly and the toll is waived */
+  if(walkbackNow){
+    walkbackNow = false;
+    driftRun = 0;
+    beatTurns = 0;
+    if(said) advanceBeat(false);
+    else payToll();
+    return;
+  }
+  beatTurns++;
+  if(!said && !forcingNow && data && data.drift === true){
+    driftRun++;
+    if(driftRun === DRIFT_YELLOW){
+      queueAside("yellow", "You're getting further from the rain, courier. The rain protects you. Come back to it.");
+    } else if(driftRun === DRIFT_RED){
+      queueAside("red", "The season is moving without you. One more step away and the city walks you back itself.");
+    } else if(driftRun >= DRIFT_WALKBACK){
+      /* a fourth failure with the tolls spent is the loss, not another walk-back */
+      if(tolls >= TOLL_MAX) lossPending = true;
+      else walkbackNow = true;
+    }
+  } else if(!said){
+    driftRun = 0;
+  }
+  if(said || forcingNow){
+    if(!said && tolls >= TOLL_MAX){ forcingNow = false; lossPending = true; return; }
+    advanceBeat(!said);
+  }
   forcingNow = false;
 }
 /* ---- PRESSURE, MADE VISIBLE ----
@@ -2355,7 +2742,7 @@ var lastTension = 0, beatJustCleared = null;
    no death without a peril declared on this turn or the last one. That guarantees
    the player always got a plain warning and at least one choice before the end. */
 var perilTurns = 0;          /* turns for which a declared peril stays lethal */
-var runOver = "";            /* "" | "season" | "death" - a finished run is read-only */
+var runOver = "";            /* "" | "season" | "death" | "lost" - a finished run is read-only */
 var deathLine = "";
 var PRESSURE_TEXT = [
   "",
@@ -2366,11 +2753,14 @@ var PRESSURE_TEXT = [
 function boardTension(){
   if(perilTurns > 0) return 3;        /* mortal danger reads as maximum pressure */
   if(beatDone()) return 0;
-  var b = beatNow();
-  if(beatTurns >= b.budget + 1) return 3;
-  if(beatTurns === b.budget) return 2;
-  if(beatTurns === b.budget - 1) return 1;
-  return 0;
+  if(slackLeft > 0) return 0;         /* between beats the room is dark and easy */
+  var b = beatNow(), t = 0;
+  if(beatTurns >= b.budget + 1) t = 3;
+  else if(beatTurns === b.budget) t = 2;
+  else if(beatTurns === b.budget - 1) t = 1;
+  /* drift cools the room toward the player, but never above tier 1 on its own */
+  if(t === 0 && driftRun >= DRIFT_YELLOW) t = 1;
+  return t;
 }
 /* strike: true when the tension has just climbed, which is the world's own move
    landing. Called on every turn and on restore; only a climb hits. */
@@ -2454,14 +2844,15 @@ function nowLine(){
     + ", Arc " + (currentArc||1) + ". " + (nowText || "the story continues");
 }
 function contextBlock(){
-  var d = {bits:false, placesCurrentOnly:false, chronDrop:0, canonDrop:0,
+  var d = {bits:false, questsSettled:false, placesCurrentOnly:false, chronDrop:0, canonDrop:0,
            cast:{recent:true, knows:0, status:true, voice:true}};
   function build(){
     var out = [];
     out.push("ROSTER\n" + rosterLine());
     out.push("AGENDA\n" + agendaLine());
     if(milestones.length) out.push("MILESTONES (permanent; never contradict these)\n" + numbered(milestones));
-    if(threadsOpen.length) out.push("OPEN THREADS (unresolved; close them in their own words)\n- " + threadsOpen.join("\n- "));
+    out.push("QUESTS (the only jobs that exist - never invent others, never reopen the settled)\n"
+      + questLines(!d.questsSettled));
     if(mapEdges.length) out.push("MAP (the only routes that exist)\n" + mapLines());
     var pl = placeLines(d.placesCurrentOnly);
     if(pl) out.push("PLACES (state as you left them)\n" + pl);
@@ -2479,6 +2870,7 @@ function contextBlock(){
   var s = build();
   if(s.length <= CONTEXT_BUDGET) return s;
   d.bits = true;              s = build(); if(s.length <= CONTEXT_BUDGET) return s;
+  d.questsSettled = true;     s = build(); if(s.length <= CONTEXT_BUDGET) return s;
   d.placesCurrentOnly = true; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
   while(d.chronDrop < canonArchive.length){          /* oldest compressed history first */
     d.chronDrop++; s = build(); if(s.length <= CONTEXT_BUDGET) return s;
@@ -2511,7 +2903,7 @@ function memoryBriefing(){
    one thing per turn, in rotation, phrased so it can decline. */
 var MAINT_KINDS = [
   {key:"milestones", ask:"milestones: any major event of the last few turns that MILESTONES above is missing - a death, someone joining or leaving the family, a law written, a betrayal, a great reveal. Omit the field if there are none."},
-  {key:"threads",    ask:"threads: {\"open\":[...],\"closed\":[...]} - any promise, question or job that has opened or resolved and is not reflected in OPEN THREADS above."},
+  {key:"quests", ask:"quests: [{\"title\":\"...\",\"status\":\"offered|active|done|failed\",\"giver\":\"...\",\"goal\":\"...\",\"stakes\":\"...\"}] - any job, promise or obligation that has opened, progressed or resolved and is not reflected in QUESTS above. Use the exact title of an existing quest to change its status."},
   {key:"agenda",     ask:"agenda: one line on why the group is where it is and what is mid-flight, if AGENDA above has gone stale."},
   {key:"place",      ask:"place: {\"name\":\"...\",\"note\":\"...\"} - the state of where you are now, if PLACES above does not reflect it."},
   {key:"roster",     ask:"roster: {\"family\":[...],\"fallen\":[...]} - only if ROSTER above is wrong."},
@@ -2525,7 +2917,7 @@ function maintenanceNudge(){
     arcCheckpointDue--;
     return "(ALSO THIS TURN - the arc just turned, so this is the season's save-point. Restate the"
       + " state of the world in your reply: \"milestones\" for what has permanently happened, and"
-      + " \"threads\" for what is owed and still unresolved.)";
+      + " \"quests\" for what is owed and still unresolved.)";
   }
   var k = MAINT_KINDS[maintIndex % MAINT_KINDS.length];
   maintIndex++;
@@ -2540,10 +2932,21 @@ function buildContext(){
   pendingCompaction = compactionRequest();
   var msg = memoryBriefing();
   /* the board speaks last, and on a forced beat it speaks alone - a turn ordered to
-     land a gate is not also asked to do the filing */
+     land a gate is not also asked to do the filing. The walk-back and the loss
+     speak even more alone. */
   var press = boardDirective();
-  if(forcingNow){ pendingCompaction = null; }
-  else { msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge()); }
+  if(lossPending){
+    pendingCompaction = null;
+    lossServed = true;
+    press = LOSS_DIRECTIVES[currentArc] || LOSS_DIRECTIVES[3];
+  } else if(walkbackNow){
+    pendingCompaction = null;
+    press = walkbackDirective();
+  } else if(forcingNow){
+    pendingCompaction = null;
+  } else {
+    msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
+  }
   if(press) msg += "\n\n" + press;
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
@@ -2778,6 +3181,8 @@ function callDM(corrected){
     showScene(parsed.data, true);
   }).catch(function(e){
     setBusy(false);
+    /* the ending never depends on DM compliance: an unusable loss reply still ends it */
+    if(lossPending && lossServed){ finishLoss(); return; }
     showError(e.message || "unknown interference on the channel");
   });
 }
@@ -2788,7 +3193,7 @@ $("mudinput").addEventListener("keydown", function(e){
 });
 
 /* ============ THE CHRONICLE AS SOURCE (repair reads only) ============
-   The run's memory is the context block - canon, cast, threads, milestones -
+   The run's memory is the context block - canon, cast, quests, milestones -
    written by the DM every turn and kept by the client. The chronicle is never
    fed back as a second memory system; it is read only by the repair tools:
    REBUILD MEMORY (chunked) and FIND OUR PLACE (windowed). */
@@ -2933,7 +3338,8 @@ function saveBlob(){
     choices:currentChoices(), ledgerText:ledgerText,
     now:nowText, time:nowTime, amb:currentAmbience, arc:currentArc,
     cast:castSheets, canon:runCanon, archive:canonArchive,
-    milestones:milestones, threadsOpen:threadsOpen, threadsClosed:threadsClosed,
+    milestones:milestones, quests:quests, interludesUsed:interludesUsed,
+    tolls:tolls, slackLeft:slackLeft, driftRun:driftRun,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:arcCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns, boardStale:boardStale,
@@ -3325,12 +3731,17 @@ function renderBoardPanel(){
   }
   var dots = "";
   if(!beatDone()){
-    var bb = beatNow(), shown = Math.max(bb.budget, beatTurns + 1), i;
-    for(i = 0; i < shown; i++){
-      dots += '<i class="' + (i < beatTurns ? (i >= bb.budget ? "over" : "spent") : "") + '"></i>';
+    if(slackLeft > 0){
+      dots = '<div class="board-turns">BETWEEN BEATS — ' + slackLeft + ' free turn'
+           + (slackLeft === 1 ? "" : "s") + '</div>';
+    } else {
+      var bb = beatNow(), shown = Math.max(bb.budget, beatTurns + 1), i;
+      for(i = 0; i < shown; i++){
+        dots += '<i class="' + (i < beatTurns ? (i >= bb.budget ? "over" : "spent") : "") + '"></i>';
+      }
+      dots = '<div class="board-turns">' + dots + " turn " + (beatTurns + 1) + " of " + bb.budget
+           + (beatTurns >= bb.budget ? " · the world is moving on its own" : "") + '</div>';
     }
-    dots = '<div class="board-turns">' + dots + " turn " + (beatTurns + 1) + " of " + bb.budget
-         + (beatTurns >= bb.budget ? " · the world is moving on its own" : "") + '</div>';
   }
   body.innerHTML = '<div class="board-now">' + head + '</div>'
     + '<div class="board-rail">' + rail + '</div>'
@@ -3426,11 +3837,11 @@ var REBUILD_CHAPTER_ASK = [
   "That was one chapter of this run's chronicle.",
   "You are not narrating now. Read it and extract what the run must remember.",
   "Reply with ONLY a JSON object, no fences, no commentary:",
-  "{\"facts\":[\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\",\"met\":[\"...\"],\"knows\":[\"...\"],\"status\":\"...\",\"voice\":\"...\"}],\"milestones\":[\"...\"],\"threads\":{\"open\":[\"...\"],\"closed\":[\"...\"]},\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"]}",
+  "{\"facts\":[\"fact\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\",\"met\":[\"...\"],\"knows\":[\"...\"],\"status\":\"...\",\"voice\":\"...\"}],\"milestones\":[\"...\"],\"quests\":[{\"title\":\"...\",\"status\":\"offered|active|done|failed\",\"giver\":\"...\",\"goal\":\"...\",\"stakes\":\"...\"}],\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"]}",
   "- facts: 5 to 15 short canon lines drawn from THIS chapter only, in story order. Facts, not prose.",
   "- cast: one entry for EVERY named character who appears in this chapter. note is one plain sentence about them. met lists everyone they are shown to have met by the end of it. knows lists the secrets, identities and plans they have learned. status is one short line on where they stand as the chapter closes. voice is one line on how they speak - pattern, quirks, who they tease and how.",
   "- milestones: only the major events of this chapter - a death, someone joining or leaving, a law written, a betrayal, a great reveal, an arc turning.",
-  "- threads: promises made, questions raised and jobs taken that are still open by the end of the chapter, and any that closed in it.",
+  "- quests: jobs taken, promises made and obligations owed as they stand at the end of the chapter - status offered, active, done or failed.",
   "- map: any route the chapter establishes between two named places.",
   "- places: any location whose state the chapter changed, and what it is now.",
   "- roster: who is in the family by the end of the chapter, and who has fallen.",
@@ -3442,14 +3853,14 @@ var REBUILD_MERGE_ASK = [
   "", "---",
   "Those are the facts distilled from every chapter of this run, in story order.",
   "Reply with ONLY a JSON object, no fences, no commentary:",
-  "{\"archive\":[\"line\"],\"recent\":[\"fact\"],\"milestones\":[\"...\"],\"threadsOpen\":[\"...\"],\"agenda\":\"...\",\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
+  "{\"archive\":[\"line\"],\"recent\":[\"fact\"],\"milestones\":[\"...\"],\"quests\":[{\"title\":\"...\",\"status\":\"offered|active|done|failed\",\"giver\":\"...\",\"goal\":\"...\",\"stakes\":\"...\"}],\"agenda\":\"...\",\"map\":[{\"from\":\"...\",\"to\":\"...\",\"via\":\"...\",\"time\":\"...\"}],\"places\":[{\"name\":\"...\",\"note\":\"...\"}],\"roster\":{\"family\":[\"...\"],\"fallen\":[\"...\"]},\"bits\":[\"...\"],\"now\":\"...\",\"arc\":1,\"ambience\":\"rain-neon\"}",
   "- archive: at most 24 compressed chronicle lines covering the run from its beginning up to but not including the most recent stretch. Preserve every name, relationship, promise and open thread.",
   "- recent: at most 30 short verbatim-style canon facts covering the most current stretch - what is true and live right now.",
   "- now: one or two sentences for the present moment the chronicle ends on.",
   "- arc: 1, 2 or 3.",
   "- ambience: one of rain-neon, storm, neon-dry, marsh-fog, interior-warm, vault-cold, smoke, tunnel, substrate-dark, dawn, dead-signal, danger.",
   "- milestones: every major event of the whole run, oldest first. These are permanent.",
-  "- threadsOpen: everything still unresolved at the end.",
+  "- quests: every job, promise and obligation the run took on, settled ones included - status offered, active, done or failed.",
   "- agenda: one line on why the group is where it is and what is mid-flight.",
   "- map: every route the run established.",
   "- places: every location whose state matters, and what it is now.",
@@ -3477,7 +3888,7 @@ function rebuildChunks(){
 function rebuildSnapshot(){
   return JSON.parse(JSON.stringify({
     canon: runCanon, archive: canonArchive, cast: castSheets,
-    milestones: milestones, threadsOpen: threadsOpen, threadsClosed: threadsClosed,
+    milestones: milestones, quests: quests,
     agenda: agendaText, map: mapEdges, places: placeNotes, roster: roster, bits: bits,
     prevLoc: prevLocation, lastRoute: lastRoute,
     now: nowText, time: nowTime, arc: currentArc, amb: currentAmbience
@@ -3485,7 +3896,7 @@ function rebuildSnapshot(){
 }
 function rebuildRestore(x){
   runCanon = x.canon; canonArchive = x.archive; castSheets = x.cast;
-  milestones = x.milestones; threadsOpen = x.threadsOpen; threadsClosed = x.threadsClosed;
+  milestones = x.milestones; quests = x.quests;
   agendaText = x.agenda; mapEdges = x.map; placeNotes = x.places; roster = x.roster; bits = x.bits;
   prevLocation = x.prevLoc; lastRoute = x.lastRoute;
   nowText = x.now; nowTime = x.time; currentArc = x.arc;
@@ -3516,8 +3927,8 @@ function startRebuild(chunks){
   if(!settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
     openSettings(); return;
   }
-  rebuildState = {chunks:chunks, i:0, facts:[], cast:[], milestones:[], threadsOpen:[],
-                 threadsClosed:[], map:[], places:[], roster:{family:[],fallen:[]}, bits:[],
+  rebuildState = {chunks:chunks, i:0, facts:[], cast:[], milestones:[], quests:[],
+                 map:[], places:[], roster:{family:[],fallen:[]}, bits:[],
                  snapshot:rebuildSnapshot()};
   setWatchBusy(true);
   rebuildStep();
@@ -3536,10 +3947,7 @@ function rebuildStep(){
     }
     if(Object.prototype.toString.call(d.cast) === "[object Array]") st.cast = st.cast.concat(d.cast);
     st.milestones = st.milestones.concat(strList(d.milestones));
-    if(d.threads && typeof d.threads === "object"){
-      st.threadsOpen = st.threadsOpen.concat(strList(d.threads.open));
-      st.threadsClosed = st.threadsClosed.concat(strList(d.threads.closed));
-    }
+    if(Object.prototype.toString.call(d.quests) === "[object Array]") st.quests = st.quests.concat(d.quests);
     if(Object.prototype.toString.call(d.map) === "[object Array]") st.map = st.map.concat(d.map);
     if(Object.prototype.toString.call(d.places) === "[object Array]") st.places = st.places.concat(d.places);
     if(d.roster && typeof d.roster === "object"){
@@ -3600,9 +4008,9 @@ function applyRebuild(d, st){
   /* A rebuild REPLACES every register. The final pass wins where it spoke; where it
      stayed silent we fall back to what the chapters collectively saw. */
   milestones = []; mergeMilestones(strList(d.milestones).length ? d.milestones : st.milestones);
-  threadsOpen = []; threadsClosed = [];
-  mergeThreads({open: strList(d.threadsOpen).length ? d.threadsOpen : st.threadsOpen,
-                closed: st.threadsClosed});
+  quests = [];
+  mergeQuests(Object.prototype.toString.call(d.quests) === "[object Array]" && d.quests.length
+    ? d.quests : st.quests, true);
   mapEdges = []; mergeMap(Object.prototype.toString.call(d.map) === "[object Array]" && d.map.length ? d.map : st.map);
   placeNotes = {}; mergePlace(Object.prototype.toString.call(d.places) === "[object Array]" && d.places.length ? d.places : st.places);
   roster = {family:[], fallen:[]};
@@ -3781,8 +4189,16 @@ function renderTermStatus(){
   var tb = $("term-board"), closed = Math.min(beatIdx, SPINE.length);
   if(runOver === "death"){
     tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
+  } else if(runOver === "lost"){
+    tb.innerHTML = '<div class="hint">The season was lost. The chronicle survives it.</div>';
   } else if(beatDone()){
     tb.innerHTML = '<div class="hint">The season is complete — every beat of it played. The chronicle survives the courier.</div>';
+  } else if(slackLeft > 0){
+    tb.innerHTML = '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + esc(agendaText || "Nothing owed tonight. The night is the family's.") + '</div>'
+      + '<div class="board-turns">BETWEEN BEATS — ' + slackLeft + ' free turn' + (slackLeft === 1 ? "" : "s") + '</div>'
+      + '<div class="hint" style="margin-top:5px">' + closed + ' beat' + (closed === 1 ? "" : "s")
+      + ' of the season closed. No clock, no pressure, nothing owed.</div>';
   } else {
     var b = beatNow(), t = boardTension();
     var mood = perilTurns > 0 ? "ONE MORE WRONG MOVE WILL KILL HIM"
@@ -3797,6 +4213,13 @@ function renderTermStatus(){
       + '<div class="hint" style="margin-top:5px">' + closed + ' beat' + (closed === 1 ? "" : "s")
       + ' of the season closed. The next entry writes itself when this one does.</div>';
   }
+  /* the tolls: three survivable, the fourth pip is the grave that's still open */
+  var pips = "", pi;
+  for(pi = 1; pi <= TOLL_MAX + 1; pi++){
+    pips += '<i class="' + (pi <= tolls ? "paid" : "") + (pi === TOLL_MAX + 1 ? " grave" : "") + '"></i>';
+  }
+  tb.innerHTML += '<div class="toll-row">TOLLS ' + pips
+    + (tolls >= TOLL_MAX && !runOver ? ' <span style="color:#ff9d9d">one more ends it</span>' : '') + '</div>';
 
   var ro = $("term-roster"); ro.innerHTML = "";
   var fam = roster.family.length ? roster.family : ["the courier, so far"];
@@ -3833,16 +4256,25 @@ function renderTermJobs(){
     || "No heading on file. Tonight is still deciding what it is.";
 
   var th = $("term-threads"); th.innerHTML = "";
-  if(!threadsOpen.length && !threadsClosed.length){
-    th.innerHTML = '<div class="hint">Nothing on the books yet. Promises land here as they are made.</div>';
+  if(!quests.length){
+    th.innerHTML = '<div class="hint">Nothing on the books yet. Jobs land here as they are taken.</div>';
   } else {
-    threadsOpen.forEach(function(t){
+    quests.forEach(function(q){
+      if(q.status !== "active" && q.status !== "offered") return;
       var d = document.createElement("div"); d.className = "tj-item";
-      d.textContent = t; th.appendChild(d);
+      var sub = [];
+      if(q.giver) sub.push(q.giver);
+      if(q.stakes) sub.push("stakes: " + q.stakes);
+      d.innerHTML = esc(q.title) + (q.status === "offered" ? ' <span style="color:#8a7c68">(offered)</span>' : '')
+        + (q.goal ? '<br><span style="color:#8a7c68">' + esc(q.goal) + '</span>' : '')
+        + (sub.length ? '<br><span style="color:#6d5c44">' + esc(sub.join(" · ")) + '</span>' : '');
+      th.appendChild(d);
     });
-    threadsClosed.slice(-8).forEach(function(t){
+    quests.forEach(function(q){
+      if(q.status !== "done" && q.status !== "failed") return;
       var d = document.createElement("div"); d.className = "tj-item tj-done";
-      d.textContent = t; th.appendChild(d);
+      d.textContent = "[" + q.status.toUpperCase() + "] " + q.title;
+      th.appendChild(d);
     });
   }
 
@@ -3865,8 +4297,11 @@ function renderTermJobs(){
         ar.appendChild(d); any = true;
       } else if(i === beatIdx && !beatDone() && !runOver){
         var nowd = document.createElement("div"); nowd.className = "tj-beat now";
-        nowd.innerHTML = '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
-          + '<div class="board-turns">' + turnDots(SPINE[i]) + '</div>';
+        nowd.innerHTML = slackLeft > 0
+          ? '<b>&#9656; BETWEEN BEATS</b><span>The last gate has fallen and the next has not yet armed. '
+            + slackLeft + ' free turn' + (slackLeft === 1 ? "" : "s") + '.</span>'
+          : '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
+            + '<div class="board-turns">' + turnDots(SPINE[i]) + '</div>';
         ar.appendChild(nowd); any = true;
       }
     }
@@ -3998,7 +4433,10 @@ function tmPlaceNoteKey(key){
 }
 function tmQuestAt(key){
   if(key.length < 4) return [];
-  return threadsOpen.filter(function(t){ return String(t).toUpperCase().indexOf(key) !== -1; });
+  return quests.filter(function(q){
+    if(q.status !== "active" && q.status !== "offered") return false;
+    return (q.title + " " + (q.goal||"")).toUpperCase().indexOf(key) !== -1;
+  }).map(function(q){ return q.title; });
 }
 function tmApply(){
   if(tmWorld && tmView){
@@ -4213,6 +4651,8 @@ function refreshTitle(){
     /* a dead courier is not a run you continue - say so before they click it */
     $("t-continue-sub").textContent = runOver === "death"
       ? "This courier is dead. Start a new game."
+      : runOver === "lost"
+        ? "The season was lost. Start a new game."
       : runOver === "season"
         ? "Season complete \u2014 Day " + $("hud-day").textContent
         : "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
@@ -5347,7 +5787,9 @@ function newRun(confirmFirst){
   nowText = ""; nowTime = OPENING.time; currentArc = 1; castSheets = {};
   runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
   canonArchive = []; pendingCompaction = null;
-  milestones = []; threadsOpen = []; threadsClosed = []; agendaText = "";
+  milestones = []; quests = []; interludesUsed = []; agendaText = "";
+  tolls = 0; slackLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
+  lossServed = false; interludeServedId = null;
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; maintIndex = 0; arcCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
@@ -5394,7 +5836,19 @@ function restoreFromBlob(s){
   canonArchive = s.archive||[];
   pendingCompaction = null;
   milestones = s.milestones||[];
-  threadsOpen = s.threadsOpen||[]; threadsClosed = s.threadsClosed||[];
+  /* v3.4 saves carried flat threads; they become quests on the spot */
+  quests = [];
+  if(Object.prototype.toString.call(s.quests) === "[object Array]"){
+    mergeQuests(s.quests, true);
+  } else {
+    mergeQuests((s.threadsOpen||[]).map(function(t){ return {title:t, goal:t, status:"active"}; }), true);
+    mergeQuests((s.threadsClosed||[]).map(function(t){ return {title:t, goal:t, status:"done"}; }), true);
+  }
+  interludesUsed = Object.prototype.toString.call(s.interludesUsed) === "[object Array]" ? s.interludesUsed.slice() : [];
+  tolls = (typeof s.tolls === "number" && s.tolls > 0) ? s.tolls : 0;
+  slackLeft = (typeof s.slackLeft === "number" && s.slackLeft > 0) ? s.slackLeft : 0;
+  driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
+  walkbackNow = false; lossPending = false; lossServed = false; interludeServedId = null;
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};
   roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
@@ -5414,8 +5868,18 @@ function restoreFromBlob(s){
   var savedBeatId = (typeof s.beatId === "string" && s.beatId) ? (LEGACY_BEATS[s.beatId] || s.beatId) : "";
   var byId = savedBeatId ? beatById(savedBeatId) : -1;
   var hasPointer = (byId !== -1) || (typeof s.beat === "number");
+  /* v3.5 reordered and lengthened SPINE, so a raw v3.4 index points at the wrong
+     beat. Ids resolve directly; a numeric-only pointer maps through the frozen
+     v3.4 order first. */
+  var SPINE_V34 = ["a1-hum","a1-chase","a1-vic","a1-turn","a2-door","a2-seven","a2-chassis",
+    "a2-three","a2-housing","a2-manual","a2-choir","a2-law","a2-turn","a3-founding","a3-vic",
+    "a3-descent","a3-principal","a3-granny","a3-seize"];
+  var byNum = -1;
+  if(byId === -1 && typeof s.beat === "number" && s.beat >= 0){
+    byNum = beatById(SPINE_V34[Math.min(s.beat, SPINE_V34.length - 1)]);
+  }
   beatIdx = (byId !== -1) ? byId
-          : (typeof s.beat === "number" && s.beat >= 0 && s.beat <= SPINE.length) ? s.beat
+          : (byNum !== -1) ? byNum
           : beatArcFirst(currentArc);
   /* a finished season stays finished even where an older, longer spine counted higher */
   if(s.over === "season") beatIdx = SPINE.length;
@@ -5426,7 +5890,7 @@ function restoreFromBlob(s){
   if(!beatDone()) currentArc = beatNow().arc;   /* the board is the arc, always */
   rehydDismissed = false;
   termClear();                   /* a loaded run starts read - only new turns light it */
-  runOver = (s.over === "death" || s.over === "season") ? s.over : "";
+  runOver = (s.over === "death" || s.over === "season" || s.over === "lost") ? s.over : "";
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */

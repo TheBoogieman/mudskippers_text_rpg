@@ -53,11 +53,20 @@ On Firefox/Safari, saves live in the browser and the ledger downloads on demand.
 The ledger is designed to be handed to any AI assistant ("here's my run, pick up as
 the DM"). Everything needed to continue a run lives in that one readable file.
 
+## The cold open is dealt, not generated
+
+A new game opens with a golden card — who you are, who Vic is, what the personal run
+was — then the street, the humming shard, and a kid who doesn't melt back into the
+crowd. One gold choice: **INTO THE RAIN**. The reveal that follows is dealt by the
+game itself, word for word, no AI required — the DM inherits a table with the cards
+already face up. (The gold bar looks open during the cold open. That is the bait.
+Try it.)
+
 ## How a season actually ends
 
-The season is a **flowchart**, not a mood. Twenty-one beats across three arcs live in
-the game itself: each one names the single thing it exists to accomplish, the gate
-that ends it, how many turns it gets, what it is allowed to reveal, and the canon it
+The season is a **flowchart**, not a mood. Twenty-four beats across three arcs live
+in the game itself: each one names the single thing it exists to accomplish, the gate
+that ends it, its own turn budget, what it is allowed to reveal, and the canon it
 writes when it clears. Every turn, the DM is handed exactly one instruction — *this
 is the beat, steer to this gate, and do not invent past it.*
 
@@ -71,14 +80,46 @@ The DM does not decide the plot and cannot wander off it:
   about. Improvisation stops becoming permanent truth.
 - **The plot's canon is written by the game.** When a gate clears, that beat's facts
   go into the run. Every route through a season produces the same spine.
-- **A beat cannot stall.** It gets three turns. On the last one the DM is told to cut
-  to the consequence; one turn later the world acts without waiting for you; one turn
-  after that the gate is **forced** — the game orders the beat landed and moves the
-  pointer itself. A season runs 62 turns played straight, and 104 in the worst case
-  imaginable. It cannot fail to finish.
+- **A beat cannot stall.** Each carries its own budget — most get four turns, the big
+  ones five. Near the end the DM is told to angle toward the gate; at the budget the
+  world acts without waiting for you; one turn past it the gate is **forced** — the
+  game orders the beat landed and moves the pointer itself. A forced gate leaves a
+  **scar**: one canon line recording that it happened rougher than it should have.
+- **Between beats, the clock stops.** Every cleared gate opens a stretch of slack —
+  two free turns, three after an arc turn — with no pressure, no clock, nothing owed.
+  The family's time. Sometimes the game deals the DM an **interlude** there: a small
+  optional scene from a hand-authored deck — a paying run everyone insists on joining,
+  a ceremonial tasting, a rooftop where nothing happens on purpose. Suggestions, never
+  orders, and each one is dealt at most once a season.
+
+A season runs **95–100 turns played straight, ~145 played leisurely** — and it cannot
+fail to end: victory, death, or loss, always seen coming.
 
 The **LEDGER** panel and the courier's terminal both show the board: which beat you
 are on, which arc, how many turns it has left, and how far along the season you are.
+
+### Quests
+
+Jobs are structured now. Every promise made, job taken, and obligation owed lives in
+a quest log the game itself keeps: title, giver, goal, stakes, status — **offered,
+active, done, failed**. The DM proposes transitions; the client keeps the book, and
+serves the settled list back every turn so nothing finished ever quietly reopens.
+Quests tied to a beat fail with it if the world has to force the gate — the world
+moving on has a cost, and the log remembers it.
+
+### The rain — and the tolls
+
+Wildness is welcome; absence is not. A wild turn aimed *at* the story is a mudskipper
+moment. A turn that ignores the season entirely — no beat, no family, no thread of it —
+is **drift**, and the rain notices: a gold warning first, then a red one, and then the
+city itself walks the courier back to the story's doorstep. The wandering is never
+punished and never undone — it happened, and it stays — but the walk home is not free.
+
+The world collects a **toll** whenever it has to force a gate or walk you back. Four
+pips sit on the wrist unit; three collections are survivable, and the game warns you
+plainly at the third. The fourth ends the season — **not with a death, with a loss**,
+and each arc loses differently. Same law as dying: the count is always visible, and
+nothing ends the season unwarned.
 
 ### The courier can die
 
@@ -110,6 +151,23 @@ the pressure drops away.
 
 The strip and the closing walls are plain HTML, so they still work on **VISUALS: CALM**
 and **VISUALS: OFF**, and reduced-motion settings still win.
+
+### MUD//OS — the courier's terminal
+
+The wrist unit clipped to the right edge is the game's own face, and everything on it
+is diegetic — what the courier himself could read off his arm. It glows green when a
+turn writes something it will show, and goes quiet when read. Four screens:
+
+- **STATUS** — location, day, clock, and the sky in pixel art (each of the twelve
+  ambiences has its own 8×8 glyph); the current heading; the family as colored chips
+  with the fallen struck through; the toll pips; the run's canon.
+- **JOBS** — the quest log, active and settled, plus the season so far: cleared beats
+  with their titles and summaries, told strictly in hindsight — the beat in play has
+  no title yet, unreached arcs are censored bars, and between beats it says so.
+- **CAST** — clickable dossiers: status, voice, who they've met, what they know.
+- **MAP** — the city as far as it has been walked, grown from the run's own route
+  registers. Drag to pan, scroll to zoom; your location is a pulsing gold diamond,
+  and places named in open jobs carry a gold pin. Nothing unvisited exists.
 
 ### Twelve skies
 
@@ -191,10 +249,11 @@ reached — and a gold banner offers one AI call that reads your chronicle and s
 pointer to the beat you are *actually* on. It touches nothing but the pointer.
 
 > **Save compatibility.** Saves from v2.7 onward store cast sheets as structured
-> objects. Older saves load fine and are migrated on the spot, but a v2.7 save is
-> **not** readable by a pre-v2.7 client. This only matters if you hand a folder-save
-> JSON to an old cached copy of the game — the hosted version and the installed app
-> both update themselves.
+> objects; saves from v3.5 onward store quests and board ids. Older saves load fine
+> and are migrated on the spot — flat threads become quests, old board positions are
+> remapped onto the new spine — but a v3.5 save is **not** readable by an older
+> client. This only matters if you hand a folder-save JSON to an old cached copy of
+> the game — the hosted version and the installed app both update themselves.
 
 ## New Game
 
