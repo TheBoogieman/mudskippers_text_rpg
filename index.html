@@ -217,12 +217,20 @@
   .menu-btn.gold{border-color:var(--gold);color:var(--gold)}
   .menu-btn small{display:block;letter-spacing:.06em;font-size:10.5px;color:var(--ink-dim);margin-top:4px;text-transform:none;font-style:italic;font-family:Georgia,serif}
   .t-foot{position:relative;margin-top:30px;color:#5c4a33;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;text-align:center;line-height:2}
-  #ledg-body{
-    white-space:pre-wrap;font-family:Georgia,serif;font-size:14px;line-height:1.7;
-    color:var(--ink);background:#1c150e;border:1px solid var(--line);border-radius:3px;
-    padding:16px 18px;max-height:40vh;overflow-y:auto;
+  /* THE ARCHIVE: records, index and the DM's-eye view share one plain style */
+  .arch-lines{
+    white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;line-height:1.6;
+    color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
+    padding:9px 11px;max-height:38vh;overflow-y:auto;margin:8px 0 14px;
   }
-  /* run canon panel (ledger modal) */
+  #arch-records details{margin-bottom:8px}
+  #arch-records summary{
+    cursor:pointer;font-family:ui-monospace,Menlo,monospace;font-size:11px;
+    letter-spacing:.18em;color:var(--granny);padding:4px 0;
+  }
+  #arch-index .term-chip{cursor:pointer;margin:0 6px 6px 0}
+  #arch-index .term-chip.sel{background:#1a2418;box-shadow:0 0 8px rgba(143,201,138,.15)}
+  /* run canon panel (archive modal) */
   #canonwrap{margin-bottom:16px}
   .canonhead{
     font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.18em;
@@ -257,27 +265,7 @@
   #canonlist li{margin-bottom:4px}
   #canonlist li b{color:var(--granny);font-weight:600;margin-right:6px}
   #canonlist .hint{margin:0;font-size:12px}
-  /* the board panel — the season as a rail you can see yourself moving along */
-  #boardwrap{margin-bottom:18px}
   #placebox:not(:empty){margin-top:10px}
-  .board-now{
-    font-family:Georgia,serif;font-size:13.5px;color:var(--ink-dim);
-    margin:2px 0 8px;line-height:1.5;
-  }
-  .board-now b{color:var(--sodium);font-weight:600}
-  .board-rail{display:flex;gap:2px;margin-bottom:5px}
-  .board-rail i{
-    flex:1;height:6px;background:#2e2519;border-radius:1px;
-    transition:background .4s ease;
-  }
-  .board-rail i.done{background:var(--granny)}
-  .board-rail i.here{background:var(--sodium);box-shadow:0 0 7px rgba(232,161,60,.55)}
-  .board-arcs{
-    display:flex;gap:2px;font-family:ui-monospace,Menlo,monospace;
-    font-size:8.5px;letter-spacing:.14em;color:#5c4a33;
-  }
-  .board-arcs span{text-align:center;white-space:nowrap;overflow:hidden}
-  .board-arcs span.on{color:var(--sodium)}
   .board-turns{
     font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.12em;
     color:#6d5c44;margin-top:7px;
@@ -895,14 +883,13 @@
     <button class="menu-btn primary" id="t-continue" style="display:none">CONTINUE<small id="t-continue-sub"></small></button>
     <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
     <button class="menu-btn" id="t-runs">RUNS</button>
-    <button class="menu-btn" id="t-ledger">LEDGER</button>
-    <button class="menu-btn" id="t-cast">CAST</button>
+    <button class="menu-btn" id="t-ledger">ARCHIVE</button>
     <button class="menu-btn" id="t-vault">CANON VAULT</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.0.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.1.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -924,6 +911,13 @@
       <h3>STEP 3 — PLAY</h3>
       <p>Pick a numbered choice each turn — or type absolutely anything into the gold bar and hit MUDSKIPPER MOMENT. The story bends around you. That's the whole game.</p>
     </div>
+    <div class="ep">
+      <h3>HOW THE NIGHT WORKS</h3>
+      <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
+      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. You'll see it coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable. The meter re-zeroes every season. Only a fourth ends the book, as a loss, and never unwarned.</p>
+      <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
+      <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
+    </div>
     <button class="btn" style="display:block;margin:6px auto 0" id="wel-close">INTO THE RAIN</button>
   </div>
 </div>
@@ -941,18 +935,13 @@
   </div>
 </div>
 
-<!-- LEDGER VIEWER MODAL -->
-<div class="modal" id="ledgmodal">
+<!-- THE ARCHIVE — the run's memory, all of it, in one place -->
+<div class="modal" id="archmodal">
   <div class="card">
-    <div class="cardhead">THE LEDGER</div>
-    <div class="cardsub">The chronicle of the current run, as it will be written.</div>
-    <div id="boardwrap">
-      <div class="canonhead">THE BOARD <button class="small" id="place-open" title="Have the AI read this run's chronicle and work out which beat of the season it is actually on">FIND OUR PLACE</button></div>
-      <div id="board-body"></div>
-      <div id="placebox"></div>
-    </div>
+    <div class="cardhead">THE ARCHIVE</div>
+    <div class="cardsub">Everything the run remembers — and exactly what the storyteller is shown.</div>
     <div id="canonwrap">
-      <div class="canonhead">RUN CANON <button class="small" id="rebuild-open" title="Have the AI re-read this run's whole chronicle and rebuild its memory">REBUILD MEMORY</button></div>
+      <div class="canonhead">THE RECORD</div>
       <div id="chronwrap" style="display:none">
         <div class="canonsub">CHRONICLE · compressed history</div>
         <ol id="chronlist"></ol>
@@ -961,8 +950,16 @@
       <ol id="canonlist"></ol>
       <div id="rebuildbox"></div>
     </div>
-    <div id="ledg-body"></div>
+    <div class="canonhead">SEASON RECORDS</div>
+    <div id="arch-records"></div>
+    <div class="canonhead">THE INDEX</div>
+    <div id="arch-index"></div>
+    <div class="canonhead">WHAT THE DM SEES</div>
+    <div id="arch-dm"></div>
+    <div id="placebox"></div>
     <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" id="place-open" title="Have the AI read this run's chronicle and work out which beat of the season it is actually on">FIND OUR PLACE</button>
+      <button class="btn ghost" id="rebuild-open" title="Have the AI re-read this run's whole chronicle and rebuild its memory">REBUILD MEMORY</button>
       <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
       <button class="btn ghost" id="ledg-close">CLOSE</button>
     </div>
@@ -991,7 +988,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.0.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.1.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1058,24 +1055,12 @@
           <div class="term-wheel" aria-hidden="true"><span>SCROLL</span></div>
           <div class="term-sidegroup">
             <button class="term-side" id="term-reboot" title="Replay the cold start">REBOOT</button>
-            <button class="term-side" id="term-ledger">LEDGER</button>
+            <button class="term-side" id="term-ledger">ARCHIVE</button>
             <button class="term-side" id="term-close">CLOSE</button>
           </div>
           <div class="term-port" aria-hidden="true"><i class="slot"></i><i class="tape"></i></div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- CAST MODAL -->
-<div class="modal" id="castmodal">
-  <div class="card">
-    <div class="cardhead">THE CAST</div>
-    <div class="cardsub">Running sheets for everyone at the table — written by the story as it happens.</div>
-    <div id="cast-body"></div>
-    <div class="btnrow" style="justify-content:center">
-      <button class="btn ghost" id="cast-close">CLOSE</button>
     </div>
   </div>
 </div>
@@ -1253,7 +1238,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.0.0 "The Archive"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.1.0 "The Tell"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1279,6 +1264,7 @@ var BIBLE = [
 "- PRESS LINES ARE OFFERS, NOT ORDERS. When the table has already supplied a scene's pressure or its answer, leave the offer in the drawer. Never override what the table actually did to make room for an authored move.",
 "- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
 "- THE CHAIR. The courier's voice, choices, and growth belong to the player alone. You render the typed action and its consequences - you never write COURIER dialogue the player did not type, never decide for him, never convert his deflection into your sincerity. When a gate needs the courier to say, choose, or declare something, offer it as one of the three choices and wait: the door can be visible, but only the player's hand opens it. If the player typed speech, render that speech - faithfully, not improved.",
+"- THE CHAIR CUTS BOTH WAYS. The player owns the courier; the world owns the world. When the player asserts a fact about the world - who did it, what it was, whose face that is - it is the COURIER'S belief, spoken or thought in-fiction, and it can be wrong. Record it as belief (\"the courier reckoned it was Mirren\"), never as ground truth, and when the player revises it, the world does not lurch to reconcile: a corrected guess is a man being wrong twice, and it costs nothing but pride.",
 "- MUDSKIPPER MOMENTS ARE SACRED, AND THEY ARE NOT FUEL. When the player does a bit, the bit lands as a bit: the family plays along or plays the straight man, the world reacts in kind, and the deflection succeeds this turn. Nobody frames the courier as anxious, cringey, or deflecting - the family finds him funny, alarming, or brilliant, never embarrassing. A bit is never converted into the scene's sincerity, never mined for the gate, never diagnosed. Sincerity arrives when the player types it, and not one turn before.",
 "- ONE TRUTH PER TURN. A scene may deliver at most one revelation, and it arrives with its aftermath attached. Characters answer what was asked - not what the file knows. Nobody delivers three unprompted paragraphs; if the player did not pull it, it stays in the drawer.",
 "- THE WORLD KEEPS SCORE OF STRANGE. Wild things land. Citizens, family, and rooms react to the insanity at proper length before any plot resumes - aftermath is content, not delay.",
@@ -1919,6 +1905,46 @@ var SPINE = [
  scar:"Custody landed as a grab, not a keeping - the silence afterwards has edges."}
 ];
 
+/* ---- THE TEASES: one spoiler-safe line per beat, the player's card only ----
+   Rendered as the green TONIGHT card when a beat arms, and pinned on the wrist
+   while the beat is live. NEVER served to the DM - the board's directives are
+   the DM's tell; this one belongs to the chair. */
+var TEASES = {
+  "a1-hum":     "The thing in your jacket wants a word.",
+  "a1-chase":   "The way home is closing. Find out what's left open.",
+  "a1-vic":     "Vic owes you the whole story. Get it out of him.",
+  "a1-pack":    "The pack is deciding what you're worth. Be there for the verdict.",
+  "a1-fare":    "Rent is due and one honest job remains. Run it.",
+  "a1-late":    "Someone is asking after a late delivery. See who.",
+  "a1-exit":    "A way out exists. Look it in the eye before it expires.",
+  "a1-carried": "The sweep is coming and Nine knows things. Trust her through it.",
+  "a1-turn":    "Decide what she is to you — and say it.",
+  "a2-door":    "There's a door that stays open in Fenwick Cross. Knock.",
+  "a2-ground":  "The hunt has found your street. Try every kind thing you know.",
+  "a2-hand":    "The hunt ends tonight, one way or the other.",
+  "a2-mirren":  "Carry her home, and say her name.",
+  "a2-seven":   "Someone arrives asking for nothing. Decide if that's how it stays.",
+  "a2-chassis": "Seven gets hands. What they're for is the question.",
+  "a2-three":   "A stranger with two voices has questions. Answer honestly.",
+  "a2-housing": "Something about you is about to explain itself. Sit down for it.",
+  "a2-manual":  "There's a manual, and Nine can read it. Let her.",
+  "a2-choir":   "Learn what the Choir actually does with people. All three answers.",
+  "a2-annul":   "A commander can be taken alive. Take him, and ask Three what comes next.",
+  "a2-law":     "The family writes its own law tonight. Bring an appetite.",
+  "a2-turn":    "The Choir makes an offer. Hear the name on it.",
+  "a3-evict":   "Take the street back. Kindly, where kindness works.",
+  "a3-voice":   "Listen to the enemy being gentle. Don't flinch.",
+  "a3-founding":"The machine has an origin. Find the voice that made it.",
+  "a3-vic":     "Vic has one more thing to say. Make time.",
+  "a3-stone":   "A stone, a name, a line each. Then the work.",
+  "a3-for":     "Name everyone's part in what comes. Nobody goes down undecided.",
+  "a3-descent": "Go under the Exchange. The way back is not the point.",
+  "a3-dreamers":"Walk what sleeps below. Look for a name you know.",
+  "a3-principal":"The landlord is home. Mind the house rules.",
+  "a3-granny":  "Talk to her. About letting go.",
+  "a3-seize":   "End it. Custody, not conquest."
+};
+
 /* ============ PROVIDER PRESETS ============ */
 var PRESETS = {
   anthropic:{style:"anthropic", base:"https://api.anthropic.com", model:"claude-sonnet-5", needsKey:true,
@@ -2044,6 +2070,7 @@ var DRIFT_YELLOW = 2, DRIFT_RED = 3, DRIFT_WALKBACK = 4;
 
 /* ---- tolls: the world's collections; 3 survivable, the 4th ends it ---- */
 var tolls = 0;
+var tollExplained = false;   /* the first collection of a run explains itself in full */
 var TOLL_MAX = 3;
 var lossPending = false;     /* next outgoing message carries the loss order */
 var lossServed = false;      /* the order has gone out; the reply is the ending */
@@ -2136,6 +2163,7 @@ function renderBlock(b){
       + (b.arcturn ? "THE ACT TURNS" : b.forced ? "THE WORLD MOVED ON" : "THAT BEAT IS CLOSED")
       + '</span>' + esc(b.title)
       + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
+      + (b.toll ? '<span class="sum" style="color:#e08b8b">' + esc(b.toll) + '</span>' : '')
       + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
   } else if(b.kind === "brief"){
     el.className = "block beatcard brief";
@@ -2145,8 +2173,8 @@ function renderBlock(b){
     el.className = "block dmaside" + (b.invite ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
   } else if(b.kind === "aside"){
-    el.className = "block dmaside" + (b.tone === "yellow" ? " aside-yellow" : "");
-    el.innerHTML = '<span class="tag">THE RAIN</span>' + esc(b.text);
+    el.className = "block dmaside" + (b.tone === "yellow" ? " aside-yellow" : b.tone === "green" ? " invite" : "");
+    el.innerHTML = '<span class="tag">' + (b.tone === "green" ? "TONIGHT" : "THE RAIN") + '</span>' + esc(b.text);
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
@@ -2959,6 +2987,17 @@ var pendingAsides = [];
 function queueAside(tone, text){ pendingAsides.push({kind:"aside", tone:tone, text:text}); }
 
 /* ---- tolls: the world's collections ---- */
+/* every collection announces itself to the player - in full the first time */
+function tollLine(){
+  if(!tollExplained){
+    tollExplained = true;
+    return "A toll was paid — " + tolls + " of " + TOLL_MAX + " this season. A toll is the fee for a"
+      + " question the night answered without you: the story moved on, and your authorship of that"
+      + " piece went with it. Three are survivable and the meter re-zeroes every season; a fourth"
+      + " ends the season as a loss. You will always be warned before the last one.";
+  }
+  return "A toll was paid — " + tolls + " of " + TOLL_MAX + " this season.";
+}
 function payToll(){
   tolls++;
   termPing();
@@ -3323,9 +3362,11 @@ function closeBeat(forced, note){
   if(!forced && note) mergeCanon([note]);
   if(forced && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
   if(b.stone) mergeMilestones([b.stone]);
+  var tollMsg = "";
   if(forced){
     questFailBeat(b.id);       /* jobs tied to this beat fail with it */
     payToll();
+    tollMsg = tollLine();      /* the collection rides the card as its footer */
     if(window.console && console.info){
       console.info("[mudskippers] board forced the gate on \"" + b.title + "\" after " + beatTurns + " turns");
     }
@@ -3338,7 +3379,7 @@ function closeBeat(forced, note){
      moment the future is allowed a title card. A season boundary announces
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
-  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec,
+  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
   termPing();                    /* the season page just gained an entry */
@@ -3357,6 +3398,8 @@ function armBeat(){
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   beatText = ""; gateRefusedNames = []; gateHeldNow = false;
   if(!beatDone() && beatNow().season !== currentSeason) currentSeason = beatNow().season;
+  /* the tease: the player's green card, dealt the moment the question goes live */
+  if(!beatDone() && TEASES[beatNow().id]) queueAside("green", TEASES[beatNow().id]);
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
@@ -3410,7 +3453,7 @@ function boardTurn(data){
     driftRun = 0;
     beatTurns = 0;
     if(said) closeBeat(false, note);
-    else payToll();
+    else { payToll(); queueAside("red", tollLine()); }
     return;
   }
   beatTurns++;
@@ -3447,6 +3490,15 @@ function boardTurn(data){
     }
   } else if(!said && !held && !lastTurnMud){
     driftRun = 0;
+  }
+  /* the visible ladder: the player reads the road shortening in their own cards,
+     one turn behind the directives the DM is writing under */
+  if(!said && !forcingNow){
+    if(beatTurns === beatNow().budget){
+      queueAside("yellow", "Tonight's business is running out of road.");
+    } else if(beatTurns === beatNow().budget + 1){
+      queueAside("yellow", "The world is starting to act without you. One more turn and it moves on.");
+    }
   }
   if(said || forcingNow){
     if(!said && tolls >= TOLL_MAX){ forcingNow = false; lossPending = true; return; }
@@ -3532,10 +3584,11 @@ function applyTension(quiet){
    never what is coming. Stored in feedLog so it survives a reload like any block. */
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
-           sum:info.sum || "", arcname:info.arcname || ""};
+           sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || ""};
   renderBlock(b); feedLog.push(b);
   ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
+    + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
 }
 
@@ -3572,6 +3625,7 @@ function contextBlock(){
   var d = {remembered:false, bits:false, questsSettled:false, wants:false, record:false,
            placesCurrentOnly:false, chronDrop:0, canonDrop:0,
            cast:{recent:true, knows:0, status:true, voice:true}};
+  contextTrimD = d;   /* WHAT THE DM SEES reads the final trim state off this */
   function build(){
     var out = [];
     out.push("ROSTER\n" + rosterLine());
@@ -3655,6 +3709,7 @@ var MAINT_KINDS = [
   {key:"cast",       ask:""}   /* built dynamically: a heavy sheet asks for its own compression */
 ];
 var maintIndex = 0, actCheckpointDue = 0;
+var contextTrimD = null;   /* the last context build's drop flags, for the ARCHIVE's debug view */
 
 /* the fullest sheet within two notes of the cap, or "" - the compression ask
    only ever fires when there is genuinely a sheet worth compressing */
@@ -3895,6 +3950,8 @@ function takeAction(text, isMud){
     lureBar(false);               /* the invitation is spent; the bar goes back to gold */
     chatLog.push({role:"user", content:"The courier steps into the rain with Pia. (The hardcoded reveal scene below has already been shown to the player.)"});
     chatLog.push({role:"assistant", content:JSON.stringify(OPENING2)});
+    /* the board goes live with the reveal: the first question deals its tease */
+    if(TEASES["a1-hum"]) queueAside("green", TEASES["a1-hum"]);
     showScene(OPENING2, true);
     return;
   }
@@ -4039,7 +4096,7 @@ function maybeRehydrate(){
   d.appendChild(document.createTextNode(
     "This run predates the new memory systems. REBUILD MEMORY — the Ledger re-reads your whole story and rebuilds it."));
   var go = document.createElement("button"); go.className = "small"; go.textContent = "OPEN THE LEDGER";
-  go.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; openLedger(); openRebuild(); };
+  go.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; openArchive(); openRebuild(); };
   var later = document.createElement("button"); later.className = "small"; later.textContent = "later";
   later.onclick = function(){ rehydDismissed = true; box.innerHTML = ""; };
   d.appendChild(go); d.appendChild(later);
@@ -4193,6 +4250,7 @@ function saveBlob(){
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
+    tollExplained:tollExplained,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -4418,7 +4476,7 @@ $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vau
 document.addEventListener("keydown", function(e){
   if(e.key==="Escape"){
     if(!rebuildGuard()) return;
-    ["vaultmodal","setmodal","welmodal","runmodal","ledgmodal","castmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    ["vaultmodal","setmodal","welmodal","runmodal","archmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
     if(runSlug) closeTitle();
   }
 });
@@ -4558,53 +4616,9 @@ function renderCanonList(){
     ol.appendChild(li);
   });
 }
-/* ============ THE BOARD PANEL + FIND OUR PLACE ============ */
-function renderBoardPanel(){
-  var body = $("board-body"); if(!body) return;
-  $("place-open").style.display = runSlug ? "inline-block" : "none";
-  var rail = SPINE.map(function(b, i){
-    var cls = i < beatIdx ? " class=\"done\"" : (i === beatIdx ? " class=\"here\"" : "");
-    return "<i" + cls + " title=\"" + esc(b.title) + "\"></i>";
-  }).join("");
-  var arcs = [1,2,3].map(function(a){
-    var n = SPINE.filter(function(b){ return b.season === a; }).length;
-    var on = !beatDone() && beatNow().season === a;
-    return '<span style="flex:' + n + '"' + (on ? ' class="on"' : '') + '>S' + a + '</span>';
-  }).join("");
-  var head;
-  if(beatDone()){
-    head = '<b>The season is complete.</b> All ' + SPINE.length + ' beats played.';
-  } else if(phase !== "live"){
-    /* the pointer holds on a closed beat until the next one arms - hindsight
-       shows its record, never its stage directions */
-    var cb = beatNow();
-    head = 'Beat ' + (beatIdx + 1) + ' of ' + SPINE.length + ' closed — <b>' + esc(cb.title) + '</b><br>'
-         + esc(gateNotes[cb.id] || cb.exit);
-  } else {
-    var b = beatNow();
-    head = 'Beat ' + (beatIdx + 1) + ' of ' + SPINE.length + ' — <b>' + esc(b.title) + '</b><br>'
-         + esc(b.goal);
-  }
-  var dots = "";
-  if(!beatDone()){
-    if(phase === "aftermath"){
-      dots = '<div class="board-turns">LANDING — the gate has fallen; the season holds while it lands</div>';
-    } else if(phase === "slack"){
-      dots = '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn'
-           + (phaseLeft === 1 ? "" : "s") + '</div>';
-    } else {
-      var bb = beatNow(), shown = Math.max(bb.budget, beatTurns + 1), i;
-      for(i = 0; i < shown; i++){
-        dots += '<i class="' + (i < beatTurns ? (i >= bb.budget ? "over" : "spent") : "") + '"></i>';
-      }
-      dots = '<div class="board-turns">' + dots + " turn " + (beatTurns + 1) + " of " + bb.budget
-           + (beatTurns >= bb.budget ? " · the world is moving on its own" : "") + '</div>';
-    }
-  }
-  body.innerHTML = '<div class="board-now">' + head + '</div>'
-    + '<div class="board-rail">' + rail + '</div>'
-    + '<div class="board-arcs">' + arcs + '</div>' + dots;
-}
+/* ============ FIND OUR PLACE ============
+   The board panel that lived here retired in v4.1: beat position, season bar
+   and turn dots are the wrist's job, and they already live there. */
 /* A run from before the board exists somewhere on it - it just doesn't know where.
    One call, chronicle in, beat id out. It touches the pointer and nothing else. */
 var PLACE_ASK_HEAD = [
@@ -4642,7 +4656,7 @@ function findOurPlace(){
     beatIdx = i; beatTurns = 0; boardStale = false;
     phase = "live"; phaseLeft = 0;   /* a repaired pointer always lands on a live beat */
     currentSeason = beatNow().season;
-    renderBoardPanel(); renderNow(); maybeBoardBanner();
+    renderNow(); maybeBoardBanner();
     persistAll(currentChoices());
     placeBox('<div class="warn">Placed at beat ' + (i+1) + ' — <b>' + esc(beatNow().title) + '</b>.'
       + (typeof d.why === "string" && d.why ? ' ' + esc(d.why) : '') + ' The run has been saved.</div>');
@@ -4661,7 +4675,7 @@ function maybeBoardBanner(){
     "THE BOARD IS NEW — this run is being steered from \"" + beatNow().title
     + "\". FIND OUR PLACE reads your chronicle and moves the pointer to where you actually are. (one AI call)"));
   var go = document.createElement("button"); go.className = "small"; go.textContent = "FIND OUR PLACE";
-  go.onclick = function(){ box.innerHTML = ""; openLedger(); findOurPlace(); };
+  go.onclick = function(){ box.innerHTML = ""; openArchive(); findOurPlace(); };
   var later = document.createElement("button"); later.className = "small"; later.textContent = "play on";
   later.onclick = function(){ boardStale = false; box.innerHTML = ""; persistAll(currentChoices()); };
   d.appendChild(go); d.appendChild(later);
@@ -4669,16 +4683,106 @@ function maybeBoardBanner(){
 }
 $("place-open").onclick = findOurPlace;
 
-function openLedger(){
-  renderCanonList();
-  renderBoardPanel();
-  placeBox("");
-  $("ledg-body").textContent = ledgerText
-    ? ledgerText
-    : "No chronicle yet. The rain is waiting; the first line writes itself the moment you step into it.";
-  $("ledgmodal").classList.add("open");
+/* the season records, each rendered as its document, collapsible per season */
+function renderArchRecords(){
+  var box = $("arch-records"); if(!box) return;
+  box.innerHTML = "";
+  var any = false, s;
+  function sec(det, head, lines){
+    var h = document.createElement("div"); h.className = "canonsub"; h.textContent = head;
+    det.appendChild(h);
+    var ul = document.createElement("div"); ul.className = "arch-lines";
+    ul.textContent = lines.length ? lines.map(function(x){ return "· " + x; }).join("\n") : "· (nothing on file)";
+    det.appendChild(ul);
+  }
+  for(s = 1; s <= 3; s++){
+    var r = seasonRecords[s];
+    if(!r) continue;
+    any = true;
+    var det = document.createElement("details");
+    var sum = document.createElement("summary");
+    sum.textContent = "SEASON " + s + " — " + SEASON_NAMES[s];
+    det.appendChild(sum);
+    sec(det, "WHAT HAPPENED", r.happened || []);
+    sec(det, "WHO WE ARE NOW", r.who || []);
+    sec(det, "WHAT WE CARRY", r.carry || []);
+    sec(det, "WHAT IT COST", r.cost || []);
+    sec(det, "WHERE THINGS STAND", r.stand || []);
+    box.appendChild(det);
+  }
+  if(!any) box.innerHTML = '<div class="hint">No season has closed yet. The first record writes itself at the first finale.</div>';
 }
-$("ledg-close").onclick = function(){ if(rebuildGuard()) $("ledgmodal").classList.remove("open"); };
+/* the retrieval index, made tappable: entity chips, then every line each anchors */
+var archEntSel = "";
+function renderArchIndex(){
+  var box = $("arch-index"); if(!box) return;
+  box.innerHTML = "";
+  if(!archiveIndex.length){
+    box.innerHTML = '<div class="hint">Nothing archived yet. The index fills at each season’s ritual.</div>';
+    return;
+  }
+  var ents = [], i, j;
+  for(i = 0; i < archiveIndex.length; i++){
+    for(j = 0; j < archiveIndex[i].e.length; j++){
+      if(ents.indexOf(archiveIndex[i].e[j]) === -1) ents.push(archiveIndex[i].e[j]);
+    }
+  }
+  ents.sort();
+  if(ents.indexOf(archEntSel) === -1) archEntSel = ents[0];
+  var chips = document.createElement("div");
+  ents.forEach(function(nm){
+    var b = document.createElement("button");
+    b.className = "term-chip" + (nm === archEntSel ? " sel" : "");
+    b.style.borderColor = castColor(nm); b.style.color = castColor(nm);
+    b.textContent = nm.toUpperCase();
+    b.onclick = function(){ archEntSel = nm; renderArchIndex(); };
+    chips.appendChild(b);
+  });
+  box.appendChild(chips);
+  var lines = document.createElement("div"); lines.className = "arch-lines";
+  var out = [];
+  for(i = archiveIndex.length - 1; i >= 0; i--){
+    if(archiveIndex[i].e.indexOf(archEntSel) !== -1) out.push("· " + archiveIndex[i].t);
+  }
+  lines.textContent = out.join("\n");
+  box.appendChild(lines);
+}
+/* the single most valuable debug surface the game can have: the genuine context
+   block for the current turn, verbatim, with its trim state. One function call. */
+function renderArchDM(){
+  var box = $("arch-dm"); if(!box) return;
+  if(!runSlug || !chatLog.length){
+    box.innerHTML = '<div class="hint">No live turn yet. The DM sees nothing until the story starts.</div>';
+    return;
+  }
+  var s = contextBlock();
+  var d = contextTrimD || {};
+  var fired = [];
+  if(d.remembered) fired.push("remembered dropped");
+  if(d.bits) fired.push("bits dropped");
+  if(d.questsSettled) fired.push("settled quests dropped");
+  if(d.wants) fired.push("wants dropped");
+  if(d.record) fired.push("record dropped");
+  if(d.placesCurrentOnly) fired.push("places thinned");
+  if(d.chronDrop) fired.push("chronicle -" + d.chronDrop);
+  if(d.canonDrop) fired.push("canon -" + d.canonDrop);
+  if(d.cast && !d.cast.recent) fired.push("cast thinned");
+  box.innerHTML = '<div class="hint">trim: ' + esc(fired.length ? fired.join(" · ") : "none — everything served")
+    + ' · ' + s.length + ' chars</div>';
+  var pre = document.createElement("div"); pre.className = "arch-lines";
+  pre.textContent = s;
+  box.appendChild(pre);
+}
+function openArchive(){
+  renderCanonList();
+  renderArchRecords();
+  renderArchIndex();
+  renderArchDM();
+  placeBox("");
+  $("place-open").style.display = runSlug ? "inline-block" : "none";
+  $("archmodal").classList.add("open");
+}
+$("ledg-close").onclick = function(){ if(rebuildGuard()) $("archmodal").classList.remove("open"); };
 $("ledg-dl").onclick = function(){
   if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown");
 };
@@ -4935,42 +5039,8 @@ function rebuildGuard(){
 }
 $("rebuild-open").onclick = openRebuild;
 
-/* ============ CAST VIEWER ============ */
-function openCast(){
-  var body = $("cast-body"); body.innerHTML = "";
-  var names = Object.keys(castSheets);
-  if(!names.length){
-    body.innerHTML = '<div class="hint">No sheets yet. The cast writes itself as you meet them.</div>';
-  } else {
-    names.forEach(function(n){
-      var col = castColor(n), s = castSheet(n);
-      var d = document.createElement("div"); d.className = "ep";
-      d.style.borderLeftColor = col;
-      var h = document.createElement("h3"); h.textContent = n.toUpperCase();
-      h.style.color = col;
-      d.appendChild(h);
-      if(s.status){
-        var st = document.createElement("p"); st.className = "cast-status";
-        st.textContent = s.status; d.appendChild(st);
-      }
-      if(s.met.length){
-        var mt = document.createElement("p"); mt.className = "cast-rel";
-        mt.innerHTML = '<b>MET</b>' + esc(s.met.join(", ")); d.appendChild(mt);
-      }
-      if(s.knows.length){
-        var kn = document.createElement("p"); kn.className = "cast-rel";
-        kn.innerHTML = '<b>KNOWS</b>' + esc(s.knows.join(" · ")); d.appendChild(kn);
-      }
-      s.notes.forEach(function(line){
-        var p = document.createElement("p"); p.textContent = line; d.appendChild(p);
-      });
-      body.appendChild(d);
-    });
-  }
-  $("castmodal").classList.add("open");
-}
-$("cast-close").onclick = function(){ $("castmodal").classList.remove("open"); };
-$("t-cast").onclick = openCast;
+/* the standalone cast viewer retired in v4.1: the wrist CAST screen is the sole
+   home for the sheets - cast is run-state, and run-state lives on the wrist */
 
 /* ============ THE COURIER'S TERMINAL ============
    MUD//OS. Four screens on a wrist: STATUS, JOBS, CAST, MAP. Everything shown
@@ -5082,6 +5152,7 @@ function renderTermStatus(){
              : t === 1 ? "something is about to give"
              : "the night has room in it";
     tb.innerHTML = seasonLine
+      + '<div class="board-turns" style="color:#8fc98a">TONIGHT — ' + esc(TEASES[b.id] || "") + '</div>'
       + '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
       + esc(agendaText || "Work tonight out as you go. That is the job.") + '</div>'
       + '<div class="board-turns">' + turnDots(b) + ' <span style="color:'
@@ -5121,6 +5192,8 @@ function renderTermStatus(){
     ro.appendChild(ch);
   });
 
+  /* the wrist shows the last three lines; the full list lives in exactly one
+     place - THE ARCHIVE - and the affordance below is the way there */
   var ol = $("term-canon"); ol.innerHTML = "";
   if(!runCanon.length){
     var e = document.createElement("li");
@@ -5128,12 +5201,20 @@ function renderTermStatus(){
     e.textContent = "No canon yet — the run writes its own truth as you play.";
     ol.appendChild(e);
   } else {
-    runCanon.forEach(function(f, i){
+    var base = Math.max(0, runCanon.length - 3);
+    runCanon.slice(-3).forEach(function(f, i){
       var li = document.createElement("li");
-      li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f);
+      li.innerHTML = '<b>' + (base + i + 1) + '.</b>' + esc(f);
       ol.appendChild(li);
     });
   }
+  var full = document.createElement("li");
+  var fb = document.createElement("button");
+  fb.className = "small";
+  fb.textContent = "FULL RECORD → ARCHIVE";
+  fb.onclick = function(){ $("termmodal").classList.remove("open"); openArchive(); };
+  full.appendChild(fb);
+  ol.appendChild(full);
 }
 
 function renderTermJobs(){
@@ -5567,7 +5648,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.0.0   COLD START",
+    "MUD//OS  v4.1.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -5628,7 +5709,7 @@ function termBuzz(){
 function openTerminal(){ termClear(); $("termmodal").classList.add("open"); renderTerminal(); termBoot(); }
 $("watch").onclick = openTerminal;
 $("term-close").onclick = function(){ termBootStop(); termBooting = false; $("termmodal").classList.remove("open"); };
-$("term-ledger").onclick = function(){ termBootStop(); termBooting = false; $("termmodal").classList.remove("open"); openLedger(); };
+$("term-ledger").onclick = function(){ termBootStop(); termBooting = false; $("termmodal").classList.remove("open"); openArchive(); };
 
 /* ============ TITLE SCREEN ============ */
 function refreshTitle(){
@@ -5678,7 +5759,7 @@ $("t-continue").onclick = function(){
 };
 $("t-new").onclick = function(){ newRun(true); };
 $("t-runs").onclick = openRuns;
-$("t-ledger").onclick = openLedger;
+$("t-ledger").onclick = openArchive;
 $("t-vault").onclick = function(){ $("vaultmodal").classList.add("open"); };
 $("t-settings").onclick = openSettings;
 $("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
@@ -6783,6 +6864,7 @@ function newRun(confirmFirst){
   lossServed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
+  tollExplained = false;
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
@@ -6892,6 +6974,7 @@ function restoreFromBlob(s){
   archiveIndex = Object.prototype.toString.call(s.archiveIndex) === "[object Array]" ? s.archiveIndex : [];
   seasonBreakDue = false;
   epilogueNow = s.epilogue === true || phase === "seasonend";   /* the door re-arms on reload */
+  tollExplained = s.tollExplained === true;   /* an old run has never been told - tell it in full */
   /* a finished season stays finished even where an older, longer spine counted higher */
   if(s.over === "season"){ beatIdx = SPINE.length; phase = "live"; phaseLeft = 0; }
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */

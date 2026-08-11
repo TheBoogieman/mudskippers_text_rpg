@@ -62,6 +62,29 @@ game itself, word for word, no AI required — the DM inherits a table with the 
 already face up. (The gold bar looks open during the cold open. That is the bait.
 Try it.)
 
+## How the night works
+
+The game is a list of questions. One is live at a time — that's the beat. When a
+question goes live you'll get a green card: **TONIGHT**, and what it's about. You get
+a handful of turns of night, usually four or five. Spend them however you like —
+bits, detours, long dinners; all of it is loved and recorded — but somewhere in those
+turns, take one honest run at tonight's business. That is the entire expectation. Not
+speed. One reach.
+
+If the night runs out, the game refuses to stall — that is its oldest promise — so
+the world answers the question for you, and that costs a **toll**: not a punishment
+for what you did, a fee for what went undone. You'll see it coming — a yellow card
+when the road is short, a second when the world stirs — and every toll explains
+itself when it's paid. Three are survivable. The meter re-zeroes every season. Only a
+fourth ends the book, as a loss, and never unwarned.
+
+Between questions there is no clock at all. The aftermath, the slack, the family's
+time — those are yours, forever, free.
+
+One more rule, and it protects you: you own the courier, and the world owns the
+world. What you *do* is law. What you *guess* is a guess — say "it was Mirren" and be
+wrong, and the only casualty is the courier's pride.
+
 ## The game is a series now
 
 Three **seasons**, each a book of its own with three internal acts, a finale, and an
