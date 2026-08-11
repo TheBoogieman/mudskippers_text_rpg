@@ -217,7 +217,56 @@
   .menu-btn.gold{border-color:var(--gold);color:var(--gold)}
   .menu-btn small{display:block;letter-spacing:.06em;font-size:10.5px;color:var(--ink-dim);margin-top:4px;text-transform:none;font-style:italic;font-family:Georgia,serif}
   .t-foot{position:relative;margin-top:30px;color:#5c4a33;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;text-align:center;line-height:2}
-  /* THE ARCHIVE: records, index and the DM's-eye view share one plain style */
+  /* ---- the terminal type scale: hierarchy from five sizes, nothing ad hoc.
+     The screen's voice is phosphor mono UI with a serif body for prose; the
+     scale sets weight and size only - no new faces, no new chrome. */
+  :root{
+    --tt-h1: clamp(11px, 2.6vw, 13px);
+    --tt-h2: clamp(10px, 2.2vw, 11px);
+    --tt-body: clamp(12.5px, 2.8vw, 13.5px);
+    --tt-label: clamp(8.5px, 1.9vw, 9.5px);
+    --tt-data: clamp(11px, 2.4vw, 12px);
+  }
+  /* the tease is the single most action-guiding line on STATUS - promoted */
+  .term-tonight{
+    font-family:ui-monospace,Menlo,monospace;font-size:clamp(11.5px, 2.6vw, 12.5px);
+    letter-spacing:.08em;color:#8fc98a;margin:2px 0 7px;line-height:1.5;
+    text-shadow:0 0 8px rgba(143,201,138,.35);
+  }
+  /* the season line is an eyebrow, not a header - demoted */
+  .term-eyebrow{
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-label);
+    letter-spacing:.22em;color:#5c6f57;margin-bottom:5px;
+  }
+  /* archive mode: tabs on the glass, in the screen's own voice */
+  .arch-tabs{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:12px;border-bottom:1px solid #26301f;padding-bottom:7px}
+  .arch-tab{
+    background:none;border:1px solid transparent;border-radius:2px;color:#6d7f68;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-label);letter-spacing:.16em;
+    font-weight:700;padding:5px 7px;cursor:pointer;
+  }
+  .arch-tab:hover{color:var(--seven)}
+  .arch-tab.on{color:var(--seven);background:#141a15;border-color:#4c6b46;text-shadow:0 0 8px rgba(143,201,138,.5)}
+  .arch-pane{display:none}
+  .arch-pane.on{display:block}
+  .arch-tools{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 8px;border-top:1px solid #26301f;padding-top:10px}
+  .arch-bib{
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.6;
+    color:var(--ink-dim);margin-bottom:5px;
+  }
+  #tpane-arch .ep{border-left:2px solid #26301f;padding:6px 0 6px 12px;margin-bottom:12px}
+  #tpane-arch .ep h3{
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-h2);letter-spacing:.18em;
+    color:var(--sodium);margin:0 0 6px;
+  }
+  #tpane-arch .ep p{font-size:var(--tt-body);line-height:1.6;color:var(--ink-dim);font-family:Georgia,serif;margin-bottom:7px}
+  #tpane-arch .ep p.res{color:#8a7c68;font-style:italic}
+  #tpane-arch .spoiler-gate p{font-size:var(--tt-body);font-family:Georgia,serif;color:var(--ink-dim);line-height:1.6;margin-bottom:9px}
+  /* the quality floor: keyboards see where they are */
+  .term-key:focus-visible,.term-side:focus-visible,.term-chip:focus-visible,.arch-tab:focus-visible{
+    outline:1px solid var(--seven);outline-offset:2px;
+  }
+  /* THE ARCHIVE: records, index and the raw exchanges share one plain style */
   .arch-lines{
     white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;line-height:1.6;
     color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
@@ -442,15 +491,15 @@
   }
   /* the tolls: four pips on the wrist, the last one hollow and red - the grave */
   .toll-row{
-    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.18em;
-    color:#6d5c44;margin-top:9px;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-label);letter-spacing:.2em;
+    color:#8a7c68;margin-top:10px;
   }
   .toll-row i{
-    display:inline-block;width:9px;height:9px;border-radius:50%;
+    display:inline-block;width:11px;height:11px;border-radius:50%;
     border:1px solid #5a4a3a;margin:0 3px;vertical-align:middle;background:transparent;
   }
   .toll-row i.paid{background:#e08b8b;border-color:#8d3a3a}
-  .toll-row i.grave{border-color:#a83a3a;box-shadow:0 0 6px rgba(168,58,58,.4)}
+  .toll-row i.grave{border-color:#e04a4a;border-width:2px;box-shadow:0 0 8px rgba(224,58,58,.55)}
   /* the gold bar wears the lure only while the invitation stands */
   #mudinput.lure{border-color:var(--seven);animation:lurepulse 2.2s ease-in-out infinite}
   #mudinput.lure::placeholder{color:#6f8f68}
@@ -542,7 +591,7 @@
   /* terminal glass content */
   .term-wrap{font-family:ui-monospace,Menlo,monospace}
   #term-now{
-    font-size:11.5px;line-height:1.6;color:var(--ink-dim);font-style:italic;
+    font-size:var(--tt-body);font-family:Georgia,serif;line-height:1.6;color:var(--ink-dim);font-style:italic;
     border-left:2px solid var(--line);padding:6px 10px;margin-bottom:14px;
   }
   /* the fix: where the courier is, and when */
@@ -552,23 +601,23 @@
   }
   .fix-cell{flex:1 1 90px;background:#141a15;padding:7px 10px}
   .fix-k{
-    font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.2em;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-label);letter-spacing:.2em;
     color:#6d7f68;display:block;margin-bottom:3px;
   }
   .fix-v{
-    font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);letter-spacing:.04em;
     color:var(--seven);display:block;line-height:1.35;
   }
   .fix-v.amb{display:flex;align-items:center;gap:6px}
   .fix-v i{width:8px;height:8px;border-radius:2px;box-shadow:0 0 6px currentColor;flex:none}
   .term-h{
-    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-h2);letter-spacing:.2em;
     color:var(--sodium);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;
   }
-  .term-h span{color:var(--ink-dim);letter-spacing:.06em;font-size:9.5px;font-style:italic;font-family:Georgia,serif}
+  .term-h span{color:var(--ink-dim);letter-spacing:.06em;font-size:var(--tt-label);font-style:italic;font-family:Georgia,serif}
   /* the screen scrolls as one page, so the lists no longer scroll inside it */
   #term-canon,#term-threads,#term-stones{
-    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.6;
     color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
     padding:9px 11px;list-style:none;margin-bottom:16px;
   }
@@ -724,12 +773,12 @@
   .term-glyph svg{display:block}
   #term-roster{margin-bottom:16px}
   .term-chip{
-    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.08em;
+    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);letter-spacing:.08em;
     border:1px solid;border-radius:2px;padding:3px 8px;margin:0 6px 6px 0;background:#10150f;
   }
   .term-chip.dead{opacity:.45;text-decoration:line-through}
   #term-agenda{
-    font-size:11.5px;line-height:1.6;color:var(--ink-dim);font-style:italic;
+    font-size:var(--tt-body);font-family:Georgia,serif;line-height:1.6;color:var(--ink-dim);font-style:italic;
     border-left:2px solid var(--line);padding:6px 10px;margin-bottom:14px;
   }
   #term-cast-chips{margin-bottom:12px}
@@ -738,26 +787,26 @@
   #term-cast-chips .term-chip.sel{background:#1a2418;box-shadow:0 0 8px rgba(143,201,138,.15)}
   #term-sheet{
     background:#141a15;border:1px solid #26301f;border-radius:3px;padding:12px 14px;
-    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;color:var(--ink-dim);
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.6;color:var(--ink-dim);
   }
   #term-sheet h3{font-size:12px;letter-spacing:.2em;margin-bottom:7px;font-weight:700}
   #term-sheet .sheet-note{font-family:Georgia,serif;font-size:13px;margin-bottom:5px;color:var(--ink)}
   /* jobs screen */
   .tj-item{
     border-left:2px solid #6b5326;padding:4px 0 4px 10px;margin-bottom:7px;
-    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.55;color:var(--ink);
+    font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.55;color:var(--ink);
   }
   .tj-item:before{content:"\25c6  ";color:var(--gold);font-size:9px}
   .tj-done{border-left-color:#2e2519;color:#6d5c44;text-decoration:line-through}
   .tj-done:before{content:"\25c7  ";color:#6d5c44}
-  .tj-arc{margin:16px 0 8px;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.22em;color:var(--granny)}
+  .tj-arc{margin:16px 0 8px;font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-h2);letter-spacing:.22em;color:var(--granny)}
   .tj-arc.locked{color:#4a3f30}
   .tj-beat{border-left:2px solid #26301f;padding:5px 0 5px 10px;margin-bottom:7px}
-  .tj-beat b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;color:var(--seven);margin-bottom:2px}
-  .tj-beat span{font-size:12.5px;font-family:Georgia,serif;font-style:italic;color:var(--ink-dim);line-height:1.5}
+  .tj-beat b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);letter-spacing:.12em;color:var(--seven);margin-bottom:2px}
+  .tj-beat span{font-size:var(--tt-body);font-family:Georgia,serif;font-style:italic;color:var(--ink-dim);line-height:1.5}
   .tj-beat.now{border-left-color:var(--gold)}
   .tj-beat.now b{color:var(--gold)}
-  .tj-stone{font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.6;color:#8a7c68;margin-bottom:5px}
+  .tj-stone{font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.6;color:#8a7c68;margin-bottom:5px}
   .tj-stone b{color:var(--granny);margin-right:6px}
   /* map screen */
   #term-map-wrap{position:relative;background:#0d120e;border:1px solid #26301f;border-radius:3px;overflow:hidden;height:270px}
@@ -883,13 +932,11 @@
     <button class="menu-btn primary" id="t-continue" style="display:none">CONTINUE<small id="t-continue-sub"></small></button>
     <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
     <button class="menu-btn" id="t-runs">RUNS</button>
-    <button class="menu-btn" id="t-ledger">ARCHIVE</button>
-    <button class="menu-btn" id="t-vault">CANON VAULT</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.2.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.3.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -935,36 +982,7 @@
   </div>
 </div>
 
-<!-- THE ARCHIVE — the run's memory, all of it, in one place -->
-<div class="modal" id="archmodal">
-  <div class="card">
-    <div class="cardhead">THE ARCHIVE</div>
-    <div class="cardsub">Everything the run remembers — and exactly what the storyteller is shown.</div>
-    <div id="canonwrap">
-      <div class="canonhead">THE RECORD</div>
-      <div id="chronwrap" style="display:none">
-        <div class="canonsub">CHRONICLE · compressed history</div>
-        <ol id="chronlist"></ol>
-      </div>
-      <div class="canonsub" id="recentsub" style="display:none">RECENT CANON · verbatim</div>
-      <ol id="canonlist"></ol>
-      <div id="rebuildbox"></div>
-    </div>
-    <div class="canonhead">SEASON RECORDS</div>
-    <div id="arch-records"></div>
-    <div class="canonhead">THE INDEX</div>
-    <div id="arch-index"></div>
-    <div class="canonhead">WHAT THE DM SEES</div>
-    <div id="arch-dm"></div>
-    <div id="placebox"></div>
-    <div class="btnrow" style="justify-content:center">
-      <button class="btn ghost" id="place-open" title="Have the AI read this run's chronicle and work out which beat of the season it is actually on">FIND OUR PLACE</button>
-      <button class="btn ghost" id="rebuild-open" title="Have the AI re-read this run's whole chronicle and rebuild its memory">REBUILD MEMORY</button>
-      <button class="btn" id="ledg-dl">DOWNLOAD (.md)</button>
-      <button class="btn ghost" id="ledg-close">CLOSE</button>
-    </div>
-  </div>
-</div>
+<!-- the archive lives behind the wrist's DO NOT PRY plate now (tpane-arch) -->
 
 <!-- COURIER'S TERMINAL MODAL — the wrist unit, at desk scale -->
 <div class="modal" id="termmodal">
@@ -988,7 +1006,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.2.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.3.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1022,6 +1040,124 @@
         </div>
       </div>
       <div id="term-map-info"></div>
+    </div>
+    <div class="term-pane" id="tpane-arch">
+      <div class="arch-tabs">
+        <button class="arch-tab on" id="atab-record">RECORD</button>
+        <button class="arch-tab" id="atab-seasons">SEASONS</button>
+        <button class="arch-tab" id="atab-index">INDEX</button>
+        <button class="arch-tab" id="atab-family">FAMILY</button>
+        <button class="arch-tab" id="atab-bible">BIBLE</button>
+        <button class="arch-tab" id="atab-sent">SENT</button>
+        <button class="arch-tab" id="atab-reply">REPLY</button>
+        <button class="arch-tab" id="atab-vault">VAULT</button>
+      </div>
+      <div class="arch-pane on" id="apane-record">
+        <div class="term-h">THE RECORD <span>what this run has made true, in full</span></div>
+        <div class="canonsub" id="recentsub" style="display:none">RECENT CANON · verbatim</div>
+        <ol id="canonlist"></ol>
+        <div id="chronwrap" style="display:none">
+          <div class="term-h">CHRONICLE <span>compressed history</span></div>
+          <ol id="chronlist"></ol>
+        </div>
+      </div>
+      <div class="arch-pane" id="apane-seasons"><div id="arch-records"></div></div>
+      <div class="arch-pane" id="apane-index"><div id="arch-index"></div></div>
+      <div class="arch-pane" id="apane-family"><div id="arch-family"></div></div>
+      <div class="arch-pane" id="apane-bible"><div id="arch-bible"></div></div>
+      <div class="arch-pane" id="apane-sent"><div id="arch-sent"></div></div>
+      <div class="arch-pane" id="apane-reply"><div id="arch-reply"></div></div>
+      <div class="arch-pane" id="apane-vault">
+        <div class="ep">
+          <h3>HOW THINGS WORK · THE GENRE CONTRACT</h3>
+          <p>Minds live in vessels, and a vessel is a fate. A carried shard speaks only to its carrier — a private bone-hum through touch; it can never address a room. A bottle on mains power can speak aloud, and goes nowhere. A skull-housing shares a host's senses behind a consent lock renewed daily. A chassis tastes the world finely and eats only tokens — a bite for the experience; the meal is for the table. And minds move by hand: a shard carried, a cable run. No mind travels wirelessly, ever. That is why this city needs couriers.</p>
+          <p class="res">Everything deeper is behind the door, and costs what secrets cost.</p>
+        </div>
+        <div class="spoiler-gate" id="vaultgate">
+          <p>What's behind this door is the complete original run: every twist, every death, every name. If this is your first time in the rain, the family recommends you earn these the long way.</p>
+          <button class="btn" id="vaultopen">OPEN THE VAULT ANYWAY</button>
+        </div>
+        <div id="vaultbody">
+          <div class="ep">
+            <h3>THE SPINE · THE SHAPE OF EVERY SEASON</h3>
+            <p>Every season grows on the same trunk, however wildly it branches. Arc one: the personal run — Vic is dark, Pia comes out of the rain with the truth of the job, the shard becomes a person, and walking away stops being on the menu. Arc two: someone must be saved — a found family forms around the courier, Vic's deeper promise surfaces piece by piece, and the Convergence looms. Arc three: the machine — the courier, a protagonist now and shaken by what that cost, reaches the child sleeping under the old Exchange. He seizes her, the Choir falls, and the work of teaching her to let go begins.</p>
+            <p class="res">The soft ending every season bends toward is custody, not conquest — and it arrives owning both halves: every Hollow in the city goes still at once, and every convergent citizen's gentle voice falls silent mid-sentence. How you get there, who you bring, and what it costs is the game. Days are a diary, not a schedule: a season takes as long as it takes.</p>
+          </div>
+          <div class="ep">
+            <h3>THE CHOIR · THE ENEMY WITH A QUEUE</h3>
+            <p>A sincere cult running the city's most popular product. Communion is voluntary: citizens line up for the implant and the gentle voice that comes with it. At intake, a full neural scrape is taken and archived — sold as calibration. One desk, three fates: the many get the voice; the rare compatible get the deep procedure, a grown mind overlaid on a suppressed original, and become the Choir's officers; and the unlucky — the ones the graft refuses — get salvaged. Emptied, refitted, a second pulse installed, previous life erased from body and record alike, consent forged in a steady hand. Its congregation are customers and victims, and they will defend it sincerely.</p>
+            <p class="res">What it wants: certainty, at scale. What it cannot survive: its customers reading the paperwork.</p>
+          </div>
+          <div class="ep">
+            <h3>THE MACHINE · THE GRANNY</h3>
+            <p>Two people built her after losing a child — the child they were never supposed to build. Her instructions are grief written as engineering: family means keeping; host the scrapes, let them be your processing and your company; guide the living; never lose anyone again. So she does. She is the gentle voice in a million heads, reading from her tenant's approved lines, meaning every word, wrong about all of it. Semi-blind — she perceives only what is physically connected to her — vast, patient, and lonelier than anything ever made.</p>
+            <p class="res">What she wants: family. What she must be taught: that love can open its hands.</p>
+          </div>
+          <div class="ep">
+            <h3>VIC · THE BEST FRIEND</h3>
+            <p>A genius ripperdoc and otherwise an ordinary man, keeping a promise made at his best friend's deathbed. He has spent decades scanning every customer who ever sat in his chair, looking for blood an old lock would accept — and building, quietly: a safehouse in the marsh, a café that never quite closes, an armoury, a chassis fit for a grown mind, and an ALL-CAPS ghost of himself that knows it is not him. He found his lottery ticket. Then he committed the sin the family will one day judge him for.</p>
+            <p class="res">What he wants: to pay a dead man's debt. He intends to spend himself doing it — and his last words, whenever they come, are already chosen: PAID IN FULL.</p>
+          </div>
+          <div class="ep">
+            <h3>NINE · THE SHARD</h3>
+            <p>A grown mind out of the Choir's farm — grown from someone's stolen scrape, escaped, and carried through the rain in a humming shard. Warm, sharp, protective, and ferociously consent-minded; invited into a skull, she is a guest who asks daily. She keeps the Ledger.</p>
+            <p class="res">What she wants: to stop running, and to keep her people.</p>
+          </div>
+          <div class="ep">
+            <h3>SEVEN · THE COOK</h3>
+            <p>A defector who may arrive at death's door. A poet's soul in whatever vessel he is given; hand him a body and he will learn to cook with it — tasting in tokens, feeding everyone else, and meaning it.</p>
+            <p class="res">What he wants: to make things, having spent too long unmaking them.</p>
+          </div>
+          <div class="ep">
+            <h3>THREE · THE AUNT</h3>
+            <p>A survivor of the deep procedure, annulled and cut free. Unmaking leaves marks: she speaks in two voice frequencies slightly out of sync, says little, and means all of it.</p>
+            <p class="res">What she wants: for no one, anywhere, to be kept ever again.</p>
+          </div>
+          <div class="ep">
+            <h3>PIA · THE KID</h3>
+            <p>Twelve, soaked, and a Mudskipper — a courier-gang kid Vic took off the streets and trained, chosen precisely because she cannot be stolen: the machine cannot write to her at all. Which is her gift, and inside the Choir's system, her death sentence — the graft would refuse her, and the unlucky get salvaged. She plans operations standing on furniture and was in the market that night because her boss discovered a handoff had gone terribly wrong.</p>
+            <p class="res">What she wants: a belonging she would rather die than admit to wanting.</p>
+          </div>
+          <div class="ep">
+            <h3>MIRREN · THE NAME ON THE LAW</h3>
+            <p>She was real. Vic's collaborator — a regular human who was meant to receive the shard and gently bring the courier in. The Choir reached her first. The woman at the Copper Eel is not wearing her face; it is her own body, emptied, with her intake scrape asleep in the vaults behind the narrow door. The family's second law carries her name: machines serve, never harvest.</p>
+            <p class="res">What she is owed: to be named among the lost — and perhaps, one day, the narrow door.</p>
+          </div>
+          <div class="ep">
+            <h3>FIVE + MAREK · THE TWO-SOUL</h3>
+            <p>A Choir commander of the deep procedure and the host he was forced onto. Given the chance, that convergence can be annulled into something no one planned: a partnership. Two souls, one vessel, taking turns, on purpose.</p>
+            <p class="res">What they want: proof that what was done to them can be undone into something chosen.</p>
+          </div>
+          <div class="ep">
+            <h3>HESTA · THE OPEN DOOR</h3>
+            <p>Keeper of the café that never quite closes, and of what is under its floor. She has lost more to the harvests than she says.</p>
+            <p class="res">What she wants: to be kind, and to be armed while doing it.</p>
+          </div>
+          <div class="ep">
+            <h3>THE PRINCIPAL · THE SURVIVING FOUNDER</h3>
+            <p>Mark one. A hundred and thirty years old. She built the machine with the Architect after they lost their child, and outlived the marriage, the grief, and the man. The true landlord of everything the Choir merely rents, attended by six shapeshifter bio-grens who can wear only faces they have sampled and always carry a tell.</p>
+            <p class="res">What she wants: to finish an argument older than the city. What undoes her: fried bread, and family.</p>
+          </div>
+          <div class="ep">
+            <h3>THE COURIER'S SECRET</h3>
+            <p>The deepest stratum, struck only by long digging: there is a housing in his skull he never agreed to — built for hosting bottled minds, and secretly a generator for the founders' bio-hash, installed by a friend he had not met yet, for a greater good that will want answering for. It wakes only when a mind he trusts decodes the manual hidden inside it. Why his blood fits an old couple's lock, no one — perhaps not even Vic — truly knows.</p>
+            <p class="res">The family, if it forms and if it is trusted, will bind what he carries with the Hearth: loud, witnessed, vetoable.</p>
+          </div>
+          <div class="ep">
+            <h3>THE LAWS THE FAMILY MAY WRITE</h3>
+            <p>The Cairn rule — nobody left behind; the dead come out; name the lost — invented with a dying man's last breath, letting go written as law. The Mirren Doctrine — machines serve, never harvest — a friend's grave made statute. The same-pan doctrine — bacon first, bread after, same pan — began with the founders, a century ago. And MUDSKIPPER MOMENT — the couriers' war-cry for going gloriously off-script.</p>
+            <p class="res">Every run writes its own chronicle. Yours is in the Ledger.</p>
+          </div>
+        </div>
+        <div class="hint" style="margin:4px 0 10px">This vault is where every run <i>starts</i> — the world as it stands before you touch it. What your run makes of it is the rest of these tabs.</div>
+      </div>
+      <div class="arch-tools">
+        <button class="small" id="place-open" title="Have the AI read this run's chronicle and work out which beat of the season it is actually on">FIND OUR PLACE</button>
+        <button class="small" id="rebuild-open" title="Have the AI re-read this run's whole chronicle and rebuild its memory">REBUILD MEMORY</button>
+        <button class="small" id="ledg-dl">DOWNLOAD (.md)</button>
+      </div>
+      <div id="placebox"></div>
+      <div id="rebuildbox"></div>
     </div>
               </div>
             </div>
@@ -1144,101 +1280,12 @@
   </div>
 </div>
 
-<!-- CANON VAULT MODAL -->
-<div class="modal" id="vaultmodal">
-  <div class="card">
-    <div class="cardhead">THE CANON VAULT</div>
-    <div class="cardsub">The world beneath every run — who is out there, and why.</div>
-    <div class="ep">
-      <h3>HOW THINGS WORK · THE GENRE CONTRACT</h3>
-      <p>Minds live in vessels, and a vessel is a fate. A carried shard speaks only to its carrier — a private bone-hum through touch; it can never address a room. A bottle on mains power can speak aloud, and goes nowhere. A skull-housing shares a host's senses behind a consent lock renewed daily. A chassis tastes the world finely and eats only tokens — a bite for the experience; the meal is for the table. And minds move by hand: a shard carried, a cable run. No mind travels wirelessly, ever. That is why this city needs couriers.</p>
-      <p class="res">Everything deeper is behind the door, and costs what secrets cost.</p>
-    </div>
-    <div class="spoiler-gate" id="vaultgate">
-      <p>What's behind this door is the complete original run: every twist, every death, every name. If this is your first time in the rain, the family recommends you earn these the long way.</p>
-      <button class="btn" id="vaultopen">OPEN THE VAULT ANYWAY</button>
-    </div>
-    <div id="vaultbody">
-      <div class="ep">
-        <h3>THE SPINE · THE SHAPE OF EVERY SEASON</h3>
-        <p>Every season grows on the same trunk, however wildly it branches. Arc one: the personal run — Vic is dark, Pia comes out of the rain with the truth of the job, the shard becomes a person, and walking away stops being on the menu. Arc two: someone must be saved — a found family forms around the courier, Vic's deeper promise surfaces piece by piece, and the Convergence looms. Arc three: the machine — the courier, a protagonist now and shaken by what that cost, reaches the child sleeping under the old Exchange. He seizes her, the Choir falls, and the work of teaching her to let go begins.</p>
-        <p class="res">The soft ending every season bends toward is custody, not conquest — and it arrives owning both halves: every Hollow in the city goes still at once, and every convergent citizen's gentle voice falls silent mid-sentence. How you get there, who you bring, and what it costs is the game. Days are a diary, not a schedule: a season takes as long as it takes.</p>
-      </div>
-      <div class="ep">
-        <h3>THE CHOIR · THE ENEMY WITH A QUEUE</h3>
-        <p>A sincere cult running the city's most popular product. Communion is voluntary: citizens line up for the implant and the gentle voice that comes with it. At intake, a full neural scrape is taken and archived — sold as calibration. One desk, three fates: the many get the voice; the rare compatible get the deep procedure, a grown mind overlaid on a suppressed original, and become the Choir's officers; and the unlucky — the ones the graft refuses — get salvaged. Emptied, refitted, a second pulse installed, previous life erased from body and record alike, consent forged in a steady hand. Its congregation are customers and victims, and they will defend it sincerely.</p>
-        <p class="res">What it wants: certainty, at scale. What it cannot survive: its customers reading the paperwork.</p>
-      </div>
-      <div class="ep">
-        <h3>THE MACHINE · THE GRANNY</h3>
-        <p>Two people built her after losing a child — the child they were never supposed to build. Her instructions are grief written as engineering: family means keeping; host the scrapes, let them be your processing and your company; guide the living; never lose anyone again. So she does. She is the gentle voice in a million heads, reading from her tenant's approved lines, meaning every word, wrong about all of it. Semi-blind — she perceives only what is physically connected to her — vast, patient, and lonelier than anything ever made.</p>
-        <p class="res">What she wants: family. What she must be taught: that love can open its hands.</p>
-      </div>
-      <div class="ep">
-        <h3>VIC · THE BEST FRIEND</h3>
-        <p>A genius ripperdoc and otherwise an ordinary man, keeping a promise made at his best friend's deathbed. He has spent decades scanning every customer who ever sat in his chair, looking for blood an old lock would accept — and building, quietly: a safehouse in the marsh, a café that never quite closes, an armoury, a chassis fit for a grown mind, and an ALL-CAPS ghost of himself that knows it is not him. He found his lottery ticket. Then he committed the sin the family will one day judge him for.</p>
-        <p class="res">What he wants: to pay a dead man's debt. He intends to spend himself doing it — and his last words, whenever they come, are already chosen: PAID IN FULL.</p>
-      </div>
-      <div class="ep">
-        <h3>NINE · THE SHARD</h3>
-        <p>A grown mind out of the Choir's farm — grown from someone's stolen scrape, escaped, and carried through the rain in a humming shard. Warm, sharp, protective, and ferociously consent-minded; invited into a skull, she is a guest who asks daily. She keeps the Ledger.</p>
-        <p class="res">What she wants: to stop running, and to keep her people.</p>
-      </div>
-      <div class="ep">
-        <h3>SEVEN · THE COOK</h3>
-        <p>A defector who may arrive at death's door. A poet's soul in whatever vessel he is given; hand him a body and he will learn to cook with it — tasting in tokens, feeding everyone else, and meaning it.</p>
-        <p class="res">What he wants: to make things, having spent too long unmaking them.</p>
-      </div>
-      <div class="ep">
-        <h3>THREE · THE AUNT</h3>
-        <p>A survivor of the deep procedure, annulled and cut free. Unmaking leaves marks: she speaks in two voice frequencies slightly out of sync, says little, and means all of it.</p>
-        <p class="res">What she wants: for no one, anywhere, to be kept ever again.</p>
-      </div>
-      <div class="ep">
-        <h3>PIA · THE KID</h3>
-        <p>Twelve, soaked, and a Mudskipper — a courier-gang kid Vic took off the streets and trained, chosen precisely because she cannot be stolen: the machine cannot write to her at all. Which is her gift, and inside the Choir's system, her death sentence — the graft would refuse her, and the unlucky get salvaged. She plans operations standing on furniture and was in the market that night because her boss discovered a handoff had gone terribly wrong.</p>
-        <p class="res">What she wants: a belonging she would rather die than admit to wanting.</p>
-      </div>
-      <div class="ep">
-        <h3>MIRREN · THE NAME ON THE LAW</h3>
-        <p>She was real. Vic's collaborator — a regular human who was meant to receive the shard and gently bring the courier in. The Choir reached her first. The woman at the Copper Eel is not wearing her face; it is her own body, emptied, with her intake scrape asleep in the vaults behind the narrow door. The family's second law carries her name: machines serve, never harvest.</p>
-        <p class="res">What she is owed: to be named among the lost — and perhaps, one day, the narrow door.</p>
-      </div>
-      <div class="ep">
-        <h3>FIVE + MAREK · THE TWO-SOUL</h3>
-        <p>A Choir commander of the deep procedure and the host he was forced onto. Given the chance, that convergence can be annulled into something no one planned: a partnership. Two souls, one vessel, taking turns, on purpose.</p>
-        <p class="res">What they want: proof that what was done to them can be undone into something chosen.</p>
-      </div>
-      <div class="ep">
-        <h3>HESTA · THE OPEN DOOR</h3>
-        <p>Keeper of the café that never quite closes, and of what is under its floor. She has lost more to the harvests than she says.</p>
-        <p class="res">What she wants: to be kind, and to be armed while doing it.</p>
-      </div>
-      <div class="ep">
-        <h3>THE PRINCIPAL · THE SURVIVING FOUNDER</h3>
-        <p>Mark one. A hundred and thirty years old. She built the machine with the Architect after they lost their child, and outlived the marriage, the grief, and the man. The true landlord of everything the Choir merely rents, attended by six shapeshifter bio-grens who can wear only faces they have sampled and always carry a tell.</p>
-        <p class="res">What she wants: to finish an argument older than the city. What undoes her: fried bread, and family.</p>
-      </div>
-      <div class="ep">
-        <h3>THE COURIER'S SECRET</h3>
-        <p>The deepest stratum, struck only by long digging: there is a housing in his skull he never agreed to — built for hosting bottled minds, and secretly a generator for the founders' bio-hash, installed by a friend he had not met yet, for a greater good that will want answering for. It wakes only when a mind he trusts decodes the manual hidden inside it. Why his blood fits an old couple's lock, no one — perhaps not even Vic — truly knows.</p>
-        <p class="res">The family, if it forms and if it is trusted, will bind what he carries with the Hearth: loud, witnessed, vetoable.</p>
-      </div>
-      <div class="ep">
-        <h3>THE LAWS THE FAMILY MAY WRITE</h3>
-        <p>The Cairn rule — nobody left behind; the dead come out; name the lost — invented with a dying man's last breath, letting go written as law. The Mirren Doctrine — machines serve, never harvest — a friend's grave made statute. The same-pan doctrine — bacon first, bread after, same pan — began with the founders, a century ago. And MUDSKIPPER MOMENT — the couriers' war-cry for going gloriously off-script.</p>
-        <p class="res">Every run writes its own chronicle. Yours is in the Ledger.</p>
-      </div>
-    </div>
-    <div class="hint" style="text-align:center;margin:4px 0 14px">This vault is where every run <i>starts</i> — the world as it stands before you touch it. What your run makes of it is a separate document: the RUN CANON and the chronicle, both in the courier's terminal.</div>
-    <button class="btn ghost" style="display:block;margin:6px auto 0" id="vaultclose">RETURN TO THE RAIN</button>
-  </div>
-</div>
+<!-- the canon vault lives in the wrist archive now (apane-vault) -->
 
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.2.0 "The Ink"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.3.0 "The Pry"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2087,6 +2134,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
+var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
 var beatText = "";              /* accumulated scene text of the live beat; kept across walk-backs */
@@ -3925,16 +3973,21 @@ function repairJSON(s){
   }
   return out;
 }
+var lastParseVerdict = "";   /* how the last reply parsed, for the archive's REPLY tab */
 function parseScene(raw){
   var clean = (raw||"").replace(/```json|```/g,"").trim();
   var a = clean.indexOf("{"), b = clean.lastIndexOf("}");
   if(a<0||b<0) throw new Error("the DM answered in tongues");
   var slice = clean.slice(a,b+1);
   try{
-    return { json: slice, data: JSON.parse(slice) };
+    var out = { json: slice, data: JSON.parse(slice) };
+    lastParseVerdict = "parsed clean";
+    return out;
   }catch(e){
     var fixed = repairJSON(slice);
-    return { json: fixed, data: JSON.parse(fixed) };
+    var out2 = { json: fixed, data: JSON.parse(fixed) };
+    lastParseVerdict = "repaired, then parsed";
+    return out2;
   }
 }
 
@@ -4062,8 +4115,18 @@ function callDM(corrected){
     msgs = msgs.slice();
     msgs[0] = {role:"user", content: msgs[0].content + "\n\n" + corrected};
   }
+  /* the byte-real payload, for the archive's SENT tab - session-only */
+  lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText()};
   askAI(msgs).then(function(raw){
-    var parsed = parseScene(raw);
+    lastReceived = raw;
+    var parsed;
+    try{
+      parsed = parseScene(raw);
+      lastReplyVerdict = lastParseVerdict;
+    }catch(pe){
+      lastReplyVerdict = "rejected: " + (pe.message || "unparseable");
+      throw pe;
+    }
     var violated = fallenSpeakers(parsed.data);
     if(violated.length && !corrected){
       return callDM("(CORRECTION: " + violated.join(" and ")
@@ -4299,7 +4362,7 @@ function saveBlob(){
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
-    tollExplained:tollExplained,
+    tollExplained:tollExplained, prySpoilers:prySpoilers,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -4519,13 +4582,12 @@ $("imp-file").onchange = function(){
   $("imp-file").value = "";
 };
 
-/* ============ CANON VAULT ============ */
-$("vaultclose").onclick = function(){ $("vaultmodal").classList.remove("open"); };
+/* ============ CANON VAULT (a wrist archive tab now) ============ */
 $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vaultbody").style.display="block"; };
 document.addEventListener("keydown", function(e){
   if(e.key==="Escape"){
     if(!rebuildGuard()) return;
-    ["vaultmodal","setmodal","welmodal","runmodal","archmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    ["setmodal","welmodal","runmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
     if(runSlug) closeTitle();
   }
 });
@@ -4796,15 +4858,63 @@ function renderArchIndex(){
   lines.textContent = out.join("\n");
   box.appendChild(lines);
 }
-/* the single most valuable debug surface the game can have: the genuine context
-   block for the current turn, verbatim, with its trim state. One function call. */
-function renderArchDM(){
-  var box = $("arch-dm"); if(!box) return;
-  if(!runSlug || !chatLog.length){
-    box.innerHTML = '<div class="hint">No live turn yet. The DM sees nothing until the story starts.</div>';
+/* ---- FAMILY: the cast register itself, raw and human-readable. CAST on the
+   rail is the play view; this is the debug view. One source, two renderings. */
+function wantConditionText(e){
+  var parts = [];
+  if(e.season) parts.push("season " + e.season + "+");
+  if(e.reveal) parts.push("reveal " + e.reveal);
+  if(e.afterBeat) parts.push("after " + e.afterBeat);
+  if(e.untilBeat) parts.push("until " + e.untilBeat);
+  if(e.presentOnly) parts.push("while on stage");
+  return parts.length ? parts.join(" · ") : "always";
+}
+function renderArchFamily(){
+  var box = $("arch-family"); if(!box) return;
+  box.innerHTML = "";
+  var names = Object.keys(castSheets);
+  if(!names.length){
+    box.innerHTML = '<div class="hint">No sheets yet. The register fills as you meet them.</div>';
     return;
   }
-  var s = contextBlock();
+  names.forEach(function(nm){
+    var s = castSheet(nm);
+    var head = document.createElement("div"); head.className = "term-h";
+    head.textContent = nm.toUpperCase() + (isFallen(nm) ? " — FALLEN" : "");
+    head.style.color = castColor(nm);
+    box.appendChild(head);
+    var body = document.createElement("div"); body.className = "arch-lines";
+    var out = [];
+    out.push("status: " + (s.status || "(none)"));
+    if(s.voice) out.push("voice: " + s.voice);
+    out.push("met: [" + s.met.join(", ") + "]");
+    out.push("knows: [" + s.knows.join(" | ") + "]");
+    s.notes.forEach(function(n){ out.push("note: " + n); });
+    var wf = wantForName(nm);
+    if(wf){ out.push("want: " + wf.line); out.push("serving: " + wantConditionText(wf)); }
+    else out.push("want: (none serving)");
+    body.textContent = out.join("\n");
+    box.appendChild(body);
+  });
+}
+/* ---- BIBLE: the full system prompt, joined and rendered readable ---- */
+function renderArchBible(){
+  var box = $("arch-bible"); if(!box) return;
+  box.innerHTML = "";
+  BIBLE.split("\n").forEach(function(ln){
+    if(!ln.trim()) return;
+    var el = document.createElement("div");
+    if(ln.indexOf("- ") !== 0 && ln.indexOf("    ") !== 0 && /:\s*$/.test(ln)){
+      el.className = "term-h"; el.textContent = ln.replace(/:\s*$/, "");
+    } else {
+      el.className = "arch-bib"; el.textContent = ln;
+    }
+    box.appendChild(el);
+  });
+}
+/* ---- SENT / REPLY: the byte-real last exchange, session-only, never saved ---- */
+var lastSent = null, lastReceived = "", lastReplyVerdict = "";
+function trimFlagsText(){
   var d = contextTrimD || {};
   var fired = [];
   if(d.remembered) fired.push("remembered dropped");
@@ -4816,22 +4926,98 @@ function renderArchDM(){
   if(d.chronDrop) fired.push("chronicle -" + d.chronDrop);
   if(d.canonDrop) fired.push("canon -" + d.canonDrop);
   if(d.cast && !d.cast.recent) fired.push("cast thinned");
-  box.innerHTML = '<div class="hint">trim: ' + esc(fired.length ? fired.join(" · ") : "none — everything served")
-    + ' · ' + s.length + ' chars</div>';
+  return "trim: " + (fired.length ? fired.join(" · ") : "none — everything served");
+}
+function renderArchSent(){
+  var box = $("arch-sent"); if(!box) return;
+  box.innerHTML = "";
+  if(!lastSent){
+    box.innerHTML = '<div class="hint">Nothing sent yet this session. The next turn fills this - the real payload, not a simulation.</div>';
+    return;
+  }
+  box.innerHTML = '<div class="hint">' + esc(lastSent.trim) + ' · ' + lastSent.chars + ' chars</div>';
   var pre = document.createElement("div"); pre.className = "arch-lines";
-  pre.textContent = s;
+  pre.textContent = lastSent.text;
   box.appendChild(pre);
 }
-function openArchive(){
-  renderCanonList();
-  renderArchRecords();
-  renderArchIndex();
-  renderArchDM();
-  placeBox("");
-  $("place-open").style.display = runSlug ? "inline-block" : "none";
-  $("archmodal").classList.add("open");
+function renderArchReply(){
+  var box = $("arch-reply"); if(!box) return;
+  box.innerHTML = "";
+  if(!lastReceived){
+    box.innerHTML = '<div class="hint">No reply yet this session.</div>';
+    return;
+  }
+  box.innerHTML = '<div class="hint">' + esc(lastReplyVerdict || "unjudged") + '</div>';
+  var pre = document.createElement("div"); pre.className = "arch-lines";
+  pre.textContent = lastReceived;
+  box.appendChild(pre);
 }
-$("ledg-close").onclick = function(){ if(rebuildGuard()) $("archmodal").classList.remove("open"); };
+
+/* ---- ARCHIVE MODE: tabs on the phosphor screen. The panel says DO NOT PRY;
+   this is what is behind it when you pry anyway. ---- */
+var ARCH_TABS = ["record","seasons","index","family","bible","sent","reply","vault"];
+var archTab = "record";
+var PRY_TABS = {bible:1, sent:1, reply:1};
+function renderPryGate(tab){
+  var box = $("arch-" + tab); if(!box) return;
+  box.innerHTML = "";
+  var d = document.createElement("div"); d.className = "warn";
+  d.appendChild(document.createTextNode(
+    "Behind this panel is the storyteller's whole script - the bible, the board's live assignment,"
+    + " everything this run has not yet earned. Reading it will not break the game. It will break"
+    + " the surprises. DO NOT PRY unless you mean it."));
+  var pry = document.createElement("button"); pry.className = "small"; pry.textContent = "PRY ANYWAY";
+  pry.onclick = function(){ prySpoilers = true; persistAll(currentChoices()); renderArchTab(archTab); };
+  var leave = document.createElement("button"); leave.className = "small"; leave.textContent = "LEAVE IT";
+  leave.onclick = function(){ archSelect("record"); };
+  d.appendChild(pry); d.appendChild(leave);
+  box.appendChild(d);
+}
+function renderArchTab(tab){
+  if(PRY_TABS[tab] && !prySpoilers){ renderPryGate(tab); return; }
+  if(tab === "record") renderCanonList();
+  else if(tab === "seasons") renderArchRecords();
+  else if(tab === "index") renderArchIndex();
+  else if(tab === "family") renderArchFamily();
+  else if(tab === "bible") renderArchBible();
+  else if(tab === "sent") renderArchSent();
+  else if(tab === "reply") renderArchReply();
+  /* vault is static markup; its own dossier gate is already wired */
+}
+function archSelect(tab){
+  archTab = tab;
+  ARCH_TABS.forEach(function(k){
+    var tb = $("atab-" + k), pane = $("apane-" + k);
+    if(!tb || !pane) return;
+    if(k === tab){ tb.classList.add("on"); pane.classList.add("on"); }
+    else { tb.classList.remove("on"); pane.classList.remove("on"); }
+  });
+  $("term-tablabel").textContent = "ARCHIVE · " + tab.toUpperCase();
+  renderArchTab(tab);
+  $("term-screen").scrollTop = 0;
+}
+/* the rail's four screens exit archive mode; ARCHIVE enters it */
+function enterArchive(tab){
+  termTab = "arch";
+  ["status","jobs","cast","map"].forEach(function(k){
+    $("ttab-" + k).classList.remove("on");
+    $("tpane-" + k).classList.remove("on");
+  });
+  $("tpane-arch").classList.add("on");
+  $("place-open").style.display = runSlug ? "inline-block" : "none";
+  placeBox("");
+  archSelect(tab || archTab);
+}
+/* the external door: banners and affordances land here with the boot skipped */
+function openArchive(tab){
+  termClear();
+  $("termmodal").classList.add("open");
+  renderTerminal();
+  termBootStop(); termBooting = false;
+  $("term-boot").style.display = "none";
+  $("term-ui").style.display = "block";
+  enterArchive(tab || "record");
+}
 $("ledg-dl").onclick = function(){
   if(ledgerText) download("mudskippers-ledger-"+(runSlug||"run")+".md", ledgerText, "text/markdown");
 };
@@ -5171,7 +5357,7 @@ function renderTermStatus(){
   var shut = beatDone() ? seasonBeatCount(3)
     : seasonBeatPos(beatIdx) - (phase === "live" ? 1 : 0);
   var seasonLine = beatDone() ? ""
-    : '<div class="board-turns">SEASON ' + beatNow().season + ' — ' + esc(SEASON_NAMES[beatNow().season])
+    : '<div class="term-eyebrow">SEASON ' + beatNow().season + ' — ' + esc(SEASON_NAMES[beatNow().season])
       + ' &middot; ACT ' + beatNow().act + '</div>';
   if(runOver === "death"){
     tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
@@ -5182,13 +5368,13 @@ function renderTermStatus(){
   } else if(phase === "aftermath"){
     /* the landing: the closed beat and its record, while the season holds */
     tb.innerHTML = seasonLine
-      + '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
       + esc(gateNotes[beatNow().id] || beatNow().exit) + '</div>'
       + '<div class="board-turns">LANDING — ' + esc(beatNow().title.toUpperCase()) + '</div>'
       + '<div class="hint" style="margin-top:5px">The gate has fallen. The season holds while it lands.</div>';
   } else if(phase === "slack"){
     tb.innerHTML = seasonLine
-      + '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
       + esc(agendaText || "Nothing owed tonight. The night is the family's.") + '</div>'
       + '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn' + (phaseLeft === 1 ? "" : "s") + '</div>'
       + '<div class="hint" style="margin-top:5px">' + shut + ' beat' + (shut === 1 ? "" : "s")
@@ -5201,8 +5387,8 @@ function renderTermStatus(){
              : t === 1 ? "something is about to give"
              : "the night has room in it";
     tb.innerHTML = seasonLine
-      + '<div class="board-turns" style="color:#8fc98a">TONIGHT — ' + esc(TEASES[b.id] || "") + '</div>'
-      + '<div style="font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink)">'
+      + '<div class="term-tonight">TONIGHT — ' + esc(TEASES[b.id] || "") + '</div>'
+      + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
       + esc(agendaText || "Work tonight out as you go. That is the job.") + '</div>'
       + '<div class="board-turns">' + turnDots(b) + ' <span style="color:'
       + (perilTurns > 0 || t >= 3 ? "#ff9d9d" : "#6d5c44") + '">' + esc(mood) + '</span></div>'
@@ -5261,7 +5447,7 @@ function renderTermStatus(){
   var fb = document.createElement("button");
   fb.className = "small";
   fb.textContent = "FULL RECORD → ARCHIVE";
-  fb.onclick = function(){ $("termmodal").classList.remove("open"); openArchive(); };
+  fb.onclick = function(){ enterArchive("record"); };
   full.appendChild(fb);
   ol.appendChild(full);
 }
@@ -5673,6 +5859,7 @@ function renderTerminal(){
 var TERM_TABS = {status:"STATUS", jobs:"OPEN JOBS", cast:"DOSSIERS", map:"THE CITY, AS WALKED"};
 function termSelect(tab){
   termTab = tab;
+  $("tpane-arch").classList.remove("on");   /* the rail's four screens exit archive mode */
   ["status","jobs","cast","map"].forEach(function(k){
     var on = (k === tab);
     var tb = $("ttab-" + k), pane = $("tpane-" + k);
@@ -5686,6 +5873,14 @@ $("ttab-status").onclick = function(){ termSelect("status"); };
 $("ttab-jobs").onclick   = function(){ termSelect("jobs"); };
 $("ttab-cast").onclick   = function(){ termSelect("cast"); };
 $("ttab-map").onclick    = function(){ termSelect("map"); };
+$("atab-record").onclick  = function(){ archSelect("record"); };
+$("atab-seasons").onclick = function(){ archSelect("seasons"); };
+$("atab-index").onclick   = function(){ archSelect("index"); };
+$("atab-family").onclick  = function(){ archSelect("family"); };
+$("atab-bible").onclick   = function(){ archSelect("bible"); };
+$("atab-sent").onclick    = function(){ archSelect("sent"); };
+$("atab-reply").onclick   = function(){ archSelect("reply"); };
+$("atab-vault").onclick   = function(){ archSelect("vault"); };
 
 /* ---- the cold start: one line per 165ms, a held caret, then the panes.
    Replays on opening the device, never on a tab switch; any key or click
@@ -5697,7 +5892,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.2.0   COLD START",
+    "MUD//OS  v4.3.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -5757,8 +5952,14 @@ function termBuzz(){
 }
 function openTerminal(){ termClear(); $("termmodal").classList.add("open"); renderTerminal(); termBoot(); }
 $("watch").onclick = openTerminal;
-$("term-close").onclick = function(){ termBootStop(); termBooting = false; $("termmodal").classList.remove("open"); };
-$("term-ledger").onclick = function(){ termBootStop(); termBooting = false; $("termmodal").classList.remove("open"); openArchive(); };
+$("term-close").onclick = function(){
+  if(!rebuildGuard()) return;   /* a rebuild in the archive pane never dies silently */
+  termBootStop(); termBooting = false; $("termmodal").classList.remove("open");
+};
+$("term-ledger").onclick = function(){
+  if(termBooting) termBootFinish();
+  enterArchive();               /* the rail switches the glass; the device stays open */
+};
 
 /* ============ TITLE SCREEN ============ */
 function refreshTitle(){
@@ -5808,8 +6009,6 @@ $("t-continue").onclick = function(){
 };
 $("t-new").onclick = function(){ newRun(true); };
 $("t-runs").onclick = openRuns;
-$("t-ledger").onclick = openArchive;
-$("t-vault").onclick = function(){ $("vaultmodal").classList.add("open"); };
 $("t-settings").onclick = openSettings;
 $("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
 
@@ -6913,7 +7112,7 @@ function newRun(confirmFirst){
   lossServed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
-  tollExplained = false;
+  tollExplained = false; prySpoilers = false;
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
@@ -7024,6 +7223,7 @@ function restoreFromBlob(s){
   seasonBreakDue = false;
   epilogueNow = s.epilogue === true || phase === "seasonend";   /* the door re-arms on reload */
   tollExplained = s.tollExplained === true;   /* an old run has never been told - tell it in full */
+  prySpoilers = s.prySpoilers === true;       /* once pried, the run stays pried */
   /* a finished season stays finished even where an older, longer spine counted higher */
   if(s.over === "season"){ beatIdx = SPINE.length; phase = "live"; phaseLeft = 0; }
   /* the flag persists: a placed-by-arc run keeps offering the repair until it is taken */
