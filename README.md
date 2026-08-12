@@ -162,15 +162,14 @@ The DM does not decide the plot and cannot wander off it:
   does not get to close a beat you're still standing in) and cost nothing but a turn.
   One is earnest, one is sideways; neither leaves you closer to the gate. A mudskipper
   moment is a stall with a joke in it: it holds the beat open and doesn't even cost the
-  turn, unless you've called it. The DM labels the doors and the client sorts by the
-  label, so the order holds even on a distracted turn — and an unlabelled rail is just
-  an ordinary rail, which is what the hardcoded opening gets.
+  turn, unless you've called it. The slots belong to the game, not the storyteller:
+  the DM is told what each position must contain and writes only the lines. Nothing
+  about the rail depends on it remembering to label anything.
 - **The way out is the game's own control, and it asks twice.** Below the choices,
-  while a beat is live, sits one red option: put the whole job down and walk. The
-  button and everything it costs belong to the game — but its *wording* comes from the
-  DM, written for the room you're actually standing in, because walking out of a knife
-  fight and walking out of a kitchen are different sentences. It takes two deliberate
-  clicks. Use it and the family feels it, and the game says so on a red card. Use it
+  while a beat is live, sits one red option: put the whole job down and walk. It is
+  authored per beat, so what leaving *means* changes as the story does — handing the
+  shard back in a market alley and walking out of the Exchange are different sentences
+  — and it can never come back missing. It takes two deliberate clicks. Use it and the family feels it, and the game says so on a red card. Use it
   again the very next turn and the courier really does go — that is the end of the run.
   Anything else in between and it is forgotten.
 - **Calling it puts the exit away.** Arm the green call and the exit choice greys out
