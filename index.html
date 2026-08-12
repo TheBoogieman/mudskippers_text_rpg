@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.2 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.3 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3531,24 +3531,21 @@ var DOOR_SLOTS = ["exit", "stall", "stall"];
 var PIN_STALLS = ["Say nothing yet. Watch, and let it come to you.",
                   "Ask the question under the question.",
                   "Take a breath and read the room properly."];
-/* WHEN THE DOOR EXISTS. It used to key off the floor, which put it on the rail
-   while the pressure strip was still saying THE NIGHT HAS ROOM IN IT - the rail
-   and the strip reading off two different clocks and contradicting each other in
-   the same glance. It reads off the strip's ladder now: while the night is roomy
-   there is no door at all and the rail is three ways to dig in; when the world
-   starts counting the door appears, cold, for one turn; then it opens.
-   "" = not on the rail · "cold" = printed, not takeable · "open" = takeable. */
+/* WHEN THE DOOR OPENS. It is on the rail the whole way through - you should always
+   be able to read the shape of the ending you are walking toward - but it is shut
+   and grey until the night is nearly out of road. It ACTIVATES on the last two
+   turns only: the world about to move, and out of room. Before that, taking it
+   would just have been another stall wearing the beat's name.
+   (It first keyed off the beat's floor, which unlocked it while the pressure strip
+   still said THE NIGHT HAS ROOM IN IT - two clocks disagreeing in one glance.)
+   "cold" = printed, shut · "open" = takeable, and it asks twice. */
 function exitStage(){
   if(!doorsLive()) return "";
-  var b = beatNow(), left = b.budget + 1 - beatTurns;
-  if(left >= 3) return "";
-  if(left === 2) return "cold";
-  return "open";
+  var b = beatNow();
+  return (b.budget + 1 - beatTurns) <= 1 ? "open" : "cold";
 }
-/* positional, and the positions move with the door: no door, no exit slot */
-function doorSlots(){
-  return exitStage() ? ["exit", "stall", "stall"] : ["stall", "stall", "stall"];
-}
+/* positional and client-owned; the door holds slot one for the whole beat */
+function doorSlots(){ return ["exit", "stall", "stall"]; }
 function pinnedExit(b){
   var xs = (b && b.exits && b.exits.length) ? b.exits : null;
   if(!xs) return "Finish it — " + (b ? b.exit : "end tonight's business") + ".";
@@ -3558,8 +3555,7 @@ function pinnedExit(b){
 function railFor(dm){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
   if(!doorsLive()) return dm.slice(0, 4);
-  /* no door yet means the whole rail is theirs: three ways to dig in, not two */
-  var b = beatNow(), out = exitStage() ? [pinnedExit(b)] : [], i, t;
+  var b = beatNow(), out = [pinnedExit(b)], i, t;
   for(i = 0; i < dm.length && out.length < 3; i++){
     t = String(dm[i] || "").trim();
     /* a dead end that IS the pinned line would put the same door on twice */
@@ -3585,7 +3581,6 @@ function showChoices(choices){
   if(choices && choices.length) lastRail = choices.slice(0, 4);
   var live = doorsLive();
   var slots = live ? doorSlots() : [];
-  var stage = live ? exitStage() : "";
   (choices||[]).slice(0,4).forEach(function(c,i){
     var btn = document.createElement("button");
     var kind = live ? (slots[i] || "") : "";
@@ -3600,7 +3595,9 @@ function showChoices(choices){
          and the strip and the rail agree about what kind of turn this is.
          And it asks twice, like the way out does, because a door that ends the
          night should never be a thing you discover you have clicked. */
-      if(defuseArmed || stage === "cold"){
+      /* shut until the last two turns; and shut once the call is armed, because
+         two ways to end the same night on one rail is just a way to misclick */
+      if(defuseArmed || exitStage() !== "open"){
         btn.disabled = true;
         btn.classList.add("notyet");
       } else {
@@ -3621,7 +3618,7 @@ function showChoices(choices){
       if(defuseArmed){
         eh.className = "choice-hint exithint";
         eh.textContent = "You called it. The next move settles the night either way.";
-      } else if(stage === "cold"){
+      } else if(exitStage() !== "open"){
         return;                        /* shut and grey says it by itself */
       } else if(exitArmed){
         eh.className = "choice-hint exithint open";
@@ -5086,14 +5083,14 @@ function boardBlock(){
      reply, so this is the wording they are looking at - and if they took it, it is
      what they said. The next rail rotates to another wording of the same move. */
   out.push("THE RAIL — the board writes the way out of tonight itself and pins it above yours."
-    + " It only appears once the night starts running out of room, and this is its wording:"
+    + " It sits in slot one all beat, shut, and unlocks for the last two turns. This is its wording:"
     + "\n  >> \"" + pinnedExit(b) + "\""
-    + (exitStage() ? "  (on the rail right now" + (exitStage() === "cold" ? ", not yet takeable)" : ", takeable)")
-                   : "  (not on the rail this turn - the night still has room)")
+    + (exitStage() === "open" ? "  (unlocked right now - they can take it this turn)"
+                             : "  (shut this turn - the night still has road left)")
     + "\nYou do not write that line, you do not repeat it, and you do not put anything like it"
     + " in \"choices\". If the player takes it, play it as written and land the gate."
-    + "\nWhat you send in \"choices\" is THREE DEAD ENDS, and nothing else - the board uses the"
-    + " first two when its own door is on the rail and all three when it is not. Three lines that"
+    + "\nWhat you send in \"choices\" is TWO DEAD ENDS, and nothing else - the door has"
+    + " slot one and yours go under it. Two lines that"
     + " GO NOWHERE - and this is the hard part and the whole point: they buy understanding, never"
     + " ground. Ask the question under the question, get the detail, press the person, check the"
     + " thing, say the human thing. If a line would leave them measurably closer to " + b.exit
@@ -5356,7 +5353,7 @@ function boardTurn(data){
      punished a scene that had genuinely reached the exit, on a turn where taking
      the exit was not on the table. Checked before the tick, so it reads the rail
      the player was actually looking at. */
-  if(pickKind === "stall" && said && exitStage()){ said = false; stalledNow = true; }
+  if(pickKind === "stall" && said && exitStage() === "open"){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
      absence and idleness, never joy - the dots hold still while the table plays.
      A bit is a stall with a joke in it: it holds the gate AND costs no road. */
@@ -7188,7 +7185,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.2");
+  R(s, "build", "v4.13.3");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7259,7 +7256,8 @@ function dbgReport(){
 
   s = S("THE THREE DOORS");
   R(s, "slots (positional, client-owned)", doorSlots());
-  R(s, "exit stage", exitStage() || "not on the rail — the night has room",
+  R(s, "exit stage", exitStage() === "open" ? "OPEN — takeable, asks twice"
+                                            : "shut — the night still has road",
     exitStage() === "open" ? "ok" : "");
   R(s, "doors live", doorsLive(), doorsLive() ? "ok" : "");
   if(b){
@@ -8410,7 +8408,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.2   COLD START",
+    "MUD//OS  v4.13.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9877,7 +9875,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.2",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.3",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
