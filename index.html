@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.5 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.5</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.4 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.5 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3569,9 +3569,44 @@ function cleanChoice(t){
   t = t.replace(/^\(([^)]{0,160})\)\s*/, function(m, inner){ return META_ASIDE.test(inner) ? "" : m; });
   return t.trim();
 }
-/* is this "dead end" actually the door wearing a different hat? Checked against
-   EVERY authored wording, not just tonight's, and loosely enough to catch a
-   paraphrase that swallows or is swallowed by one of them. */
+/* THE GATE'S VOCABULARY. Substring matching was never going to hold, and the
+   line that proved it was "'Nine.' You say the name out loud. Let whoever the
+   shard is hear it." - which is the gate move, in a stall slot, sharing not one
+   contiguous run with any authored wording. What it DOES share is the beat's own
+   language: name / out loud / the shard / hear.
+   So the door is fingerprinted by its word pairs. Every authored exit, plus the
+   aim and the gate text, is milled into bigrams; a line that hits two of them is
+   reaching for tonight's ending whatever else it says. Bigrams survive rewording
+   in a way whole strings do not, and they are the beat's OWN words, so this is
+   still the board recognising itself rather than the client guessing at meaning. */
+var GRAM_STOP = {the:1,a:1,an:1,and:1,or:1,of:1,to:1,in:1,on:1,at:1,it:1,is:1,i:1,
+  my:1,me:1,you:1,your:1,we:1,us:1,her:1,his:1,him:1,she:1,he:1,they:1,them:1,
+  that:1,this:1,for:1,with:1,so:1,but:1,if:1,as:1,be:1,am:1,are:1,was:1,do:1,
+  not:1,no:1,all:1,one:1,just:1,what:1,who:1,how:1,why:1,when:1,where:1,
+  now:1,then:1,there:1,here:1,its:1,let:1,got:1,get:1};
+function gramsOf(t){
+  var w = normLine(t).split(" "), out = {}, i, g;
+  for(i = 0; i + 1 < w.length; i++){
+    if(GRAM_STOP[w[i]] && GRAM_STOP[w[i + 1]]) continue;   /* pure filler pairs say nothing */
+    g = w[i] + " " + w[i + 1];
+    out[g] = 1;
+  }
+  return out;
+}
+var doorGramCache = {};
+function doorGrams(b){
+  if(!b) return {};
+  if(doorGramCache[b.id]) return doorGramCache[b.id];
+  var src = (b.exits || []).concat([b.aim || "", b.exit || ""]), all = {}, i, g, k;
+  for(i = 0; i < src.length; i++){
+    g = gramsOf(src[i]);
+    for(k in g) if(Object.prototype.hasOwnProperty.call(g, k)) all[k] = 1;
+  }
+  doorGramCache[b.id] = all;
+  return all;
+}
+var DOOR_GRAM_HITS = 2;
+/* is this "dead end" actually the door wearing a different hat? */
 function sameAsDoor(b, t){
   var n = normLine(t), xs = (b && b.exits) || [], i, e;
   if(!n) return true;
@@ -3581,17 +3616,27 @@ function sameAsDoor(b, t){
     if(n === e) return true;
     if(n.length > 24 && (e.indexOf(n) !== -1 || n.indexOf(e) !== -1)) return true;
   }
+  var door = doorGrams(b), mine = gramsOf(t), hits = 0, k;
+  for(k in mine){
+    if(Object.prototype.hasOwnProperty.call(mine, k) && door[k]){
+      hits++;
+      if(hits >= DOOR_GRAM_HITS) return true;
+    }
+  }
   return false;
 }
-/* the rail as the player actually gets it: our door, then their two dead ends */
-function railFor(dm){
+/* the rail as the player actually gets it: our door, then their two dead ends.
+   "trusted" means the lines came from the board's own authored openings, which
+   are allowed to lean on the beat's language - the filter is here to police the
+   DM, not us, and it was quietly eating four authored opening lines. */
+function railFor(dm, trusted){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
   if(!doorsLive()) return dm.slice(0, 4).map(cleanChoice);
   var b = beatNow(), out = [pinnedExit(b)], i, t, dropped = 0;
   for(i = 0; i < dm.length && out.length < 3; i++){
     t = cleanChoice(dm[i]);
     if(!t) continue;
-    if(sameAsDoor(b, t)){ dropped++; continue; }
+    if(!trusted && sameAsDoor(b, t)){ dropped++; continue; }
     out.push(t);
   }
   if(dropped && window.console && console.warn){
@@ -4324,7 +4369,7 @@ function showScene(data, logIt, instant){
       var ja = beatJustArmed; beatJustArmed = "";
       if(!runOver && !foldPending && !beatDone() && !seasonBreakDue && !walkoutDue){
         var orail = playOpening(ja);
-        if(orail) choices = railFor(orail);
+        if(orail) choices = railFor(orail, true);
       }
     }
     else if(pendingAsides.length){
@@ -7230,7 +7275,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.4");
+  R(s, "build", "v4.13.5");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8453,7 +8498,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.4   COLD START",
+    "MUD//OS  v4.13.5   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9920,7 +9965,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.4",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.5",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
