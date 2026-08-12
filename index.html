@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.10.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.10.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.10.1 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.10.2 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2207,8 +2207,8 @@ var PRESETS = {
     hint:"Get a key at platform.openai.com."},
   openrouter:{style:"openai", base:"https://openrouter.ai/api/v1", model:"anthropic/claude-sonnet-5", needsKey:true,
     hint:"One key, any model. Or use the one-click Connect button above — no pasting."},
-  ollama:{style:"openai", base:"http://localhost:11434/v1", model:"llama3.1", needsKey:false,
-    hint:"Fully offline. Install from ollama.com, run: ollama pull llama3.1 — then set OLLAMA_ORIGINS=* so this page may connect."},
+  ollama:{style:"openai", base:"http://localhost:11434/v1", model:"mistral-small3.2:24b", needsKey:false,
+    hint:"Fully offline. Install from ollama.com, then: ollama pull mistral-small3.2:24b (~15GB, needs about 18GB of VRAM; mistral-nemo:12b runs on far less but writes much thinner scenes). Set OLLAMA_ORIGINS=* so this page may connect, and OLLAMA_CONTEXT_LENGTH=24576 — this game's prompt is ~12,500 tokens and Ollama's default window of 4096 would silently throw most of it away."},
   lmstudio:{style:"openai", base:"http://localhost:1234/v1", model:"local-model", needsKey:false,
     hint:"Fully offline. In LM Studio: load a model, start the local server, enable CORS in server settings."},
   custom:{style:"openai", base:"", model:"", needsKey:true,
@@ -4704,6 +4704,13 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
   /* a bit of reasoning, in OpenRouter's own dialect - it maps effort to each
      model's native thinking controls and ignores it where unsupported */
   if(settings.provider === "openrouter") body.reasoning = {effort:"low"};
+  /* a model on this machine gets the guardrail the big ones do not need: forced
+     JSON. A 12B will happily write a sentence of preamble before the object, and
+     every one of those turns is a dead turn. Ollama and LM Studio both honour it. */
+  if(settings.provider === "ollama" || settings.provider === "lmstudio"){
+    body.response_format = {type:"json_object"};
+    body.temperature = 0.8;
+  }
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
@@ -6772,7 +6779,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.10.1   COLD START",
+    "MUD//OS  v4.10.2   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8189,7 +8196,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.2",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
