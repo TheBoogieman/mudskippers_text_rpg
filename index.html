@@ -1017,7 +1017,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.14.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.15.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1128,7 +1128,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.14.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.15.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1407,7 +1407,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.14.1 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.15.0 "The Table, Set"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1725,21 +1725,25 @@ var SPINE = [
  walks:["Give the shard to Pia and walk back the way I came.",
         "Hand her over. This was a delivery job and I am done delivering.",
         "Put it in the kid's hand and go home while home still exists."],
- lands:[{time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
-       now:"Day 1, past midnight, under the Veldt overpass. Nine rides in the courier's closed hand now, not his jacket.",
+ lands:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+       now:"Day 1, past midnight, under the Veldt overpass. Nine rides in the courier's closed hand, not his jacket. Pia is watching the road back.",
        lines:["The market lets you go the way it lets everyone go — all at once, into a road that stopped being a road years ago.",
               "You are under the overpass before anyone says anything else, the rain going at the concrete overhead like it has been told there is money in it, and she is still in your hand.",
-              "Pia looks at your fist, then at your face, and informs you that talking to your own pocket in public is a choice."],
-       rail:["Tell her the pocket talks back.",
-             "Keep Nine where she is. Whatever's behind us, she hears it too.",
+              ["Pia","Talking to your own pocket in public is a choice, you know. People get committed for less."],
+              ["Nine","I can hear the rain through your hand. Is it always like this up here?"],
+              "Pia opens her mouth, closes it, and looks back the way you came instead — at the market, at the one set of lights that has not moved since you left."],
+       rail:["Tell her it is always like this up here.",
+             "Ask Pia what she is looking at.",
              "Move. The marsh road is hours out and the rain is winning."]}],
- landsHard:[{time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
-       now:"Day 1, past midnight, under the Veldt overpass. Nine is in the courier's jacket, and the conversation happened at a run, half-heard.",
+ landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+       now:"Day 1, past midnight, under the overpass. Nine is in the courier's jacket. The conversation happened at a jog, half-heard, and she has gone quiet.",
        lines:["It gets said in the end, most of it, at a jog, into a jacket — which is not how anybody would have chosen to meet a person.",
-              "Under the overpass you finally stop, and there is a silence out of your chest pocket with a shape to it.",
-              "Pia does not make a joke about the pocket. That is how you know it went badly."],
+              "Under the overpass you finally stop. There is a silence out of your chest pocket with a shape to it.",
+              ["Pia","She heard all that, right? The running and the — all of it."],
+              "Pia does not make the joke about the pocket. That is how you know it went badly.",
+              "Whatever Nine noticed about being carried a little longer, she keeps to herself, and the rain fills in the gap."],
        rail:["Take her out properly and start again.",
-             "Say sorry to a jacket. See how that goes.",
+             "Ask Pia what she thinks Nine heard.",
              "Move. We can be sorry on the marsh road."]}],
  budget:4, reveals:["nine"], anchors:["Nine"],
  press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
@@ -1760,29 +1764,35 @@ var SPINE = [
  walks:["Turn around. Whatever is behind us can have me instead.",
         "Stop running. I want my old life back and I will beg for it.",
         "Let them take the shard. I never signed up for a manhunt."],
- opens:[{time:"12:50am", place:"THE VELDT STAIRS", amb:"danger",
-       now:"Day 1, past midnight, on the long stairs out of the Veldt. Something official is coming down them.",
-       lines:["The stairs out of the Veldt are ninety steps of wet iron and a smell that has opinions.",
-              "You are forty steps up when the lights at the top go out in order, one after another, politely, like something is switching them off as it comes.",
-              "Pia says a word Vic would fine her for and takes your sleeve."],
-       rail:["Ask her what exactly is coming down those stairs.",
-             "Back down. Whatever it is, it can have the stairs."]}],
- lands:[{time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
-       now:"Day 1, deep night, out on the causeway past the last streetlight. Nobody is following any more.",
+ opens:[{day:"1", time:"12:50am", place:"THE VELDT STAIRS", amb:"danger",
+       now:"Day 1, past midnight, on the ninety iron steps out of the Veldt. The lights above are going out in order.",
+       lines:["The stairs out of the Veldt are ninety steps of wet iron and a smell that has opinions about your shoes.",
+              "You are forty steps up when the lights at the top go out one after another — politely, in order, like something is switching them off as it comes down.",
+              ["Pia","Don't run. Running is how they know which one of us is the one."],
+              ["Pia","Your room's above the noodle place, isn't it. Third floor, blue door."],
+              "It is not a question, and she does not look at you when she says it."],
+       rail:["Ask her why she is asking about my room.",
+             "Back down. Whatever is coming, it can have the stairs."]}],
+ lands:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
+       now:"Day 1, deep night, on the causeway past the last streetlight. Nobody is following. The safehouse light is out on the marsh ahead.",
        lines:["The city thins out the way a bruise does — colour first, then everything.",
               "By the time the last sodium lamp gives up behind you there is only the causeway, black water either side, and a wind off it that has never heard of buildings.",
-              "Pia points at a light a long way out and says that is the door, and then walks a whole mile without a single opinion, which from her is a eulogy."],
-       rail:["Ask what Vic will be like when he opens it.",
-             "Walk. Save every question for the man himself.",
-             "Check on Nine. She has been quiet since the stairs."]}],
- landsHard:[{time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
-       now:"Day 1, deep night, on the causeway. Nobody said the thing out loud, and the city decided it for them.",
-       lines:["Nobody says it, so the city says it — a door that does not open, a name off a list, a room that belongs to somebody else by morning.",
+              ["Pia","That light out there. That's the door. Hour, maybe, if you keep up."],
+              ["Nine","He said it out loud. About the room. Does that mean it is true now?"],
+              "Pia walks the next mile without a single opinion, which from her is a eulogy."],
+       rail:["Tell Nine that saying it did not make it true; finding it shut did.",
+             "Ask Pia what Vic will be like when he opens that door.",
+             "Walk. Save every question for the man himself."]}],
+ landsHard:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
+       now:"Day 1, deep night, on the causeway. Nobody said it out loud; the courier found the door shut and the Choir chose the moment.",
+       lines:["Nobody says it, so the city says it — a door that does not open, a lock that has been changed by somebody with a form, a room that belongs to the Choir's paperwork by morning.",
               "You walk out onto the causeway with the fact following at a polite distance, the way facts do when you have refused to look at them.",
-              "Pia offers you half a wet bun from her coat. It is the worst thing you have ever eaten and you finish all of it."],
+              ["Pia","For what it's worth, they picked when you found out. Not you. That's their whole thing."],
+              "She offers you half a wet bun out of her coat. It is the worst thing you have ever eaten and you finish all of it.",
+              "Out on the marsh there is one light that has not moved, and it is the only thing ahead of you that is not water."],
        rail:["Ask where she even keeps buns.",
              "Say it now. Late is not the same as never.",
-             "Walk. The light on the marsh is not getting closer on its own."]}],
+             "Walk. The light is not getting closer on its own."]}],
  budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
@@ -1803,29 +1813,35 @@ var SPINE = [
  walks:["Walk out of Vic's door and off this marsh for good.",
         "Leave him with his shutters and his story. I want no part of it.",
         "Put the shard on his kitchen table and go."],
- opens:[{time:"2:05am", place:"THE SAFEHOUSE PORCH", amb:"marsh-fog",
-       now:"Day 1, small hours, on the safehouse porch. The door has not opened yet.",
+ opens:[{day:"1", time:"2:05am", place:"THE SAFEHOUSE PORCH", amb:"marsh-fog",
+       now:"Day 1, small hours, on the safehouse porch. Pia has knocked. The door has not opened yet.",
        lines:["Up close the safehouse is a farmhouse that lost an argument with the marsh and stayed anyway.",
               "There is a porch light, a bell that has been disconnected on purpose, and a doormat that says WELCOME, which out here reads as a threat.",
-              "Pia knocks the way you knock when you have a code, and inside, somebody who is definitely Vic makes a noise like a man deciding whether to be in."],
-       rail:["Say his name through the door.",
+              ["Pia","He'll have heard us at the causeway. He's deciding what face to open it with."],
+              ["Vic","Pia. Is he with you? Say it properly, not the knock."],
+              "The voice comes through the door older than you remember it, and it does not open anything yet."],
+       rail:["Say his name back through the door.",
              "Let Pia handle it. She has the code and the leverage."]}],
- lands:[{time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
-       now:"Day 1, the small hours, in the safehouse kitchen with the shutters down. Vic has said his piece and gone quiet.",
+ lands:[{day:"1", time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 1, the small hours, in the safehouse kitchen with the shutters down. Vic has told the whole story and gone quiet over the kettle.",
        lines:["The story runs out somewhere around three in the morning and leaves the lot of you sitting in it.",
-              "Vic fills the kettle because there is nothing else to do with his hands, and the kettle has been labelled KETTLE in marker by somebody who lives here alone and is not going to explain it.",
-              "Out past the marsh the city is still going without you. Your wire has not made a sound all night, and that is not normal."],
+              "Vic fills the kettle because there is nothing else to do with his hands. The kettle has been labelled KETTLE in marker by a man who lives here alone and is not going to explain it.",
+              ["Vic","Ask me anything else. Anything. I mean that."],
+              ["Pia","He means anything except the one you actually want."],
+              "Out past the marsh the city is still going without you, and your wire has not made a sound all night, which is not normal."],
        rail:["Check the wire. If the pack has been trying to reach me, I want to know.",
              "Ask him who he thought was going to steal the kettle.",
              "Say nothing. Let the kettle be the whole conversation for a minute."]}],
- landsHard:[{time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
-       now:"Day 1, the small hours, in the safehouse kitchen. Vic talked around it and the night ran out before anyone made him stop.",
-       lines:["He tells you a version. It has all the right buildings in it and none of the right reasons, and by the time you notice, he has put the kettle on.",
-              "The kitchen accepts the version because it is three in the morning and everyone in it is soaked, which is how most lies get through.",
-              "Pia catches your eye across the table and very slightly shakes her head, and she is twelve, and she is right."],
-       rail:["Ask him the missing question anyway.",
+ landsHard:[{day:"1", time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 1, small hours, in the kitchen. Vic's story came out ragged and interrupted; parts of it the courier still owes himself.",
+       lines:["It comes out in pieces, and every piece arrives with something else on top of it — the kettle, the shutters, a noise off the marsh that turns out to be nothing twice.",
+              "By three in the morning you have most of a story and a very clear sense of which parts you were steered around.",
+              ["Vic","We'll do the rest tomorrow. I'm not hiding it, I'm just — tomorrow."],
+              ["Pia","He said that about the shop, too."],
+              "She says it into her mug, not to him, and Vic hears it anyway and does not answer."],
+       rail:["Ask him the part he walked around.",
              "Let it stand. Tonight, only tonight.",
-             "Go and find where he sleeps and wait there."]}],
+             "Check the wire. The pack has been quiet all night."]}],
  budget:4, reveals:[], anchors:["Vic"],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
@@ -1845,28 +1861,34 @@ var SPINE = [
  walks:["Take whatever the pack left me and disappear into it.",
         "Go back to the rain alone. No family, no cargo, no questions.",
         "Cut the whole lot loose and take the next route out of the Veldt."],
- opens:[{time:"8:10am", place:"THE CABLE SHACK", amb:"marsh-fog",
-       now:"Day 2, morning, in Vic's cable shack. The pack has not been asked yet, and the wire is right there.",
+ opens:[{day:"2", time:"8:10am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in Vic's cable shack behind the safehouse. The wire is on the bench and the pack has not been asked yet.",
        lines:["Morning over the marsh is one long grey suggestion that you go back to bed.",
-              "The shack smells of hot dust and old solder, and Vic's cable rig has been zip-tied together by a man who has never once said the words temporary fix.",
-              "The wire is right there on the bench. Nine is on the bench next to it, which she will later describe as an ambush."],
-       rail:["Ask Nine what she thinks a pack even is.",
-             "Look at the rig properly. Vic built this to outlive him."]}],
- lands:[{time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
-       now:"Day 2, morning, in the cable shack. The pack has answered and the day starts anyway.",
-       lines:["The answer arrives, and it is the answer, and the kettle in the house goes on regardless because that is what kettles are for.",
-              "You stay out in the shack a while because that is where the wire is, and because the kitchen currently contains three people who love you and want to say so.",
-              "There is a job on the board out here. Small, legal, half a day — and it has been sitting there since before any of this started."],
+              "The shack smells of hot dust and old solder, and Vic's rig has been zip-tied together by a man who has never once said the words temporary fix.",
+              ["Pia","Whatever they say, say it back to me straight. Don't do the thing where you shrug."],
+              ["Nine","What is a pack, exactly? Is it a family or is it a job?"],
+              "Nobody answers her, which is its own answer, and the wire sits on the bench being switched off."],
+       rail:["Tell Nine it is both, badly.",
+             "Ask Pia what she thinks they will say."]}],
+ lands:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in the cable shack. The pack has answered and the day has to start anyway. There is a job on the board.",
+       lines:["The answer arrives, and it is the answer, and the kettle in the house goes on regardless, because that is what kettles are for.",
+              "You stay out in the shack a while — because the wire is here, and because the kitchen currently contains people who love you and want to say so.",
+              ["Pia","You going to tell Vic, or shall I do it in a way that's kinder than it deserves?"],
+              "There is a job on the board out here. Small, legal, half a day — and it has been sitting there since before any of this started.",
+              ["Nine","That one has a date on it. Is a date a promise, up here?"]],
        rail:["Read the job properly.",
-             "Ask Pia whether I should take it.",
-             "Put Nine somewhere she can hear the room."]}],
- landsHard:[{time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
-       now:"Day 2, morning, in the cable shack. Nobody asked the pack, so the pack decided by itself.",
-       lines:["Nobody asks, and so it gets settled the way these things settle — quietly, by other people, in a room you were not in.",
-              "You find out from a routing table. Your name is not in it. It is very tidy work and somebody did it fast.",
-              "Pia reads it over your shoulder, says that is rude, and puts the kettle on for the second time in an hour, which for her is a rampage."],
+             "Tell Pia to do it kindly.",
+             "Answer Nine. Explain what a due date is to something that has never been late."]}],
+ landsHard:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in the shack. The pack decided at a distance and the courier heard where he stands secondhand.",
+       lines:["Nobody asks you anything. It gets settled the way these things settle — quietly, by other people, in a room you were not in.",
+              "You find out from a routing table. Your name is not in it. It is tidy work and somebody did it fast.",
+              ["Pia","That's rude. That's actually rude, and I'm allowed to say so, I'm twelve."],
+              "She puts the kettle on for the second time in an hour, which for her is a rampage.",
+              "The job on the board is still there. Small, legal, half a day, and it does not care what a routing table says about you."],
        rail:["Ask her who did the routing.",
-             "Close the rig. There is a job on the board.",
+             "Read the job properly.",
              "Say nothing and let the kettle do its work."]}],
  budget:4, floor:2, reveals:[], anchors:["Pia"],
  press:["Word arrives that the Choir is asking the stalls about a courier by description. The pack hears it in real time.",
@@ -1886,27 +1908,33 @@ var SPINE = [
  walks:["Keep the fare and keep walking. That is the job I actually have.",
         "Finish this parcel and never come back to that marsh.",
         "Sign the chit, take the money, and vanish into a normal week."],
- opens:[{time:"11:30am", place:"THE PARCEL OFFICE, VELDT WEST", amb:"neon-dry",
+ opens:[{day:"2", time:"11:30am", place:"THE PARCEL OFFICE, VELDT WEST", amb:"neon-dry",
        now:"Day 2, late morning, at a parcel counter that has not been robbed in nine years and is smug about it.",
        lines:["The job is a box the size of a shoe and a chit that says FRAGILE, which in this city is decorative.",
-              "The clerk asks whether you are still with the pack. You say something with a lot of syllables in it and he stamps the chit anyway.",
+              ["Other","Still with the pack? Only the rate's different if you're not."],
+              "You say something with a lot of syllables in it and the clerk stamps the chit anyway.",
+              ["Pia","He's freelance. Put down freelance. It sounds better than what it is."],
               "Pia has appointed herself security and is standing by the door with her arms folded, at four foot nine, in a coat that used to be Vic's."],
        rail:["Ask the clerk what is actually in the box.",
              "Tell Pia security does not usually glare at the potted plant."]}],
- lands:[{time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
+ lands:[{day:"2", time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
        now:"Day 2, late afternoon, on the far pavement opposite the Copper Eel. The last honest fare is signed for and done.",
        lines:["The chit signs, the door shuts, and that is the whole ceremony a working life gets.",
-              "You walk out into the flat gold hour when the rain has stopped and the whole district looks like it has been cleaned up for somebody more important than you.",
-              "The route home goes past the Copper Eel, the way it always has, and there is a woman on the stool by the window who has been dead since Tuesday."],
+              "You walk out into the flat gold hour when the rain has stopped and the district looks like it was tidied for somebody more important than you.",
+              ["Pia","That's it, then. That was the last one that was just a box."],
+              "The route home goes past the Copper Eel, the way it always has.",
+              "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
        rail:["Keep walking. Do not look twice.",
              "Ask Pia if she is seeing what I am seeing.",
              "Off the street. Anywhere with a door."]}],
- landsHard:[{time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
-       now:"Day 2, late afternoon, opposite the Copper Eel. The last fare went undelivered and everyone is pretending it was nothing.",
-       lines:["The box does not get where it was going, which after everything else is almost funny, and nobody laughs.",
-              "You stand in the gold hour holding somebody else's shoe-sized problem and understand that the working life ended a while ago and forgot to say.",
-              "The route home goes past the Copper Eel, and there is a woman on the stool by the window who has been dead since Tuesday."],
-       rail:["Put the box in a bin and mean it.",
+ landsHard:[{day:"2", time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
+       now:"Day 2, late afternoon, opposite the Eel. The fare finished itself without him and the tip was pity.",
+       lines:["The box gets where it was going without you having much to do with it, which after everything is almost funny, and nobody laughs.",
+              "The tip is generous. That is the part that stays with you: somebody looked at the state of you and rounded up.",
+              ["Pia","Don't do the face. It's money. Money doesn't know why it came."],
+              "The route home goes past the Copper Eel, the way it always has.",
+              "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
+       rail:["Keep walking. Do not look twice.",
              "Ask Pia if she is seeing what I am seeing.",
              "Off the street. Anywhere with a door."]}],
  budget:4, floor:2, reveals:[], anchors:[],
@@ -1927,28 +1955,34 @@ var SPINE = [
  walks:["Hand her the shard and let her have whatever this is.",
         "Give the hunter what she came for and walk away clean.",
         "Step back. Let somebody else be the one holding it."],
- opens:[{time:"5:20pm", place:"THE COPPER EEL, DOORWAY", amb:"neon-dry",
-       now:"Day 2, early evening, in the doorway of the Copper Eel. The thing on the stool has noticed the door.",
+ opens:[{day:"2", time:"5:20pm", place:"THE COPPER EEL, DOORWAY", amb:"neon-dry",
+       now:"Day 2, early evening, in the doorway of the Copper Eel. The thing on the stool turned before the door finished opening.",
        lines:["Inside, the Eel is exactly as bad as it has always been, which is oddly steadying.",
-              "The stool by the window turns around before the door has finished opening, and it does it at the speed of somebody who was told the door would open.",
-              "She smiles with Mirren's mouth and says your name like she is checking it off."],
+              "The stool by the window turns around before the door has finished opening — at the speed of somebody who was told the door would open.",
+              ["Mirren","There you are. You're late, and I've been very patient about it."],
+              ["Pia","That's not her. Whatever that is, it isn't her."],
+              "She smiles with Mirren's mouth and does not appear to have heard, or to mind."],
        rail:["Ask her what her actual name is.",
-             "Say nothing. Let her do the talking and count the exits."]}],
- lands:[{time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
+             "Say nothing. Let her talk and count the exits."]}],
+ lands:[{day:"2", time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
        now:"Day 2, evening, in the back of a closed laundry three districts from the Eel. Nobody is following yet.",
        lines:["You get out the way people get out — badly, fast, and further than anyone meant to go.",
-              "The laundry has been shut since the flood and the dark in it smells of soap and standing water, which beats what the street smells of.",
-              "Pia counts something on her fingers, gets to four, starts again, and says whatever the Choir wanted, they were never going to ask twice."],
-       rail:["Ask what she means by twice.",
-             "Take Nine out. She was in the room and she was listening.",
+              "The laundry has been shut since the flood. The dark in it smells of soap and standing water, which beats what the street smells of.",
+              ["Pia","She let us get to the door. I counted. She could've had us at the door."],
+              ["Nine","She used my name. Not the shard. My name."],
+              "Nobody has anything to say to that, and the three of you sit in a dead building listening to a district that has stopped looking for you."],
+       rail:["Ask Nine what it means that she used the name.",
+             "Ask Pia what she counted.",
              "Wait. Let the street get bored of us first."]}],
- landsHard:[{time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
-       now:"Day 2, evening, in a closed laundry. They got away, but she got a good long look, and everyone knows it.",
-       lines:["You get out. She lets you, which is worse, and everybody in the room understood the difference at the time.",
-              "The laundry is dark and smells of soap, and for a while the only sound is four people breathing at slightly different speeds.",
-              "Pia says she has decided she does not like that woman. It is the smallest possible thing to say and it is exactly the right size."],
-       rail:["Agree, at length.",
-             "Take Nine out. She was listening the whole time.",
+ landsHard:[{day:"2", time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
+       now:"Day 2, evening, in a shut laundry. The hunter chose the meeting and the family got out on luck they did not earn.",
+       lines:["You get out. The honest version is that she let go of the thread and you fell over backwards, and everyone in this room watched it happen.",
+              "The laundry is dark and smells of soap, and for a while the only sound is three people breathing at slightly different speeds.",
+              ["Pia","We didn't do that. I want to say we did that. We didn't do that."],
+              ["Nine","She was not in a hurry. That is the part I keep going back to."],
+              "The district outside has stopped looking for you, which is not the same as having lost you."],
+       rail:["Ask Nine why the lack of hurry frightens her.",
+             "Agree with Pia, out loud, that we got lucky.",
              "Wait. Let the street get bored of us first."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["She does not chase. She is simply at the next corner too, asking again.",
@@ -1969,27 +2003,33 @@ var SPINE = [
  walks:["Take the exit that was offered and leave them standing.",
         "Say yes to their terms. I want out and this is out.",
         "Sign whatever it is. Let this be somebody else's night."],
- opens:[{time:"9:40pm", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
-       now:"Day 2, night, in the long room. An offer is on the table and Nine is on the table with it.",
+ opens:[{day:"2", time:"9:40pm", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+       now:"Day 2, night, in the long room. A clean way out is on the table and Nine is on the table with it.",
        lines:["Somebody has put the offer in the middle of the table, next to the salt, which is a choice.",
-              "Vic has not sat down. Vic has been not sitting down for about forty minutes now, in a way that is becoming its own contribution.",
+              "Papers, a route, a name that is not yours and a life with no hum in it. It is real enough to pick up, and you can tell it is real by how carefully nobody is touching it.",
+              ["Vic","I'm not arguing for it. I'm saying it's on the table and you get to look at it."],
+              ["Pia","He's arguing for it."],
               "Nine is out of the pocket and in the light, and every person in the room is being extremely careful not to look directly at her."],
        rail:["Ask Vic to sit down or leave.",
-             "Read the offer out. All of it, including the small print."]}],
- lands:[{time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
-       now:"Day 2, late, on the safehouse porch with the marsh roaring. The exit has been answered out loud.",
+             "Read the offer out loud. All of it, including the small print."]}],
+ lands:[{day:"2", time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
+       now:"Day 2, late, on the safehouse porch with the marsh roaring. The exit has been answered out loud and the house heard it.",
        lines:["Whatever was on the table is off it now, and everyone in the house heard which way it went.",
-              "You end up on the porch, which is where people go when a room has finished with them, and tonight the marsh is loud enough to count as company.",
-              "Vic comes out after a while, stands next to you, and looks at the road instead of at you for a length of time that stops being accidental."],
+              "You end up on the porch, which is where people go when a room has finished with them. Tonight the marsh is loud enough to count as company.",
+              ["Vic","You know I'd have driven you. Whichever way it went, I'd have driven you."],
+              "He looks at the road instead of at you for a length of time that stops being accidental.",
+              "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
        rail:["Ask him what is on the road.",
-             "Let him stand there. He will get to it.",
+             "Ask him why he keeps looking at it.",
              "Go in and check the shutters."]}],
- landsHard:[{time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
-       now:"Day 2, late, on the porch. The offer expired unanswered and the house is being very normal about it.",
-       lines:["Nobody answers it, and at some point it stops being an offer and becomes a thing that happened.",
-              "The house goes on around the gap — plates, shutters, somebody losing an argument about the chair by the window — with everybody generously agreeing not to mention it.",
-              "Vic comes out to the porch, stands next to you, and looks at the road instead of at you for a length of time that stops being accidental."],
-       rail:["Ask him what is on the road.",
+ landsHard:[{day:"2", time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
+       now:"Day 2, late, on the porch. The offer expired unanswered, which is an answer, and the house is being very normal about it.",
+       lines:["Nobody answers it. At some point it stops being an offer and becomes a thing that happened, and the papers go back in the envelope without ceremony.",
+              "The house goes on around the gap — plates, shutters, an argument about the chair by the window — with everybody generously agreeing not to mention it.",
+              ["Pia","For the record, not answering is answering. I read that somewhere."],
+              ["Vic","She reads too much."],
+              "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
+       rail:["Ask what is on the road.",
              "Say the thing nobody said in there.",
              "Go in and check the shutters."]}],
  budget:4, floor:2, reveals:[], anchors:["Nine"],
@@ -2010,28 +2050,34 @@ var SPINE = [
  walks:["Drop her and run. I would rather be lost than led.",
         "Put her down in the dark and take my chances alone.",
         "Stop listening to the voice in my hand and get out my own way."],
- opens:[{time:"12:40am", place:"VELDT EAST, UNDER THE SWEEP", amb:"danger",
-       now:"Day 3, after midnight, caught on the wrong side of a Choir sweep with nowhere obvious to be.",
+ opens:[{day:"3", time:"12:40am", place:"VELDT EAST, UNDER THE SWEEP", amb:"danger",
+       now:"Day 3, after midnight, caught on the wrong side of a Choir sweep with nowhere obvious to be. Nine is in the courier's hand.",
        lines:["A sweep sounds like nothing at all, which is the single worst thing about it.",
               "You are two streets into the wrong district when the air changes pressure and every screen in the row goes the same shade of nothing.",
-              "Nine, in your hand, says one word: left. She has never given you a direction before."],
+              ["Nine","Left. Now, not in a second. Left."],
+              "She has never given you a direction before.",
+              ["Pia","Do what she says. I don't know why she knows, but do what she says."]],
        rail:["Ask her how she knows.",
-             "Do not ask her anything. Just go left."]}],
- lands:[{time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
-       now:"Day 3, small hours, inside the dead pumping station under Veldt East. The sweep went over an hour ago.",
+             "Do not ask her anything. Go left."]}],
+ lands:[{day:"3", time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
+       now:"Day 3, small hours, inside the dead pumping station under Veldt East. The sweep passed over an hour ago. Nine got them through.",
        lines:["The sweep goes over you the way weather goes over a rock, and then it is somewhere else, and then it is gone.",
-              "You come up inside the pumping station, which has not pumped anything in thirty years, and sit down on the floor because your legs make the decision without you.",
-              "Nine is warm. Not hot — warm, the temperature a hand is, and neither of you mentions it, which takes some doing."],
+              "You come up inside the pumping station, which has not pumped anything in thirty years, and sit down on the floor because your legs decide it for you.",
+              ["Nine","I knew the timings because I was on the other side of them. That is all it is. Don't make it a virtue."],
+              "She is warm. Not hot — warm, the temperature a hand is, and neither of you mentions it.",
+              ["Pia","She's allowed to be good at something. Tell her she's allowed."]],
        rail:["Say thank you. Out loud, properly.",
-             "Ask her how she knew where the gaps were.",
+             "Ask her what the other side of the timings was like.",
              "Get up. We are not sleeping here."]}],
- landsHard:[{time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
-       now:"Day 3, small hours, in the pumping station. He got through on luck and a wall, not on her word.",
-       lines:["You get through it, mostly, on a wall and a bin and the kind of luck that does not come round twice.",
-              "The pumping station is thirty years dead and full of the sound of water going somewhere else, and you sit down in it because standing has stopped being an option.",
-              "Nine does not say anything for a long while. When she does, it is to ask whether you heard her at all."],
+ landsHard:[{day:"3", time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
+       now:"Day 3, small hours, in the pumping station. The sweep passed over them more than they beat it, and Nine spent what she knew unthanked.",
+       lines:["You get through it on a wall, a bin, and the kind of luck that does not come round twice.",
+              "Somewhere in the middle of it Nine said three things that were exactly right and nobody had time to notice.",
+              "The pumping station is thirty years dead and full of the sound of water going somewhere else. You sit down in it because standing has stopped being an option.",
+              ["Nine","Did you hear any of it? At the second corner. Did you hear me."],
+              "It is not a question so much as a receipt."],
        rail:["Tell her the truth.",
-             "Ask her to say it again, and mean it this time.",
+             "Say thank you now, late, and mean it.",
              "Get up. We are not sleeping here."]}],
  budget:4, reveals:[], anchors:["Nine"],
  press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
@@ -2051,12 +2097,14 @@ var SPINE = [
  walks:["Deliver her. That was the job and the job is all I owe.",
         "Hand her over and take the money like a courier is supposed to.",
         "Choose the fee. Say it out loud so nobody has to wonder."],
- opens:[{time:"8:00pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
-       now:"Evening. The question of what happens to Nine is sitting at the table and has been served food.",
+ opens:[{day:"3", time:"8:00pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 3, evening. The question of what happens to Nine is at the table and has been served food.",
        lines:["Somebody has cooked, which in this house means somebody has something to say.",
-              "There are five plates and four people, and nobody has explained the fifth, and nobody is going to, and it is in front of the shard.",
+              "There are five plates and four people, and nobody has explained the fifth, and nobody is going to. It is in front of the shard.",
+              ["Vic","Don't look at me. Pia laid the table."],
+              ["Pia","I laid the table."],
               "Vic looks at the fifth plate for a long moment and then does not object, which is the loudest thing he has done all week."],
-       rail:["Ask who set the fifth place.",
+       rail:["Ask who taught her to set a place for a rock.",
              "Eat first. Whatever this is, it keeps better fed."]}],
  budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:[],
@@ -5653,13 +5701,32 @@ function playAuthored(V, salt){
   /* the NOW line has to move with them or the next turn opens in the old room
      with a new name on the strip */
   if(V.now) nowText = V.now;
+  /* A LINE MAY NOW HAVE A VOICE. Narration alone could set a room but it could
+     not set a TABLE: the DM inherited a place and a time and nobody in the middle
+     of saying anything, so its first move was always to invent an opening beat of
+     its own. An authored line is either a string (narration, as before) or a
+     [speaker, text] pair, and two or three of those prime the next turn far
+     harder than any directive does - the model continues a conversation it can
+     hear much more reliably than it obeys an instruction about tone. */
   var lines = [], blocks = [];
   (V.lines || []).forEach(function(t){
-    var blk = {speaker:"Narration", text:t};
+    var sp = "Narration", tx = t;
+    if(Object.prototype.toString.call(t) === "[object Array]"){
+      sp = String(t[0] || "Narration").trim() || "Narration";
+      tx = t[1];
+    }
+    if(!tx) return;
+    var blk = {speaker:sp, text:String(tx)};
     renderBlock(blk); feedLog.push(blk); blocks.push(blk);
     var el = $("feedinner").lastElementChild;
     if(el) el.classList.add("shown");
-    lines.push(t);
+    /* anyone the board puts on stage is met by definition - otherwise the cast
+       gate would refuse the DM the very person we just had speak */
+    if(sp !== "Narration" && sp !== "Other" && !castSheets[sp]){
+      var sh = castSheet(sp);
+      sh.seen = "Day " + $("hud-day").textContent + ", " + $("hud-loc").textContent;
+    }
+    lines.push((sp === "Narration" ? "" : sp.toUpperCase() + ": ") + tx);
   });
   if(lines.length){
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " — "
@@ -5672,10 +5739,17 @@ function playAuthored(V, salt){
        somewhere around three in the morning" three times running. The cold open
        has always paired its hardcoded scene with a note saying it is already on
        screen; this one was not, and that was the whole difference. */
+    /* the note also has to say what the passage did NOT do. Handing the model
+       authored dialogue taught it to write dialogue - which is the point - but it
+       started handing the courier lines too, and chair corrections went from three
+       in twenty-eight turns to twelve in thirty-one. The passage is the example;
+       the example has to be complete. */
     chatLog.push({role:"user", content:"(The board played the passage below on screen itself."
       + " It has ALREADY been shown to the player. Never reprint it, never quote it, and never"
       + " open your next reply by repeating any of its lines - the family is on the far side of"
-      + " it now. Write what happens NEXT.)"});
+      + " it now. Write what happens NEXT."
+      + " Note who spoke in it and who did not: the courier said nothing. He never does, unless"
+      + " the player types it. Everyone else in the room is yours; his mouth is not.)"});
     chatLog.push({role:"assistant", content:JSON.stringify({
       day:$("hud-day").textContent, time:nowTime, location:$("hud-loc").textContent,
       now:nowText, scene:blocks, choices:(V.rail || [])
@@ -7420,7 +7494,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.14.1");
+  R(s, "build", "v4.15.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8646,7 +8720,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.14.1   COLD START",
+    "MUD//OS  v4.15.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10113,7 +10187,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.14.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.15.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
