@@ -994,7 +994,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.11.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.11.5 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1089,7 +1089,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.5</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1368,7 +1368,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.11.4 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.11.5 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2390,6 +2390,7 @@ var foldServed = false;      /* the order has gone out; the reply is the catch-u
 var foldedBeats = [];        /* beat ids the world closed without the family - persisted */
 var defuseArmed = false;     /* the call: the player's next action settles the beat - persisted */
 var calledClose = false;     /* this close is the call's: blue card, anchors waived */
+var exitClose = false;       /* ...or the exit door's, which says so differently */
 /* the spare room: the chassis is Nine's to keep or to give, chosen at the
    a2-chassis gate. Whoever lacks a body afterwards lives in the housing. */
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
@@ -2485,10 +2486,14 @@ function renderBlock(b){
   if(b.kind === "beat" && b.called){
     /* the blue tier, between green and gold: the call closed this one */
     el.className = "block beatcard called" + (b.arcturn ? " arcturn" : "");
-    el.innerHTML = '<span class="eyebrow">' + esc(b.title) + ' — closed on the storyteller&#39;s terms</span>'
+    el.innerHTML = '<span class="eyebrow">' + esc(b.title) + ' — '
+      + esc(b.viaexit ? "you ended it; the telling caught up after"
+                      : "closed on the storyteller's terms") + '</span>'
       + '<span class="tag">THE BEAT, SETTLED</span>'
       + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
-      + '<span class="sum foot">No toll. The story took your move and ran with it.</span>'
+      + '<span class="sum foot">' + (b.viaexit
+        ? "No toll. You settled it yourself and the night went along with it."
+        : "No toll. The story took your move and ran with it.") + '</span>'
       + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
   } else if(b.kind === "beat"){
     el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
@@ -4141,7 +4146,7 @@ function closeBeat(forced, note){
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
   beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
-    called: calledClose,
+    called: calledClose, viaexit: exitClose,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
   termPing();                    /* the season page just gained an entry */
@@ -4250,9 +4255,11 @@ function boardTurn(data){
      this turn whatever the reply did with the order - the same guarantee the call
      carries, for the same reason. Anchors are waived, no toll, no scar. */
   if(pickKind === "exit" && !said && beatTurns >= beatFloor(beatNow())){
-    calledClose = true;
-    closeBeat(false, note || ("settled on the courier's own move — " + beatNow().exit));
-    calledClose = false;
+    calledClose = true; exitClose = true;
+    /* the DM had its chance and its retry, same as the call - so this line is an
+       admission, not a summary: the ending is real, the telling of it is not */
+    closeBeat(false, note || ("settled on the courier's own move, between scenes — " + beatNow().exit));
+    calledClose = false; exitClose = false;
     return;
   }
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
@@ -4265,7 +4272,10 @@ function boardTurn(data){
      refused - no card, no canon, no advance, the budget still ticking. Forcing
      stays the fallback below, and forced canon is authored, therefore true:
      the system degrades toward truth instead of toward hallucination. */
-  if(said){
+  /* the exit waives the anchor check the way the call does. It has to: the door
+     GUARANTEES a close, and a refusal here would leave a beat the player already
+     ended standing open with nothing left to end it with. */
+  if(said && !(pickKind === "exit" && beatTurns >= beatFloor(beatNow()))){
     var miss = anchorsMissing(beatNow());
     if(miss.length){
       said = false;
@@ -4396,9 +4406,9 @@ function applyTension(quiet){
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
            sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || "",
-           called:!!info.called};
+           called:!!info.called, viaexit:!!info.viaexit};
   renderBlock(b); feedLog.push(b);
-  ledgerText += "\n\n_" + (info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
+  ledgerText += "\n\n_" + (info.viaexit ? "The beat, settled by the courier" : info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
     + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
@@ -5075,6 +5085,27 @@ function callDM(corrected){
           + " Continue the same scene now and write the resolution itself: " + beatNow().exit
           + ". On screen, or in one chronicle-voice paragraph - written, not implied - then close"
           + " the scene, and send \"gate\": true with a true gateNote.)");
+      }
+    }
+    /* THE EXIT'S OWN RETRY. The exit door guarantees a close, and that guarantee
+       was closing beats the reply had never landed: a night whose entire job was a
+       first two-way conversation with Nine settled on a scene where Nine never said
+       a word, and the client wrote the conversation into canon on its own authority.
+       The close is not in question - the player spent their move on it. Whether the
+       STORY gets to be the thing that closes it is, and it only takes asking. */
+    if(!corrected && pickKind === "exit" && !defuseArmed && !forcingNow && !lastTurnMud
+       && phase === "live" && !beatDone() && !foldPending && !walkbackNow
+       && beatTurns + 1 >= beatFloor(beatNow())){
+      var xg = parsed.data.gate === true || parsed.data.gate === "true";
+      var xgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
+      if(!xg || !xgn){
+        return callDM("(THE EXIT WAS TAKEN AND YOU DID NOT LAND IT. The player reached for the"
+          + " ending on their own move, so this beat closes on this turn whatever you send - the"
+          + " only thing still open is whether the story tells it or the board files it. Continue"
+          + " the same scene and put the resolution ON SCREEN, in the prose, in front of them: "
+          + beatNow().exit + ". Not implied, not skipped past, not somebody afterwards saying it"
+          + " happened - if it needs somebody to speak, they speak. Then send \"gate\": true with"
+          + " a true gateNote saying what actually happened.)");
       }
     }
     /* the fork must be stated: the a2-chassis gate carries Nine's choice */
@@ -6874,7 +6905,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.11.4   COLD START",
+    "MUD//OS  v4.11.5   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8332,7 +8363,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.4",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.5",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
