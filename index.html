@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.5 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.6 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.5</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.6</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.5 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.6 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3528,9 +3528,12 @@ var DOOR_SLOTS = ["exit", "stall", "stall"];
    same sentence four times. The DM now writes only the two dead ends.
 
    This is the last thing on the rail that was still the DM's to get wrong. */
-var PIN_STALLS = ["Say nothing yet. Watch, and let it come to you.",
-                  "Ask the question under the question.",
-                  "Take a breath and read the room properly."];
+/* the last resort, and it shows: these are written to survive being read by a
+   player who does not know they are filler. "Ask the question under the question"
+   was an instruction to the DM that reached a rail and sat there being nonsense. */
+var PIN_STALLS = ["Say nothing. Let the quiet do the asking.",
+                  "Ask what they are not saying.",
+                  "Stop, and take a proper look at where you are."];
 /* WHEN THE DOOR OPENS. It is on the rail the whole way through - you should always
    be able to read the shape of the ending you are walking toward - but it is shut
    and grey until the night is nearly out of road. It ACTIVATES on the last two
@@ -3642,7 +3645,17 @@ function railFor(dm, trusted){
   if(dropped && window.console && console.warn){
     console.warn("[mudskippers] dropped " + dropped + " choice(s) that were the door in disguise");
   }
-  for(i = 0; out.length < 3; i++) out.push(PIN_STALLS[i % PIN_STALLS.length]);
+  /* short of two dead ends, the last rail's own stalls are borrowed before any
+     generic filler is: they were written for this scene and this room, which is
+     more than a house line can say. Slot one is skipped - that was the door. */
+  for(i = 1; i < lastRail.length && out.length < 3; i++){
+    t = cleanChoice(lastRail[i]);
+    if(t && out.indexOf(t) === -1 && !sameAsDoor(b, t)) out.push(t);
+  }
+  for(i = 0; out.length < 3; i++){
+    t = PIN_STALLS[i % PIN_STALLS.length];
+    if(out.indexOf(t) === -1) out.push(t);
+  }
   return out;
 }
 /* the way out says what leaving means HERE, and it is authored per beat, so it
@@ -6418,6 +6431,33 @@ function callDM(corrected){
         + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
         + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)");
     }
+    /* THE EMPTY TURN. A reply carrying no scene used to be accepted in silence: it
+       rendered nothing, wrote nothing to the ledger, and still ticked the beat's
+       clock - so a player could spend two turns of their night on blank space and
+       watch the road run out for reasons that never appeared on screen. It is the
+       loudest symptom of a model whose context window is smaller than the prompt,
+       because the front of the briefing is dropped and what comes back is a shell.
+       Ask once; if it comes back empty again, the turn is NOT spent. */
+    var sceneBlocks = ((parsed.data && parsed.data.scene) || []).filter(function(bk){
+      return bk && bk.speaker && bk.text && String(bk.text).trim();
+    }).length;
+    if(!sceneBlocks){
+      if(!corrected){
+        return callDM("(YOU SENT NO SCENE. The reply had no \"scene\" blocks in it, so the player"
+          + " is looking at a blank turn. Write the turn now: three or four blocks of speaker/text,"
+          + " the player's action and what it costs, in the register you were given.)");
+      }
+      setBusy(false);
+      if(window.console && console.warn){
+        console.warn("[mudskippers] two empty replies in a row - the turn was not spent."
+          + " Wire was " + (lastSent ? lastSent.wire : "?") + " chars; if the model's context"
+          + " window is smaller than that, the briefing is being truncated before it is read.");
+      }
+      showError("the storyteller sent an empty turn twice. Nothing was spent — press RETRY."
+        + " If this keeps happening the model's context window is too small for the game's"
+        + " briefing; raise it (Ollama: OLLAMA_CONTEXT_LENGTH=24576) and restart it.");
+      return;
+    }
     chatLog.push({role:"assistant", content:parsed.json});
     setBusy(false);
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
@@ -7275,7 +7315,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.5");
+  R(s, "build", "v4.13.6");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7455,7 +7495,11 @@ function dbgReport(){
     /* the number that actually decides whether a local model saw the rules: over
        its window and the front of the prompt is thrown away in silence */
     R(s, "whole wire", (lastSent.msgs || 1) + " messages · " + wire + " chars ≈ " + tok
-      + " tokens — needs a context window above this", tok > 3500 ? "warn" : "ok");
+      + " tokens" + (tok > 4096
+        ? " — OVER Ollama's 4096 default. Without OLLAMA_CONTEXT_LENGTH raised, the front"
+          + " of this is being discarded before the model reads it."
+        : " — under Ollama's 4096 default, but a few more turns will pass it."),
+      tok > 4096 ? "warn" : "ok");
     R(s, "context trim", lastSent.trim);
   } else {
     R(s, "payload", "nothing sent this session yet", "warn");
@@ -8498,7 +8542,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.5   COLD START",
+    "MUD//OS  v4.13.6   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9965,7 +10009,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.5",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.6",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
