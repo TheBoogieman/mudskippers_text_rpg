@@ -233,6 +233,30 @@ every message actually sent, with a token estimate. A local model whose context 
 is smaller than that number silently discards the front of the prompt — the rules, the
 board, the fence — and nothing in the game can tell you it happened. This row can.
 
+## The road — one list, said once
+
+The board used to say the same thing three times a turn: a storyboard naming every
+question in the season, a fence naming the next six *again* with their exits, and an
+armed-next block naming the one after tonight a third time. All of it rode every
+turn.
+
+It's one block now. Each question appears once and its line does both jobs at once —
+this is where the road goes, and none of it may happen yet:
+
+```
+THE ROAD — SEASON 1 of 3, THE PERSONAL RUN. Fixed, and the board's…
+  done — the shard that hums · no way home · the safehouse door
+  >> TONIGHT — the last fare
+  NEXT — the delivery is late: The trap stands up. Mirren — the receiver, worn…
+  fenced — "the clean exit": the exit has been answered or has expired, out loud…
+  fenced — "the courier, carried": the courier is clear of the sweep because…
+  fenced — and further off still: the keeping.
+```
+
+Nothing was dropped: the near questions still carry their exits, the far ones are
+still named, the discipline paragraph still runs underneath, and on the quiet turns
+the leaning order and the knock clause still ride along. It is simply said once.
+
 ## How a season actually ends
 
 Each season is a **flowchart**, not a mood. Thirty-three beats across the three
