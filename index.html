@@ -967,7 +967,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.7.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.7.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1037,7 +1037,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.7.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.7.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1316,7 +1316,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.7.0 "The Storyboard"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.7.1 "The Storyboard"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2238,7 +2238,22 @@ var gateHeldNow = false;     /* a gate arrived below the beat's floor; served on
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
 var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
 var SLACK_STD = 2, SLACK_ARC = 3;
-var pageTurnDue = false;     /* the next live turn opens a new scene, not a continued one */
+/* THE PAGE TURN belongs to the closing, not the opening. A beat ends one of two
+   ways - the player calls it at the end of the road, on their terms, or the road
+   runs out and the world ends it for them - and either way the reply that ends it
+   also cuts away: time passes, the family lands somewhere they can put their coats
+   down, and the landing opens there instead of mid-sentence in a scene that is
+   over. Ordering the cut on the NEXT beat's first turn was wrong: it let one
+   action carry a timeskip AND that beat's opening business, which runs a beat
+   before the player has stood in it. */
+function pageTurnClause(){
+  return " Then turn the page. Tonight's question is answered, so do not leave the family"
+    + " standing in the room that answered it: end this reply with a real cut - time moving"
+    + " on screen, the hour or the day turning over, the family arriving somewhere they can"
+    + " put their coats down - and set day, time and location to match. Nothing new begins"
+    + " and no next matter is named; the turn after this one is the landing, and it should"
+    + " open somewhere the story can breathe.";
+}
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
 var interludeServedId = null;/* the card riding the current outgoing exchange */
 
@@ -3415,7 +3430,6 @@ function finishFold(){
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   beatText = ""; gateRefusedNames = []; gateHeldNow = false; defuseArmed = false;
-  pageTurnDue = false;           /* the fold's own passage was the page turn */
   tolls = 0;                     /* paid in full; the meter starts clean */
   var finBeat = SPINE[fin];
   var body = "While you played it your way, the world closed: " + titles.join(", ")
@@ -3735,6 +3749,7 @@ function boardBlock(){
   out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
     + " Everything else about how it happens is yours and the player's."
     + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
+    + pageTurnClause()
     + (actTurnAhead() ? " This gate turns the act: roll the day over with it - nights end." : "")
     + (seasonAhead() ? " This gate closes the season." : ""));
   return out.join("\n");
@@ -3755,17 +3770,6 @@ function boardDirective(){
       + "\nOpen the season: write ONE re-establishment scene, time having passed - days, not minutes - the family where the record left them, changed by what it cost. No new business, no new jobs, no reveals: the family, alive, where we find them. Roll the day forward. End with the floor open.)";
   }
   if(phase === "slack") return "";
-  /* the page turn outranks the ladder by construction - it only ever rides turn
-     one of a beat, where there is no pressure yet to speak over */
-  if(pageTurnDue){
-    return "(THE PAGE TURNS — the last question is finished and this is a new one. Do not continue"
-      + " the scene that just ended. Cut away from it: let time pass on screen - hours, a night,"
-      + " days, whatever the fiction has earned - and open on the family somewhere they actually"
-      + " are, doing something ordinary, before anything happens to them. Establish the place and"
-      + " the hour in the prose and set day, time and location to match. Then let tonight's business"
-      + " walk in. End with the floor open and three fresh choices"
-      + (beatNow().aim ? ", at least one a live attempt at: " + beatNow().aim : "") + ".)";
-  }
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -3775,9 +3779,7 @@ function boardDirective(){
       + b.exit + ". Cut straight to the consequence, skip travel and preamble, jump the clock if"
       + " you need to, and end the beat inside this turn. Send \"gate\": true."
       + (b.scar ? " The world does this now, and it costs: " + b.scar : "")
-      + " Then turn the page: end the reply with the scene visibly closing - a cut, a passage of"
-      + " time, the world's move settling - so the next turn opens in the aftermath, not in the"
-      + " middle of a conversation the world just ended.)";
+      + pageTurnClause() + ")";
   }
   /* a held gate speaks first: the haste was the DM's, and the fix is to keep playing */
   if(gateHeldNow){
@@ -3881,9 +3883,6 @@ function closeBeat(forced, note){
 /* the season opens the next door: pointer advances, the witness starts fresh */
 function armBeat(){
   if(beatDone()) return;
-  /* the page turn: a new question deserves a new scene. The season break already
-     writes its own re-establishment, so it never double-skips. */
-  pageTurnDue = (phase !== "seasonopen");
   beatIdx++;
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
@@ -3944,9 +3943,6 @@ function boardTurn(data){
     if(phaseLeft <= 0) armBeat();
     return;
   }
-  /* the page has turned the moment a live reply lands on it, whatever it did
-     with the order - the scene never gets skipped twice */
-  pageTurnDue = false;
   /* the walk-back reply: clock resets and the toll is paid - unless the gate
      landed, in which case they came back spectacularly and the toll is waived */
   if(walkbackNow){
@@ -4309,11 +4305,9 @@ function buildContext(){
       + " reply, carry the scene to the beat's resolution ON SCREEN - the exit's events happen in"
       + " the prose, shown, not implied, folded around what they did; if the scene genuinely"
       + " cannot carry it, step into chronicle voice for one short paragraph and narrate the"
-      + " business done. Three: turn the page - end the reply with the scene visibly closing: a"
-      + " cut, a passage of time, the room letting go - so the next turn opens in the aftermath,"
-      + " not in the middle of a conversation that no longer has a subject. The courier's voice"
-      + " stays the player's throughout. End with \"gate\": true and a gateNote that describes"
-      + " what was actually written.)";
+      + " business done. Three:" + pageTurnClause().replace(/^ Then turn the page\. /, " turn the page. ")
+      + " The courier's voice stays the player's throughout. End with \"gate\": true and a"
+      + " gateNote that describes what was actually written.)";
   }
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
@@ -4846,7 +4840,6 @@ function saveBlob(){
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     defuseArmed:defuseArmed, foldedBeats:foldedBeats, chassisHolder:chassisHolder,
-    pageTurn:pageTurnDue,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -6380,7 +6373,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.7.0   COLD START",
+    "MUD//OS  v4.7.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7600,7 +7593,7 @@ function newRun(confirmFirst){
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
-  gateHeldNow = false; lastTurnMud = false; lastPlayerText = ""; pageTurnDue = false;
+  gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
@@ -7664,7 +7657,6 @@ function restoreFromBlob(s){
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
   foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
   defuseArmed = s.defuseArmed === true;   /* the call stands across a reload */
-  pageTurnDue = s.pageTurn === true;      /* an unturned page survives one too */
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};

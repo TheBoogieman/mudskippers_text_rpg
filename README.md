@@ -146,6 +146,13 @@ The DM does not decide the plot and cannot wander off it:
   is a live attempt at it, in the scene's own voice. The other two are yours to enjoy
   and may go anywhere. Three choices that all leave the gate exactly where it was is
   how a night runs out of road with the player never once offered the road.
+- **The page turns on the way out, not on the way in.** A beat ends one of two ways:
+  you reach the end of the road and **call it** — choosing the ending on your own
+  terms — or you don't, and the road runs out and the world ends it for you. Either
+  way the reply that ends it also cuts: time moves on screen, the family lands
+  somewhere they can put their coats down, and the next turn opens there instead of
+  mid-sentence in a scene that's over. Nothing is ordered on the *next* beat's first
+  turn — a new question is yours to walk into at your own pace.
 - **A beat closes completely before the next one opens.** Every gate is followed by
   the **landing** — a turn (two on an arc turn) where nothing new is allowed to
   begin: reactions, cost, quiet, the family being people about what just happened.
@@ -160,11 +167,6 @@ The DM does not decide the plot and cannot wander off it:
   time is plainly reaching for the next matter, the board answers and the next beat
   arms at once. Momentum, convenience, or the DM's good segue is not a knock — only
   the player's hand is.
-- **And then the page turns.** A new question gets a new scene, never a continued
-  one. When the next beat arms, the DM is ordered to cut: let time pass on screen,
-  open on the family somewhere they actually are doing something ordinary, and only
-  then let tonight's business walk in — with fresh choices, one of them aimed. The
-  card tells you the last beat closed; the page turn puts you in the next one.
 
 The series runs **~80 / ~110 / ~100 turns per season — roughly 300 for all three
 books** played with intent, longer played leisurely — and it cannot fail to end:
