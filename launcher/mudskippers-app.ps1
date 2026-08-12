@@ -164,8 +164,7 @@ function Pick-Model([int]$free) {
 # only knows the card's size, so it assumes a couple of gigabytes are already
 # spoken for by the desktop.
 function Get-VramFreeMB {
-  $smi = Join-Path $env:SystemRoot "System32
-vidia-smi.exe"
+  $smi = Join-Path $env:SystemRoot "System32\nvidia-smi.exe"
   if (Test-Path $smi) {
     try {
       $n = ((& $smi --query-gpu=memory.free --format=csv,noheader,nounits 2>$null) | Select-Object -First 1) -as [int]
