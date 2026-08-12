@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.3 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.4 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3551,15 +3551,51 @@ function pinnedExit(b){
   if(!xs) return "Finish it — " + (b ? b.exit : "end tonight's business") + ".";
   return xs[beatTurns % xs.length];
 }
+/* THE RAIL'S DOORMAN. Two things came back on one line that should never have
+   reached a player: the board's own status note about whether the door was
+   unlocked, printed as the front of a choice - "(The rail has unlocked for this
+   turn.) Stop walking. Shard out of the jacket..." - and behind it the pinned
+   exit itself, copied word for word off the briefing that had just told the DM
+   not to repeat it. The old check only compared against the wording pinned RIGHT
+   NOW, and the rotation had already moved on, so the door sailed through as a
+   dead end. Both are caught here rather than asked for politely upstairs. */
+function normLine(t){
+  return String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+}
+var META_ASIDE = /\b(rail|board|slot|unlock|locked|gate|dead end|choices?|beat)\b/i;
+function cleanChoice(t){
+  t = String(t || "").trim();
+  /* a courier does not open his mouth with a bracketed note about the interface */
+  t = t.replace(/^\(([^)]{0,160})\)\s*/, function(m, inner){ return META_ASIDE.test(inner) ? "" : m; });
+  return t.trim();
+}
+/* is this "dead end" actually the door wearing a different hat? Checked against
+   EVERY authored wording, not just tonight's, and loosely enough to catch a
+   paraphrase that swallows or is swallowed by one of them. */
+function sameAsDoor(b, t){
+  var n = normLine(t), xs = (b && b.exits) || [], i, e;
+  if(!n) return true;
+  for(i = 0; i < xs.length; i++){
+    e = normLine(xs[i]);
+    if(!e) continue;
+    if(n === e) return true;
+    if(n.length > 24 && (e.indexOf(n) !== -1 || n.indexOf(e) !== -1)) return true;
+  }
+  return false;
+}
 /* the rail as the player actually gets it: our door, then their two dead ends */
 function railFor(dm){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
-  if(!doorsLive()) return dm.slice(0, 4);
-  var b = beatNow(), out = [pinnedExit(b)], i, t;
+  if(!doorsLive()) return dm.slice(0, 4).map(cleanChoice);
+  var b = beatNow(), out = [pinnedExit(b)], i, t, dropped = 0;
   for(i = 0; i < dm.length && out.length < 3; i++){
-    t = String(dm[i] || "").trim();
-    /* a dead end that IS the pinned line would put the same door on twice */
-    if(t && t !== out[0]) out.push(t);
+    t = cleanChoice(dm[i]);
+    if(!t) continue;
+    if(sameAsDoor(b, t)){ dropped++; continue; }
+    out.push(t);
+  }
+  if(dropped && window.console && console.warn){
+    console.warn("[mudskippers] dropped " + dropped + " choice(s) that were the door in disguise");
   }
   for(i = 0; out.length < 3; i++) out.push(PIN_STALLS[i % PIN_STALLS.length]);
   return out;
@@ -5082,13 +5118,22 @@ function boardBlock(){
   /* the rail on screen while the player was choosing is the one built on the LAST
      reply, so this is the wording they are looking at - and if they took it, it is
      what they said. The next rail rotates to another wording of the same move. */
+  /* the status used to trail the quoted line as a bracket, and a 24b duly shipped
+     "(The rail has unlocked for this turn.) Stop walking. Shard out of the..." as
+     a choice - the note and the line read as one block. Both live on their own
+     labelled lines now, and the ban on brackets is explicit. */
   out.push("THE RAIL — the board writes the way out of tonight itself and pins it above yours."
-    + " It sits in slot one all beat, shut, and unlocks for the last two turns. This is its wording:"
-    + "\n  >> \"" + pinnedExit(b) + "\""
-    + (exitStage() === "open" ? "  (unlocked right now - they can take it this turn)"
-                             : "  (shut this turn - the night still has road left)")
-    + "\nYou do not write that line, you do not repeat it, and you do not put anything like it"
-    + " in \"choices\". If the player takes it, play it as written and land the gate."
+    + " It sits in slot one all beat, shut, and unlocks for the last two turns."
+    + "\n  THE BOARD'S LINE: \"" + pinnedExit(b) + "\""
+    + "\n  ITS STATE THIS TURN: " + (exitStage() === "open"
+        ? "UNLOCKED - the player can take it and end the beat."
+        : "SHUT - the night still has road left, so they cannot take it yet.")
+    + "\nThose two lines are the board talking to you. Neither of them is ever a choice, or part"
+    + " of one. You do not write that line, you do not repeat it, you do not reword it, and you do"
+    + " not put anything that reaches for the same thing in \"choices\". Never begin a choice with"
+    + " a bracketed aside about the rail, the board, the beat or the state of anything - a choice"
+    + " is only ever the courier's own words. If the player takes the board's line, play it as"
+    + " written and land the gate."
     + "\nWhat you send in \"choices\" is TWO DEAD ENDS, and nothing else - the door has"
     + " slot one and yours go under it. Two lines that"
     + " GO NOWHERE - and this is the hard part and the whole point: they buy understanding, never"
@@ -7185,7 +7230,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.3");
+  R(s, "build", "v4.13.4");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8408,7 +8453,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.3   COLD START",
+    "MUD//OS  v4.13.4   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9875,7 +9920,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.3",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.4",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);

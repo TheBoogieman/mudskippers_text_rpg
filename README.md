@@ -173,7 +173,12 @@ So the rail is the game's now, top to bottom:
   story: handing a shard back in Book One and walking out of the heart room in Book
   Three are not the same sentence, so they are not the same sentence.
 - **The storyteller writes two dead ends.** That's it. It's told the pinned line
-  verbatim so its two don't collide with it.
+  verbatim so its two don't collide with it — and when it ignores that and hands
+  the door back anyway, the game drops the line rather than printing it. A "dead
+  end" is checked against *every* authored wording of that beat's exit, not just
+  tonight's, loosely enough to catch a paraphrase. Anything that opens with a
+  bracketed aside about the rail or the board gets that aside stripped: a choice is
+  only ever the courier's own words.
 
 ## Openings and landings
 
