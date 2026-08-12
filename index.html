@@ -272,6 +272,28 @@
     color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
     padding:9px 11px;max-height:38vh;overflow-y:auto;margin:8px 0 14px;
   }
+  /* ---- THE TRAPDOOR — the board from underneath. Not fiction, not furniture:
+     it is deliberately a readout, so nothing in it can be mistaken for the game. ---- */
+  #dbgmodal .card{max-width:1040px;padding:20px 22px 28px}
+  .dbg-sec{
+    font-family:ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.3em;
+    color:var(--sodium);border-bottom:1px solid #3a2f1c;
+    padding-bottom:5px;margin:20px 0 8px;
+  }
+  .dbg-row{
+    display:flex;gap:14px;font-family:ui-monospace,Menlo,monospace;font-size:11px;
+    line-height:1.55;padding:1px 0;align-items:baseline;
+  }
+  .dbg-row .k{flex:0 0 210px;color:#8a7c68}
+  .dbg-row .v{flex:1 1 auto;color:var(--ink);word-break:break-word;white-space:pre-wrap}
+  .dbg-row.warn .v{color:#e08b8b}
+  .dbg-row.ok .v{color:#8fc98a}
+  .dbg-blk{font-size:9.5px;max-height:30vh}
+  .dbg-blk-h{
+    font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.16em;
+    color:#8a7c68;margin:12px 0 0;
+  }
+  @media (max-width:640px){ .dbg-row{display:block} .dbg-row .k{margin-bottom:1px} }
   #arch-records details{margin-bottom:8px}
   #arch-records summary{
     cursor:pointer;font-family:ui-monospace,Menlo,monospace;font-size:11px;
@@ -994,7 +1016,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.11.5 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.12.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1065,6 +1087,22 @@
   </div>
 </div>
 
+<!-- THE TRAPDOOR — middle-click the shard. Every number the night runs on. -->
+<div class="modal" id="dbgmodal">
+  <div class="card">
+    <div class="cardhead">THE BOARD, FROM UNDERNEATH</div>
+    <div class="cardsub">Everything the night is actually running on, read live off the machine: the pointer, the gate and its witness, the doors, the clocks, and the exact bytes that went to the storyteller last turn. Nothing here is fiction and nothing here is saved. Middle-click the shard to open it again; ESC closes it.</div>
+    <div class="btnrow">
+      <button class="btn" id="dbg-refresh">REFRESH</button>
+      <button class="btn" id="dbg-copy">COPY REPORT</button>
+      <button class="btn" id="dbg-save">DOWNLOAD REPORT</button>
+      <button class="btn ghost" id="dbg-close">CLOSE</button>
+    </div>
+    <div class="hint" id="dbg-note">The report is this panel, verbatim, plus the last payload, the raw reply and the save — everything needed to reproduce a turn.</div>
+    <div id="dbg-body"></div>
+  </div>
+</div>
+
 <!-- the archive lives behind the wrist's DO NOT PRY plate now (tpane-arch) -->
 
 <!-- COURIER'S TERMINAL MODAL — the wrist unit, at desk scale -->
@@ -1089,7 +1127,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.5</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.12.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1368,7 +1406,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.11.5 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.12.0 "The Trapdoor"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2628,6 +2666,7 @@ function showChoices(choices){
       box.appendChild(wh);
     }
   }
+  dbgTick();   /* a trapdoor left open watches the numbers move */
 }
 
 function setAmbience(name){
@@ -5029,7 +5068,12 @@ function callDM(corrected){
     msgs[0] = {role:"user", content: msgs[0].content + "\n\n" + corrected};
   }
   /* the byte-real payload, for the archive's SENT tab - session-only */
-  lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText()};
+  /* the briefing is msgs[0]; the history rides behind it and counts against the
+     same window, so the trapdoor needs the whole wire, not just the front of it */
+  var wire = 0;
+  for(var wi = 0; wi < msgs.length; wi++) wire += String(msgs[wi].content || "").length;
+  lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText(),
+              msgs: msgs.length, wire: wire};
   askAI(msgs).then(function(raw){
     lastReceived = raw;
     var parsed;
@@ -5595,7 +5639,8 @@ $("vaultopen").onclick = function(){ $("vaultgate").style.display="none"; $("vau
 document.addEventListener("keydown", function(e){
   if(e.key==="Escape"){
     if(!rebuildGuard()) return;
-    ["setmodal","welmodal","runmodal","termmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    ["setmodal","welmodal","runmodal","termmodal","dbgmodal"].forEach(function(id){ $(id).classList.remove("open"); });
+    dbgOpen = false;
     if(runSlug) closeTitle();
   }
 });
@@ -5960,6 +6005,302 @@ function renderArchReply(){
   pre.textContent = lastReceived;
   box.appendChild(pre);
 }
+
+/* ============ THE TRAPDOOR ============
+   A run that goes wrong goes wrong in the numbers, and until now reading them
+   meant opening a console and already knowing the variable names. This is the
+   same information laid out - and, the actual point of it, extractable: the
+   panel and the report are built from ONE structure, so the file that gets sent
+   for a diagnosis is byte-for-byte what was on the screen.
+
+   Nothing in here has a side effect, and that is a constraint, not a happy
+   accident: boardDirective() sets forcingNow and memoryBriefing() rewrites the
+   trim record, so a panel that called them to "show what we send" would change
+   the next turn by being looked at. The composed payload is therefore read from
+   the last real send; every block computed live is a pure builder. */
+function dbgV(v){
+  if(v === null || v === undefined || v === "") return "—";
+  if(v === true) return "TRUE";
+  if(v === false) return "false";
+  if(Object.prototype.toString.call(v) === "[object Array]"){
+    return v.length ? v.join("  ·  ") : "(none)";
+  }
+  return String(v);
+}
+function dbgPad(s, n){ s = String(s); while(s.length < n) s += " "; return s; }
+function dbgReport(){
+  var secs = [], b = beatDone() ? null : beatNow(), i, m, s;
+  function S(nm){ var o = {sec:nm, rows:[], blocks:[]}; secs.push(o); return o; }
+  function R(o, k, v, flag){ o.rows.push({k:k, v:dbgV(v), flag:flag || ""}); }
+  function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
+
+  s = S("THE RUN");
+  R(s, "build", "v4.12.0");
+  R(s, "read at", new Date().toISOString());
+  R(s, "provider / model", settings.provider + " / " + settings.model);
+  R(s, "base", settings.base);
+  R(s, "key present", !!settings.key);
+  R(s, "run slug", runSlug);
+  R(s, "rehearsing", rehearsing, rehearsing ? "warn" : "");
+  R(s, "run over", runOver, runOver ? "warn" : "");
+  R(s, "death line", deathLine);
+  R(s, "day / time / place", $("hud-day").textContent + " / " + nowTime + " / " + $("hud-loc").textContent);
+  R(s, "ambience", currentAmbience);
+  R(s, "tension (0-3)", lastTension);
+  R(s, "busy", busy);
+  R(s, "phase / left", phase + " / " + phaseLeft);
+  R(s, "intro stage", introStage);
+  R(s, "season", currentSeason);
+  R(s, "board stale", boardStale, boardStale ? "warn" : "");
+  R(s, "epilogue / break due", epilogueNow + " / " + seasonBreakDue);
+  R(s, "spoilers pried", prySpoilers);
+
+  s = S("THE POINTER");
+  if(!b){
+    R(s, "beat", "the board is finished (" + beatIdx + " of " + SPINE.length + ")");
+  } else {
+    R(s, "beat", (beatIdx + 1) + " of " + SPINE.length + "  —  " + b.id + "  \"" + b.title + "\"");
+    R(s, "season / act", "s" + b.season + " a" + b.act + "  ("
+      + SEASON_NAMES[b.season] + " / " + ACT_NAMES[b.season][b.act] + ")"
+      + "  —  beat " + seasonBeatPos(beatIdx) + " of " + seasonBeatCount(b.season) + " this season");
+    R(s, "turns", beatTurns + " spent · floor " + beatFloor(b) + " · budget " + b.budget
+      + " · forced close at " + (b.budget + 1),
+      beatTurns >= b.budget ? "warn" : (beatTurns >= beatFloor(b) ? "ok" : ""));
+    R(s, "act turn ahead", actTurnAhead());
+    R(s, "season ahead", seasonAhead());
+    R(s, "is finale", isFinaleBeat());
+    B(s, "GOAL", b.goal);
+    B(s, "EXIT (the gate)", b.exit);
+    B(s, "AIM (slot 1 is told to reach for this)", b.aim);
+    B(s, "WALK LINE (slot 4, client-owned)", b.walkLine);
+    R(s, "anchors", b.anchors || []);
+    R(s, "reveals", b.reveals || []);
+    R(s, "stone", b.stone);
+    B(s, "SCAR (recorded on a forced close)", b.scar);
+    B(s, "CANON MERGED ON CLOSE", (b.canon || []).join("\n"));
+    if(b.canonAlt) B(s, "CANON (Nine branch, replaces)", b.canonAlt.join("\n"));
+    if(b.canonA) B(s, "CANON A (Seven branch, appends)", b.canonA.join("\n"));
+    if(b.canonB) B(s, "CANON B (Nine branch, appends)", b.canonB.join("\n"));
+    B(s, "PRESS (the world's shoves)", (b.press || []).join("\n"));
+    R(s, "tease", TEASES[b.id]);
+    m = SPINE[beatIdx + 1];
+    R(s, "next", m ? m.id + "  \"" + m.title + "\"" : "(end of board)");
+  }
+
+  s = S("THE GATE AND ITS WITNESS");
+  if(b){
+    var miss = anchorsMissing(b);
+    R(s, "anchors missing NOW", miss.length ? miss : "(none — a gate would be allowed)",
+      miss.length ? "warn" : "ok");
+  }
+  R(s, "witness chars", beatText.length + " of " + BEAT_TEXT_CAP);
+  R(s, "last gate refused on", gateRefusedNames, gateRefusedNames.length ? "warn" : "");
+  R(s, "gate held (below floor)", gateHeldNow, gateHeldNow ? "warn" : "");
+  R(s, "stalled (player held it)", stalledNow);
+  R(s, "forcing this turn", forcingNow, forcingNow ? "warn" : "");
+  R(s, "call armed", defuseArmed, defuseArmed ? "ok" : "");
+  R(s, "call eligible", callEligible());
+  R(s, "chassis holder / pick", dbgV(chassisHolder) + " / " + dbgV(chassisPick));
+  R(s, "housing resident", housingResident());
+  B(s, "WITNESS TAIL (last 900 chars the anchor check reads)", beatText.slice(-900));
+
+  s = S("THE THREE DOORS");
+  R(s, "slots (positional, client-owned)", DOOR_SLOTS);
+  R(s, "doors live", doorsLive(), doorsLive() ? "ok" : "");
+  R(s, "this turn's door", pickKind);
+  R(s, "pending door", pendingKind);
+  for(i = 0; i < lastRail.length; i++){
+    R(s, "rail " + (i + 1) + " · " + (DOOR_SLOTS[i] || "—"), lastRail[i]);
+  }
+  R(s, "walk line now", b ? walkLineNow(redRun >= 1) : "—");
+  R(s, "walk armed", walkArmed);
+  R(s, "consecutive walks", redRun + " (2 ends the run)", redRun ? "warn" : "");
+  R(s, "walkout due", walkoutDue, walkoutDue ? "warn" : "");
+
+  s = S("THE CLOCKS");
+  R(s, "tolls", tolls + " of " + TOLL_MAX + " (a 4th folds the table)", tolls ? "warn" : "");
+  R(s, "toll explained", tollExplained);
+  R(s, "drift run", driftRun + "  (yellow " + DRIFT_YELLOW + " · red " + DRIFT_RED
+    + " · walk-back " + DRIFT_WALKBACK + ")", driftRun >= DRIFT_YELLOW ? "warn" : "");
+  R(s, "walk-back queued", walkbackNow, walkbackNow ? "warn" : "");
+  R(s, "fold pending / served", foldPending + " / " + foldServed, foldPending ? "warn" : "");
+  R(s, "folded beats", foldedBeats);
+  R(s, "peril turns left", perilTurns, perilTurns ? "warn" : "");
+  R(s, "last turn was a bit", lastTurnMud);
+  R(s, "arc checkpoint due", actCheckpointDue);
+  R(s, "maintenance index", maintIndex);
+  R(s, "slack length", "std " + SLACK_STD + " · act " + SLACK_ARC);
+  R(s, "interlude riding", interludeServedId);
+  R(s, "interludes used", interludesUsed.length);
+  R(s, "asides queued", pendingAsides.length);
+  R(s, "card waiting", beatJustCleared ? beatJustCleared.title : null);
+
+  s = S("THE BOARD, BEAT BY BEAT");
+  var road = [];
+  for(i = 0; i < SPINE.length; i++){
+    m = SPINE[i];
+    /* the pointer sits on a closed beat all through the landing, so the marker
+       has to say which of those two things it is - that gap is where the beat
+       lifecycle bugs live */
+    var mark = (i < beatIdx || (i === beatIdx && gateNotes[m.id]))
+      ? (foldedBeats.indexOf(m.id) !== -1 ? "[world]" : "[closed]")
+      : (i === beatIdx && !beatDone() ? "[ HERE ]" : "[      ]");
+    road.push(dbgPad(mark, 9) + "s" + m.season + "a" + m.act + "  " + dbgPad(m.id, 14)
+      + "b" + m.budget + "/f" + beatFloor(m) + "  " + m.title
+      + (i === beatIdx && !beatDone() ? "   ← the pointer (" + phase + ")" : "")
+      + (gateNotes[m.id] ? "\n" + dbgPad("", 22) + "→ " + gateNotes[m.id] : ""));
+  }
+  B(s, "33 QUESTIONS · [closed] player or DM · [world] forced · [HERE] live", road.join("\n"));
+
+  s = S("THE CAST");
+  R(s, "family", roster.family);
+  R(s, "fallen (permanent)", roster.fallen, roster.fallen.length ? "warn" : "");
+  R(s, "met (the gate on names)", metNames());
+  var unmet = [];
+  for(i = 0; i < SPINE_CAST.length; i++){
+    if(metNames().indexOf(SPINE_CAST[i]) === -1) unmet.push(SPINE_CAST[i]);
+  }
+  R(s, "spine names NOT yet met", unmet);
+  R(s, "sheets on record", Object.keys(castSheets).length);
+  R(s, "on stage last turn", lastPresent);
+
+  s = S("THE SERVED STATE");
+  R(s, "canon lines", runCanon.length + " live · " + canonArchive.length + " archived");
+  R(s, "milestones", milestones.length);
+  R(s, "archive index", archiveIndex.length + " lines");
+  R(s, "season records", Object.keys(seasonRecords));
+  R(s, "bits", bits);
+  R(s, "agenda", agendaText);
+  R(s, "map edges / places", mapEdges.length + " / " + Object.keys(placeNotes).length);
+  R(s, "route", dbgV(prevLocation) + " → " + dbgV($("hud-loc").textContent) + "  via " + dbgV(lastRoute));
+  R(s, "feed blocks / chat turns", feedLog.length + " / " + chatLog.length);
+  var qs = [];
+  for(i = 0; i < quests.length; i++){
+    qs.push(dbgPad("[" + quests[i].status + "]", 11) + quests[i].title
+      + (quests[i].beat ? "  (tied to " + quests[i].beat + ")" : ""));
+  }
+  B(s, "JOBS", qs.join("\n"));
+  B(s, "MILESTONES", milestones.join("\n"));
+
+  s = S("WHAT RIDES THE NEXT TURN");
+  B(s, "TEMPO", tempoLine());
+  if(b){
+    B(s, "ROAD LINE", roadLine(b));
+    B(s, "STORYBOARD", storyboardBlock());
+    B(s, "THE FENCE", fenceBlock());
+    /* the door order only ships on a live turn, so showing it in the landing
+       would be showing something that is not going to be sent */
+    B(s, "DOOR DIRECTIVE" + (doorsLive()
+        ? " (for the door last picked: " + dbgV(pickKind) + ")"
+        : " — not sent in " + phase + "; shown for reference"), doorDirective());
+  }
+  B(s, "PAGE TURN CLAUSE", pageTurnClause());
+
+  s = S("THE LAST EXCHANGE");
+  if(lastSent){
+    var wire = lastSent.wire || lastSent.chars, tok = Math.round(wire / 3.7);
+    R(s, "briefing", lastSent.chars + " chars (msgs[0] — the block below)");
+    /* the number that actually decides whether a local model saw the rules: over
+       its window and the front of the prompt is thrown away in silence */
+    R(s, "whole wire", (lastSent.msgs || 1) + " messages · " + wire + " chars ≈ " + tok
+      + " tokens — needs a context window above this", tok > 3500 ? "warn" : "ok");
+    R(s, "context trim", lastSent.trim);
+  } else {
+    R(s, "payload", "nothing sent this session yet", "warn");
+  }
+  R(s, "reply verdict", lastReplyVerdict, /rejected|repaired/.test(lastReplyVerdict) ? "warn" : "ok");
+  R(s, "player's last line", lastPlayerText);
+  B(s, "SENT — the byte-real outgoing message", lastSent ? lastSent.text : "");
+  B(s, "RECEIVED — raw, before parsing", lastReceived);
+
+  return secs;
+}
+/* the panel and the file are the same structure rendered twice - if one of them
+   is wrong they are both wrong, which is the only honest way to ship a bug tool */
+function renderDebug(){
+  var box = $("dbg-body"); if(!box) return;
+  box.innerHTML = "";
+  dbgReport().forEach(function(s){
+    var h = document.createElement("div");
+    h.className = "dbg-sec"; h.textContent = s.sec;
+    box.appendChild(h);
+    s.rows.forEach(function(r){
+      var el = document.createElement("div");
+      el.className = "dbg-row" + (r.flag ? " " + r.flag : "");
+      el.innerHTML = '<span class="k">' + esc(r.k) + '</span><span class="v">' + esc(r.v) + '</span>';
+      box.appendChild(el);
+    });
+    s.blocks.forEach(function(bk){
+      var bh = document.createElement("div");
+      bh.className = "dbg-blk-h"; bh.textContent = bk.h;
+      box.appendChild(bh);
+      var bd = document.createElement("div");
+      bd.className = "arch-lines dbg-blk"; bd.textContent = bk.t;
+      box.appendChild(bd);
+    });
+  });
+}
+/* the extraction. Markdown because that is what survives being pasted into a
+   chat window, and the save rides along at the bottom so the turn can actually
+   be reproduced rather than described. */
+/* a DM reply can contain backticks - one fenced block in this file closing early
+   would corrupt everything after it, so each fence outgrows its own contents */
+function dbgFence(t, lang){
+  var runs = String(t).match(/`+/g) || [], n = 3, i;
+  for(i = 0; i < runs.length; i++) if(runs[i].length >= n) n = runs[i].length + 1;
+  var f = ""; while(f.length < n) f += "`";
+  return [f + (lang || ""), String(t), f];
+}
+function dbgText(){
+  var out = ["# MUDSKIPPERS — DEBUG REPORT", ""];
+  dbgReport().forEach(function(s){
+    out.push("## " + s.sec, "");
+    s.rows.forEach(function(r){ out.push(dbgPad(r.k, 26) + " : " + r.v); });
+    if(s.rows.length) out.push("");
+    s.blocks.forEach(function(bk){
+      out.push("### " + bk.h);
+      out = out.concat(dbgFence(bk.t));
+      out.push("");
+    });
+  });
+  var feed = [];
+  feedLog.slice(-14).forEach(function(f){
+    feed.push("[" + (f.kind || "scene") + (f.mud ? "/bit" : "") + "] "
+      + (f.speaker && f.speaker !== "__player" ? f.speaker + ": " : "")
+      + String(f.text || f.sum || f.title || "").slice(0, 400));
+  });
+  out.push("## THE FEED, LAST 14 BLOCKS");
+  out = out.concat(dbgFence(feed.join("\n")));
+  out.push("", "## THE SAVE — paste-to-reproduce");
+  out = out.concat(dbgFence(saveBlob(), "json"));
+  out.push("");
+  return out.join("\n");
+}
+var dbgOpen = false;
+function openDebug(){
+  dbgOpen = true;
+  renderDebug();
+  $("dbgmodal").classList.add("open");
+}
+function closeDebug(){ dbgOpen = false; $("dbgmodal").classList.remove("open"); }
+$("dbg-close").onclick = closeDebug;
+$("dbg-refresh").onclick = renderDebug;
+$("dbg-save").onclick = function(){
+  download("mudskippers-debug-" + (runSlug || "norun") + ".md", dbgText(), "text/markdown");
+};
+$("dbg-copy").onclick = function(){
+  var btn = $("dbg-copy"), t = dbgText();
+  function done(ok){
+    btn.textContent = ok ? "COPIED" : "COPY FAILED — USE DOWNLOAD";
+    setTimeout(function(){ btn.textContent = "COPY REPORT"; }, 1800);
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ done(true); }, function(){ done(false); });
+  } else { done(false); }
+};
+/* the panel is live while it is open: a turn taken behind it re-reads itself, so
+   you can leave it up and watch the numbers move */
+function dbgTick(){ if(dbgOpen) renderDebug(); }
 
 /* ---- ARCHIVE MODE: tabs on the phosphor screen. The panel says DO NOT PRY;
    this is what is behind it when you pry anyway. ---- */
@@ -6905,7 +7246,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.11.5   COLD START",
+    "MUD//OS  v4.12.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8103,6 +8444,10 @@ function shardInit(){
 
   shardEl.addEventListener("pointerdown", function(e){
     e.preventDefault(); e.stopPropagation();
+    /* THE TRAPDOOR. The middle button never grabs - it opens the numbers. The
+       shard is the one thing on screen that is always there, never scrolls away
+       and belongs to no panel, which makes it the right handle for this. */
+    if(e.button === 1){ openDebug(); return; }
     shardHeld = {dx: e.clientX - shardX, dy: e.clientY - shardY,
                  x0: e.clientX, y0: e.clientY, t0: Date.now(), moved: false,
                  vx: 0, vy: 0, tp: Date.now()};
@@ -8145,6 +8490,11 @@ function shardInit(){
   shardEl.addEventListener("pointerup", letGo);
   shardEl.addEventListener("pointercancel", letGo);
   shardEl.addEventListener("click", function(e){ e.stopPropagation(); });
+  /* Windows answers a middle click with the autoscroll ring unless both the
+     pointer event AND the aux click are refused */
+  shardEl.addEventListener("auxclick", function(e){
+    if(e.button === 1){ e.preventDefault(); e.stopPropagation(); }
+  });
   window.addEventListener("resize", function(){ shardMeasure(); shardPlace(); shardHush(); shardWake(); });
   /* The shelf moves. The pressure strip appears and disappears, banners come and go,
      choices wrap on a narrow window - every one of those changes the height of the
@@ -8363,7 +8713,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.5",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.12.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);

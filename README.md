@@ -135,6 +135,34 @@ and a node skeleton pre-seeded with the stall prompts players were actually give
 write into. It's built for handing to someone (or something) that has to author the
 offline version of that beat without the repo open.
 
+## The trapdoor — when something goes wrong
+
+**Middle-click the shard.** A panel opens over the run with every number the night is
+actually running on, and none of it is fiction: the pointer and where it sits on the
+board, the gate and the witness text the anchor check reads, which anchors are missing
+*right now*, the three doors and which line is sitting in which slot, the tolls, the
+drift, the fold, the peril clock, the whole thirty-three-beat road marked closed /
+forced / live with each gate note under it, and the exact bytes that went to the
+storyteller last turn next to the raw reply that came back.
+
+It reads the machine and never touches it. That is a constraint rather than a
+courtesy: two of the things you'd most want to see — the board's press directive and
+the memory briefing — arm flags as a side effect of being built, so a panel that
+called them to show you "what we send" would change the next turn by being looked at.
+The composed payload is therefore read back from the last real send; everything
+computed live is a pure builder. Leave the panel open and it re-reads itself after
+every turn.
+
+**COPY REPORT** / **DOWNLOAD REPORT** give you the same thing as a markdown file: the
+panel verbatim, the outgoing payload, the raw reply, the last fourteen feed blocks and
+the entire save as JSON — enough to reproduce a turn rather than describe it. The
+panel and the file are rendered from one structure, so they can never disagree.
+
+The one row worth knowing on sight is **whole wire**: the total characters across
+every message actually sent, with a token estimate. A local model whose context window
+is smaller than that number silently discards the front of the prompt — the rules, the
+board, the fence — and nothing in the game can tell you it happened. This row can.
+
 ## How a season actually ends
 
 Each season is a **flowchart**, not a mood. Thirty-three beats across the three
