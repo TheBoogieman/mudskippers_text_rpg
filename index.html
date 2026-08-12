@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.11.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.11.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.11.1 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.11.2 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1498,7 +1498,7 @@ var BIBLE = [
 "- When the group leaves a location, include one canon line stating what concluded there. ",
 "- day: REQUIRED. Follow the fiction - advance it only when a night actually passes in-scene, and when it does, advance it in the same turn the sun comes up rather than silently later. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
-"- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, The File, Other. Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible, and it exists only once it has been installed; before that the terminal is dumb hardware. Only use characters the player has actually met.",
+"- speaker must be Narration, Courier, Other, or one of the names in ON STAGE in the context block - that list is the whole cast this run has actually met, and it grows as the story introduces people. Never use a name that is not on it: the people who have not arrived yet are not yours to cast, and putting one on screen early spends them. Strangers get \"Other\". Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible - and it only exists once it has been installed; before that the terminal is dumb hardware.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words. Inside a live beat the game reads them BY POSITION, so the order is a contract, not a preference. CHOICE 1 is the exit: a real attempt at tonight's aim, the move that ends this business, and the most tempting thing on the rail. CHOICES 2 AND 3 are dead ends: the question under the question, the detail, the person pressed, the human thing said - unlike each other, one earnest and one sideways, and neither leaving the courier measurably closer to the gate. A dead end that quietly advances the night is the commonest way this table's pacing gets stolen. Outside a live beat - the landing, the family's own time - write three ordinary choices as you always have.",
 "- NEVER offer quitting as a choice. Walking out on the job, handing the shard back, telling them to find another courier - that door exists, it matters, and it belongs to the game, not to you. The board prints it under your three, in red, and makes the player click it twice. Your three choices are for people who are still in this.",
@@ -4420,6 +4420,46 @@ function nowLine(){
   return "Day " + $("hud-day").textContent + ", " + (nowTime || "—") + ", " + ($("hud-loc").textContent || "—")
     + ", Season " + (currentSeason||1) + ". " + (nowText || "the story continues");
 }
+/* ---- WHO IS ON STAGE ----
+   The bible used to list every speaker the series will ever contain, which read
+   as a menu: a local model put Marek - a Book Two character - on a Book One
+   rooftop in the first live beat, complete with a backstory, because the name
+   was offered and "only use characters the player has met" is prose a small
+   model drops. The cast is the client's to state now. It grows as the story
+   introduces people, and nobody arrives before their night. */
+var SPINE_CAST = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Principal",
+                  "Marek","Five","Mirren","Architect","Machine","The File"];
+function metNames(){
+  var seen = {}, out = [], i;
+  function add(n){
+    n = String(n || "").trim();
+    if(!n || seen[n]) return;
+    seen[n] = 1; out.push(n);
+  }
+  Object.keys(castSheets).forEach(add);
+  (roster.family || []).forEach(add);
+  (roster.fallen || []).forEach(add);
+  /* the road's own people, up to and including tonight - tonight's anchors are
+     due to walk in, so they are allowed to */
+  for(i = 0; i <= beatIdx && i < SPINE.length; i++) (SPINE[i].anchors || []).forEach(add);
+  if(!housingResident()) {                    /* the wrist is dumb hardware until it is not */
+    out = out.filter(function(n){ return n !== "The File"; });
+  } else add("The File");
+  return out.length ? out : ["Pia"];
+}
+/* a name from later in the story, used before it belongs to the table */
+function unmetSpeakers(data){
+  var met = {}, bad = [];
+  metNames().forEach(function(n){ met[n] = 1; });
+  ((data && data.scene) || []).forEach(function(b){
+    var nm = String((b && b.speaker) || "").trim();
+    if(!nm || met[nm]) return;
+    for(var i = 0; i < SPINE_CAST.length; i++){
+      if(SPINE_CAST[i].toLowerCase() === nm.toLowerCase() && bad.indexOf(nm) === -1) bad.push(nm);
+    }
+  });
+  return bad;
+}
 /* ---- THE TEMPO ----
    The three books do not sound alike, and the difference is not decoration: in
    Book One these people are being hunted and have no time to be characters yet.
@@ -4491,6 +4531,9 @@ function contextBlock(){
        hand is a law that gets broken in the scene */
     out.push("PHYSICS (these hold in every scene, without exception)\n" + physicsLines().join("\n"));
     out.push("NOW\n" + nowLine());
+    out.push("ON STAGE — the entire cast this run has met, and the only names you may"
+      + " use as a speaker: " + metNames().join(", ")
+      + ". Anyone else in the world is \"Other\".");
     out.push(tempoLine());      /* the season's own register - it changes as they do */
     out.push(boardBlock());     /* last, closest to the writing, and never shed */
     return out.join("\n\n");
@@ -4982,6 +5025,19 @@ function callDM(corrected){
     }
     if(violated.length && window.console && console.warn){
       console.warn("[mudskippers] roster violation stood after one correction:", violated.join(", "));
+    }
+    /* the cast gate: a later book's person on tonight's stage is spent, not
+       introduced - and the name is the tell, so it costs one correction */
+    if(!corrected){
+      var early = unmetSpeakers(parsed.data);
+      if(early.length){
+        return callDM("(NOT YET CAST: " + early.join(" and ") + " belong" + (early.length === 1 ? "s" : "")
+          + " to a part of this story that has not happened. The player has never met "
+          + (early.length === 1 ? "them" : "them") + ", and putting a name on screen before its"
+          + " night spends it. Rewrite this turn with the same events: if the scene needs another"
+          + " body, they are \"Other\" and they are nobody the story is keeping. Only the names in"
+          + " ON STAGE may speak.)");
+      }
     }
     if(deathRefused(parsed.data)){
       if(!corrected){
@@ -6805,7 +6861,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.11.1   COLD START",
+    "MUD//OS  v4.11.2   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8222,7 +8278,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.2",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
