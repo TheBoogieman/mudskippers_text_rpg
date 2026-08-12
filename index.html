@@ -342,6 +342,19 @@
   .amb-vault-cold{background:linear-gradient(180deg, rgba(201,196,189,.05), transparent 60%),radial-gradient(ellipse 34% 78% at 50% 30%, rgba(127,179,213,.055), transparent 72%)}
   .amb-smoke{background:radial-gradient(ellipse 70% 45% at 50% 78%, rgba(255,120,60,.06), transparent 70%),linear-gradient(180deg, rgba(60,40,26,.20), transparent 55%);animation:fogdrift 19s ease-in-out infinite alternate}
   .amb-dead-signal{background:repeating-linear-gradient(180deg, transparent 0 3px, rgba(201,196,189,.035) 3px 4px),linear-gradient(180deg, rgba(0,0,0,.26), rgba(0,0,0,.30));animation:deadroll 5.5s linear infinite}
+  /* THE SLIDING SHEET. These striped gradients are a relic of the days before the
+     rain was a particle system, and they cannot do what they were asked to do: a
+     repeating-linear-gradient can only ever be translated PERPENDICULAR to its own
+     stripes - shifting it along them changes nothing - so animating it does not
+     look like rain falling, it looks like a solid sheet scrolling across the page.
+     Storm made it obvious: stripes every 28px at .05 alpha, on a keyframe borrowed
+     from rain-neon whose stripes are 47px at a different angle, so it also snapped
+     every 0.62s. Under FULL the canvas draws real rain and these are removed. Under
+     CALM there is no canvas, so they stay as still texture - never animated. */
+  body:not(.vis-calm) .amb-rain-neon,
+  body:not(.vis-calm) .amb-storm{background-image:none;animation:none}
+  .vis-calm .amb-rain-neon,
+  .vis-calm .amb-storm{animation:none}
   @keyframes fogdrift{from{background-position:0 0,0 0}to{background-position:60px -30px,-50px 25px}}
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes hearth{0%,100%{opacity:.82}37%{opacity:1}61%{opacity:.9}}
@@ -981,7 +994,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.11.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.11.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1089,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1368,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.11.2 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.11.3 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6861,7 +6874,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.11.2   COLD START",
+    "MUD//OS  v4.11.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7185,12 +7198,21 @@ function fxResize(){
 }
 function fxNewDrop(spread){
   var r = fxCfg().rain || {};
-  var sp = (620 + Math.random()*640) * (r.speed || 1);
+  /* depth: near drops fall faster, land brighter and lean a touch less, the way
+     a real curtain of rain reads. Every drop used to share ONE direction vector
+     - vx was exactly -sp*lean for all of them - so the whole field was a rigid
+     parallel sheet, and a rigid sheet does not look like weather, it looks like
+     a texture sliding across the screen. The angle is jittered per drop and tied
+     to depth, which is what breaks the scroll. */
+  var depth = Math.random();                       /* 0 far, 1 near */
+  var sp = (620 + depth*640) * (r.speed || 1);
+  var lean = (r.lean || 0.42) * (1.18 - depth*0.30) * (0.86 + Math.random()*0.28);
   return {
     x: Math.random()*(fxW + 400) - 200,
     y: spread ? Math.random()*fxH : -30 - Math.random()*160,
-    vx: -sp*(r.lean || 0.42), vy: sp,
-    a: 0.20 + Math.random()*0.15,
+    px: 0, py: 0,                        /* where it was last frame - the streak IS the motion */
+    vx: -sp*lean, vy: sp,
+    a: 0.14 + depth*0.19,                /* near drops read brighter, far ones sit back */
     warm: Math.random() < (r.warm === undefined ? 0.45 : r.warm),
     lands: Math.random() < 0.22
   };
@@ -7306,6 +7328,7 @@ function fxUpdate(dt){
         d.vx += (ddx >= 0 ? 300 : -300) * s;
         d.a *= 0.97;
       }
+      d.px = d.x; d.py = d.y;
       d.x += (d.vx + fxGust)*s; d.y += d.vy*s;
       /* a drop that finds the shard breaks on it and lights it up */
       if(sb && d.x >= sb.l && d.x <= sb.r && d.y >= sb.t && d.y <= sb.b){
@@ -7522,9 +7545,20 @@ function fxDraw(){
         var d = fxDrops[i];
         c.globalAlpha = Math.min(0.35, d.a) * fxAlpha;
         c.strokeStyle = d.warm ? "rgba(232,161,60,1)" : "rgba(214,225,238,1)";
+        /* the streak IS the movement, not a guess at it. A fixed 18ms tail
+           matched a 60fps frame at ordinary speed and nothing else: under
+           pressure the world hurries (fxSpeed), and in a storm the drops are
+           half again as fast, so they were jumping ~51px a frame while drawing
+           a 39px tail. The eye joins that up into long strobing lines. Drawing
+           from where the drop actually was is self-correcting - at any refresh
+           rate, any tension, any weather. */
+        var bx = d.px || d.x, by = d.py || d.y;
+        var tx = d.x - bx, ty = d.y - by, tl = Math.sqrt(tx*tx + ty*ty);
+        if(tl > 46){ bx = d.x - tx*(46/tl); by = d.y - ty*(46/tl); }  /* a dropped frame is not a comet */
+        else if(tl < 6){ bx = d.x - (d.vx + fxGust)*0.010; by = d.y - d.vy*0.010; }
         c.beginPath();
         c.moveTo(d.x, d.y);
-        c.lineTo(d.x - (d.vx + fxGust)*0.018, d.y - d.vy*0.018);
+        c.lineTo(bx, by);
         c.stroke();
       }
       c.globalAlpha = 1;
@@ -8278,7 +8312,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.2",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.3",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
