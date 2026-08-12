@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.8 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.9 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.8</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.9</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.8 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.9 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6320,6 +6320,25 @@ function chairTaken(data){
     return !!t && (x.indexOf(t) !== -1 || t.indexOf(x) !== -1);
   });
 }
+/* ...and when it is taken a second time, the words come out. Only the courier's
+   lines, only the ones that are not the player's own typed text rendered back -
+   everybody else's dialogue and every piece of narration is untouched, because
+   the world is still the world's to write. A scene usually survives this cleanly:
+   the listening stays, Nine still answers, Pia still notices. What goes is the
+   courier having opinions nobody asked him for. */
+var chairCuts = 0;
+function chairStrip(data){
+  var t = (lastPlayerText || "").toLowerCase(), keep = [], cut = 0;
+  (data.scene || []).forEach(function(b){
+    if(b && String(b.speaker).trim() === "Courier" && b.text){
+      var x = String(b.text).toLowerCase();
+      if(!(t && (x.indexOf(t) !== -1 || t.indexOf(x) !== -1))){ cut++; return; }
+    }
+    keep.push(b);
+  });
+  if(cut) data.scene = keep;
+  return cut;
+}
 function callDM(corrected){
   if(runOver) return;
   setBusy(true);
@@ -6435,10 +6454,29 @@ function callDM(corrected){
           + " prose and the canon.)");
       }
     }
-    if(!corrected && chairTaken(parsed.data)){
-      return callDM("(THE CHAIR WAS TAKEN - your reply spoke in the courier's voice beyond what"
-        + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
-        + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)");
+    /* THE CHAIR, ENFORCED. Asking once and then shrugging is how "you own the
+       courier" quietly became "you own the courier unless the model feels
+       strongly about it". A 32b answered a player who chose to LISTEN with two
+       lines of the courier's own speech - including what he wants done about it -
+       took the correction, and sent the same scene back. The client accepted it,
+       and the beat closed on a conversation the player never had.
+       So the second refusal costs the lines. They come out, the way a door in
+       disguise comes off the rail: everything the player did not say goes, the
+       rest of the scene stands, and it is logged rather than quietly allowed. */
+    if(chairTaken(parsed.data)){
+      if(!corrected){
+        return callDM("(THE CHAIR WAS TAKEN - your reply spoke in the courier's voice beyond what"
+          + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
+          + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)");
+      }
+      var cut = chairStrip(parsed.data);
+      if(cut){
+        chairCuts += cut;
+        if(window.console && console.warn){
+          console.warn("[mudskippers] the chair was taken twice - cut " + cut
+            + " line(s) the player never typed");
+        }
+      }
     }
     /* THE EMPTY TURN. A reply carrying no scene used to be accepted in silence: it
        rendered nothing, wrote nothing to the ledger, and still ticked the beat's
@@ -7352,7 +7390,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.8");
+  R(s, "build", "v4.13.9");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7456,6 +7494,8 @@ function dbgReport(){
   R(s, "folded beats", foldedBeats);
   R(s, "peril turns left", perilTurns, perilTurns ? "warn" : "");
   R(s, "last turn was a bit", lastTurnMud);
+  R(s, "chair lines cut", chairCuts + " (courier speech the player never typed)",
+    chairCuts ? "warn" : "ok");
   R(s, "arc checkpoint due", actCheckpointDue);
   R(s, "maintenance index", maintIndex);
   R(s, "slack length", "std " + SLACK_STD + " · act " + SLACK_ARC);
@@ -8578,7 +8618,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.8   COLD START",
+    "MUD//OS  v4.13.9   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10045,7 +10085,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.8",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.9",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10108,7 +10148,7 @@ function newRun(confirmFirst, bare){
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
-  thinReplies = 0; truncWarned = false;
+  thinReplies = 0; truncWarned = false; chairCuts = 0;
   walkArmed = false;
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
