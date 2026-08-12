@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.10.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.10.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.10.3 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.10.4 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5354,28 +5354,29 @@ $("s-visuals").onchange = function(){
   saveSettings();
   applyVisuals();
 };
-/* A page served over https cannot reach a server on http://localhost - the
-   browser blocks it as mixed content, and the only symptom is "Failed to fetch",
-   which reads like the model is broken when nothing is. Say so plainly instead. */
-function localBlockedHere(){
+/* Browsers DO let an https page reach http://localhost - localhost is a
+   potentially-trustworthy origin and is exempt from mixed-content blocking, so
+   the published build talks to a local model perfectly well. Some embedded
+   browsers and privacy extensions block it anyway (ERR_BLOCKED_BY_CLIENT), and
+   then the only symptom is "Failed to fetch". So: never pre-empt the call -
+   just explain that possibility if it actually fails. */
+function localMaybeBlocked(){
   return location.protocol === "https:" && /^http:\/\/(localhost|127\.0\.0\.1)/i.test(settings.base || "");
 }
 $("s-test").onclick = function(){
   $("s-save").onclick();
-  if(localBlockedHere()){
-    $("s-status").innerHTML = '<div class="bad">This page is on https, and your model is on'
-      + ' http://localhost \u2014 the browser blocks that, and nothing on either side can fix it.'
-      + ' Run the game from a local copy instead: save index.html and open it, or serve the'
-      + ' folder over http://localhost. The online build can only reach cloud providers.</div>';
-    return;
-  }
   $("s-status").innerHTML = '<div class="hint">Testing\u2026</div>';
   askAI([{role:"user",content:"Reply with exactly: OK"}]).then(function(t){
     $("s-status").innerHTML = /OK/i.test(t||"")
       ? '<div class="ok">Connected. The table is set.</div>'
       : '<div class="ok">Connected (model replied: '+esc((t||"").slice(0,60))+')</div>';
   }).catch(function(e){
-    $("s-status").innerHTML = '<div class="bad">Failed: '+esc(e.message||"unknown")+'</div>';
+    $("s-status").innerHTML = '<div class="bad">Failed: '+esc(e.message||"unknown")
+      + (localMaybeBlocked()
+          ? ' \u2014 if the model is definitely running, something on this browser may be blocking'
+            + ' a page on https from reaching http://localhost (an extension, or an embedded'
+            + ' browser). Opening the game from a local copy avoids it.'
+          : '') + '</div>';
   });
 };
 
@@ -6804,7 +6805,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.10.3   COLD START",
+    "MUD//OS  v4.10.4   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8221,7 +8222,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.3",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.4",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
