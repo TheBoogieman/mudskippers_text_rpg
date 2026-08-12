@@ -154,21 +154,28 @@ The DM does not decide the plot and cannot wander off it:
   than it should have. And every beat also has a **floor**: a gate sent before the
   scene has been lived is held, and the DM is told to keep playing. The clock watches
   the storyteller's speed as closely as it watches yours.
-- **The rail has doors on it, and you decide when the night ends.** Inside a live beat
-  the DM labels two of its three choices. **The exit** is a real attempt at the thing
-  that finishes tonight's business — take it and the beat closes, because you reached
-  for it. **The stall** digs in instead: ask the question under the question, get the
-  detail, press the person. It holds the gate open — the DM does not get to close a
-  beat you're still standing in — and costs nothing but a turn. The third choice is
-  whatever the scene wants. A mudskipper moment is a stall with a joke in it: it holds
-  the beat open and doesn't even cost the turn, unless you've called it. A door is
-  what the DM *labels* it, never where it sits on the rail — position means nothing.
+- **The rail always reads the same way down, and you decide when the night ends.**
+  Inside a live beat: **first the exit** — a real attempt at the thing that finishes
+  tonight's business. Take it and the beat closes, because you reached for it. **Then
+  two stalls that go nowhere on purpose** — the question under the question, the
+  detail, the person pressed, the human thing said. They hold the gate open (the DM
+  does not get to close a beat you're still standing in) and cost nothing but a turn.
+  One is earnest, one is sideways; neither leaves you closer to the gate. A mudskipper
+  moment is a stall with a joke in it: it holds the beat open and doesn't even cost the
+  turn, unless you've called it. The DM labels the doors and the client sorts by the
+  label, so the order holds even on a distracted turn — and an unlabelled rail is just
+  an ordinary rail, which is what the hardcoded opening gets.
 - **The way out is the game's own control, and it asks twice.** Below the choices,
-  while a beat is live, sits one red option: put the whole job down and walk. It reads
-  the same every night, it is never something the DM wrote, and it takes two deliberate
+  while a beat is live, sits one red option: put the whole job down and walk. The
+  button and everything it costs belong to the game — but its *wording* comes from the
+  DM, written for the room you're actually standing in, because walking out of a knife
+  fight and walking out of a kitchen are different sentences. It takes two deliberate
   clicks. Use it and the family feels it, and the game says so on a red card. Use it
   again the very next turn and the courier really does go — that is the end of the run.
   Anything else in between and it is forgotten.
+- **Calling it puts the exit away.** Arm the green call and the exit choice greys out
+  for that turn: you have already promised your next move settles the night, and two
+  ways to end the same night on one rail is just a way to misclick.
 - **The DM cannot close a beat on you.** A gate lands when you reach for it, or when
   the road runs out and the board forces it. "The scene felt covered" is not a
   reason, and no beat can end before its third turn.

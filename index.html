@@ -979,7 +979,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.8.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.8.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1004,8 +1004,8 @@
     <div class="ep">
       <h3>HOW THE NIGHT WORKS</h3>
       <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
-      <p>While a question is live, one of your choices is always <b>the way out of tonight</b> — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. Another <b>digs in</b> instead: the question under the question, the detail, the person pressed properly. It holds the night open — nobody closes a beat you're still standing in — and costs nothing but a turn. Mudskipping does the same and doesn't even cost the turn. The third is whatever the scene wants.</p>
-      <p>Under them sits one more, in red: <b>put the whole job down and walk</b>. That one is the game's, not the storyteller's — it reads the same every night and it always asks twice. Use it and the family feels it. Use it again the very next turn and the courier really does go, and that is the end of that run. Anything else in between and it's forgotten.</p>
+      <p>While a question is live the rail always reads the same way down the screen. <b>First</b> is the way out of tonight — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. <b>Second and third</b> go nowhere on purpose: dig in, ask the question under the question, get the detail, press the person, say the human thing. They hold the night open — nobody closes a beat you're still standing in — and cost nothing but a turn. Mudskipping does the same and doesn't even cost the turn.</p>
+      <p>Under them, in red, is the way out of <i>everything</i>: put the whole job down and walk. That one is the game's, not the storyteller's — it always asks twice, and it is worded for the room you're standing in. Use it and the family feels it. Use it again the very next turn and the courier really does go, and that is the end of that run. Anything else in between and it's forgotten.</p>
       <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing, and once the road gets short you'll see a green choice — call it, and your next move, bit or not, settles tonight's business your way. You'll still see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. Every hard ending in this game is one you see coming first — the mortality rules warn you, and so does the third door.</p>
       <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
@@ -1051,7 +1051,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.8.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.8.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1330,7 +1330,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.8.1 "The Three Doors"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.8.2 "The Three Doors"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1441,7 +1441,7 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"doors\":[\"exit\",\"stall\",\"\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, \"drift\" only as THE RAIN describes, and \"knock\" only as BETWEEN BEATS allows.",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"doors\":[\"exit\",\"stall\",\"stall\"],\"walk\":\"...\",\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, \"drift\" only as THE RAIN describes, and \"knock\" only as BETWEEN BEATS allows.",
 "- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, quests, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: one or two plain sentences of present state - where we are, who is present, what is live. It is shown to the player and it is also your own working memory: keep it accurate.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
@@ -1475,8 +1475,8 @@ var BIBLE = [
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, The File, Other. Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible, and it exists only once it has been installed; before that the terminal is dumb hardware. Only use characters the player has actually met.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
-"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct. Inside a live beat, send a \"doors\" array of three strings lined up with them position for position: one \"exit\" - a real attempt at tonight's aim, the move that ends this business - one \"stall\" - dig in instead: the question under the question, the detail, the person pressed properly - and one \"\" that is yours to write however the scene wants. Label by what a line DOES, not by where it sits, and never write the label into the choice text. Outside a live beat send \"doors\":[\"\",\"\",\"\"] or omit it, and write three ordinary choices as you always have.",
-"- NEVER offer quitting as a choice. Walking out on the job, handing the shard back, telling them to find another courier - that door exists, it matters, and it belongs to the game, not to you. It is always on the player's screen and it takes two deliberate clicks. Your three choices are for people who are still in this.",
+"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words. Inside a live beat they come in a fixed order with \"doors\":[\"exit\",\"stall\",\"stall\"] lined up with them. FIRST the exit: a real attempt at tonight's aim, the move that ends this business, and the most tempting thing on the rail. THEN two stalls that GO NOWHERE - the question under the question, the detail, the person pressed, the human thing said - different from each other, one earnest and one sideways, and neither one leaving the courier measurably closer to the gate. A stall that quietly advances the night is the commonest way this table gets its pacing stolen. Label by what a line DOES and never write the label into the choice text. Outside a live beat omit \"doors\" and write three ordinary choices as you always have.",
+"- NEVER offer quitting as a choice. Walking out on the job, handing the shard back, telling them to find another courier - that door exists, it matters, and it belongs to the game, not to you. Send its wording as \"walk\": one short first-person line, under 90 characters, written for the room the scene is actually in. The game puts it on screen in red, under everything else, and makes the player click it twice. Your three choices are for people who are still in this.",
 "- THE PLAYER CLOSES THE BEAT, NOT YOU. A gate lands when they reach for it - the exit door, a call, or their own typed move going for it - or when the road runs out and the board forces you. Do not close a beat because the scene feels covered: covered is not finished, and a night that ends on its second move was never a night. When they stall, you keep playing. When a MUDSKIPPER MOMENT lands, you keep playing - a bit holds the beat open and costs nothing, unless they have called it.",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
 "- Keep each turn tight. A beat gets the turns the board says it gets. Spend them on the thing that matters and cut everything that is only atmosphere. THE TEMPO block in the context sets the length and the register for the book you are in, and it outranks every habit you have: Book One is short, hunted and unsentimental; Book Two breathes and banters; Book Three is deliberate."
@@ -2476,17 +2476,49 @@ function doorsFor(list){
   }
   return ok ? out : null;
 }
+/* The rail always reads the same way down the screen: the way out of tonight
+   first, then the two that go nowhere. The DM is told the order, and the client
+   sorts by label anyway so a distracted turn cannot shuffle the furniture. */
+function orderRail(choices, doors){
+  if(!doors) return {choices: choices, doors: null};
+  var ex = [], st = [], rest = [], i, d;
+  for(i = 0; i < choices.length; i++){
+    d = doors[i] || "";
+    if(d === "exit") ex.push(i); else if(d === "stall") st.push(i); else rest.push(i);
+  }
+  var order = ex.concat(st, rest), c2 = [], d2 = [];
+  for(i = 0; i < order.length; i++){ c2.push(choices[order[i]]); d2.push(doors[order[i]] || ""); }
+  return {choices: c2, doors: d2};
+}
 var railDoors = null;        /* the DM's own labels for the rail on screen */
+var railWalkLine = "";       /* the DM's wording for the way out, this scene */
+/* the second time he says it, he is saying it again - the scene's own words with
+   the finality added, so the button never stops meaning what the room means */
+function walkLineNow(last){
+  var l = String(railWalkLine || "").trim();
+  if(l.length > 90) l = "";                    /* a paragraph is not a button */
+  if(!l) return last ? "I meant it. I'm gone — find another courier."
+                     : "I'm putting this down. Find another courier.";
+  return last ? (l.replace(/[.!?]+\s*$/, "") + " — and this time I mean it.") : l;
+}
 function showChoices(choices, doors){
   var box = $("choices"); box.innerHTML = "";
-  railDoors = doorsFor(doors) || (arguments.length > 1 ? null : railDoors);
+  /* no sticky state: labels are passed in every time, so a rail can never inherit
+     the last turn's meaning. Callers that re-render the same rail pass railDoors. */
+  railDoors = doorsFor(doors);
   var live = doorsLive();
-  (choices||[]).slice(0,4).forEach(function(c,i){
+  var sorted = orderRail((choices||[]).slice(0,4), live ? railDoors : null);
+  choices = sorted.choices;
+  if(sorted.doors) railDoors = sorted.doors;
+  choices.forEach(function(c,i){
     var btn = document.createElement("button");
     var kind = (live && railDoors) ? (railDoors[i] || "") : "";
     btn.className = "choice" + (kind ? " " + kind : "");
     btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
-    btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
+    /* the call already promised the next move settles it - two ways to end the
+       same night on one rail is just a way to misclick */
+    if(kind === "exit" && defuseArmed) btn.disabled = true;
+    else btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
     box.appendChild(btn);
   });
   /* the green defuse: click arms it; the next action - bit or not - settles */
@@ -2503,30 +2535,27 @@ function showChoices(choices, doors){
       call.onclick = function(){
         defuseArmed = true;
         persistAll(choices || []);
-        showChoices(choices);
+        showChoices(choices, railDoors);
       };
       box.appendChild(call);
     }
   }
-  /* THE WAY OUT is the game's own control, never the DM's third choice - it reads
-     the same every night, it cannot be mistaken for a line about the shard, and
-     it takes two deliberate clicks. Nothing in this game ends unwarned and
-     nothing ends by accident. */
+  /* THE WAY OUT stays the game's control - never one of the DM's choices, always
+     the last thing on the rail, always two deliberate clicks. Only the WORDING is
+     the DM's, because "put it down" means nothing in a room the player is standing
+     in: walking out of a knife fight and walking out of a kitchen are different
+     sentences. Client owns the button and the consequence; the DM owns the line. */
   if(doorsLive()){
     var last = (redRun >= 1);
+    var line = walkLineNow(last);
     var walk = document.createElement("button");
     walk.className = "choice walk" + (walkArmed ? " armed" : "");
-    walk.innerHTML = '<span class="n">&#9587;</span>' + esc(
-      walkArmed
-        ? (last ? "Click again and he is gone for good. The run ends here."
-                : "Click again to put it down in front of them.")
-        : (last ? "Walk out for good — the family does not get a third time."
-                : "Put it down. Tell them to find another courier."));
+    walk.innerHTML = '<span class="n">&#9587;</span>' + esc(walkArmed ? ("Sure? " + line) : line);
     walk.onclick = function(){
-      if(!walkArmed){ walkArmed = true; showChoices(choices); return; }
+      if(!walkArmed){ walkArmed = true; showChoices(choices, railDoors); return; }
       walkArmed = false;
       pendingKind = "walk";
-      takeAction(last ? "I meant it. I'm gone." : "I'm putting it down. Find another courier.", false);
+      takeAction(line, false);
     };
     box.appendChild(walk);
     if(walkArmed){
@@ -3104,6 +3133,7 @@ function showScene(data, logIt, instant){
   /* the rail's labels come off this reply and only this reply - a stale set from
      the last turn must never colour a new rail */
   railDoors = doorsFor(data.doors);
+  railWalkLine = (typeof data.walk === "string") ? data.walk.trim() : "";
   var token = ++revealToken;
   var els = []; var first = null;
   blocks.forEach(function(b){
@@ -3145,7 +3175,7 @@ function showScene(data, logIt, instant){
     if(data.__live && foldPending && foldServed){
       finishFold();
       renderNow();
-      showChoices(choices);
+      showChoices(choices, railDoors);
       persistAll(choices);
       return;
     }
@@ -3157,7 +3187,7 @@ function showScene(data, logIt, instant){
       return;
     }
     if(afterRevealHook){ var hook = afterRevealHook; afterRevealHook = null; hook(); }
-    showChoices(choices);
+    showChoices(choices, railDoors);
     if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
   }
@@ -3850,17 +3880,22 @@ function boardBlock(){
      three choices that all leave the gate where it was is how a beat runs out
      of road with the player never once offered the road */
   if(b.aim) out.push("TONIGHT'S AIM — the move that actually walks this beat to its gate: " + b.aim + ".");
-  out.push("THE DOORS — write your usual three choices, and label two of them in a \"doors\""
-    + " array of three strings that lines up with \"choices\" position for position:"
-    + "\n  \"exit\"  — a real attempt at tonight's aim above: the move that ends this business."
-    + " Exactly one. Never hedge it and never make it the boring one; it is the door the story wants."
-    + "\n  \"stall\" — dig in instead. Ask the question under the question, get the detail, press the"
-    + " person, look at the thing properly. It buys understanding, not progress. Exactly one."
-    + "\n  \"\"      — the third is yours: tactical, funny, tender, sideways, whatever the scene wants."
-    + "\nSo doors reads like [\"exit\",\"stall\",\"\"] - in whatever order you actually wrote them."
-    + " Label by what the line DOES, not by where it sits, and never write the labels into the"
-    + " choice text. The player's way out of the whole job is the game's own control, not one of"
-    + " your choices - never offer quitting, leaving or handing the shard back as a choice.");
+  out.push("THE DOORS — three choices, always in this order, with \"doors\":[\"exit\",\"stall\",\"stall\"]"
+    + " lined up with them:"
+    + "\n  1 THE EXIT — a real attempt at tonight's aim above: the move that ends this business."
+    + " Exactly one, always first. Never hedge it and never make it the dull one; it is the door"
+    + " the story wants, and it should be the most tempting thing on the rail."
+    + "\n  2 and 3 THE STALLS — two lines that GO NOWHERE. This is the hard part and it is the"
+    + " point: a stall buys understanding, never ground. Ask the question under the question, get"
+    + " the detail, press the person, check the thing, say the human thing. If a choice would leave"
+    + " them measurably closer to " + b.exit + ", it is not a stall - rewrite it. Make the two"
+    + " different from each other: one earnest, one sideways or funny. Neither advances the night."
+    + "\nLabel by what each line DOES and never write the labels into the choice text."
+    + "\nTHE WALK is not one of them. Send \"walk\": a single short first-person line, under 90"
+    + " characters, for the courier putting this whole job down and leaving - written for THIS"
+    + " room, because walking out of a knife fight and walking out of a kitchen are different"
+    + " sentences. The game owns that button and what it costs; you only give it its words."
+    + " Never put quitting, leaving or handing the shard back in \"choices\".");
   if(b.id === "a2-chassis") out.push("THE FORK: this gate must carry \"chassis\": \"Seven\" or \"chassis\": \"Nine\" - Nine's choice, spoken at the table, decides who lives in the body.");
   if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
@@ -5085,7 +5120,7 @@ function saveBlob(){
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     defuseArmed:defuseArmed, foldedBeats:foldedBeats, chassisHolder:chassisHolder,
     redRun:redRun,
-    doors:railDoors,
+    doors:railDoors, walkLine:railWalkLine,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -6622,7 +6657,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.8.1   COLD START",
+    "MUD//OS  v4.8.2   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7846,7 +7881,7 @@ function newRun(confirmFirst){
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
-  walkArmed = false; railDoors = null;
+  walkArmed = false; railDoors = null; railWalkLine = "";
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
@@ -7985,6 +8020,7 @@ function restoreFromBlob(s){
     || s.over === "broken" || s.over === "walked") ? s.over : "";
   redRun = (typeof s.redRun === "number" && s.redRun > 0) ? s.redRun : 0;
   walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false;
+  railWalkLine = (typeof s.walkLine === "string") ? s.walkLine : "";
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
