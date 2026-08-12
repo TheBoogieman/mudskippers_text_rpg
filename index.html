@@ -979,7 +979,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.8.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.9.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1051,7 +1051,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.8.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.9.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1330,7 +1330,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.8.3 "The Three Doors"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.9.0 "The Fence"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2511,8 +2511,10 @@ function walkLineNow(last){
   var l = (b && b.walkLine) ? String(b.walkLine) : "I'm putting this down. Find another courier.";
   return last ? (l.replace(/[.!?]+\s*$/, "") + " — and this time I mean it.") : l;
 }
+var lastRail = [];           /* the last rail actually offered, for a lost turn */
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
+  if(choices && choices.length) lastRail = choices.slice(0, 4);
   var live = doorsLive();
   (choices||[]).slice(0,4).forEach(function(c,i){
     var btn = document.createElement("button");
@@ -3234,6 +3236,12 @@ function showError(msg){
   var b = document.createElement("button"); b.className="small"; b.textContent="RETRY";
   b.onclick = function(){ box.innerHTML=""; if(pendingRetry) pendingRetry(); };
   d.appendChild(b); box.appendChild(d);
+  /* a lost turn is not a lost game: put the rail back so the table is still
+     playable while they decide whether to retry. Taking a turn clears the
+     choices, and if the reply never lands nothing ever puts them back. */
+  if(!runOver && !document.querySelector("#choices .choice") && lastRail.length){
+    showChoices(lastRail);
+  }
 }
 
 /* ============ AI CALL (provider-agnostic) ============ */
@@ -3828,6 +3836,41 @@ function roadLine(b){
   if(!/[.!?]$/.test(out)) out += ".";
   return out;
 }
+/* ---- THE FENCE ----
+   The storyboard tells the DM where the road goes; on its own that turned out to
+   be an invitation. Handed "next: Vic tells the whole story of the job", a DM
+   with a player walking toward Vic simply told the whole story of the job - two
+   beats early, in the quiet after another question, and the beat that owned it
+   arrived already spent. Every later gate in the season is now named as a thing
+   that MUST NOT happen yet. The road is still visible; arriving is fenced. */
+function fenceBlock(){
+  var out = [], i, m, b = beatNow(), more = 0;
+  for(i = beatIdx + 1; i < SPINE.length; i++){
+    m = SPINE[i];
+    if(m.season !== b.season) break;
+    if(out.length >= 6){ more++; continue; }   /* the near road, named; the rest by count */
+    var ex = String(m.exit || "");
+    if(ex.length > 110) ex = ex.slice(0, 108).replace(/[\s,;-]+\S*$/, "") + "...";
+    out.push("  - \"" + m.title + "\": " + ex);
+  }
+  if(!out.length) return "";
+  if(more) out.push("  - ...and the " + more + " question" + (more === 1 ? "" : "s")
+    + " after those, which are further away still.");
+  return "NOT TONIGHT — every one of these belongs to a later question and MUST NOT happen yet."
+    + " Not on screen, not in summary, not as someone finally explaining, not as a reward for a"
+    + " player who asks the right way:\n" + out.join("\n")
+    + "\nThis is the whole discipline of the table. A question played before its night arrives"
+    + " already spent, and the beat that owned it has nothing left to be about. People can be"
+    + " walked toward - they cannot arrive, and they cannot deliver. If someone would plainly say"
+    + " one of these things now, they get interrupted, they hedge, they put it off, the moment"
+    + " breaks, or they are simply not ready to say it yet - that is not stalling, that is the"
+    + " story keeping its own order."
+    + (phase === "slack"
+        ? " If the player is plainly reaching for the next one anyway, do not hand it over: send"
+          + " \"knock\": true and the board will bring that question forward properly, and then you"
+          + " may play it."
+        : " Tonight's question is the only one on this table.");
+}
 function storyboardBlock(){
   var b = beatNow(), out = [], i, m;
   out.push("THE STORYBOARD — SEASON " + b.season + " of 3, " + SEASON_NAMES[b.season]
@@ -3854,7 +3897,7 @@ function boardBlock(){
       : "THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
-    if(phase !== "seasonopen") out.push(storyboardBlock());
+    if(phase !== "seasonopen"){ out.push(storyboardBlock()); out.push(fenceBlock()); }
     return out.join("\n");
   }
   if(phase === "slack"){
@@ -3862,6 +3905,7 @@ function boardBlock(){
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
     out.push(storyboardBlock());
+    out.push(fenceBlock());
     /* ceremony: an offer never shares a turn with a card still waiting to land */
     if(!pendingAsides.length && !beatJustCleared){
       var card = pickInterlude();
@@ -3903,6 +3947,7 @@ function boardBlock(){
   if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
   if(nx) out.push("NEXT AFTER THIS: \"" + nx.title + "\" — aim the last line of this turn at it.");
   out.push(storyboardBlock());
+  out.push(fenceBlock());
   out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
     + " Everything else about how it happens is yours and the player's."
     + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
@@ -3917,7 +3962,11 @@ function boardDirective(){
   forcingNow = false;
   if(beatDone() || walkbackNow || foldPending) return "";
   if(phase === "aftermath" || phase === "seasonend"){
-    return "(THE AFTERMATH - the gate has fallen and nothing new begins. Let what just happened land: reactions, cost, quiet, the family being people about it. Do not introduce the next matter, open a job, or reveal anything. The season is holding its breath on purpose.)";
+    return "(THE AFTERMATH - the gate has fallen and nothing new begins. Let what just happened"
+      + " land: reactions, cost, quiet, the family being people about it. Do not introduce the next"
+      + " matter, open a job, or reveal anything, and your three choices must not reach for the next"
+      + " question either - offer them things to do with THIS one. The season is holding its breath"
+      + " on purpose.)";
   }
   if(phase === "seasonopen"){
     var rec = seasonRecords[currentSeason] || {happened:[]};
@@ -4680,17 +4729,44 @@ function repairJSON(s){
   return out;
 }
 var lastParseVerdict = "";   /* how the last reply parsed, for the archive's REPLY tab */
+/* the object, and only the object. Taking everything between the first { and the
+   LAST } swallowed whatever the DM wrote after the JSON - a sign-off, a second
+   object, a stray brace in a note - and the whole turn died on "unexpected
+   non-whitespace character after JSON", leaving the player looking at an empty
+   rail. Walk the braces instead, minding strings and escapes. */
+function jsonSlice(s, from){
+  var depth = 0, inStr = false, esc = false, i, c;
+  for(i = from; i < s.length; i++){
+    c = s.charAt(i);
+    if(esc){ esc = false; continue; }
+    if(c === "\\"){ if(inStr) esc = true; continue; }
+    if(c === "\""){ inStr = !inStr; continue; }
+    if(inStr) continue;
+    if(c === "{") depth++;
+    else if(c === "}"){ depth--; if(depth === 0) return s.slice(from, i + 1); }
+  }
+  return "";
+}
 function parseScene(raw){
   var clean = (raw||"").replace(/```json|```/g,"").trim();
   var a = clean.indexOf("{"), b = clean.lastIndexOf("}");
   if(a<0||b<0) throw new Error("the DM answered in tongues");
+  var matched = jsonSlice(clean, a);
   var slice = clean.slice(a,b+1);
+  /* the balanced object first; the greedy slice only if bracing found nothing */
+  if(matched){
+    try{
+      var m = { json: matched, data: JSON.parse(matched) };
+      lastParseVerdict = (matched.length === slice.length) ? "parsed clean" : "parsed clean (trailing text ignored)";
+      return m;
+    }catch(e0){}
+  }
   try{
     var out = { json: slice, data: JSON.parse(slice) };
     lastParseVerdict = "parsed clean";
     return out;
   }catch(e){
-    var fixed = repairJSON(slice);
+    var fixed = repairJSON(matched || slice);
     var out2 = { json: fixed, data: JSON.parse(fixed) };
     lastParseVerdict = "repaired, then parsed";
     return out2;
@@ -6654,7 +6730,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.8.3   COLD START",
+    "MUD//OS  v4.9.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",

@@ -144,6 +144,14 @@ The DM does not decide the plot and cannot wander off it:
 - **Nothing is revealed before its beat.** Everything the run hasn't reached is
   served to the DM as a locked list it may not confirm, hint at, or write canon
   about. Improvisation stops becoming permanent truth.
+- **And nothing *happens* before its beat either.** Every later gate in the season
+  rides along as a fence — named, and forbidden. Not on screen, not in summary, not
+  as someone finally explaining, not as a reward for asking the right way. People can
+  be walked toward; they cannot arrive and they cannot deliver. A question played
+  before its night arrives already spent, and the beat that owned it has nothing left
+  to be about. If you reach for the next one during the family's own time, the DM
+  doesn't hand it over — it knocks, and the board brings that question forward
+  properly.
 - **The plot's canon is written by the game.** When a gate clears, that beat's facts
   go into the run. Every route through a season produces the same spine.
 - **A beat cannot stall — and cannot be rushed.** Each carries its own budget — most
