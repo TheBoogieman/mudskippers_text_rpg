@@ -19,6 +19,7 @@ $OllamaAp = Join-Path $env:LOCALAPPDATA "Programs\Ollama\ollama app.exe"
 $BrowserDir = Join-Path $env:LOCALAPPDATA "Mudskippers\browser"   # note: $Profile is a PowerShell automatic variable
 
 $script:model    = ""
+$script:runModel = ""   # the derived model the game actually talks to
 $script:ctx      = 16384
 $script:browser  = $null
 $script:closing  = $false
@@ -228,12 +229,22 @@ $btnPlay.Add_Click({
     [Environment]::SetEnvironmentVariable("OLLAMA_KEEP_ALIVE","30m","User")
     $env:OLLAMA_CONTEXT_LENGTH="$($script:ctx)"; $env:OLLAMA_ORIGINS="*"; $env:OLLAMA_KEEP_ALIVE="30m"
 
-    if (-not (Test-Ollama)) {
-      Set-Status "Starting the engine..."
-      if (Test-Path $OllamaAp) { Start-Process $OllamaAp } else { Start-Process $OllamaEx -ArgumentList "serve" -WindowStyle Hidden }
-      for ($i=0; $i -lt 30 -and -not (Test-Ollama); $i++) { Set-Status "Starting the engine..."; Start-Sleep -Seconds 1 }
-      if (-not (Test-Ollama)) { Start-Process $OllamaEx -ArgumentList "serve" -WindowStyle Hidden; Start-Sleep -Seconds 3 }
+    # A SERVER THAT WAS ALREADY UP NEVER SAW ANY OF THAT. Ollama installs itself
+    # into Windows startup, so on most machines it is running before this
+    # launcher exists - with whatever environment it inherited at login, which on
+    # a first run is no context length at all. "Start it if it is absent" then
+    # skipped it every single time, the 4096 default stood, and the game quietly
+    # lost two thirds of its briefing on every turn. So it gets restarted into
+    # OUR environment rather than trusted.
+    if (Test-Ollama) {
+      Set-Status "Restarting the engine with the right settings..."
+      [void](Stop-Everything)
+      Start-Sleep -Milliseconds 900
     }
+    Set-Status "Starting the engine..."
+    if (Test-Path $OllamaAp) { Start-Process $OllamaAp } else { Start-Process $OllamaEx -ArgumentList "serve" -WindowStyle Hidden }
+    for ($i=0; $i -lt 30 -and -not (Test-Ollama); $i++) { Set-Status "Starting the engine..."; Start-Sleep -Seconds 1 }
+    if (-not (Test-Ollama)) { Start-Process $OllamaEx -ArgumentList "serve" -WindowStyle Hidden; Start-Sleep -Seconds 3 }
 
     $have = $false
     try {
@@ -246,13 +257,30 @@ $btnPlay.Add_Click({
       Wait-Proc $p ("Downloading {0}.`nA few GB, once only - you can leave this running." -f $script:model)
     }
 
+    # AND THE BELT TO THAT PAIR OF BRACES. An environment variable is a promise
+    # about a process; num_ctx baked into the model is a property of the model,
+    # and it holds no matter who started the server or what it was holding when
+    # it did. This costs nothing on disk - a derived model is a manifest that
+    # points at the same weights - and it is the only version of this fix that
+    # cannot be undone by something else on the machine.
+    $script:runModel = "mudskippers-" + ($script:model -replace "[:.\/]", "-")
+    try {
+      $mfPath = Join-Path $env:TEMP "mudskippers.Modelfile"
+      "FROM $($script:model)`nPARAMETER num_ctx $($script:ctx)" | Out-File -FilePath $mfPath -Encoding ascii
+      Set-Status ("Setting the storyteller's memory to {0:N0} tokens..." -f $script:ctx)
+      $p = Start-Process $OllamaEx -ArgumentList "create $($script:runModel) -f `"$mfPath`"" -PassThru -WindowStyle Hidden
+      Wait-Proc $p ("Setting the storyteller's memory to {0:N0} tokens..." -f $script:ctx)
+      $tags2 = Invoke-RestMethod "http://127.0.0.1:11434/api/tags" -TimeoutSec 5
+      if (-not ($tags2.models | Where-Object { $_.name -like "$($script:runModel)*" })) { $script:runModel = $script:model }
+    } catch { $script:runModel = $script:model }
+
     Set-Status "Waking the storyteller..."
     try {
-      $body = @{ model=$script:model; prompt="hello"; stream=$false; options=@{num_predict=1} } | ConvertTo-Json -Depth 4
+      $body = @{ model=$script:runModel; prompt="hello"; stream=$false; options=@{num_predict=1} } | ConvertTo-Json -Depth 4
       Invoke-RestMethod "http://127.0.0.1:11434/api/generate" -Method Post -Body $body -ContentType "application/json" -TimeoutSec 600 | Out-Null
     } catch {}
 
-    $url = $GameUrl + "?ai=ollama&model=" + [uri]::EscapeDataString($script:model)
+    $url = $GameUrl + "?ai=ollama&model=" + [uri]::EscapeDataString($script:runModel)
     $exe = Find-Browser
     if ($exe) {
       # its own profile, so it opens as a real window we can watch rather than
