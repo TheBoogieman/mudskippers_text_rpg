@@ -544,13 +544,6 @@
   }
   .toll-row i.paid{background:#e08b8b;border-color:#8d3a3a}
   .toll-row i.grave{border-color:#e04a4a;border-width:2px;box-shadow:0 0 8px rgba(224,58,58,.55)}
-  /* the call and the fold: green defuse in the rail, gold card in the feed */
-  .choice.call{
-    border-color:#4c6b46;color:#8fc98a;
-    box-shadow:0 0 10px rgba(143,201,138,.14);
-  }
-  .choice.call:hover{border-color:var(--seven);background:#12190f}
-  .choice.call .n{color:#8fc98a}
   /* the three doors: the exit is lit, the stall is the house style, the walk is
      the one you have to mean. Never labelled - the colour is the whole tell. */
   .choice.exit{border-color:#6a5a2a;box-shadow:inset 2px 0 0 var(--sodium)}
@@ -607,14 +600,6 @@
   .block.beatcard.forced .tag{color:#e08b8b}
   .block.beatcard.arcturn{color:var(--gold);border-color:#7a5f22}
   .block.beatcard.arcturn .tag{color:var(--gold)}
-  /* the blue tier, between green and gold: a beat the call settled */
-  .block.beatcard.called{color:#9fc3dd;border-color:#3d5a70;background:linear-gradient(90deg,transparent,rgba(127,179,213,.05),transparent)}
-  .block.beatcard.called .tag{color:#7fb3d5}
-  .block.beatcard.called .eyebrow{
-    display:block;font-family:ui-monospace,Menlo,monospace;font-size:9px;
-    letter-spacing:.22em;color:#5c7a94;margin-bottom:4px;
-  }
-  .block.beatcard.called .sum.foot{color:#5c7a94;font-style:italic}
   /* the card's body: what that beat was, in plain serif under the title */
   .block.beatcard .sum{
     display:block;font-family:Georgia,serif;font-style:italic;font-weight:400;
@@ -1032,7 +1017,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.9 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.14.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1059,7 +1044,7 @@
       <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
       <p>While a question is live the rail always reads the same way down the screen. <b>First</b> is the way out of tonight — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. <b>Second and third</b> go nowhere on purpose: dig in, ask the question under the question, get the detail, press the person, say the human thing. They hold the night open — nobody closes a beat you're still standing in — and cost nothing but a turn. Mudskipping does the same and doesn't even cost the turn.</p>
       <p>Under them, in red, is the way out of <i>everything</i>: put the whole job down and walk. That one is the game's, not the storyteller's — it always asks twice, and what leaving means is written fresh for each question the story asks. Use it and the family feels it. Use it again the very next turn and the courier really does go, and that is the end of that run. Anything else in between and it's forgotten.</p>
-      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing, and once the road gets short you'll see a green choice — call it, and your next move, bit or not, settles tonight's business your way. You'll still see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. Every hard ending in this game is one you see coming first — the mortality rules warn you, and so does the third door.</p>
+      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing. You'll see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. Every hard ending in this game is one you see coming first — the mortality rules warn you, and so does the third door.</p>
       <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
     </div>
@@ -1143,7 +1128,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.9</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.14.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1407,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.9 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.14.0 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3343,8 +3328,6 @@ var TOLL_MAX = 3;
 var foldPending = false;     /* next outgoing message carries the fold order */
 var foldServed = false;      /* the order has gone out; the reply is the catch-up passage */
 var foldedBeats = [];        /* beat ids the world closed without the family - persisted */
-var defuseArmed = false;     /* the call: the player's next action settles the beat - persisted */
-var calledClose = false;     /* this close is the call's: blue card, anchors waived */
 /* the spare room: the chassis is Nine's to keep or to give, chosen at the
    a2-chassis gate. Whoever lacks a body afterwards lives in the housing. */
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
@@ -3437,16 +3420,7 @@ function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.
 /* ============ RENDER ============ */
 function renderBlock(b){
   var el = document.createElement("p");
-  if(b.kind === "beat" && b.called){
-    /* the blue tier, between green and gold: the call closed this one */
-    el.className = "block beatcard called" + (b.arcturn ? " arcturn" : "");
-    el.innerHTML = '<span class="eyebrow">' + esc(b.title) + ' — '
-      + esc("closed on the storyteller's terms") + '</span>'
-      + '<span class="tag">THE BEAT, SETTLED</span>'
-      + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
-      + '<span class="sum foot">No toll. The story took your move and ran with it.</span>'
-      + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
-  } else if(b.kind === "beat"){
+  if(b.kind === "beat"){
     el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
     el.innerHTML = '<span class="tag">'
       + (b.arcturn ? "THE ACT TURNS" : b.forced ? "THE WORLD MOVED ON" : "THAT BEAT IS CLOSED")
@@ -3490,12 +3464,6 @@ function renderDivider(){
 function scrollFeed(){ $("feed").scrollTop = $("feed").scrollHeight; }
 $("feed").addEventListener("click", function(){ if(skipReveal) skipReveal(); });
 
-/* the call is offered from the squeeze onward, on every beat - the finale too */
-function callEligible(){
-  return !!runSlug && !runOver && !beatDone() && phase === "live"
-    && !walkbackNow && !foldPending && introStage !== 1
-    && beatTurns >= beatFloor(beatNow()) && beatTurns >= beatNow().budget - 1;
-}
 /* the doors are only doors inside a live beat: the landing and the family's own
    time have nothing to close, nothing to stall and nothing to walk out on */
 function doorsLive(){
@@ -3543,9 +3511,11 @@ var PIN_STALLS = ["Say nothing. Let the quiet do the asking.",
    still said THE NIGHT HAS ROOM IN IT - two clocks disagreeing in one glance.)
    "cold" = printed, shut · "open" = takeable, and it asks twice. */
 function exitStage(){
-  if(!doorsLive()) return "";
-  var b = beatNow();
-  return (b.budget + 1 - beatTurns) <= 1 ? "open" : "cold";
+  /* It was locked to the last two turns so a night could not resolve on its second
+     move. That protection belongs to the floor, not to the door: locking the ONE
+     honest way out of tonight taught the player that the rail lies about what it
+     offers. It is the genuine exit; it is always open; it asks twice. */
+  return doorsLive() ? "open" : "";
 }
 /* positional and client-owned; the door holds slot one for the whole beat */
 function doorSlots(){ return ["exit", "stall", "stall"]; }
@@ -3571,6 +3541,45 @@ function cleanChoice(t){
   /* a courier does not open his mouth with a bracketed note about the interface */
   t = t.replace(/^\(([^)]{0,160})\)\s*/, function(m, inner){ return META_ASIDE.test(inner) ? "" : m; });
   return t.trim();
+}
+/* ---- THE FENCE HAS A MAP NOW ----
+   The fence forbade later questions in words and the cast gate forbade their
+   people, and a 32b walked the family into Vic's safehouse on the second turn of
+   beat one anyway - two beats early, with Vic talking. It got past the cast gate
+   by calling him "Vic's Voice", and past the fence because the fence had no idea
+   what a place was.
+   It does now. Every question's authored openings and landings name a room, so
+   the board already knows which rooms belong to which night. Arriving at one
+   early is refused the same way a gate with no anchors is refused. */
+/* Whole-string matching missed the exact case it was written for: the safehouse
+   is authored as THE SAFEHOUSE PORCH and the DM called it "Vic's Safehouse", and
+   neither contains the other. Places are matched on their distinctive words -
+   with the district's own furniture ignored, because half of Book One happens in
+   the Veldt and "the old road" is not an address. */
+var PLACE_STOP = {the:1,a:1,an:1,of:1,at:1,in:1,on:1,and:1,to:1,s:1,
+  lower:1,upper:1,north:1,south:1,east:1,west:1,old:1,new:1,veldt:1,
+  street:1,road:1,alley:1,side:1,back:1,outside:1,inside:1,room:1,place:1,city:1,
+  dockside:1,docks:1,dock:1,quay:1,row:1,yard:1,head:1,edge:1,stairs:1,step:1};
+function placeWords(t){
+  var w = normLine(t).split(" "), out = [], i;
+  for(i = 0; i < w.length; i++){
+    if(w[i].length > 1 && !PLACE_STOP[w[i]] && out.indexOf(w[i]) === -1) out.push(w[i]);
+  }
+  return out;
+}
+function fencedPlace(loc){
+  var want = placeWords(loc);
+  if(!want.length || beatDone()) return "";
+  for(var i = beatIdx + 1; i < SPINE.length; i++){
+    var m = SPINE[i], pools = (m.opens || []).concat(m.lands || [], m.landsHard || []);
+    for(var j = 0; j < pools.length; j++){
+      var here = placeWords(pools[j].place || ""), k;
+      for(k = 0; k < here.length; k++){
+        if(want.indexOf(here[k]) !== -1) return m.title;
+      }
+    }
+  }
+  return "";
 }
 /* THE GATE'S VOCABULARY. Substring matching was never going to hold, and the
    line that proved it was "'Nine.' You say the name out loud. Let whoever the
@@ -3700,32 +3709,20 @@ function showChoices(choices){
          and the strip and the rail agree about what kind of turn this is.
          And it asks twice, like the way out does, because a door that ends the
          night should never be a thing you discover you have clicked. */
-      /* shut until the last two turns; and shut once the call is armed, because
-         two ways to end the same night on one rail is just a way to misclick */
-      if(defuseArmed || exitStage() !== "open"){
-        btn.disabled = true;
-        btn.classList.add("notyet");
-      } else {
-        if(exitArmed) btn.classList.add("armed");
-        btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(exitArmed ? ("Sure? " + c) : c);
-        btn.onclick = function(){
-          if(!exitArmed){ exitArmed = true; walkArmed = false; showChoices(choices); return; }
-          exitArmed = false;
-          pendingKind = "exit"; takeAction(c, false);
-        };
-      }
+      if(exitArmed) btn.classList.add("armed");
+      btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(exitArmed ? ("Sure? " + c) : c);
+      btn.onclick = function(){
+        if(!exitArmed){ exitArmed = true; walkArmed = false; showChoices(choices); return; }
+        exitArmed = false;
+        pendingKind = "exit"; takeAction(c, false);
+      };
     } else {
       btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
     }
     box.appendChild(btn);
     if(kind === "exit" && live){
       var eh = document.createElement("div");
-      if(defuseArmed){
-        eh.className = "choice-hint exithint";
-        eh.textContent = "You called it. The next move settles the night either way.";
-      } else if(exitStage() !== "open"){
-        return;                        /* shut and grey says it by itself */
-      } else if(exitArmed){
+      if(exitArmed){
         eh.className = "choice-hint exithint open";
         eh.textContent = "This ends tonight's business. Pick anything else and it is forgotten.";
       } else {
@@ -3735,25 +3732,6 @@ function showChoices(choices){
       box.appendChild(eh);
     }
   });
-  /* the green defuse: click arms it; the next action - bit or not - settles */
-  if(callEligible()){
-    if(defuseArmed){
-      var hint = document.createElement("div");
-      hint.className = "choice-hint";
-      hint.textContent = "Called. Your next move settles it — bit or not.";
-      box.appendChild(hint);
-    } else {
-      var call = document.createElement("button");
-      call.className = "choice call";
-      call.innerHTML = '<span class="n">&#9670;</span>' + esc("Call it — settle tonight's business your way.");
-      call.onclick = function(){
-        defuseArmed = true;
-        persistAll(choices || []);
-        showChoices(choices);
-      };
-      box.appendChild(call);
-    }
-  }
   /* THE WAY OUT stays the game's control - never one of the DM's choices, always
      the last thing on the rail, always two deliberate clicks. Only the WORDING is
      the DM's, because "put it down" means nothing in a room the player is standing
@@ -3930,7 +3908,7 @@ function finishBreak(name){
   runOver = "broken";
   deathLine = name;            /* the card names who the story could not lose */
   perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
-  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
+  seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   var aside = {kind:"dmaside", text:"The rain has too much to offer. It can not end like this."};
   renderBlock(aside); feedLog.push(aside);
   ledgerText += "\n\n---\n\n**THE RAIN REFUSED.** " + name + " held the story up, and the story cannot stand without them.\n";
@@ -3948,7 +3926,7 @@ function finishWalkout(){
   runOver = "walked";
   walkoutDue = false; redRun = 0; perilTurns = 0;
   foldPending = false; foldServed = false; epilogueNow = false;
-  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
+  seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   ledgerText += "\n\n---\n\n**HE PUT IT DOWN.** The courier walked, and this time nobody talked him out of it.\n";
   applyTension();
   endCard("walked", "");
@@ -4821,7 +4799,7 @@ function finishFold(){
   beatIdx = fin;
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
-  beatText = ""; gateRefusedNames = []; gateHeldNow = false; defuseArmed = false;
+  beatText = ""; gateRefusedNames = []; gateHeldNow = false;
   tolls = 0;                     /* paid in full; the meter starts clean */
   var finBeat = SPINE[fin];
   var body = "While you played it your way, the world closed: " + titles.join(", ")
@@ -5357,14 +5335,13 @@ function closeBeat(forced, note){
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
   beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
-    called: calledClose, id: b.id,
+    id: b.id,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
   termPing();                    /* the season page just gained an entry */
   beatTurns = 0;
   driftRun = 0; walkbackNow = false;
   gateRefusedNames = []; gateHeldNow = false;
-  defuseArmed = false;         /* the call stands until the beat closes - it just did */
   if(beatIdx === SPINE.length - 1){ beatIdx++; return; }   /* the finale's epilogue IS the aftermath */
   phase = "aftermath";
   phaseLeft = turned ? 2 : 1;
@@ -5392,11 +5369,10 @@ function boardTurn(data){
   chassisPick = (data && (data.chassis === "Seven" || data.chassis === "Nine")) ? data.chassis : "";
   /* mudskipper immunity: a bit cannot be spent. No gate lands off it, no knock
      rides it, and the rain neither ticks nor forgives while the table laughs.
-     The one exception is the call: a bit can never be TAKEN but it can be
-     GIVEN, and on a called turn the gate is accepted even off a bit. */
+     A bit can never be TAKEN. */
   if(lastTurnMud){
     knock = false;
-    if(!(defuseArmed && phase === "live")) said = false;
+    said = false;
   }
   /* an interlude that rode this exchange is spent once the reply lands */
   if(interludeServedId){
@@ -5444,18 +5420,6 @@ function boardTurn(data){
     else { payToll(); queueAside("red", tollLine()); }
     return;
   }
-  /* the call's guarantee: a called turn closes the beat no matter what the
-     reply contains. Anchors are waived - the player consciously traded
-     strictness for resolution - and a missing gateNote falls back to the exit.
-     A call can never be left hanging. */
-  if(defuseArmed){
-    calledClose = true;
-    /* the DM had its chance and its retry; only a double failure closes on paper */
-    closeBeat(false, note || ("settled between scenes — " + beatNow().exit));
-    calledClose = false;
-    forcingNow = false;
-    return;
-  }
   /* THE STALL holds the gate open. The player is still standing in this beat and
      said so out loud, so the DM does not get to close it around them - no scar,
      no toll, nothing owed. The road still gets spent: a stall costs a turn. */
@@ -5471,13 +5435,13 @@ function boardTurn(data){
      A bit is a stall with a joke in it: it holds the gate AND costs no road. */
   if(!lastTurnMud) beatTurns++;
   /* THE EXIT was taken: the player reached for the ending, so the beat closes on
-     this turn whatever the reply did with the order - the same guarantee the call
-     carries, for the same reason. Anchors are waived, no toll, no scar. */
+     this turn whatever the reply did with the order. Anchors are waived, no toll,
+     no scar. */
   /* GREEN, ALWAYS. The pinned line IS the gate move, authored against this
      beat's own exit, so a player who took it has done the thing - whatever the
      reply managed to write about it. There is nothing here for a blue card to
      apologise for: the beat closed the way the board says beats close. */
-  if(pickKind === "exit" && !said && beatTurns >= beatFloor(beatNow())){
+  if(pickKind === "exit" && !said){
     closeBeat(false, note || beatNow().exit);
     return;
   }
@@ -5491,10 +5455,10 @@ function boardTurn(data){
      refused - no card, no canon, no advance, the budget still ticking. Forcing
      stays the fallback below, and forced canon is authored, therefore true:
      the system degrades toward truth instead of toward hallucination. */
-  /* the exit waives the anchor check the way the call does. It has to: the door
-     GUARANTEES a close, and a refusal here would leave a beat the player already
-     ended standing open with nothing left to end it with. */
-  if(said && !(pickKind === "exit" && beatTurns >= beatFloor(beatNow()))){
+  /* the exit waives the anchor check. It has to: the door GUARANTEES a close, and
+     a refusal here would leave a beat the player already ended standing open with
+     nothing left to end it with. */
+  if(said && pickKind !== "exit"){
     var miss = anchorsMissing(beatNow());
     if(miss.length){
       said = false;
@@ -5707,9 +5671,9 @@ function playOpening(id){
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
            sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || "",
-           called:!!info.called};
+           };
   renderBlock(b); feedLog.push(b);
-  ledgerText += "\n\n_" + (info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
+  ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
     + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
@@ -5773,13 +5737,24 @@ function metNames(){
 }
 /* a name from later in the story, used before it belongs to the table */
 function unmetSpeakers(data){
-  var met = {}, bad = [];
+  var met = {}, bad = [], names = [];
   metNames().forEach(function(n){ met[n] = 1; });
-  ((data && data.scene) || []).forEach(function(b){
+  ((data && data.scene) || []).forEach(function(b){ names.push({speaker:(b && b.speaker) || ""}); });
+  /* a cast sheet entry introduces somebody just as surely as a line of dialogue
+     does - Vic reached the roster two beats early without once being a speaker */
+  (Object.prototype.toString.call(data && data.cast) === "[object Array]" ? data.cast : [])
+    .forEach(function(c){ names.push({speaker:(c && c.name) || ""}); });
+  names.forEach(function(b){
     var nm = String((b && b.speaker) || "").trim();
     if(!nm || met[nm]) return;
+    /* an exact match was too easy to walk around. A 32b put the whole safehouse
+       scene on screen two beats early by calling him "Vic's Voice" - not a name
+       in the cast list, so not a name the gate was watching. A spine name found
+       ANYWHERE inside a speaker label is that person with a hat on. */
     for(var i = 0; i < SPINE_CAST.length; i++){
-      if(SPINE_CAST[i].toLowerCase() === nm.toLowerCase() && bad.indexOf(nm) === -1) bad.push(nm);
+      var sp = SPINE_CAST[i];
+      if(met[sp]) continue;                 /* met people may wear any label they like */
+      if(new RegExp("\\b" + sp + "\\b", "i").test(nm) && bad.indexOf(nm) === -1) bad.push(nm);
     }
   });
   return bad;
@@ -5951,7 +5926,7 @@ function maintenanceNudge(){
 /* Note the side effect: the maintenance ask is decided here because it rides the
    outgoing message, and showScene harvests whatever comes back against it. */
 /* The door the player just opened, spoken to the DM as an order. Only ever built
-   for a live beat, and never when the call is armed - that promise outranks. */
+   for a live beat. */
 function doorDirective(){
   var b = beatNow();
   if(pickKind === "walk"){
@@ -6015,21 +5990,9 @@ function buildContext(){
     msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
   }
   if(press) msg += "\n\n" + press;
-  /* the call rides the next action, and that reply writes the story and turns
-     the page - never paperwork over a continuing conversation */
-  if(defuseArmed && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
-    msg += "\n\n(THE CALL — the player has called it. This reply resolves tonight's business in"
-      + " three movements. One: play their move - however wacky - honestly. Two: in the same"
-      + " reply, carry the scene to the beat's resolution ON SCREEN - the exit's events happen in"
-      + " the prose, shown, not implied, folded around what they did; if the scene genuinely"
-      + " cannot carry it, step into chronicle voice for one short paragraph and narrate the"
-      + " business done. Three:" + pageTurnClause().replace(/^ Then turn the page\. /, " turn the page. ")
-      + " The courier's voice stays the player's throughout. End with \"gate\": true and a"
-      + " gateNote that describes what was actually written.)";
-  }
-  /* which door they came through - the call outranks all three, because arming it
-     was itself a decision and it promised the next move would settle the night */
-  if(pickKind && !defuseArmed && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
+  /* the door the player came through rides the next action */
+  /* which door they came through */
+  if(pickKind && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
     msg += "\n\n" + doorDirective();
   }
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
@@ -6386,6 +6349,46 @@ function callDM(corrected){
           + " body, they are \"Other\" and they are nobody the story is keeping. Only the names in"
           + " ON STAGE may speak.)");
       }
+      /* and the same rule for rooms: a later question's address, reached tonight,
+         spends that question exactly as surely as its people do.
+         (both are re-checked below, because one correction is a request) */
+      var earlyPlace = fencedPlace(parsed.data && parsed.data.location);
+      if(earlyPlace){
+        return callDM("(NOT YET, AND NOT THERE: \"" + String(parsed.data.location) + "\" is where"
+          + " \"" + earlyPlace + "\" happens, and that is a later question. Arriving early spends it"
+          + " - the beat that owned it has nothing left to be about. Rewrite this turn with the same"
+          + " events somewhere they have not got to yet: the road there, the weather on the way, the"
+          + " last street before it. They can be walked toward. They cannot arrive.)");
+      }
+    }
+    /* IT INSISTED. One correction is a request, and every gate in this file that
+       stopped at a request has been walked through: the chair, the door, and this.
+       So the second refusal is enforced. The room is dropped and they stay where
+       they were; the person is relabelled "Other" rather than admitted, because a
+       name that reaches metNames() disarms the cast gate for the rest of the run -
+       which is exactly how Vic ended up on the cast sheet two beats early. */
+    if(corrected){
+      if(fencedPlace(parsed.data && parsed.data.location)){
+        if(window.console && console.warn){
+          console.warn("[mudskippers] refused an early arrival at " + parsed.data.location);
+        }
+        delete parsed.data.location;
+      }
+      var stubborn = unmetSpeakers(parsed.data);
+      if(stubborn.length){
+        (parsed.data.scene || []).forEach(function(bk){
+          if(bk && stubborn.indexOf(String(bk.speaker || "").trim()) !== -1) bk.speaker = "Other";
+        });
+        /* and out of the cast payload, or the sheet learns them anyway */
+        if(Object.prototype.toString.call(parsed.data.cast) === "[object Array]"){
+          parsed.data.cast = parsed.data.cast.filter(function(c){
+            return !(c && stubborn.indexOf(String(c.name || "").trim()) !== -1);
+          });
+        }
+        if(window.console && console.warn){
+          console.warn("[mudskippers] not yet cast, twice - relabelled as Other: " + stubborn.join(", "));
+        }
+      }
     }
     if(deathRefused(parsed.data)){
       if(!corrected){
@@ -6402,25 +6405,14 @@ function callDM(corrected){
       }
     }
     /* the settling: a called reply must write the resolution itself, not file it */
-    if(!corrected && defuseArmed && phase === "live" && !beatDone() && !foldPending && !walkbackNow){
-      var cg = parsed.data.gate === true || parsed.data.gate === "true";
-      var cgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
-      if(!cg || !cgn){
-        return callDM("(THE CALL STANDS — you played their move but did not land the beat."
-          + " Continue the same scene now and write the resolution itself: " + beatNow().exit
-          + ". On screen, or in one chronicle-voice paragraph - written, not implied - then close"
-          + " the scene, and send \"gate\": true with a true gateNote.)");
-      }
-    }
     /* THE EXIT'S OWN RETRY. The exit door guarantees a close, and that guarantee
        was closing beats the reply had never landed: a night whose entire job was a
        first two-way conversation with Nine settled on a scene where Nine never said
        a word, and the client wrote the conversation into canon on its own authority.
        The close is not in question - the player spent their move on it. Whether the
        STORY gets to be the thing that closes it is, and it only takes asking. */
-    if(!corrected && pickKind === "exit" && !defuseArmed && !forcingNow && !lastTurnMud
-       && phase === "live" && !beatDone() && !foldPending && !walkbackNow
-       && beatTurns + 1 >= beatFloor(beatNow())){
+    if(!corrected && pickKind === "exit" && !forcingNow && !lastTurnMud
+       && phase === "live" && !beatDone() && !foldPending && !walkbackNow){
       var xg = parsed.data.gate === true || parsed.data.gate === "true";
       var xgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
       if(!xg || !xgn){
@@ -6742,13 +6734,13 @@ function saveBlob(){
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
-    defuseArmed:defuseArmed, foldedBeats:foldedBeats, chassisHolder:chassisHolder,
+    foldedBeats:foldedBeats, chassisHolder:chassisHolder,
     redRun:redRun,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
 function currentChoices(){
-  /* the call, the way out and the season-break door are the client's furniture,
+  /* the way out and the season-break door are the client's furniture,
      not the DM's choices - they are rebuilt from state, never restored as text */
   var out=[]; var els=document.querySelectorAll("#choices .choice:not(.call):not(.walk)");
   for(var i=0;i<els.length;i++){ out.push(els[i].textContent.replace(/^\d/,"").trim()); }
@@ -7390,7 +7382,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.9");
+  R(s, "build", "v4.14.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7453,8 +7445,6 @@ function dbgReport(){
   R(s, "gate held (below floor)", gateHeldNow, gateHeldNow ? "warn" : "");
   R(s, "stalled (player held it)", stalledNow);
   R(s, "forcing this turn", forcingNow, forcingNow ? "warn" : "");
-  R(s, "call armed", defuseArmed, defuseArmed ? "ok" : "");
-  R(s, "call eligible", callEligible());
   R(s, "chassis holder / pick", dbgV(chassisHolder) + " / " + dbgV(chassisPick));
   R(s, "housing resident", housingResident());
   B(s, "WITNESS TAIL (last 900 chars the anchor check reads)", beatText.slice(-900));
@@ -8618,7 +8608,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.9   COLD START",
+    "MUD//OS  v4.14.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10085,7 +10075,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.9",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.14.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10145,7 +10135,7 @@ function newRun(confirmFirst, bare){
   canonArchive = []; pendingCompaction = null;
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
-  foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
+  foldServed = false; foldedBeats = []; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
@@ -10219,7 +10209,6 @@ function restoreFromBlob(s){
   driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
   foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
-  defuseArmed = s.defuseArmed === true;   /* the call stands across a reload */
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};

@@ -74,14 +74,12 @@ speed. One reach.
 If the night runs out, the game refuses to stall — that is its oldest promise — so
 the world answers the question for you, and that costs a **toll**: not a punishment
 for what you did, a fee for what went undone. Your bits never feed the clock:
-mudskipping stalls the night for as long as you're playing, and once the road gets
-short you'll see a green choice — call it, and your next move, bit or not, settles
-tonight's business your way. You'll still see everything coming — a yellow card when
-the road is short, a second when the world stirs — and every toll explains itself
-when it's paid. Three are survivable and the meter re-zeroes every season. A fourth
-doesn't end anything: the world folds the table, catches the story up without you,
-tells you exactly what it did on a gold card, and hands you the season's finale with
-a clean meter.
+mudskipping stalls the night for as long as you're playing. You'll see everything
+coming — a yellow card when the road is short, a second when the world stirs — and
+every toll explains itself when it's paid. Three are survivable and the meter
+re-zeroes every season. A fourth doesn't end anything: the world folds the table,
+catches the story up without you, tells you exactly what it did on a gold card, and
+hands you the season's finale with a clean meter.
 
 The hard endings are few and all of them are yours to see coming: the mortality rules
 warn you before they take the courier; killing someone the story is standing on ends
@@ -151,24 +149,11 @@ So the rail is the game's now, top to bottom:
   one and they rotate while the beat stays open, so a player who digs in sees the
   same door worded differently rather than the same sentence four times. Take it and
   the beat closes, **green**, once, guaranteed.
-- **The door sits in slot one the whole beat, shut**, so you can always read the
-  shape of the ending you're walking toward — and it **unlocks for the last two
-  turns only**, when the world is about to move and when the road has run out.
-  Earlier than that, taking it would only have been a stall wearing the beat's name.
-  Shut it's grey and captionless; being there at all is the message. Open, it **asks
-  twice**, the way the bail-out does: a door that ends the night should never be
-  something you find out you clicked.
-
-  ```
-  THE NIGHT HAS ROOM IN IT           door printed, grey, shut
-  TWO TURNS BEFORE THE WORLD MOVES   door printed, grey, shut
-  NEXT TURN THE WORLD MOVES          door UNLOCKS
-  OUT OF ROOM                        door open — last call
-  ```
-
-  Taken on that final turn it still closes green and pays no toll: the exit is
-  checked before the world's forced close, so reaching for the ending at the last
-  possible moment beats the world to it. The door is never a trap.
+- **The door is never locked.** It is the one honest way out of tonight, so it sits
+  in slot one from the first turn and it is takeable from the first turn. Locking it
+  to the end of the beat taught the player that the rail lies about what it offers.
+  It **asks twice**: a door that ends the night should never be something you find
+  out you clicked.
 - **The bail-out is authored the same way**, and what leaving *means* moves with the
   story: handing a shard back in Book One and walking out of the heart room in Book
   Three are not the same sentence, so they are not the same sentence.
