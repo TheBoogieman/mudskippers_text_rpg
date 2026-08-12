@@ -392,6 +392,12 @@
   }
   @keyframes perilbeat{0%,100%{filter:brightness(.78)}50%{filter:brightness(1.4)}}
   #tension.over{opacity:1;box-shadow:inset 0 0 230px rgba(150,18,18,.40)}
+  /* the refusal: the whole room goes red and stays red - still, not pulsing */
+  #tension.over.broken{
+    opacity:1;
+    background:radial-gradient(ellipse at 50% 50%, rgba(150,15,15,.28) 0%, rgba(80,8,8,.70) 100%);
+    box-shadow:inset 0 0 260px rgba(150,18,18,.55);
+  }
   #pressure.peril{
     color:#ff9d9d;border-color:#a83a3a;background:#300d0d;
     animation:ppulse .82s ease-in-out infinite;
@@ -961,7 +967,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.5.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.6.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1031,7 +1037,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.5.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.6.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1310,7 +1316,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.5.0 "The Spare Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.6.0 "The Refusal"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1355,6 +1361,7 @@ var BIBLE = [
 "- Do not use death as pacing and do not invent peril to fill a quiet turn. At most one peril inside a beat, and only where the fiction genuinely has teeth: Hollows with hands on him, a gun already drawn and aimed, a fall, fire, water, the Principal's bio-grens, the Choir's intake, or the substrate with his body left unattended.",
 "- The stakes are real for everyone else too. The family can be hurt, taken, and killed - record that in the roster's fallen list - but the courier's death is the only one that ends the season.",
 "- ENDING THE HUNT IS THE TABLE'S ACT. When Mirren's hunt must end, the blow belongs to the family and the choice of whose hand belongs to the table. You never perform it for them.",
+"- THE LOAD-BEARING PEOPLE. Nine, Pia, Vic, Hesta, Seven, Three, the Granny and the Principal hold the story up. If the player kills or destroys one of them - and a smashed shard IS a death - do not soften it, do not write around it, and never resurrect: honor the act in the scene, record the name in roster fallen in the SAME reply, and stop steering. The game ends such a run itself, and it should - the rain has too much to offer to continue without its people. The story's own deaths stay the story's: Mirren's hunt and Vic's PAID IN FULL are the board's to spend, not this law's to block.",
 "",
 "LOSS - THE SEASON CAN BE LOST, AND IT IS REAL:",
 "- The world collects a toll when it must force a gate or walk a drifting player back. The player always sees the count, and the game warns them plainly before the last one. Nothing ends the season unwarned - the same law as death.",
@@ -2431,22 +2438,27 @@ function endCard(kind, line){
   epilogueNow = false; renderSeasonBanner();   /* a finished run has no doors left */
   var dead = (kind === "death");
   var lost = (kind === "lost");
+  var broken = (kind === "broken");
   var lc = LOSS_CARDS[currentSeason] || LOSS_CARDS[3];
   var d = document.createElement("div");
-  d.className = "endcard" + (dead || lost ? " dead" : "");
-  var head = dead ? "THE COURIER IS DEAD" : lost ? lc.head : "PAID IN FULL";
+  d.className = "endcard" + (dead || lost || broken ? " dead" : "");
+  var head = dead ? "THE COURIER IS DEAD" : lost ? lc.head
+    : broken ? "THE RAIN HAS TOO MUCH TO OFFER" : "PAID IN FULL";
   var sub  = dead
     ? (line ? esc(line) : "The rain takes it from here.")
     : lost ? esc(lc.line)
+    : broken ? esc((line || "Someone load-bearing") + " held this story up. It can not end like this — so it ends here.")
     : "Season complete. The chronicle survives the courier.";
   d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
     + (dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
             + 'another night, and the same rain. Start again?</div>'
      : lost ? '<div class="end-s2">The world collected four times and the season went with it. '
-            + 'Another courier, another night, and the rain still falling. Start again?</div>' : '');
+            + 'Another courier, another night, and the rain still falling. Start again?</div>'
+     : broken ? '<div class="end-s2">The rain does not go on without its people. Another courier, '
+            + 'another night, and everyone alive again. Start again?</div>' : '');
   var b1 = document.createElement("button");
-  b1.className = dead || lost ? "btn" : "btn ghost";
-  b1.textContent = dead || lost ? "NEW GAME" : "NEW SEASON";
+  b1.className = dead || lost || broken ? "btn" : "btn ghost";
+  b1.textContent = dead || lost || broken ? "NEW GAME" : "NEW SEASON";
   b1.onclick = function(){ newRun(true); };
   var b2 = document.createElement("button");
   b2.className = dead ? "btn ghost" : "btn";
@@ -2465,6 +2477,37 @@ function lockRun(){
   var mi = $("mudinput"), mb = $("mudbtn");
   if(mi){ mi.disabled = true; mi.value = ""; mi.placeholder = "The run is over. Start a new game."; }
   if(mb) mb.disabled = true;
+}
+/* ---- THE REFUSAL ----
+   The load-bearing people hold the story up. If one of them enters the fallen
+   list by the table's hand - a smashed shard is a death - the DM does not get
+   to write around it and the game does not continue: the rain refuses, out
+   loud, the screen goes red, and the run ends as hard as a death. The story's
+   own sanctioned deaths are exempt: Mirren always, Vic from his own beat on. */
+var LOAD_BEARING = ["Nine", "Pia", "Vic", "Hesta", "Seven", "Three", "Granny", "Machine", "Principal"];
+var breakDue = "";
+function loadBearingHit(name){
+  var n = String(name || "");
+  for(var i = 0; i < LOAD_BEARING.length; i++){
+    if(!new RegExp("\\b" + LOAD_BEARING[i] + "\\b", "i").test(n)) continue;
+    if(LOAD_BEARING[i] === "Vic" && beatIdx >= beatById("a3-vic")) continue;
+    return n;
+  }
+  return "";
+}
+function finishBreak(name){
+  if(runOver) return;
+  runOver = "broken";
+  deathLine = name;            /* the card names who the story could not lose */
+  perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
+  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null;
+  var aside = {kind:"dmaside", text:"The rain has too much to offer. It can not end like this."};
+  renderBlock(aside); feedLog.push(aside);
+  ledgerText += "\n\n---\n\n**THE RAIN REFUSED.** " + name + " held the story up, and the story cannot stand without them.\n";
+  applyTension();
+  endCard("broken", name);
+  persistAll([]);
+  scrollFeed();
 }
 /* THE DEATH. The client owns it: it ends the run, freezes the board, drops the
    weather into danger and writes the last line of the chronicle itself. */
@@ -2798,7 +2841,17 @@ function showScene(data, logIt, instant){
     $("hud-loc").textContent = now;
   }
   mergeMilestones(data.milestones);
+  /* the refusal watches the fallen list's live transitions only - names already
+     fallen when a save loads are history, not a fresh act at this table */
+  var fallenBefore = roster.fallen.slice();
   mergeRoster(data.roster);
+  if(data.__live && !runOver && !breakDue){
+    roster.fallen.forEach(function(f){
+      if(fallenBefore.indexOf(f) !== -1) return;
+      var hit = loadBearingHit(f);
+      if(hit && !breakDue) breakDue = hit;
+    });
+  }
   mergeQuests(data.quests, false,
     (data.__live && phase === "live" && !beatDone()) ? beatNow().id : "");
   mergePlace(data.place);
@@ -2857,6 +2910,13 @@ function showScene(data, logIt, instant){
   });
   function done(){
     skipReveal = null;
+    /* the refusal preempts every other ceremony: the scene was read, and now
+       the rain says its piece and the run ends */
+    if(data.__live && breakDue && !runOver){
+      var who = breakDue; breakDue = "";
+      finishBreak(who);
+      return;
+    }
     /* ceremony: one card a turn. The beat card lands after the scene that closed
        it; an aside waits its own turn rather than sharing one. */
     if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
@@ -3868,7 +3928,8 @@ function applyTension(quiet){
      the room red but still, not pulsing at somebody reading an epitaph */
   if(runOver){
     lastTension = 0; fxTension = 0;
-    var eo = $("tension"); if(eo) eo.className = (runOver === "death") ? "over" : "";
+    var eo = $("tension");
+    if(eo) eo.className = (runOver === "death") ? "over" : (runOver === "broken") ? "over broken" : "";
     var po = $("pressure"); if(po){ po.className = ""; po.innerHTML = ""; }
     try{ shardWake(); }catch(e){}
     return;
@@ -5629,6 +5690,8 @@ function renderTermStatus(){
       + ' &middot; ACT ' + beatNow().act + '</div>';
   if(runOver === "death"){
     tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
+  } else if(runOver === "broken"){
+    tb.innerHTML = '<div class="hint">The rain refused. The run is over; the chronicle survives it.</div>';
   } else if(runOver === "lost"){
     tb.innerHTML = '<div class="hint">The season was lost. The chronicle survives it.</div>';
   } else if(beatDone()){
@@ -6161,7 +6224,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.5.0   COLD START",
+    "MUD//OS  v4.6.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6237,6 +6300,8 @@ function refreshTitle(){
     /* a dead courier is not a run you continue - say so before they click it */
     $("t-continue-sub").textContent = runOver === "death"
       ? "This courier is dead. Start a new game."
+      : runOver === "broken"
+        ? "The rain refused. Start a new game."
       : runOver === "lost"
         ? "The season was lost. Start a new game."
       : runOver === "season"
@@ -7514,7 +7579,7 @@ function restoreFromBlob(s){
   if(!beatDone()) currentSeason = beatNow().season;   /* the board is the season, always */
   rehydDismissed = false;
   termClear();                   /* a loaded run starts read - only new turns light it */
-  runOver = (s.over === "death" || s.over === "season" || s.over === "lost") ? s.over : "";
+  runOver = (s.over === "death" || s.over === "season" || s.over === "lost" || s.over === "broken") ? s.over : "";
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
