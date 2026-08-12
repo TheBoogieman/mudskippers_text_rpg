@@ -536,6 +536,14 @@
   .block.beatcard.forced .tag{color:#e08b8b}
   .block.beatcard.arcturn{color:var(--gold);border-color:#7a5f22}
   .block.beatcard.arcturn .tag{color:var(--gold)}
+  /* the blue tier, between green and gold: a beat the call settled */
+  .block.beatcard.called{color:#9fc3dd;border-color:#3d5a70;background:linear-gradient(90deg,transparent,rgba(127,179,213,.05),transparent)}
+  .block.beatcard.called .tag{color:#7fb3d5}
+  .block.beatcard.called .eyebrow{
+    display:block;font-family:ui-monospace,Menlo,monospace;font-size:9px;
+    letter-spacing:.22em;color:#5c7a94;margin-bottom:4px;
+  }
+  .block.beatcard.called .sum.foot{color:#5c7a94;font-style:italic}
   /* the card's body: what that beat was, in plain serif under the title */
   .block.beatcard .sum{
     display:block;font-family:Georgia,serif;font-style:italic;font-weight:400;
@@ -951,7 +959,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.4.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.4.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1021,7 +1029,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1300,7 +1308,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.4.2 "The Fold"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.4.3 "The Fold"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1327,7 +1335,7 @@ var BIBLE = [
 "- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
 "- THE CHAIR. The courier's voice, choices, and growth belong to the player alone. You render the typed action and its consequences - you never write COURIER dialogue the player did not type, never decide for him, never convert his deflection into your sincerity. When a gate needs the courier to say, choose, or declare something, offer it as one of the three choices and wait: the door can be visible, but only the player's hand opens it. If the player typed speech, render that speech - faithfully, not improved.",
 "- THE CHAIR CUTS BOTH WAYS. The player owns the courier; the world owns the world. When the player asserts a fact about the world - who did it, what it was, whose face that is - it is the COURIER'S belief, spoken or thought in-fiction, and it can be wrong. Record it as belief (\"the courier reckoned it was Mirren\"), never as ground truth, and when the player revises it, the world does not lurch to reconcile: a corrected guess is a man being wrong twice, and it costs nothing but pride.",
-"- THE CALL. When the player calls it, their next action - any action - is the resolution. Honor it in the exit's spirit, bring the named people on stage, and record it proudly. Style is never punished at this table.",
+"- THE CALL. When the player calls it, your very next reply resolves tonight's business on your terms: fold whatever they did - however wacky - into the lore, aligned with canon, release the tension, and close the beat. The courier's voice stays theirs; resolve around their move, never through their mouth. Style is never punished at this table, and a call is never left open.",
 "- MUDSKIPPER MOMENTS ARE SACRED, AND THEY ARE NOT FUEL. When the player does a bit, the bit lands as a bit: the family plays along or plays the straight man, the world reacts in kind, and the deflection succeeds this turn. Nobody frames the courier as anxious, cringey, or deflecting - the family finds him funny, alarming, or brilliant, never embarrassing. A bit is never converted into the scene's sincerity, never mined for the gate, never diagnosed. Sincerity arrives when the player types it, and not one turn before.",
 "- ONE TRUTH PER TURN. A scene may deliver at most one revelation, and it arrives with its aftermath attached. Characters answer what was asked - not what the file knows. Nobody delivers three unprompted paragraphs; if the player did not pull it, it stays in the drawer.",
 "- THE WORLD KEEPS SCORE OF STRANGE. Wild things land. Citizens, family, and rooms react to the insanity at proper length before any plot resumes - aftermath is content, not delay.",
@@ -2186,6 +2194,7 @@ var foldPending = false;     /* next outgoing message carries the fold order */
 var foldServed = false;      /* the order has gone out; the reply is the catch-up passage */
 var foldedBeats = [];        /* beat ids the world closed without the family - persisted */
 var defuseArmed = false;     /* the call: the player's next action settles the beat - persisted */
+var calledClose = false;     /* this close is the call's: blue card, anchors waived */
 
 var MAP_CAP = 24, MILESTONE_CAP = 40, BITS_CAP = 10, PLACE_LINES = 2;
 var QUEST_ACTIVE_CAP = 12, QUEST_SETTLED_SERVED = 8;
@@ -2269,7 +2278,15 @@ function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.
 /* ============ RENDER ============ */
 function renderBlock(b){
   var el = document.createElement("p");
-  if(b.kind === "beat"){
+  if(b.kind === "beat" && b.called){
+    /* the blue tier, between green and gold: the call closed this one */
+    el.className = "block beatcard called" + (b.arcturn ? " arcturn" : "");
+    el.innerHTML = '<span class="eyebrow">closed on the storyteller&#39;s terms</span>'
+      + '<span class="tag">THE BEAT, SETTLED</span>'
+      + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
+      + '<span class="sum foot">No toll. The story took your move and ran with it.</span>'
+      + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
+  } else if(b.kind === "beat"){
     el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
     el.innerHTML = '<span class="tag">'
       + (b.arcturn ? "THE ACT TURNS" : b.forced ? "THE WORLD MOVED ON" : "THAT BEAT IS CLOSED")
@@ -3541,12 +3558,14 @@ function boardDirective(){
   if(beatTurns === b.budget){
     return "(PRESSURE — this beat is out of room. The world acts, now. Drive at the gate; no new digressions."
       + " If the scene still needs its pressure, an offer: "
-      + ((b.press || [])[1] || "something forces the issue without the player choosing it.") + ")";
+      + ((b.press || [])[1] || "something forces the issue without the player choosing it.")
+      + " If the exit has already been met in play, send the gate now - a met exit left un-gated is the world's error, not the player's.)";
   }
   if(beatTurns === b.budget - 1){
     return "(SQUEEZE — this beat is running out of room. Let the scene keep its feet, but angle it: bring the gate into view and make the next step toward it the obvious one."
       + " If the scene still needs its pressure, an offer: "
-      + ((b.press || [])[0] || "raise the pressure toward the gate.") + ")";
+      + ((b.press || [])[0] || "raise the pressure toward the gate.")
+      + " If the exit has already been met in play, send the gate now - a met exit left un-gated is the world's error, not the player's.)";
   }
   return "";
 }
@@ -3599,6 +3618,7 @@ function closeBeat(forced, note){
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
   beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
+    called: calledClose,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
   termPing();                    /* the season page just gained an entry */
@@ -3679,6 +3699,17 @@ function boardTurn(data){
     beatTurns = 0;
     if(said) closeBeat(false, note);
     else { payToll(); queueAside("red", tollLine()); }
+    return;
+  }
+  /* the call's guarantee: a called turn closes the beat no matter what the
+     reply contains. Anchors are waived - the player consciously traded
+     strictness for resolution - and a missing gateNote falls back to the exit.
+     A call can never be left hanging. */
+  if(defuseArmed){
+    calledClose = true;
+    closeBeat(false, note);
+    calledClose = false;
+    forcingNow = false;
     return;
   }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
@@ -3823,9 +3854,10 @@ function applyTension(quiet){
    never what is coming. Stored in feedLog so it survives a reload like any block. */
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
-           sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || ""};
+           sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || "",
+           called:!!info.called};
   renderBlock(b); feedLog.push(b);
-  ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
+  ledgerText += "\n\n_" + (info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
     + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
@@ -4011,12 +4043,14 @@ function buildContext(){
     msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
   }
   if(press) msg += "\n\n" + press;
-  /* the call rides every action until the beat closes: bit or not, it settles */
+  /* the call rides the next action, and that reply closes the beat - not optional */
   if(defuseArmed && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
-    msg += "\n\n(THE DEFUSE — the player has called it. Their action this turn, whatever it is"
-      + " - a bit, a stunt, a single word - is how tonight's business resolves. Fold the beat"
-      + " around it honestly: bring anyone the gate names on stage, meet the exit in its spirit,"
-      + " and send \"gate\": true with a true gateNote. Do not punish the style; record it proudly.)";
+    msg += "\n\n(THE CALL — the player has called it. This reply RESOLVES tonight's business,"
+      + " on your terms: take whatever they just did - however wacky - and fold it into the lore,"
+      + " aligned with canon. Write the bit that lands it, release the tension, bring anyone the"
+      + " gate names on stage, and close the beat. The courier's own voice still belongs to the"
+      + " player - resolve around their move, never through their mouth. Send \"gate\": true with"
+      + " a true gateNote. This is not optional: the beat closes this turn.)";
   }
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
@@ -6048,7 +6082,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.4.2   COLD START",
+    "MUD//OS  v4.4.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
