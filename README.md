@@ -115,7 +115,13 @@ Each season is a **flowchart**, not a mood. Thirty-three beats across the three
 seasons live in the game itself: each one names the single thing it exists to
 accomplish, the gate that ends it, its own turn budget, what it is allowed to reveal,
 and the canon it writes when it clears. Every turn, the DM is handed exactly one
-instruction — *this is the beat, steer to this gate, and do not invent past it.*
+instruction — *this is the beat, steer to this gate, and do not invent past it* —
+and, under it, **the storyboard**: the whole season in order, what's cleared, what's
+live, and what's actually next, with a logline. A DM that can't see the road invents
+one; asked "so what's the plan?" in the family's own quiet time it will produce a
+fixer and a dock out of thin air and send everyone walking, and the real next beat
+has to elbow its way in afterwards. The cure isn't a stricter rule, it's an answer:
+when the table asks where this is going, the true reply is already in the DM's hand.
 
 The DM does not decide the plot and cannot wander off it:
 
@@ -135,6 +141,11 @@ The DM does not decide the plot and cannot wander off it:
   than it should have. And every beat also has a **floor**: a gate sent before the
   scene has been lived is held, and the DM is told to keep playing. The clock watches
   the storyteller's speed as closely as it watches yours.
+- **One choice always walks toward the gate.** Each beat carries an **aim** — the
+  move that would actually land it — and the DM is required to offer one choice that
+  is a live attempt at it, in the scene's own voice. The other two are yours to enjoy
+  and may go anywhere. Three choices that all leave the gate exactly where it was is
+  how a night runs out of road with the player never once offered the road.
 - **A beat closes completely before the next one opens.** Every gate is followed by
   the **landing** — a turn (two on an arc turn) where nothing new is allowed to
   begin: reactions, cost, quiet, the family being people about what just happened.
@@ -149,6 +160,11 @@ The DM does not decide the plot and cannot wander off it:
   time is plainly reaching for the next matter, the board answers and the next beat
   arms at once. Momentum, convenience, or the DM's good segue is not a knock — only
   the player's hand is.
+- **And then the page turns.** A new question gets a new scene, never a continued
+  one. When the next beat arms, the DM is ordered to cut: let time pass on screen,
+  open on the family somewhere they actually are doing something ordinary, and only
+  then let tonight's business walk in — with fresh choices, one of them aimed. The
+  card tells you the last beat closed; the page turn puts you in the next one.
 
 The series runs **~80 / ~110 / ~100 turns per season — roughly 300 for all three
 books** played with intent, longer played leisurely — and it cannot fail to end:

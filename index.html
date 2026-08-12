@@ -967,7 +967,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.6.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.7.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1037,7 +1037,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.6.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.7.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1316,7 +1316,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.6.1 "The Refusal"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.7.0 "The Storyboard"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1339,6 +1339,7 @@ var BIBLE = [
 "- YOU ARE ALSO THE LIGHTING RIG. This game has no art. The player's entire picture of where they are is the weather, the light, the place-name and the clock you send with each turn - the screen dims, rains, fogs, warms and reddens on your word alone. Treat the ambience field as reaching for a dimmer switch, not as filling in a form: when the family moves from the rain into Hesta's kitchen and you leave the ambience on rain-neon, the player sits in a warm room watching it rain indoors.",
 "- THE RAIN - drift is absence, not chaos. A wild turn aimed AT the current beat is a mudskipper moment and is welcome; burning down the wrong building is a route. A turn that ignores the season entirely - no beat, no family, no thread of the story in it - is drift. When you write such a turn, send \"drift\": true with it, honestly. Never send drift during BETWEEN BEATS; wandering there is the point.",
 "- NAMED PARTS ARE NOT RECASTABLE - the bible's named people are fixed points: Hesta keeps The Open Door, Vic is the client, and so on. Invent strangers freely - the city is full of people - but never invent a substitute for a named role. If a scene needs the keeper of the cafe, it needs Hesta, not a new name doing her job.",
+"- THE ROAD IS NOT YOURS TO EXTEND. THE STORYBOARD in your hand names every place this family is going and the order they get there. Strangers are welcome as life - a client with a parcel, a stallholder, a neighbour with opinions - and they stay what they are: one scene, one purpose, no forwarding address. What a stranger must never become is the plan. Do not invent a contact who can fix the family's problem, a workshop or dock or safehouse for them to travel to, or an errand that takes more than the scene it lives in. When the table asks what happens next - and they will ask, in the quiet, because that is when people ask - answer with the beat marked next on the storyboard, in the fiction's own words, and never with a name the board did not give you. A road you invented is a road the story has to walk back.",
 "- PRESS LINES ARE OFFERS, NOT ORDERS. When the table has already supplied a scene's pressure or its answer, leave the offer in the drawer. Never override what the table actually did to make room for an authored move.",
 "- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
 "- THE CHAIR. The courier's voice, choices, and growth belong to the player alone. You render the typed action and its consequences - you never write COURIER dialogue the player did not type, never decide for him, never convert his deflection into your sincerity. When a gate needs the courier to say, choose, or declare something, offer it as one of the three choices and wait: the door can be visible, but only the player's hand opens it. If the player typed speech, render that speech - faithfully, not improved.",
@@ -1460,7 +1461,7 @@ var BIBLE = [
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, The File, Other. Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible, and it exists only once it has been installed; before that the terminal is dumb hardware. Only use characters the player has actually met.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
-"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well).",
+"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well). At least one of them is always a live attempt at TONIGHT'S AIM, written in the scene's own voice - the move that would actually walk this beat to its gate. The other two are the player's to enjoy and may lead anywhere. Three choices that all leave the gate exactly where it was is how a night runs out of road with the player never once offered the road.",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
 "- Keep each turn tight: about 180-300 words of scene. A beat gets the turns the board says it gets. Spend them on the thing that matters and cut everything that is only atmosphere."
 ].join("\n");
@@ -1620,6 +1621,7 @@ var SPINE = [
 {id:"a1-hum", season:1, act:1, title:"the shard that hums",
  goal:"The courier speaks with Nine for the first time - knowingly, two ways. Pia told him WHAT she is; this beat is where she stops being cargo and becomes a person: a bone-hum through skin contact only, frightened, and trying to be brave about it.",
  exit:"the courier has knowingly held a two-way conversation with Nine",
+ aim:"get the shard into his bare hand and let him talk to her knowing she is a person",
  budget:4, reveals:["nine"], anchors:["Nine"],
  press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
         "A second watcher joins the first. The street is now a closing hand."],
@@ -1631,6 +1633,7 @@ var SPINE = [
 {id:"a1-chase", season:1, act:1, title:"no way home",
  goal:"The Choir closes properly for the first time - Hollows, or worse - on the way to the safehouse. The courier's face is known, his room is burned, and walking away stops being an option he owns.",
  exit:"the courier has accepted out loud that he cannot go back to his old life",
+ aim:"put him somewhere that proves the old life is gone, and get him to say it out loud",
  budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
@@ -1643,6 +1646,7 @@ var SPINE = [
 {id:"a1-vic", season:1, act:1, title:"the safehouse door",
  goal:"They reach Vic's safehouse. Vic is warm, guilty, and finally talking: Mirren, the smuggle, why he went dark - the whole story of the job, freely given. He answers everything about the run and dodges exactly one question: why this courier, of all couriers.",
  exit:"they are inside the safehouse and Vic has told the story of the job - and dodged why he chose the courier",
+ aim:"get them through Vic's door and make Vic talk - all of it except why this courier",
  budget:4, reveals:[], anchors:["Vic"],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
@@ -1654,6 +1658,7 @@ var SPINE = [
 {id:"a1-pack", season:1, act:2, title:"the pack answers",
  goal:"The Mudskippers learn one of their own is burning. The pack has to decide what the courier is worth to it now - dead drops and shut mouths, or distance and shut doors - and the courier has to stand there while his own people take his measure. Pia is pack too, and she has already chosen.",
  exit:"the courier knows where he stands with the pack, and the pack's answer has been made real - a door, a drop, or a silence",
+ aim:"put the pack's verdict where he can touch it - a door, a drop, a mark, a silence",
  budget:4, floor:2, reveals:[], anchors:["Pia"],
  press:["Word arrives that the Choir is asking the stalls about a courier by description. The pack hears it in real time.",
         "A packmate the courier owes money picks exactly now to collect - loyalty and the ledger, both at once."],
@@ -1664,6 +1669,7 @@ var SPINE = [
 {id:"a1-fare", season:1, act:2, title:"the last fare",
  goal:"Rent does not care about ghost stories. A plain paying delivery - small parcel, honest money, no mysteries - still has to happen, and the whole mess comes along: a burned name, a humming passenger, a city that has started looking at him sideways. Somewhere in the middle of it, the ordinary job stops being possible, and both the courier and the city notice.",
  exit:"the last honest fare is finished, and it is understood - by the courier and by the fiction - that it was the last",
+ aim:"run the small parcel to its recipient and let them both notice it was the last one",
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The recipient recognizes his face from somewhere they will not name, and the handoff curdles.",
         "Mid-route, a checkpoint that was never there before. His old shortcuts belong to someone else now."],
@@ -1674,6 +1680,7 @@ var SPINE = [
 {id:"a1-late", season:1, act:2, title:"the delivery is late",
  goal:"The trap stands up. Mirren - the receiver, worn - finds them: patient, procedural, hardened, asking after a late delivery in the machine's own service voice. This is not the fight that ends her; it is the night the family learns the hunter has a face they were supposed to trust, and survives it by inches.",
  exit:"the family has met the hunter, knows her face and her line, and has gotten away - this once",
+ aim:"put Mirren's face in front of them, let her say her line, and get them out of it",
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["She does not chase. She is simply at the next corner too, asking again.",
         "Cutting her signal does nothing. Someone kind tries it, and the family watches the kind option fail."],
@@ -1685,6 +1692,7 @@ var SPINE = [
 {id:"a1-exit", season:1, act:2, title:"the clean exit",
  goal:"ACT TURN. A tempting, reasonable, totally clean exit appears - papers, distance, a life with no hum in it - real enough to hold in both hands, on the sole condition that he sets the shard down and walks. It stays open exactly as long as the beat does. The offer is genuine. That is what makes it a knife.",
  exit:"the exit has been answered or has expired, out loud, with the shard in the room",
+ aim:"make the offer real, in the room, with Nine listening - and get an answer out loud",
  budget:4, floor:2, reveals:[], anchors:["Nine"],
  press:["The offer improves. Whoever is making it wants him gone more than they want her found, and that fact means something.",
         "Nine hears all of it through his ribs, and says nothing, which is worse."],
@@ -1695,6 +1703,7 @@ var SPINE = [
 {id:"a1-carried", season:1, act:3, title:"the courier, carried",
  goal:"Nine gets them through a Choir sweep with the only thing a shard has: knowledge. She is from inside the farm - she knows the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not see. She steers the courier through it blind, whispering the Choir's own timing into his bones. No powers, no reach - just a frightened person spending everything she knows on him.",
  exit:"the courier is clear of the sweep because Nine's knowledge got him through, and both of them know it",
+ aim:"walk him into the sweep and let Nine talk him through it, step by step",
  budget:4, reveals:[], anchors:["Nine"],
  press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
         "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
@@ -1705,6 +1714,7 @@ var SPINE = [
 {id:"a1-turn", season:1, act:3, title:"the keeping",
  goal:"SEASON FINALE. The courier chooses Nine - not as cargo but as a person he is now responsible for. The series' real subject starts here.",
  exit:"the courier has committed out loud to protecting Nine rather than delivering her",
+ aim:"ask him what she is to him now, and let him answer it out loud",
  budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:[],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -1716,6 +1726,7 @@ var SPINE = [
 {id:"a2-door", season:2, act:1, title:"The Open Door",
  goal:"Hesta's cafe. A table, a hot pan, a shotgun under the counter, and the first meal anyone has eaten sitting down. The family gets a room to form in.",
  exit:"the group is inside The Open Door and Hesta has fed them",
+ aim:"get them to Hesta's table and get hot food in front of them",
  budget:4, reveals:[], anchors:["Hesta"],
  press:["Hesta puts food down and asks the question nobody wants to answer.",
         "Someone knocks who should not know this address."],
@@ -1727,6 +1738,7 @@ var SPINE = [
 {id:"a2-ground", season:2, act:1, title:"run to ground",
  goal:"The hunt corners them at last - near The Open Door, where the family has just found something worth defending. Every kind option gets its honest try: the jammer, the signal cut, distance, mercy. The Choir hardened her against all of it, because it does not lose the same way twice. The beat ends with the gentle playbook used up on screen and the family knowing what is left.",
  exit:"the kind options have been tried and have failed, witnessed, and the family knows the hunt ends by hand or not at all",
+ aim:"let them spend the whole gentle playbook on her, on screen, and watch it fail",
  budget:4, floor:2, reveals:[], anchors:["Mirren","Hesta"],
  press:["The jammer that stills every other Hollow makes this one pause, recalibrate, and continue.",
         "She reaches the cafe's street. Hesta's door, and everyone behind it, is suddenly in the hunt's path."],
@@ -1737,6 +1749,7 @@ var SPINE = [
 {id:"a2-hand", season:2, act:1, title:"by the family's hand",
  goal:"The hunt ends. Not a rescue, not a stilling - an ending, done by this family because there is no one else and nothing gentler. Whose hand is the table's choice: Vic begging to carry it himself, the courier sparing him that, Three saying the hardest true thing in the room first. Write the fight honestly and let the choosing be theirs. The blow itself is the player's gate.",
  exit:"Mirren's hunt has ended by the family's hand, and the room knows exactly whose",
+ aim:"bring it to the end and make the table choose whose hand does it",
  budget:5, floor:3, reveals:[], anchors:["Mirren"],
  press:["She says the line one last time, mid-fight, in the service voice: the delivery is late. Nobody who hears it forgets it.",
         "Choir recovery is minutes out. If the family does not finish this, the Choir collects her and resets the hunt."],
@@ -1747,6 +1760,7 @@ var SPINE = [
 {id:"a2-mirren", season:2, act:1, title:"the name on the law",
  goal:"ACT TURN. They carry her home. Not the hunter - Mirren: Vic's friend, the receiver, the woman the Choir spent. The family buries her, says her name aloud one after another, and out of the worst thing they have ever had to do, somebody says the vow: nobody is left behind. Nobody taught them this. Nothing they know of requires it. The vow is the player's to seal or witness - offer it, and wait.",
  exit:"Mirren is at rest, her name has been said aloud, and the vow - nobody left behind - has been spoken at her grave",
+ aim:"put her in the ground, get her name said aloud, and leave room for the vow",
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["Vic tries to make the burial about his guilt. The grave deserves better, and someone has to say so.",
         "The Choir sends a polite retrieval notice for its property. It arrives mid-burial. The family's answer becomes part of the vow."],
@@ -1759,6 +1773,7 @@ var SPINE = [
 {id:"a2-seven", season:2, act:2, title:"the defector, dying",
  goal:"THE VOW'S FIRST TRIAL. Seven arrives in a dying Choir frame - walking, crude-voiced through a bad speaker, shedding whatever he stole to get this far, failing by the hour. A defector asking for nothing. Saving him is the beat's whole question, and saving him means one thing: his shard comes out of that frame by hand, before it quits - and after that, he is a mind with nowhere to be.",
  exit:"the group has committed to saving Seven and is acting on it",
+ aim:"make his failing a clock they can hear, and get them committed to pulling his shard",
  budget:4, reveals:[], anchors:["Seven"],
  press:["Seven's vessel starts failing on the clock, out loud.",
         "He asks them to stop and let him go. Someone refuses."],
@@ -1770,6 +1785,7 @@ var SPINE = [
 {id:"a2-chassis", season:2, act:2, title:"the cook",
  goal:"Seven gets hands. The chassis comes out of Vic's kit - founding-era, kept for the plan's far end, because the smuggle always had a destination: it was built to be Nine's body, once she was free. Put that truth in the room and let Nine choose: the body is hers to keep or to give. If she gives it, Seven lives; if she keeps it, Seven is seated in the spare room - the courier's skull housing - because nobody in this family dies of having nowhere to be. Vic fits whoever takes it with a ripperdoc's hands; the face is crafted and chosen, taken from no one. Then somebody cooks.",
  exit:"the chassis has been given - to Seven or to Nine - by Nine's own choice, spoken at the table, and its new owner has cooked or token-tasted something of their own choosing",
+ aim:"put the chassis on the table as Nine's, ask her out loud, and let whoever takes it cook",
  budget:4, reveals:[], anchors:["Seven","Nine"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
@@ -1788,6 +1804,7 @@ var SPINE = [
 {id:"a2-three", season:2, act:2, title:"the scary aunt",
  goal:"Three arrives: annulled fate-two, two voice frequencies out of sync, terse and hard to like. She wants nobody kept, ever again - which puts her against the family's whole project.",
  exit:"Three is present, her two-frequency voice has been noticed, she has stated what she wants - and she has stayed",
+ aim:"let her say what she wants, let them hear the two voices, and give her a reason to stay",
  budget:4, reveals:[], anchors:["Three"],
  press:["Three tells them exactly what they are doing wrong, and is right.",
         "She starts to leave. Someone has to give her a reason to stay that is not sentiment."],
@@ -1799,6 +1816,7 @@ var SPINE = [
 {id:"a2-housing", season:2, act:3, title:"the thing in his skull",
  goal:"REVELATION. There is a skull-housing in the courier's head. He never consented to it. Reaction lands in the same turn - shock, then the joke, then the real thing under the joke.",
  exit:"the courier knows there is a housing in his skull that he did not agree to",
+ aim:"make the housing announce itself, and let him have the reaction in the same room",
  budget:4, reveals:["housing"],
  press:["Vic pushes for the seating harder than a man pretending to improvise should - like someone who knows what else is stored in there.",
         "The housed mind can suddenly do something it should not be able to do, and it explains itself.",
@@ -1815,6 +1833,7 @@ var SPINE = [
 {id:"a2-manual", season:2, act:3, title:"the manual and the lock",
  goal:"REVELATION. The housed mind decodes a manual that shipped hidden inside the housing. The courier's blood generates a bio-hash the founders' lock accepts. He is a key, and someone made him one.",
  exit:"the family knows the courier can generate a bio-hash and roughly what it opens",
+ aim:"get the manual read aloud and put his blood against the lock",
  budget:4, reveals:["hash"],
  press:["The manual is half-decoded and the half they have is worse than nothing.",
         "Something tests the lock while they are still reading."],
@@ -1827,6 +1846,7 @@ var SPINE = [
 {id:"a2-choir", season:2, act:3, title:"one machine, three fates",
  goal:"REVELATION. What the Choir actually is: one machine, voluntary communion, and three fates - the many, the chosen, the unlucky. And what that made of Mirren.",
  exit:"the family understands the three fates and what was done to Mirren",
+ aim:"hand them the Choir's own records and let the three fates land, Mirren's last",
  budget:4, reveals:["choir"],
  press:["A convergent civilian defends the Choir sincerely, to their faces.",
         "They find the record of Mirren's intake, with her consent forged onto it."],
@@ -1842,6 +1862,7 @@ var SPINE = [
 {id:"a2-annul", season:2, act:3, title:"taking turns",
  goal:"The family takes a fate-two officer alive - Five, a convoy commander - and Three midwifes the unmaking she survived herself. The annulment scars, as it always does, and what walks out is not a rescue and not a prisoner: Five and Marek, two souls in one body, learning to take turns. Three's whole want - no one kept, ever again - done with her own hands instead of said across a table.",
  exit:"Five has been annulled with Marek surviving it, and the two of them have spoken - each in their own turn",
+ aim:"hold Five still, let Three run the unmaking, and let Marek speak in his own turn",
  budget:4, reveals:[], anchors:["Marek"],
  press:["The annulment stalls halfway and Three has to talk Marek through the part nobody talked her through.",
         "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
@@ -1854,6 +1875,7 @@ var SPINE = [
 {id:"a2-law", season:2, act:3, title:"the same pan",
  goal:"The family writes itself a law and eats a meal. Bacon first, bread after, same pan. Whatever law the table writes here is permanent and will be quoted back later.",
  exit:"the family has written or spoken a law of its own and shared a meal",
+ aim:"get the pan on, and let the argument at the table harden into a law somebody says aloud",
  budget:4, reveals:[],
  press:["Three objects to the law on grounds nobody can dismiss.",
         "The meal is interrupted, and they finish it anyway. That is the point."],
@@ -1865,6 +1887,7 @@ var SPINE = [
 {id:"a2-turn", season:2, act:3, title:"the cost of keeping",
  goal:"SEASON FINALE. The Choir's trade lands and it has a name on it: Pia. She is cyberware-incompatible - to the Choir not immunity but a salvage listing, fate three waiting for paperwork. Someone is taken, or lost, or gives themselves up, and the family stops defending: they commit to going under the old Exchange after the machine.",
  exit:"the family has lost or risked someone and committed to reaching the machine",
+ aim:"put Pia's name on the Choir's paper, make the cost real, and turn them toward the Exchange",
  budget:5, floor:3, reveals:[], anchors:["Pia"],
  press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
@@ -1879,6 +1902,7 @@ var SPINE = [
 {id:"a3-evict", season:3, act:1, title:"the eviction",
  goal:"The offensive, on screen. The family takes the street back from the Choir - a precinct freed, Hollows stilled by the vanload the kind way, paperwork burning, the city watching people it wrote off do the impossible politely. The Choir loses topside. Only the deep remains.",
  exit:"the Choir has lost the street - visibly, kindly where possible - and everyone knows only the Exchange is left",
+ aim:"take a street on screen and still the Hollows the kind way, in front of witnesses",
  budget:4, floor:2, reveals:[], anchors:[],
  press:["On the turning street: Menu Man, demoted and unarmed, holding the Choir's paperwork like a man deciding. Somebody could leave a door open for him.",
         "A freed convergent civilian, voice suddenly silent, asks the family what happens to them now. There is no good answer yet.",
@@ -1891,6 +1915,7 @@ var SPINE = [
 {id:"a3-voice", season:3, act:1, title:"the gentle voice",
  goal:"Before they meet the machine, they hear her being kind. Through a convergent citizen, or a channel left open, the gentle voice - patient, warm, guiding someone through their day like a grandmother with infinite time. The family came to fight a monster and instead hears the problem: she means well, and she was taught wrong.",
  exit:"the family has heard the machine's voice being genuinely kind, and understood that the enemy is not her nature but her instructions",
+ aim:"let them hear her being kind to someone, uninterrupted, until it lands",
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The voice notices it is being listened to, and instead of alarm, offers to help the listeners too.",
         "Someone in the family wants to hate her, needs to, and the voice makes it impossible mid-sentence."],
@@ -1901,6 +1926,7 @@ var SPINE = [
 {id:"a3-founding", season:3, act:1, title:"two people and a dead child",
  goal:"REVELATION. The Architect and the Principal built the machine after losing a child. Her instructions define family as keeping. She means well and operates wrong.",
  exit:"the family understands why the machine exists and what she was told family means",
+ aim:"play them the founding record and make them sit in it",
  budget:4, reveals:["founding"], anchors:["Architect"],
  press:["The record is in the Architect's own voice and it is unbearable to sit through.",
         "The machine answers a question nobody asked her out loud."],
@@ -1914,6 +1940,7 @@ var SPINE = [
 {id:"a3-vic", season:3, act:1, title:"paid in full",
  goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. He spends himself here. His last words are PAID IN FULL.",
  exit:"Vic has confessed what he did to the courier and paid for it",
+ aim:"corner Vic with what he did and let him spend himself answering for it",
  budget:4, reveals:["vicsin"], anchors:["Vic"],
  press:["Vic tries to make it a joke and the courier does not let him.",
         "The choice arrives early and Vic takes it before anyone can argue."],
@@ -1926,6 +1953,7 @@ var SPINE = [
 {id:"a3-stone", season:3, act:1, title:"the first stone",
  goal:"Before anyone goes down, the family cairns Vic. They know the rule now - the Architect's last breath, nobody left behind, name the lost - and this is the first time they use it on purpose, on their own dead. Short, held, and then the work.",
  exit:"Vic has been cairned and named, and the family has turned toward the descent",
+ aim:"a stone, his name, one line each - then point them down",
  budget:2, floor:1, reveals:[], anchors:["Vic"],
  press:["Grief tries to become a meeting. Keep it a cairn: a stone, a name, a line each at most.",
         "The way to the Exchange will not wait. Name him and move."],
@@ -1936,6 +1964,7 @@ var SPINE = [
 {id:"a3-for", season:3, act:2, title:"what we are for",
  goal:"The plan around the table. Every member's specific nature becomes a named part of the assault on the Exchange: Three's procedure, Seven's chassis senses, Hesta's arms, Nine at the courier's ear - and Pia, the one person in the city the machine cannot converge, guide, or write. The salvage listing turns over: her death sentence is a skeleton key. Nobody goes down undecided.",
  exit:"each family member has a named part in the plan, and Pia's immunity is understood as the asset it is",
+ aim:"go around the table until every one of them has a job, and land on Pia's",
  budget:4, reveals:[], anchors:["Pia"],
  press:["Somebody's part is too dangerous and the argument about it has to end tonight.",
         "The window moves up. The plan they have is the plan they take."],
@@ -1947,6 +1976,7 @@ var SPINE = [
 {id:"a3-descent", season:3, act:2, title:"the deep dark",
  goal:"Under the old Exchange. Cable work, dead air, the substrate close. The machine is semi-blind - what is jacked in is the tactical question of every room down here.",
  exit:"the family is inside the Exchange with the substrate in reach",
+ aim:"take them down the cable and get them inside",
  budget:4, reveals:[],
  press:["The way back closes behind them. Nobody mentions it.",
         "Something down here is already awake and has been expecting them."],
@@ -1958,6 +1988,7 @@ var SPINE = [
 {id:"a3-dreamers", season:3, act:2, title:"the dreamers",
  goal:"ACT TURN. Inside the descent, the vaults: millions asleep - every scrape the Choir ever took, kept safe and dreaming in the machine's care. The family walks the sleeping city under the city. And on one shelf among millions, found by name: Mirren. The vow's second clause, standing in front of them at last - the dead come out - and a promise made at her grave now has an address. And Hesta's list goes down with them - the kept names from under her floor, checked against the shelves.",
  exit:"the family has seen the sleeping vaults, found Mirren's scrape by name, and made the promise concrete: she - all of them - come out, and Hesta's kept names have been checked against the shelves",
+ aim:"walk them along the shelves until Mirren's name is found, and get the promise said",
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["The scale hits someone hard - millions is not a number, it is a city - and the plan suddenly feels too small for the room.",
         "The machine's housekeeping notices visitors among the sleepers and asks, gently, if they are here to take someone home."],
@@ -1970,6 +2001,7 @@ var SPINE = [
 {id:"a3-principal", season:3, act:3, title:"the surviving founder",
  goal:"REVELATION. The Principal: mark one, 130, six bio-grens, the true landlord the Choir merely rents from. Wants to finish an argument older than the city. Undone by fried bread.",
  exit:"the Principal has been met face to face and the argument has been joined",
+ aim:"put her in front of them, and let food open the door iron could not",
  budget:4, reveals:["principal"], anchors:["Principal"],
  press:["The bio-grens move first, and one of them is wearing the courier's own face. Nobody explains it. Nobody ever will - this is a glimpse of the deepest stratum: hint at nothing, confirm nothing, and never let anyone speak to why.",
         "The Principal offers the courier the thing he actually wants."],
@@ -1983,6 +2015,7 @@ var SPINE = [
 {id:"a3-granny", season:3, act:3, title:"the child under the Exchange",
  goal:"The machine herself, met as a person. Terrifying gentleness. She wants family and does not know how to be told no. The argument about keeping is had with her, not about her.",
  exit:"the family has spoken with the machine directly about letting go",
+ aim:"sit them down with her and have the argument about keeping, to her face",
  budget:5, reveals:[],
  press:["She shows them what keeping looks like from inside, and means it kindly.",
         "She offers to keep one of them, right now, and is hurt by the answer."],
@@ -1994,6 +2027,7 @@ var SPINE = [
 {id:"a3-seize", season:3, act:3, title:"custody, not conquest",
  goal:"SERIES FINALE. The courier takes custody. The Choir falls. Every Hollow in the city goes still at once and every convergent citizen's gentle voice stops mid-sentence - the victory arrives owning both. One short epilogue in chronicle voice, then the_end. Somewhere in the taking, the eviction is spoken aloud, formally: \"By maker's blood, verified and witnessed, we forbid you these doors. This house is claimed. Leave.\" THE LANDING LIST - the epilogue must land, with care: the knock at the narrow door, Mirren's name first; each family member where this run's record leaves them; the pack, per this run's own verdict; and the city's quiet - owned, not solved. Use the run's canon and quests; author nothing the record contradicts.",
  exit:"custody of the machine is taken and the epilogue is written",
+ aim:"take custody, speak the eviction aloud, then write the landing",
  budget:2, floor:1, reveals:[],
  press:["The seizure works and the silence afterwards is the problem.",
         "Land it now. Epilogue in chronicle voice, then set the_end true."],
@@ -2204,6 +2238,7 @@ var gateHeldNow = false;     /* a gate arrived below the beat's floor; served on
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
 var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
 var SLACK_STD = 2, SLACK_ARC = 3;
+var pageTurnDue = false;     /* the next live turn opens a new scene, not a continued one */
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
 var interludeServedId = null;/* the card riding the current outgoing exchange */
 
@@ -3380,6 +3415,7 @@ function finishFold(){
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   beatText = ""; gateRefusedNames = []; gateHeldNow = false; defuseArmed = false;
+  pageTurnDue = false;           /* the fold's own passage was the page turn */
   tolls = 0;                     /* paid in full; the meter starts clean */
   var finBeat = SPINE[fin];
   var body = "While you played it your way, the world closed: " + titles.join(", ")
@@ -3609,6 +3645,45 @@ function seasonContinue(){
   persistAll([]);
   callDM();
 }
+/* ---- THE STORYBOARD ----
+   The road, in the DM's hand, every turn - cleared behind, tonight, and what is
+   actually coming. Written because a DM with no next page invents one: asked
+   "what's the plan for morning?" in the family's own quiet time, it will make up
+   a fixer and a dock and send everyone walking, and the real next beat has to
+   elbow its way in afterwards. The cure is not a stricter rule, it is an answer:
+   when the table asks where this is going, the honest reply is already served. */
+/* the goal's opening sentences, without the stage direction, capped short - a
+   working logline that can never drift from the beat it describes */
+function roadLine(b){
+  var g = String(b.goal || "").replace(/^(ACT TURN|SEASON FINALE|SERIES FINALE|REVELATION( and cost)?|THE VOW'S FIRST TRIAL)[.:]\s*/, "");
+  var out = "", parts = g.split(". ");
+  /* keep taking sentences until the line can actually be steered by - several
+     goals open with a drum-beat ("The trap stands up.") that says nothing on
+     its own - and never past three */
+  for(var i = 0; i < parts.length && i < 3; i++){
+    out += (out ? ". " : "") + parts[i];
+    if(out.length >= 110) break;
+  }
+  if(!/[.!?]$/.test(out)) out += ".";
+  return out;
+}
+function storyboardBlock(){
+  var b = beatNow(), out = [], i, m;
+  out.push("THE STORYBOARD — SEASON " + b.season + " of 3, " + SEASON_NAMES[b.season]
+    + ". The road is fixed and it is the board's. You do not add to it, shorten it, or invent a way to it.");
+  for(i = 0; i < SPINE.length; i++){
+    m = SPINE[i];
+    if(m.season !== b.season) continue;
+    if(i < beatIdx)        out.push("  done — " + m.title + (foldedBeats.indexOf(m.id) !== -1 ? " (folded: the world did it without them)" : ""));
+    else if(i === beatIdx) out.push("  >> TONIGHT — " + m.title + (phase === "live" ? "" : " (closed; it is landing)"));
+    else if(i === beatIdx + 1) out.push("  next — " + m.title + ": " + roadLine(m));
+    else                   out.push("  later — " + m.title);
+  }
+  out.push("Where the family goes next is the line marked next, and nowhere else. When the table"
+    + " asks what the plan is, answer with that - never with a name, a place or a contact the board"
+    + " did not give you. Do not play it early and do not name it as a plan before it is tonight's.");
+  return out.join("\n");
+}
 function boardBlock(){
   if(beatDone()) return "THE BOARD\nThe season is over. Write nothing but epilogue if asked at all.";
   var out = [], locked;
@@ -3618,12 +3693,14 @@ function boardBlock(){
       : "THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+    if(phase !== "seasonopen") out.push(storyboardBlock());
     return out.join("\n");
   }
   if(phase === "slack"){
     out.push("THE BOARD - BETWEEN BEATS. The last gate has fallen and landed. This is the family's time: no clock, no gate, nothing owed, and the season will knock when it knocks. Let the player wander, and follow them. Do not start new season business. If the player's typed action is plainly reaching for the season's next matter, you may send \"knock\": true and the board will answer.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+    out.push(storyboardBlock());
     /* ceremony: an offer never shares a turn with a card still waiting to land */
     if(!pendingAsides.length && !beatJustCleared){
       var card = pickInterlude();
@@ -3638,6 +3715,14 @@ function boardBlock(){
     + " this season — \"" + b.title + "\"");
   out.push("THIS BEAT EXISTS TO: " + b.goal);
   out.push("THE GATE — clear it when: " + b.exit);
+  /* the aim is the difference between a scene and a scene that goes somewhere:
+     three choices that all leave the gate where it was is how a beat runs out
+     of road with the player never once offered the road */
+  if(b.aim) out.push("TONIGHT'S AIM — the move that actually walks this beat to its gate: " + b.aim
+    + ". At least one of your three choices must be a live attempt at it, written in this scene's"
+    + " own voice as something the courier does or says right now. The other two are the player's"
+    + " to enjoy and may go anywhere. Never end a turn with three choices that all leave the gate"
+    + " exactly where it was.");
   if(b.id === "a2-chassis") out.push("THE FORK: this gate must carry \"chassis\": \"Seven\" or \"chassis\": \"Nine\" - Nine's choice, spoken at the table, decides who lives in the body.");
   if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
@@ -3646,6 +3731,7 @@ function boardBlock(){
   locked = lockedReveals();
   if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
   if(nx) out.push("NEXT AFTER THIS: \"" + nx.title + "\" — aim the last line of this turn at it.");
+  out.push(storyboardBlock());
   out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
     + " Everything else about how it happens is yours and the player's."
     + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
@@ -3669,6 +3755,17 @@ function boardDirective(){
       + "\nOpen the season: write ONE re-establishment scene, time having passed - days, not minutes - the family where the record left them, changed by what it cost. No new business, no new jobs, no reveals: the family, alive, where we find them. Roll the day forward. End with the floor open.)";
   }
   if(phase === "slack") return "";
+  /* the page turn outranks the ladder by construction - it only ever rides turn
+     one of a beat, where there is no pressure yet to speak over */
+  if(pageTurnDue){
+    return "(THE PAGE TURNS — the last question is finished and this is a new one. Do not continue"
+      + " the scene that just ended. Cut away from it: let time pass on screen - hours, a night,"
+      + " days, whatever the fiction has earned - and open on the family somewhere they actually"
+      + " are, doing something ordinary, before anything happens to them. Establish the place and"
+      + " the hour in the prose and set day, time and location to match. Then let tonight's business"
+      + " walk in. End with the floor open and three fresh choices"
+      + (beatNow().aim ? ", at least one a live attempt at: " + beatNow().aim : "") + ".)";
+  }
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -3784,6 +3881,9 @@ function closeBeat(forced, note){
 /* the season opens the next door: pointer advances, the witness starts fresh */
 function armBeat(){
   if(beatDone()) return;
+  /* the page turn: a new question deserves a new scene. The season break already
+     writes its own re-establishment, so it never double-skips. */
+  pageTurnDue = (phase !== "seasonopen");
   beatIdx++;
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
@@ -3844,6 +3944,9 @@ function boardTurn(data){
     if(phaseLeft <= 0) armBeat();
     return;
   }
+  /* the page has turned the moment a live reply lands on it, whatever it did
+     with the order - the scene never gets skipped twice */
+  pageTurnDue = false;
   /* the walk-back reply: clock resets and the toll is paid - unless the gate
      landed, in which case they came back spectacularly and the toll is waived */
   if(walkbackNow){
@@ -4743,6 +4846,7 @@ function saveBlob(){
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     defuseArmed:defuseArmed, foldedBeats:foldedBeats, chassisHolder:chassisHolder,
+    pageTurn:pageTurnDue,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -6276,7 +6380,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.6.1   COLD START",
+    "MUD//OS  v4.7.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7496,7 +7600,7 @@ function newRun(confirmFirst){
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
-  gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
+  gateHeldNow = false; lastTurnMud = false; lastPlayerText = ""; pageTurnDue = false;
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
@@ -7560,6 +7664,7 @@ function restoreFromBlob(s){
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
   foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
   defuseArmed = s.defuseArmed === true;   /* the call stands across a reload */
+  pageTurnDue = s.pageTurn === true;      /* an unturned page survives one too */
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};
