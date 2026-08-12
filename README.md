@@ -73,10 +73,16 @@ speed. One reach.
 
 If the night runs out, the game refuses to stall — that is its oldest promise — so
 the world answers the question for you, and that costs a **toll**: not a punishment
-for what you did, a fee for what went undone. You'll see it coming — a yellow card
-when the road is short, a second when the world stirs — and every toll explains
-itself when it's paid. Three are survivable. The meter re-zeroes every season. Only a
-fourth ends the book, as a loss, and never unwarned.
+for what you did, a fee for what went undone. Your bits never feed the clock:
+mudskipping stalls the night for as long as you're playing, and once the road gets
+short you'll see a green choice — call it, and your next move, bit or not, settles
+tonight's business your way. You'll still see everything coming — a yellow card when
+the road is short, a second when the world stirs — and every toll explains itself
+when it's paid. Three are survivable and the meter re-zeroes every season. A fourth
+doesn't end anything: the world folds the table, catches the story up without you,
+tells you exactly what it did on a gold card, and hands you the season's finale with
+a clean meter. The only hard ending in this game is the one the mortality rules warn
+you about first.
 
 Between questions there is no clock at all. The aftermath, the slack, the family's
 time — those are yours, forever, free.

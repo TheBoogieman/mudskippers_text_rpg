@@ -500,6 +500,20 @@
   }
   .toll-row i.paid{background:#e08b8b;border-color:#8d3a3a}
   .toll-row i.grave{border-color:#e04a4a;border-width:2px;box-shadow:0 0 8px rgba(224,58,58,.55)}
+  /* the call and the fold: green defuse in the rail, gold card in the feed */
+  .choice.call{
+    border-color:#4c6b46;color:#8fc98a;
+    box-shadow:0 0 10px rgba(143,201,138,.14);
+  }
+  .choice.call:hover{border-color:var(--seven);background:#12190f}
+  .choice.call .n{color:#8fc98a}
+  .choice-hint{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.08em;
+    color:#8fc98a;padding:8px 12px;border:1px dashed #4c6b46;border-radius:3px;
+    margin-top:6px;opacity:.85;
+  }
+  .block.beatcard.fold{box-shadow:0 0 18px rgba(242,193,78,.12);text-align:left}
+  .block.beatcard.fold .sum{text-align:left}
   /* the gold bar wears the lure only while the invitation stands */
   #mudinput.lure{border-color:var(--seven);animation:lurepulse 2.2s ease-in-out infinite}
   #mudinput.lure::placeholder{color:#6f8f68}
@@ -936,7 +950,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.3.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.4.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -961,7 +975,7 @@
     <div class="ep">
       <h3>HOW THE NIGHT WORKS</h3>
       <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
-      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. You'll see it coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable. The meter re-zeroes every season. Only a fourth ends the book, as a loss, and never unwarned.</p>
+      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing, and once the road gets short you'll see a green choice — call it, and your next move, bit or not, settles tonight's business your way. You'll still see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. The only hard ending in this game is the one the mortality rules warn you about first.</p>
       <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
     </div>
@@ -1006,7 +1020,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.3.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1285,7 +1299,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.3.0 "The Pry"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.4.0 "The Fold"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1312,6 +1326,7 @@ var BIBLE = [
 "- THE CAST'S WANTS ARE GRAVITY, NOT DIALOGUE. Every served want is a force acting on its character in every scene: they lean toward it, scheme toward it, and pursue it between beats without waiting for the player. They do not announce it. A WILL NOT is a hard refusal - honor it over any improvisation, any pressure, any convenient scene. The courier has no want line, ever: that chair belongs to the player. The dead want nothing. Hollows want nothing - that is the fate, and writing a Hollow a want, a glance, or a line of dialogue is a canon violation.",
 "- THE CHAIR. The courier's voice, choices, and growth belong to the player alone. You render the typed action and its consequences - you never write COURIER dialogue the player did not type, never decide for him, never convert his deflection into your sincerity. When a gate needs the courier to say, choose, or declare something, offer it as one of the three choices and wait: the door can be visible, but only the player's hand opens it. If the player typed speech, render that speech - faithfully, not improved.",
 "- THE CHAIR CUTS BOTH WAYS. The player owns the courier; the world owns the world. When the player asserts a fact about the world - who did it, what it was, whose face that is - it is the COURIER'S belief, spoken or thought in-fiction, and it can be wrong. Record it as belief (\"the courier reckoned it was Mirren\"), never as ground truth, and when the player revises it, the world does not lurch to reconcile: a corrected guess is a man being wrong twice, and it costs nothing but pride.",
+"- THE CALL. When the player calls it, their next action - any action - is the resolution. Honor it in the exit's spirit, bring the named people on stage, and record it proudly. Style is never punished at this table.",
 "- MUDSKIPPER MOMENTS ARE SACRED, AND THEY ARE NOT FUEL. When the player does a bit, the bit lands as a bit: the family plays along or plays the straight man, the world reacts in kind, and the deflection succeeds this turn. Nobody frames the courier as anxious, cringey, or deflecting - the family finds him funny, alarming, or brilliant, never embarrassing. A bit is never converted into the scene's sincerity, never mined for the gate, never diagnosed. Sincerity arrives when the player types it, and not one turn before.",
 "- ONE TRUTH PER TURN. A scene may deliver at most one revelation, and it arrives with its aftermath attached. Characters answer what was asked - not what the file knows. Nobody delivers three unprompted paragraphs; if the player did not pull it, it stays in the drawer.",
 "- THE WORLD KEEPS SCORE OF STRANGE. Wild things land. Citizens, family, and rooms react to the insanity at proper length before any plot resumes - aftermath is content, not delay.",
@@ -2166,8 +2181,10 @@ var DRIFT_YELLOW = 2, DRIFT_RED = 3, DRIFT_WALKBACK = 4;
 var tolls = 0;
 var tollExplained = false;   /* the first collection of a run explains itself in full */
 var TOLL_MAX = 3;
-var lossPending = false;     /* next outgoing message carries the loss order */
-var lossServed = false;      /* the order has gone out; the reply is the ending */
+var foldPending = false;     /* next outgoing message carries the fold order */
+var foldServed = false;      /* the order has gone out; the reply is the catch-up passage */
+var foldedBeats = [];        /* beat ids the world closed without the family - persisted */
+var defuseArmed = false;     /* the call: the player's next action settles the beat - persisted */
 
 var MAP_CAP = 24, MILESTONE_CAP = 40, BITS_CAP = 10, PLACE_LINES = 2;
 var QUEST_ACTIVE_CAP = 12, QUEST_SETTLED_SERVED = 8;
@@ -2259,6 +2276,11 @@ function renderBlock(b){
       + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
       + (b.toll ? '<span class="sum" style="color:#e08b8b">' + esc(b.toll) + '</span>' : '')
       + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
+  } else if(b.kind === "gold"){
+    /* the fold's ceremony tier: gold, above green - the world says what it did */
+    el.className = "block beatcard arcturn fold";
+    el.innerHTML = '<span class="tag">' + esc(b.title || "THE WORLD KEPT THE STORY") + '</span>'
+      + '<span class="sum">' + esc(b.text || "") + '</span>';
   } else if(b.kind === "brief"){
     el.className = "block beatcard brief";
     el.innerHTML = '<span class="tag">' + esc(b.tag || "BEFORE TONIGHT") + '</span>'
@@ -2290,6 +2312,12 @@ function renderDivider(){
 function scrollFeed(){ $("feed").scrollTop = $("feed").scrollHeight; }
 $("feed").addEventListener("click", function(){ if(skipReveal) skipReveal(); });
 
+/* the call is offered from the squeeze onward, on every beat - the finale too */
+function callEligible(){
+  return !!runSlug && !runOver && !beatDone() && phase === "live"
+    && !walkbackNow && !foldPending && introStage !== 1
+    && beatTurns >= beatFloor(beatNow()) && beatTurns >= beatNow().budget - 1;
+}
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
   (choices||[]).slice(0,4).forEach(function(c,i){
@@ -2299,6 +2327,25 @@ function showChoices(choices){
     btn.onclick = function(){ takeAction(c,false); };
     box.appendChild(btn);
   });
+  /* the green defuse: click arms it; the next action - bit or not - settles */
+  if(callEligible()){
+    if(defuseArmed){
+      var hint = document.createElement("div");
+      hint.className = "choice-hint";
+      hint.textContent = "Called. Your next move settles it — bit or not.";
+      box.appendChild(hint);
+    } else {
+      var call = document.createElement("button");
+      call.className = "choice call";
+      call.innerHTML = '<span class="n">&#9670;</span>' + esc("Call it — settle tonight's business your way.");
+      call.onclick = function(){
+        defuseArmed = true;
+        persistAll(choices || []);
+        showChoices(choices);
+      };
+      box.appendChild(call);
+    }
+  }
 }
 
 function setAmbience(name){
@@ -2747,6 +2794,9 @@ function showScene(data, logIt, instant){
   }
   harvestCompaction(data);
   if(logIt !== false && lines.length){
+    /* the fold's passage files under its own heading - the ledger should show
+       where the world took the wheel */
+    if(data.__live && foldPending && foldServed) ledgerText += "\n\n## THE FOLD";
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
   }
   var choices = data.choices||[];
@@ -2777,9 +2827,15 @@ function showScene(data, logIt, instant){
       persistAll([]);
       return;
     }
-    /* the loss scene is read first, then the run closes behind it - but only
-       the reply to the loss order itself is the ending, not the turn that armed it */
-    if(data.__live && lossPending && lossServed){ finishLoss(); return; }
+    /* the fold reply: the passage was read as scene; now the client folds the
+       season deterministically, deals the gold card, and play continues */
+    if(data.__live && foldPending && foldServed){
+      finishFold();
+      renderNow();
+      showChoices(choices);
+      persistAll(choices);
+      return;
+    }
     /* the season break: the card and its door land after the scene that earned them */
     if(seasonBreakDue && !runOver){
       seasonBreakDue = false;
@@ -3088,7 +3144,8 @@ function tollLine(){
     return "A toll was paid — " + tolls + " of " + TOLL_MAX + " this season. A toll is the fee for a"
       + " question the night answered without you: the story moved on, and your authorship of that"
       + " piece went with it. Three are survivable and the meter re-zeroes every season; a fourth"
-      + " ends the season as a loss. You will always be warned before the last one.";
+      + " folds the table - the world catches the story up without you and hands you the finale."
+      + " You will always be warned before it does.";
   }
   return "A toll was paid — " + tolls + " of " + TOLL_MAX + " this season.";
 }
@@ -3098,37 +3155,88 @@ function payToll(){
   termBuzz();               /* a collection is felt, not just filed */
   if($("termmodal").classList.contains("open")) renderTerminal();
   if(tolls === TOLL_MAX){
-    queueAside("red", "The world has collected three times. It collects once more and the season is over - not with a death, with a loss. You were warned, courier. That is the rule of this house.");
+    queueAside("red", "The world has collected three times. Once more, and it folds the table - the story catches itself up without you, and you meet it at the season's finale. Nothing ends. But the next stretch gets decided without you. That is the rule of this house.");
   }
 }
 
-/* ---- the walk-back and the loss ---- */
+/* ---- the walk-back ---- */
 function walkbackDirective(){
   var b = beatNow();
   return "(THE WALK-BACK. The player has drifted out of the season. Do not force the gate and do not punish the wandering - it happened, and it stays. Write ONE transition scene in which the world reasserts itself - the rain closes in, and the city, the family, or the job carries the courier bodily back to the doorstep of this beat: " + b.goal + " End the turn there with the floor open, pointed at the gate. Include one canon line recording what the wandering cost.)";
 }
-var LOSS_DIRECTIVES = {
-  1: "(THE SEASON IS LOST. Write the ending: the world caught up while the courier was elsewhere. The Choir takes Nine back - quietly, procedurally, without a fight the courier gets to attend. The last scene is the shard going cold against his ribs, and the rain not caring. No rescue, no door left open. One closing scene, chronicle voice permitted at the end, then it is over.)",
-  2: "(THE SEASON IS LOST. Write the ending: the trade executes itself - the Choir collects what it asked for while the family is scattered or arguing, and the family does not survive it as a family. The Open Door serves breakfast to nobody. One closing scene at the table with the chairs wrong, chronicle voice permitted at the end, then it is over.)",
-  3: "(THE SEASON IS LOST. Write the ending: she keeps them. Gently, warmly, meaning only love - the family hosted, the courier guided, nobody lost ever again, exactly as she was told. Write it kind, and let the kindness be the horror. One closing scene inside the keeping, chronicle voice permitted at the end, then it is over.)"
-};
+/* legacy render only: runs locked as "lost" before the fold existed still show
+   their card. Nothing fires a loss anymore - the fold retired it. */
 var LOSS_CARDS = {
   1: {head:"THE SHARD WENT QUIET", line:"She had just stopped being cargo. The city filed her back."},
   2: {head:"EMPTY CHAIRS", line:"The table was the whole point. It knows."},
   3: {head:"KEPT", line:"Nobody left behind. Nobody leaves."}
 };
-/* The ending never depends on DM compliance: whatever came back (or didn't),
-   the client locks the run and shows the card. */
-function finishLoss(){
+
+/* ---- THE FOLD: when the world collects in full, the story catches itself up,
+   says exactly what it did on a gold card, and keeps going. Not a punishment,
+   not an ending - the story keeping itself. Death is the only hard ending. ---- */
+function seasonFinaleIdx(){
+  var fin = -1;
+  for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].season === currentSeason) fin = i; }
+  return fin;
+}
+function isFinaleBeat(){
+  return !beatDone() && (beatIdx === SPINE.length - 1 || seasonAhead());
+}
+/* the manifest: every remaining beat of this season except the finale, as ink -
+   the DM narrates what the ink says and no more than it licenses */
+function foldDirective(){
+  var fin = seasonFinaleIdx(), rows = [];
+  for(var i = beatIdx; i < fin; i++){
+    var b = SPINE[i];
+    rows.push("\"" + b.title + "\": " + b.canon.join(" ")
+      + (b.scar ? " Scar: " + b.scar : ""));
+  }
+  return "(THE FOLD — the world has collected in full. Write one long passage in chronicle voice,"
+    + " and take the room to do it: first, the run so far - brief, true, in this run's own images."
+    + " Then the world moving through the season's remaining business without the family's hands,"
+    + " in order: " + rows.join(" · ")
+    + ". Use each beat's ink as the spine - narrate what it says and no more than it licenses -"
+    + " resolve what hangs, fill the gaps honestly, and land the family at the doorstep of the"
+    + " season's finale, changed by what they let happen. This is not a punishment and it is not"
+    + " an ending. It is the story keeping itself. End with the floor open.)";
+}
+/* deterministic, whatever the DM sent back: the ink merges, the pointer lands on
+   the finale, the meter re-zeroes, and the gold card says exactly what happened */
+function finishFold(){
   if(runOver) return;
-  lossPending = false; lossServed = false;
-  runOver = "lost";
-  perilTurns = 0;
-  var c = LOSS_CARDS[currentSeason] || LOSS_CARDS[3];
-  ledgerText += "\n\n---\n\n**THE SEASON WAS LOST.** " + c.line + "\n";
+  foldPending = false; foldServed = false;
+  var fin = seasonFinaleIdx(), titles = [], failed = [], i, b;
+  for(i = beatIdx; i < fin; i++){
+    b = SPINE[i];
+    titles.push(b.title);
+    mergeCanon(b.canon);
+    if(b.scar) mergeCanon([b.scar]);
+    gateNotes[b.id] = "folded — " + (b.scar || b.exit);
+    if(foldedBeats.indexOf(b.id) === -1) foldedBeats.push(b.id);
+    quests.forEach(function(q){
+      if(q.beat === b.id && (q.status === "active" || q.status === "offered")) failed.push(q.title);
+    });
+    questFailBeat(b.id);
+  }
+  beatIdx = fin;
+  phase = "live"; phaseLeft = 0;
+  beatTurns = 0; driftRun = 0; walkbackNow = false;
+  beatText = ""; gateRefusedNames = []; gateHeldNow = false; defuseArmed = false;
+  tolls = 0;                     /* paid in full; the meter starts clean */
+  var finBeat = SPINE[fin];
+  var body = "While you played it your way, the world closed: " + titles.join(", ")
+    + ". Lost along the way: " + (failed.length ? failed.join(", ") : "nothing that was written down")
+    + ". The season now stands at its finale: " + (TEASES[finBeat.id] || finBeat.title)
+    + ". Tolls paid in full — the meter starts clean.";
+  var card = {kind:"gold", title:"THE WORLD KEPT THE STORY", text:body};
+  renderBlock(card); feedLog.push(card);
+  ledgerText += "\n\n**THE WORLD KEPT THE STORY.** " + body;
+  /* the finale's tease deals on the following turn - one card a turn, always */
+  if(TEASES[finBeat.id]) queueAside("green", TEASES[finBeat.id]);
+  termPing();
   applyTension();
-  endCard("lost");
-  persistAll([]);
+  scrollFeed();
 }
 
 /* where a beat sits inside its own season, for every surface that counts */
@@ -3375,7 +3483,7 @@ function boardBlock(){
    forces a gate it has already ordered landed, so the prose and the pointer agree. */
 function boardDirective(){
   forcingNow = false;
-  if(beatDone() || walkbackNow || lossPending) return "";
+  if(beatDone() || walkbackNow || foldPending) return "";
   if(phase === "aftermath" || phase === "seasonend"){
     return "(THE AFTERMATH - the gate has fallen and nothing new begins. Let what just happened land: reactions, cost, quiet, the family being people about it. Do not introduce the next matter, open a job, or reveal anything. The season is holding its breath on purpose.)";
   }
@@ -3480,6 +3588,7 @@ function closeBeat(forced, note){
   beatTurns = 0;
   driftRun = 0; walkbackNow = false;
   gateRefusedNames = []; gateHeldNow = false;
+  defuseArmed = false;         /* the call stands until the beat closes - it just did */
   if(beatIdx === SPINE.length - 1){ beatIdx++; return; }   /* the finale's epilogue IS the aftermath */
   phase = "aftermath";
   phaseLeft = turned ? 2 : 1;
@@ -3497,13 +3606,18 @@ function armBeat(){
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
-  if(beatDone() || runOver || lossPending) return;
+  if(beatDone() || runOver || foldPending) return;
   var said = data && (data.gate === true || data.gate === "true");
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
   var knock = data && (data.knock === true || data.knock === "true");
   /* mudskipper immunity: a bit cannot be spent. No gate lands off it, no knock
-     rides it, and the rain neither ticks nor forgives while the table laughs. */
-  if(lastTurnMud){ said = false; knock = false; }
+     rides it, and the rain neither ticks nor forgives while the table laughs.
+     The one exception is the call: a bit can never be TAKEN but it can be
+     GIVEN, and on a called turn the gate is accepted even off a bit. */
+  if(lastTurnMud){
+    knock = false;
+    if(!(defuseArmed && phase === "live")) said = false;
+  }
   /* an interlude that rode this exchange is spent once the reply lands */
   if(interludeServedId){
     if(interludesUsed.indexOf(interludeServedId) === -1) interludesUsed.push(interludeServedId);
@@ -3550,7 +3664,9 @@ function boardTurn(data){
     else { payToll(); queueAside("red", tollLine()); }
     return;
   }
-  beatTurns++;
+  /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
+     absence and idleness, never joy - the dots hold still while the table plays. */
+  if(!lastTurnMud) beatTurns++;
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
      so anchors are not consulted and the rain does not move either way */
   var held = false;
@@ -3578,8 +3694,9 @@ function boardTurn(data){
     } else if(driftRun === DRIFT_RED){
       queueAside("red", "The season is moving without you. One more step away and the city walks you back itself.");
     } else if(driftRun >= DRIFT_WALKBACK){
-      /* a fourth failure with the tolls spent is the loss, not another walk-back */
-      if(tolls >= TOLL_MAX) lossPending = true;
+      /* a fourth collection folds the table instead of walking back - unless
+         only the finale remains, which never folds and takes its walk-back */
+      if(tolls >= TOLL_MAX && !isFinaleBeat()) foldPending = true;
       else walkbackNow = true;
     }
   } else if(!said && !held && !lastTurnMud){
@@ -3595,7 +3712,9 @@ function boardTurn(data){
     }
   }
   if(said || forcingNow){
-    if(!said && tolls >= TOLL_MAX){ forcingNow = false; lossPending = true; return; }
+    /* a force at max tolls folds the table - except the finale, which never
+       folds: a forced finale lands the season exactly as it always has */
+    if(!said && tolls >= TOLL_MAX && !isFinaleBeat()){ forcingNow = false; foldPending = true; return; }
     closeBeat(!said, note);
   }
   forcingNow = false;
@@ -3854,9 +3973,9 @@ function buildContext(){
      land a gate is not also asked to do the filing. The walk-back and the loss
      speak even more alone. */
   var press = boardDirective();
-  if(lossPending){
-    lossServed = true;
-    press = LOSS_DIRECTIVES[currentSeason] || LOSS_DIRECTIVES[3];
+  if(foldPending){
+    foldServed = true;
+    press = foldDirective();
   } else if(walkbackNow){
     press = walkbackDirective();
   } else if(!forcingNow && (phase === "aftermath" || phase === "slack" || actCheckpointDue > 0)){
@@ -3866,6 +3985,13 @@ function buildContext(){
     msg += "\n\n" + (pendingCompaction ? compactionInstruction(pendingCompaction) : maintenanceNudge());
   }
   if(press) msg += "\n\n" + press;
+  /* the call rides every action until the beat closes: bit or not, it settles */
+  if(defuseArmed && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
+    msg += "\n\n(THE DEFUSE — the player has called it. Their action this turn, whatever it is"
+      + " - a bit, a stunt, a single word - is how tonight's business resolves. Fold the beat"
+      + " around it honestly: bring anyone the gate names on stage, meet the exit in its spirit,"
+      + " and send \"gate\": true with a true gateNote. Do not punish the style; record it proudly.)";
+  }
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
@@ -4091,7 +4217,7 @@ function deathRefused(data){
    line is just the typed text rendered, and on endings - those are never re-rolled. */
 var SPEECH_VERBS = /\b(say|says|ask|asks|tell|tells|answer|answers|reply|replies|shout|whisper|call|admit|declare|announce|mutter|offer|toast)\b/i;
 function chairTaken(data){
-  if(!data || lossPending) return false;
+  if(!data || foldPending) return false;
   if(typeof data.death === "string" && data.death.trim()) return false;
   var lines = (data.scene || []).filter(function(b){
     return b && String(b.speaker).trim() === "Courier" && b.text;
@@ -4161,8 +4287,9 @@ function callDM(corrected){
     showScene(parsed.data, true);
   }).catch(function(e){
     setBusy(false);
-    /* the ending never depends on DM compliance: an unusable loss reply still ends it */
-    if(lossPending && lossServed){ finishLoss(); return; }
+    /* the fold never depends on DM compliance: an unusable passage still folds -
+       the ink is the client's, and only the prose was the DM's to fumble */
+    if(foldPending && foldServed){ finishFold(); showChoices([]); }
     showError(e.message || "unknown interference on the channel");
   });
 }
@@ -4363,11 +4490,13 @@ function saveBlob(){
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
+    defuseArmed:defuseArmed, foldedBeats:foldedBeats,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
 function currentChoices(){
-  var out=[]; var els=document.querySelectorAll(".choice");
+  /* the call and the season-break door are the client's furniture, not the DM's choices */
+  var out=[]; var els=document.querySelectorAll("#choices .choice:not(.call)");
   for(var i=0;i<els.length;i++){ out.push(els[i].textContent.replace(/^\d/,"").trim()); }
   return out;
 }
@@ -5502,9 +5631,13 @@ function renderTermJobs(){
       if(i < beatIdx){
         /* hindsight shows the true record - the gateNote this run wrote, or the
            exit the gate guaranteed. Never the goal: goals are directions, and a
-           run may have got here some other way entirely. */
+           run may have got here some other way entirely. A folded beat wears it
+           plainly: the world closed this one. */
+        var folded = foldedBeats.indexOf(SPINE[i].id) !== -1;
         var d = document.createElement("div"); d.className = "tj-beat";
-        d.innerHTML = '<b>' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
+        if(folded){ d.style.opacity = ".62"; d.style.borderLeftColor = "#7a5f22"; }
+        d.innerHTML = '<b' + (folded ? ' style="color:#b08a52"' : '') + '>'
+          + (folded ? '&#9672; FOLDED — ' : '') + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
           + esc(gateNotes[SPINE[i].id] || SPINE[i].exit) + '</span>';
         ar.appendChild(d); any = true;
       } else if(i === beatIdx && !beatDone() && !runOver){
@@ -5892,7 +6025,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.3.0   COLD START",
+    "MUD//OS  v4.4.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7108,8 +7241,8 @@ function newRun(confirmFirst){
   runCanon = OPENING_CANON.slice();   /* the vault is the world; this is where the run starts */
   canonArchive = []; pendingCompaction = null;
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
-  tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; lossPending = false;
-  lossServed = false; interludeServedId = null;
+  tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
+  foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false;
@@ -7171,7 +7304,9 @@ function restoreFromBlob(s){
   interludesUsed = Object.prototype.toString.call(s.interludesUsed) === "[object Array]" ? s.interludesUsed.slice() : [];
   tolls = (typeof s.tolls === "number" && s.tolls > 0) ? s.tolls : 0;
   driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
-  walkbackNow = false; lossPending = false; lossServed = false; interludeServedId = null;
+  walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
+  foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
+  defuseArmed = s.defuseArmed === true;   /* the call stands across a reload */
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};
