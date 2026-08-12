@@ -115,6 +115,26 @@ or say a name, and the run's own past is quoted back verbatim, never re-summariz
 
 And one truth told spoiler-lightly: **the receiver did not stay put.**
 
+## The rehearsal room
+
+An authoring tool, on the title screen. Pick any one of the thirty-three questions
+and play it in isolation, as many times as you like, labelling each take with the
+approach you took — *stall-heavy, hostile, comic, straight at it*. The record before
+the beat is seeded from the board itself: every earlier beat's authored canon, its
+gate note, its stones, the cast the road has named. The spine **is** the history, so
+a mid-season question opens where the story would actually be rather than in a void.
+
+Rehearsal runs live in their own drawer. They never appear in RUNS, never move the
+CONTINUE pointer, and never write a file to your save folder — a night of rehearsing
+leaves a real run exactly where it was.
+
+**EXTRACT** gives you a worksheet, not a transcript: the beat's authored spec, the
+tempo it's written in, the state it opened on, every rail line ever offered split by
+slot, every scene as speaker/text blocks, what each take closed on and what it cost —
+and a node skeleton pre-seeded with the stall prompts players were actually given, to
+write into. It's built for handing to someone (or something) that has to author the
+offline version of that beat without the repo open.
+
 ## How a season actually ends
 
 Each season is a **flowchart**, not a mood. Thirty-three beats across the three

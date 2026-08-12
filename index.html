@@ -943,6 +943,7 @@
     <span id="hud-time">11:47PM</span>
     <span id="hud-loc">LOWER VELDT MARKET</span>
     <span id="ledger">LEDGER: —</span>
+    <span id="rehchip" style="display:none"></span>
     <button class="small" id="menubtn" title="Back to the title screen">MENU</button>
     <button class="small" id="setbtn">SETTINGS</button>
   </div>
@@ -977,9 +978,10 @@
     <button class="menu-btn" id="t-runs">RUNS</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
+    <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.9.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.10.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1027,6 +1029,29 @@
   </div>
 </div>
 
+<!-- REHEARSAL ROOM — the authoring tool. One beat, over and over, then extract. -->
+<div class="modal" id="rehmodal">
+  <div class="card">
+    <div class="cardhead">THE REHEARSAL ROOM</div>
+    <div class="cardsub">Play one question in isolation, as many times as you like. The record before it is seeded from the board, so the beat opens where the story would actually be. Rehearsal runs are kept apart from your real saves and never touch them.</div>
+    <div class="fld"><label>THE QUESTION</label><select id="reh-beat"></select></div>
+    <div class="fld"><label>THIS TAKE'S APPROACH — OPTIONAL, IT RIDES THE EXTRACTION</label>
+      <input id="reh-label" placeholder="stall-heavy / hostile / comic / straight at it / silent"></div>
+    <div class="btnrow" style="margin-top:12px">
+      <button class="btn" id="reh-start">OPEN THE ROOM</button>
+      <button class="btn ghost" id="reh-close">CLOSE</button>
+    </div>
+    <div class="fld" style="margin-top:16px"><label>TAKES ON RECORD</label>
+      <div id="reh-list" class="hint">Nothing yet.</div></div>
+    <div class="btnrow">
+      <button class="btn" id="reh-extract">EXTRACT THIS QUESTION</button>
+      <button class="btn" id="reh-extract-all">EXTRACT EVERYTHING</button>
+      <button class="btn ghost" id="reh-clear">CLEAR TAKES</button>
+    </div>
+    <div class="hint" style="margin-top:8px">The extraction is a worksheet, not a transcript: the beat's authored spec, the state it opened on, every rail line offered split by slot, every scene as speaker/text blocks, what each take closed on — and a pre-seeded node skeleton to write into.</div>
+  </div>
+</div>
+
 <!-- the archive lives behind the wrist's DO NOT PRY plate now (tpane-arch) -->
 
 <!-- COURIER'S TERMINAL MODAL — the wrist unit, at desk scale -->
@@ -1051,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.9.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1330,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.9.0 "The Fence"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.10.0 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3126,7 +3151,14 @@ function showScene(data, logIt, instant){
     if(!beatDone() && lines.length){
       beatText = (beatText + "\n" + lines.join("\n")).slice(-BEAT_TEXT_CAP);
     }
+    /* the rehearsal reads the exchange from both sides of the board: what was
+       played and what it cost, so a take is a node graph rather than a story */
+    var rehBefore = rehearsing ? {
+      n: rehTurns.length, phase: phase, beatTurns: beatTurns,
+      pick: pickKind, text: lastPlayerText, mud: lastTurnMud, rail: lastRail.slice()
+    } : null;
     boardTurn(data);            /* ...then the beat's fixed canon, if the gate fell */
+    if(rehBefore) rehCapture(data, rehBefore);
   }
   harvestCompaction(data);
   if(logIt !== false && lines.length){
@@ -5206,15 +5238,25 @@ function currentChoices(){
 }
 
 function writeFiles(){
-  if(!runSlug) return;
+  if(!runSlug || rehearsing) return;   /* rehearsals never touch the player's folder */
   writeFile("mudskippers-save-"+runSlug+".json", saveBlob());
   writeFile("mudskippers-ledger-"+runSlug+".md", ledgerText);
 }
 
+/* ---- THE REHEARSAL ROOM ----
+   An authoring tool, not a game mode. It plays one beat in isolation, seeded
+   from the board's own record so a mid-season question opens where the story
+   would actually be, and it keeps every take. Its saves live in their own
+   drawer and its files are never written to the player's folder: a night of
+   rehearsing must leave a real run exactly where it was. */
+var rehearsing = false;
+var rehBeatId = "", rehLabel = "", rehTake = 0, rehTurns = [], rehSeed = null;
+function rehRunsKey(){ return rehearsing ? "mud-reh-runs" : "mud-runs"; }
+function rehActiveKey(){ return rehearsing ? "mud-reh-active" : "mud-active"; }
 function loadRunsMap(){
-  try{ return JSON.parse(localStorage.getItem("mud-runs")||"{}"); }catch(e){ return {}; }
+  try{ return JSON.parse(localStorage.getItem(rehRunsKey())||"{}"); }catch(e){ return {}; }
 }
-function saveRunsMap(mm){ try{ localStorage.setItem("mud-runs", JSON.stringify(mm)); }catch(e){} }
+function saveRunsMap(mm){ try{ localStorage.setItem(rehRunsKey(), JSON.stringify(mm)); }catch(e){} }
 function migrateLegacy(){
   try{
     var old = localStorage.getItem("mud-run");
@@ -5231,7 +5273,7 @@ function persistAll(choices){
     var mm = loadRunsMap();
     mm[runSlug] = saveBlob();
     saveRunsMap(mm);
-    localStorage.setItem("mud-active", runSlug);
+    localStorage.setItem(rehActiveKey(), runSlug);
   }catch(e){}
   writeFiles();
 }
@@ -6730,7 +6772,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.9.0   COLD START",
+    "MUD//OS  v4.10.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6838,7 +6880,7 @@ function closeTitle(){
   $("titlescreen").classList.remove("open");
   try{ shardShow(); }catch(e){}     /* it only comes out once there is a room to be in */
 }
-$("menubtn").onclick = openTitle;
+$("menubtn").onclick = function(){ if(rehearsing) endRehearsal(); else openTitle(); };
 $("t-continue").onclick = function(){
   if(!runSlug){
     try{
@@ -6853,6 +6895,20 @@ $("t-new").onclick = function(){ newRun(true); };
 $("t-runs").onclick = openRuns;
 $("t-settings").onclick = openSettings;
 $("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
+$("t-reh").onclick = openRehearsal;
+$("reh-close").onclick = function(){ $("rehmodal").classList.remove("open"); };
+$("reh-start").onclick = function(){
+  var id = $("reh-beat").value;
+  if(!id) return;
+  if(rehearsing) rehFinishTake();      /* the take in progress goes on the record first */
+  startRehearsal(id, $("reh-label").value);
+};
+$("reh-extract").onclick = function(){ if(rehearsing) rehFinishTake(); rehExtract(false); };
+$("reh-extract-all").onclick = function(){ if(rehearsing) rehFinishTake(); rehExtract(true); };
+$("reh-clear").onclick = function(){
+  if(!confirm("Throw away every take on record? The extraction cannot be rebuilt afterwards.")) return;
+  rehTakesSave({}); rehTurns = []; renderRehList();
+};
 
 /* ============ PWA: INSTALL + SERVICE WORKER ============ */
 function inStandalone(){
@@ -7938,6 +7994,239 @@ function applyVisuals(){
 }
 
 /* ============ NEW GAME / RESTORE ============ */
+/* ============ THE REHEARSAL ROOM ============ */
+function rehTakesLoad(){
+  try{ return JSON.parse(localStorage.getItem("mud-reh-takes")||"{}"); }catch(e){ return {}; }
+}
+function rehTakesSave(t){ try{ localStorage.setItem("mud-reh-takes", JSON.stringify(t)); }catch(e){} }
+/* the record as it would stand walking into this beat: every earlier beat's
+   authored canon, its gate note, its stones - the same merge closeBeat does,
+   run forward at speed. The spine IS the history, so this is not a guess. */
+function rehSeedTo(idx){
+  var i, j, b, seeded = [], notes = {};
+  for(i = 0; i < idx; i++){
+    b = SPINE[i];
+    var set = (chassisHolder === "Nine" && b.canonAlt) ? b.canonAlt : b.canon;
+    for(j = 0; j < (set||[]).length; j++) seeded.push(set[j]);
+    if(b.canonA && chassisHolder !== "Nine") for(j = 0; j < b.canonA.length; j++) seeded.push(b.canonA[j]);
+    if(b.canonB && chassisHolder === "Nine") for(j = 0; j < b.canonB.length; j++) seeded.push(b.canonB[j]);
+    notes[b.id] = b.exit;
+    if(b.stone) milestones.push(b.stone);
+    if(b.id === "a2-chassis" && !chassisHolder) chassisHolder = "Seven";
+  }
+  mergeCanon(seeded);
+  gateNotes = notes;
+  /* who is on stage: everyone the road has named up to and including tonight */
+  var names = {};
+  for(i = 0; i <= idx && i < SPINE.length; i++){
+    (SPINE[i].anchors||[]).forEach(function(n){ names[n] = 1; });
+  }
+  if(SPINE[idx] && SPINE[idx].season >= 1){ names["Pia"] = 1; names["Vic"] = 1; names["Nine"] = 1; }
+  Object.keys(names).forEach(function(n){
+    if(castSheets[n]) return;
+    castSheets[n] = {notes:[], met:[], knows:[], status:"", voice:"", seen:""};
+    var s = castSheet(n);          /* the real shape, then a seeded line */
+    s.notes.push("With the family, where the record leaves them.");
+    s.status = "Present, as the record leaves them.";
+  });
+  beatIdx = idx; currentSeason = SPINE[idx].season;
+  phase = "live"; phaseLeft = 0; beatTurns = 0; beatText = "";
+  return {canon: seeded.length, cast: Object.keys(names), chassisHolder: chassisHolder};
+}
+function startRehearsal(beatId, label){
+  var idx = beatById(beatId);
+  if(idx < 0) return;
+  var store = rehTakesLoad();
+  rehearsing = true;                 /* set first: every save below routes to the drawer */
+  rehBeatId = beatId; rehLabel = String(label||"").trim();
+  rehTake = ((store[beatId]||[]).length) + 1;
+  rehTurns = [];
+  newRun(false);
+  /* strip the cold open - a rehearsal starts at its own question */
+  chatLog = []; feedLog = []; ledgerText = "";
+  $("feedinner").innerHTML = ""; $("errbox").innerHTML = ""; $("choices").innerHTML = "";
+  introStage = 0; afterRevealHook = null; lureBar(false); openBar();
+  pendingAsides = []; beatJustCleared = null;
+  rehSeed = rehSeedTo(idx);
+  var b = beatNow();
+  var card = {kind:"brief", tag:"REHEARSAL · TAKE " + rehTake,
+    sum: "“" + b.title + "” — Season " + b.season + ", beat " + seasonBeatPos(idx)
+       + ". The record before it has been seeded from the board."
+       + (rehLabel ? " Approach: " + rehLabel + "." : "")};
+  renderBlock(card); feedLog.push(card);
+  if(TEASES[b.id]) queueAside("green", TEASES[b.id]);
+  chatLog.push({role:"user", content:"(REHEARSAL. This one question is being played in isolation so it can"
+    + " be written properly later. The context block is where the story stands walking in. Open with a short"
+    + " establishing scene - the family where the record leaves them - and then play this beat exactly as you"
+    + " normally would. Nothing about this is different except that nothing came before it on screen.)"});
+  $("rehmodal").classList.remove("open");
+  closeTitle();
+  renderRehChip();
+  callDM();
+}
+function endRehearsal(){
+  rehFinishTake();
+  rehearsing = false; rehBeatId = ""; rehTurns = []; rehSeed = null;
+  renderRehChip();
+  openTitle();
+}
+function renderRehChip(){
+  var c = $("rehchip");
+  if(!c) return;
+  if(!rehearsing){ c.style.display = "none"; c.innerHTML = ""; return; }
+  c.style.display = "";
+  c.innerHTML = '<b style="color:#c98a8a">REHEARSAL</b> ' + esc(rehBeatId) + ' · take ' + rehTake;
+}
+/* one exchange, role-tagged. The rail is split by slot because that is the shape
+   the offline content has to be written in - not because it reads nicely. */
+function rehCapture(data, before){
+  if(!rehearsing) return;
+  var rail = (data.choices||[]).slice(0,3);
+  rehTurns.push({
+    n: rehTurns.length + 1,
+    phaseIn: before.phase, turnIn: before.beatTurns,
+    played: before.n === 0 ? null : {
+      door: before.pick || (before.mud ? "mud" : "typed"),
+      text: before.text, mud: !!before.mud
+    },
+    railIn: before.rail,
+    scene: (data.scene||[]).map(function(x){ return {s:x.speaker, t:x.text}; }),
+    now: data.now || "", location: data.location || "", day: data.day || null,
+    gateSent: data.gate === true || data.gate === "true",
+    gateNote: (typeof data.gateNote === "string") ? data.gateNote : "",
+    canon: (data.canon||[]).slice(),
+    peril: data.peril === true || data.peril === "true",
+    railOut: {exit: rail[0]||"", stalls: rail.slice(1), walk: walkLineNow(false)},
+    phaseOut: phase, turnOut: beatTurns, tolls: tolls,
+    heldByStall: before.pick === "stall" && (data.gate === true || data.gate === "true"),
+    closed: before.phase === "live" && phase !== "live"
+  });
+}
+function rehFinishTake(){
+  if(!rehearsing || !rehBeatId || !rehTurns.length) return;
+  var store = rehTakesLoad();
+  if(!store[rehBeatId]) store[rehBeatId] = [];
+  var last = rehTurns[rehTurns.length - 1];
+  var closedBy = "open";
+  for(var i = 0; i < rehTurns.length; i++){
+    if(!rehTurns[i].closed) continue;
+    var t = rehTurns[i];
+    closedBy = t.played && t.played.door === "exit" ? "exit"
+      : t.turnIn >= beatNow().budget ? "forced"
+      : t.gateSent ? "dm" : "other";
+  }
+  if(runOver === "walked") closedBy = "walked-out";
+  store[rehBeatId].push({
+    take: rehTake, label: rehLabel,
+    at: new Date().toISOString(),
+    dm: {provider: settings.provider, model: settings.model},
+    seed: rehSeed,
+    turns: rehTurns.slice(),
+    outcome: {closedBy: closedBy, turnsSpent: last.turnOut, tolls: last.tolls,
+              gateNote: gateNotes[rehBeatId] || "", walkedOut: runOver === "walked"}
+  });
+  rehTakesSave(store);
+  rehTurns = [];
+}
+/* THE EXTRACTION. Not a transcript - a worksheet. Everything needed to author
+   this beat offline without the repo open: what the board demands, what the
+   room knew walking in, every rail line ever offered split by slot, every
+   scene as speaker/text blocks, and a node skeleton pre-seeded with the stall
+   prompts players were actually given. */
+function rehExtractOne(beatId, store){
+  var idx = beatById(beatId);
+  if(idx < 0) return null;
+  var b = SPINE[idx], takes = store[beatId] || [];
+  var exits = [], stalls = [], walks = [], openings = [], resolutions = [], typed = [], mud = [], forced = [];
+  function push(arr, v){ if(v && arr.indexOf(v) === -1) arr.push(v); }
+  takes.forEach(function(tk){
+    tk.turns.forEach(function(t, i){
+      push(exits, t.railOut.exit);
+      (t.railOut.stalls||[]).forEach(function(s){ push(stalls, s); });
+      push(walks, t.railOut.walk);
+      if(i === 0) openings.push(t.scene);
+      if(t.closed) (t.played && t.played.door === "exit" ? resolutions : forced).push(t.scene);
+      if(t.played && t.played.door === "typed") push(typed, t.played.text);
+      if(t.played && t.played.mud) push(mud, t.played.text);
+    });
+  });
+  return {
+    beat: beatId,
+    spec: {
+      title: b.title, season: b.season, act: b.act, position: seasonBeatPos(idx) + " of " + seasonBeatCount(b.season),
+      goal: b.goal, exit: b.exit, aim: b.aim || "", walkLine: b.walkLine || "",
+      budget: b.budget, floor: beatFloor(b), anchors: b.anchors || [], reveals: b.reveals || [],
+      press: b.press || [], canon: b.canon || [], canonAlt: b.canonAlt || null,
+      canonA: b.canonA || null, canonB: b.canonB || null,
+      scar: b.scar || "", stone: b.stone || "", tease: TEASES[beatId] || ""
+    },
+    tempo: tempoLineFor(b.season),
+    takes: takes,
+    library: {
+      exitLines: exits, stallLines: stalls, walkLines: walks,
+      openingScenes: openings, resolutionScenes: resolutions, forcedScenes: forced,
+      playerTyped: typed, mudskipperMoments: mud
+    },
+    worksheet: {
+      note: "Fill scene arrays with {s:speaker,t:text} blocks. stalls[].ask is the rail line; "
+          + "stalls[].scene is what it buys. Nothing in a stall may leave the courier closer to the gate.",
+      open: {scene: [], exitLine: "", stallLines: ["", ""]},
+      stalls: stalls.slice(0, 10).map(function(s){ return {ask: s, scene: [], keep: null}; }),
+      exit: {scene: [], gateNote: b.exit},
+      forced: {scene: [], scar: b.scar || ""},
+      aftermath: {scene: []}
+    }
+  };
+}
+function tempoLineFor(season){
+  var was = currentSeason; currentSeason = season;
+  var t = tempoLine(); currentSeason = was; return t;
+}
+function rehExtract(all){
+  var store = rehTakesLoad();
+  var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.0",
+    captured: new Date().toISOString(), beats: []};
+  ids.forEach(function(id){
+    var one = rehExtractOne(id, store);
+    if(one) out.beats.push(one);
+  });
+  if(!out.beats.length){ alert("No takes on record for that question yet."); return; }
+  var fname = all ? "mudskippers-rehearsal-all" : ("mudskippers-rehearsal-" + ids[0]);
+  download(fname + ".json", JSON.stringify(out, null, 1), "application/json");
+}
+function renderRehList(){
+  var store = rehTakesLoad(), box = $("reh-list"), ids = Object.keys(store), rows = [];
+  if(!ids.length){ box.textContent = "Nothing yet."; return; }
+  ids.forEach(function(id){
+    var n = store[id].length;
+    var turns = 0;
+    store[id].forEach(function(t){ turns += t.turns.length; });
+    rows.push(esc(id) + " — " + n + " take" + (n === 1 ? "" : "s") + ", " + turns + " turns");
+  });
+  box.innerHTML = rows.join("<br>");
+}
+function openRehearsal(){
+  var sel = $("reh-beat");
+  if(!sel.options.length){
+    var lastSeason = 0;
+    SPINE.forEach(function(b, i){
+      if(b.season !== lastSeason){
+        lastSeason = b.season;
+        var og = document.createElement("optgroup");
+        og.label = "SEASON " + b.season + " — " + SEASON_NAMES[b.season];
+        og.id = "reh-og-" + b.season;
+        sel.appendChild(og);
+      }
+      var o = document.createElement("option");
+      o.value = b.id;
+      o.textContent = seasonBeatPos(i) + ". " + b.title;
+      document.getElementById("reh-og-" + b.season).appendChild(o);
+    });
+  }
+  renderRehList();
+  $("rehmodal").classList.add("open");
+}
 function newRun(confirmFirst){
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   var now = new Date();
