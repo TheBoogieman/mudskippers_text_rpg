@@ -1033,7 +1033,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1144,7 +1144,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1423,7 +1423,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.0 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.1 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3532,6 +3532,24 @@ var DOOR_SLOTS = ["exit", "stall", "stall"];
 var PIN_STALLS = ["Say nothing yet. Watch, and let it come to you.",
                   "Ask the question under the question.",
                   "Take a breath and read the room properly."];
+/* WHEN THE DOOR EXISTS. It used to key off the floor, which put it on the rail
+   while the pressure strip was still saying THE NIGHT HAS ROOM IN IT - the rail
+   and the strip reading off two different clocks and contradicting each other in
+   the same glance. It reads off the strip's ladder now: while the night is roomy
+   there is no door at all and the rail is three ways to dig in; when the world
+   starts counting the door appears, cold, for one turn; then it opens.
+   "" = not on the rail · "cold" = printed, not takeable · "open" = takeable. */
+function exitStage(){
+  if(!doorsLive()) return "";
+  var b = beatNow(), left = b.budget + 1 - beatTurns;
+  if(left >= 3) return "";
+  if(left === 2) return "cold";
+  return "open";
+}
+/* positional, and the positions move with the door: no door, no exit slot */
+function doorSlots(){
+  return exitStage() ? ["exit", "stall", "stall"] : ["stall", "stall", "stall"];
+}
 function pinnedExit(b){
   var xs = (b && b.exits && b.exits.length) ? b.exits : null;
   if(!xs) return "Finish it — " + (b ? b.exit : "end tonight's business") + ".";
@@ -3541,7 +3559,8 @@ function pinnedExit(b){
 function railFor(dm){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
   if(!doorsLive()) return dm.slice(0, 4);
-  var b = beatNow(), out = [pinnedExit(b)], i, t;
+  /* no door yet means the whole rail is theirs: three ways to dig in, not two */
+  var b = beatNow(), out = exitStage() ? [pinnedExit(b)] : [], i, t;
   for(i = 0; i < dm.length && out.length < 3; i++){
     t = String(dm[i] || "").trim();
     /* a dead end that IS the pinned line would put the same door on twice */
@@ -3566,14 +3585,11 @@ function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
   if(choices && choices.length) lastRail = choices.slice(0, 4);
   var live = doorsLive();
-  /* the door opens on the turn that TAKING it would close the beat - the same
-     arithmetic boardTurn uses, read one turn ahead, so with the standard floor of
-     three the rail runs cold, cold, open */
-  var floorLeft = 0;
-  if(live) floorLeft = Math.max(0, beatFloor(beatNow()) - (beatTurns + 1));
+  var slots = live ? doorSlots() : [];
+  var stage = live ? exitStage() : "";
   (choices||[]).slice(0,4).forEach(function(c,i){
     var btn = document.createElement("button");
-    var kind = live ? (DOOR_SLOTS[i] || "") : "";
+    var kind = live ? (slots[i] || "") : "";
     btn.className = "choice" + (kind ? " " + kind : "");
     btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
     if(kind === "exit"){
@@ -3581,11 +3597,11 @@ function showChoices(choices){
          cleared meant the player spent the early turns not knowing what tonight's
          way out even was; enabling it from turn one meant a night could resolve on
          its second move. So it is printed from the start, cold, with the count on
-         it - you always know the shape of the ending you are walking toward, and
-         you cannot take it until the beat has been lived.
+         it for one turn - the shape of the ending arrives before the ending does,
+         and the strip and the rail agree about what kind of turn this is.
          And it asks twice, like the way out does, because a door that ends the
          night should never be a thing you discover you have clicked. */
-      if(defuseArmed || floorLeft > 0){
+      if(defuseArmed || stage === "cold"){
         btn.disabled = true;
         btn.classList.add("notyet");
       } else {
@@ -3606,7 +3622,7 @@ function showChoices(choices){
       if(defuseArmed){
         eh.className = "choice-hint exithint";
         eh.textContent = "You called it. The next move settles the night either way.";
-      } else if(floorLeft > 0){
+      } else if(stage === "cold"){
         eh.className = "choice-hint exithint";
         eh.textContent = "The rain is picking up.";
       } else if(exitArmed){
@@ -5071,17 +5087,20 @@ function boardBlock(){
   /* the rail on screen while the player was choosing is the one built on the LAST
      reply, so this is the wording they are looking at - and if they took it, it is
      what they said. The next rail rotates to another wording of the same move. */
-  out.push("THE RAIL — the board writes the way out of tonight itself and pins it first."
-    + " This is the line sitting in slot one right now, word for word, and taking it ENDS"
-    + " this beat:\n  >> \"" + pinnedExit(b) + "\""
+  out.push("THE RAIL — the board writes the way out of tonight itself and pins it above yours."
+    + " It only appears once the night starts running out of room, and this is its wording:"
+    + "\n  >> \"" + pinnedExit(b) + "\""
+    + (exitStage() ? "  (on the rail right now" + (exitStage() === "cold" ? ", not yet takeable)" : ", takeable)")
+                   : "  (not on the rail this turn - the night still has room)")
     + "\nYou do not write that line, you do not repeat it, and you do not put anything like it"
     + " in \"choices\". If the player takes it, play it as written and land the gate."
-    + "\nWhat you send in \"choices\" is TWO DEAD ENDS, and nothing else. Two lines that GO"
-    + " NOWHERE - and this is the hard part and the whole point: they buy understanding, never"
+    + "\nWhat you send in \"choices\" is THREE DEAD ENDS, and nothing else - the board uses the"
+    + " first two when its own door is on the rail and all three when it is not. Three lines that"
+    + " GO NOWHERE - and this is the hard part and the whole point: they buy understanding, never"
     + " ground. Ask the question under the question, get the detail, press the person, check the"
     + " thing, say the human thing. If a line would leave them measurably closer to " + b.exit
-    + ", it is NOT a dead end - rewrite it. Make the two unlike each other: one earnest, one"
-    + " sideways or funny. Neither advances the night by an inch."
+    + ", it is NOT a dead end - rewrite it. Make them unlike each other: one earnest, one"
+    + " sideways or funny. None of them advances the night by an inch."
     + "\nNever label them in the text and never number them yourself."
     + "\nThe player's way out of the whole job is the game's own control, printed under the rail"
     + " and worded by the board. Never put quitting, leaving or handing the shard back in \"choices\".");
@@ -7165,7 +7184,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.0");
+  R(s, "build", "v4.13.1");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7235,7 +7254,9 @@ function dbgReport(){
   B(s, "WITNESS TAIL (last 900 chars the anchor check reads)", beatText.slice(-900));
 
   s = S("THE THREE DOORS");
-  R(s, "slots (positional, client-owned)", DOOR_SLOTS);
+  R(s, "slots (positional, client-owned)", doorSlots());
+  R(s, "exit stage", exitStage() || "not on the rail — the night has room",
+    exitStage() === "open" ? "ok" : "");
   R(s, "doors live", doorsLive(), doorsLive() ? "ok" : "");
   if(b){
     R(s, "PINNED EXIT (slot 1, ours)", pinnedExit(b), "ok");
@@ -7249,7 +7270,7 @@ function dbgReport(){
   R(s, "this turn's door", pickKind);
   R(s, "pending door", pendingKind);
   for(i = 0; i < lastRail.length; i++){
-    R(s, "rail " + (i + 1) + " · " + (DOOR_SLOTS[i] || "—"), lastRail[i]);
+    R(s, "rail " + (i + 1) + " · " + (doorSlots()[i] || "—"), lastRail[i]);
   }
   R(s, "walk line now", b ? walkLineNow(redRun >= 1) : "—");
   R(s, "walk armed", walkArmed);
@@ -8385,7 +8406,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.0   COLD START",
+    "MUD//OS  v4.13.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9852,7 +9873,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.1",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
