@@ -81,8 +81,14 @@ the road is short, a second when the world stirs — and every toll explains its
 when it's paid. Three are survivable and the meter re-zeroes every season. A fourth
 doesn't end anything: the world folds the table, catches the story up without you,
 tells you exactly what it did on a gold card, and hands you the season's finale with
-a clean meter. The only hard ending in this game is the one the mortality rules warn
-you about first.
+a clean meter.
+
+The hard endings are few and all of them are yours to see coming: the mortality rules
+warn you before they take the courier; killing someone the story is standing on ends
+the run out loud; and the third choice on every rail is the way out of the whole
+thing. Take that one and the family feels it. Take it twice in a row and the courier
+really does put the job down, and that is the end of that run — quietly, with nobody
+dead. Anything else resets the count.
 
 Between questions there is no clock at all. The aftermath, the slack, the family's
 time — those are yours, forever, free.
@@ -141,17 +147,23 @@ The DM does not decide the plot and cannot wander off it:
   than it should have. And every beat also has a **floor**: a gate sent before the
   scene has been lived is held, and the DM is told to keep playing. The clock watches
   the storyteller's speed as closely as it watches yours.
-- **One choice always walks toward the gate.** Each beat carries an **aim** — the
-  move that would actually land it — and the DM is required to offer one choice that
-  is a live attempt at it, in the scene's own voice. The other two are yours to enjoy
-  and may go anywhere. Three choices that all leave the gate exactly where it was is
-  how a night runs out of road with the player never once offered the road.
-- **The page turns on the way out, not on the way in.** A beat ends one of two ways:
-  you reach the end of the road and **call it** — choosing the ending on your own
-  terms — or you don't, and the road runs out and the world ends it for you. Either
-  way the reply that ends it also cuts: time moves on screen, the family lands
-  somewhere they can put their coats down, and the next turn opens there instead of
-  mid-sentence in a scene that's over. Nothing is ordered on the *next* beat's first
+- **The rail is three doors, and you decide when the night ends.** Inside a live beat
+  the three choices are always the same three shapes, in the same order. **The exit**
+  is a real attempt at the thing that finishes tonight's business — take it and the
+  beat closes, because you reached for it. **The stall** digs in instead: ask the
+  question under the question, get the detail, press the person. It holds the gate
+  open — the DM does not get to close a beat you're still standing in — and it costs
+  nothing but a turn. **The walk** is the red one: put the whole thing down and go.
+  A mudskipper moment is a stall with a joke in it — it holds the beat open and
+  doesn't even cost the turn, unless you've called it.
+- **The DM cannot close a beat on you.** A gate lands when you reach for it, or when
+  the road runs out and the board forces it. "The scene felt covered" is not a
+  reason, and no beat can end before its third turn.
+- **The page turns on the way out, and only when the world did the ending.** Close it
+  yourself — the exit, or a call — and the story walks on out of the scene unbroken.
+  Stall all the way to the end of the road and the world lands it for you, and cuts:
+  time moves on screen, the family lands somewhere they can put their coats down,
+  and the next turn opens there. Nothing is ever ordered on the *next* beat's first
   turn — a new question is yours to walk into at your own pace.
 - **A beat closes completely before the next one opens.** Every gate is followed by
   the **landing** — a turn (two on an arc turn) where nothing new is allowed to

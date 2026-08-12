@@ -516,6 +516,14 @@
   }
   .choice.call:hover{border-color:var(--seven);background:#12190f}
   .choice.call .n{color:#8fc98a}
+  /* the three doors: the exit is lit, the stall is the house style, the walk is
+     the one you have to mean. Never labelled - the colour is the whole tell. */
+  .choice.exit{border-color:#6a5a2a;box-shadow:inset 2px 0 0 var(--sodium)}
+  .choice.exit:hover{border-color:var(--sodium);background:#191408}
+  .choice.walk{border-color:#5a2f2f;color:#d8a9a9;box-shadow:inset 2px 0 0 #8d3b3b}
+  .choice.walk:hover{border-color:#a04a4a;background:#190f0f}
+  .choice.walk .n{color:#c96a6a}
+  .endcard.walked .end-h{color:#c9b48a}
   .choice-hint{
     font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.08em;
     color:#8fc98a;padding:8px 12px;border:1px dashed #4c6b46;border-radius:3px;
@@ -967,7 +975,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.7.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.8.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -992,7 +1000,8 @@
     <div class="ep">
       <h3>HOW THE NIGHT WORKS</h3>
       <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
-      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing, and once the road gets short you'll see a green choice — call it, and your next move, bit or not, settles tonight's business your way. You'll still see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. The only hard ending in this game is the one the mortality rules warn you about first.</p>
+      <p>While a question is live your three choices are always the same three doors. The <b>first</b> is the way out of tonight — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. The <b>second</b> digs in instead: ask the question under the question, get the detail, press the person. It holds the night open — nobody closes a beat you're still standing in — and it costs nothing but a turn. Mudskipping does the same thing and doesn't even cost the turn. The <b>third</b> is red, and it means it: put the whole thing down and go. The family will feel that. Do it twice in a row and the courier really does leave, and that's the run.</p>
+      <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing, and once the road gets short you'll see a green choice — call it, and your next move, bit or not, settles tonight's business your way. You'll still see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. Every hard ending in this game is one you see coming first — the mortality rules warn you, and so does the third door.</p>
       <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
     </div>
@@ -1037,7 +1046,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.7.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.8.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1316,7 +1325,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.7.1 "The Storyboard"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.8.0 "The Three Doors"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1461,7 +1470,8 @@ var BIBLE = [
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be one of: Narration, Courier, Nine, Seven, Three, Pia, Vic, Granny, Principal, Marek, Five, Hesta, The File, Other. Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible, and it exists only once it has been installed; before that the terminal is dumb hardware. Only use characters the player has actually met.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
-"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words, tonally distinct (one earnest, one tactical, one chaotic works well). At least one of them is always a live attempt at TONIGHT'S AIM, written in the scene's own voice - the move that would actually walk this beat to its gate. The other two are the player's to enjoy and may lead anywhere. Three choices that all leave the gate exactly where it was is how a night runs out of road with the player never once offered the road.",
+"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words. Inside a live beat they are THE THREE DOORS and they always come in this order: 1 THE EXIT - a real attempt at tonight's aim, the move that ends this business; 2 THE STALL - dig in instead, ask the question under the question, get the detail, press the person; 3 THE WALK - put the whole thing down and go, the honest tempting version of 'I can't do this, I'm getting out'. Write all three in the scene's own voice, never label them, and never make the exit the boring one. Outside a live beat - the landing, the family's own time - write three ordinary choices as you always have.",
+"- THE PLAYER CLOSES THE BEAT, NOT YOU. A gate lands when they reach for it - the exit door, a call, or their own typed move going for it - or when the road runs out and the board forces you. Do not close a beat because the scene feels covered: covered is not finished, and a night that ends on its second move was never a night. When they stall, you keep playing. When a MUDSKIPPER MOMENT lands, you keep playing - a bit holds the beat open and costs nothing, unless they have called it.",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
 "- Keep each turn tight: about 180-300 words of scene. A beat gets the turns the board says it gets. Spend them on the thing that matters and cut everything that is only atmosphere."
 ].join("\n");
@@ -2254,6 +2264,22 @@ function pageTurnClause(){
     + " and no next matter is named; the turn after this one is the landing, and it should"
     + " open somewhere the story can breathe.";
 }
+/* ---- THE THREE DOORS ----
+   A live beat's rail is not three flavours of the same turn any more; it is
+   three doors, and which one the player opens decides what the night does.
+   Slot 1 THE EXIT: the canon resolution. Taking it closes the beat, and because
+   the player reached for the ending, the story walks on - no cut.
+   Slot 2 THE STALL: dig in, ask, get more. The gate is held: the DM does not get
+   to close a beat the player is still standing in. Stalls still spend the road.
+   Slot 3 THE WALK: put the whole thing down. Peril, and the family feels it.
+   Twice in a row and the courier really does leave, and the run is over.
+   The close moved out of the DM's judgement and into the player's hand; the
+   only closes left to the world are the ones where the road ran out. */
+var pickKind = "";           /* "exit" | "stall" | "walk" - this turn's door */
+var pendingKind = "";        /* set by the button, consumed by takeAction */
+var stalledNow = false;      /* a gate was held because the player stalled */
+var redRun = 0;              /* consecutive walks; two ends the run - persisted */
+var walkoutDue = false;      /* the second walk: this reply ends it */
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
 var interludeServedId = null;/* the card riding the current outgoing exchange */
 
@@ -2421,13 +2447,22 @@ function callEligible(){
     && !walkbackNow && !foldPending && introStage !== 1
     && beatTurns >= beatFloor(beatNow()) && beatTurns >= beatNow().budget - 1;
 }
+/* the doors are only doors inside a live beat: the landing and the family's own
+   time have nothing to close, nothing to stall and nothing to walk out on */
+function doorsLive(){
+  return !!runSlug && !runOver && !beatDone() && phase === "live"
+    && !walkbackNow && !foldPending && introStage !== 1;
+}
+var DOOR_KINDS = ["exit", "stall", "walk"];
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
+  var doors = doorsLive();
   (choices||[]).slice(0,4).forEach(function(c,i){
     var btn = document.createElement("button");
-    btn.className="choice";
+    var kind = (doors && i < 3) ? DOOR_KINDS[i] : "";
+    btn.className = "choice" + (kind ? " " + kind : "");
     btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
-    btn.onclick = function(){ takeAction(c,false); };
+    btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
     box.appendChild(btn);
   });
   /* the green defuse: click arms it; the next action - bit or not - settles */
@@ -2489,15 +2524,19 @@ function endCard(kind, line){
   var dead = (kind === "death");
   var lost = (kind === "lost");
   var broken = (kind === "broken");
+  var walked = (kind === "walked");
+  var over = dead || lost || broken || walked;
   var lc = LOSS_CARDS[currentSeason] || LOSS_CARDS[3];
   var d = document.createElement("div");
-  d.className = "endcard" + (dead || lost || broken ? " dead" : "");
+  d.className = "endcard" + (over ? " dead" : "") + (walked ? " walked" : "");
   var head = dead ? "THE COURIER IS DEAD" : lost ? lc.head
-    : broken ? "THE RAIN HAS TOO MUCH TO OFFER" : "PAID IN FULL";
+    : broken ? "THE RAIN HAS TOO MUCH TO OFFER"
+    : walked ? "HE PUT IT DOWN" : "PAID IN FULL";
   var sub  = dead
     ? (line ? esc(line) : "The rain takes it from here.")
     : lost ? esc(lc.line)
     : broken ? esc((line || "Someone load-bearing") + " held this story up. It can not end like this — so it ends here.")
+    : walked ? "He said it twice, and the second time he meant it. The job is somebody else's now."
     : "Season complete. The chronicle survives the courier.";
   d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
     + (dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
@@ -2505,10 +2544,13 @@ function endCard(kind, line){
      : lost ? '<div class="end-s2">The world collected four times and the season went with it. '
             + 'Another courier, another night, and the rain still falling. Start again?</div>'
      : broken ? '<div class="end-s2">The rain does not go on without its people. Another courier, '
-            + 'another night, and everyone alive again. Start again?</div>' : '');
+            + 'another night, and everyone alive again. Start again?</div>'
+     : walked ? '<div class="end-s2">Nobody died. That is the whole difference, and it is not '
+            + 'nothing. The rain keeps falling on the people he left in it — and somewhere in it '
+            + 'there is another courier who does not put it down. Start again?</div>' : '');
   var b1 = document.createElement("button");
-  b1.className = dead || lost || broken ? "btn" : "btn ghost";
-  b1.textContent = dead || lost || broken ? "NEW GAME" : "NEW SEASON";
+  b1.className = over ? "btn" : "btn ghost";
+  b1.textContent = over ? "NEW GAME" : "NEW SEASON";
   b1.onclick = function(){ newRun(true); };
   var b2 = document.createElement("button");
   b2.className = dead ? "btn ghost" : "btn";
@@ -2596,6 +2638,22 @@ function finishBreak(name){
   ledgerText += "\n\n---\n\n**THE RAIN REFUSED.** " + name + " held the story up, and the story cannot stand without them.\n";
   applyTension();
   endCard("broken", name);
+  persistAll([]);
+  scrollFeed();
+}
+/* THE WALKING OUT. Twice through the red door and the courier means it. The DM
+   has already written the leaving on this turn; the client only has to agree
+   that it happened and stop the run. No red screen - nobody died, and that is
+   the point: this one is quiet. */
+function finishWalkout(){
+  if(runOver) return;
+  runOver = "walked";
+  walkoutDue = false; redRun = 0; perilTurns = 0;
+  foldPending = false; foldServed = false; epilogueNow = false;
+  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null;
+  ledgerText += "\n\n---\n\n**HE PUT IT DOWN.** The courier walked, and this time nobody talked him out of it.\n";
+  applyTension();
+  endCard("walked", "");
   persistAll([]);
   scrollFeed();
 }
@@ -3007,6 +3065,8 @@ function showScene(data, logIt, instant){
       finishBreak(who);
       return;
     }
+    /* the second walk: the leaving has just been written, and it stands */
+    if(data.__live && walkoutDue && !runOver){ finishWalkout(); return; }
     /* ceremony: one card a turn. The beat card lands after the scene that closed
        it; an aside waits its own turn rather than sharing one. */
     if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
@@ -3732,11 +3792,17 @@ function boardBlock(){
   /* the aim is the difference between a scene and a scene that goes somewhere:
      three choices that all leave the gate where it was is how a beat runs out
      of road with the player never once offered the road */
-  if(b.aim) out.push("TONIGHT'S AIM — the move that actually walks this beat to its gate: " + b.aim
-    + ". At least one of your three choices must be a live attempt at it, written in this scene's"
-    + " own voice as something the courier does or says right now. The other two are the player's"
-    + " to enjoy and may go anywhere. Never end a turn with three choices that all leave the gate"
-    + " exactly where it was.");
+  if(b.aim) out.push("TONIGHT'S AIM — the move that actually walks this beat to its gate: " + b.aim + ".");
+  out.push("THE THREE DOORS — your three choices are not three flavours of one turn. They are"
+    + " three doors, in this order, every single live turn, always all three, written in this"
+    + " scene's own voice as things the courier does or says right now:"
+    + "\n  1. THE EXIT — a real attempt at tonight's aim above. The move that ends this business."
+    + " Never hedge it and never make it the boring one; it is the door the story wants."
+    + "\n  2. THE STALL — dig in instead. Ask the question under the question, get the detail,"
+    + " press the person, look at the thing properly. It buys understanding, not progress."
+    + "\n  3. THE WALK — put it down. Not sulking and not suicide: the honest, tempting version"
+    + " of I cannot do this, I am getting out - hand the shard over, take the door, leave them to"
+    + " it. Make it genuinely attractive to a tired man. It is the one that costs.");
   if(b.id === "a2-chassis") out.push("THE FORK: this gate must carry \"chassis\": \"Seven\" or \"chassis\": \"Nine\" - Nine's choice, spoken at the table, decides who lives in the body.");
   if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
@@ -3749,7 +3815,7 @@ function boardBlock(){
   out.push("Send \"gate\": true with the scene the moment the gate above is met. Not before; never withhold it once met."
     + " Everything else about how it happens is yours and the player's."
     + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
-    + pageTurnClause()
+    + " A beat the player themselves ended does NOT cut away: they earned it, so the story walks on out of it."
     + (actTurnAhead() ? " This gate turns the act: roll the day over with it - nights end." : "")
     + (seasonAhead() ? " This gate closes the season." : ""));
   return out.join("\n");
@@ -3780,6 +3846,14 @@ function boardDirective(){
       + " you need to, and end the beat inside this turn. Send \"gate\": true."
       + (b.scar ? " The world does this now, and it costs: " + b.scar : "")
       + pageTurnClause() + ")";
+  }
+  /* a gate the player held speaks first, and it is not a reprimand: they wanted
+     more of the scene and they are entitled to it */
+  if(stalledNow){
+    stalledNow = false;
+    return "(THE PLAYER HELD THIS BEAT OPEN. You reached for the gate and they had not finished"
+      + " standing in the scene, so it did not land - no fault, no cost, nothing owed. Keep playing"
+      + " it at minutes-scale. The ending is theirs to reach for when they want it.)";
   }
   /* a held gate speaks first: the haste was the DM's, and the fix is to keep playing */
   if(gateHeldNow){
@@ -3824,8 +3898,10 @@ function anchorsMissing(b){
   });
   return out;
 }
-/* a beat cannot close before it has been lived */
-function beatFloor(b){ return b.floor || 2; }
+/* a beat cannot close before it has been lived. Three, not two: a night that
+   resolves on its second move was never a night, and the stall exists so the
+   player can spend as much more of it as they like. */
+function beatFloor(b){ return b.floor || 3; }
 /* Closing writes the record and starts the landing; the pointer does NOT move.
    The lifecycle finishes the closed beat completely - aftermath, then the
    family's slack - before armBeat() opens the next one. */
@@ -3965,9 +4041,23 @@ function boardTurn(data){
     forcingNow = false;
     return;
   }
+  /* THE STALL holds the gate open. The player is still standing in this beat and
+     said so out loud, so the DM does not get to close it around them - no scar,
+     no toll, nothing owed. The road still gets spent: a stall costs a turn. */
+  if(pickKind === "stall" && said){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
-     absence and idleness, never joy - the dots hold still while the table plays. */
+     absence and idleness, never joy - the dots hold still while the table plays.
+     A bit is a stall with a joke in it: it holds the gate AND costs no road. */
   if(!lastTurnMud) beatTurns++;
+  /* THE EXIT was taken: the player reached for the ending, so the beat closes on
+     this turn whatever the reply did with the order - the same guarantee the call
+     carries, for the same reason. Anchors are waived, no toll, no scar. */
+  if(pickKind === "exit" && !said && beatTurns >= beatFloor(beatNow())){
+    calledClose = true;
+    closeBeat(false, note || ("settled on the courier's own move — " + beatNow().exit));
+    calledClose = false;
+    return;
+  }
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
      so anchors are not consulted and the rain does not move either way */
   var held = false;
@@ -4277,6 +4367,51 @@ function maintenanceNudge(){
 
 /* Note the side effect: the maintenance ask is decided here because it rides the
    outgoing message, and showScene harvests whatever comes back against it. */
+/* The door the player just opened, spoken to the DM as an order. Only ever built
+   for a live beat, and never when the call is armed - that promise outranks. */
+function doorDirective(){
+  var b = beatNow();
+  if(pickKind === "walk"){
+    if(walkoutDue){
+      return "(HE IS ACTUALLY LEAVING. Twice now, and the second time is the one that counts."
+        + " Write the leaving: he puts the job down and goes, and the family watches him do it."
+        + " Give them their real reactions - Pia's first, and no speeches - and let nobody talk"
+        + " him round, because nobody gets to this time. No rescue, no last-second turn, no gate."
+        + " End on the door and the rain. This is the last scene of this run and it should be"
+        + " written like it.)";
+    }
+    return "(HE IS TRYING TO PUT IT DOWN. The courier just reached for the way out - not sulking,"
+      + " genuinely done. Take it seriously and let it cost: the family hears it, and it lands on"
+      + " them the way that kind of thing lands on people who have been counting on you. Somebody"
+      + " says the wrong thing. Nothing is repaired by the end of this turn. Send \"peril\": true -"
+      + " what is in danger here is the family holding together - and do NOT send the gate: a man"
+      + " walking out is not this beat resolving. Leave the three doors open; he can still change"
+      + " his mind, and he can also do it again.)";
+  }
+  if(pickKind === "stall"){
+    return "(THEY ARE STILL STANDING IN IT. The courier chose to dig in rather than end the night,"
+      + " so give them what they reached for - the answer under the answer, the detail, the person"
+      + " pressed properly - and make it worth the turn: the scene should be further along in"
+      + " understanding even though the business is not finished. Do NOT send the gate this turn."
+      + " The beat stays open, and it stays open because the player said so.)";
+  }
+  if(pickKind === "exit"){
+    if(beatTurns + 1 < beatFloor(b)){
+      return "(THEY ARE REACHING FOR THE ENDING - BUT THE SCENE HAS NOT BEEN LIVED YET. Play the"
+        + " move honestly and let it get real ground: they should end this turn closer to "
+        + b.exit + " than they started, and feel it. But the night is too young to end here, so"
+        + " something answers back, gets in the way, or takes longer than they hoped. Do NOT send"
+        + " the gate yet.)";
+    }
+    return "(THE EXIT, TAKEN. The player reached for the ending on their own initiative - that is"
+      + " the whole point of that door, so it works. This reply lands it: carry the scene to "
+      + b.exit + " ON SCREEN, in the prose, folded around exactly what they just did. Send"
+      + " \"gate\": true with a true gateNote. Do NOT cut away afterwards and do NOT skip time -"
+      + " they earned this ending, so the story walks on out of it: end the reply in the room,"
+      + " with the family in it, on the far side of the thing they just finished.)";
+  }
+  return "";
+}
 function buildContext(){
   if(!chatLog.length) return chatLog;
   pendingCompaction = null;
@@ -4308,6 +4443,11 @@ function buildContext(){
       + " business done. Three:" + pageTurnClause().replace(/^ Then turn the page\. /, " turn the page. ")
       + " The courier's voice stays the player's throughout. End with \"gate\": true and a"
       + " gateNote that describes what was actually written.)";
+  }
+  /* which door they came through - the call outranks all three, because arming it
+     was itself a decision and it promised the next move would settle the night */
+  if(pickKind && !defuseArmed && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
+    msg += "\n\n" + doorDirective();
   }
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
@@ -4483,6 +4623,10 @@ function takeAction(text, isMud){
     openSettings(); return;
   }
   renderDivider();
+  /* the door this turn came through - only a rail click sets one, so typing and
+     bits are neither an exit nor a stall nor a walk */
+  pickKind = pendingKind || ""; pendingKind = "";
+  if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
   lastPlayerText = text.trim();   /* the chair lint checks the reply against this */
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
@@ -4499,6 +4643,12 @@ function takeAction(text, isMud){
     if(TEASES["a1-hum"]) queueAside("green", TEASES["a1-hum"]);
     showScene(OPENING2, true);
     return;
+  }
+  /* the walk is counted on the way out, so the directive this turn already knows
+     whether it is the first one or the last one */
+  if(pickKind === "walk"){
+    redRun++;
+    if(redRun >= 2) walkoutDue = true;
   }
   var userMsg = isMud
     ? "MUDSKIPPER MOMENT (custom off-script action by the courier - bend the world around it): " + text.trim()
@@ -4840,6 +4990,7 @@ function saveBlob(){
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     defuseArmed:defuseArmed, foldedBeats:foldedBeats, chassisHolder:chassisHolder,
+    redRun:redRun,
     over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
   });
 }
@@ -5841,6 +5992,8 @@ function renderTermStatus(){
     tb.innerHTML = '<div class="hint">Signal lost. The run is over; the chronicle survives it.</div>';
   } else if(runOver === "broken"){
     tb.innerHTML = '<div class="hint">The rain refused. The run is over; the chronicle survives it.</div>';
+  } else if(runOver === "walked"){
+    tb.innerHTML = '<div class="hint">The courier put it down. The run is over; the chronicle survives it.</div>';
   } else if(runOver === "lost"){
     tb.innerHTML = '<div class="hint">The season was lost. The chronicle survives it.</div>';
   } else if(beatDone()){
@@ -6373,7 +6526,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.7.1   COLD START",
+    "MUD//OS  v4.8.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6451,6 +6604,8 @@ function refreshTitle(){
       ? "This courier is dead. Start a new game."
       : runOver === "broken"
         ? "The rain refused. Start a new game."
+      : runOver === "walked"
+        ? "The courier put it down. Start a new game."
       : runOver === "lost"
         ? "The season was lost. Start a new game."
       : runOver === "season"
@@ -7594,6 +7749,7 @@ function newRun(confirmFirst){
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
+  redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
@@ -7728,7 +7884,10 @@ function restoreFromBlob(s){
   if(!beatDone()) currentSeason = beatNow().season;   /* the board is the season, always */
   rehydDismissed = false;
   termClear();                   /* a loaded run starts read - only new turns light it */
-  runOver = (s.over === "death" || s.over === "season" || s.over === "lost" || s.over === "broken") ? s.over : "";
+  runOver = (s.over === "death" || s.over === "season" || s.over === "lost"
+    || s.over === "broken" || s.over === "walked") ? s.over : "";
+  redRun = (typeof s.redRun === "number" && s.redRun > 0) ? s.redRun : 0;
+  walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
