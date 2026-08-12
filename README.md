@@ -135,6 +135,59 @@ and a node skeleton pre-seeded with the stall prompts players were actually give
 write into. It's built for handing to someone (or something) that has to author the
 offline version of that beat without the repo open.
 
+## The prompt book — what the storyteller no longer writes
+
+A beat used to hand the AI four jobs and hope. It reliably did one. Asked to put
+"the move that ends tonight" in slot one, a local 24B spent an entire four-turn
+beat offering *what's the safehouse look like* and *what's Vic told you about me* —
+four stalls in the exit's chair — and the board closed the night on a scene that
+never contained it.
+
+So the rail is the game's now, top to bottom:
+
+- **The exit is pinned and authored.** Every one of the 33 questions carries two
+  or three versions of its own way out, in the courier's voice — loose about *how*
+  (the scene owns that), exact about *what* (the board owns that). One sits in slot
+  one and they rotate while the beat stays open, so a player who digs in sees the
+  same door worded differently rather than the same sentence four times. Take it and
+  the beat closes, **green**, once, guaranteed.
+- **It is printed from the first turn, and cold for two of them.** You always know
+  the shape of the ending you're walking toward; you just can't take it until the
+  night has been lived. Cold, it wears the house style exactly — same border, same
+  ink, no sodium edge — with *the rain is picking up* underneath. Then it opens, and
+  **asks twice**, the way the bail-out does: a door that ends the night should never
+  be something you find out you clicked.
+- **The bail-out is authored the same way**, and what leaving *means* moves with the
+  story: handing a shard back in Book One and walking out of the heart room in Book
+  Three are not the same sentence, so they are not the same sentence.
+- **The storyteller writes two dead ends.** That's it. It's told the pinned line
+  verbatim so its two don't collide with it.
+
+## Openings and landings
+
+Every question is bracketed by authored prose, played instantly by the game the way
+the cold open is:
+
+- **The opening** — when a question goes live it establishes itself: a time, a place,
+  three sentences and two dead ends, with the pinned exit dropped in front of them.
+  No more nights that begin with somebody walking and somebody repeating the last
+  thing they said.
+- **The landing** — a card is not a transition. The beat closes, the page turns *in
+  the same breath*: the clock moves, the family is somewhere else, three sentences
+  put them there and a fresh rail belongs to the new room.
+- **The scar rides it.** A beat the world took off you does not land in the room you'd
+  have landed in. Each question has a second, harder landing written from inside the
+  loss — miss the conversation with Nine and you get the overpass with her still in
+  your jacket, and Pia not making the joke.
+
+Both land in the storyteller's own context as scenes it appears to have written, so
+the next turn never opens with the model quietly missing something you already read.
+And the moment a gate falls, the board **arms the DM with the next question** — named,
+not playable, fenced off from arriving — so the quiet turns lean somewhere instead of
+wandering.
+
+716 authored lines, one-to-one with the board. The AI's job is now the middle.
+
 ## The trapdoor — when something goes wrong
 
 **Middle-click the shard.** A panel opens over the run with every number the night is

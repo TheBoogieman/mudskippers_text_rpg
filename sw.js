@@ -1,5 +1,5 @@
 /* MUDSKIPPERS service worker — offline shell, update-friendly */
-var CACHE = "mudskippers-v4-12";
+var CACHE = "mudskippers-v4-13";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){

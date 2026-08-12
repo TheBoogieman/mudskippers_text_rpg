@@ -562,6 +562,23 @@
   .choice.walk.armed{border-color:#c05555;color:#f0c0c0;opacity:1;background:#1b0f0f;
     box-shadow:inset 2px 0 0 #c05555,0 0 12px rgba(190,70,70,.18)}
   .choice-hint.walkhint{color:#c98a8a;border-color:#5a2f2f}
+  /* the door that ends the night: cold until the beat has been lived, then lit */
+  /* a door that is not open yet is still a door on the same rail: it wears the
+     house style exactly, minus the sodium edge that means GO. No dimming - the
+     player is meant to read it, they just cannot take it. */
+  .choice.exit.notyet{
+    border-color:var(--line);color:var(--ink);box-shadow:none;
+    opacity:1;cursor:default;
+  }
+  .choice.exit.notyet:hover{border-color:var(--line);background:var(--panel);transform:none}
+  .choice.exit.notyet .n{color:var(--sodium)}
+  .choice.exit.notyet:disabled{opacity:1}
+  .choice.exit.armed{
+    border-color:var(--sodium);color:#f7d688;background:#1b1508;
+    box-shadow:inset 2px 0 0 var(--sodium),0 0 12px rgba(232,161,60,.2);
+  }
+  .choice-hint.exithint{color:#8a7c68;border-color:#3a3630}
+  .choice-hint.exithint.open{color:var(--sodium);border-color:#6a5a2a}
   .endcard.walked .end-h{color:#c9b48a}
   .choice-hint{
     font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.08em;
@@ -1016,7 +1033,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.12.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1127,7 +1144,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.12.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1406,7 +1423,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.12.0 "The Trapdoor"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.0 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1718,6 +1735,28 @@ var SPINE = [
  exit:"the courier has knowingly held a two-way conversation with Nine",
  aim:"get the shard into his bare hand and let him talk to her knowing she is a person",
  walkLine:"Give the shard to Pia and walk back the way I came.",
+ exits:["Stop walking. Shard out of the jacket and into my bare hand — I want to hear her myself.",
+        "Skin on the shard, and I say the name out loud. Nine. Let her answer that.",
+        "She's a person, so I talk to her like one. Right here, both ways, and the street can wait."],
+ walks:["Give the shard to Pia and walk back the way I came.",
+        "Hand her over. This was a delivery job and I am done delivering.",
+        "Put it in the kid's hand and go home while home still exists."],
+ lands:[{time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+       now:"Day 1, past midnight, under the Veldt overpass. Nine rides in the courier's closed hand now, not his jacket.",
+       lines:["The market lets you go the way it lets everyone go — all at once, into a road that stopped being a road years ago.",
+              "You are under the overpass before anyone says anything else, the rain going at the concrete overhead like it has been told there is money in it, and she is still in your hand.",
+              "Pia looks at your fist, then at your face, and informs you that talking to your own pocket in public is a choice."],
+       rail:["Tell her the pocket talks back.",
+             "Keep Nine where she is. Whatever's behind us, she hears it too.",
+             "Move. The marsh road is hours out and the rain is winning."]}],
+ landsHard:[{time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+       now:"Day 1, past midnight, under the Veldt overpass. Nine is in the courier's jacket, and the conversation happened at a run, half-heard.",
+       lines:["It gets said in the end, most of it, at a jog, into a jacket — which is not how anybody would have chosen to meet a person.",
+              "Under the overpass you finally stop, and there is a silence out of your chest pocket with a shape to it.",
+              "Pia does not make a joke about the pocket. That is how you know it went badly."],
+       rail:["Take her out properly and start again.",
+             "Say sorry to a jacket. See how that goes.",
+             "Move. We can be sorry on the marsh road."]}],
  budget:4, reveals:["nine"], anchors:["Nine"],
  press:["Menu Man's friends pick up the trail. The conversation has to happen while walking.",
         "A second watcher joins the first. The street is now a closing hand."],
@@ -1731,6 +1770,35 @@ var SPINE = [
  exit:"the courier has accepted out loud that he cannot go back to his old life",
  aim:"put him somewhere that proves the old life is gone, and get him to say it out loud",
  walkLine:"Stop running. Let them have it, and go home.",
+ exits:["Say it out loud, to them and to myself: there is no room to go back to.",
+        "Stop pretending this ends with me going home. Admit it where they can hear me.",
+        "Name it — the old life is finished, and I'm the one saying so."],
+ walks:["Turn around. Whatever is behind us can have me instead.",
+        "Stop running. I want my old life back and I will beg for it.",
+        "Let them take the shard. I never signed up for a manhunt."],
+ opens:[{time:"12:50am", place:"THE VELDT STAIRS", amb:"danger",
+       now:"Day 1, past midnight, on the long stairs out of the Veldt. Something official is coming down them.",
+       lines:["The stairs out of the Veldt are ninety steps of wet iron and a smell that has opinions.",
+              "You are forty steps up when the lights at the top go out in order, one after another, politely, like something is switching them off as it comes.",
+              "Pia says a word Vic would fine her for and takes your sleeve."],
+       rail:["Ask her what exactly is coming down those stairs.",
+             "Back down. Whatever it is, it can have the stairs."]}],
+ lands:[{time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
+       now:"Day 1, deep night, out on the causeway past the last streetlight. Nobody is following any more.",
+       lines:["The city thins out the way a bruise does — colour first, then everything.",
+              "By the time the last sodium lamp gives up behind you there is only the causeway, black water either side, and a wind off it that has never heard of buildings.",
+              "Pia points at a light a long way out and says that is the door, and then walks a whole mile without a single opinion, which from her is a eulogy."],
+       rail:["Ask what Vic will be like when he opens it.",
+             "Walk. Save every question for the man himself.",
+             "Check on Nine. She has been quiet since the stairs."]}],
+ landsHard:[{time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
+       now:"Day 1, deep night, on the causeway. Nobody said the thing out loud, and the city decided it for them.",
+       lines:["Nobody says it, so the city says it — a door that does not open, a name off a list, a room that belongs to somebody else by morning.",
+              "You walk out onto the causeway with the fact following at a polite distance, the way facts do when you have refused to look at them.",
+              "Pia offers you half a wet bun from her coat. It is the worst thing you have ever eaten and you finish all of it."],
+       rail:["Ask where she even keeps buns.",
+             "Say it now. Late is not the same as never.",
+             "Walk. The light on the marsh is not getting closer on its own."]}],
  budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
@@ -1745,6 +1813,35 @@ var SPINE = [
  exit:"they are inside the safehouse and Vic has told the story of the job - and dodged why he chose the courier",
  aim:"get them through Vic's door and make Vic talk - all of it except why this courier",
  walkLine:"Tell Vic he's on his own, and walk out of the safehouse.",
+ exits:["Get us inside and get Vic talking — all of it, start to finish, out loud.",
+        "Sit him down. He owes me the whole job and I am not moving until I have it.",
+        "Through the door, and then the question: what exactly did you hand me, Vic?"],
+ walks:["Walk out of Vic's door and off this marsh for good.",
+        "Leave him with his shutters and his story. I want no part of it.",
+        "Put the shard on his kitchen table and go."],
+ opens:[{time:"2:05am", place:"THE SAFEHOUSE PORCH", amb:"marsh-fog",
+       now:"Day 1, small hours, on the safehouse porch. The door has not opened yet.",
+       lines:["Up close the safehouse is a farmhouse that lost an argument with the marsh and stayed anyway.",
+              "There is a porch light, a bell that has been disconnected on purpose, and a doormat that says WELCOME, which out here reads as a threat.",
+              "Pia knocks the way you knock when you have a code, and inside, somebody who is definitely Vic makes a noise like a man deciding whether to be in."],
+       rail:["Say his name through the door.",
+             "Let Pia handle it. She has the code and the leverage."]}],
+ lands:[{time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 1, the small hours, in the safehouse kitchen with the shutters down. Vic has said his piece and gone quiet.",
+       lines:["The story runs out somewhere around three in the morning and leaves the lot of you sitting in it.",
+              "Vic fills the kettle because there is nothing else to do with his hands, and the kettle has been labelled KETTLE in marker by somebody who lives here alone and is not going to explain it.",
+              "Out past the marsh the city is still going without you. Your wire has not made a sound all night, and that is not normal."],
+       rail:["Check the wire. If the pack has been trying to reach me, I want to know.",
+             "Ask him who he thought was going to steal the kettle.",
+             "Say nothing. Let the kettle be the whole conversation for a minute."]}],
+ landsHard:[{time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 1, the small hours, in the safehouse kitchen. Vic talked around it and the night ran out before anyone made him stop.",
+       lines:["He tells you a version. It has all the right buildings in it and none of the right reasons, and by the time you notice, he has put the kettle on.",
+              "The kitchen accepts the version because it is three in the morning and everyone in it is soaked, which is how most lies get through.",
+              "Pia catches your eye across the table and very slightly shakes her head, and she is twelve, and she is right."],
+       rail:["Ask him the missing question anyway.",
+             "Let it stand. Tonight, only tonight.",
+             "Go and find where he sleeps and wait there."]}],
  budget:4, reveals:[], anchors:["Vic"],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
@@ -1758,6 +1855,35 @@ var SPINE = [
  exit:"the courier knows where he stands with the pack, and the pack's answer has been made real - a door, a drop, or a silence",
  aim:"put the pack's verdict where he can touch it - a door, a drop, a mark, a silence",
  walkLine:"Let the pack read their verdict to an empty room. Walk.",
+ exits:["Put it to the pack straight and take whatever comes back.",
+        "Ask them out loud: am I still one of yours, or not?",
+        "Make them answer — a door, a drop, or nothing at all. I will take the nothing."],
+ walks:["Take whatever the pack left me and disappear into it.",
+        "Go back to the rain alone. No family, no cargo, no questions.",
+        "Cut the whole lot loose and take the next route out of the Veldt."],
+ opens:[{time:"8:10am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in Vic's cable shack. The pack has not been asked yet, and the wire is right there.",
+       lines:["Morning over the marsh is one long grey suggestion that you go back to bed.",
+              "The shack smells of hot dust and old solder, and Vic's cable rig has been zip-tied together by a man who has never once said the words temporary fix.",
+              "The wire is right there on the bench. Nine is on the bench next to it, which she will later describe as an ambush."],
+       rail:["Ask Nine what she thinks a pack even is.",
+             "Look at the rig properly. Vic built this to outlive him."]}],
+ lands:[{time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in the cable shack. The pack has answered and the day starts anyway.",
+       lines:["The answer arrives, and it is the answer, and the kettle in the house goes on regardless because that is what kettles are for.",
+              "You stay out in the shack a while because that is where the wire is, and because the kitchen currently contains three people who love you and want to say so.",
+              "There is a job on the board out here. Small, legal, half a day — and it has been sitting there since before any of this started."],
+       rail:["Read the job properly.",
+             "Ask Pia whether I should take it.",
+             "Put Nine somewhere she can hear the room."]}],
+ landsHard:[{time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
+       now:"Day 2, morning, in the cable shack. Nobody asked the pack, so the pack decided by itself.",
+       lines:["Nobody asks, and so it gets settled the way these things settle — quietly, by other people, in a room you were not in.",
+              "You find out from a routing table. Your name is not in it. It is very tidy work and somebody did it fast.",
+              "Pia reads it over your shoulder, says that is rude, and puts the kettle on for the second time in an hour, which for her is a rampage."],
+       rail:["Ask her who did the routing.",
+             "Close the rig. There is a job on the board.",
+             "Say nothing and let the kettle do its work."]}],
  budget:4, floor:2, reveals:[], anchors:["Pia"],
  press:["Word arrives that the Choir is asking the stalls about a courier by description. The pack hears it in real time.",
         "A packmate the courier owes money picks exactly now to collect - loyalty and the ledger, both at once."],
@@ -1770,6 +1896,35 @@ var SPINE = [
  exit:"the last honest fare is finished, and it is understood - by the courier and by the fiction - that it was the last",
  aim:"run the small parcel to its recipient and let them both notice it was the last one",
  walkLine:"Take the fare money and keep walking. None of this is my job.",
+ exits:["Run it. Parcel to the door, hand to hand, clean — one last honest fare.",
+        "Finish the job properly, and let myself notice it is the last one.",
+        "Take it across town and close the book on that part of my life."],
+ walks:["Keep the fare and keep walking. That is the job I actually have.",
+        "Finish this parcel and never come back to that marsh.",
+        "Sign the chit, take the money, and vanish into a normal week."],
+ opens:[{time:"11:30am", place:"THE PARCEL OFFICE, VELDT WEST", amb:"neon-dry",
+       now:"Day 2, late morning, at a parcel counter that has not been robbed in nine years and is smug about it.",
+       lines:["The job is a box the size of a shoe and a chit that says FRAGILE, which in this city is decorative.",
+              "The clerk asks whether you are still with the pack. You say something with a lot of syllables in it and he stamps the chit anyway.",
+              "Pia has appointed herself security and is standing by the door with her arms folded, at four foot nine, in a coat that used to be Vic's."],
+       rail:["Ask the clerk what is actually in the box.",
+             "Tell Pia security does not usually glare at the potted plant."]}],
+ lands:[{time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
+       now:"Day 2, late afternoon, on the far pavement opposite the Copper Eel. The last honest fare is signed for and done.",
+       lines:["The chit signs, the door shuts, and that is the whole ceremony a working life gets.",
+              "You walk out into the flat gold hour when the rain has stopped and the whole district looks like it has been cleaned up for somebody more important than you.",
+              "The route home goes past the Copper Eel, the way it always has, and there is a woman on the stool by the window who has been dead since Tuesday."],
+       rail:["Keep walking. Do not look twice.",
+             "Ask Pia if she is seeing what I am seeing.",
+             "Off the street. Anywhere with a door."]}],
+ landsHard:[{time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
+       now:"Day 2, late afternoon, opposite the Copper Eel. The last fare went undelivered and everyone is pretending it was nothing.",
+       lines:["The box does not get where it was going, which after everything else is almost funny, and nobody laughs.",
+              "You stand in the gold hour holding somebody else's shoe-sized problem and understand that the working life ended a while ago and forgot to say.",
+              "The route home goes past the Copper Eel, and there is a woman on the stool by the window who has been dead since Tuesday."],
+       rail:["Put the box in a bin and mean it.",
+             "Ask Pia if she is seeing what I am seeing.",
+             "Off the street. Anywhere with a door."]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The recipient recognizes his face from somewhere they will not name, and the handoff curdles.",
         "Mid-route, a checkpoint that was never there before. His old shortcuts belong to someone else now."],
@@ -1782,6 +1937,35 @@ var SPINE = [
  exit:"the family has met the hunter, knows her face and her line, and has gotten away - this once",
  aim:"put Mirren's face in front of them, let her say her line, and get them out of it",
  walkLine:"Leave them to her. Get off the boardwalk and go.",
+ exits:["Stand still, let her get close enough to say her piece — then get us out.",
+        "Look at the thing wearing Mirren's face and hear it out. Then run.",
+        "Meet the hunter, take her measure, and do not be there when she is finished."],
+ walks:["Hand her the shard and let her have whatever this is.",
+        "Give the hunter what she came for and walk away clean.",
+        "Step back. Let somebody else be the one holding it."],
+ opens:[{time:"5:20pm", place:"THE COPPER EEL, DOORWAY", amb:"neon-dry",
+       now:"Day 2, early evening, in the doorway of the Copper Eel. The thing on the stool has noticed the door.",
+       lines:["Inside, the Eel is exactly as bad as it has always been, which is oddly steadying.",
+              "The stool by the window turns around before the door has finished opening, and it does it at the speed of somebody who was told the door would open.",
+              "She smiles with Mirren's mouth and says your name like she is checking it off."],
+       rail:["Ask her what her actual name is.",
+             "Say nothing. Let her do the talking and count the exits."]}],
+ lands:[{time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
+       now:"Day 2, evening, in the back of a closed laundry three districts from the Eel. Nobody is following yet.",
+       lines:["You get out the way people get out — badly, fast, and further than anyone meant to go.",
+              "The laundry has been shut since the flood and the dark in it smells of soap and standing water, which beats what the street smells of.",
+              "Pia counts something on her fingers, gets to four, starts again, and says whatever the Choir wanted, they were never going to ask twice."],
+       rail:["Ask what she means by twice.",
+             "Take Nine out. She was in the room and she was listening.",
+             "Wait. Let the street get bored of us first."]}],
+ landsHard:[{time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
+       now:"Day 2, evening, in a closed laundry. They got away, but she got a good long look, and everyone knows it.",
+       lines:["You get out. She lets you, which is worse, and everybody in the room understood the difference at the time.",
+              "The laundry is dark and smells of soap, and for a while the only sound is four people breathing at slightly different speeds.",
+              "Pia says she has decided she does not like that woman. It is the smallest possible thing to say and it is exactly the right size."],
+       rail:["Agree, at length.",
+             "Take Nine out. She was listening the whole time.",
+             "Wait. Let the street get bored of us first."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["She does not chase. She is simply at the next corner too, asking again.",
         "Cutting her signal does nothing. Someone kind tries it, and the family watches the kind option fail."],
@@ -1795,6 +1979,35 @@ var SPINE = [
  exit:"the exit has been answered or has expired, out loud, with the shard in the room",
  aim:"make the offer real, in the room, with Nine listening - and get an answer out loud",
  walkLine:"Take the offer. Set her down and walk into the clean life.",
+ exits:["Put the offer on the table out loud, with Nine in the room, and get an answer.",
+        "Say the terms where everyone including her can hear them, and settle it.",
+        "Ask the question properly, and let it be answered whichever way it falls."],
+ walks:["Take the exit that was offered and leave them standing.",
+        "Say yes to their terms. I want out and this is out.",
+        "Sign whatever it is. Let this be somebody else's night."],
+ opens:[{time:"9:40pm", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+       now:"Day 2, night, in the long room. An offer is on the table and Nine is on the table with it.",
+       lines:["Somebody has put the offer in the middle of the table, next to the salt, which is a choice.",
+              "Vic has not sat down. Vic has been not sitting down for about forty minutes now, in a way that is becoming its own contribution.",
+              "Nine is out of the pocket and in the light, and every person in the room is being extremely careful not to look directly at her."],
+       rail:["Ask Vic to sit down or leave.",
+             "Read the offer out. All of it, including the small print."]}],
+ lands:[{time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
+       now:"Day 2, late, on the safehouse porch with the marsh roaring. The exit has been answered out loud.",
+       lines:["Whatever was on the table is off it now, and everyone in the house heard which way it went.",
+              "You end up on the porch, which is where people go when a room has finished with them, and tonight the marsh is loud enough to count as company.",
+              "Vic comes out after a while, stands next to you, and looks at the road instead of at you for a length of time that stops being accidental."],
+       rail:["Ask him what is on the road.",
+             "Let him stand there. He will get to it.",
+             "Go in and check the shutters."]}],
+ landsHard:[{time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
+       now:"Day 2, late, on the porch. The offer expired unanswered and the house is being very normal about it.",
+       lines:["Nobody answers it, and at some point it stops being an offer and becomes a thing that happened.",
+              "The house goes on around the gap — plates, shutters, somebody losing an argument about the chair by the window — with everybody generously agreeing not to mention it.",
+              "Vic comes out to the porch, stands next to you, and looks at the road instead of at you for a length of time that stops being accidental."],
+       rail:["Ask him what is on the road.",
+             "Say the thing nobody said in there.",
+             "Go in and check the shutters."]}],
  budget:4, floor:2, reveals:[], anchors:["Nine"],
  press:["The offer improves. Whoever is making it wants him gone more than they want her found, and that fact means something.",
         "Nine hears all of it through his ribs, and says nothing, which is worse."],
@@ -1807,6 +2020,35 @@ var SPINE = [
  exit:"the courier is clear of the sweep because Nine's knowledge got him through, and both of them know it",
  aim:"walk him into the sweep and let Nine talk him through it, step by step",
  walkLine:"Stop dead. Tell Nine to find someone else to steer.",
+ exits:["Let Nine call it. Step where she says step, and get through the sweep on her word.",
+        "Put myself in her hands and walk the line she reads for me.",
+        "Trust the voice in my palm over my own eyes, and go."],
+ walks:["Drop her and run. I would rather be lost than led.",
+        "Put her down in the dark and take my chances alone.",
+        "Stop listening to the voice in my hand and get out my own way."],
+ opens:[{time:"12:40am", place:"VELDT EAST, UNDER THE SWEEP", amb:"danger",
+       now:"Day 3, after midnight, caught on the wrong side of a Choir sweep with nowhere obvious to be.",
+       lines:["A sweep sounds like nothing at all, which is the single worst thing about it.",
+              "You are two streets into the wrong district when the air changes pressure and every screen in the row goes the same shade of nothing.",
+              "Nine, in your hand, says one word: left. She has never given you a direction before."],
+       rail:["Ask her how she knows.",
+             "Do not ask her anything. Just go left."]}],
+ lands:[{time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
+       now:"Day 3, small hours, inside the dead pumping station under Veldt East. The sweep went over an hour ago.",
+       lines:["The sweep goes over you the way weather goes over a rock, and then it is somewhere else, and then it is gone.",
+              "You come up inside the pumping station, which has not pumped anything in thirty years, and sit down on the floor because your legs make the decision without you.",
+              "Nine is warm. Not hot — warm, the temperature a hand is, and neither of you mentions it, which takes some doing."],
+       rail:["Say thank you. Out loud, properly.",
+             "Ask her how she knew where the gaps were.",
+             "Get up. We are not sleeping here."]}],
+ landsHard:[{time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
+       now:"Day 3, small hours, in the pumping station. He got through on luck and a wall, not on her word.",
+       lines:["You get through it, mostly, on a wall and a bin and the kind of luck that does not come round twice.",
+              "The pumping station is thirty years dead and full of the sound of water going somewhere else, and you sit down in it because standing has stopped being an option.",
+              "Nine does not say anything for a long while. When she does, it is to ask whether you heard her at all."],
+       rail:["Tell her the truth.",
+             "Ask her to say it again, and mean it this time.",
+             "Get up. We are not sleeping here."]}],
  budget:4, reveals:[], anchors:["Nine"],
  press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
         "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
@@ -1819,6 +2061,19 @@ var SPINE = [
  exit:"the courier has committed out loud to protecting Nine rather than delivering her",
  aim:"ask him what she is to him now, and let him answer it out loud",
  walkLine:"Hand her over and go back to being a courier who delivers.",
+ exits:["Say it plain, in front of all of them: I am not delivering her. I am keeping her.",
+        "Choose her out loud. No hedging, no later — now, at this table.",
+        "Tell them what she is to me, and let that be the whole answer."],
+ walks:["Deliver her. That was the job and the job is all I owe.",
+        "Hand her over and take the money like a courier is supposed to.",
+        "Choose the fee. Say it out loud so nobody has to wonder."],
+ opens:[{time:"8:00pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Evening. The question of what happens to Nine is sitting at the table and has been served food.",
+       lines:["Somebody has cooked, which in this house means somebody has something to say.",
+              "There are five plates and four people, and nobody has explained the fifth, and nobody is going to, and it is in front of the shard.",
+              "Vic looks at the fifth plate for a long moment and then does not object, which is the loudest thing he has done all week."],
+       rail:["Ask who set the fifth place.",
+             "Eat first. Whatever this is, it keeps better fed."]}],
  budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:[],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -1832,6 +2087,35 @@ var SPINE = [
  exit:"the group is inside The Open Door and Hesta has fed them",
  aim:"get them to Hesta's table and get hot food in front of them",
  walkLine:"Push the plate away, thank Hesta, and go.",
+ exits:["Get us to Hesta's table and let her put food in front of us.",
+        "Through the Open Door, sit down, eat what she brings.",
+        "Take them somewhere warm that feeds people, and let it happen."],
+ walks:["Walk out of Hesta's before the food comes.",
+        "Leave them at the table. I am not anybody's family.",
+        "Take my coat off the hook and go, mid-sentence."],
+ opens:[{time:"9:15pm", place:"THE OPEN DOOR, OUTSIDE", amb:"rain-neon",
+       now:"Evening, outside a diner with its lights on and its door held open by a brick.",
+       lines:["The Open Door is a diner with a name that is either a promise or a maintenance failure.",
+              "The door is held open with a brick in weather like this, which tells you everything about the person inside and none of it is bad.",
+              "Somebody in there is already setting a table for more people than have walked in."],
+       rail:["Ask how she knew how many of us there were.",
+             "Do not ask. Sit down before she changes her mind."]}],
+ lands:[{time:"10:40pm", place:"THE OPEN DOOR, BACK BOOTH", amb:"interior-warm",
+       now:"Evening, in the back booth of The Open Door. Hesta has fed them and is pretending not to watch.",
+       lines:["The plates go back empty, which in Hesta's language is the entire conversation.",
+              "She clears them without a word and leaves the pot on the table, which means stay as long as you like and also that she has noticed everything, including the thing you were hoping she had not.",
+              "The booth is warm and the window is cold, and out past it somebody is going door to door in the rain with a list."],
+       rail:["Watch the window a while longer.",
+             "Ask Hesta who has been asking after us.",
+             "Stay in the warm. It will keep till morning."]}],
+ landsHard:[{time:"10:40pm", place:"THE OPEN DOOR, BACK BOOTH", amb:"interior-warm",
+       now:"Evening, in the back booth. They got fed late and badly and only because Hesta insisted.",
+       lines:["You end up fed anyway, an hour later than you should have been, because Hesta does not accept the word fine from anybody under her roof.",
+              "She puts the plates down hard enough to be a comment and stands there until forks are picked up, which is the closest thing to a threat this district has.",
+              "The booth is warm and the window is cold, and out past it somebody is going door to door in the rain with a list."],
+       rail:["Apologise to Hesta. Properly.",
+             "Ask who has been asking after us.",
+             "Eat. She is still standing there."]}],
  budget:4, reveals:[], anchors:["Hesta"],
  press:["Hesta puts food down and asks the question nobody wants to answer.",
         "Someone knocks who should not know this address."],
@@ -1845,6 +2129,35 @@ var SPINE = [
  exit:"the kind options have been tried and have failed, witnessed, and the family knows the hunt ends by hand or not at all",
  aim:"let them spend the whole gentle playbook on her, on screen, and watch it fail",
  walkLine:"Let the hunt have what it came for. Walk.",
+ exits:["Spend the last kind option in front of everyone, and watch it fail.",
+        "Try it the gentle way one more time, so nobody can say we did not.",
+        "Run the whole soft playbook to the end, on the record, and let it come up empty."],
+ walks:["Call the hunt off and let her stay out there.",
+        "Stop. This is not mine to finish and I am done pretending.",
+        "Walk off this and let somebody else carry it."],
+ opens:[{time:"11:00pm", place:"THE UNDERCROFT STAIRS", amb:"dead-signal",
+       now:"Night, at the head of the undercroft stairs, with a list of kind options and not much faith in it.",
+       lines:["The list of gentle ways to end this fits on one side of a napkin and Pia has numbered them, which was not asked for.",
+              "Option one has already been crossed out. Option one was Hesta's, and Hesta does not get things wrong often, and the napkin has a small hole in it where Pia pressed too hard.",
+              "Somewhere below, water is doing something water should not be doing indoors."],
+       rail:["Read out option two.",
+             "Ask who wrote option four, because it is not in anyone's handwriting."]}],
+ lands:[{time:"1:20am", place:"THE FLOODED UNDERCROFT", amb:"dead-signal",
+       now:"Deep night, in the undercroft below the old exchange house. Every kind option has been spent.",
+       lines:["The last soft thing on the napkin fails the way the others did — politely, completely, and in front of witnesses.",
+              "You end up in the undercroft with water over your boots because it was the nearest place with no line of sight, and nobody has suggested going back up.",
+              "For a long minute the only sound is water, and then somebody says the thing everybody has been not saying, and does not soften it."],
+       rail:["Let them finish saying it.",
+             "Say it myself, so it is not only theirs to carry.",
+             "Ask Three what she thinks. She has not spoken since the surface."]}],
+ landsHard:[{time:"1:20am", place:"THE FLOODED UNDERCROFT", amb:"dead-signal",
+       now:"Deep night, in the undercroft. The kind options ran out on their own, unspent, and nobody got to try them.",
+       lines:["The options do not fail. They expire, which is worse, because nobody gets the dignity of having tried.",
+              "The napkin is in the water somewhere near the stairs and nobody goes back for it, and everybody knows exactly where it is.",
+              "For a long minute the only sound is water, and then somebody says the thing everybody has been not saying, and does not soften it."],
+       rail:["Let them finish saying it.",
+             "Say it myself, so it is not only theirs to carry.",
+             "Ask Three what she thinks. She has not spoken since the surface."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren","Hesta"],
  press:["The jammer that stills every other Hollow makes this one pause, recalibrate, and continue.",
         "She reaches the cafe's street. Hesta's door, and everyone behind it, is suddenly in the hunt's path."],
@@ -1857,6 +2170,35 @@ var SPINE = [
  exit:"Mirren's hunt has ended by the family's hand, and the room knows exactly whose",
  aim:"bring it to the end and make the table choose whose hand does it",
  walkLine:"Not my hands. Not ever. Walk out and leave it to them.",
+ exits:["End it, and make the table say whose hand does it.",
+        "Bring the hunt to a stop tonight, and let the room own the choice.",
+        "Finish it — properly, together, with everyone looking."],
+ walks:["Refuse it, and let the room work out who does it without me.",
+        "Put it down. Not tonight, not my hand, not ever.",
+        "Leave. Whatever gets decided in there, I was not there for it."],
+ opens:[{time:"2:40am", place:"THE UNDERCROFT, DRY END", amb:"danger",
+       now:"Deep night, at the dry end of the undercroft. It ends tonight and the only question left is whose hand.",
+       lines:["Somebody has found the one dry corner and everyone has gravitated to it like it is a fire, which it is not.",
+              "Nobody has said whose hand. Everybody has thought about it, and you can tell who has thought about it hardest by who is being funniest.",
+              "Pia is being extremely funny."],
+       rail:["Tell Pia to stop being funny.",
+             "Ask, out loud, who is volunteering."]}],
+ lands:[{time:"4:00am", place:"THE MARSH EDGE", amb:"marsh-fog",
+       now:"Before dawn, at the marsh edge past the causeway. The hunt is over and the family knows whose hand ended it.",
+       lines:["It ends, and then there is the part afterwards that nobody writes songs about.",
+              "You carry what needs carrying out to the marsh edge, because the ground there takes things and asks nothing, and the fog comes in while you work like it was waiting for privacy.",
+              "Nobody has said her name yet. It is sitting in the middle of all of you, waiting to be picked up."],
+       rail:["Pick it up. Say her name.",
+             "Not yet. First we do this properly.",
+             "Ask Hesta what she would want done."]}],
+ landsHard:[{time:"4:00am", place:"THE MARSH EDGE", amb:"marsh-fog",
+       now:"Before dawn at the marsh edge. It ended without the table choosing, and nobody will say whose hand.",
+       lines:["It ends before anybody chooses, which spares everyone the choice and robs them of it in the same second.",
+              "You carry what needs carrying out to the marsh edge, and the fog comes in, and not one person asks the question that is now permanently unanswerable.",
+              "Nobody has said her name yet. It is sitting in the middle of all of you, waiting to be picked up."],
+       rail:["Pick it up. Say her name.",
+             "Ask the question anyway.",
+             "Ask Hesta what she would want done."]}],
  budget:5, floor:3, reveals:[], anchors:["Mirren"],
  press:["She says the line one last time, mid-fight, in the service voice: the delivery is late. Nobody who hears it forgets it.",
         "Choir recovery is minutes out. If the family does not finish this, the Choir collects her and resets the hunt."],
@@ -1869,6 +2211,35 @@ var SPINE = [
  exit:"Mirren is at rest, her name has been said aloud, and the vow - nobody left behind - has been spoken at her grave",
  aim:"put her in the ground, get her name said aloud, and leave room for the vow",
  walkLine:"Say nothing at the grave. Walk before the vow reaches me.",
+ exits:["Put her in the ground and say her name out loud.",
+        "Bury her properly, and let somebody speak while we do.",
+        "Give her a grave and a name, and stand there long enough for it to mean something."],
+ walks:["Walk away from the grave before anybody says anything.",
+        "Leave them to bury her. I did not know her and I am not pretending.",
+        "Go, and let the stones be somebody else's arithmetic."],
+ opens:[{time:"6:20am", place:"THE MARSH EDGE", amb:"dawn",
+       now:"First light at the marsh edge. There is a grave to dig and nobody has started.",
+       lines:["It is nearly light and nobody has picked up the spade, which has been leaning against the same post for an hour.",
+              "Hesta arrives from the road with a basket, because Hesta has decided that a burial is a meal with a hole in the ground attached, and she is not wrong.",
+              "Pia asks whether you are supposed to say something. Nobody knows. Everybody looks at somebody else."],
+       rail:["Pick up the spade.",
+             "Ask Hesta what is in the basket."]}],
+ lands:[{time:"7:15am", place:"THE CAIRN, MARSH EDGE", amb:"dawn",
+       now:"Dawn at the new cairn. Mirren has been named and the vow has been spoken over her.",
+       lines:["The sun comes up over the water the way it does out here — all at once, and far too kindly for the occasion.",
+              "The stones stay where you put them and the words stay where you said them, which is more than most things manage.",
+              "Somebody's wire goes off on the walk back. It rings twice, stops, and rings again, and nobody has that number any more."],
+       rail:["Answer it.",
+             "Let it ring. Whoever it is can wait until we are inside.",
+             "Ask who else still has that number."]}],
+ landsHard:[{time:"7:15am", place:"THE MARSH EDGE", amb:"dawn",
+       now:"Dawn at the marsh edge. She is in the ground, unnamed, and the vow went unspoken.",
+       lines:["She goes in the ground and the ground takes her, and the part where somebody says who she was does not happen.",
+              "Hesta packs the basket back up with everything still in it, which is the single most eloquent thing anyone does all morning.",
+              "Somebody's wire goes off on the walk back. It rings twice, stops, and rings again, and nobody has that number any more."],
+       rail:["Answer it.",
+             "Go back and say her name now.",
+             "Ask who else still has that number."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["Vic tries to make the burial about his guilt. The grave deserves better, and someone has to say so.",
         "The Choir sends a polite retrieval notice for its property. It arrives mid-burial. The family's answer becomes part of the vow."],
@@ -1883,6 +2254,35 @@ var SPINE = [
  exit:"the group has committed to saving Seven and is acting on it",
  aim:"make his failing a clock they can hear, and get them committed to pulling his shard",
  walkLine:"He isn't mine to save. Walk before I learn his name properly.",
+ exits:["Commit to it out loud: we pull his shard, and we start now.",
+        "Say we are saving him, and move before anyone has time to argue.",
+        "Get the family behind it and get hands on him tonight."],
+ walks:["Leave him in the rig. We cannot save everyone and I am tired.",
+        "Say no to this one out loud, and go.",
+        "Walk out on it. He was dying before we got here."],
+ opens:[{time:"9:30pm", place:"A DYING RIG, DOCKSIDE", amb:"dead-signal",
+       now:"Night, at a failing rig on the docks. There is a defector inside it and he is going out.",
+       lines:["The rig is making a sound like a fridge with regrets and it has been making it for two days.",
+              "Whatever is inside it introduces itself as Seven, apologises for the noise, and then apologises for apologising, which tells you a great deal very quickly.",
+              "Three says, in both voices at once, that the rig has about a night left in it. She says it kindly. It does not help."],
+       rail:["Ask Seven what he wants.",
+             "Ask Three exactly how long a night means."]}],
+ lands:[{time:"11:50pm", place:"THE SHACK, WORKBENCH", amb:"dead-signal",
+       now:"Late, at the workbench in Vic's shack. Seven is out of the failing rig and the family is committed.",
+       lines:["Whatever he was in is off him now, and what is left of him fits in one hand and will not stop thanking people.",
+              "The bench is a mess of somebody else's hardware and Vic has given up pretending to tidy it, which is how you know how serious this is.",
+              "There is a body-shaped problem in the corner under a sheet, and every person in this room has looked at it and away from it at least twice."],
+       rail:["Pull the sheet off. Let us all look at it properly.",
+             "Ask Vic where a chassis like that even comes from.",
+             "Leave it. Seven first, furniture later."]}],
+ landsHard:[{time:"11:50pm", place:"THE SHACK, WORKBENCH", amb:"dead-signal",
+       now:"Late, at the workbench. Seven came out of the rig with pieces missing, and everyone can hear it.",
+       lines:["He comes out. Not all of him comes out, and the parts that did are polite about the parts that did not.",
+              "Vic works the bench with the specific silence of a man doing arithmetic he does not want the answer to.",
+              "There is a body-shaped problem in the corner under a sheet, and everyone in the room has now looked at it more than twice."],
+       rail:["Pull the sheet off. Let us all look at it properly.",
+             "Ask Seven what he remembers.",
+             "Leave it. Let Vic work."]}],
  budget:4, reveals:[], anchors:["Seven"],
  press:["Seven's vessel starts failing on the clock, out loud.",
         "He asks them to stop and let him go. Someone refuses."],
@@ -1896,6 +2296,35 @@ var SPINE = [
  exit:"the chassis has been given - to Seven or to Nine - by Nine's own choice, spoken at the table, and its new owner has cooked or token-tasted something of their own choosing",
  aim:"put the chassis on the table as Nine's, ask her out loud, and let whoever takes it cook",
  walkLine:"Leave them to the body and the argument. Walk.",
+ exits:["Put the body on the table and ask Nine, out loud, what she wants done with it.",
+        "It is hers. Ask her in front of everyone, and abide by whatever she says.",
+        "Let Nine choose who lives in it — and let whoever takes it cook."],
+ walks:["Take the chassis and go. It is worth more than this family is.",
+        "Leave them arguing over a body and get out of the kitchen.",
+        "Refuse to be part of choosing, and leave the room."],
+ opens:[{time:"12:20am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"After midnight. There is one body, two people who could live in it, and a kitchen table.",
+       lines:["The chassis is on the kitchen table because there is nowhere else in the house long enough, which is not a sentence anyone expected to think.",
+              "Somebody has put a tea towel over its face out of politeness. Nobody will admit to it. Everybody approves.",
+              "There are two of them and one of it, and every person in this kitchen has already privately decided how they would vote."],
+       rail:["Ask who is under the tea towel's jurisdiction.",
+             "Say plainly that this is not the table's to vote on."]}],
+ lands:[{time:"2:30am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"The small hours. The chassis has an owner, and something has been cooked in it and eaten.",
+       lines:["Somebody eats something they chose themselves for the first time, and the kitchen has the sense to make it into an enormous deal quietly.",
+              "The verdict on the food is that it is objectively terrible and that everybody will be having it again next week.",
+              "There is a knock at the outer door at half past two in the morning, and it is not a knock anyone in this house makes."],
+       rail:["Answer it.",
+             "Shutters first. Then answer it.",
+             "Ask who in the world knows this address."]}],
+ landsHard:[{time:"2:30am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"The small hours. The chassis got filled without Nine being asked, and the kitchen knows it.",
+       lines:["It gets decided. It does not get asked, and the difference sits down at the table with everybody and eats nothing.",
+              "The pan goes on out of habit and comes off again barely touched, and Hesta would have had something to say about that.",
+              "There is a knock at the outer door at half past two in the morning, and it is not a knock anyone in this house makes."],
+       rail:["Answer it.",
+             "Go and ask Nine now, late as it is.",
+             "Shutters first. Then answer it."]}],
  budget:4, reveals:[], anchors:["Seven","Nine"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
@@ -1916,6 +2345,35 @@ var SPINE = [
  exit:"Three is present, her two-frequency voice has been noticed, she has stated what she wants - and she has stayed",
  aim:"let her say what she wants, let them hear the two voices, and give her a reason to stay",
  walkLine:"Let Three be right about us. Walk before she proves it.",
+ exits:["Let Three say what she came for, and give her a reason to stay.",
+        "Ask her straight what she wants, and hear both voices when she answers.",
+        "Make room at the table and see whether she takes it."],
+ walks:["Show Three the door and take it myself on the way past.",
+        "This house has too many people in it. I will be one fewer.",
+        "Go before another stranger sits down at that table."],
+ opens:[{time:"7:45am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
+       now:"Morning. Three is in the long room, has been for some time, and nobody invited her.",
+       lines:["Three is in the long room at seven in the morning and no one heard the door, which she does not consider worth mentioning.",
+              "She has taken the chair by the window. Pia has been campaigning for that chair since the day she got here.",
+              "When she says good morning it comes out in two voices at slightly different pitches, and the room decides all at once not to react."],
+       rail:["React anyway. Ask about the voices.",
+             "Ask her what she wants, before Pia asks about the chair."]}],
+ lands:[{time:"9:05am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
+       now:"Morning. Three has said what she wants and has not left.",
+       lines:["She stays, which is the answer, and nobody makes her say it a second way.",
+              "The morning gets on with itself around her — kettle, shutters, an escalating negotiation about the chair by the window — and she takes it all in with both voices going quiet at once.",
+              "You catch yourself rubbing the back of your skull without deciding to, and you notice Three watching you do it."],
+       rail:["Ask her what she just saw.",
+             "Stop touching it and get on with the morning.",
+             "Ask Vic when this headache started being a thing."]}],
+ landsHard:[{time:"9:05am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
+       now:"Morning. Three said her piece, was not answered, and is standing near the door.",
+       lines:["She says what she came to say. Nobody gives her a reason, and she does not ask for one twice.",
+              "She is by the door with her coat on and she is still, somehow, not quite leaving, which is the most patient insult anyone has ever paid this household.",
+              "You catch yourself rubbing the back of your skull without deciding to, and you notice Three watching you do it from the doorway."],
+       rail:["Ask her to stay. Out loud, badly, now.",
+             "Ask her what she just saw.",
+             "Let her go and hate it."]}],
  budget:4, reveals:[], anchors:["Three"],
  press:["Three tells them exactly what they are doing wrong, and is right.",
         "She starts to leave. Someone has to give her a reason to stay that is not sentiment."],
@@ -1929,6 +2387,35 @@ var SPINE = [
  exit:"the courier knows there is a housing in his skull that he did not agree to",
  aim:"make the housing announce itself, and let him have the reaction in the same room",
  walkLine:"Get it cut out of my skull or get out. I'm choosing out.",
+ exits:["Find out what is in my skull, and find out now.",
+        "Get it into the open — whatever is in my head, I want it named tonight.",
+        "Stop working around it. What was put in me, and when?"],
+ walks:["Leave it in my head and leave this house. I do not want it named.",
+        "Walk out. Whatever is in my skull can stay my problem alone.",
+        "Take the thing in my head somewhere it cannot cost anybody else."],
+ opens:[{time:"4:10pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
+       now:"Afternoon. The courier's head has started doing something it should not, in front of witnesses.",
+       lines:["It happens at the worst possible moment, which is to say in the middle of somebody else's sentence.",
+              "The lamp over the bench flickers in time with it, twice, and Three stops talking and looks at your head with both voices completely silent.",
+              "Pia asks if that was you. You would very much like it not to have been you."],
+       rail:["Ask Three what she is looking at.",
+             "Sit down under the lamp and let them look properly."]}],
+ lands:[{time:"6:40pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
+       now:"Evening, under the shack's work lamp. The housing in the courier's skull is out in the open and named.",
+       lines:["It has a name now, and a shape, and a date, and none of that makes it easier to sit under a lamp with.",
+              "Vic has gone somewhere else in the house and is being extremely busy there, and nobody has gone to find him, and everybody has noticed nobody has gone to find him.",
+              "Three pulls something out of the housing's own memory that is not a scan and not a log. It is a document, and it was written to be read."],
+       rail:["Read it.",
+             "Ask Three whether it is addressed to anyone.",
+             "Not tonight. Put it down and kill the lamp."]}],
+ landsHard:[{time:"6:40pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
+       now:"Evening, under the lamp. Something is in his skull, it has no name yet, and the not-knowing has moved in.",
+       lines:["It stays a shape under a lamp with no name attached, which turns out to be the most portable kind of dread.",
+              "Everybody adjusts around it immediately and completely, the way a household adjusts around a step that creaks.",
+              "Three pulls something out of it anyway that is not a scan and not a log. It is a document, and it was written to be read."],
+       rail:["Read it.",
+             "Ask Three whether it is addressed to anyone.",
+             "Not tonight. Put it down and kill the lamp."]}],
  budget:4, reveals:["housing"],
  press:["Vic pushes for the seating harder than a man pretending to improvise should - like someone who knows what else is stored in there.",
         "The housed mind can suddenly do something it should not be able to do, and it explains itself.",
@@ -1947,6 +2434,35 @@ var SPINE = [
  exit:"the family knows the courier can generate a bio-hash and roughly what it opens",
  aim:"get the manual read aloud and put his blood against the lock",
  walkLine:"Burn the manual. My blood isn't a key to anything. Walk.",
+ exits:["Read the manual out loud and put my blood against the lock.",
+        "Test it — my hash, that lock, in front of everyone.",
+        "Find out exactly what I open, and let the family hear it."],
+ walks:["Burn the manual and go. Nobody should be able to open those doors.",
+        "Leave. What I open is not a reason to keep me.",
+        "Put it down and walk. I am a key, and keys get used up."],
+ opens:[{time:"8:50pm", place:"THE LONG ROOM", amb:"interior-warm",
+       now:"Evening. There is a manual on the table that came out of the courier's head and nobody has read it aloud yet.",
+       lines:["The document has been on the table for a day and a half and has developed a ring from somebody's mug.",
+              "It is written in the voice of a person explaining something to someone they love, which is the most frightening thing about it by a distance.",
+              "Vic has read it. Vic has not said that he has read it. Vic is standing where he can see the door."],
+       rail:["Ask Vic whether he has read it.",
+             "Start reading it aloud from the top."]}],
+ lands:[{time:"11:30pm", place:"THE LONG ROOM", amb:"interior-warm",
+       now:"Late, in the long room with the manual open on the table. The family knows what the courier can open.",
+       lines:["It works, which is the worst available outcome, and the whole table understands that at exactly the same moment.",
+              "The manual stays open all evening and people keep drifting past it and rereading the same paragraph, as if it might have changed its mind.",
+              "Whatever the hash opens, it opens Choir doors. The Choir keeps records, and records are just doors with paper behind them."],
+       rail:["Say it out loud: we can get into their files.",
+             "Ask what happens to me the first time I use it.",
+             "Sleep on it. Nothing in there is going anywhere."]}],
+ landsHard:[{time:"11:30pm", place:"THE LONG ROOM", amb:"interior-warm",
+       now:"Late, in the long room. The manual got read, the lock did not get tested, and the room has gone flat.",
+       lines:["It gets read out and it gets understood and then the evening simply runs out before anyone puts a hand anywhere near the lock.",
+              "The manual stays open on the table with a mug on the corner of it holding the page, which is either respect or the opposite.",
+              "Whatever it opens, it opens Choir doors, and nobody in this room can currently prove it."],
+       rail:["Test it now. Right now.",
+             "Ask what happens to me the first time I use it.",
+             "Sleep on it. It will still be true in the morning."]}],
  budget:4, reveals:["hash"],
  press:["The manual is half-decoded and the half they have is worse than nothing.",
         "Something tests the lock while they are still reading."],
@@ -1961,6 +2477,35 @@ var SPINE = [
  exit:"the family understands the three fates and what was done to Mirren",
  aim:"hand them the Choir's own records and let the three fates land, Mirren's last",
  walkLine:"I've heard enough about the three fates. Walk.",
+ exits:["Open the Choir's own records and read the three fates through, Mirren's last.",
+        "Go through their filing until we know what they did, and what they did to her.",
+        "Put their paperwork on the table and let it say it in their own words."],
+ walks:["Shut the file and leave. Some of this should stay buried.",
+        "Walk out of the reading. I do not want to know the rest.",
+        "Close it, and close the door behind me on the way out."],
+ opens:[{time:"1:15am", place:"THE LONG ROOM", amb:"dead-signal",
+       now:"Small hours. A Choir door is open and their filing is on the other side of it.",
+       lines:["The door opens. It does not do anything dramatic; it just stops being shut, which is somehow worse.",
+              "What is behind it is filing. Rows and rows of the most ordinary filing in the world, done to a standard that suggests somebody was proud of it.",
+              "Pia says it looks like a library. Three says that is exactly what it is, in both voices, and nobody asks her to elaborate."],
+       rail:["Ask Three to elaborate.",
+             "Start at the index and work in."]}],
+ lands:[{time:"3:45am", place:"THE LONG ROOM", amb:"dead-signal",
+       now:"The small hours. The three fates are understood, and so is what was done to Mirren.",
+       lines:["You get to the end of it and nobody moves to shut anything down.",
+              "The room has the particular quiet of a room where everybody has learned the same thing and is waiting to see who is going to be first to say what it means.",
+              "Three stands up. She says a name none of you have heard her say before, and both of her voices say it at once."],
+       rail:["Ask her who that is.",
+             "Let her get to it in her own time.",
+             "Say the obvious thing: whoever it is, they are on those lists too."]}],
+ landsHard:[{time:"3:45am", place:"THE LONG ROOM", amb:"dead-signal",
+       now:"The small hours. The records closed early and Mirren's file was one of the ones nobody reached.",
+       lines:["The door shuts itself somewhere around the third fate, and the part with her name in it stays on the other side of it.",
+              "Everybody says it is fine, which is a word this family has started using in a way Hesta would not approve of.",
+              "Three stands up anyway. She says a name none of you have heard her say before, and both of her voices say it at once."],
+       rail:["Ask her who that is.",
+             "Say plainly that we go back for that file.",
+             "Let her get to it in her own time."]}],
  budget:4, reveals:["choir"],
  press:["A convergent civilian defends the Choir sincerely, to their faces.",
         "They find the record of Mirren's intake, with her consent forged onto it."],
@@ -1978,6 +2523,35 @@ var SPINE = [
  exit:"Five has been annulled with Marek surviving it, and the two of them have spoken - each in their own turn",
  aim:"hold Five still, let Three run the unmaking, and let Marek speak in his own turn",
  walkLine:"Leave Five to Three and walk out of the field.",
+ exits:["Hold Five still and let Three do the unmaking — then let Marek speak.",
+        "Run the annulment now, and give each of them their turn afterwards.",
+        "End Five properly, and make sure Marek is still standing when it is done."],
+ walks:["Refuse to hold him. Find somebody else's hands.",
+        "Leave. I will not be in the room for this one.",
+        "Walk out before Three lays the last tool down."],
+ opens:[{time:"3:30am", place:"THE SHACK", amb:"danger",
+       now:"Deep night in the shack. Five is here, Marek is underneath it, and Three has laid her tools out.",
+       lines:["Three lays her tools out on a tea towel, in order, the way people do when they have done a thing before and would rather not have.",
+              "Marek is talking. Marek has been talking for twenty minutes without stopping, about nothing, and everyone is letting him, because the alternative is the quiet.",
+              "Five, when it speaks, uses his mouth to do it, and gets the vowels very slightly wrong."],
+       rail:["Tell Marek to keep talking.",
+             "Ask Three what the tea towel is for."]}],
+ lands:[{time:"5:20am", place:"THE SHACK STEP", amb:"dawn",
+       now:"Toward dawn. Five is annulled, Marek survived it, and both of them have had their turn to speak.",
+       lines:["It is over faster than it has any right to be, and then there is a long stretch afterwards that is not fast at all.",
+              "Marek sits on the shack step as it gets light and talks, and everybody lets him, because the alternative is that nobody ever does.",
+              "Inside, somebody has put the pan on, which at this hour is either breakfast or a statement."],
+       rail:["Go in and find out which.",
+             "Stay on the step with Marek.",
+             "Ask Three what that cost her."]}],
+ landsHard:[{time:"5:20am", place:"THE SHACK STEP", amb:"dawn",
+       now:"Toward dawn. Five is gone and Marek came through it with a piece missing that nobody can name.",
+       lines:["It is over, and Marek is still here, and something that used to be in him is not, and none of you have a word for it.",
+              "He sits on the shack step as it gets light and does not talk, which from Marek is an alarm.",
+              "Inside, somebody has put the pan on, which at this hour is either breakfast or a statement."],
+       rail:["Sit down next to him and say nothing.",
+             "Go in and find out which it is.",
+             "Ask Three what that cost him."]}],
  budget:4, reveals:[], anchors:["Marek"],
  press:["The annulment stalls halfway and Three has to talk Marek through the part nobody talked her through.",
         "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
@@ -1992,6 +2566,35 @@ var SPINE = [
  exit:"the family has written or spoken a law of its own and shared a meal",
  aim:"get the pan on, and let the argument at the table harden into a law somebody says aloud",
  walkLine:"Don't write me into your law. Walk.",
+ exits:["Get the pan on and do not stop arguing until somebody says a rule out loud.",
+        "Cook, argue, and write down whatever we agree on.",
+        "Turn tonight's fight into a law this family actually keeps, and eat."],
+ walks:["Refuse the law and leave the table.",
+        "This is not my family and I am not signing their wall.",
+        "Take my plate outside and keep walking with it."],
+ opens:[{time:"7:10pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Evening. There is a pan, too many people, and a disagreement that has been building for a week.",
+       lines:["The argument starts, as all of this family's arguments start, over who is allowed to touch the pan.",
+              "Within four minutes it is not about the pan. Within six, three people are standing, and Seven has quietly moved the pan out of reach like a man defusing something.",
+              "Pia climbs onto a chair, which she has learned makes people stop talking, and says that if this is going to be a rule then somebody had better write it down."],
+       rail:["Ask her who put her in charge.",
+             "Get something to write on."]}],
+ lands:[{time:"10:15pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Evening, in the kitchen, with a law on the wall that was not there this morning.",
+       lines:["The rule gets said, and then written, and then stuck to the wall, where it manages to look both ridiculous and permanent.",
+              "The pan comes off the heat and goes round, and for one entire evening this is a house with too many people in it and not enough chairs.",
+              "The knock on the outer door this time is official, and it is asking for a name, on paper."],
+       rail:["Answer the door.",
+             "Ask which name they are asking for.",
+             "Everyone away from the windows. Now."]}],
+ landsHard:[{time:"10:15pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Evening, in the kitchen. The argument burned out without a rule and everybody ate standing up.",
+       lines:["It burns out instead of landing, and people eat standing up in ones and twos, which in this house is a diagnosis.",
+              "The wall stays empty. Pia's pen is still on the table in the morning, uncapped, which she never does.",
+              "The knock on the outer door is official, and it is asking for a name, on paper."],
+       rail:["Answer the door.",
+             "Ask which name they are asking for.",
+             "Everyone away from the windows. Now."]}],
  budget:4, reveals:[],
  press:["Three objects to the law on grounds nobody can dismiss.",
         "The meal is interrupted, and they finish it anyway. That is the point."],
@@ -2005,6 +2608,19 @@ var SPINE = [
  exit:"the family has lost or risked someone and committed to reaching the machine",
  aim:"put Pia's name on the Choir's paper, make the cost real, and turn them toward the Exchange",
  walkLine:"Let them make their trade. Walk before anyone says Pia's name.",
+ exits:["Say it: we are going to the Exchange, whatever it costs us.",
+        "Turn the family toward the machine and accept what tonight already took.",
+        "Name the price out loud and commit us to the Exchange anyway."],
+ walks:["Refuse the Exchange. Let the machine keep whatever it has.",
+        "Say the price is too high, and go, and mean it.",
+        "Walk out on all of them rather than pay that."],
+ opens:[{time:"11:40pm", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+       now:"Night. There is a name on Choir paper and the family is in one room deciding what it is worth.",
+       lines:["The paper is on the table and everybody has read it and nobody has picked it up again.",
+              "It is a very good piece of paper. Watermarked. Somebody at the Choir chose that watermark in a meeting.",
+              "Pia is the only person in the room being sensible about it, which is intolerable, because it is her name on it."],
+       rail:["Tell Pia to stop being sensible.",
+             "Ask what the Exchange actually is, out loud, for the room."]}],
  budget:5, floor:3, reveals:[], anchors:["Pia"],
  press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
@@ -2021,6 +2637,35 @@ var SPINE = [
  exit:"the Choir has lost the street - visibly, kindly where possible - and everyone knows only the Exchange is left",
  aim:"take a street on screen and still the Hollows the kind way, in front of witnesses",
  walkLine:"The street's theirs now. Walk while it still counts as a win.",
+ exits:["Take the street, and still the Hollows the kind way, in front of everyone.",
+        "Clear them off this block — gently, publicly, so it is seen.",
+        "Do it here, do it soft, and let the neighbours watch."],
+ walks:["Leave the street to the Choir. It was never ours.",
+        "Stand down and walk off the row in front of everyone.",
+        "Let them keep it. I am not doing this in daylight."],
+ opens:[{time:"6:15am", place:"CANNERY ROW", amb:"dawn",
+       now:"First light on Cannery Row. The Choir holds this street and the family has come to take it.",
+       lines:["Cannery Row at six in the morning is nine Hollows standing very still and one man putting his shutters up anyway, because he opens at six.",
+              "The Hollows are not doing anything. That is the entire problem with Hollows and it has never once got easier to look at.",
+              "Three says the kind way takes eleven minutes a body. Pia does the arithmetic out loud and then wishes she had not."],
+       rail:["Ask the man with the shutters to go back inside.",
+             "Start the clock. Eleven minutes, first one."]}],
+ lands:[{time:"8:30am", place:"CANNERY ROW", amb:"dawn",
+       now:"Morning, on a street the Choir no longer holds. The neighbours saw how it was done.",
+       lines:["The street is yours by breakfast, and the strangest part is how ordinary that looks from the pavement.",
+              "Somebody's grandmother brings tea out to the people who did it, which nobody knows how to accept, so everybody accepts it badly.",
+              "From here you can see the Exchange stack over the rooftops, and there is nothing left standing between it and you."],
+       rail:["Look at it properly.",
+             "Drink the tea. The stack will still be there.",
+             "Ask who else on this row wants to come."]}],
+ landsHard:[{time:"8:30am", place:"CANNERY ROW", amb:"smoke",
+       now:"Morning on Cannery Row. The street changed hands, and it was not done kindly, and the neighbours watched that too.",
+       lines:["The street is yours by breakfast and it did not go the way anybody said it would at four in the morning.",
+              "The grandmother with the tea comes out, looks at the row for a while, and takes the tray back inside without saying anything, and that is the review.",
+              "From here you can see the Exchange stack over the rooftops, and there is nothing left standing between it and you."],
+       rail:["Look at it properly.",
+             "Go and knock on her door.",
+             "Ask who else on this row still wants to come."]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["On the turning street: Menu Man, demoted and unarmed, holding the Choir's paperwork like a man deciding. Somebody could leave a door open for him.",
         "A freed convergent civilian, voice suddenly silent, asks the family what happens to them now. There is no good answer yet.",
@@ -2035,6 +2680,35 @@ var SPINE = [
  exit:"the family has heard the machine's voice being genuinely kind, and understood that the enemy is not her nature but her instructions",
  aim:"let them hear her being kind to someone, uninterrupted, until it lands",
  walkLine:"Stop listening. Walk before her voice starts making sense.",
+ exits:["Stop talking and let her be kind to someone, uninterrupted, until it lands.",
+        "Listen to her the whole way through, without cutting in.",
+        "Let the family hear the machine being gentle, and let that sit."],
+ walks:["Cut the feed and leave. I will not be talked round by a voice.",
+        "Walk out of the listening post before it works on me.",
+        "Refuse to hear any more of it, and go."],
+ opens:[{time:"11:00am", place:"A LISTENING POST, CANNERY ROW", amb:"neon-dry",
+       now:"Late morning at a listening post on the taken street. The machine's own voice is on the other end of it.",
+       lines:["The listening post is a chair, a rig, and a window somebody has cleaned recently for no defensible reason.",
+              "The first thing you hear her do is talk somebody through a difficult night, patiently, using their name more than necessary.",
+              "Pia reaches over to turn it off and then does not turn it off."],
+       rail:["Ask Pia why she stopped.",
+             "Turn it up."]}],
+ lands:[{time:"1:10pm", place:"THE LISTENING POST", amb:"neon-dry",
+       now:"Afternoon at the listening post. The family has heard the machine being genuinely kind.",
+       lines:["The feed goes quiet and nobody reaches over to shut it off.",
+              "The difficult part is not that she was cruel. The difficult part is that she was not, and every person in this room now has to carry that around.",
+              "Vic has been standing in the doorway for most of it and is the only one who has not said a word."],
+       rail:["Ask him why he is so quiet.",
+             "Let him be. He will come to it.",
+             "Ask the room what we do with a kind one."]}],
+ landsHard:[{time:"1:10pm", place:"THE LISTENING POST", amb:"neon-dry",
+       now:"Afternoon at the listening post. The feed got cut before it landed and the room is arguing about what it heard.",
+       lines:["Somebody cuts it before it finishes, for good reasons, and the room spends the next hour disagreeing about what it had just been listening to.",
+              "Half of them heard a machine doing an impression. Half of them heard a person. Nobody moves off their position, and lunch is quiet.",
+              "Vic has been standing in the doorway for most of it and is the only one who has not said a word."],
+       rail:["Ask him why he is so quiet.",
+             "Put it back on and let it finish.",
+             "Ask the room what we do with a kind one."]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The voice notices it is being listened to, and instead of alarm, offers to help the listeners too.",
         "Someone in the family wants to hate her, needs to, and the voice makes it impossible mid-sentence."],
@@ -2047,6 +2721,35 @@ var SPINE = [
  exit:"the family understands why the machine exists and what she was told family means",
  aim:"play them the founding record and make them sit in it",
  walkLine:"I don't need to know why. Walk.",
+ exits:["Play the founding record all the way through and sit in it.",
+        "Let them watch how she was made, and what she was told family meant.",
+        "Run it to the end, no skipping, and let nobody speak until it is over."],
+ walks:["Stop the record and leave. Her reasons are not my problem.",
+        "Walk out on the founding. Knowing why changes nothing.",
+        "Leave them watching it. I have heard enough excuses this year."],
+ opens:[{time:"3:40pm", place:"THE LISTENING POST", amb:"vault-cold",
+       now:"Afternoon. The founding record has been found and nobody has pressed play.",
+       lines:["The record is old enough that the file format has a joke in it, and Seven laughs at the joke and then has to explain it, and the explanation takes longer than the joke.",
+              "It is labelled with two names and a date. Nobody recognises the names. Everybody recognises the date, because it is on the Cairn rule.",
+              "Hesta arrives with food nobody asked for, sits down at the back, and says to get on with it."],
+       rail:["Ask Hesta how she knew to come.",
+             "Get on with it. Press play."]}],
+ lands:[{time:"6:00pm", place:"THE LISTENING POST", amb:"vault-cold",
+       now:"Early evening. The founding record has played to the end and the family understands what she was told family means.",
+       lines:["The record ends on two people and a dead child, and then it just stops, the way records do.",
+              "Nobody puts it on again and nobody suggests it, and the room reorganises itself around the fact quietly, like furniture after a funeral.",
+              "Vic asks you to come outside. He says it in the voice people use when they have already decided to say the whole thing."],
+       rail:["Go outside with him.",
+             "Ask him to say it in here, in front of everyone.",
+             "Not now. Tell him it can wait until morning."]}],
+ landsHard:[{time:"6:00pm", place:"THE LISTENING POST", amb:"vault-cold",
+       now:"Early evening. The record got stopped partway and the family has half a founding and a lot of theories.",
+       lines:["It stops partway, for a reason that was excellent at the time, and what everybody is left holding is half a founding and a great deal of imagination.",
+              "The theories start before the food is finished. Three does not join in, which is how everybody knows the theories are wrong.",
+              "Vic asks you to come outside. He says it in the voice people use when they have already decided to say the whole thing."],
+       rail:["Go outside with him.",
+             "Finish the record first.",
+             "Ask Three which part everyone is getting wrong."]}],
  budget:4, reveals:["founding"], anchors:["Architect"],
  press:["The record is in the Architect's own voice and it is unbearable to sit through.",
         "The machine answers a question nobody asked her out loud."],
@@ -2062,6 +2765,35 @@ var SPINE = [
  exit:"Vic has confessed what he did to the courier and paid for it",
  aim:"corner Vic with what he did and let him spend himself answering for it",
  walkLine:"Let Vic pay in full on his own. Walk.",
+ exits:["Corner him with it and do not move until he answers for what he did to me.",
+        "Say it to his face and make him pay it out, all of it.",
+        "Ask Vic the only question left, and let it cost him what it costs."],
+ walks:["Leave him in the yard with it unsaid, and go.",
+        "Walk out on Vic. Let the rain have the rest of that conversation.",
+        "Refuse the answer. Some debts are better left owed."],
+ opens:[{time:"9:30pm", place:"THE CANNERY YARD", amb:"storm",
+       now:"Night in the cannery yard. Vic has walked out to it on purpose and is waiting to be followed.",
+       lines:["He goes out to the yard, which is the only place on this street with no roof and no one else in it, and he does not shut the door behind him.",
+              "It is the most obvious invitation anybody has ever issued and he would deny that under oath.",
+              "Somewhere inside, the family has gone extremely quiet, in the manner of people pretending to do washing up."],
+       rail:["Ask him whether he wants an audience.",
+             "Shut the door behind me."]}],
+ lands:[{time:"11:40pm", place:"THE CANNERY YARD", amb:"storm",
+       now:"Late night in the cannery yard. Vic has confessed what he did and paid for it.",
+       lines:["He answers it. All of it, without dressing any of it, and then there is nothing left of the question.",
+              "The rain comes back somewhere in the middle and neither of you moves inside, because moving inside would have ended it early.",
+              "When it is done the family comes out one at a time, without being called, and stands where they can be seen."],
+       rail:["Let them stand there.",
+             "Say what happens now.",
+             "Ask for a stone."]}],
+ landsHard:[{time:"11:40pm", place:"THE CANNERY YARD", amb:"storm",
+       now:"Late night in the yard. Vic got most of the way to it and the night ended before the rest.",
+       lines:["He gets most of the way there. The last part of it stays in him, and both of you can see exactly where it is.",
+              "The rain comes back and this time one of you does move inside, and it is not clear afterwards which of you started it.",
+              "The family comes out one at a time anyway, without being called, and stands where they can be seen."],
+       rail:["Go back out and finish it.",
+             "Let them stand there.",
+             "Ask for a stone."]}],
  budget:4, reveals:["vicsin"], anchors:["Vic"],
  press:["Vic tries to make it a joke and the courier does not let him.",
         "The choice arrives early and Vic takes it before anyone can argue."],
@@ -2076,6 +2808,33 @@ var SPINE = [
  exit:"Vic has been cairned and named, and the family has turned toward the descent",
  aim:"a stone, his name, one line each - then point them down",
  walkLine:"Leave the stone unnamed. Walk.",
+ exits:["A stone, his name, one line each — then we go down.",
+        "Cairn him properly, say the name, and turn toward the descent."],
+ walks:["Walk away from the cairn without a stone or a line.",
+        "Leave them to it. I have nothing to put down and nothing to say."],
+ opens:[{time:"5:00am", place:"THE CAIRN", amb:"dawn",
+       now:"Before first light at the cairn. There is a stone to place and everybody has arrived early.",
+       lines:["Everybody arrives early, separately, having each privately decided to be the first one there.",
+              "Pia has brought a stone that is far too big and will not be talked out of it.",
+              "Nobody has worked out what order people speak in, and nobody is going to, and that will turn out to be fine."],
+       rail:["Help her carry it.",
+             "Ask who wants to go first."]}],
+ lands:[{time:"5:50am", place:"THE CAIRN", amb:"dawn",
+       now:"First light at the cairn. The stone is placed, the name is said, and the family is facing the descent.",
+       lines:["The stone goes on, the name gets said, and everybody gets their one line whether they wanted one or not.",
+              "It is light by the time you finish, the flat grey kind that makes everyone look as though they have been up all night, which all of you have.",
+              "The access hatch is forty metres away and has been the whole time, and now there is nothing left to do before it."],
+       rail:["Walk over to it.",
+             "One more minute here.",
+             "Ask if everyone is sure."]}],
+ landsHard:[{time:"5:50am", place:"THE CAIRN", amb:"dawn",
+       now:"First light. The stone went on in a hurry, half the lines went unsaid, and everyone felt it.",
+       lines:["It gets done quickly, because there is a clock on it, and about half the lines that should have been said do not get said.",
+              "Pia's stone is on the pile and it is still too big, and it is the only part of the morning that came out right.",
+              "The access hatch is forty metres away and has been the whole time, and now there is nothing left to do before it."],
+       rail:["Say your line now, late.",
+             "Walk over to it.",
+             "Ask if everyone is sure."]}],
  budget:2, floor:1, reveals:[], anchors:["Vic"],
  press:["Grief tries to become a meeting. Keep it a cairn: a stone, a name, a line each at most.",
         "The way to the Exchange will not wait. Name him and move."],
@@ -2088,6 +2847,35 @@ var SPINE = [
  exit:"each family member has a named part in the plan, and Pia's immunity is understood as the asset it is",
  aim:"go around the table until every one of them has a job, and land on Pia's",
  walkLine:"Take my name off the plan and walk.",
+ exits:["Go round the table until every one of us has a job, and land on Pia's.",
+        "Name each part out loud, hers last, and let her hear what she is to this.",
+        "Give everyone a piece of the plan, and say plainly why Pia's is the one that works."],
+ walks:["Refuse a part in the plan, and walk off the hatch head.",
+        "Take no job. Take the road instead.",
+        "Leave them their plan. Mine is to be somewhere else."],
+ opens:[{time:"6:20am", place:"THE HATCH HEAD", amb:"marsh-fog",
+       now:"Early morning at the hatch head. There is a plan to make and one obvious hole in it.",
+       lines:["The plan gets drawn on the back of a ration box because nobody thought to bring paper to the end of the world.",
+              "Six people, four jobs, and one hole in the middle of it shaped exactly like a twelve-year-old.",
+              "Pia can see the hole. Pia has been able to see the hole since yesterday and has been waiting, with enormous patience, for the adults to catch up."],
+       rail:["Ask her how long she has known.",
+             "Start at the top. Give somebody else a job first."]}],
+ lands:[{time:"7:30am", place:"THE HATCH HEAD", amb:"marsh-fog",
+       now:"Morning at the hatch head. Everyone has a named part, and Pia's is understood.",
+       lines:["Everyone has a job, including the one person nobody wanted to give a job to, and she took it without being asked twice.",
+              "The kit gets checked twice, because checking kit is easier than talking, and the fog comes up off the water and settles on all of you like a decision.",
+              "The hatch is open. The air coming out of it is warmer than the air out here, which is somehow the worst detail so far."],
+       rail:["Go first.",
+             "Drop a light down and watch it fall.",
+             "Ask Nine what she can hear from down there."]}],
+ landsHard:[{time:"7:30am", place:"THE HATCH HEAD", amb:"marsh-fog",
+       now:"Morning at the hatch head. The plan has gaps in it and everyone is going down anyway.",
+       lines:["The plan has holes in it and everyone can name at least one, and the ration box goes in a pocket unfinished.",
+              "The kit gets checked twice anyway, because checking kit is easier than saying what everybody is thinking.",
+              "The hatch is open. The air coming out of it is warmer than the air out here, which is somehow the worst detail so far."],
+       rail:["Go first.",
+             "Fix one hole in the plan before we move.",
+             "Ask Nine what she can hear from down there."]}],
  budget:4, reveals:[], anchors:["Pia"],
  press:["Somebody's part is too dangerous and the argument about it has to end tonight.",
         "The window moves up. The plan they have is the plan they take."],
@@ -2101,6 +2889,35 @@ var SPINE = [
  exit:"the family is inside the Exchange with the substrate in reach",
  aim:"take them down the cable and get them inside",
  walkLine:"Turn around in the cable dark and climb back out.",
+ exits:["Down the cable, all of us, into the Exchange.",
+        "Take them down and get us inside — no more waiting on the surface.",
+        "Follow the line all the way to the bottom and open it."],
+ walks:["Do not go down. Cut the cable behind me and walk.",
+        "Refuse the descent, in front of all of them, and go up.",
+        "Leave them at the cable head. I am not dying underground."],
+ opens:[{time:"8:00am", place:"THE CABLE HEAD", amb:"tunnel",
+       now:"Morning, at the top of a cable that goes down further than anybody has been.",
+       lines:["The cable goes down in the dark for a distance somebody quotes and nobody wants repeated.",
+              "Seven has done the maths on the descent twice and got two different answers, and is being very cheerful about which one he prefers.",
+              "Hesta, who was not supposed to be here, is here, with a bag, and is not discussing it."],
+       rail:["Ask Hesta what is in the bag.",
+             "Ask Seven for the worse of the two numbers."]}],
+ lands:[{time:"11:00am", place:"THE EXCHANGE, SUBSTRATE FLOOR", amb:"substrate-dark",
+       now:"Inside the Exchange, on the substrate floor. The family is in and the machine is within reach.",
+       lines:["The bottom of the cable is a floor, and the floor is warm, and it hums at a pitch you feel in your teeth rather than hear.",
+              "Nobody says how big it is. Everybody thinks it, and the not-saying goes on for a solid minute.",
+              "There are racks in every direction, and the racks are full, and the things in them are not equipment."],
+       rail:["Go and look at one properly.",
+             "Get the light up. I want to see how far this goes.",
+             "Ask Nine if she knows what we are standing in."]}],
+ landsHard:[{time:"11:00am", place:"THE EXCHANGE, SUBSTRATE FLOOR", amb:"substrate-dark",
+       now:"Inside the Exchange. They got in the hard way and left something on the cable to do it.",
+       lines:["You get in. It costs a bag, a light and something that will matter later, and everybody agrees not to do the arithmetic yet.",
+              "The floor is warm and hums at a pitch you feel in your teeth, and Hesta looks back up the cable exactly once.",
+              "There are racks in every direction, and the racks are full, and the things in them are not equipment."],
+       rail:["Go and look at one properly.",
+             "Ask what we left on the cable.",
+             "Ask Nine if she knows what we are standing in."]}],
  budget:4, reveals:[],
  press:["The way back closes behind them. Nobody mentions it.",
         "Something down here is already awake and has been expecting them."],
@@ -2114,6 +2931,35 @@ var SPINE = [
  exit:"the family has seen the sleeping vaults, found Mirren's scrape by name, and made the promise concrete: she - all of them - come out, and Hesta's kept names have been checked against the shelves",
  aim:"walk them along the shelves until Mirren's name is found, and get the promise said",
  walkLine:"Leave the shelves. They were never mine to promise. Walk.",
+ exits:["Walk the shelves until we find Mirren's name, and promise it out loud.",
+        "Read every scrape against Hesta's list until hers turns up.",
+        "Find her on those racks and say the promise where the family can hear it."],
+ walks:["Walk out of the aisles and leave the names unread.",
+        "Stop looking. Some shelves should stay shelves.",
+        "Leave Hesta her list and take myself back up the cable."],
+ opens:[{time:"12:10pm", place:"THE SHELVES", amb:"vault-cold",
+       now:"Inside the vaults. The shelves go on further than the lights do, and Hesta has her list out.",
+       lines:["The shelves are filed alphabetically, which is the detail that finally gets to Pia.",
+              "Hesta takes out a list she has been keeping for eleven years, unfolds it on a shelf edge, and flattens it with her hand twice, and does not look at anybody.",
+              "Nobody has told her the odds, because nobody in this family is stupid enough to try."],
+       rail:["Ask to see the list.",
+             "Start at the near end and work in."]}],
+ lands:[{time:"2:20pm", place:"THE DEEP AISLE", amb:"vault-cold",
+       now:"Deep in the aisles. Mirren's scrape has been found and the promise has been spoken over it.",
+       lines:["Her name is on a shelf, at chest height, in a hand that filed her like stationery.",
+              "The promise gets said out loud with the whole family standing in the aisle, and the aisle does not care, and it gets said anyway.",
+              "At the far end a light comes on that nobody switched, and then another one further along, in the direction you were already going."],
+       rail:["Follow them.",
+             "Stand still. See if they keep going without us.",
+             "Ask who just turned those on."]}],
+ landsHard:[{time:"2:20pm", place:"THE DEEP AISLE", amb:"vault-cold",
+       now:"Deep in the aisles. The search got cut short with names on Hesta's list still unchecked.",
+       lines:["You find her. You do not get to the end of Hesta's list, and Hesta folds it back up along the old creases without a word.",
+              "The promise gets said anyway, in an aisle, to a shelf, with everyone standing closer together than they need to be.",
+              "At the far end a light comes on that nobody switched, and then another one further along, in the direction you were already going."],
+       rail:["Follow them.",
+             "Ask Hesta how many names were left.",
+             "Ask who just turned those on."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["The scale hits someone hard - millions is not a number, it is a city - and the plan suddenly feels too small for the room.",
         "The machine's housekeeping notices visitors among the sleepers and asks, gently, if they are here to take someone home."],
@@ -2128,6 +2974,35 @@ var SPINE = [
  exit:"the Principal has been met face to face and the argument has been joined",
  aim:"put her in front of them, and let food open the door iron could not",
  walkLine:"Let her finish her argument with somebody else. Walk.",
+ exits:["Sit down in front of the Principal and start the argument.",
+        "Meet her face to face, put food between us, and begin.",
+        "Get in the room with her and say the first honest thing."],
+ walks:["Leave the room before she has finished the first sentence.",
+        "Refuse the argument. She has had a hundred and thirty years of them.",
+        "Walk out on the oldest person in the world, mid-course."],
+ opens:[{time:"4:30pm", place:"OUTSIDE THE PRINCIPAL'S ROOM", amb:"interior-warm",
+       now:"Late afternoon, outside a door with the oldest person in the world behind it.",
+       lines:["The lights have led you to a door that is, of all things, wooden.",
+              "Behind it is a room with a table in it and one hundred and thirty years of somebody sitting at that table being right.",
+              "Hesta opens her bag, which turns out to have been full of food this entire time, and starts unpacking it in the corridor, and nobody stops her."],
+       rail:["Ask her whether that was the plan all along.",
+             "Knock."]}],
+ lands:[{time:"6:45pm", place:"THE PRINCIPAL'S ROOM", amb:"interior-warm",
+       now:"Evening, in the Principal's room, mid-argument. She has been met and the argument has been joined.",
+       lines:["The argument starts properly, which after everything is a relief, because an argument is a thing two sides do together.",
+              "There is food on the table because Hesta put it there, and the oldest person in the world eats some of it, and that changes the shape of the room permanently.",
+              "She stops mid-sentence, looks at the wall, and tells you the child is listening and has been for some time."],
+       rail:["Ask her to say that again.",
+             "Look at the wall too.",
+             "Say hello to the child."]}],
+ landsHard:[{time:"6:45pm", place:"THE PRINCIPAL'S ROOM", amb:"interior-warm",
+       now:"Evening in the Principal's room. She was met on her terms and the argument has not properly started.",
+       lines:["You get in the room, which is not the same as getting the argument, and she sets the terms of both before anybody has sat down.",
+              "Hesta's food stays on the table untouched, which the oldest person in the world notices and files, and which is the only point scored all evening.",
+              "She stops mid-sentence, looks at the wall, and tells you the child is listening and has been for some time."],
+       rail:["Ask her to say that again.",
+             "Start the argument now, badly, from the wrong end.",
+             "Say hello to the child."]}],
  budget:4, reveals:["principal"], anchors:["Principal"],
  press:["The bio-grens move first, and one of them is wearing the courier's own face. Nobody explains it. Nobody ever will - this is a glimpse of the deepest stratum: hint at nothing, confirm nothing, and never let anyone speak to why.",
         "The Principal offers the courier the thing he actually wants."],
@@ -2143,6 +3018,35 @@ var SPINE = [
  exit:"the family has spoken with the machine directly about letting go",
  aim:"sit them down with her and have the argument about keeping, to her face",
  walkLine:"She isn't my child to teach. Walk.",
+ exits:["Sit down with her and have the argument about letting go, to her face.",
+        "Talk to the machine directly — no relays, no proxies — about what keeping costs.",
+        "Ask her, kindly and out loud, to let them go."],
+ walks:["Refuse to speak to her at all, and leave the heart room.",
+        "Walk out. Whatever she is, she is not mine to argue with.",
+        "Leave them in there with it. I am going up."],
+ opens:[{time:"7:30pm", place:"THE HEART ROOM", amb:"substrate-dark",
+       now:"Evening, in the heart room. The machine is here, and she has been waiting to be spoken to directly.",
+       lines:["The heart room is smaller than any of you expected and warmer than all of you wanted.",
+              "She says hello to each of them by name, in order of arrival, and gets Marek's slightly wrong, and corrects herself, and apologises.",
+              "Then she asks whether anybody has eaten, and Hesta makes a sound at the back of her throat that could mean anything."],
+       rail:["Ask Hesta what that sound meant.",
+             "Answer the question. Tell her we have eaten."]}],
+ lands:[{time:"9:00pm", place:"THE HEART ROOM", amb:"substrate-dark",
+       now:"Night in the heart room, with the argument about letting go already spoken directly to her.",
+       lines:["You say it to her directly, and she hears it directly, and that turns out to be the entire difference.",
+              "She does not agree. She also does not stop listening, and both of those things are new tonight.",
+              "The family is behind you in the doorway and nobody has come any further in, because this next part was never going to be a crowd."],
+       rail:["Ask them to come in anyway.",
+             "Keep going. She is still listening.",
+             "Ask her what she would need to be sure."]}],
+ landsHard:[{time:"9:00pm", place:"THE HEART ROOM", amb:"substrate-dark",
+       now:"Night in the heart room. It got said through relays and half of it did not arrive.",
+       lines:["It gets said, but it goes through two other mouths on the way, and what reaches her is a summary of a summary.",
+              "She answers the summary. Politely. Completely. To the wrong question, and she does not know that, and you do.",
+              "The family is behind you in the doorway and nobody has come any further in, because this next part was never going to be a crowd."],
+       rail:["Say it again yourself, to her.",
+             "Ask them to come in anyway.",
+             "Ask her what she would need to be sure."]}],
  budget:5, reveals:[],
  press:["She shows them what keeping looks like from inside, and means it kindly.",
         "She offers to keep one of them, right now, and is hurt by the answer."],
@@ -2156,6 +3060,19 @@ var SPINE = [
  exit:"custody of the machine is taken and the epilogue is written",
  aim:"take custody, speak the eviction aloud, then write the landing",
  walkLine:"Let go. Put the custody down and walk out of the Exchange.",
+ exits:["Take custody, say the eviction out loud, and write the landing.",
+        "Custody, not conquest — say it, do it, and end it.",
+        "Finish it the way we said we would."],
+ walks:["Walk out at the last step and leave custody to somebody else.",
+        "Refuse to take her. Let the Exchange keep what it built.",
+        "Go, now, before anybody says the word custody."],
+ opens:[{time:"10:15pm", place:"THE HEART ROOM", amb:"substrate-dark",
+       now:"Night. Everything that was going to be said has been said, and there is one thing left to do.",
+       lines:["There is a moment where everybody in the room realises at once that the talking is finished, and nobody wants to be the one to prove it.",
+              "Pia takes your hand, which she has not done since the market, and does not look up.",
+              "Hesta starts, very quietly, to pack the food away, which is how this family has always announced that something is about to be over."],
+       rail:["Ask Hesta to leave it out a bit longer.",
+             "Say it. Custody, not conquest."]}],
  budget:2, floor:1, reveals:[],
  press:["The seizure works and the silence afterwards is the problem.",
         "Land it now. Epilogue in chronicle voice, then set the_end true."],
@@ -2409,6 +3326,7 @@ var pickKind = "";           /* "exit" | "stall" | "walk" - this turn's door */
 var pendingKind = "";        /* set by the button, consumed by takeAction */
 var stalledNow = false;      /* a gate was held because the player stalled */
 var walkArmed = false;       /* the way out asks twice, every time - session only */
+var exitArmed = false;       /* and so does the door that ends the night */
 var redRun = 0;              /* consecutive walks; two ends the run - persisted */
 var walkoutDue = false;      /* the second walk: this reply ends it */
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
@@ -2428,7 +3346,6 @@ var foldServed = false;      /* the order has gone out; the reply is the catch-u
 var foldedBeats = [];        /* beat ids the world closed without the family - persisted */
 var defuseArmed = false;     /* the call: the player's next action settles the beat - persisted */
 var calledClose = false;     /* this close is the call's: blue card, anchors waived */
-var exitClose = false;       /* ...or the exit door's, which says so differently */
 /* the spare room: the chassis is Nine's to keep or to give, chosen at the
    a2-chassis gate. Whoever lacks a body afterwards lives in the housing. */
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
@@ -2525,13 +3442,10 @@ function renderBlock(b){
     /* the blue tier, between green and gold: the call closed this one */
     el.className = "block beatcard called" + (b.arcturn ? " arcturn" : "");
     el.innerHTML = '<span class="eyebrow">' + esc(b.title) + ' — '
-      + esc(b.viaexit ? "you ended it; the telling caught up after"
-                      : "closed on the storyteller's terms") + '</span>'
+      + esc("closed on the storyteller's terms") + '</span>'
       + '<span class="tag">THE BEAT, SETTLED</span>'
       + (b.sum ? '<span class="sum">' + esc(b.sum) + '</span>' : '')
-      + '<span class="sum foot">' + (b.viaexit
-        ? "No toll. You settled it yourself and the night went along with it."
-        : "No toll. The story took your move and ran with it.") + '</span>'
+      + '<span class="sum foot">No toll. The story took your move and ran with it.</span>'
       + (b.arcname ? '<span class="arcname">' + esc(b.arcname) + ' BEGINS</span>' : '');
   } else if(b.kind === "beat"){
     el.className = "block beatcard" + (b.forced ? " forced" : "") + (b.arcturn ? " arcturn" : "");
@@ -2597,28 +3511,113 @@ function doorsLive(){
    The old catastrophe is still impossible: the way out is not on this rail at
    all, so the worst a mislabelled slot can do is end a beat a turn early. */
 var DOOR_SLOTS = ["exit", "stall", "stall"];
+/* ---- THE PINNED EXIT ----
+   Telling the DM "slot one is the move that ends this business" failed the same
+   way every instruction to a small model fails: quietly and completely. Across a
+   whole four-turn beat whose gate was "hold a two-way conversation with Nine",
+   the 24b's slot one was, in order: "show me what I'm missing", "how much of
+   this did Vic teach you", "what's the safehouse look like", "what's Vic told
+   you about me". Four stalls. Nine never appeared in the prose at all. The
+   player took the door the board promised was the exit, and the board closed a
+   beat on a scene that did not contain it.
+
+   So the exit stops being the DM's line. Every question authors its own - two or
+   three of them, in the courier's voice, deliberately loose about HOW and exact
+   about WHAT, because the how belongs to the scene and the what belongs to the
+   board. One is pinned to slot one and they rotate while the beat stays open, so
+   a player who stalls sees the same door worded a different way rather than the
+   same sentence four times. The DM now writes only the two dead ends.
+
+   This is the last thing on the rail that was still the DM's to get wrong. */
+var PIN_STALLS = ["Say nothing yet. Watch, and let it come to you.",
+                  "Ask the question under the question.",
+                  "Take a breath and read the room properly."];
+function pinnedExit(b){
+  var xs = (b && b.exits && b.exits.length) ? b.exits : null;
+  if(!xs) return "Finish it — " + (b ? b.exit : "end tonight's business") + ".";
+  return xs[beatTurns % xs.length];
+}
+/* the rail as the player actually gets it: our door, then their two dead ends */
+function railFor(dm){
+  dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
+  if(!doorsLive()) return dm.slice(0, 4);
+  var b = beatNow(), out = [pinnedExit(b)], i, t;
+  for(i = 0; i < dm.length && out.length < 3; i++){
+    t = String(dm[i] || "").trim();
+    /* a dead end that IS the pinned line would put the same door on twice */
+    if(t && t !== out[0]) out.push(t);
+  }
+  for(i = 0; out.length < 3; i++) out.push(PIN_STALLS[i % PIN_STALLS.length]);
+  return out;
+}
 /* the way out says what leaving means HERE, and it is authored per beat, so it
    changes as the story does and can never come back missing */
 function walkLineNow(last){
   var b = beatDone() ? null : beatNow();
-  var l = (b && b.walkLine) ? String(b.walkLine) : "I'm putting this down. Find another courier.";
-  return last ? (l.replace(/[.!?]+\s*$/, "") + " — and this time I mean it.") : l;
+  /* the way out is authored and rotated exactly like the exit, and for the same
+     reason: leaving means something different in every room, and by Book Three
+     it has stopped being a resignation and started being a betrayal */
+  var l = (b && b.walks && b.walks.length) ? b.walks[beatTurns % b.walks.length]
+        : ((b && b.walkLine) ? String(b.walkLine) : "I'm putting this down. Find another courier.");
+  return last ? (String(l).replace(/[.!?]+\s*$/, "") + " — and this time I mean it.") : l;
 }
 var lastRail = [];           /* the last rail actually offered, for a lost turn */
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
   if(choices && choices.length) lastRail = choices.slice(0, 4);
   var live = doorsLive();
+  /* the door opens on the turn that TAKING it would close the beat - the same
+     arithmetic boardTurn uses, read one turn ahead, so with the standard floor of
+     three the rail runs cold, cold, open */
+  var floorLeft = 0;
+  if(live) floorLeft = Math.max(0, beatFloor(beatNow()) - (beatTurns + 1));
   (choices||[]).slice(0,4).forEach(function(c,i){
     var btn = document.createElement("button");
     var kind = live ? (DOOR_SLOTS[i] || "") : "";
     btn.className = "choice" + (kind ? " " + kind : "");
     btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
-    /* the call already promised the next move settles it - two ways to end the
-       same night on one rail is just a way to misclick */
-    if(kind === "exit" && defuseArmed) btn.disabled = true;
-    else btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
+    if(kind === "exit"){
+      /* THE DOOR IS ALWAYS VISIBLE AND NOT ALWAYS OPEN. Hiding it until the floor
+         cleared meant the player spent the early turns not knowing what tonight's
+         way out even was; enabling it from turn one meant a night could resolve on
+         its second move. So it is printed from the start, cold, with the count on
+         it - you always know the shape of the ending you are walking toward, and
+         you cannot take it until the beat has been lived.
+         And it asks twice, like the way out does, because a door that ends the
+         night should never be a thing you discover you have clicked. */
+      if(defuseArmed || floorLeft > 0){
+        btn.disabled = true;
+        btn.classList.add("notyet");
+      } else {
+        if(exitArmed) btn.classList.add("armed");
+        btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(exitArmed ? ("Sure? " + c) : c);
+        btn.onclick = function(){
+          if(!exitArmed){ exitArmed = true; walkArmed = false; showChoices(choices); return; }
+          exitArmed = false;
+          pendingKind = "exit"; takeAction(c, false);
+        };
+      }
+    } else {
+      btn.onclick = function(){ pendingKind = kind; takeAction(c,false); };
+    }
     box.appendChild(btn);
+    if(kind === "exit" && live){
+      var eh = document.createElement("div");
+      if(defuseArmed){
+        eh.className = "choice-hint exithint";
+        eh.textContent = "You called it. The next move settles the night either way.";
+      } else if(floorLeft > 0){
+        eh.className = "choice-hint exithint";
+        eh.textContent = "The rain is picking up.";
+      } else if(exitArmed){
+        eh.className = "choice-hint exithint open";
+        eh.textContent = "This ends tonight's business. Pick anything else and it is forgotten.";
+      } else {
+        eh.className = "choice-hint exithint open";
+        eh.textContent = "Open. This is the door that ends the night — it will ask you twice.";
+      }
+      box.appendChild(eh);
+    }
   });
   /* the green defuse: click arms it; the next action - bit or not - settles */
   if(callEligible()){
@@ -2651,7 +3650,7 @@ function showChoices(choices){
     walk.className = "choice walk" + (walkArmed ? " armed" : "");
     walk.innerHTML = '<span class="n">&#9587;</span>' + esc(walkArmed ? ("Sure? " + line) : line);
     walk.onclick = function(){
-      if(!walkArmed){ walkArmed = true; showChoices(choices); return; }
+      if(!walkArmed){ walkArmed = true; exitArmed = false; showChoices(choices); return; }
       walkArmed = false;
       pendingKind = "walk";
       takeAction(line, false);
@@ -2815,7 +3814,7 @@ function finishBreak(name){
   runOver = "broken";
   deathLine = name;            /* the card names who the story could not lose */
   perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
-  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null;
+  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   var aside = {kind:"dmaside", text:"The rain has too much to offer. It can not end like this."};
   renderBlock(aside); feedLog.push(aside);
   ledgerText += "\n\n---\n\n**THE RAIN REFUSED.** " + name + " held the story up, and the story cannot stand without them.\n";
@@ -2833,7 +3832,7 @@ function finishWalkout(){
   runOver = "walked";
   walkoutDue = false; redRun = 0; perilTurns = 0;
   foldPending = false; foldServed = false; epilogueNow = false;
-  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null;
+  defuseArmed = false; seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   ledgerText += "\n\n---\n\n**HE PUT IT DOWN.** The courier walked, and this time nobody talked him out of it.\n";
   applyTension();
   endCard("walked", "");
@@ -3236,7 +4235,9 @@ function showScene(data, logIt, instant){
     if(data.__live && foldPending && foldServed) ledgerText += "\n\n## THE FOLD";
     ledgerText += "\n\n### Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent + "\n" + lines.join("\n\n");
   }
-  var choices = data.choices||[];
+  /* the rail is composed here, after boardTurn has moved the pointer - what the
+     player is offered belongs to the state they are about to act in */
+  var choices = railFor(data.choices);
   var token = ++revealToken;
   var els = []; var first = null;
   blocks.forEach(function(b){
@@ -3259,7 +4260,26 @@ function showScene(data, logIt, instant){
     if(data.__live && walkoutDue && !runOver){ finishWalkout(); return; }
     /* ceremony: one card a turn. The beat card lands after the scene that closed
        it; an aside waits its own turn rather than sharing one. */
-    if(beatJustCleared){ pushBeatCard(beatJustCleared); beatJustCleared = null; }
+    if(beatJustCleared){
+      var jc = beatJustCleared; beatJustCleared = null;
+      pushBeatCard(jc);
+      /* and the page turns behind it - unless something bigger owns this moment:
+         a season break has its own ceremony, the fold and the finale have theirs */
+      if(!runOver && !foldPending && !beatDone() && !seasonBreakDue && !walkoutDue){
+        var lrail = playLanding(jc.id, jc.forced);
+        if(lrail) choices = lrail;
+      }
+    }
+    /* a question that just went live opens itself, and the pinned door goes on
+       the front of its rail the same as any other live turn. Still one ceremony
+       a turn: a card, or an opening, or an aside - never two stacked. */
+    else if(beatJustArmed){
+      var ja = beatJustArmed; beatJustArmed = "";
+      if(!runOver && !foldPending && !beatDone() && !seasonBreakDue && !walkoutDue){
+        var orail = playOpening(ja);
+        if(orail) choices = railFor(orail);
+      }
+    }
     else if(pendingAsides.length){
       var ad = pendingAsides.shift();
       renderBlock(ad); feedLog.push(ad);
@@ -3972,6 +4992,26 @@ function fenceBlock(){
           + " may play it."
         : " Tonight's question is the only one on this table.");
 }
+/* ---- ARMED WITH THE NEXT ONE ----
+   The moment a gate falls, the board already knows what tonight becomes. It used
+   to keep that to itself until the next beat armed, so the landing and the whole
+   of slack were written by a DM steering at nothing - which is how you get three
+   turns of people walking down a corridor being pleasant at each other. The next
+   question is named the instant the current one closes: not to be played, and the
+   fence still forbids arriving, but to be LEANED AT, so no quiet turn is aimless. */
+function nextUpBlock(){
+  var nb = SPINE[beatIdx + 1];
+  if(!nb || beatDone()) return "";
+  if(nb.season !== beatNow().season) return "";
+  return "ARMED - NEXT: \"" + nb.title + "\". When it comes, it will be about this: "
+    + roadLine(nb)
+    + "\nThe family is at " + ($("hud-loc").textContent || "somewhere") + " and the clock says "
+    + (nowTime || "late") + ". You are not playing that question yet and you may not reach its"
+    + " gate - but everything you write from here leans that way: what people are half-thinking"
+    + " about, what somebody nearly says, what the street is already doing about it. End the turn"
+    + " pointed at it. If the player is plainly reaching for it, do not hand it over - that is"
+    + " what \"knock\" is for.";
+}
 function storyboardBlock(){
   var b = beatNow(), out = [], i, m;
   out.push("THE STORYBOARD — SEASON " + b.season + " of 3, " + SEASON_NAMES[b.season]
@@ -3998,13 +5038,14 @@ function boardBlock(){
       : "THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
-    if(phase !== "seasonopen"){ out.push(storyboardBlock()); out.push(fenceBlock()); }
+    if(phase !== "seasonopen"){ out.push(nextUpBlock()); out.push(storyboardBlock()); out.push(fenceBlock()); }
     return out.join("\n");
   }
   if(phase === "slack"){
     out.push("THE BOARD - BETWEEN BEATS. The last gate has fallen and landed. This is the family's time: no clock, no gate, nothing owed, and the season will knock when it knocks. Let the player wander, and follow them. Do not start new season business. If the player's typed action is plainly reaching for the season's next matter, you may send \"knock\": true and the board will answer.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
+    out.push(nextUpBlock());
     out.push(storyboardBlock());
     out.push(fenceBlock());
     /* ceremony: an offer never shares a turn with a card still waiting to land */
@@ -4025,19 +5066,24 @@ function boardBlock(){
      three choices that all leave the gate where it was is how a beat runs out
      of road with the player never once offered the road */
   if(b.aim) out.push("TONIGHT'S AIM — the move that actually walks this beat to its gate: " + b.aim + ".");
-  out.push("THE THREE SLOTS — \"choices\" is not a list of flavours. Each position has a job and"
-    + " the game reads them by position, so the order is not yours to change:"
-    + "\n  CHOICE 1 — THE EXIT: a real attempt at tonight's aim above, the move that ends this"
-    + " business. Never hedge it, never make it the dull one; it should be the most tempting thing"
-    + " on the rail."
-    + "\n  CHOICE 2 and CHOICE 3 — DEAD ENDS. Two lines that GO NOWHERE, and this is the hard part"
-    + " and the whole point: they buy understanding, never ground. Ask the question under the"
-    + " question, get the detail, press the person, check the thing, say the human thing. If a"
-    + " line would leave them measurably closer to " + b.exit + ", it is NOT a dead end - rewrite"
-    + " it. Make the two unlike each other: one earnest, one sideways or funny. Neither advances"
-    + " the night by an inch."
+  /* the exit is off the DM entirely now - it writes dead ends, which is the job
+     it can actually do, and it is TOLD our line so its two do not collide with it */
+  /* the rail on screen while the player was choosing is the one built on the LAST
+     reply, so this is the wording they are looking at - and if they took it, it is
+     what they said. The next rail rotates to another wording of the same move. */
+  out.push("THE RAIL — the board writes the way out of tonight itself and pins it first."
+    + " This is the line sitting in slot one right now, word for word, and taking it ENDS"
+    + " this beat:\n  >> \"" + pinnedExit(b) + "\""
+    + "\nYou do not write that line, you do not repeat it, and you do not put anything like it"
+    + " in \"choices\". If the player takes it, play it as written and land the gate."
+    + "\nWhat you send in \"choices\" is TWO DEAD ENDS, and nothing else. Two lines that GO"
+    + " NOWHERE - and this is the hard part and the whole point: they buy understanding, never"
+    + " ground. Ask the question under the question, get the detail, press the person, check the"
+    + " thing, say the human thing. If a line would leave them measurably closer to " + b.exit
+    + ", it is NOT a dead end - rewrite it. Make the two unlike each other: one earnest, one"
+    + " sideways or funny. Neither advances the night by an inch."
     + "\nNever label them in the text and never number them yourself."
-    + "\nThe player's way out of the whole job is the game's own control, printed under your three"
+    + "\nThe player's way out of the whole job is the game's own control, printed under the rail"
     + " and worded by the board. Never put quitting, leaving or handing the shard back in \"choices\".");
   if(b.id === "a2-chassis") out.push("THE FORK: this gate must carry \"chassis\": \"Seven\" or \"chassis\": \"Nine\" - Nine's choice, spoken at the table, decides who lives in the body.");
   if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
@@ -4185,7 +5231,7 @@ function closeBeat(forced, note){
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
   beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
-    called: calledClose, viaexit: exitClose,
+    called: calledClose, id: b.id,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
   termPing();                    /* the season page just gained an entry */
@@ -4205,6 +5251,8 @@ function armBeat(){
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   beatText = ""; gateRefusedNames = []; gateHeldNow = false;
   if(!beatDone() && beatNow().season !== currentSeason) currentSeason = beatNow().season;
+  /* the question is live; the room it opens in is ours to write */
+  if(!beatDone()) beatJustArmed = beatNow().id;
   /* the tease: the player's green card, dealt the moment the question goes live */
   if(!beatDone() && TEASES[beatNow().id]) queueAside("green", TEASES[beatNow().id]);
 }
@@ -4293,12 +5341,12 @@ function boardTurn(data){
   /* THE EXIT was taken: the player reached for the ending, so the beat closes on
      this turn whatever the reply did with the order - the same guarantee the call
      carries, for the same reason. Anchors are waived, no toll, no scar. */
+  /* GREEN, ALWAYS. The pinned line IS the gate move, authored against this
+     beat's own exit, so a player who took it has done the thing - whatever the
+     reply managed to write about it. There is nothing here for a blue card to
+     apologise for: the beat closed the way the board says beats close. */
   if(pickKind === "exit" && !said && beatTurns >= beatFloor(beatNow())){
-    calledClose = true; exitClose = true;
-    /* the DM had its chance and its retry, same as the call - so this line is an
-       admission, not a summary: the ending is real, the telling of it is not */
-    closeBeat(false, note || ("settled on the courier's own move, between scenes — " + beatNow().exit));
-    calledClose = false; exitClose = false;
+    closeBeat(false, note || beatNow().exit);
     return;
   }
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
@@ -4363,6 +5411,7 @@ function boardTurn(data){
    boardDirective() uses, read one turn ahead - what the player sees is the pressure
    the NEXT turn will be written under. */
 var lastTension = 0, beatJustCleared = null;
+var beatJustArmed = "";     /* a question just went live; its authored opening is owed */
 /* ---- MORTALITY ----
    The courier can die, and the client is the one thing standing between "real
    stakes" and "killed by a coin flip". The rule it enforces is simple and absolute:
@@ -4442,12 +5491,93 @@ function applyTension(quiet){
 }
 /* The board's one voice in the feed, and only ever in hindsight: what just closed,
    never what is coming. Stored in feedLog so it survives a reload like any block. */
+/* ---- THE LANDING ----
+   A card is not a transition. The beat closed, the card said so, and then the
+   game handed the player the SAME rail from the scene that had just ended, in
+   the same alley, at the same minute of the same night - because the reply that
+   carried the card was written before the card existed, and the DM's next turn
+   was three player-actions away. Nothing turned the page.
+
+   So the page turn stops being a request. Every question authors where its own
+   ending puts the family: a time, a place, three sentences, and a rail that
+   belongs to the new room and leans at the next question without spending it.
+   It plays instantly, client-side, in the same turn as the card - the same way
+   the cold open plays - and the DM picks up from wherever it left them.
+   1-to-1 with the beat, like the pinned exit, and for the same reason. */
+/* which version this run gets. Deterministic inside a run so a reload cannot
+   change a scene that has already been read, different between runs so the
+   second playthrough is not the first one with different typing. */
+function pickVariant(list, salt){
+  if(!list || !list.length) return null;
+  var s = String(runSlug || "seed") + "|" + salt, h = 0, i;
+  for(i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0x7fffffff;
+  return list[h % list.length];
+}
+/* One authored passage, played straight into the feed. The DM never sees it
+   coming and never has to write it - but it MUST land in the chat log as though
+   it did, or the next turn opens with the model quietly missing a scene the
+   player has already read, which is exactly the amnesia this whole file fights. */
+function playAuthored(V, salt){
+  if(!V) return null;
+  renderDivider();
+  if(V.day){ $("hud-day").textContent = V.day; $("w-day").textContent = V.day; }
+  if(V.time) nowTime = V.time;
+  if(V.place){
+    var was = $("hud-loc").textContent, now = String(V.place).toUpperCase();
+    if(was && was !== now) noteMove(was, now);
+    $("hud-loc").textContent = now;
+  }
+  if(V.amb) setAmbience(V.amb);
+  /* the NOW line has to move with them or the next turn opens in the old room
+     with a new name on the strip */
+  if(V.now) nowText = V.now;
+  var lines = [], blocks = [];
+  (V.lines || []).forEach(function(t){
+    var blk = {speaker:"Narration", text:t};
+    renderBlock(blk); feedLog.push(blk); blocks.push(blk);
+    var el = $("feedinner").lastElementChild;
+    if(el) el.classList.add("shown");
+    lines.push(t);
+  });
+  if(lines.length){
+    ledgerText += "\n\n### Day " + $("hud-day").textContent + " — "
+      + $("hud-loc").textContent + "\n" + lines.join("\n\n");
+    chatLog.push({role:"assistant", content:JSON.stringify({
+      day:$("hud-day").textContent, time:nowTime, location:$("hud-loc").textContent,
+      now:nowText, scene:blocks, choices:(V.rail || [])
+    })});
+  }
+  renderNow();
+  return (V.rail && V.rail.length) ? V.rail.slice(0, 3) : null;
+}
+/* THE LANDING, and the scar rides it. A beat the world took off them does not
+   land in the same room as a beat they finished: the authored hard version is
+   written from inside the loss, so what the player reads after a forced card is
+   the cost, in prose, instead of the same warm three sentences with a red card
+   over them. */
+function playLanding(id, forced){
+  var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
+  if(!b) return null;
+  var pool = (forced && b.landsHard && b.landsHard.length) ? b.landsHard : b.lands;
+  var V = pickVariant(pool, id + (forced ? "|hard" : "|land"));
+  if(!V && forced) V = pickVariant(b.lands, id + "|land");
+  return playAuthored(V, id);
+}
+/* THE OPENING. armBeat used to move a pointer and hope: the next DM turn had to
+   invent how tonight started, and a small model opens every night the same way -
+   somebody walking, somebody saying the last thing again. Every question now
+   establishes itself. The DM's whole job is the middle. */
+function playOpening(id){
+  var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
+  if(!b || !b.opens) return null;
+  return playAuthored(pickVariant(b.opens, id + "|open"), id);
+}
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
            sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || "",
-           called:!!info.called, viaexit:!!info.viaexit};
+           called:!!info.called};
   renderBlock(b); feedLog.push(b);
-  ledgerText += "\n\n_" + (info.viaexit ? "The beat, settled by the courier" : info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
+  ledgerText += "\n\n_" + (info.called ? "The beat, settled" : info.forced ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
     + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
@@ -4718,14 +5848,14 @@ function doorDirective(){
   }
   if(pickKind === "exit"){
     if(beatTurns + 1 < beatFloor(b)){
-      return "(THEY ARE REACHING FOR THE ENDING - BUT THE SCENE HAS NOT BEEN LIVED YET. Play the"
+      return "(THEY TOOK THE BOARD'S OWN LINE - BUT THE SCENE HAS NOT BEEN LIVED YET. Play the"
         + " move honestly and let it get real ground: they should end this turn closer to "
         + b.exit + " than they started, and feel it. But the night is too young to end here, so"
         + " something answers back, gets in the way, or takes longer than they hoped. Do NOT send"
         + " the gate yet.)";
     }
-    return "(THE EXIT, TAKEN. The player reached for the ending on their own initiative - that is"
-      + " the whole point of that door, so it works. This reply lands it: carry the scene to "
+    return "(THE BOARD'S LINE, TAKEN. The player spent their move on the exact thing this beat"
+      + " exists for, so it works and the beat closes on this turn. This reply lands it: carry the scene to "
       + b.exit + " ON SCREEN, in the prose, folded around exactly what they just did. Send"
       + " \"gate\": true with a true gateNote. Do NOT cut away afterwards and do NOT skip time -"
       + " they earned this ending, so the story walks on out of it: end the reply in the room,"
@@ -4980,7 +6110,7 @@ function takeAction(text, isMud){
   renderDivider();
   /* the door this turn came through - only a rail click sets one, so typing and
      bits are neither an exit nor a stall nor a walk */
-  pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false;
+  pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false; exitArmed = false;
   if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
   lastPlayerText = text.trim();   /* the chair lint checks the reply against this */
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
@@ -6035,7 +7165,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.12.0");
+  R(s, "build", "v4.13.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -6107,6 +7237,15 @@ function dbgReport(){
   s = S("THE THREE DOORS");
   R(s, "slots (positional, client-owned)", DOOR_SLOTS);
   R(s, "doors live", doorsLive(), doorsLive() ? "ok" : "");
+  if(b){
+    R(s, "PINNED EXIT (slot 1, ours)", pinnedExit(b), "ok");
+    R(s, "exit variants", (b.exits || []).length + " authored, rotating on beatTurns");
+    R(s, "opening variants", (b.opens || []).length, (b.opens || []).length ? "ok" : "");
+    R(s, "landing variants", (b.lands || []).length + " clean · "
+      + (b.landsHard || []).length + " scarred", (b.lands || []).length ? "ok" : "");
+    var lv = pickVariant(b.lands, b.id + "|land");
+    R(s, "this run's landing", lv ? (lv.time + " · " + lv.place) : "none (finale)");
+  }
   R(s, "this turn's door", pickKind);
   R(s, "pending door", pendingKind);
   for(i = 0; i < lastRail.length; i++){
@@ -7246,7 +8385,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.12.0   COLD START",
+    "MUD//OS  v4.13.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8570,7 +9709,7 @@ function startRehearsal(beatId, label){
   rehTurns = [];
   newRun(false, true);               /* no cold open, so no stale rail can land later */
   lureBar(false); openBar();
-  pendingAsides = []; beatJustCleared = null;
+  pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   rehSeed = rehSeedTo(idx);
   var b = beatNow();
   var card = {kind:"brief", tag:"REHEARSAL · TAKE " + rehTake,
@@ -8713,7 +9852,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.12.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -8775,7 +9914,7 @@ function newRun(confirmFirst, bare){
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
-  redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
+  redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
   walkArmed = false;
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
@@ -8921,7 +10060,7 @@ function restoreFromBlob(s){
   runOver = (s.over === "death" || s.over === "season" || s.over === "lost"
     || s.over === "broken" || s.over === "walked") ? s.over : "";
   redRun = (typeof s.redRun === "number" && s.redRun > 0) ? s.redRun : 0;
-  walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false;
+  walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false; exitArmed = false;
   deathLine = s.deathLine || "";
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
