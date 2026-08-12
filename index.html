@@ -374,8 +374,10 @@
     padding:7px 12px;border-radius:3px;border:1px solid;font-weight:700;
   }
   #pressure.on{display:flex}
-  #pressure .ticks{display:flex;gap:3px;flex:none}
-  #pressure .ticks i{width:16px;height:4px;border-radius:1px;background:currentColor;opacity:.18}
+  /* one bar, always the same length - tonight's budget just divides it. The
+     segment count stays honest (one per turn); the footprint stays constant. */
+  #pressure .ticks{display:flex;gap:3px;flex:none;width:96px}
+  #pressure .ticks i{flex:1;min-width:0;height:4px;border-radius:1px;background:currentColor;opacity:.18}
   #pressure .ticks i.lit{opacity:1;box-shadow:0 0 8px currentColor}
   #pressure.t0{color:#8a7c68;border-color:#3a2f24;background:#1c150e}
   #pressure.t1{color:var(--gold);border-color:#6b5326;background:#221a0e}
@@ -959,7 +961,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.4.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.4.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1029,7 +1031,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1308,7 +1310,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.4.3 "The Fold"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.4.4 "The Fold"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6082,7 +6084,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.4.3   COLD START",
+    "MUD//OS  v4.4.4   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
