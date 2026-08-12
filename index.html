@@ -563,16 +563,15 @@
     box-shadow:inset 2px 0 0 #c05555,0 0 12px rgba(190,70,70,.18)}
   .choice-hint.walkhint{color:#c98a8a;border-color:#5a2f2f}
   /* the door that ends the night: cold until the beat has been lived, then lit */
-  /* a door that is not open yet is still a door on the same rail: it wears the
-     house style exactly, minus the sodium edge that means GO. No dimming - the
-     player is meant to read it, they just cannot take it. */
+  /* the door arrives with the pressure bar and arrives shut: grey, unlit, plainly
+     not yet yours. It needs no caption - it only exists once the night has started
+     counting, so its being there at all is the message. */
   .choice.exit.notyet{
-    border-color:var(--line);color:var(--ink);box-shadow:none;
-    opacity:1;cursor:default;
+    border-color:#3a3630;color:#6f6960;box-shadow:inset 2px 0 0 #4a443a;
+    opacity:.6;cursor:default;
   }
-  .choice.exit.notyet:hover{border-color:var(--line);background:var(--panel);transform:none}
-  .choice.exit.notyet .n{color:var(--sodium)}
-  .choice.exit.notyet:disabled{opacity:1}
+  .choice.exit.notyet:hover{border-color:#3a3630;background:var(--panel);transform:none}
+  .choice.exit.notyet .n{color:#6f6960}
   .choice.exit.armed{
     border-color:var(--sodium);color:#f7d688;background:#1b1508;
     box-shadow:inset 2px 0 0 var(--sodium),0 0 12px rgba(232,161,60,.2);
@@ -1033,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1144,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1423,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.1 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.2 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3623,8 +3622,7 @@ function showChoices(choices){
         eh.className = "choice-hint exithint";
         eh.textContent = "You called it. The next move settles the night either way.";
       } else if(stage === "cold"){
-        eh.className = "choice-hint exithint";
-        eh.textContent = "The rain is picking up.";
+        return;                        /* shut and grey says it by itself */
       } else if(exitArmed){
         eh.className = "choice-hint exithint open";
         eh.textContent = "This ends tonight's business. Pick anything else and it is forgotten.";
@@ -5352,7 +5350,13 @@ function boardTurn(data){
   /* THE STALL holds the gate open. The player is still standing in this beat and
      said so out loud, so the DM does not get to close it around them - no scar,
      no toll, nothing owed. The road still gets spent: a stall costs a turn. */
-  if(pickKind === "stall" && said){ said = false; stalledNow = true; }
+  /* ...but only when there was a door to refuse. On a roomy turn the rail is
+     three dead ends and nothing else, so "stall" is not the player digging in -
+     it is the only thing they were offered. Suppressing a real gate there
+     punished a scene that had genuinely reached the exit, on a turn where taking
+     the exit was not on the table. Checked before the tick, so it reads the rail
+     the player was actually looking at. */
+  if(pickKind === "stall" && said && exitStage()){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
      absence and idleness, never joy - the dots hold still while the table plays.
      A bit is a stall with a joke in it: it holds the gate AND costs no road. */
@@ -7184,7 +7188,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.1");
+  R(s, "build", "v4.13.2");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8406,7 +8410,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.1   COLD START",
+    "MUD//OS  v4.13.2   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9873,7 +9877,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.2",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);

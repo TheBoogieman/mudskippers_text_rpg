@@ -151,18 +151,17 @@ So the rail is the game's now, top to bottom:
   one and they rotate while the beat stays open, so a player who digs in sees the
   same door worded differently rather than the same sentence four times. Take it and
   the beat closes, **green**, once, guaranteed.
-- **The door only exists once the night starts running out of room**, and it reads
-  off the same ladder the pressure strip does, so the two never contradict each
-  other. While the strip says *the night has room in it* there's no door at all and
-  the rail is three ways to dig in. When the world starts counting, the door arrives
-  — **cold** for one turn, wearing the house style exactly (same border, same ink,
-  no sodium edge) with *the rain is picking up* under it — and then it opens.
-  Open, it **asks twice**, the way the bail-out does: a door that ends the night
-  should never be something you find out you clicked.
+- **The door arrives with the pressure bar**, and reads off the same ladder the bar
+  does, so the two never contradict each other. While the strip says *the night has
+  room in it* there's no door at all and the rail is three ways to dig in — down
+  there the exit would only be another stall anyway. When the world starts counting,
+  the door appears **shut and grey** for one turn, then opens. Open, it **asks
+  twice**, the way the bail-out does: a door that ends the night should never be
+  something you find out you clicked.
 
   ```
   turn 0–2   THE NIGHT HAS ROOM IN IT           three dead ends, no door
-  turn 3     TWO TURNS BEFORE THE WORLD MOVES   door, cold
+  turn 3     TWO TURNS BEFORE THE WORLD MOVES   door, grey and shut
   turn 4     NEXT TURN THE WORLD MOVES          door, open
   turn 5     OUT OF ROOM                        door, open — last call
   ```
