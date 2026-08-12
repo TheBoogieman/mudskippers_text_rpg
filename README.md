@@ -216,14 +216,16 @@ the thing that was just named as lethal is.
 
 ### Pressure you can see
 
-You are never told a turn count — you're shown one. As a beat runs out of room the
-room itself closes in: a vignette tightens and warms, then reddens and starts to
-breathe. A strip above your choices names the feeling — **SOMETHING IS ABOUT TO
-GIVE**, then **THE WORLD IS MOVING**, then **OUT OF ROOM**. When the world takes its
-own turn it lands as a hit: the screen flashes and shoves, the rain leans harder, and
-everything on the canvas speeds up. When a beat finally closes, the board says so once
-in the feed — *that beat is closed*, or *the world moved on*, or *the arc turns* — and
-the pressure drops away.
+There is exactly one gauge on the play screen, and it tells the truth: the beat's own
+turn odometer, one dot per turn of the night, lit as they're spent, visible through
+the whole live beat — with a countdown in plain words: **THE NIGHT HAS ROOM IN IT**,
+then **TWO TURNS BEFORE THE WORLD MOVES**, then **NEXT TURN THE WORLD MOVES**, then
+**OUT OF ROOM — NEXT TURN SETTLES IT**. The wrist says exactly the same words,
+always. As the road shortens the room itself closes in: a vignette tightens and
+warms, then reddens and starts to breathe, and when the world takes its own turn it
+lands as a hit — the screen flashes and shoves, the rain leans harder. When a beat
+finally closes, the board says so once in the feed — *that beat is closed*, or *the
+world moved on*, or *the act turns* — and the pressure drops away.
 
 The strip and the closing walls are plain HTML, so they still work on **VISUALS: CALM**
 and **VISUALS: OFF**, and reduced-motion settings still win.
