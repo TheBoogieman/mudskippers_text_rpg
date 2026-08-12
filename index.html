@@ -994,7 +994,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.11.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.11.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1089,7 +1089,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1368,7 +1368,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.11.3 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.11.4 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6874,7 +6874,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.11.3   COLD START",
+    "MUD//OS  v4.11.4   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -7207,9 +7207,29 @@ function fxNewDrop(spread){
   var depth = Math.random();                       /* 0 far, 1 near */
   var sp = (620 + depth*640) * (r.speed || 1);
   var lean = (r.lean || 0.42) * (1.18 - depth*0.30) * (0.86 + Math.random()*0.28);
+  var vx = -sp*lean, vy = sp, x, y;
+  if(spread){
+    x = Math.random()*(fxW + 400) - 200;
+    y = Math.random()*fxH;
+  } else {
+    /* THE LEE SIDE. The wind carries every drop left, and drops were only ever
+       reborn along the top - so to reach the bottom right a drop would have had
+       to be born further right than any drop ever is, and that whole corner of
+       the screen stayed dry. Rain enters through the windward edge as well as
+       the ceiling, split by how much actually crosses each: |vx|*height against
+       vy*width. On this lean that is roughly a third of them down the right. */
+    var fluxSide = Math.abs(vx) * fxH, fluxTop = vy * fxW;
+    if(Math.random() * (fluxSide + fluxTop) < fluxSide){
+      x = fxW + 20 + Math.random()*70;             /* just off the right, sliding in */
+      y = Math.random()*(fxH + 120) - 120;
+    } else {
+      x = Math.random()*(fxW + 260) - 130;
+      y = -30 - Math.random()*130;
+    }
+  }
   return {
-    x: Math.random()*(fxW + 400) - 200,
-    y: spread ? Math.random()*fxH : -30 - Math.random()*160,
+    x: x,
+    y: y,
     px: 0, py: 0,                        /* where it was last frame - the streak IS the motion */
     vx: -sp*lean, vy: sp,
     a: 0.14 + depth*0.19,                /* near drops read brighter, far ones sit back */
@@ -8312,7 +8332,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.3",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.4",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
