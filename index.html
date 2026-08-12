@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.10.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.11.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.11.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.10.4 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.11.0 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6805,7 +6805,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.10.4   COLD START",
+    "MUD//OS  v4.11.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8222,7 +8222,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.4",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.11.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -8464,8 +8464,36 @@ function finishBoot(orConnected){
   }
   maybeWelcome();
 }
+/* ---- THE LAUNCHER HANDSHAKE ----
+   A launcher that has already installed Ollama and pulled a model can hand the
+   game its connection in the URL, so a non-technical player never opens Settings
+   at all: ?ai=ollama&model=mistral-nemo:12b
+   Only the local providers are accepted and the endpoint always comes from the
+   preset, never from the link - a URL must never be able to point somebody's
+   game at a stranger's server, and it can never carry a key. */
+function applyLaunchParams(){
+  var q = {}, s = (location.search || "").replace(/^\?/, "");
+  if(!s) return false;
+  s.split("&").forEach(function(kv){
+    var i = kv.indexOf("=");
+    if(i < 0) return;
+    q[decodeURIComponent(kv.slice(0,i))] = decodeURIComponent(kv.slice(i+1).replace(/\+/g," "));
+  });
+  var ai = String(q.ai || "").toLowerCase();
+  if(ai !== "ollama" && ai !== "lmstudio") return false;
+  var pre = PRESETS[ai];
+  settings.provider = ai;
+  settings.style = pre.style;
+  settings.base = pre.base;              /* the preset's localhost, never the link's */
+  settings.key = "";
+  var m = String(q.model || "").trim();
+  if(m && /^[\w.:\/-]{1,64}$/.test(m)) settings.model = m; else settings.model = pre.model;
+  try{ saveSettings(); }catch(e){}
+  return true;
+}
 (function boot(){
   try{ loadSettings(); }catch(e){}
+  try{ applyLaunchParams(); }catch(e){}
   try{ fxInit(); applyVisuals(); }catch(e){}
   try{ shardInit(); }catch(e){}
   handleOAuthReturn().then(function(orConnected){
