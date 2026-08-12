@@ -136,12 +136,45 @@ function Get-VramMB {
 # The context has to stay above the prompt, which is ~12,500 tokens, so 16k
 # is the floor. Reasoning models are excluded: they spend the whole budget
 # thinking and return nothing.
-function Pick-Model([int]$vram) {
-  if ($vram -ge 18000) { return @{ model="mistral-small3.2:24b"; ctx=24576; note="full scenes" } }
-  if ($vram -ge 11000) { return @{ model="mistral-nemo:12b";     ctx=16384; note="shorter scenes" } }
-  if ($vram -ge  7000) { return @{ model="qwen2.5:7b";           ctx=16384; note="brief, but it plays" } }
-  if ($vram -ge  4500) { return @{ model="llama3.2:3b";          ctx=16384; note="very brief" } }
-  return                      @{ model="llama3.2:3b";            ctx=16384; note="on the processor - slow" }
+# The tiers are keyed on FREE video memory, not total. A 32 GB card with a desktop
+# and the game's own browser window on it is not a 32 GB card, and a model that
+# does not fit does not fail - it half-offloads to the processor and every turn
+# crawls, which is worse than picking one size down. "need" is the measured
+# footprint at the context we ask for, plus about a gigabyte of room to breathe.
+# Measured footprints at the context we ask for, not download sizes:
+#   qwen2.5:32b            19.9 GB of weights  ~23 GB loaded
+#   mistral-small3.2:24b   15.2 GB of weights   17.3 GB loaded (measured on a 5090)
+#   the same 24b at 8-bit  25.9 GB of weights  ~28 GB loaded - and that is the trap.
+# It fits on a 32 GB card right up until the game opens its own browser window,
+# and then it half-offloads and every turn crawls. Bigger is only better while it
+# still fits with the rest of the desktop in the room.
+$script:TIERS = @(
+  @{ model="qwen2.5:32b";                             need=26000; ctx=24576; note="the big one" },
+  @{ model="mistral-small3.2:24b";                    need=19000; ctx=24576; note="full scenes" },
+  @{ model="mistral-nemo:12b";                        need=11000; ctx=16384; note="shorter scenes" },
+  @{ model="qwen2.5:7b";                              need= 7000; ctx=16384; note="brief, but it plays" },
+  @{ model="llama3.2:3b";                             need= 4500; ctx=16384; note="very brief" }
+)
+function Pick-Model([int]$free) {
+  foreach ($t in $script:TIERS) { if ($free -ge $t.need) { return $t } }
+  return @{ model="llama3.2:3b"; ctx=16384; note="on the processor - slow" }
+}
+
+# What is actually available right now. nvidia-smi knows; the registry fallback
+# only knows the card's size, so it assumes a couple of gigabytes are already
+# spoken for by the desktop.
+function Get-VramFreeMB {
+  $smi = Join-Path $env:SystemRoot "System32
+vidia-smi.exe"
+  if (Test-Path $smi) {
+    try {
+      $n = ((& $smi --query-gpu=memory.free --format=csv,noheader,nounits 2>$null) | Select-Object -First 1) -as [int]
+      if ($n -gt 0) { return $n }
+    } catch {}
+  }
+  $t = Get-VramMB
+  if ($t -gt 2500) { return $t - 2000 }
+  return $t
 }
 # Ollama binds 127.0.0.1; "localhost" can resolve to IPv6 or route through a
 # proxy, and a healthy server then looks dead.
@@ -207,10 +240,15 @@ $btnPlay.Add_Click({
   $btnPlay.Enabled = $false
   try {
     $vram = Get-VramMB
-    $pick = Pick-Model $vram
+    $free = Get-VramFreeMB
+    $pick = Pick-Model $free
+    # a dev machine gets to disagree. MUDSKIPPERS_MODEL pins the storyteller and
+    # MUDSKIPPERS_CTX its window, without editing any of this.
+    if ($env:MUDSKIPPERS_MODEL) { $pick = @{ model=$env:MUDSKIPPERS_MODEL; ctx=$pick.ctx; note="pinned by MUDSKIPPERS_MODEL" } }
+    if ($env:MUDSKIPPERS_CTX)   { $pick.ctx = [int]$env:MUDSKIPPERS_CTX }
     $script:model = $pick.model
     $script:ctx   = $pick.ctx
-    if ($vram -gt 0) { Set-Status ("{0:N1} GB of video memory`n{1}  ({2})" -f ($vram/1024), $script:model, $pick.note) }
+    if ($vram -gt 0) { Set-Status ("{0:N1} GB of video memory, {1:N1} GB free`n{2}  ({3})" -f ($vram/1024), ($free/1024), $script:model, $pick.note) }
     else { Set-Status ("no graphics card found`n{0}  ({1})" -f $script:model, $pick.note) }
     Start-Sleep -Milliseconds 900
 

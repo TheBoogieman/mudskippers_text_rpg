@@ -36,14 +36,17 @@ launch after that is seconds.
 
 ## What it picks for you
 
-It reads your graphics card and chooses the largest storyteller that genuinely
-fits. These are measured footprints — model **plus** its working memory, which is
-what has to fit, and is much larger than the download size:
+It reads how much video memory is **free right now** — not how big the card is,
+because a desktop and the game's own window are real tenants — and takes the
+largest storyteller that still fits with room to spare. These are measured
+footprints at the context the game asks for, which is much larger than the
+download size:
 
-| video memory | storyteller | actually uses | what to expect |
+| free video memory | storyteller | actually uses | what to expect |
 |---|---|---|---|
-| 18 GB+ | `mistral-small3.2:24b` | 17.3 GB | full scenes, the family talking to each other |
-| 11–18 GB | `mistral-nemo:12b` | 8.9 GB | shorter scenes, plays properly |
+| 26 GB+ | `qwen2.5:32b` | ~23 GB | the big one |
+| 19–26 GB | `mistral-small3.2:24b` | 17.3 GB | full scenes, the family talking to each other |
+| 11–19 GB | `mistral-nemo:12b` | 8.9 GB | shorter scenes, plays properly |
 | 7–11 GB | `qwen2.5:7b` | 5.2 GB | brief, but it plays — the 8 GB sweet spot |
 | 4.5–7 GB | `llama3.2:3b` | ~3 GB | very brief |
 | less / none | `llama3.2:3b` | — | runs on the processor; turns take a while |
@@ -54,6 +57,20 @@ the game itself rather than in the model.
 
 Reasoning models are deliberately avoided — they spend their whole budget
 thinking and hand the game an empty reply. `qwen3` fails exactly this way.
+
+**Why not an 8-bit 24B on a 32 GB card?** It looks like the obvious upgrade and
+it is a trap: 25.9 GB of weights becomes ~28 GB loaded, which fits right up until
+the game opens its own browser window, and then it half-offloads to the processor
+and every turn crawls. Bigger is only better while it still fits with the rest of
+the desktop in the room.
+
+**Pinning your own.** On a machine where you want to decide yourself, set
+`MUDSKIPPERS_MODEL` (and optionally `MUDSKIPPERS_CTX`) before launching and the
+tier table steps aside:
+
+```
+setx MUDSKIPPERS_MODEL "gemma3:27b"
+```
 
 ## The setting that decides whether any of this works
 
