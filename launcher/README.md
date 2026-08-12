@@ -15,6 +15,23 @@ gigabytes stranded by forgetting.
 The first run downloads a storyteller — a few GB, once. After that it's seconds.
 No account, no key, no cost, and nothing leaves the machine.
 
+## Getting the file onto the other computer
+
+**Email will not work.** Gmail, Outlook and most mail services refuse `.bat`
+attachments outright — including inside a `.zip`. Send a **link** to this file on
+GitHub instead and let them download it directly.
+
+**The first time they run it, Windows will object.** A downloaded script gets a
+blue "Windows protected your PC" box. That is SmartScreen doing its job, not
+something being wrong: click **More info**, then **Run anyway**. To skip it
+entirely, right-click the file → **Properties** → tick **Unblock** → OK, before
+double-clicking.
+
+**The first START is slow.** Installing Ollama and downloading a storyteller can
+take ten or twenty minutes on a normal connection, and the window will sit on
+"Downloading…" the whole time. That is expected; it only happens once. Every
+launch after that is seconds.
+
 ---
 
 ## What it picks for you
