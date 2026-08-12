@@ -950,7 +950,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.4.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.4.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1020,7 +1020,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.4.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1299,7 +1299,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.4.0 "The Fold"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.4.1 "The Fold"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3423,11 +3423,27 @@ function seasonBreakCard(){
   seasonBreakButtons();
   scrollFeed();
 }
+/* the wrap: the fold's gold card, mirrored - there the world's hands closed the
+   season; here the player's did. Dealt at CONTINUE, before the next book opens. */
+function seasonWrapCard(closedSeason, opening){
+  var titles = [], carried = [];
+  SPINE.forEach(function(b){ if(b.season === closedSeason) titles.push(b.title); });
+  quests.forEach(function(q){ if(q.status === "active" || q.status === "offered") carried.push(q.title); });
+  var body = "By your hands, the season closed: " + titles.join(", ")
+    + ". Carried forward: " + (carried.length ? carried.join(", ") : "nothing that was written down — just the family")
+    + ". Season " + opening + " — " + SEASON_NAMES[opening] + " begins."
+    + " Tolls paid in full — the meter starts clean.";
+  var card = {kind:"gold", title:"THE SEASON IS IN THE RECORD", text:body};
+  renderBlock(card); feedLog.push(card);
+  ledgerText += "\n\n**THE SEASON IS IN THE RECORD.** " + body;
+  scrollFeed();
+}
 function seasonContinue(){
   if(busy || !epilogueNow) return;
   var opening = currentSeason + 1;
   epilogueNow = false;
   runSeasonRitual();
+  seasonWrapCard(currentSeason, opening);   /* the wrap, then the transition scene */
   phase = "seasonopen"; phaseLeft = 0;
   $("choices").innerHTML = "";
   renderSeasonBanner();        /* the door closes behind them */
@@ -6025,7 +6041,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.4.0   COLD START",
+    "MUD//OS  v4.4.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
