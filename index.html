@@ -1032,7 +1032,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.13.6 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.13.7 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1143,7 +1143,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.6</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.13.7</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1422,7 +1422,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.13.6 "The Prompt Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.13.7 "The Prompt Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3645,15 +3645,24 @@ function railFor(dm, trusted){
   if(dropped && window.console && console.warn){
     console.warn("[mudskippers] dropped " + dropped + " choice(s) that were the door in disguise");
   }
-  /* short of two dead ends, the last rail's own stalls are borrowed before any
-     generic filler is: they were written for this scene and this room, which is
-     more than a house line can say. Slot one is skipped - that was the door. */
-  for(i = 1; i < lastRail.length && out.length < 3; i++){
-    t = cleanChoice(lastRail[i]);
-    if(t && out.indexOf(t) === -1 && !sameAsDoor(b, t)) out.push(t);
+  /* short of two dead ends, the last rail's own stalls are borrowed: they were
+     written for this scene and this room, which is more than a house line can say.
+     Slot one is skipped - that was the door.
+     But only ONCE. Borrowing every turn is how a rail freezes: a DM that has
+     stopped sending choices altogether had the same two lines handed back four
+     turns running, which reads as a broken game rather than a struggling model.
+     Past the first bad turn the house lines take over, and they rotate, so the
+     rail visibly moves even while nothing else does. */
+  if(thinReplies < 2){
+    for(i = 1; i < lastRail.length && out.length < 3; i++){
+      t = cleanChoice(lastRail[i]);
+      if(t && out.indexOf(t) === -1 && !sameAsDoor(b, t)) out.push(t);
+    }
   }
+  /* the house lines rotate with the beat so a DM that has stopped sending choices
+     at least stops handing back the same two sentences forever */
   for(i = 0; out.length < 3; i++){
-    t = PIN_STALLS[i % PIN_STALLS.length];
+    t = PIN_STALLS[(i + beatTurns) % PIN_STALLS.length];
     if(out.indexOf(t) === -1) out.push(t);
   }
   return out;
@@ -3670,6 +3679,8 @@ function walkLineNow(last){
   return last ? (String(l).replace(/[.!?]+\s*$/, "") + " — and this time I mean it.") : l;
 }
 var lastRail = [];           /* the last rail actually offered, for a lost turn */
+var thinReplies = 0;         /* consecutive replies with the shape of a truncated prompt */
+var truncWarned = false;     /* the context-window card is said once a run, not every turn */
 function showChoices(choices){
   var box = $("choices"); box.innerHTML = "";
   if(choices && choices.length) lastRail = choices.slice(0, 4);
@@ -6441,6 +6452,34 @@ function callDM(corrected){
     var sceneBlocks = ((parsed.data && parsed.data.scene) || []).filter(function(bk){
       return bk && bk.speaker && bk.text && String(bk.text).trim();
     }).length;
+    var choiceCount = ((parsed.data && parsed.data.choices) || []).filter(function(c){
+      return c && String(c).trim();
+    }).length;
+    /* THE TRUNCATION SIGNATURE. A model whose window is smaller than the briefing
+       does not fail loudly - it answers with the shape of an answer: one narration
+       block instead of four, and "choices" simply absent, because the instruction
+       asking for them was cut off the front before it ever read a word. Three
+       ledgers running have looked exactly like this. The client cannot see the
+       model's context length, but it can see the shape, and it can say so. */
+    if(sceneBlocks && choiceCount) thinReplies = 0;
+    else thinReplies++;
+    if(!choiceCount && sceneBlocks && !corrected && !runOver && !beatDone()){
+      return callDM("(YOU SENT NO CHOICES. The reply had a scene but no \"choices\" array, so the"
+        + " player has nothing to pick from and the rail had to repeat itself. Resend this same"
+        + " turn, same scene, with \"choices\": two dead ends as instructed.)");
+    }
+    if(thinReplies >= 3 && !truncWarned && !runOver){
+      truncWarned = true;
+      var tw = {kind:"dmaside", text:"The storyteller is answering in fragments — short scenes,"
+        + " no choices, the same lines coming back. That is what a model looks like when the game's"
+        + " briefing is longer than its context window: the front of it is thrown away before it"
+        + " reads a word, so it never sees the rules, the cast or the board. This run is sending "
+        + (lastSent ? Math.round((lastSent.wire || lastSent.chars) / 3.7) : "about 5000")
+        + " tokens a turn. On Ollama, set OLLAMA_CONTEXT_LENGTH=24576 and restart it — or launch"
+        + " through MUDSKIPPERS.bat, which does it for you."};
+      renderBlock(tw); feedLog.push(tw);
+      scrollFeed();
+    }
     if(!sceneBlocks){
       if(!corrected){
         return callDM("(YOU SENT NO SCENE. The reply had no \"scene\" blocks in it, so the player"
@@ -7315,7 +7354,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.13.6");
+  R(s, "build", "v4.13.7");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8542,7 +8581,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.13.6   COLD START",
+    "MUD//OS  v4.13.7   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10009,7 +10048,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.6",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.13.7",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10072,6 +10111,7 @@ function newRun(confirmFirst, bare){
   foldServed = false; foldedBeats = []; defuseArmed = false; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
+  thinReplies = 0; truncWarned = false;
   walkArmed = false;
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
