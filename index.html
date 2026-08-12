@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.10.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.10.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.10.2 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.10.3 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2199,6 +2199,18 @@ function physicsLines(){
   return out;
 }
 
+/* A LEAN BIBLE WAS TRIED HERE AND MEASURED WORSE. The theory was sound - the
+   client now enforces the fence, the doors, the floors, the tolls and the
+   endings, so a local model no longer needs telling laws the code keeps - and a
+   ~400 token prompt replaced ~10,900. Three samples per cell, same board, same
+   context, forced JSON:
+       mistral-nemo:12b   full 2.7 blocks / 53 words   lean 1.3 / 33
+       mistral-small3.2   full 3.0 blocks / 94 words   lean 2.3 / 71
+   Stripping the bible made scenes THINNER, not sharper: its cast, its voice and
+   its worked examples are apparently what these models write FROM, not just
+   rules they obey. The full bible ships to every provider. A lean prompt is
+   still the right shape for the authored build, where the model's only job is a
+   one-line reaction - but that is a different prompt for a different job. */
 /* ============ PROVIDER PRESETS ============ */
 var PRESETS = {
   anthropic:{style:"anthropic", base:"https://api.anthropic.com", model:"claude-sonnet-5", needsKey:true,
@@ -5342,8 +5354,21 @@ $("s-visuals").onchange = function(){
   saveSettings();
   applyVisuals();
 };
+/* A page served over https cannot reach a server on http://localhost - the
+   browser blocks it as mixed content, and the only symptom is "Failed to fetch",
+   which reads like the model is broken when nothing is. Say so plainly instead. */
+function localBlockedHere(){
+  return location.protocol === "https:" && /^http:\/\/(localhost|127\.0\.0\.1)/i.test(settings.base || "");
+}
 $("s-test").onclick = function(){
   $("s-save").onclick();
+  if(localBlockedHere()){
+    $("s-status").innerHTML = '<div class="bad">This page is on https, and your model is on'
+      + ' http://localhost \u2014 the browser blocks that, and nothing on either side can fix it.'
+      + ' Run the game from a local copy instead: save index.html and open it, or serve the'
+      + ' folder over http://localhost. The online build can only reach cloud providers.</div>';
+    return;
+  }
   $("s-status").innerHTML = '<div class="hint">Testing\u2026</div>';
   askAI([{role:"user",content:"Reply with exactly: OK"}]).then(function(t){
     $("s-status").innerHTML = /OK/i.test(t||"")
@@ -6779,7 +6804,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.10.2   COLD START",
+    "MUD//OS  v4.10.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -8196,7 +8221,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.2",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.3",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
