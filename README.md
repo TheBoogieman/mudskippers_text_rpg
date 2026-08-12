@@ -85,10 +85,10 @@ a clean meter.
 
 The hard endings are few and all of them are yours to see coming: the mortality rules
 warn you before they take the courier; killing someone the story is standing on ends
-the run out loud; and the third choice on every rail is the way out of the whole
-thing. Take that one and the family feels it. Take it twice in a row and the courier
-really does put the job down, and that is the end of that run — quietly, with nobody
-dead. Anything else resets the count.
+the run out loud; and the red control under the rail is the way out of the whole
+thing. Use it and the family feels it, and you get told plainly what a second one
+does. Use it twice in a row and the courier really does put the job down — the end of
+that run, quietly, with nobody dead. Anything else resets the count.
 
 Between questions there is no clock at all. The aftermath, the slack, the family's
 time — those are yours, forever, free.
@@ -129,6 +129,13 @@ fixer and a dock out of thin air and send everyone walking, and the real next be
 has to elbow its way in afterwards. The cure isn't a stricter rule, it's an answer:
 when the table asks where this is going, the true reply is already in the DM's hand.
 
+The three books also do not sound alike, and the DM is handed the difference every
+turn. **Book One is a chase** — short lines, no speeches, no backstory offered
+unprompted, nobody growing as a person, because these people are being hunted and
+have no room to be characters yet. **Book Two breathes**: the hunt ends inside it, a
+family forms around a table, and the banter picks up properly. **Book Three carries
+weight** — deliberate, fewer jokes, and none of them nervous.
+
 The DM does not decide the plot and cannot wander off it:
 
 - **Branches are routes, never forks.** You decide *how* a gate falls; the board
@@ -147,15 +154,21 @@ The DM does not decide the plot and cannot wander off it:
   than it should have. And every beat also has a **floor**: a gate sent before the
   scene has been lived is held, and the DM is told to keep playing. The clock watches
   the storyteller's speed as closely as it watches yours.
-- **The rail is three doors, and you decide when the night ends.** Inside a live beat
-  the three choices are always the same three shapes, in the same order. **The exit**
-  is a real attempt at the thing that finishes tonight's business — take it and the
-  beat closes, because you reached for it. **The stall** digs in instead: ask the
-  question under the question, get the detail, press the person. It holds the gate
-  open — the DM does not get to close a beat you're still standing in — and it costs
-  nothing but a turn. **The walk** is the red one: put the whole thing down and go.
-  A mudskipper moment is a stall with a joke in it — it holds the beat open and
-  doesn't even cost the turn, unless you've called it.
+- **The rail has doors on it, and you decide when the night ends.** Inside a live beat
+  the DM labels two of its three choices. **The exit** is a real attempt at the thing
+  that finishes tonight's business — take it and the beat closes, because you reached
+  for it. **The stall** digs in instead: ask the question under the question, get the
+  detail, press the person. It holds the gate open — the DM does not get to close a
+  beat you're still standing in — and costs nothing but a turn. The third choice is
+  whatever the scene wants. A mudskipper moment is a stall with a joke in it: it holds
+  the beat open and doesn't even cost the turn, unless you've called it. A door is
+  what the DM *labels* it, never where it sits on the rail — position means nothing.
+- **The way out is the game's own control, and it asks twice.** Below the choices,
+  while a beat is live, sits one red option: put the whole job down and walk. It reads
+  the same every night, it is never something the DM wrote, and it takes two deliberate
+  clicks. Use it and the family feels it, and the game says so on a red card. Use it
+  again the very next turn and the courier really does go — that is the end of the run.
+  Anything else in between and it is forgotten.
 - **The DM cannot close a beat on you.** A gate lands when you reach for it, or when
   the road runs out and the board forces it. "The scene felt covered" is not a
   reason, and no beat can end before its third turn.
