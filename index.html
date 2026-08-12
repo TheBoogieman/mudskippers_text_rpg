@@ -981,7 +981,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.10.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.10.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1076,7 +1076,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.10.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1355,7 +1355,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.10.0 "The Rehearsal Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.10.1 "The Rehearsal Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6772,7 +6772,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.10.0   COLD START",
+    "MUD//OS  v4.10.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -6907,7 +6907,10 @@ $("reh-extract").onclick = function(){ if(rehearsing) rehFinishTake(); rehExtrac
 $("reh-extract-all").onclick = function(){ if(rehearsing) rehFinishTake(); rehExtract(true); };
 $("reh-clear").onclick = function(){
   if(!confirm("Throw away every take on record? The extraction cannot be rebuilt afterwards.")) return;
-  rehTakesSave({}); rehTurns = []; renderRehList();
+  /* the take in the room is thrown away too, or it files itself back in the
+     moment you extract and the clearing looks like it never happened */
+  rehTakesSave({}); rehTurns = []; rehTake = rehearsing ? 1 : 0;
+  renderRehChip(); renderRehList();
 };
 
 /* ============ PWA: INSTALL + SERVICE WORKER ============ */
@@ -8041,11 +8044,8 @@ function startRehearsal(beatId, label){
   rehBeatId = beatId; rehLabel = String(label||"").trim();
   rehTake = ((store[beatId]||[]).length) + 1;
   rehTurns = [];
-  newRun(false);
-  /* strip the cold open - a rehearsal starts at its own question */
-  chatLog = []; feedLog = []; ledgerText = "";
-  $("feedinner").innerHTML = ""; $("errbox").innerHTML = ""; $("choices").innerHTML = "";
-  introStage = 0; afterRevealHook = null; lureBar(false); openBar();
+  newRun(false, true);               /* no cold open, so no stale rail can land later */
+  lureBar(false); openBar();
   pendingAsides = []; beatJustCleared = null;
   rehSeed = rehSeedTo(idx);
   var b = beatNow();
@@ -8075,7 +8075,11 @@ function renderRehChip(){
   if(!c) return;
   if(!rehearsing){ c.style.display = "none"; c.innerHTML = ""; return; }
   c.style.display = "";
-  c.innerHTML = '<b style="color:#c98a8a">REHEARSAL</b> ' + esc(rehBeatId) + ' · take ' + rehTake;
+  /* the way back into the room without leaving the take: extraction, the next
+     take and the beat picker all live in there, and MENU is not the road to it */
+  c.innerHTML = '<button class="small" id="rehchip-btn" title="Open the rehearsal room">'
+    + 'REHEARSAL &middot; ' + esc(rehBeatId) + ' &middot; take ' + rehTake + '</button>';
+  $("rehchip-btn").onclick = openRehearsal;
 }
 /* one exchange, role-tagged. The rail is split by slot because that is the shape
    the offline content has to be written in - not because it reads nicely. */
@@ -8185,7 +8189,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.10.1",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -8227,7 +8231,12 @@ function openRehearsal(){
   renderRehList();
   $("rehmodal").classList.add("open");
 }
-function newRun(confirmFirst){
+/* bare: reset the whole run but deal no cold open. The rehearsal room needs the
+   clean state without the two hardcoded turns - and crucially without OPENING's
+   animated reveal, whose deferred done() lands seconds later and re-renders INTO
+   THE RAIN over whatever rail is there by then. Every one of those buttons is
+   dead, because the beat's own first call is still in flight. */
+function newRun(confirmFirst, bare){
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
@@ -8264,6 +8273,13 @@ function newRun(confirmFirst){
   ledgerText = "# MUDSKIPPERS \u2014 RUN LOG\n\nRun started: " + now.toLocaleString()
     + "\nDM: " + settings.provider + " / " + settings.model
     + "\n\n_" + BACKSTORY + "_";
+  if(bare){
+    introStage = 0;              /* no reveal is owed: there was no cold open */
+    ledgerText = "";
+    closeTitle();
+    applyVisuals();
+    return;
+  }
   var brief = {kind:"brief", tag:"BEFORE TONIGHT", sum:BACKSTORY};
   renderBlock(brief); feedLog.push(brief);
   chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The player has read the courier's backstory and the opening scene below - both already shown.)"});
