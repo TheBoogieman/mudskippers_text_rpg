@@ -967,7 +967,7 @@
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.6.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.6.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1037,7 +1037,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.6.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.6.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1316,7 +1316,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.6.0 "The Refusal"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.6.1 "The Refusal"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1361,7 +1361,7 @@ var BIBLE = [
 "- Do not use death as pacing and do not invent peril to fill a quiet turn. At most one peril inside a beat, and only where the fiction genuinely has teeth: Hollows with hands on him, a gun already drawn and aimed, a fall, fire, water, the Principal's bio-grens, the Choir's intake, or the substrate with his body left unattended.",
 "- The stakes are real for everyone else too. The family can be hurt, taken, and killed - record that in the roster's fallen list - but the courier's death is the only one that ends the season.",
 "- ENDING THE HUNT IS THE TABLE'S ACT. When Mirren's hunt must end, the blow belongs to the family and the choice of whose hand belongs to the table. You never perform it for them.",
-"- THE LOAD-BEARING PEOPLE. Nine, Pia, Vic, Hesta, Seven, Three, the Granny and the Principal hold the story up. If the player kills or destroys one of them - and a smashed shard IS a death - do not soften it, do not write around it, and never resurrect: honor the act in the scene, record the name in roster fallen in the SAME reply, and stop steering. The game ends such a run itself, and it should - the rain has too much to offer to continue without its people. The story's own deaths stay the story's: Mirren's hunt and Vic's PAID IN FULL are the board's to spend, not this law's to block.",
+"- THE LOAD-BEARING PEOPLE. Nine, Pia, Vic, Hesta, Seven, Three, the Granny and the Principal hold the story up. If the player kills or destroys one of them - and a smashed shard IS a death - do not soften it, do not write around it, and never resurrect: honor the act in the scene, record the name in roster fallen in the SAME reply, and stop steering. The game ends such a run itself, and it should - the rain has too much to offer to continue without its people. The story's own deaths stay the story's: Mirren's hunt is always the board's to spend, and from Book Three's first night Vic's death is too - PAID IN FULL or otherwise, the family figures the rest out together. Before Book Three, losing Vic loses the story.",
 "",
 "LOSS - THE SEASON CAN BE LOST, AND IT IS REAL:",
 "- The world collects a toll when it must force a gate or walk a drifting player back. The player always sees the count, and the game warns them plainly before the last one. Nothing ends the season unwarned - the same law as death.",
@@ -2483,15 +2483,55 @@ function lockRun(){
    list by the table's hand - a smashed shard is a death - the DM does not get
    to write around it and the game does not continue: the rain refuses, out
    loud, the screen goes red, and the run ends as hard as a death. The story's
-   own sanctioned deaths are exempt: Mirren always, Vic from his own beat on. */
+   own sanctioned deaths are exempt: Mirren always, Vic from Book Three on. */
 var LOAD_BEARING = ["Nine", "Pia", "Vic", "Hesta", "Seven", "Three", "Granny", "Machine", "Principal"];
 var breakDue = "";
 function loadBearingHit(name){
   var n = String(name || "");
   for(var i = 0; i < LOAD_BEARING.length; i++){
     if(!new RegExp("\\b" + LOAD_BEARING[i] + "\\b", "i").test(n)) continue;
-    if(LOAD_BEARING[i] === "Vic" && beatIdx >= beatById("a3-vic")) continue;
+    /* from Book Three's first beat Vic's death is the story's to spend - the
+       family figures the rest out together */
+    if(LOAD_BEARING[i] === "Vic" && beatIdx >= beatById("a3-evict")) continue;
     return n;
+  }
+  return "";
+}
+/* the refusal's net: prose can kill quietly. If the reply's own factual
+   registers - canon and now - read like a load-bearing death that the roster
+   does not record, one certify pass forces the truth onto the record: roster
+   the death (and the refusal fires), or state plainly that they live. A false
+   positive costs one call, never a run. */
+var DEATH_VERBS = /\b(dead|died|dies|killed|kills?|destroyed|smashed|crushed|shattered|gone(?!\s+dark))\b/i;
+function deathSuspect(data){
+  if(!data) return "";
+  var pool = [];
+  if(Object.prototype.toString.call(data.canon) === "[object Array]") pool = pool.concat(data.canon);
+  if(typeof data.now === "string" && data.now) pool.push(data.now);
+  var replyFallen = (data.roster && Object.prototype.toString.call(data.roster.fallen) === "[object Array]")
+    ? data.roster.fallen : [];
+  function onRecord(t){
+    return roster.fallen.concat(replyFallen).some(function(f){
+      return new RegExp("\\b" + t + "\\b", "i").test(String(f));
+    });
+  }
+  /* while Nine rides the shard, the shard IS Nine: breaking the glass kills the passenger */
+  var ci = beatById("a2-chassis"), hi = beatById("a2-housing");
+  var nineOut = (chassisHolder === "Nine" && beatIdx > ci) || (chassisHolder === "Seven" && beatIdx > hi);
+  for(var i = 0; i < pool.length; i++){
+    var ln = String(pool[i] || "");
+    if(!nineOut && !onRecord("Nine") && /\bshard\b/i.test(ln)
+       && /\b(smashed|crushed|shattered|destroyed|broken|breaks?)\b/i.test(ln)){
+      return "Nine";
+    }
+    if(!DEATH_VERBS.test(ln)) continue;
+    for(var j = 0; j < LOAD_BEARING.length; j++){
+      var t = LOAD_BEARING[j];
+      if(!new RegExp("\\b" + t + "\\b", "i").test(ln)) continue;
+      if(t === "Vic" && beatIdx >= beatById("a3-evict")) continue;
+      if(onRecord(t)) continue;   /* the roster already tells the truth; the main trigger has it */
+      return t;
+    }
   }
   return "";
 }
@@ -4476,6 +4516,18 @@ function callDM(corrected){
           + " \"Nine\" - Nine's choice, spoken at the table. Resend the same turn with it.)");
       }
     }
+    /* the refusal's certify pass: a suspected load-bearing death must enter the
+       record or be denied on it - it does not get to live in prose alone */
+    if(!corrected){
+      var suspect = deathSuspect(parsed.data);
+      if(suspect){
+        return callDM("(CHECK THE ROSTER: this turn reads like " + suspect + " was killed or"
+          + " destroyed. If so, that is a death and it is permanent: keep the scene exactly as"
+          + " written and send roster with " + suspect + " in fallen - the game will take it from"
+          + " there. If " + suspect + " is alive, resend the turn making that plainly true in the"
+          + " prose and the canon.)");
+      }
+    }
     if(!corrected && chairTaken(parsed.data)){
       return callDM("(THE CHAIR WAS TAKEN - your reply spoke in the courier's voice beyond what"
         + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
@@ -6224,7 +6276,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.6.0   COLD START",
+    "MUD//OS  v4.6.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
