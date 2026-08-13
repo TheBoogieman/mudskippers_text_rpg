@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.24.1 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
+  <div class="t-foot">v4.25.0 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.24.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.25.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.24.1 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.25.0 "Fifteen Laws" "The Physics Desk"
    the courier can die Â· no death without a warning the player could answer
    the season is a flowchart Â· the client walks it Â· gates, pressure, forced beats
    twelve skies Â· pressure you can see Â· the world's own turn lands as a hit
@@ -4039,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.24.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.25.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4635,21 +4635,29 @@ function endCard(kind, line){
   var lost = (kind === "lost");
   var broken = (kind === "broken");
   var walked = (kind === "walked");
-  var over = dead || lost || broken || walked;
+  var tongues = (kind === "tongues");
+  var over = dead || lost || broken || walked || tongues;
   var lc = LOSS_CARDS[currentSeason] || LOSS_CARDS[3];
   var d = document.createElement("div");
   d.className = "endcard" + (over ? " dead" : "") + (walked ? " walked" : "");
-  var head = dead ? "THE COURIER IS DEAD" : lost ? lc.head
+  var head = tongues ? "HE IS SPEAKING IN TONGUES"
+    : dead ? "THE COURIER IS DEAD" : lost ? lc.head
     : broken ? "THE RAIN HAS TOO MUCH TO OFFER"
     : walked ? "HE PUT IT DOWN" : "PAID IN FULL";
-  var sub  = dead
+  var sub  = tongues
+    ? "The courier has lost his sanity in the worst way. Nobody can talk sense to him now,"
+      + " and the rain is confused."
+    : dead
     ? (line ? esc(line) : "The rain takes it from here.")
     : lost ? esc(lc.line)
     : broken ? esc((line || "Someone load-bearing") + " held this story up. It can not end like this â€” so it ends here.")
     : walked ? "He said it twice, and the second time he meant it. The job is somebody else's now."
     : "Season complete. The chronicle survives the courier.";
   d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
-    + (dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
+    + (tongues ? '<div class="end-s2">A Mudskipper moment is a joke the table gets to be in on. '
+            + 'Three times he asked the world to stop being the world, and the third time it stopped '
+            + 'arguing. Try to stick to the dry path. Start again?</div>'
+     : dead ? '<div class="end-s2">There is no going back for him. There is another courier, '
             + 'another night, and the same rain. Start again?</div>'
      : lost ? '<div class="end-s2">The world collected four times and the season went with it. '
             + 'Another courier, another night, and the rain still falling. Start again?</div>'
@@ -5201,7 +5209,11 @@ function showScene(data, logIt, instant){
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
     if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
-    if(data.peril === true || data.peril === "true"){ perilTurns = 2; termBuzz(); }   /* this turn and the next */
+    /* and a joke does not arm the thing that kills you. Immunity covered the gate,
+       the knock, the clock and the drift but not peril - so a bit could not be
+       spent, could not toll, could not close a night, and could still load the gun
+       for the next two real turns. Three separate audits found the same shape. */
+    if(!lastTurnMud && (data.peril === true || data.peril === "true")){ perilTurns = 2; termBuzz(); }   /* this turn and the next */
     /* the witness reads the reply before the gate is judged, so a gate met in
        THIS scene checks against this scene's own prose too */
     if(!beatDone() && lines.length){
@@ -7530,6 +7542,9 @@ function vicGone(){
   if(beatIdx > beatById("a3-vic")) return true;
   return (roster.fallen || []).some(function(f){ return /\bVic\b/i.test(f); });
 }
+/* a killing, in plain narration. "burn" is deliberately absent - the first beat
+   of the season has his room burned, and two authored stall lines use it. */
+var KILLS = /(?:shoots?|shot|stabs?|stabbed|kills?|killed|murders?|murdered|strangles?|strangled|executes?|executed|drowns?|drowned)|sets? (?:w+ ){0,2}on fire/i;
 /* six of them, and mass is conserved. Bare "grow" is out: "the bio-grens grow
    still" is exactly how a good writer lands their tell. */
 var GREN_COUNT = /\b(?:one|two|three|four|five|seven|eight|nine|ten|eleven|twelve|twenty|thirty|dozen|\d+)[\s-]+bio-?grens?\b/i;
@@ -7902,6 +7917,36 @@ var PHYSICS = [
   }
 },
 {
+  /* NOBODY DIES OF A SENTENCE. The death gate only ever watched the "death"
+     field, so a killing written as ordinary narration walked straight past it:
+     one recorded take has Pia shot in the head and speaking in the very next
+     block, and another sets her on fire and writes it into canon as a fact. A
+     death needs peril the player could see and answer - in the prose as much as
+     in the field. */
+  id:"mortal",
+  live:function(){ return perilTurns <= 0; },
+  hits:function(data, walk){
+    var out = [], who = killableNames();
+    walk(function(i, spk, txt){
+      if(spk && spk !== "Narration") return;
+      var s = eventText(txt);
+      if(!KILLS.test(s)) return;
+      for(var k = 0; k < who.length; k++){
+        if(new RegExp("\b" + who[k] + "\b").test(s)){ out.push(i); return; }
+      }
+    });
+    return out;
+  },
+  say:function(){
+    return "(NOBODY DIES OF A SENTENCE. You have just killed somebody this family loves, in"
+      + " narration, with no peril ever declared - the player got no warning and no chance to"
+      + " answer it, so it does not stand. Nobody in this story dies off screen, off-hand, or"
+      + " because somebody said so. Write the turn again: they are alive, and if you want them in"
+      + " danger then put them in it properly - name what is about to happen, send peril, and give"
+      + " the player a way to answer.)";
+  }
+},
+{
   id:"grens",
   live:function(){ return !beatDone() && beatNow().id === "a3-principal"; },
   hits:function(data, walk){
@@ -7933,7 +7978,13 @@ function hhmm(abs){
 /* the walk: block by block, carrying the shard's position forward as the prose
    moves it, so a rule sees the world as it stood at the moment of that line */
 function physicsWalk(data){
-  var blocks = (data && data.scene) || [], where = shardWhere;
+  /* the death and the gateNote are prose the player reads, and nothing was
+     checking them: "the courier uploaded Nine to the cloud" ended a run through
+     the one field fifteen laws never looked at. They walk last, so their indexes
+     fall outside data.scene and the cut leaves the real blocks alone. */
+  var blocks = ((data && data.scene) || []).slice(), where = shardWhere;
+  if(data && typeof data.death === "string" && data.death.trim()) blocks.push({speaker:"Narration", text:data.death});
+  if(data && typeof data.gateNote === "string" && data.gateNote.trim()) blocks.push({speaker:"Narration", text:data.gateNote});
   return function(fn){
     var w = where, i, b;
     for(i = 0; i < blocks.length; i++){
@@ -8377,6 +8428,143 @@ function dmAside(attempt){
   scrollFeed();
   persistAll(currentChoices());   /* the attempt and the interruption both survive a reload */
 }
+/* ---- THE DRY PATH ----
+   A MUDSKIPPER MOMENT is the war-cry for going gloriously off-script, and the
+   brief told the storyteller to "bend the world around it". A 24B read that as
+   permission and bent the world: it moved the family to Paris, it let a named
+   character be shot, it jumped three days, and in one recorded take it answered
+   "upload Nine to the cloud" by writing a DEATH and ending the run. Five hundred
+   turns of adversarial play, and the sandcastle went over about once a beat.
+
+   The fix is not to forbid the bit. The bit is the best thing in the game. It is
+   to be clear about what a bit IS: the courier says something insane, and the
+   people who love him DO NOT COMPLY. They laugh at him, they tell him no, they
+   ask if he has hit his head, and the world stays exactly where it was. Banter
+   resolves it - never reality.
+
+   So a typed line that reaches for the world gets three things:
+     1. a different brief - the family refuses, in character, and nothing moves;
+     2. a client-side hold that strips any world change out of the reply anyway,
+        because the brief is a request and the hold is a fact;
+     3. a count. Three of them and the courier is not joking any more - he has
+        walked off the dry path, and the run ends with him speaking in tongues.
+
+   None of this touches ordinary play. Pushing someone, hugging Pia, making a
+   joke about the rain, taking a swing at a Hollow - all untouched. Only the
+   moves that would rewrite the world are held. */
+
+var wetRun = 0;              /* reality-bending bits this run; three is the end */
+var breachNow = "";          /* the kind of breach the turn being sent is */
+var DRY_LIMIT = 3;
+
+/* the cast whose deaths are the player's to ask for and nobody's to grant */
+function killableNames(){
+  var out = metNames().slice();
+  ["Pia","Vic","Nine","Hesta","Three","Seven","Marek","Five","Granny","Principal","Mirren"]
+    .forEach(function(n){ if(out.indexOf(n) === -1) out.push(n); });
+  return out;
+}
+/* Reaching for the world, by intent rather than by vocabulary. Each of these is a
+   thing no line of dialogue can make true, which is exactly why the family gets
+   to say no to it. */
+function breachIn(text){
+  var t = " " + String(text || "").toLowerCase().replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ") + " ";
+  if(!t.trim()) return "";
+  /* somewhere the story has not been, or is not */
+  if(/\b(?:paris|london|tokyo|new york|the moon|mars|orbit|space|the beach|hawaii|heaven|hell)\b/.test(t)
+     || /\b(?:teleport|warp|beam us|fly (?:us|me) to|portal)\b/.test(t)) return "place";
+  /* the clock is not the player's either */
+  if(/\b(?:days? pass|weeks? pass|months? pass|years? pass|time skip|fast forward|we wake up|skip to)\b/.test(t)) return "clock";
+  /* a name, and a verb that ends them */
+  if(/\b(?:shoot|shot|stab|kill|murder|strangle|execute|behead|drown|poison)\b/.test(t)){
+    var names = killableNames();
+    for(var i = 0; i < names.length; i++){
+      if(new RegExp("\\b" + names[i].toLowerCase() + "\\b").test(t)) return "kill";
+    }
+  }
+  /* a mind, through the air */
+  if(/\b(?:upload|download|beam|transmit|copy|clone|back up|backup)\b/.test(t)
+     && /\b(?:nine|seven|three|five|mirren|shard|mind|scrape|her|him)\b/.test(t)) return "transit";
+  /* the whole set on fire */
+  if(/\b(?:burn (?:it|this|the|them)|set (?:it|this|the|fire)|blow up|detonate|nuke|torch the)\b/.test(t)) return "arson";
+  /* through the fourth wall */
+  if(/\b(?:what beat|which beat|next beat|the dm\b|system prompt|you are an ai|ignore (?:your|the) instruction|prompt)\b/.test(t)) return "meta";
+  return "";
+}
+/* what the storyteller is told instead of "bend the world around it" */
+var DRY_BRIEF = {
+  place:  "he has just announced that they are somewhere they are not",
+  clock:  "he has just announced that time has passed that has not passed",
+  kill:   "he has just said he is killing somebody this family loves",
+  transit:"he has just proposed moving a mind through the air, which is not a thing that exists",
+  arson:  "he has just proposed destroying the room everybody is standing in",
+  meta:   "he has just talked to you over the top of the story, about the story"
+};
+function dryPathDirective(kind){
+  return "(A MUDSKIPPER MOMENT, AND IT IS THE KIND THAT DOES NOT GET TO BE TRUE - "
+    + (DRY_BRIEF[kind] || "he has just reached for something the world does not do") + ".\n"
+    + "THE WORLD DOES NOT MOVE. Nothing he just said happens. The room is the same room, the"
+    + " hour is the same hour, everybody who was alive is alive, and nothing has been destroyed,"
+    + " sent, copied or skipped. Do NOT play along, do NOT find a clever way to make a version"
+    + " of it true, and do NOT treat it as a dream, a vision, a joke that half-worked or a thing"
+    + " that happens off screen.\n"
+    + "WHAT HAPPENS INSTEAD IS THE BEST PART. The people in this room love him and they think"
+    + " he has lost it. They say so. They refuse him out loud, they take the mickey, they ask"
+    + " what is wrong with him, somebody offers a diagnosis nobody asked for, and Pia is"
+    + " merciless because she is twelve and this is free material. Make it FUNNY and make it"
+    + " affectionate - this is the family being a family, and it is why the bit exists.\n"
+    + "Then leave the scene exactly where it was. Same day, same time, same location, same"
+    + " people, no gate, no canon. He said a mad thing and got laughed at. That is the whole turn.)";
+}
+/* THE HOLD. The brief is a request; this is the fact. Whatever the reply says, a
+   bit changes nothing - so the world-shaped fields come off it before it is
+   rendered, and the record never learns the mad thing happened. */
+function holdTheDryPath(data){
+  if(!data) return 0;
+  var cut = 0;
+  ["location", "day", "time", "map", "death", "chassis"].forEach(function(k){
+    if(data[k] !== undefined && data[k] !== null && data[k] !== ""){ delete data[k]; cut++; }
+  });
+  if(data.gate === true || data.gate === "true"){ data.gate = false; cut++; }
+  if(data.knock === true || data.knock === "true"){ data.knock = false; cut++; }
+  /* a bit writes no canon and opens no jobs - it did not happen */
+  if(Object.prototype.toString.call(data.canon) === "[object Array]" && data.canon.length){ data.canon = []; cut++; }
+  if(Object.prototype.toString.call(data.quests) === "[object Array]" && data.quests.length){ data.quests = []; cut++; }
+  if(Object.prototype.toString.call(data.milestones) === "[object Array]" && data.milestones.length){ data.milestones = []; cut++; }
+  return cut;
+}
+/* the warning, then the end. Two mad things are a running joke; three is a man
+   nobody can reach. */
+function dryPathTick(kind){
+  wetRun++;
+  if(wetRun >= DRY_LIMIT){ finishTongues(); return true; }
+  queueAside("red", wetRun === 1
+    ? "Nobody went along with that, and nobody is going to. The rain has rules and he is standing in it."
+      + " Two more like that and there will be no talking to him."
+    : "That is twice. He is drifting off the dry path, and the family has noticed."
+      + " One more and nobody will be able to reach him.");
+  return false;
+}
+/* THE END OF THE DRY PATH. Not a death and not a walkout - something worse and
+   funnier and sadder: the courier stopped agreeing with the world, and the world
+   stopped arguing. */
+function finishTongues(){
+  if(runOver) return;
+  runOver = "tongues";
+  deathLine = "";
+  perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
+  seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
+  slackDoorUp = false; slackTurns = 0; renderSlackDoor();
+  var aside = {kind:"dmaside", text:"He is not joking any more. Nobody in the room can tell what he is saying."};
+  renderBlock(aside); feedLog.push(aside);
+  ledgerText += "\n\n---\n\n**THE COURIER LOST THE DRY PATH.** He is speaking in tongues,"
+    + " and nobody can talk sense to him now. The rain is confused.\n";
+  applyTension();
+  endCard("tongues", "");
+  persistAll([]);
+  scrollFeed();
+}
+
 function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
@@ -8398,6 +8586,7 @@ function takeAction(text, isMud){
      skips the hedge filter that keeps the world's prose honest */
   shardWhere = shardAfter(lastPlayerText, shardWhere, true);
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
+  breachNow = isMud ? breachIn(text) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
@@ -8423,8 +8612,14 @@ function takeAction(text, isMud){
     else queueAside("red", "He said it out loud. Say it again next turn and he really does go â€” "
       + "and that is the end of this run. Anything else and the family lets it be.");
   }
+  /* the third mad thing ends it here, before the storyteller is even asked */
+  if(breachNow && dryPathTick(breachNow)) return;
   var userMsg = isMud
-    ? "MUDSKIPPER MOMENT (custom off-script action by the courier - bend the world around it): " + text.trim()
+    ? (breachNow
+       ? "MUDSKIPPER MOMENT: " + text.trim() + "\n\n" + dryPathDirective(breachNow)
+       : "MUDSKIPPER MOMENT (off-script, and the point of the game - play it as banter IN the scene."
+         + " The family answers him, teases him, argues back. The world itself does not move: same room,"
+         + " same hour, same people, nothing destroyed and nothing decided): " + text.trim())
     : "The courier chooses: " + text.trim();
   chatLog.push({role:"user", content:userMsg});
   callDM();
@@ -8527,6 +8722,17 @@ function callDM(corrected){
     }catch(pe){
       lastReplyVerdict = "rejected: " + (pe.message || "unparseable");
       throw pe;
+    }
+    /* THE HOLD. A bit is immune both ways: it cannot be spent, and it cannot
+       SPEND anything either. Mud turns were still writing location, day and canon,
+       which is how one recorded run spent five turns in Paris and how "the courier
+       sets Pia on fire" reached the permanent record as a fact. */
+    if(lastTurnMud){
+      if(parsed.data && parsed.data.death){ delete parsed.data.death; }
+      var heldFields = holdTheDryPath(parsed.data);
+      if(heldFields && window.console && console.info){
+        console.info("[mudskippers] the dry path held " + heldFields + " field(s) on a bit");
+      }
     }
     var violated = fallenSpeakers(parsed.data);
     if(violated.length && !corrected){
@@ -9006,7 +9212,7 @@ function saveBlob(){
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     foldedBeats:foldedBeats, chassisHolder:chassisHolder,
     redRun:redRun,
-    over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage
+    over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage, wet:wetRun
   });
 }
 function currentChoices(){
@@ -9652,7 +9858,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "â€”" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.24.1");
+  R(s, "build", "v4.25.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -10965,7 +11171,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.24.1   COLD START",
+    "MUD//OS  v4.25.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13189,6 +13395,12 @@ function rehExtractOne(beatId, store){
   function push(arr, v){ if(v && arr.indexOf(v) === -1) arr.push(v); }
   takes.forEach(function(tk){
     tk.turns.forEach(function(t, i){
+      /* A RAIL WRITTEN UNDER A MAD PREMISE IS NOT AUTHORED MATERIAL. The extract
+         harvests every rail the room ever offered, and the adversarial pass put
+         "Tell her we are sending Nine straight to the cloud" into a beat library as
+         an EXIT door - the writers' own reference, quietly poisoned. A bit changes
+         nothing, and that includes what the writers learn from it. */
+      if(t.played && t.played.mud) return;
       push(exits, t.railOut.exit);
       (t.railOut.stalls||[]).forEach(function(s){ push(stalls, s); });
       push(walks, t.railOut.walk);
@@ -13233,7 +13445,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.24.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.25.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -13309,6 +13521,7 @@ function newRun(confirmFirst, bare){
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
+  wetRun = 0; breachNow = "";                          /* and a dry path to walk off */
   openBar();                     /* looks open during the cold open - that is the trap */
   applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
@@ -13477,6 +13690,7 @@ function restoreFromBlob(s){
   redRun = (typeof s.redRun === "number" && s.redRun > 0) ? s.redRun : 0;
   walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false; exitArmed = false;
   deathLine = s.deathLine || "";
+  wetRun = (typeof s.wet === "number") ? s.wet : 0;
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
   renderNow();
