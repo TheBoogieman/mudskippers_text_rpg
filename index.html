@@ -1028,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.19.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.19.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1140,7 +1140,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1419,7 +1419,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.19.0 "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.19.1 "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4821,6 +4821,10 @@ function showScene(data, logIt, instant){
     }
     if(afterRevealHook){ var hook = afterRevealHook; afterRevealHook = null; hook(); }
     showChoices(choices);
+    /* and only now the way out of the room, after the turn it belongs to has
+       landed and its rail is on screen - a door offered mid-reveal is a door the
+       player can take before the turn under it has finished happening */
+    renderSlackDoor();
     if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
   }
@@ -5584,11 +5588,19 @@ function seasonContinue(){
    been one, and then it just stands there. It does not nag, it does not expire,
    and the night does not move while it waits - a player who wants nine more turns
    of arguing about the pan gets nine more turns of arguing about the pan. */
+/* The flag and the card only. The DOOR is not put on screen here, and that is the
+   whole point: this runs inside boardTurn, which runs inside showScene BEFORE the
+   scene has finished revealing - and busy is already false by then. A door
+   rendered here is a live button sitting under a turn that has not landed yet.
+   Click it fast and slackArm arms the next beat mid-reveal; the render then
+   catches up and finishes the OLD turn on top of the new one - the room's own
+   invitation dealt after the new beat's opening scene, and worse, showChoices
+   overwriting the new beat's rail with the leftover slack choices and saving them.
+   The door goes up in done(), when the turn is actually over. */
 function openSlackDoor(){
   slackDoorUp = true;
   queueAside("room", "The room is yours as long as you want it - nothing out there is counting."
     + " When you have had enough of each other, the night still has one more question in it.");
-  renderSlackDoor();
 }
 function renderSlackDoor(){
   var box = $("boardbox"); if(!box) return;
@@ -5617,7 +5629,9 @@ function renderSlackDoor(){
    reason: the room the next question opens in is authored, so there is nothing
    to ask a model for - the board plays it and the player moves first. */
 function slackArm(){
-  if(busy || phase !== "slack" || !slackDoorUp || beatDone() || runOver) return;
+  /* skipReveal is the belt to the door's braces: it is non-null for exactly as
+     long as a turn is still landing, and nothing may arm a beat on top of one */
+  if(busy || skipReveal || phase !== "slack" || !slackDoorUp || beatDone() || runOver) return;
   slackDoorUp = false;
   var box = $("boardbox"); box.innerHTML = ""; box.removeAttribute("data-slack-door");
   chatLog.push({role:"user", content:"(The player has taken the night on: the family's own time is over,"
@@ -8176,7 +8190,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.19.0");
+  R(s, "build", "v4.19.1");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9489,7 +9503,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.19.0   COLD START",
+    "MUD//OS  v4.19.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10956,7 +10970,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.1",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
