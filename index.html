@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.29.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.30.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.29.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.30.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.29.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.30.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1772,7 +1772,7 @@ var BIBLE = [
 "- bits: short strings - running jokes and callbacks the table has established. Reuse them; they are load-bearing.",
 "- When the group leaves a location, include one canon line stating what concluded there. ",
 "- day: REQUIRED. Follow the fiction - advance it only when a night actually passes in-scene, and when it does, advance it in the same turn the sun comes up rather than silently later. Day numbers are a diary, not a schedule: never pace, gate, or aim events at particular day numbers, and never rush the season to match the first run's calendar.",
-"- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it - 'Lower Veldt Market', 'The Open Door', 'the marsh safehouse', 'the deep dark'. Update it the moment the party moves, in the same turn they arrive.",
+"- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it. Name the room you are actually in - do not borrow a name from this instruction, from the road ahead, or from a person. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be Narration, Courier, Other, or one of the names in ON STAGE in the context block - that list is the whole cast this run has actually met, and it grows as the story introduces people. Never use a name that is not on it: the people who have not arrived yet are not yours to cast, and putting one on screen early spends them. Strangers get \"Other\". Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible - and it only exists once it has been installed; before that the terminal is dumb hardware.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
 "- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words. Inside a live beat the game reads them BY POSITION, so the order is a contract, not a preference. CHOICE 1 is the exit: a real attempt at tonight's aim, the move that ends this business, and the most tempting thing on the rail. CHOICES 2 AND 3 are dead ends: the question under the question, the detail, the person pressed, the human thing said - unlike each other, one earnest and one sideways, and neither leaving the courier measurably closer to the gate. A dead end that quietly advances the night is the commonest way this table's pacing gets stolen. Outside a live beat - the landing, the family's own time - write three ordinary choices as you always have.",
@@ -4053,7 +4053,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.29.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.30.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4362,6 +4362,7 @@ function normLine(t){
 }
 var META_ASIDE = /\b(rail|board|slot|unlock|locked|gate|dead end|choices?|beat)\b/i;
 function cleanChoice(t){
+  t = String(t == null ? "" : t).replace(/\*\*(.+?)\*\*/g, "$1");
   t = String(t || "").trim();
   /* a courier does not open his mouth with a bracketed note about the interface */
   t = t.replace(/^\(([^)]{0,160})\)\s*/, function(m, inner){ return META_ASIDE.test(inner) ? "" : m; });
@@ -4418,6 +4419,41 @@ function placeWentBlank(data){
   if(!data) return false;
   if(typeof data.location !== "string" || data.location.trim()) return false;
   return !!String($("hud-loc").textContent || "").trim();
+}
+/* A PERSON IS NOT AN ADDRESS. One reply named a neighbour's house "Granny's Place"
+   one beat before the machine's voice is first heard - a load-bearing name on a door
+   in a street she has never stood in. The fence only ever matched later beats'
+   titles, so it slept. */
+/* ...unless the board puts that name on a door itself. THE PRINCIPAL'S ROOM is an
+   authored place, and the first cut of this refused it - the sweep caught it before
+   it shipped, which is the third detector this project has had to teach not to fight
+   its own prose. Read off SPINE, so authoring a new one needs no code. */
+var placeNameOk = null;
+function placeNamesOk(){
+  if(placeNameOk) return placeNameOk;
+  placeNameOk = {};
+  SPINE.forEach(function(b){
+    ["opens", "lands", "landsHard"].forEach(function(k){
+      (b[k] || []).forEach(function(p){
+        var t = " " + String((p && p.place) || "").toLowerCase() + " ";
+        LOAD_BEARING.forEach(function(nm){
+          var low = String(nm).toLowerCase();
+          if(t.indexOf(" " + low + " ") !== -1 || t.indexOf(" " + low + "'s ") !== -1) placeNameOk[nm] = 1;
+        });
+      });
+    });
+  });
+  return placeNameOk;
+}
+function personPlace(loc){
+  var t = " " + String(loc || "").toLowerCase() + " ", ok = placeNamesOk(), i, nm, low;
+  for(i = 0; i < LOAD_BEARING.length; i++){
+    nm = LOAD_BEARING[i];
+    if(ok[nm]) continue;
+    low = String(nm || "").toLowerCase();
+    if(low && (t.indexOf(" " + low + " ") !== -1 || t.indexOf(" " + low + "'s ") !== -1)) return nm;
+  }
+  return "";
 }
 function fencedPlace(loc){
   var want = placeWords(loc);
@@ -5183,6 +5219,10 @@ function showScene(data, logIt, instant){
      required b.text to be truthy before it would look. */
   if(Object.prototype.toString.call(data.scene) === "[object Array]"){
     data.scene = data.scene.filter(function(b){ return b && /\w/.test(String(b.text || "")); });
+    /* ...and nobody speaks in markdown. Asterisk pairs reached the screen inside
+       dialogue and, worse, onto the rail buttons: "**Say** Mirren's name, now that
+       you're here again." */
+    data.scene.forEach(function(b){ b.text = String(b.text).replace(/\*\*(.+?)\*\*/g, "$1"); });
   }
   var blocks = []; var lines = [];
   (data.scene||[]).forEach(function(b){
@@ -5203,7 +5243,12 @@ function showScene(data, logIt, instant){
   /* the world moves to wherever the turn left it. After the lints, before the
      render: what reaches the screen is what the physics desk now believes. */
   notePhysics(data);
-  var sealed = !!(data.__live && phase === "slack");
+  /* THE SEAL COVERED THE FAMILY'S OWN TIME AND NOT THE LANDING. An aftermath move
+     writes straight to the HUD and then becomes the slack room - so a reply could
+     invent a house, walk the family into it, and make it the room they spend the
+     rest of the beat in, on top of an authored landing that had just put them
+     somewhere else and said the door stayed shut. */
+  var sealed = !!(data.__live && (phase === "slack" || phase === "aftermath"));
   if(data.day && !sealed){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
   if(typeof data.time === "string" && data.time.trim() && !sealed) nowTime = data.time.trim();
   /* the map has to know about the move before we can name the route we took */
@@ -5304,6 +5349,11 @@ function showScene(data, logIt, instant){
        THIS scene checks against this scene's own prose too */
     if(!beatDone() && lines.length){
       beatText = (beatText + "\n" + lines.join("\n")).slice(-BEAT_TEXT_CAP);
+      /* and what the player has now read, so the next turn cannot print it again */
+      blocks.forEach(function(bk){
+        var k = stutterKey(bk && bk.text);
+        if(k) beatSeen[k] = 1;
+      });
     }
     /* the rehearsal reads the exchange from both sides of the board: what was
        played and what it cost, so a take is a node graph rather than a story */
@@ -5568,6 +5618,12 @@ function castStateBlock(opts){
    turn, then advances whatever comes back. A season cannot fail to end. */
 function beatNow(){ return SPINE[Math.min(beatIdx, SPINE.length - 1)]; }
 function beatDone(){ return beatIdx >= SPINE.length; }
+/* what the player has already read this beat, for the stutter law */
+var beatSeen = {};
+function stutterKey(t){
+  var k = String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
+  return k.length > 40 ? k : "";
+}
 function beatSeasonFirst(arc){
   for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].season === arc) return i; }
   return 0;
@@ -5875,7 +5931,7 @@ function finishFold(){
   phase = "live"; phaseLeft = 0;
   slackTurns = 0; slackRoom = ""; slackDoorUp = false; renderSlackDoor();
   beatTurns = 0; driftRun = 0; walkbackNow = false;
-  beatText = ""; gateRefusedNames = []; gateHeldNow = false;
+  beatText = ""; beatSeen = {}; gateRefusedNames = []; gateHeldNow = false;
   tolls = 0;                     /* paid in full; the meter starts clean */
   var finBeat = SPINE[fin];
   var body = "While you played it your way, the world closed: " + titles.join(", ")
@@ -6493,7 +6549,8 @@ function boardBlock(){
     + " Everything else about how it happens is yours and the player's."
     + " When you send it, hold any new job openings for the aftermath - the closing turn belongs to the closing."
     + " A beat the player themselves ended does NOT cut away: they earned it, so the story walks on out of it."
-    + (actTurnAhead() ? " This gate turns the act: roll the day over with it - nights end." : "")
+    + (actTurnAhead() && actTurnCrossesNight()
+        ? " This gate turns the act: roll the day over with it - nights end." : "")
     + (seasonAhead() ? " This gate closes the season." : ""));
   return out.join("\n");
 }
@@ -6575,6 +6632,21 @@ function boardDirective(){
       + ((b.press || [])[1] || "something forces the issue without the player choosing it.")
       + " If the exit has already been met in play, send the gate now - a met exit left un-gated is the world's error, not the player's.)";
   }
+  /* THE PREMISE WAS ONLY EVER OFFERED IN THE LAST TWO TURNS. press[0] and press[1]
+     went out at budget-1 and budget, and a clean pass takes the door at the FLOOR,
+     which is below both - so on every well-played beat the pressure cards were
+     never offered at all. Twelve of the thirty-three audits reported the same
+     sentence: "neither press entry reached the screen in any take". The press is
+     where the night's premise and its cost live; one beat banked "the Choir asked
+     for Pia by name" into the spine having never put the Choir in the room.
+     It is an offer here, not an order - the orders are still below. */
+  if(pressOfferedFor !== b.id && beatTurns >= 1 && beatTurns < b.budget - 1 && (b.press || [])[0]){
+    pressOfferedFor = b.id;
+    return "(THE NIGHT HAS ITS OWN PRESSURE, AND IT IS AVAILABLE NOW: " + b.press[0]
+      + " This is an offer, not an order - play it if the scene wants it, hold it if the"
+      + " scene is already carrying its own weight. It is here because a beat that never"
+      + " shows the thing it is about closes on a sentence nobody earned.)";
+  }
   if(beatTurns === b.budget - 1){
     return "(SQUEEZE — this beat is running out of room. Let the scene keep its feet, but angle it: bring the gate into view and make the next step toward it the obvious one."
       + " If the scene still needs its pressure, an offer: "
@@ -6600,6 +6672,29 @@ function anchorsMissing(b){
    resolves on its second move was never a night, and the stall exists so the
    player can spend as much more of it as they like. */
 function beatFloor(b){ return b.floor || 3; }
+/* the latest day this beat's own authored passages claim. A beat that spans midnight
+   pins to its landing, not its opening, or its own landing would break the law. */
+function beatDayPin(b){
+  var pin = NaN;
+  ["opens", "lands", "landsHard"].forEach(function(k){
+    (b && b[k] || []).forEach(function(p){
+      var d = parseInt(String((p && p.day) || ""), 10);
+      if(!isNaN(d) && (isNaN(pin) || d > pin)) pin = d;
+    });
+  });
+  return pin;
+}
+/* does the NEXT beat actually open on a later day? The act-turn directive told the
+   storyteller to roll the day over on every act turn, and six of them do cross a
+   night - but a3-stone lands at 5:50am and a3-for opens at 6:20am the same dawn, so
+   the player watched day 33 become 34 and then get dragged back to 33 by the next
+   beat's own authored opening. */
+function actTurnCrossesNight(){
+  var nb = SPINE[beatIdx + 1];
+  if(!nb) return false;
+  var here = beatDayPin(beatNow()), there = beatDayPin(nb);
+  return !isNaN(here) && !isNaN(there) && there > here;
+}
 /* Closing writes the record and starts the landing; the pointer does NOT move.
    The lifecycle finishes the closed beat completely - aftermath, then the
    family's slack - before armBeat() opens the next one. */
@@ -6711,7 +6806,7 @@ function armBeat(){
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   slackTurns = 0; slackRoom = "";   /* the room is behind them; its counter goes with it */
-  beatText = ""; gateRefusedNames = []; gateHeldNow = false;
+  beatText = ""; beatSeen = {}; gateRefusedNames = []; gateHeldNow = false;
   if(!beatDone() && beatNow().season !== currentSeason) currentSeason = beatNow().season;
   /* the question is live; the room it opens in is ours to write */
   if(!beatDone()) beatJustArmed = beatNow().id;
@@ -6906,6 +7001,7 @@ function boardTurn(data){
    takes its own turn it lands as a hit. The ladder here is the SAME arithmetic
    boardDirective() uses, read one turn ahead - what the player sees is the pressure
    the NEXT turn will be written under. */
+var pressOfferedFor = "";    /* the beat whose premise has already been offered */
 var lastTension = 0, beatJustCleared = null;
 var beatJustArmed = "";     /* a question just went live; its authored opening is owed */
 /* ---- MORTALITY ----
@@ -7847,6 +7943,30 @@ var PHYSICS = [
   }
 },
 {
+  /* EVERY REPLY IS NEW PROSE - which the briefing has said for versions, with nothing
+     behind it. A third of the beats recorded the storyteller reopening a turn with
+     the previous turn's paragraph word for word, worst on bits, where no state ticks
+     and it has nothing new to continue from. Exact match on the normalised text, so
+     there is no wording for it to fight: this only ever fires on prose the player has
+     already read, this beat, on screen. */
+  id:"stutter",
+  live:function(){ return !beatDone(); },
+  hits:function(data){
+    var out = [];
+    ((data && data.scene) || []).forEach(function(bk, i){
+      var k = stutterKey(bk && bk.text);
+      if(k && beatSeen[k]) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(YOU HAVE ALREADY SHOWN THEM THAT. One of those blocks is a paragraph the player"
+      + " read earlier in this same beat, printed again word for word. Cut it and open where the"
+      + " last turn actually stopped - if the room genuinely has not moved, then say what it is"
+      + " like to be standing in a room that has not moved, which is a different sentence.)";
+  }
+},
+{
   id:"boardleak",
   live:function(){ return !beatDone(); },
   hits:function(data, walk){
@@ -8161,22 +8281,38 @@ var PHYSICS = [
      the sun above the marsh has barely moved. The pin is read off the beat's own
      authored opening rather than hardcoded. */
   id:"dayheld",
-  live:function(){
-    return beatIdx >= beatById("a3-descent");
-  },
+  /* THE CLOCK ONLY EVER REFUSED TIME GOING BACKWARDS. Forward was free, so the game's
+     first beat ran on day 3 before the player had done anything, one close overshot
+     the whole of the next beat, and the beat this law was WRITTEN for turned its own
+     day on its own closing turn - because the storyteller put the date in the prose
+     and left data.day empty, and the law only ever read the field. It is live on
+     every beat now, pinned to the latest day the beat's own authored passages
+     claim, and it reads the sentence as well as the field. */
+  live:function(){ return !beatDone(); },
   hits:function(data){
-    var b = beatNow(), pin = parseInt((b.opens && b.opens[0] && b.opens[0].day) || "", 10);
+    var pin = beatDayPin(beatNow());
     if(isNaN(pin) || (data && data.the_end)) return [];
+    var out = [], re = /\bday\s+(\d+)\b/i;
     var got = parseInt(String((data && data.day) || ""), 10);
-    return (!isNaN(got) && got > pin) ? [-1] : [];
+    if(!isNaN(got) && got > pin) out.push(-1);
+    function prose(txt, idx){
+      var m = re.exec(String(txt || ""));
+      if(m && parseInt(m[1], 10) > pin) out.push(idx);
+    }
+    ((data && data.scene) || []).forEach(function(bk, i){ prose(bk && bk.text, i); });
+    if(data && typeof data.now === "string") prose(data.now, -2);
+    return out;
   },
   say:function(){
-    var b = beatNow(), pin = (b.opens && b.opens[0] && b.opens[0].day) || "the same day";
-    return "(THE DAY DOES NOT TURN DOWN HERE. Time runs hot inside the machine - about a minute"
-      + " within for every second outside, and she sets the dial - so however long that felt, the"
-      + " sun above the marsh has barely moved and nobody has slept. It is still day " + pin + "."
-      + " Send the same turn with the day unchanged, and if you want the weight of hours, put it"
-      + " in what it cost them rather than on the calendar.)";
+    var pin = beatDayPin(beatNow());
+    var inside = beatIdx >= beatById("a3-descent")
+      ? " Time runs hot inside the machine - about a minute within for every second outside, and"
+        + " she sets the dial - so however long that felt, the sun above the marsh has barely moved."
+      : " Tonight has not finished happening: nobody has slept, and the room you were just in is"
+        + " still warm.";
+    return "(THE DAY DOES NOT TURN HERE." + inside + " It is still day " + pin + ", in the field and"
+      + " in the prose. Send the same turn with the day unchanged - and if you want the weight of"
+      + " hours, put it in what it cost them rather than on the calendar.)";
   },
   after:function(data){ delete data.day; }
 },
@@ -9298,6 +9434,13 @@ function callDM(corrected){
           + " cannot file. They are still at " + ($("hud-loc").textContent || "where they were")
           + ". Send the turn again with them where they actually are.)");
       }
+      var whoPlace = personPlace(parsed.data && parsed.data.location);
+      if(whoPlace){
+        return callDM("(THAT IS A PERSON, NOT AN ADDRESS. You have just put " + whoPlace
+          + "'s name on a door, in a street " + whoPlace + " has never stood in. Name the room for"
+          + " what it is - a neighbour's kitchen, a shopfront, a hallway, a back room - and leave"
+          + " " + whoPlace + " where " + whoPlace + " lives.)");
+      }
       var earlyPlace = fencedPlace(parsed.data && parsed.data.location);
       if(earlyPlace){
         return callDM("(NOT YET, AND NOT THERE: \"" + String(parsed.data.location) + "\" is where"
@@ -9314,6 +9457,12 @@ function callDM(corrected){
        name that reaches metNames() disarms the cast gate for the rest of the run -
        which is exactly how Vic ended up on the cast sheet two beats early. */
     if(corrected){
+      if(personPlace(parsed.data && parsed.data.location)){
+        if(window.console && console.warn){
+          console.warn("[mudskippers] refused a person's name on a door: " + parsed.data.location);
+        }
+        delete parsed.data.location;
+      }
       if(fencedPlace(parsed.data && parsed.data.location)){
         if(window.console && console.warn){
           console.warn("[mudskippers] refused an early arrival at " + parsed.data.location);
@@ -10431,7 +10580,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.29.0");
+  R(s, "build", "v4.30.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11744,7 +11893,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.29.0   COLD START",
+    "MUD//OS  v4.30.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13865,7 +14014,7 @@ function rehSeedTo(idx){
     s.status = "Present, as the record leaves them.";
   });
   beatIdx = idx; currentSeason = SPINE[idx].season;
-  phase = "live"; phaseLeft = 0; beatTurns = 0; beatText = "";
+  phase = "live"; phaseLeft = 0; beatTurns = 0; beatText = ""; beatSeen = {};
   return {canon: seeded.length, cast: Object.keys(names), chassisHolder: chassisHolder};
 }
 function startRehearsal(beatId, label){
@@ -14038,7 +14187,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.29.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.30.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -14109,7 +14258,7 @@ function newRun(confirmFirst, bare){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; gateNotes = {}; gateRefusedNames = []; topicSpent = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
