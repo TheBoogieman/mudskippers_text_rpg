@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.34.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.35.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.34.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.35.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.34.4 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.35.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5457,7 +5457,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.34.4";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.35.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5475,6 +5475,7 @@ var gateNotes = {};             /* beat id -> the DM's one-line record of how it
 var phase = "live";          /* "live" | "aftermath" | "slack" */
 var phaseLeft = 0;           /* turns remaining in the current non-live phase */
 var gateHeldNow = false;     /* a gate arrived below the beat's floor; served one turn */
+var sceneCollapsed = false;  /* this turn's reply had stopped writing and was circling */
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
 var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
 /* ---- THE SLACK ROOM ----
@@ -5818,6 +5819,11 @@ var META_ASIDE = /\b(rail|board|slot|unlock|locked|gate|dead end|choices?|beat)\
 function cleanChoice(t){
   if(t && typeof t === "object") return "";
   t = String(t == null ? "" : t).replace(/\*\*(.+?)\*\*/g, "$1");
+  /* ...and the rail was still speaking in backticks after the prose stopped:
+     `He looks at Vic intently.` `Why did you do it?` went onto a button and then
+     into the record as what the courier did. */
+  t = t.replace(/`([^`\n]{1,300})`/g, "\u201c$1\u201d").replace(/`/g, "");
+  t = t.replace(/^[\s.,;:]+/, "");
   t = String(t || "").trim();
   /* a courier does not open his mouth with a bracketed note about the interface */
   t = t.replace(/^\(([^)]{0,160})\)\s*/, function(m, inner){ return META_ASIDE.test(inner) ? "" : m; });
@@ -6683,12 +6689,47 @@ function mergeCanon(list){
   return added;
 }
 function showScene(data, logIt, instant){
+  sceneCollapsed = false;
   /* a block with no word in it is not a line. A Narration block whose entire text
      was one double-quote reached a player's screen, and two blocks tagged Courier
      with empty text rendered as blank name-tags - invisible to the chair, which
      required b.text to be truthy before it would look. */
   if(Object.prototype.toString.call(data.scene) === "[object Array]"){
     data.scene = data.scene.filter(function(b){ return b && /\w/.test(String(b.text || "")); });
+    /* THE COLLAPSE. The stutter law watches across turns, and a correction costs a
+       call - but a reply that says the same thing to itself needs no model to fix it,
+       only a filter. A small model on a heavy scene stops writing and starts
+       circling: one recorded turn of Vic's confession came back as twenty blocks of
+       which six were "The rain continues to fall around them.", three were "The
+       courier's voice is firm, but there is also a hint of pain in his words.", and
+       two more were "The rain continues to fall." - which is not an exact duplicate
+       of anything, so matching on equality alone leaves the loop half standing.
+       A line that CONTAINS a line already said in the same breath is the same line
+       with more weather on it. */
+    var saidHere = [], dropped = 0;
+    data.scene = data.scene.filter(function(b){
+      var k = stutterKey(b.text);
+      if(!k) return true;
+      for(var i = 0; i < saidHere.length; i++){
+        if(k === saidHere[i] || k.indexOf(saidHere[i]) === 0 || saidHere[i].indexOf(k) === 0){
+          dropped++; return false;
+        }
+      }
+      saidHere.push(k);
+      return true;
+    });
+    /* ...and a scene is three or four blocks, which the format rules say out loud.
+       Whatever survives the loop above, twenty of anything is a model that has
+       stopped writing, and the player should not have to scroll through it. */
+    if(data.scene.length > 9){
+      dropped += data.scene.length - 9;
+      data.scene = data.scene.slice(0, 9);
+    }
+    if(dropped && window.console && console.info){
+      console.info("[mudskippers] dropped " + dropped + " block(s) the reply had already said");
+    }
+    /* three blocks past saying it twice is not a slip, it is a loop */
+    if(dropped >= 3) sceneCollapsed = true;
     /* ...and nobody speaks in markdown. Asterisk pairs reached the screen inside
        dialogue and, worse, onto the rail buttons: "**Say** Mirren's name, now that
        you're here again." */
@@ -6701,6 +6742,9 @@ function showScene(data, logIt, instant){
          here fixes the screen, the ledger, the witness and the laws at once,
          because everything downstream reads the scene after this. */
       b.speaker = speakerName(b.speaker);
+      /* a stray leading full stop: the storyteller opens a block with the tail of
+         the punctuation it meant to put somewhere else */
+      b.text = b.text.replace(/^[\s.,;:]+/, "");
       /* ...and the backtick. The format rules forbid unescaped double quotes inside
          a JSON string, so the storyteller reaches for the next thing on the keyboard
          and the player gets `There are enough chairs for all of you` in the prose. */
@@ -7105,7 +7149,12 @@ function beatDone(){ return beatIdx >= SPINE.length; }
 var beatSeen = {};
 function stutterKey(t){
   var k = String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
-  return k.length > 40 ? k : "";
+  /* forty characters was too long to catch a refrain. "The rain hushes the yard."
+     is twenty-five and it went round three times in one reply. Four words is the
+     floor now - short enough for a refrain, long enough that "Yes." and "I know."
+     and "Vic." can be said as often as a scene needs them. */
+  if(k.length < 19) return "";
+  return k.split(" ").length >= 4 ? k : "";
 }
 function beatSeasonFirst(arc){
   for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].season === arc) return i; }
@@ -8428,6 +8477,18 @@ function boardTurn(data){
   var held = false;
   if(said && beatTurns < beatFloor(beatNow())){
     said = false; held = true; gateHeldNow = true;
+  }
+  /* ...and so is a gate that arrived on a reply which had stopped writing. A beat
+     ended on a turn that was six copies of "The rain continues to fall around them.",
+     and the ending it recorded was as empty as the prose that carried it. Held on the
+     same terms as the floor - the failure is the storyteller's, so no toll, no scar,
+     no anchor check, and the player gets the beat back to play properly. The door
+     is exempt on the same grounds the anchor check exempts it below: a player who
+     reached for the ending has done the thing, whatever the reply managed to write
+     about it, and the branch above only catches the door when the DM stayed silent. */
+  if(said && sceneCollapsed && pickKind !== "exit"){
+    said = false; held = true; gateHeldNow = true;
+    if(window.console && console.warn) console.warn("[mudskippers] gate held: the reply was circling");
   }
   /* the anchor check: a gate whose named parts never entered the beat's prose is
      refused - no card, no canon, no advance, the budget still ticking. Forcing
@@ -12208,7 +12269,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.34.4");
+  R(s, "build", "v4.35.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13521,7 +13582,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.34.4   COLD START",
+    "MUD//OS  v4.35.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15815,7 +15876,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.34.4",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.35.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
