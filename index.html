@@ -1028,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.19.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.19.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1140,7 +1140,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1419,7 +1419,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.19.2 "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.19.3 "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3674,7 +3674,6 @@ var CONTEXT_TAIL = 12;
 var CAST_CAP = 14;      /* notes per character */
 var MET_CAP = 12;       /* met is permanent - full means refuse, never forget */
 var KNOWS_CAP = 10;     /* knows evicts oldest */
-var CAST_STATE_BUDGET = 2200;
 
 /* A cast sheet is {notes, met, knows, status}. v2.3-v2.6 saves stored a bare array
    of notes; everything reads through here so both shapes work. */
@@ -3805,14 +3804,6 @@ function doorsLive(){
   return !!runSlug && !runOver && !beatDone() && phase === "live"
     && !walkbackNow && !foldPending && introStage !== 1;
 }
-/* THE LABELS ARE THE CLIENT'S. Asking the DM to tag its own rail failed the only
-   way that matters: it simply did not send the tags, so every rail came back
-   unlabelled, no stall ever held a gate open, and beats closed on players who
-   were digging in. Slots are ours now - one, the exit; two and three, the dead
-   ends - and the DM is told what to put in each. It only writes choices.
-   The old catastrophe is still impossible: the way out is not on this rail at
-   all, so the worst a mislabelled slot can do is end a beat a turn early. */
-var DOOR_SLOTS = ["exit", "stall", "stall"];
 /* ---- THE PINNED EXIT ----
    Telling the DM "slot one is the move that ends this business" failed the same
    way every instruction to a small model fails: quietly and completely. Across a
@@ -3853,6 +3844,13 @@ function exitStage(){
   return doorsLive() ? "open" : "";
 }
 /* positional and client-owned; the door holds slot one for the whole beat */
+/* THE LABELS ARE THE CLIENT'S. Asking the DM to tag its own rail failed the only
+   way that matters: it simply did not send the tags, so every rail came back
+   unlabelled, no stall ever held a gate open, and beats closed on players who
+   were digging in. Slots are ours - one, the exit; two and three, the dead ends -
+   and the DM is told what to put in each. It only writes choices.
+   The old catastrophe is still impossible: the way out is not on this rail at
+   all, so the worst a mislabelled slot can do is end a beat a turn early. */
 function doorSlots(){ return ["exit", "stall", "stall"]; }
 function pinnedExit(b){
   var xs = (b && b.exits && b.exits.length) ? b.exits : null;
@@ -4883,7 +4881,6 @@ function showError(msg){
 }
 
 /* ============ AI CALL (provider-agnostic) ============ */
-var CANON_BUDGET = 6000;   /* characters of canon we are willing to spend per call */
 var REPLY_TOKENS = 6000;   /* output ceiling, not a spend - and on models that think
                               by default the ceiling covers thinking too, so it needs
                               headroom even though thinking is turned off below */
@@ -4896,26 +4893,12 @@ var ARCHIVE_AT = 30, ARCHIVE_TAKE = 16, ARCHIVE_TO = 6;
 function numbered(lines){
   return lines.map(function(l, i){ return (i+1) + ". " + l; }).join("\n");
 }
-function canonPart(cl, rl){
-  var parts = [];
-  if(cl.length) parts.push("CHRONICLE (compressed history, oldest first):\n" + numbered(cl));
-  if(rl.length) parts.push("RECENT CANON (verbatim):\n" + numbered(rl));
-  return parts.join("\n\n");
-}
-function canonBlock(){
-  if(!canonArchive.length && !runCanon.length) return "Nothing established yet beyond the opening.";
-  var body = canonPart(canonArchive, runCanon);
-  if(body.length <= CANON_BUDGET) return body;
-  /* Guard only - compaction should make this unreachable. Whatever we drop, we drop
-     from the OLDEST end of each list, so the newest truth always survives. */
-  var chron = canonArchive.slice(-60), recent = runCanon.slice(-140);
-  var chronCap = Math.floor(CANON_BUDGET / 3);
-  while(chron.length && canonPart(chron, []).length > chronCap) chron.shift();
-  while(recent.length > 1 && canonPart(chron, recent).length > CANON_BUDGET) recent.shift();
-  if(canonPart(chron, recent).length > CANON_BUDGET) chron = [];
-  var out = canonPart(chron, recent);
-  return out.length <= CANON_BUDGET ? out : out.slice(-(CANON_BUDGET - 1));
-}
+/* CANON_BUDGET, canonPart() and canonBlock() lived here: canon's own private
+   server with its own private squeeze, spending a character budget of its own.
+   contextBlock formats and trims both lists itself now, on one ladder with every
+   other block, so the whole subsystem had been assembling a string nobody asked
+   for since that ladder was built. Three declarations that only ever talked to
+   each other, which is why nothing noticed. */
 
 /* One compaction may ride a turn. Canon overflow is handled before archive overflow. */
 function compactionRequest(){
@@ -5148,15 +5131,8 @@ function wantLines(){
   });
   return personal.concat(inst);   /* people lean first; institutions last */
 }
-function openedReveals(){
-  var out = [];
-  for(var i = 0; i <= Math.min(beatIdx, SPINE.length - 1); i++){
-    (SPINE[i].reveals || []).forEach(function(k){
-      if(REVEALS[k] && out.indexOf(REVEALS[k]) === -1) out.push(REVEALS[k]);
-    });
-  }
-  return out;
-}
+/* openedReveals() was lockedReveals' mirror - everything the story HAS told - and
+   was never wired to anything. What is open needs no list: it is simply allowed. */
 /* ---- THE INTERLUDE DECK ----
    interlude = {id, when:{season, after, roster, loc}, text}
    Served ONLY during slack, at most one per BETWEEN BEATS block, first eligible
@@ -8194,7 +8170,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.19.2");
+  R(s, "build", "v4.19.3");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9507,7 +9483,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.19.2   COLD START",
+    "MUD//OS  v4.19.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10478,8 +10454,6 @@ function shardPlace(){
   shardEl.style.transform = "translate(" + shardX.toFixed(1) + "px," + shardY.toFixed(1) + "px)"
     + " rotate(" + shardRot.toFixed(1) + "deg)";
 }
-/* Loitering, not frozen: it lives on the lip of the panel but never quite stops. */
-function shardAtRest(){ return !shardHeld && Math.abs(shardY - shardRest) < 3 && Math.abs(shardVY) < 4; }
 function shardTarget(){ return SHARD_AIR[currentAmbience] || SHARD_AIR["rain-neon"]; }
 /* The air changes when the sky does, but not instantly - walking from the rain into
    a warm kitchen should feel like the air thickening around it, not a cut. */
@@ -10974,7 +10948,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.2",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.3",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
