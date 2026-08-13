@@ -1028,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.19.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.19.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1140,7 +1140,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1419,7 +1419,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.19.1 "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.19.2 "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4780,9 +4780,12 @@ function showScene(data, logIt, instant){
         if(lrail) choices = lrail;
       }
     }
-    /* a question that just went live opens itself, and the pinned door goes on
-       the front of its rail the same as any other live turn. Still one ceremony
-       a turn: a card, or an opening, or an aside - never two stacked. */
+    /* A question that just went live opens itself. Both routes into a new beat -
+       the player's door out of the room, and the season premiere - now play that
+       opening themselves and clear the flag on the next line, so in ordinary play
+       this branch does not run any more; it covers the same seam the seasonopen
+       net does. The ceremony rule it belongs to still holds everywhere: a card,
+       or an opening, or an aside - never two stacked. */
     else if(beatJustArmed){
       var ja = beatJustArmed; beatJustArmed = "";
       if(!runOver && !foldPending && !beatDone() && !seasonBreakDue && !walkoutDue){
@@ -5006,17 +5009,23 @@ function beatById(id){
 }
 /* Everything the run has NOT reached yet, so the DM can be told what it may not
    touch. This is the single rule that stops improvisation becoming canon. */
-function lockedReveals(){
+/* what the story is still holding back, keyed. The lint needs the key, the prompt
+   needs the sentence, and they must never disagree about the list - so there is
+   one walk and lockedReveals just reads the dictionary with it. */
+function lockedKeys(){
   var out = [];
   for(var i = beatIdx + 1; i < SPINE.length; i++){
     (SPINE[i].reveals || []).forEach(function(k){
       /* seating Seven at the chassis necessarily opened the housing early -
          its existence is out; a2-housing confronts its origin instead */
       if(k === "housing" && chassisHolder === "Nine") return;
-      if(REVEALS[k] && out.indexOf(REVEALS[k]) === -1) out.push(REVEALS[k]);
+      if(REVEALS[k] && out.indexOf(k) === -1) out.push(k);
     });
   }
   return out;
+}
+function lockedReveals(){
+  return lockedKeys().map(function(k){ return REVEALS[k]; });
 }
 /* ---- THE TELLS ----
    NOT YET was the last law in this file that was only ever a request. The board
@@ -5076,18 +5085,6 @@ function revealLeak(data){
       if(out.indexOf(k) === -1 && hay.indexOf(t) !== -1) out.push(k);
     });
   });
-  return out;
-}
-/* the same walk as lockedReveals, but keyed - the lint needs the key, the prompt
-   needs the sentence */
-function lockedKeys(){
-  var out = [];
-  for(var i = beatIdx + 1; i < SPINE.length; i++){
-    (SPINE[i].reveals || []).forEach(function(k){
-      if(k === "housing" && chassisHolder === "Nine") return;
-      if(REVEALS[k] && out.indexOf(k) === -1) out.push(k);
-    });
-  }
   return out;
 }
 /* which scene blocks did it, so a second offence can be cut without taking the
@@ -5785,13 +5782,16 @@ function roadBlock(){
 function boardBlock(){
   if(beatDone()) return "THE BOARD\nThe season is over. Write nothing but epilogue if asked at all.";
   var out = [], locked;
-  if(phase === "aftermath" || phase === "seasonend" || phase === "seasonopen"){
-    out.push(phase === "seasonopen"
-      ? "THE BOARD — BETWEEN SEASONS. The record is written; the next book opens on your reply."
-      : "THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
+  /* "seasonopen" was a third case here, telling the DM the next book opened on
+     its reply. It cannot: the board plays the premiere itself and the phase is
+     resolved before any turn is sent, so the copy described a turn that no longer
+     exists. The phase still appears in old saves and restore still knows it - it
+     just never reaches a briefing. */
+  if(phase === "aftermath" || phase === "seasonend"){
+    out.push("THE BOARD — THE AFTERMATH. The gate has fallen; the season holds while it lands. Nothing new begins this turn.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
-    if(phase !== "seasonopen") out.push(roadBlock());
+    out.push(roadBlock());
     return out.join("\n");
   }
   if(phase === "slack"){
@@ -6101,7 +6101,11 @@ function boardTurn(data){
   }
   /* the season break idles: the card holds the door and the chat is epilogue */
   if(phase === "seasonend") return;
-  /* the season-open reply is the re-establishment scene; it arms the first beat */
+  /* the last net under the season seam. The board plays the premiere itself and
+     restore converts any old save that was caught mid-seam, so nothing should
+     ever get a turn in this phase - but if one somehow did, arming beats leaving
+     the run wedged between two books. Cheap, and the only cost of keeping it is
+     this comment saying it is not the design. */
   if(phase === "seasonopen"){ armBeat(); return; }
   /* the landing: no gates, no drift, no clocks - the closed beat settles.
      A finale's landing ends in the season break instead of slack. */
@@ -8190,7 +8194,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.19.1");
+  R(s, "build", "v4.19.2");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9503,7 +9507,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.19.1   COLD START",
+    "MUD//OS  v4.19.2   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10970,7 +10974,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.2",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
