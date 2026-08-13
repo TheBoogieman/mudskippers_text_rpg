@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.27.1 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.28.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.27.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.28.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.27.1 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.28.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2528,8 +2528,9 @@ var SPINE = [
  budget:5, floor:3, reveals:[], anchors:["Mirren"],
  press:["She says the line one last time, mid-fight, in the service voice: the delivery is late. Nobody who hears it forgets it.",
         "Choir recovery is minutes out. If the family does not finish this, the Choir collects her and resets the hunt."],
- canon:["The family ended Mirren's hunt with their own hands. Nothing gentler was left, and they knew it.",
-        "The service voice stopped mid-line. The silence after it is part of the family now."],
+ canon:["The service voice stopped mid-line. The silence after it is part of the family now."],
+ canonSoft:["The family ended Mirren's hunt with their own hands. Nothing gentler was left, and they knew it."],
+ falls:["Mirren"],
  scar:"The world finished it - a recall, a rail, a river - and nobody's hand got to matter."},
 
 {id:"a2-mirren", season:2, act:1, title:"the name on the law",
@@ -3170,8 +3171,8 @@ var SPINE = [
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The voice notices it is being listened to, and instead of alarm, offers to help the listeners too.",
         "Someone in the family wants to hate her, needs to, and the voice makes it impossible mid-sentence."],
- canon:["The family has heard the machine's voice being kind. She guides the convergent like family, because she was told that is what family means.",
-        "The enemy is the instructions, not the nature. That changes what winning has to look like."],
+ canon:["The enemy is the instructions, not the nature. That changes what winning has to look like."],
+ canonSoft:["The family has heard the machine's voice being kind. She guides the convergent like family, because she was told that is what family means."],
  scar:"Her kindness reached them secondhand, quoted, already argued about."},
 
 {id:"a3-founding", season:3, act:1, title:"two people and a dead child",
@@ -3271,6 +3272,7 @@ var SPINE = [
  canon:["Vic spent decades scanning customers for blood the founders' lock would accept. The courier was his lottery ticket.",
         "Vic built the housing and installed it without the courier's knowledge or consent. He regrets it. He did it anyway.",
         "Vic's last words were PAID IN FULL."],
+ falls:["Vic"],
  stone:"Vic confessed, and paid in full.",
  scar:"Vic paid before the courier finished being angry - PAID IN FULL landed with the accounts still open."},
 
@@ -4051,7 +4053,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.27.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.28.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4120,6 +4122,7 @@ function pageTurnClause(){
 var pickKind = "";           /* "exit" | "stall" | "walk" - this turn's door */
 var pendingKind = "";        /* set by the button, consumed by takeAction */
 var stalledNow = false;      /* a gate was held because the player stalled */
+var askAgain = 0;            /* re-asks spent on THIS turn - one correction is a request */
 var walkArmed = false;       /* the way out asks twice, every time - session only */
 var exitArmed = false;       /* and so does the door that ends the night */
 var redRun = 0;              /* consecutive walks; two ends the run - persisted */
@@ -5118,6 +5121,44 @@ function deriveFromScene(data, skip){
   });
   return learned;
 }
+/* A LINE THAT CLAIMS TONIGHT'S ENDING, ON A TURN THAT DID NOT GET ONE. Used only
+   when the board has just held, suppressed, refused or overtaken the gate - so a
+   line that restates the exit is by definition premature, whatever else it says.
+   Content words only, and a run of three of them in order, so paraphrase is caught
+   and a shared "the family" is not. */
+var CANON_SKIP = " the a an and or of to in on at is was for with that this it its "
+  + " they them their he she his her him has have had been be by from as not no ";
+function canonWords(t){
+  return String(t || "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").split(/\s+/)
+    .filter(function(w){ return w.length > 2 && CANON_SKIP.indexOf(" " + w + " ") === -1; });
+}
+function canonSaysExit(line, exit){
+  var a = canonWords(line), b = canonWords(exit), i, j, run;
+  if(a.length < 3 || b.length < 3) return false;
+  for(i = 0; i + 2 < a.length; i++){
+    for(j = 0; j + 2 < b.length; j++){
+      run = a[i] === b[j] && a[i+1] === b[j+1] && a[i+2] === b[j+2];
+      if(run) return true;
+    }
+  }
+  return false;
+}
+/* Two tests, because they miss different things. sameAsDoor is the fingerprint the
+   rail already uses to spot a dead end that is really the door - it reads the beat's
+   authored exits as word pairs, and it is the better of the two. The three-word run
+   catches the case sameAsDoor is not built for: a reply that quotes the exit STRING
+   back verbatim, which is what one beat's take did on three separate turns. Neither
+   fires on ordinary colour; both were swept over all 443 canon lines this corpus
+   recorded and over every authored line in the spine. */
+function canonMinusExit(list, b){
+  if(Object.prototype.toString.call(list) !== "[object Array]" || !b) return list;
+  var kept = list.filter(function(c){ return !sameAsDoor(b, c) && !canonSaysExit(c, b.exit); });
+  if(kept.length !== list.length && window.console && console.info){
+    console.info("[mudskippers] held " + (list.length - kept.length)
+      + " canon line(s) that claimed an ending this turn did not get");
+  }
+  return kept;
+}
 function mergeCanon(list){
   if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
   var added = 0;
@@ -5226,7 +5267,17 @@ function showScene(data, logIt, instant){
     var pn = c && c.name ? String(c.name).trim() : "";
     if(pn && lastPresent.indexOf(pn) === -1) lastPresent.push(pn);
   });
-  mergeCanon(data.canon);       /* the DM's colour first... */
+  /* THE RECORD IS WRITTEN AFTER THE JUDGEMENT, NOT BEFORE IT. This merge used to
+     run twenty-one lines above boardTurn, so the DM's canon landed whatever the
+     board then decided: a gate held below the floor, suppressed by a stall,
+     refused for missing anchors or overtaken by a force still wrote its sentence
+     into the permanent record. One beat's take had the exit banked on three
+     separate turns the client had deliberately refused. A live turn now holds its
+     colour until the gate has been judged; the authored passages, which are not
+     the DM and answer to nothing, still merge here. */
+  var canonHeld = null;
+  if(data.__live) canonHeld = data.canon;
+  else mergeCanon(data.canon);
   if(newFaces || data.milestones || data.quests || data.roster || data.map || data.place
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
@@ -5247,7 +5298,15 @@ function showScene(data, logIt, instant){
       n: rehTurns.length, phase: phase, beatTurns: beatTurns,
       pick: pickKind, text: lastPlayerText, mud: lastTurnMud, rail: lastRail.slice()
     } : null;
+    var beatWas = beatDone() ? null : beatNow();      /* the pointer can move below */
     boardTurn(data);            /* ...then the beat's fixed canon, if the gate fell */
+    /* and only now the colour, minus anything that claimed the ending the board
+       just declined to give it */
+    if(canonHeld){
+      var refused = gateHeldNow || stalledNow || lastCloseHard
+                 || (gateRefusedNames && gateRefusedNames.length);
+      mergeCanon(refused ? canonMinusExit(canonHeld, beatWas) : canonHeld);
+    }
     if(rehBefore) rehCapture(data, rehBefore);
   }
   harvestCompaction(data);
@@ -6531,8 +6590,18 @@ function beatFloor(b){ return b.floor || 3; }
 /* Closing writes the record and starts the landing; the pointer does NOT move.
    The lifecycle finishes the closed beat completely - aftermath, then the
    family's slack - before armBeat() opens the next one. */
-function closeBeat(forced, note){
+/* THREE WAYS A BEAT ENDS. A chosen close records what the storyteller witnessed. A
+   forced close is the world taking it, and costs a toll. A THIN close is the third
+   one the board never had: the player reached for the door and the reply came back
+   without the people the night was about in it. The beat still ends - the player
+   spent their move and the door guarantees a close - but it ends on the authored
+   scar rather than on a sentence nobody earned, and it costs the player nothing,
+   because the failure was not theirs. */
+var lastCloseHard = false;   /* this turn's close was forced or thin */
+function closeBeat(mode, note){
   if(beatDone()) return;
+  var forced = (mode === true), thin = (mode === "thin"), hard = forced || thin;
+  lastCloseHard = hard;
   var b = beatNow();
   /* the fork: the a2-chassis close records Nine's choice; every later branch
      reads it. A close without a stated choice defaults to the gift. */
@@ -6553,21 +6622,41 @@ function closeBeat(forced, note){
   mergeCanon((chassisHolder === "Nine" && b.canonAlt) ? b.canonAlt : b.canon);
   if(b.canonA && chassisHolder !== "Nine") mergeCanon(b.canonA);
   if(b.canonB && chassisHolder === "Nine") mergeCanon(b.canonB);
+  /* canonSoft is the half of the record the scar takes back. Most beats' canon and
+     scar coexist - facts, then what they cost. On a few they are the same event
+     told two ways, and the record was keeping both: one run held "the family ended
+     her hunt with their own hands" beside "nobody's hand got to matter", for ever,
+     and the next beat was built on the first. */
+  if(!hard && b.canonSoft) mergeCanon(b.canonSoft);
   /* the record is written by the witness: what the closed beat SHOWS from here on
      is the DM's gateNote (or the exit, which the gate guarantees) - never the goal.
      A forced close records the scar instead: authored, and true precisely because
      forcing IS the world doing the authored thing. */
-  var rec = forced ? (b.scar || b.exit) : (note || b.exit);
+  var rec = hard ? (b.scar || b.exit) : (note || b.exit);
   gateNotes[b.id] = rec;
-  if(!forced && note) mergeCanon([note]);
-  if(forced && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
+  /* THE NOTE IS A WITNESS STATEMENT, AND A WITNESS HAS TO HAVE BEEN THERE. It went
+     into permanent canon verbatim, so a reply could assert an ending its own scene
+     never showed and the run would carry it as fact - "the courier pressed Vic and
+     got them: the job, Mirren, everything except why him", on a take where Mirren
+     is not mentioned once. If the people this night is about never made it into
+     the prose, the note still names the card; it does not get to name the truth. */
+  if(!hard && note && !anchorsMissing(b).length) mergeCanon([note]);
+  if(hard && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
+  /* THE DEAD, AS DATA. This was one hardcoded push for one character, and the
+     comment under it described exactly the bug it was not fixing: the only thing
+     that ever put Vic in the roster was the rehearsal room's seeding, which never
+     runs in a real game - so in a real game he walked into his own cairn still on
+     the cast list, still able to speak, with the beat's own anchor putting him
+     back ON STAGE. It is a field now, and every path through here reads it. */
+  (b.falls || []).forEach(function(nm){
+    if(roster.fallen.indexOf(nm) === -1) roster.fallen.push(nm);
+  });
   if(b.stone) mergeMilestones([b.stone]);
   /* the hunt ends here on every path, forced or chosen, and the client knew it by
      construction and never wrote it down - so nothing stopped the DM giving her a
      line at her own burial the following night. One push turns on two mechanisms
      that already ship: the fallen-speaker refusal, and the roster line in the
      briefing that says these names never speak or act again. */
-  if(b.id === "a2-hand" && roster.fallen.indexOf("Mirren") === -1) roster.fallen.push("Mirren");
   var tollMsg = "";
   if(forced){
     questFailBeat(b.id);       /* jobs tied to this beat fail with it */
@@ -6585,7 +6674,7 @@ function closeBeat(forced, note){
      moment the future is allowed a title card. A season boundary announces
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
-  beatJustCleared = {title:b.title, forced:!!forced, arcturn:turned, sum:rec, toll:tollMsg,
+  beatJustCleared = {title:b.title, forced:hard, arcturn:turned, sum:rec, toll:tollMsg,
     id: b.id,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
@@ -6593,9 +6682,14 @@ function closeBeat(forced, note){
   beatTurns = 0;
   driftRun = 0; walkbackNow = false;
   gateRefusedNames = []; gateHeldNow = false;
-  if(beatIdx === SPINE.length - 1){ beatIdx++; return; }   /* the finale's epilogue IS the aftermath */
+  /* THE FINALE HAD NOWHERE TO PUT ITS EPILOGUE. This advanced the pointer and
+     returned, which makes beatDone() true - and the same render pass then reads it
+     and deals the season end card. So the last beat of the series had to fit the
+     seizure AND the whole landing list into one reply, and it never did: the last
+     prose of thirty-three beats was two narration blocks. It gets the aftermath
+     every other beat gets, and the pointer moves when that drains. */
   phase = "aftermath";
-  phaseLeft = turned ? 2 : 1;
+  phaseLeft = (beatIdx === SPINE.length - 1) ? 2 : (turned ? 2 : 1);
 }
 /* the season opens the next door: pointer advances, the witness starts fresh */
 function armBeat(){
@@ -6613,6 +6707,7 @@ function armBeat(){
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
+  lastCloseHard = false;       /* read by the canon hold, so it is this turn's */
   if(beatDone() || runOver || foldPending) return;
   var said = data && (data.gate === true || data.gate === "true");
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
@@ -6644,6 +6739,18 @@ function boardTurn(data){
   if(phase === "aftermath"){
     phaseLeft--;
     if(phaseLeft <= 0){
+      /* THE SERIES ENDS WHEN ITS EPILOGUE HAS BEEN PLAYED. The finale used to
+         advance the pointer inside closeBeat and end the run in the same render
+         pass, so its epilogue had nowhere to go. It gets two settling turns like
+         any other landing now - and the pointer moves here, when they drain, which
+         is what makes beatDone() true and deals the closing card. seasonAhead() is
+         false at the last beat (there is no next one to compare), so without this
+         the run would settle into slack and never finish. */
+      if(beatIdx === SPINE.length - 1){
+        beatIdx++;
+        phase = "live"; phaseLeft = 0;
+        return;
+      }
       if(seasonAhead()){
         phase = "seasonend";
         if(!epilogueNow){
@@ -6691,7 +6798,12 @@ function boardTurn(data){
      punished a scene that had genuinely reached the exit, on a turn where taking
      the exit was not on the table. Checked before the tick, so it reads the rail
      the player was actually looking at. */
-  if(pickKind === "stall" && said && exitStage() === "open"){ said = false; stalledNow = true; }
+  /* ...and never under a forcing order. The board itself said this beat ends now;
+     the storyteller did as it was told and sent the gate; and this line threw it
+     away because the card the player had clicked was labelled a stall. The close
+     happened anyway one branch below - as a FORCE, with a toll and a scar, on a
+     night the family had actually finished. Three beats recorded that exact shape. */
+  if(pickKind === "stall" && said && exitStage() === "open" && !forcingNow){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
      absence and idleness, never joy - the dots hold still while the table plays.
      A bit is a stall with a joke in it: it holds the gate AND costs no road. */
@@ -6703,8 +6815,21 @@ function boardTurn(data){
      beat's own exit, so a player who took it has done the thing - whatever the
      reply managed to write about it. There is nothing here for a blue card to
      apologise for: the beat closed the way the board says beats close. */
+  /* ...and the close it guarantees is honest. The door waives the anchor check
+     because it has to - a refusal would leave a beat the player already ended
+     standing open. But waiving the check and BELIEVING the reply are different
+     things: one recorded take closed the fork without the word "Nine" appearing in
+     its prose at all, and the board wrote down that she had chosen. When the people
+     tonight was about never reached the page, the beat still ends - on the authored
+     scar, which is the true account of a night that happened without them - and it
+     costs the player nothing, because the player did their part. */
   if(pickKind === "exit" && !said){
-    closeBeat(false, note || beatNow().exit);
+    var xmiss = anchorsMissing(beatNow());
+    if(xmiss.length && window.console && console.warn){
+      console.warn("[mudskippers] the door closed on a scene without " + xmiss.join(", ")
+        + " in it - recording the scar rather than the exit");
+    }
+    closeBeat(xmiss.length ? "thin" : false, note);
     return;
   }
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
@@ -8832,6 +8957,7 @@ function takeAction(text, isMud){
      skips the hedge filter that keeps the world's prose honest */
   shardWhere = shardAfter(lastPlayerText, shardWhere, true);
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
+  askAgain = 0;                   /* the re-asks are per turn, not per run */
   breachNow = isMud ? (breachIn(text) || breachMore(text)) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
@@ -9159,11 +9285,12 @@ function callDM(corrected){
        a word, and the client wrote the conversation into canon on its own authority.
        The close is not in question - the player spent their move on it. Whether the
        STORY gets to be the thing that closes it is, and it only takes asking. */
-    if(!corrected && pickKind === "exit" && !forcingNow && !lastTurnMud
+    if(askAgain < 2 && pickKind === "exit" && !forcingNow && !lastTurnMud
        && phase === "live" && !beatDone() && !foldPending && !walkbackNow){
       var xg = parsed.data.gate === true || parsed.data.gate === "true";
       var xgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
       if(!xg || !xgn){
+        askAgain++;
         return callDM("(THE EXIT WAS TAKEN AND YOU DID NOT LAND IT. The player reached for the"
           + " ending on their own move, so this beat closes on this turn whatever you send - the"
           + " only thing still open is whether the story tells it or the board files it. Continue"
@@ -9173,11 +9300,43 @@ function callDM(corrected){
           + " a true gateNote saying what actually happened.)");
       }
     }
+    /* THE WORLD WAS TAKING THIS ONE AND YOU WROTE ANOTHER MINUTE OF THE SAME ROOM.
+       A forcing turn that comes back without a gate used to close on the counter
+       alone: the beat ended, the scar was recorded, and the scene under it was two
+       people still talking. The scar is meant to be what the world did, not
+       bookkeeping over a night that never finished. */
+    if(askAgain < 2 && forcingNow && !lastTurnMud && phase === "live" && !beatDone()
+       && !foldPending && !walkbackNow
+       && !(parsed.data.gate === true || parsed.data.gate === "true")){
+      askAgain++;
+      return callDM("(THE WORLD IS TAKING THIS ONE AND YOU WROTE ANOTHER MINUTE OF THE SAME"
+        + " ROOM. You were told to end it and you did not, so it ends anyway - the only thing"
+        + " still open is whether the story tells it or the board files it. Nobody gets the"
+        + " version they wanted: the thing that was going to be said gets said badly, on the"
+        + " move, or does not get said at all, and the moment closes over it. Write that turn,"
+        + " put it on screen, and send \"gate\": true with a gateNote saying what it cost.)");
+    }
+    /* THEY DID NOT GO. A stall is the player standing still and saying so. The
+       client drops the gate flag when one arrives on a stall - but dropping a flag
+       does not un-write "he begins to descend", and four beats recorded stalls that
+       walked the family through the door in prose while the board held it shut. */
+    if(askAgain < 2 && pickKind === "stall" && !forcingNow && !lastTurnMud
+       && phase === "live" && !beatDone() && !foldPending && !walkbackNow
+       && exitStage() === "open"
+       && (parsed.data.gate === true || parsed.data.gate === "true")){
+      askAgain++;
+      return callDM("(THEY DID NOT GO. The courier stalled - he asked his question and stayed"
+        + " exactly where he was standing. Nothing in this turn moves anybody toward the door:"
+        + " nobody sets off, nobody steps through, nothing gets decided that ends tonight's"
+        + " business. Write the turn again with the question answered, the room the same room,"
+        + " and everybody still in it. Do not send a gate.)");
+    }
     /* the fork must be stated: the a2-chassis gate carries Nine's choice */
-    if(!corrected && !beatDone() && phase === "live" && beatNow().id === "a2-chassis"
+    if(askAgain < 2 && !beatDone() && phase === "live" && beatNow().id === "a2-chassis"
        && (parsed.data.gate === true || parsed.data.gate === "true")){
       var chv = String(parsed.data.chassis || "");
       if(chv !== "Seven" && chv !== "Nine"){
+        askAgain++;
         return callDM("(CORRECTION: this gate must carry \"chassis\": \"Seven\" or \"chassis\":"
           + " \"Nine\" - Nine's choice, spoken at the table. Resend the same turn with it.)");
       }
@@ -10132,7 +10291,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.27.1");
+  R(s, "build", "v4.28.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11445,7 +11604,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.27.1   COLD START",
+    "MUD//OS  v4.28.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13544,8 +13703,11 @@ function rehSeedTo(idx){
   mergeCanon(seeded);
   gateNotes = notes;
   /* the dead, as of walking in */
-  if(idx > beatById("a2-hand") && roster.fallen.indexOf("Mirren") === -1) roster.fallen.push("Mirren");
-  if(idx > beatById("a3-vic") && roster.fallen.indexOf("Vic") === -1) roster.fallen.push("Vic");
+  for(i = 0; i < idx; i++){
+    (SPINE[i].falls || []).forEach(function(nm){
+      if(roster.fallen.indexOf(nm) === -1) roster.fallen.push(nm);
+    });
+  }
   /* who is on stage: everyone the road has named up to and including tonight */
   var names = {};
   for(i = 0; i <= idx && i < SPINE.length; i++){
@@ -13736,7 +13898,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.27.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.28.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
