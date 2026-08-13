@@ -198,6 +198,49 @@ wandering.
 
 716 authored lines, one-to-one with the board. The AI's job is now the middle.
 
+## The scene book — the middle, as data
+
+The middle was the last thing left to the model, and it was where the run came apart.
+The board told the storyteller what tonight was *for* and left the how to it. That
+works on a large model. On a cheap one it fails in one specific place: **the stall.**
+
+A stall said *give them the answer under the answer* without ever saying what the
+answer was, so the model invented one — and every extra stall invented a little
+further from the story. Ask a 24B who was watching you in the market and it will
+happily explain what the Choir does to people, five nights before that question is
+supposed to exist. The drift grew with the stalling, and by the end of a night the
+middle no longer agreed with the card the game printed over it.
+
+So the middle is written down too, and it is sent as **data rather than prose**:
+
+- **Each night carries a table of what can actually be dug into.** One entry per
+  topic: who answers it, the true thing they give up, and the thing they will not
+  say tonight — plus *how* they get out of saying it, because somebody refusing well
+  is better television than somebody explaining well.
+- **The game reads what you typed and deals exactly one card.** Ask about Mirren and
+  you get the Mirren card. Ask about nothing in particular and it deals the next one
+  you haven't seen. **Stalling spends the list instead of inventing past it**, and it
+  never deals the same card twice in a run.
+- **The card is sent as a small JSON object at the very bottom of the message**, under
+  six numbered rules. That position is deliberate: a large model reads six thousand
+  characters of briefing and does as it's told, and a cheap one reads the front, the
+  back, and skims the middle — which is where the rules used to be.
+- **The night's destination rides with it.** The storyteller is told, in the landing's
+  own words, where this beat is standing when it finishes. It used to write the middle
+  of a night without ever being told how the night looked at the end of it, which is
+  the whole reason the in-between stopped matching the end cards.
+- **The fence rides in the structure too.** Everything not yet unlocked is listed in
+  the object, not only in the prose above it. A fence is only a fence where the model
+  is actually reading.
+
+The sealed room after each beat gets its own table, on the same rules — which is the
+part of the night that is *entirely* conversation, and so was entirely drift.
+
+Written for the first three nights and the three rooms after them: **42 cards.** A
+night with no entry behaves exactly as it did before — the prose block, and the
+storyteller's judgment. The Writers' Board shows both on the same page, so what has
+been written and what has not sit next to each other.
+
 ## The trapdoor — when something goes wrong
 
 **Middle-click the shard.** A panel opens over the run with every number the night is

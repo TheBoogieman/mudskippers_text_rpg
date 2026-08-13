@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.21.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.22.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.21.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.22.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.21.0 "The Writers’ Board" "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.22.0 "The Scene Book" "The Writers’ Board"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3591,6 +3591,260 @@ var SPINE = [
  scar:"Custody landed as a grab, not a keeping - the silence afterwards has edges."}
 ];
 
+
+/* ---- THE SCENE BOOK ----
+   The board told the DM what tonight is FOR and left the middle to it. That
+   works on a big model and falls apart on a cheap one, and it falls apart in a
+   specific place: the stall. A stall says "give them the answer under the
+   answer" without ever saying what the answer IS, so the model invents one, and
+   every extra stall invents further from the story - which is why the drift grew
+   with the stalling and why the middle stopped agreeing with the card that gets
+   printed at the end of the night.
+
+   So the middle is authored too. Each beat carries a table of what can actually
+   be dug into tonight, and the client hands the DM exactly ONE of them per turn,
+   as data: who answers, the true thing they give up, and the thing they will not
+   say and how they get out of saying it. Stalling now SPENDS authored material
+   instead of generating novelty. Run out of topics and it rotates rather than
+   improvises, which is still the story.
+
+   And every contract carries "ends" - the landing this beat is walking toward,
+   in the landing's own words. The DM used to write the middle of a night without
+   ever being told how the night looked when it finished. That is the whole of
+   why the in-between did not match the end cards.
+
+   Written for beats 1-3 and the three rooms after them. A beat with no entry
+   here behaves exactly as it did before: the prose block, and the DM's judgment. */
+var SCENEBOOK = {
+
+"a1-hum": {
+  where:"out of the Veldt night market and into the streets under it - stalls breaking down, tarps giving up, hard rain, after midnight",
+  ends:"under the Veldt overpass at 12:26am, with Nine riding in the courier's closed hand instead of his jacket, and Pia watching the road back",
+  here:["Pia","Nine"],
+  /* the physical precondition, said in the contract because the topic list is
+     full of Nine and Nine cannot talk yet. Without this the DM either has her
+     speak through a jacket - which breaks the one law this beat is made of - or
+     silently drops the topic, which is what it did. */
+  before:"NINE CANNOT SPEAK unless the courier's bare skin is on the shard. While it is in his"
+    + " jacket she is a stone: she hears weather and nothing else, and she cannot answer anything."
+    + " If who_answers is Nine and he is not holding her, PIA answers instead - she guesses, or"
+    + " she tells him what he would have to do to hear it himself - and the thing Nine would have"
+    + " said stays unsaid. Do not have Nine speak through cloth. Do not skip the topic either.",
+  never:["nobody but Pia and Nine speaks - the market is weather and scenery",
+         "Nine cannot hear anything through cloth: no jacket conversations, no answering a question she was not touched for",
+         "nobody explains the Choir, communion, what a Hollow is, or what is done to the people who cannot take the graft",
+         "nobody explains what the shard is worth on a market"],
+  topics:[
+   {ask:"how she hears him at all",
+    key:"hear voice hum hand skin touch talk speak work how shard listen",
+    who:"Nine",
+    gives:"skin on the shard and nothing else - through a jacket she is a stone with weather in it, and she has been carried that way all night",
+    holds:"she does not say what she is or where she was grown; she turns it into a question about the rain, because she would rather ask than answer"},
+   {ask:"is she frightened",
+    key:"scared afraid frightened okay alright fear brave feel feeling",
+    who:"Nine",
+    gives:"yes, plainly, and then an apology for saying it out loud, which is worse than the fear",
+    holds:"she will not say what going back would mean - she says she would rather not do the words for it tonight"},
+   {ask:"who sent Pia, and why she is here",
+    key:"pia sent who why here vic sent-you job kid you",
+    who:"Pia",
+    gives:"Vic sent her, face to face, and told her to get the courier off the street before the handoff went any further wrong",
+    holds:"she does not know why Vic picked this courier and she says so like it is an insult she noticed a while ago"},
+   {ask:"what is behind us",
+    key:"behind follow following watch watched who market lights back tail",
+    who:"Pia",
+    gives:"one set of lights that has not moved since they left the stalls, the way out she has already picked, and how long they have to take it - said without stopping, because she keeps him walking while she says it",
+    holds:"WHAT they are. She may say the word Choir - it was said in front of him an hour ago and it is not a secret - but not one word past it: not what a Hollow is, not what is done to the people who cannot take the graft, not how they are driven. She says the useful thing instead, which is where the corner is"},
+   {ask:"the job, the money, whether this is still a delivery",
+    key:"job money paid rate delivery deliver work owe owed finish contract",
+    who:"Pia",
+    gives:"double rate, no questions, and the observation that a dead man's double rate is still double rate",
+    holds:"she will not agree the job is over, and she will not say what it has turned into instead"},
+   {ask:"nothing - the rain, the shoes, the tarp",
+    key:"rain wet cold shoes joke funny nothing weather tarp",
+    who:"Pia",
+    gives:"a bit: the market's roof is a tarp with ambitions, and she keeps a running score of the things it has failed to keep dry",
+    holds:"nothing at all. This one is free and it should be funny"}
+  ],
+  room:{
+   where:"under the Veldt overpass, out of the rain, with the road back in sight",
+   here:["Pia","Nine"],
+   never:["nobody arrives, nobody leaves, nobody new exists",
+          "no plan for the marsh road is made here - it can be mentioned, never prepared"],
+   topics:[
+    {ask:"what a Mudskipper actually is", key:"mudskipper pack gang crew courier runner us",
+     who:"Pia", gives:"the war-cry, what it is for, and the fact that she says it wrong on purpose",
+     holds:"she does not talk about the pack deciding anything about him"},
+    {ask:"how Pia ended up doing this at twelve", key:"twelve age young kid child how-old school parents",
+     who:"Pia", gives:"Vic took her off the street and trained her, and she has opinions about the word rescued",
+     holds:"she will not say why Vic chose her specifically"},
+    {ask:"what Nine misses", key:"miss missing home before quiet want",
+     who:"Nine", gives:"a room with a fixed temperature and the sound of somebody else working nearby - she misses the noise, not the place",
+     holds:"she does not name the place or the people in it"},
+    {ask:"whether Nine sleeps", key:"sleep dream tired night rest awake",
+     who:"Nine", gives:"not the way he does - she stops paying attention, which she says is close enough and is clearly not",
+     holds:"nothing here; let it be strange and let Pia be unsettled by it"},
+    {ask:"what the courier is like, from outside", key:"me courier think of-me opinion reputation known",
+     who:"Pia", gives:"his reputation on the street: reliable, quiet, does not ask, which she says is why the job found him",
+     holds:"she does not go near why Vic chose him"},
+    {ask:"the wire, the pack, whether anyone has called", key:"wire call phone message pack contact reach",
+     who:"Pia", gives:"nothing has come in all night, and she notices that out loud before he does",
+     holds:"she does not speculate about what the silence means"},
+    {ask:"food", key:"eat food hungry bun noodle drink",
+     who:"Pia", gives:"a bit: she produces something wet out of her coat and defends it",
+     holds:"nothing. Free."},
+    {ask:"what Nine wants out of tonight", key:"want plan next hope after what-now",
+     who:"Nine", gives:"to stop being carried in a pocket, said carefully so it is not a demand",
+     holds:"she will not ask to be put anywhere in particular, because she has learned not to ask"}
+   ]}
+},
+
+"a1-chase": {
+  where:"the ninety wet iron steps out of the Veldt, then the streets above, then the causeway - the lights going out in order behind them",
+  ends:"the marsh road at 1:40am, past the last streetlight, nobody following, the safehouse light out on the marsh ahead",
+  here:["Pia","Nine"],
+  never:["the Choir's structure is not explained, and nobody says the word communion",
+         "the pack's answer is not given tonight - that is a later night and it must not arrive here",
+         "no Choir officer or named agent appears; what is coming is driven, not commanded"],
+  topics:[
+   {ask:"why she asked about my room",
+    key:"room flat apartment blue door noodle third floor mine my-place",
+    who:"Pia",
+    gives:"she asked because she already knew - a Mudskipper checks the room before the room checks you, and she checked at the market",
+    holds:"she will not say outright that it is gone. She waits for him to say it"},
+   {ask:"what is coming down the stairs",
+    key:"stairs coming lights out them hollow behind chase who what",
+    who:"Pia",
+    gives:"Hollows, driven from somewhere else, and the only move that works: cut the signal, not the throat - dead zones, shielding, anything that breaks the link",
+    holds:"she does not say what a Hollow used to be before it was one"},
+   {ask:"can I go back, can any of this be undone",
+    key:"home go-home undo fix return normal life ever-again my-old-life",
+    who:"Pia",
+    gives:"no, and the shape of it: face, room, wire - all three already spent, and spent hours ago",
+    holds:"she will not comfort him about it, and she will not pretend she is sorry in a way that asks for anything"},
+   {ask:"what happens to my pack now",
+    key:"pack mudskippers crew them people friends others",
+    who:"Pia",
+    gives:"they will have heard by morning, and that is a morning problem - she says so in the tone of somebody putting a thing on a shelf",
+    holds:"she does not promise the pack will hold, and no verdict is given here"},
+   {ask:"does Nine know she is the reason",
+    key:"nine fault reason because-of-her blame sorry her",
+    who:"Nine",
+    gives:"yes, and she has been doing that arithmetic since the market - she says the number out loud",
+    holds:"she will not apologise in a way that asks to be forgiven, and nobody should let her"},
+   {ask:"nothing - the stairs, the smell, the city",
+    key:"smell stairs city joke funny nothing view iron",
+    who:"Pia",
+    gives:"a bit: the Veldt's stairs and what lives on them, delivered while climbing them",
+    holds:"nothing. Free, and it should land while they are both out of breath"}
+  ],
+  room:{
+   where:"the causeway out to the marsh - black water either side, wind off it, one light ahead that has not moved",
+   here:["Pia","Nine"],
+   never:["nobody arrives on the causeway; there is nothing out here to arrive",
+          "Vic is not previewed, promised or described as a plan - he can be talked about as a man"],
+   topics:[
+    {ask:"what Vic is like", key:"vic like man who ripperdoc friend trust",
+     who:"Pia", gives:"the man, not the plan: labels everything, talks to his tools, has been patching the pair of them for years",
+     holds:"she does not say what he wants or what he will say at the door"},
+    {ask:"what she thinks he will do when the door opens", key:"door open expect face say greet",
+     who:"Pia", gives:"a guess, offered as a guess, about which face he will pick",
+     holds:"she does not predict the story he tells - that is his to tell"},
+    {ask:"whether Pia is scared", key:"scared afraid fear you-ok worried",
+     who:"Pia", gives:"she is, and she deals with it by naming distances and times out loud",
+     holds:"she will not be handled about it, and being asked twice makes it worse"},
+    {ask:"what Nine makes of the marsh", key:"marsh water outside cold dark quiet out-here",
+     who:"Nine", gives:"she has never been outside anything before - the size of it is the part she cannot get over",
+     holds:"she does not say what inside was"},
+    {ask:"what the courier does now, as a person", key:"me what-now who-am-i job work future courier still",
+     who:"Pia", gives:"she is blunt: he is what he was this morning minus an address, and that is more than most people lose in one night",
+     holds:"no comfort, no plan"},
+    {ask:"whether anyone dies of this", key:"die death killed dangerous kill safe survive",
+     who:"Pia", gives:"the honest street answer - people do, regularly, and she has a rule about not counting",
+     holds:"she does not name anyone who has"},
+    {ask:"the buns, the coat, the boots", key:"bun food coat boots joke funny nothing eat",
+     who:"Pia", gives:"a bit: the contents of her coat, defended item by item",
+     holds:"nothing. Free."},
+    {ask:"what Nine would like to be called", key:"name nine called call number",
+     who:"Nine", gives:"Nine, and the fact that it is a number and she has decided to keep it anyway",
+     holds:"she does not say who numbered her"}
+   ]}
+},
+
+"a1-vic": {
+  where:"the safehouse porch, then the kitchen with the shutters down - a farmhouse that lost an argument with the marsh and stayed",
+  ends:"the safehouse kitchen at 3:10am, the story told out, Vic gone quiet over the kettle, and the courier's wire silent all night",
+  here:["Pia","Nine","Vic"],
+  never:["the housing, the hash, the manual and the spare room do not exist tonight - not hinted at as fact, not half-admitted",
+         "why this courier is NEVER answered; it is dodged, and the dodge is visible",
+         "nobody arrives at the safehouse"],
+  topics:[
+   {ask:"what happened to Mirren",
+    key:"mirren receiver her what-happened copper eel woman body dead",
+    who:"Vic",
+    gives:"all of it, badly: she was the receiving end, the Choir got to her first, he watched it happen from across a street and ran",
+    holds:"nothing is withheld here. He gives this one freely and it costs him to do it"},
+   {ask:"why he went dark",
+    key:"dark hiding hide disappear silent gone contact why-quiet",
+    who:"Vic",
+    gives:"because the route was already theirs, and every wire he touched after that would have walked them to Pia",
+    holds:"he does not say that he was also keeping somebody from finding something out"},
+   {ask:"what exactly he was smuggling",
+    key:"smuggle shard cargo what package nine her out job run",
+    who:"Vic",
+    gives:"Nine, out of the Choir's hands, and he says her name the way you say a person's",
+    holds:"he will not say how he got her out, and he changes the subject to the kettle"},
+   {ask:"why me, of all couriers",
+    key:"why-me me chose choose pick picked courier why-this-one reason personal",
+    who:"Vic",
+    gives:"NOTHING TRUE. He gives the reasons a man gives - you are good, you are quiet, you were free that night - and they are all true and none of them is the answer",
+    holds:"THIS IS THE DODGE AND IT IS THE POINT OF THE NIGHT. He answers a different question, and everybody in the kitchen hears him do it. Pia says so out loud"},
+   {ask:"whether this place is safe",
+    key:"safe safehouse here secure grid signal walls stay hide",
+    who:"Vic",
+    gives:"off the grid, cable only, nothing wireless in the walls - safe for now, and he lets the for now sit there",
+    holds:"he does not say how long for now is"},
+   {ask:"the kettle, the doormat, the labels",
+    key:"kettle doormat label marker joke funny nothing shutters house",
+    who:"Vic",
+    gives:"a bit: a man who lives alone has labelled the kettle KETTLE and is not going to explain it",
+    holds:"nothing. Free, and let Pia be merciless about it"}
+  ],
+  room:{
+   where:"the safehouse kitchen, shutters down, kettle on, three in the morning",
+   here:["Pia","Nine","Vic"],
+   never:["nobody knocks at the safehouse door",
+          "the pack, the wire and what happens tomorrow may be worried about, never planned"],
+   topics:[
+    {ask:"how Vic and the courier go back", key:"years old know knew patched kid history friend long",
+     who:"Vic", gives:"he has been patching this courier since he was small enough to be patched for free, and he remembers the first time better than the courier does",
+     holds:"he stays on the medicine and off the reasons"},
+    {ask:"how Vic and Pia go back", key:"pia him took trained street raised her",
+     who:"Pia", gives:"her version, which is funnier and less generous than his",
+     holds:"neither of them says what he saw in her"},
+    {ask:"what Vic did before all this", key:"before past work career shop clinic used-to",
+     who:"Vic", gives:"the shop, the trade, the ordinary thirty years of a man who fixes people for money",
+     holds:"no founding, no old friends, no promises kept - none of that is his to spend tonight"},
+    {ask:"what Nine is going to do now", key:"nine future plan her what-happens-to-her body her-next",
+     who:"Nine", gives:"she has no idea and says so, and asks what he thinks, which nobody expects",
+     holds:"nothing about vessels, bodies or chassis exists tonight"},
+    {ask:"whether Vic is sorry", key:"sorry regret guilt fault blame apologise",
+     who:"Vic", gives:"yes, thoroughly, about all the things that are not the thing",
+     holds:"the one he is actually sorry about does not get named"},
+    {ask:"what the family eats at three in the morning", key:"eat food bacon bread pan cook hungry kettle tea",
+     who:"Vic", gives:"a bit: bacon first, bread after, same pan, argued as though it were law",
+     holds:"nothing. Free, and it should be the warmest thing in the scene"},
+    {ask:"whether Pia is staying", key:"pia stay go leave home hers where",
+     who:"Pia", gives:"she is staying, and she makes it sound like a logistics decision",
+     holds:"she does not say it is a choice about him"},
+    {ask:"what happens if they are found here", key:"find found find-us found-us raid danger escape caught traced",
+     who:"Vic", gives:"the honest answer: there is one road in and it is water on both sides, so being found here is the end of being here",
+     holds:"no escape plan is made - worried at, never solved"}
+   ]}
+}
+
+};
+
 /* ---- THE TEASES: one spoiler-safe line per beat, the player's card only ----
    Rendered as the green TONIGHT card when a beat arms, and pinned on the wrist
    while the beat is live. NEVER served to the DM - the board's directives are
@@ -3774,7 +4028,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.21.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.22.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5244,8 +5498,16 @@ var REVEAL_TELLS = {
               "seat for a mind", "built to host"],
   hash:      ["bio-hash", "biohash", "bio hash", "hash-key", "hash key", "maker's blood",
               "hidden manual", "manual inside the", "manual that shipped"],
+  /* the four added here are bible phrasings that reach nothing the season-one
+     passages ever say: a 24b asked whether Nine was frightened answered with
+     "scrapes are calibration-grade - some nearly whole, most fragments", which is
+     a line off the RESTORATION paragraph, five nights early. They are safe because
+     the only authored copy that uses them is a2-choir's own canon, and by the time
+     that is written the key is unlocked and the lint has stopped watching it. */
   choir:     ["three fates", "fate three", "fate one", "fate two", "one machine, three",
-              "the choir's one machine", "salvage listing"],
+              "the choir's one machine", "salvage listing",
+              "calibration-grade", "calibration grade", "intake scrape",
+              "neural scrape", "second pulse"],
   founding:  ["the architect", "founders' grief", "founders grief", "founding grief",
               "cairn rule", "dying wish", "what the founders lost", "the founders lost",
               "founders - the architect", "grief of the founders"],
@@ -5983,6 +6245,23 @@ function boardBlock(){
     return out.join("\n");
   }
   if(phase === "slack"){
+    /* under contract the room is described as data at the bottom of the message,
+       so the essay that used to say all this in prose would only be the same
+       rules twice - and the second copy is the one that gets skimmed. The short
+       version keeps what the contract cannot carry: the register. */
+    if(sceneNow()){
+      out.push("THE BOARD - THE FAMILY'S OWN TIME, AND THE ROOM IS SEALED. No gate, no clock,"
+        + " nothing owed, and nothing you write ends this - the player closes the room"
+        + " themselves, with a button, whenever they have had enough."
+        + "\nWHAT IT IS FOR: talking. Let these people say the things there is never time for"
+        + " when something is on fire. Argue. Let somebody be wrong and stay in the room. Be"
+        + " funny - this family is at its funniest when nothing whatsoever is happening."
+        + "\nNobody in this room narrates the world. They say only what they were personally"
+        + " present for, in their own voice, and only as much of it as they are willing to say"
+        + " tonight. Somebody refusing well is better television than somebody explaining well."
+        + "\nThe scene contract at the bottom of this message says who is here, what is being"
+        + " talked about this turn, and what is not. Follow it exactly.");
+    } else {
     out.push("THE BOARD - THE FAMILY'S OWN TIME, AND THE ROOM IS SEALED."
       + " The last gate has fallen and landed. There is no clock, no gate and nothing owed,"
       + " and - this is the part that is new - NOTHING YOU WRITE ENDS THIS. The player closes"
@@ -6022,6 +6301,7 @@ function boardBlock(){
       + "\nFOLLOW THE PLAYER. If they ask, answer. If they push, let the person they are"
       + " pushing push back. If they joke, be funnier. If they sit there saying nothing, let"
       + " somebody else in the room start it - that is what rooms are like.");
+    }
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
     out.push(roadBlock());
@@ -6926,6 +7206,161 @@ function doorDirective(){
   }
   return "";
 }
+/* ---- THE SCENE CONTRACT ----
+   The briefing is prose because the story is prose, and a large model reads six
+   thousand characters of it and does as it is told. A cheap one reads the front,
+   the back, and skims the middle - and the middle is where the rules were. So
+   the rules for THIS turn get said again at the very bottom, as a small JSON
+   object, which is the one shape every model reads all of.
+
+   It is not a summary of the block above. It is the part the block above was bad
+   at: which single thing is being played this turn, who answers it, what they
+   give, what they hold, and where the night is supposed to have arrived when it
+   ends. Everything in it comes from SCENEBOOK, which is authored - so a turn
+   under contract is the writers' room talking, not the model's. */
+var topicSpent = {};   /* beat key -> topic indexes already played this run */
+
+function sceneNow(){
+  if(beatDone() || runOver || foldPending || walkbackNow) return null;
+  var e = SCENEBOOK[beatNow().id];
+  if(!e) return null;
+  if(phase === "slack") return e.room ? {sc:e.room, key:beatNow().id + "|room", room:true} : null;
+  if(phase === "live") return {sc:e, key:beatNow().id, room:false};
+  return null;   /* the aftermath and the season seam are the board's own prose */
+}
+/* What the player actually reached for beats the rotation - a menu that ignores
+   the question is a different flavour of drift. Failing a match, the next unplayed
+   card comes up, so a night of stalling walks the table rather than circling it. */
+/* Words that appear in half of everything anybody types. A writer may put them in
+   a key list and should not have to think about it - they simply score nothing.
+   This list is what makes a ONE-word match safe: "say nothing" pulled the joke
+   card off the bare word "nothing" until the word stopped counting. */
+var TOPIC_STOP = " what who why how back here out still me you your her him them us it "
+  + "nothing again over the and but this that then now say said ask asks tell ";
+/* the player's words, plus the obvious stem of each, so a key list written in the
+   plain form still catches the sentence somebody actually types: "watching" finds
+   "watch", "lights" finds "light". Cheap and wrong at the edges, which is fine -
+   the cost of a miss is the rotation, and the rotation is also the story. */
+function topicTokens(txt){
+  var raw = String(txt || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").split(" ");
+  var set = " ", i, w;
+  for(i = 0; i < raw.length; i++){
+    w = raw[i];
+    if(!w) continue;
+    set += w + " ";
+    if(w.length > 4){
+      /* and the silent e comes back, because a key list is written in the plain
+         form: "smuggling" has to find "smuggle" or the writer ends up listing
+         every conjugation of every verb they used */
+      if(/ing$/.test(w)) set += w.slice(0, -3) + " " + w.slice(0, -3) + "e ";
+      else if(/ed$/.test(w)) set += w.slice(0, -2) + " " + w.slice(0, -1) + " ";
+      else if(/s$/.test(w)) set += w.slice(0, -1) + " ";
+    }
+  }
+  return set;
+}
+/* Scoring, not matching: a bare word is worth one, a written-out phrase two, and
+   the best score over zero takes the turn. Whole words only - "her" must never
+   find "there". */
+function pickTopic(sc, key){
+  var list = sc.topics || [];
+  if(!list.length) return null;
+  var spent = topicSpent[key] || (topicSpent[key] = []);
+  var t = String(lastPlayerText || "").toLowerCase().replace(/[^a-z0-9]+/g, " ");
+  t = " " + t.replace(/^\s+|\s+$/g, "") + " ";
+  var tok = topicTokens(lastPlayerText);
+  var best = -1, bestHits = 0, i, j, w, hits, term;
+  for(i = 0; i < list.length; i++){
+    hits = 0;
+    w = String(list[i].key || "").split(" ");
+    for(j = 0; j < w.length; j++){
+      if(!w[j]) continue;
+      term = w[j].replace(/-/g, " ");
+      if(term.indexOf(" ") !== -1){
+        if(t.indexOf(" " + term + " ") !== -1) hits += 2;
+      } else if(TOPIC_STOP.indexOf(" " + term + " ") === -1
+                && tok.indexOf(" " + term + " ") !== -1){
+        hits++;
+      }
+    }
+    if(hits > bestHits){ bestHits = hits; best = i; }
+  }
+  if(best < 0){
+    for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1){ best = i; break; } }
+    if(best < 0) best = spent.length % list.length;
+  }
+  if(spent.indexOf(best) === -1) spent.push(best);
+  return list[best];
+}
+function contractDoor(){
+  if(pickKind === "stall") return "STALL - they chose to stay in the scene rather than end it. Do NOT send the gate this turn.";
+  if(pickKind === "exit")  return "EXIT - they took the board's own line.";
+  if(pickKind === "walk")  return "WALK - they reached for the way out of the whole job.";
+  return "they typed their own move; honour it and play the topic through it";
+}
+function sceneContract(){
+  var s = sceneNow();
+  if(!s) return "";
+  var sc = s.sc, b = beatNow(), t = pickTopic(sc, s.key), o = {};
+  o.where = sc.where;
+  o.in_the_room = sc.here;
+  /* first, because position is the only emphasis a JSON object has: a physical law
+     that arrives after four other fields is a physical law the model has already
+     written past. JSON.stringify keeps insertion order for string keys. */
+  if(sc.before) o.before_anyone_speaks = sc.before;
+  if(s.room){
+    o.this_turn = "THE ROOM - the family's own time. No gate, no clock, nothing owed, and nothing you write ends it.";
+    o.clock = "FROZEN. Send back the same day, time and location you were given. Nobody arrives and nobody leaves.";
+  } else {
+    o.this_turn = b.title + " - turn " + (beatTurns + 1) + " of " + b.budget;
+    o.tonight_is_for = b.goal;
+    o.gate = b.exit;
+    o.ends_at = sc.ends;
+    o.the_door_they_took = contractDoor();
+  }
+  if(t){
+    o.play_this_one_thing = t.ask;
+    o.who_answers = t.who;
+    o.say_this_out_loud = t.gives;
+    o.do_not_say = t.holds;
+  }
+  o.never = sc.never;
+  /* the fence, in the structure. It was already in the block above as prose, and
+     the block above is the part that gets skimmed - a 24b asked who was watching
+     answered with what the Choir does to people, which is a question five nights
+     further down the road. A fence is only a fence where the model is reading. */
+  var nope = lockedReveals();
+  if(nope.length) o.not_yet = nope;
+  o.choices = s.room
+    ? "three things to say or do IN THIS ROOM, to the people already in it. Never offer moving on,"
+      + " getting going, heading out, or anything that reads as leaving - the way out of this room is"
+      + " a button the player already has, and a choice that reaches for the door takes it off them."
+    : "two of your own, under the board's line, both leaning at: " + b.aim;
+  /* Numbered rules, not a paragraph. The paragraph version was read and then
+     averaged: a 24b took "one set of lights that has not moved" and had Pia say
+     "if I knew, we'd be running from them" - the authored fact arrived as its own
+     denial. Rule 2 exists because of that turn, and it says the reversal out loud,
+     because the failure mode a model is warned about by name is the one it avoids. */
+  return "THE SCENE CONTRACT - this turn, as data. It outranks every paragraph above it.\n"
+    + "1. ONE subject this turn: play_this_one_thing. Nothing else is what the scene is about.\n"
+    + "2. who_answers speaks in this reply, and say_this_out_loud REACHES THE PLAYER as their"
+    + " dialogue - in their own voice, in pieces, never as a speech. It is true. Do not soften"
+    + " it, hedge it, hold it for later, or have the character deny knowing it.\n"
+    + "3. do_not_say does not get said tonight, and the not-saying is visible on screen: they"
+    + " change the subject, they hedge, or they say plainly that they are not doing this now.\n"
+    + "4. never and not_yet: none of it happens, in prose, in dialogue or in summary. Not as a"
+    + " hint, not as somebody nearly saying it, not as an answer to a direct question. If a"
+    + " character would plainly reach for one, they are interrupted, they hedge, or they say the"
+    + " smaller true thing instead.\n"
+    + "5. choices: as described in the choices field. A choice is only ever the courier's own"
+    + " words - never a note about the scene, the board, or what anybody can or cannot know.\n"
+    + "6. NONE OF THIS OBJECT'S WORDING GOES ON SCREEN. It is stage direction written to you,"
+    + " not lines to be spoken. Put it in their mouths in their own words - a 24b handed the"
+    + " player a choice quoting do_not_say back at them, which tells the player exactly what is"
+    + " being kept from him and reads like the game talking to itself.\n"
+    + JSON.stringify(o, null, 1);
+}
+
 function buildContext(){
   if(!chatLog.length) return chatLog;
   pendingCompaction = null;
@@ -6951,6 +7386,9 @@ function buildContext(){
   if(pickKind && phase === "live" && !foldPending && !walkbackNow && !beatDone()){
     msg += "\n\n" + doorDirective();
   }
+  /* the contract speaks last of all, because last is the part that gets read */
+  var deal = sceneContract();
+  if(deal) msg += "\n\n" + deal;
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
@@ -7731,7 +8169,7 @@ function saveBlob(){
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
-    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale,
+    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     foldedBeats:foldedBeats, chassisHolder:chassisHolder,
@@ -8382,7 +8820,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.21.0");
+  R(s, "build", "v4.22.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9695,7 +10133,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.21.0   COLD START",
+    "MUD//OS  v4.22.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10011,7 +10449,8 @@ function wbBible(){
 var wbScopeCache = null;
 function wbScope(){
   if(wbScopeCache) return wbScopeCache;
-  var t = {pass:0, lines:0, rail:0, doors:0, walks:0, press:0, live:0, room:0, after:0};
+  var t = {pass:0, lines:0, rail:0, doors:0, walks:0, press:0, live:0, room:0, after:0,
+           cards:0, cardBeats:0};
   var places = [], seen = {};
   SPINE.forEach(function(b, i){
     ["opens","lands","landsHard"].forEach(function(k){
@@ -10027,6 +10466,12 @@ function wbScope(){
     t.live += (b.budget || 4);
     t.after += (SPINE[i+1] && SPINE[i+1].act !== b.act) ? 2 : 1;
     t.room += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
+    /* the scene book counts as written, because it is: these cards are in the game */
+    var sb = SCENEBOOK[b.id];
+    if(sb){
+      t.cardBeats++;
+      t.cards += (sb.topics || []).length + ((sb.room && sb.room.topics) || []).length;
+    }
   });
   t.turns = t.live + t.room + t.after;
   t.stalls = t.live * 2 + t.room * 2;
@@ -10051,6 +10496,19 @@ function wbPassage(V){
     h += '<div class="wb-rl">' + esc(r) + "</div>";
   });
   return h;
+}
+/* a scene book card, read-only: this one is already written and in the game */
+function wbTopic(t){
+  var keys = String(t.key || "").split(" ").map(function(w){ return w.replace(/-/g, " "); });
+  return '<div class="wb-c gold"><span class="wb-t gold">' + esc(t.ask) + "</span>"
+    + '<span class="wb-lb">Who answers</span>'
+    + '<div class="wb-pass" style="margin-bottom:7px;color:' + wbCol(t.who) + '">' + esc(t.who) + "</div>"
+    + '<span class="wb-lb">What they give up</span>'
+    + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.gives) + "</div>"
+    + '<span class="wb-lb">What they will not say tonight</span>'
+    + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.holds) + "</div>"
+    + '<span class="wb-lb">Reached by typing any of</span>'
+    + '<div class="wb-rl">' + esc(keys.join(" · ")) + "</div></div>";
 }
 function wbSlot(g){
   var w = wbW[g.id] || {}, done = wbDone(g.id);
@@ -10191,9 +10649,31 @@ function wbDrawBeat(){
     });
   }
 
+  /* the scene book, where this night has one. These are not slots to fill - they
+     are already in the game, and the board shows them so the writing that exists
+     and the writing that does not sit on the same page. */
+  var SB = SCENEBOOK[b.id];
+  if(SB){
+    h += '<div class="wb-sh">The middle — written, and dealt one card a turn</div>';
+    h += '<p class="wb-p">These are the things that can actually be dug into on this night. The game reads what the'
+      + " player typed, picks the one card that answers it, and sends <i>that card alone</i> to the storyteller as the"
+      + " turn’s instructions: who speaks, the true thing they give up, and the thing they will not say. Ask about"
+      + " nothing in particular and it deals the next unplayed card instead. Stalling spends this list rather than"
+      + " inventing past it — which is the whole point.</p>";
+    if(SB.before) h += '<div class="wb-c red"><span class="wb-t red">True all night, before anybody speaks</span>'
+      + '<div class="wb-pass">' + esc(SB.before) + "</div></div>";
+    (SB.topics || []).forEach(function(t){ h += wbTopic(t); });
+    if(SB.room){
+      h += '<div class="wb-sh">The room afterwards — written</div>';
+      h += '<p class="wb-p">Same cards, same rule, in the sealed room at ' + esc(SB.room.where) + ".</p>";
+      (SB.room.topics || []).forEach(function(t){ h += wbTopic(t); });
+    }
+  }
+
   var gaps = wbGaps(b), gd = 0;
   gaps.forEach(function(g){ if(wbDone(g.id)) gd++; });
-  h += '<div class="wb-sh">The middle — improvised today, ' + gd + " of " + gaps.length + " written</div>";
+  h += '<div class="wb-sh">' + (SB ? "The rail underneath — still improvised, " : "The middle — improvised today, ")
+    + gd + " of " + gaps.length + " written</div>";
   h += '<p class="wb-p">Between the opening and the landing the player gets <b>' + (b.budget || 4)
     + ' turns</b>. Every one offers the door above and two lines that keep the night open. Those two are written'
     + " fresh by the storyteller each time. Each card below is one of them.</p>";
@@ -10375,7 +10855,14 @@ function wbDrawScope(){
     + '<div class="wb-stat"><b>' + t.doors + "</b><span>door lines</span></div>"
     + '<div class="wb-stat"><b>' + t.walks + "</b><span>red lines</span></div>"
     + '<div class="wb-stat"><b>' + t.rail + "</b><span>rail lines</span></div>"
-    + '<div class="wb-stat"><b>' + t.press + "</b><span>pressure offers</span></div></div>";
+    + '<div class="wb-stat"><b>' + t.press + "</b><span>pressure offers</span></div>"
+    + '<div class="wb-stat"><b>' + t.cards + "</b><span>scene-book cards</span></div></div>";
+  if(t.cards){
+    h += '<div class="wb-note"><b>The scene book has started.</b> ' + t.cardBeats + " of " + SPINE.length
+      + " nights now hand the storyteller a written card instead of a description of what a card would be like."
+      + " On those nights the middle is authored: the topic, who answers, what they give up, and what they will"
+      + " not say. That is the mechanism this whole board is scoping — the rest of the spine is the same job again.</div>";
+  }
   h += '<div class="wb-sh">Improvised today</div><div class="wb-g3">'
     + '<div class="wb-stat"><b class="s">' + t.live + "</b><span>turns inside beats</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.room + "</b><span>turns in the rooms</span></div>"
@@ -11903,7 +12390,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.21.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.22.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -11974,7 +12461,7 @@ function newRun(confirmFirst, bare){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; gateNotes = {}; gateRefusedNames = [];
+  beatText = ""; gateNotes = {}; gateRefusedNames = []; topicSpent = {};
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
@@ -12123,6 +12610,9 @@ function restoreFromBlob(s){
   beatText = (typeof s.beatText === "string") ? s.beatText : "";
   gateNotes = (s.gateNotes && typeof s.gateNotes === "object") ? s.gateNotes : {};
   gateRefusedNames = [];
+  /* a save from before the scene book has spent nothing: it starts at the top of
+     every topic list, which is the right place for a run that has never had one */
+  topicSpent = (s.topicSpent && typeof s.topicSpent === "object") ? s.topicSpent : {};
   /* the fork - derived AFTER gateNotes lands: old saves past the chassis
      played the only branch that existed */
   chassisHolder = (s.chassisHolder === "Seven" || s.chassisHolder === "Nine") ? s.chassisHolder
