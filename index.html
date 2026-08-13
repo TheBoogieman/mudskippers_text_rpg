@@ -1186,6 +1186,7 @@
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
   <div class="t-foot" id="t-foot">· THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot" style="opacity:.55;margin-top:6px">for Mr. Togan</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1205,10 +1206,13 @@
     </div>
     <div class="ep">
       <h3>STEP 3 — PLAY</h3>
-      <p>Pick a numbered choice each turn — or type absolutely anything into the gold bar and hit MUDSKIPPER MOMENT. The story bends around you. That's the whole game.</p>
+      <p>Pick a numbered choice each turn — or say what the courier does in the gold bar and press Enter. The MUDSKIPPER MOMENT button is for the other kind of line: the wild one, the joke, the thing that gets you thrown out of better establishments. Those are free — they never cost you a night.</p>
+      <p><b>Three sentences and you know this game.</b> One question is live at a time. The first choice on the rail ends it; the others dig. The red one is the game's own, and it always asks twice.</p>
+      <p style="opacity:.7">Everything else explains itself as it happens. The story bends around you; that's the whole game.</p>
     </div>
     <div class="ep">
-      <h3>HOW THE NIGHT WORKS</h3>
+      <h3><span style="cursor:pointer" id="wel-more">HOW THE NIGHT WORKS &#9662;</span></h3>
+      <div id="wel-rules" style="display:none">
       <p>The game is a list of questions. One is live at a time — that's the beat. When a question goes live you'll get a green card: TONIGHT, and what it's about. You get a handful of turns of night, usually four or five. Spend them however you like — bits, detours, long dinners; all of it is loved and recorded — but somewhere in those turns, take one honest run at tonight's business. That is the entire expectation. Not speed. One reach.</p>
       <p>While a question is live the rail always reads the same way down the screen. <b>First</b> is the way out of tonight — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. <b>Second and third</b> go nowhere on purpose: dig in, ask the question under the question, get the detail, press the person, say the human thing. They hold the night open — nobody closes a beat you're still standing in — and cost nothing but a turn. Mudskipping does the same and doesn't even cost the turn.</p>
       <p>Under them, in red, is the way out of <i>everything</i>: put the whole job down and walk. That one is the game's, not the storyteller's — it always asks twice, and what leaving means is written fresh for each question the story asks. Use it and the family feels it. Use it again the very next turn and the courier really does go, and that is the end of that run. Anything else in between and it's forgotten.</p>
@@ -1216,6 +1220,7 @@
       <p>Between questions there is no clock at all. After a beat lands you get <b>the family's own time</b>, and it lasts exactly as long as you want it to. The room is sealed while you are in it — same place, same hour, same people, nobody at the door — and nothing the storyteller writes can end it. It is the one part of the night that is allowed to be about nothing, which is the point: ask what the rain actually is, argue about what the vow means on a day it's inconvenient, find out what somebody did before all this, be funny at each other. Ask about the world and you'll get a real answer, as long as it isn't the answer to a question the story hasn't asked yet.</p>
       <p>After seven turns of that, a card appears offering the way on. It doesn't nag and it doesn't expire. Press it when you've had enough of each other.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
+      </div>
     </div>
     <button class="btn" style="display:block;margin:6px auto 0" id="wel-close">INTO THE RAIN</button>
   </div>
@@ -1630,7 +1635,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.44.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.45.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1759,7 +1764,7 @@ var BIBLE = [
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
-"- canon: REQUIRED ON EVERY TURN. An array of 1 to 3 short telegraphic strings - what THIS TURN made true that the board did not already decide: what the player chose, what it cost, who witnessed it, what a character gave away, a promise given, an amendment to the past. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Never repeat a fact already in the context block, and never write canon that reaches past the board - no facts about locked reveals, no facts about beats not yet played. Even a quiet turn establishes something. Never send an empty array.",
+"- canon: REQUIRED ON EVERY TURN. An array of 1 to 3 short telegraphic strings - what THIS TURN made true that the board did not already decide: what the player chose, what it cost, who witnessed it, what a character gave away, a promise given, an amendment to the past. Write facts, not prose (e.g. 'Pia knows the courier's route; refuses to say how'). Never repeat a fact already in the context block, and never write canon that reaches past the board - no facts about locked reveals, no facts about beats not yet played. Even a quiet turn establishes something. Never send an empty array. AND THE ONE STYLE RULE: canon records what happened THIS TURN AT THIS TABLE - never the past, never off-screen, never a named person's history. If you find yourself writing when somebody learned a thing, what they were told years ago, or what a character did before the story started, that is worldbuilding and it belongs to the bible, not to you. A character may SAY such a thing in dialogue, where it is their word and can be wrong; it does not become a canon line. (The scene book sometimes commissions an invention outright - a story somebody cannot possibly know is true - and says so when it does. That is colour, offered as unreliable. This rule is about the difference.)",
 "- cast: REQUIRED ON EVERY TURN IN WHICH ANY NAMED CHARACTER SPEAKS OR ACTS. If they have no sheet yet, emit 2 or 3 entries for them covering who they are, how they present, and what they want. If they already have a sheet, emit at least one entry recording what this turn changed or revealed about them - what they now know, want, fear, or owe. Entries are {\"name\":\"...\",\"note\":\"...\"}, one plain sentence each, appended to that character's running sheet. Never repeat an existing note. Omit cast only on a turn of pure narration with no named character in it.",
 "- cast entries may also carry \"knows\" (facts this character has just learned - a secret, an identity, a plan), \"status\" (one line on where they stand, replaces the old one), and \"voice\" (one line - speech pattern, quirks, who they tease and how; set once, revise rarely). \"met\" is derived by the game from who appears in each scene, so you never need to send it - but the rule it enforces is absolute: NEVER re-introduce two names that have met, and never let a character act ignorant of something in their knows list. Sending knows is the one memory job only you can do: the game can see who was in the room, but not what they worked out.",
 "- compacted: only when the turn asks for MAINTENANCE - the requested compressed chronicle lines. Otherwise omit.",
@@ -1848,7 +1853,7 @@ var OPENING2 = {
      talk to her, knowing - and the two under it go nowhere. It is also the FIRST
      assistant message in the log, so it is the shape every later turn copies. */
   choices: [
-    "Introduce me to the shard while we walk. If I'm carrying a person, she gets a vote.",
+    "Tell me who Mirren was to Vic, before she was a drop.",
     "Take me to Vic. He owes me this story face to face.",
     "Not the straight way — we lose every pair of eyes first, then the safehouse."
   ]
@@ -2657,7 +2662,7 @@ var SPINE = [
               ["Pia","Verdict?"],
               ["Seven","It's terrible. It's genuinely terrible. Can we do it again next week."],
               "The pan goes in the sink and the window goes grey at the edges and the argument everybody expected does not happen tonight.",
-              "There is a knock at the outer door at half past two in the morning, and it is not a knock anyone in this house makes."],
+              "Then the streetlight across the road goes out, the way they do, except that the one beside it does not, and neither does the one after that."],
        rail:["Answer it.",
              "Shutters first. Then answer it.",
              "Ask who in the world knows this address."]}],
@@ -2798,7 +2803,7 @@ var SPINE = [
  walks:["Burn the manual and go. Nobody should be able to open those doors.",
         "Leave. What I open is not a reason to keep me.",
         "Put it down and walk. I am a key, and keys get used up."],
- opens:[{day:"18", time:"8:50pm", place:"THE LONG ROOM", amb:"interior-warm",
+ opens:[{day:"18", time:"8:50pm", place:"THE SAFEHOUSE ROOF", amb:"neon-dry",
        now:"Evening. A manual that came out of the courier's head is on the table and nobody has read it aloud.",
        lines:["The document has been on the table for a day and a half and has developed a ring from somebody's mug.",
               "It is written in the voice of a person explaining something to someone they love, which is the most frightening thing about it by a distance.",
@@ -2807,7 +2812,7 @@ var SPINE = [
               ["Vic","Read it."]],
        rail:["Ask Vic whether he has read it before.",
              "Start reading from the top."]}],
- lands:[{day:"18", time:"11:30pm", place:"THE LONG ROOM", amb:"interior-warm",
+ lands:[{day:"18", time:"11:30pm", place:"THE SAFEHOUSE ROOF", amb:"neon-dry",
        now:"Late, with the manual open on the table. The family knows what the courier can open, and what it costs.",
        lines:["It works, which is the worst available outcome, and the whole table understands that at the same moment.",
               ["Seven","So he's a key. Sorry. I know that's the blunt way to say it. He's a key."],
@@ -2963,7 +2968,7 @@ var SPINE = [
               ["Hesta","It's crooked."],
               ["Pia","It's meant to be crooked. It's a law, not a poster."],
               "The pan comes off the heat and goes round, and for one entire evening this is a house with too many people in it and not enough chairs.",
-              "The knock on the outer door this time is official, and it is asking for a name, on paper."],
+              "Hesta stops mid-wipe, with the cloth still on the plate, and looks at the door for four seconds without saying anything, and then goes back to the plate."],
        rail:["Answer the door.",
              "Ask which name they are asking for.",
              "Everyone away from the windows. Now."]}],
@@ -3228,7 +3233,7 @@ var SPINE = [
  scar:"The founding surfaced in fragments they had no time to sit with; grief went unattended into the plan."},
 
 {id:"a3-vic", season:3, act:1, title:"paid in full",
- goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. He spends himself here. His last words are PAID IN FULL.",
+ goal:"REVELATION and cost. Vic confesses: he scanned every customer for decades, found the courier's blood, and built the housing into his skull without asking. HOW HE SPENDS HIMSELF: the founders' lock wanted living tissue that would take the courier's blood, and the only donor in the room that night was Vic - he built the housing out of his own filtering gear and has run patched ever since, on a rig only he knows how to service. He has been putting the last service off for months so he would still be upright for this conversation. Tonight he stops putting it off. It is not fast and it is not a scene; he simply does not get up again, and he knows the arithmetic before he starts talking. His last words are PAID IN FULL.",
  exit:"Vic has confessed what he did to the courier and paid for it",
  aim:"corner Vic with what he did and let him spend himself answering for it",
  walkLine:"Let Vic pay in full on his own. Walk.",
@@ -3252,6 +3257,9 @@ var SPINE = [
        lines:["He answers it. All of it, without dressing any of it, and then there is nothing left of the question.",
               "The rain comes back somewhere in the middle and neither of you moves inside, because moving inside would have ended it early.",
               ["Vic","I'd do it again. That's the part I'm not allowed to soften, so I won't. I'd do it again and I'd hate it again."],
+              "Halfway through he stops leaning on the wall and starts leaning on the drum beside it, and then on nothing, and he keeps talking through all three.",
+              ["Vic","The lock wanted living tissue that'd take your blood. There was one bit of that in the room and it was mine. I've been running on the patch since. Been due a service since spring."],
+              ["Vic","I put it off. I wanted to be standing up for this. That was the whole plan, that was it, that was the entire plan."],
               "When it is done the family comes out one at a time, without being called, and stands where they can be seen.",
               ["Hesta","We heard. All of it. You're not explaining it twice."]],
        rail:["Let them stand there.",
@@ -3260,6 +3268,7 @@ var SPINE = [
  landsHard:[{day:"32", time:"11:40pm", place:"THE CANNERY YARD", amb:"storm",
        now:"Late night in the yard. Vic paid before the courier finished being angry; it landed with the accounts still open.",
        lines:["He gets there before you do. Whatever was owed, he pays it in one motion, and you are left holding the second half of a thing you had not finished saying.",
+              "He has been overdue the service only he could do since spring, and putting it off to stay upright for exactly this, and he does not make it to the end of the conversation he arranged.",
               ["Vic","I know. I know you weren't done. I couldn't — I'm sorry, I couldn't sit in it any longer."],
               "The rain comes back and neither of you moves, for different reasons now.",
               ["Pia","Is he — did that count? Does that count?"],
@@ -3272,6 +3281,8 @@ var SPINE = [
         "The choice arrives early and Vic takes it before anyone can argue."],
  canon:["Vic spent decades scanning customers for blood the founders' lock would accept. The courier was his lottery ticket.",
         "Vic built the housing and installed it without the courier's knowledge or consent. He regrets it. He did it anyway.",
+        "The founders' lock wanted living tissue that would take the courier's blood. Vic used his own, and ran patched from that night on.",
+        "He was overdue the service only he could do, and had been putting it off to stay standing for this. He stopped putting it off in the cannery yard.",
         "Vic's last words were PAID IN FULL."],
  falls:["Vic"],
  stone:"Vic confessed, and paid in full.",
@@ -3397,7 +3408,9 @@ var SPINE = [
               "Nobody says how big it is. Everybody thinks it, and the not-saying goes on for a solid minute.",
               ["Nine","I know this sound. I want to be clear that I know this sound and that I am still here."],
               ["Pia","You're still here."],
-              "There are racks in every direction, and the racks are full, and the things in them are not equipment."],
+              "There are racks in every direction, and the racks are full, and the things in them are not equipment.",
+              ["Seven","Check your wrist. Go on. Check it against how long we have been down here."],
+              "Nine minutes have passed up there. You have been on this floor for most of an hour, and the wrist is not wrong; the floor is just running hot, the way she does, and you are inside her now."],
        rail:["Go and look at one properly.",
              "Get the light up. I want to see how far this goes.",
              "Stay with Nine a moment."]}],
@@ -3495,6 +3508,8 @@ var SPINE = [
               "There is food on the table because Hesta put it there, and the oldest person in the world eats some of it, and that changes the shape of the room permanently.",
               ["Principal","This is very good. I want to be difficult about everything else, so I am being agreeable about this."],
               ["Hesta","Take another one and be difficult afterwards."],
+              ["Principal","Here is the argument, and it is the only one I have ever had. Nothing that can be lost is safe, and nothing that is safe is alive. I chose safe. I have had a hundred and thirty years to find the flaw in that and I have not found it. You have until the bread is cold."],
+              "One of the six by the door has been standing very still, and when the light moves it is wearing the courier's face. Not a copy and not a mockery - his, worn plainly, the way a coat is worn. Nobody in the room explains it. Nobody looks at it twice except him.",
               "She stops mid-sentence, looks at the wall, and tells you the child is listening and has been for some time."],
        rail:["Ask her to say that again.",
              "Look at the wall too.",
@@ -3504,6 +3519,7 @@ var SPINE = [
        lines:["You get into the room, which is not the same as getting the argument. She sets the terms of both before anybody has sat down.",
               "Hesta's food stays on the table untouched — the oldest person in the world notices that and files it, and it is the only point scored all evening.",
               ["Principal","You may have the next question. I'll tell you when."],
+              ["Principal","My position, since nobody asked for it in the correct order: nothing that can be lost is safe, and nothing that is safe is alive. I picked one. Tell me which of those two you are picking and we can stop circling."],
               ["Three","We are being managed. I am saying so out loud because it works less well once it is said out loud."],
               "She stops mid-sentence, looks at the wall, and tells you the child is listening and has been for some time."],
        rail:["Ask her to say that again.",
@@ -5274,15 +5290,15 @@ var SCENEBOOK = {
    the DM's tell; this one belongs to the chair. */
 var TEASES = {
   "a1-hum":     "The thing in your jacket wants a word.",
-  "a1-chase":   "The way home is closing. Find out what's left open.",
+  "a1-chase":   "Your room is not yours any more. Find out what still is.",
   "a1-vic":     "Vic owes you the whole story. Get it out of him.",
   "a1-pack":    "The pack is deciding what you're worth. Be there for the verdict.",
   "a1-fare":    "Rent is due and one honest job remains. Run it.",
-  "a1-late":    "Someone is asking after a late delivery. See who.",
+  "a1-late":    "You've seen who's asking. Go and hear what she wants.",
   "a1-exit":    "A way out exists. Look it in the eye before it expires.",
   "a1-carried": "The sweep is coming and Nine knows things. Trust her through it.",
   "a1-turn":    "Decide what she is to you — and say it.",
-  "a2-door":    "There's a door that stays open in Fenwick Cross. Knock.",
+  "a2-door":    "There's a door on the far side of the marsh that never shuts. Knock.",
   "a2-ground":  "The hunt has found your street. Try every kind thing you know.",
   "a2-hand":    "The hunt ends tonight, one way or the other.",
   "a2-mirren":  "Carry her home, and say her name.",
@@ -5290,19 +5306,19 @@ var TEASES = {
   "a2-chassis": "Seven gets hands. What they're for is the question.",
   "a2-three":   "A stranger with two voices has questions. Answer honestly.",
   "a2-housing": "Something about you is about to explain itself. Sit down for it.",
-  "a2-manual":  "There's a manual, and the one riding your skull can read it. Let them.",
-  "a2-choir":   "Learn what the Choir actually does with people. All three answers.",
-  "a2-annul":   "A commander can be taken alive. Take him, and ask Three what comes next.",
+  "a2-manual":  "There are instructions for what was done to you. Somebody has to read them aloud.",
+  "a2-choir":   "Their filing cabinet is open. Some of it is about her.",
+  "a2-annul":   "One of them can be taken alive. Three knows what to do after that, and would rather you asked.",
   "a2-law":     "The family writes its own law tonight. Bring an appetite.",
   "a2-turn":    "The Choir makes an offer. Hear the name on it.",
   "a3-evict":   "Take the street back. Kindly, where kindness works.",
   "a3-voice":   "Listen to the enemy being gentle. Don't flinch.",
-  "a3-founding":"The machine has an origin. Find the voice that made it.",
+  "a3-founding":"Someone taught her what family means. Listen to them do it.",
   "a3-vic":     "Vic has one more thing to say. Make time.",
   "a3-stone":   "A stone, a name, a line each. Then the work.",
   "a3-for":     "Name everyone's part in what comes. Nobody goes down undecided.",
-  "a3-descent": "Go under the Exchange. The way back is not the point.",
-  "a3-dreamers":"Walk what sleeps below. Look for a name you know.",
+  "a3-descent": "Go under the Exchange. Down there the clock is hers.",
+  "a3-dreamers":"Millions are asleep down here. One of them has your promise on her.",
   "a3-principal":"The landlord is home. Mind the house rules.",
   "a3-granny":  "Talk to her. About letting go.",
   "a3-seize":   "End it. Custody, not conquest."
@@ -5477,7 +5493,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.44.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.45.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -6747,6 +6763,26 @@ function canonMinusExit(list, b){
       + " canon line(s) that claimed an ending this turn did not get");
   }
   return kept;
+}
+/* WHO WROTE THIS LINE. Board-written canon and table-written canon are different
+   substances: one is the spine, fixed for every run, and the other is what this
+   table made true tonight. They went into the same array indistinguishable, so a
+   line a model invented was quotable forever as though the board had authored it.
+   The set is session-derived from the spine rather than persisted, so every save
+   ever written keeps working. */
+function canonIsBoard(line){
+  var t = String(line || "").trim();
+  if(!t) return false;
+  for(var i = 0; i < SPINE.length; i++){
+    var b = SPINE[i], keys = ["canon","canonAlt","canonA","canonB","canonSoft"], k, j;
+    for(k = 0; k < keys.length; k++){
+      var arr = b[keys[k]] || [];
+      for(j = 0; j < arr.length; j++){ if(String(arr[j]).trim() === t) return true; }
+    }
+    if(String(b.stone || "").trim() === t) return true;
+  }
+  for(var q = 0; q < OPENING_CANON.length; q++){ if(String(OPENING_CANON[q]).trim() === t) return true; }
+  return false;
 }
 function mergeCanon(list){
   if(Object.prototype.toString.call(list) !== "[object Array]") return 0;
@@ -10799,7 +10835,12 @@ function dmAside(attempt){
   $("mudinput").value = "";
   var pb = {kind:"player", text:attempt, mud:true, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
-  var aside = {kind:"dmaside", text:DM_ASIDE, warm:true};
+  /* ...and it says back what they actually did. "She heard you" is a claim; the
+     line they typed, quoted, is the proof of it. */
+  var quoted = String(attempt || "").trim().replace(/\s+/g, " ");
+  if(quoted.length > 90) quoted = quoted.slice(0, 88) + "\u2026";
+  var aside = {kind:"dmaside", warm:true,
+    text: "\u201c" + quoted + "\u201d \u2014 " + DM_ASIDE};
   renderBlock(aside); feedLog.push(aside);
   scrollFeed();
   persistAll(currentChoices());   /* the attempt and the interruption both survive a reload */
@@ -12390,6 +12431,14 @@ $("wel-settings").onclick = function(){
   $("welmodal").classList.remove("open"); openSettings();
 };
 $("wel-folder").onclick = function(){ chooseFolder(); };
+/* the rules essay is still here for anyone who wants it - it is just no longer
+   seven paragraphs of mechanics standing between a stranger and the first
+   raindrop, in a register the game never uses again */
+$("wel-more").onclick = function(){
+  var r = $("wel-rules"), open = r.style.display !== "none";
+  r.style.display = open ? "none" : "block";
+  $("wel-more").innerHTML = "HOW THE NIGHT WORKS " + (open ? "&#9662;" : "&#9652;");
+};
 
 /* ============ SAVE MANAGER ============ */
 function summarize(blobStr){
@@ -12434,7 +12483,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.44.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.45.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12524,9 +12573,17 @@ function renderCanonList(){
     ol.appendChild(e);
     return;
   }
+  /* THE RECORD SAYS WHO WROTE IT. Board-written canon is the spine, identical in
+     every run; table-written canon is what happened here tonight. They sat in one
+     array indistinguishable, so a line a model invented about a character's
+     off-screen past was quotable forever as though the board had authored it.
+     Marking it costs nothing and makes the difference readable. */
   runCanon.forEach(function(f, i){
     var li = document.createElement("li");
-    li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f);
+    var board = canonIsBoard(f);
+    li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f)
+      + '<span style="opacity:.45;font-size:10px;letter-spacing:.14em;margin-left:8px">'
+      + (board ? "BOARD" : "THIS TABLE") + '</span>';
     ol.appendChild(li);
   });
 }
@@ -15802,7 +15859,9 @@ function shardHoldStart(){
 function shardHoldStop(){
   if(shardHoldTimer){ clearTimeout(shardHoldTimer); shardHoldTimer = null; }
 }
-var SHARD_SAYS = "MR. TOGAN, THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.";
+/* the courier's name belongs to the player and to nobody else - the dedication
+   it used to carry lives in the title foot now, where it reads as what it is */
+var SHARD_SAYS = "THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.";
 /* What it says depends on what it can feel. One is picked at random per tap, never
    the same one twice running. The signature line is always the first of a session. */
 var SHARD_LINES = {

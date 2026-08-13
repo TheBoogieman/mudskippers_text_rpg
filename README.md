@@ -236,7 +236,7 @@ So the middle is written down too, and it is sent as **data rather than prose**:
 The sealed room after each beat gets its own table, on the same rules — which is the
 part of the night that is *entirely* conversation, and so was entirely drift.
 
-Written for the first three nights and the three rooms after them: **42 cards.** A
+Written for all thirty-three nights and every room after them: **250 cards.** A
 night with no entry behaves exactly as it did before — the prose block, and the
 storyteller's judgment. The Writers' Board shows both on the same page, so what has
 been written and what has not sit next to each other.
@@ -292,7 +292,7 @@ about a minute inside the machine per second outside and a turn coming back out 
 legitimately stamped *earlier* than the turn that went in; down there the day is
 guarded instead, because a subjective week inside is still minutes on the surface.
 
-### Fifteen laws, and the sweep that keeps them honest
+### Twenty laws, and the sweep that keeps them honest
 
 The laws now run the length of the spine — the hum, the bodiless (a mind in the
 courier's skull has *less* body than a shard: a shard at least sits somewhere), the
@@ -305,13 +305,16 @@ permanent death in it), the one chassis, the sleepers on the shelves, the six
 bio-grens, and the vessel law: when the family's only ripperdoc dies, the skill dies
 with him and what is broken stays broken.
 
-Keeping fifteen detectors honest needs a test bigger than reading them. There is
-one, and it is free: **the game's own authored prose is legal by definition.** Every
-one of the 102 written passages is replayed past the desk at its own beat, in the
-state the game would actually be in, on all three sides of the chassis fork — 306
-checks. A single hit is a bug in a rule. Then the same grid runs backwards: for
-every beat, every rule that claims to be live there is fed a scene that plainly
-breaks it, and must catch it — 814 checks.
+Keeping twenty detectors honest needs a test bigger than reading them. There is
+one, and it is free: **the game's own authored prose is legal by definition.** Open
+**index.html?selftest** and every one of the 101 written passages is replayed past
+the desk at its own beat, in the state the game would actually be in, on all three
+sides of the chassis fork — 3,287 live law evaluations. A single hit is a bug in a
+rule. Then the grid runs backwards: nine scenes that plainly break a law, each of
+which must be caught *by the law it was written for*. The page also declares what
+it does **not** cover — six of the twenty laws have a case that proves them, and
+the other fourteen are named on screen, because a sweep that hides its own gaps is
+worse than no sweep. In CI: load the page and read window.__SELFTEST__.fail.
 
 That sweep has earned its keep. It found that the board's own writing broke the
 board's own law (from night two onward every authored page has Nine talking, but
