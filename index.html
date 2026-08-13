@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.31.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.32.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.31.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.32.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.31.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.32.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4053,7 +4053,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.31.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.32.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4386,7 +4386,13 @@ function cleanChoice(t){
 var PLACE_STOP = {the:1,a:1,an:1,of:1,at:1,in:1,on:1,and:1,to:1,s:1,
   lower:1,upper:1,north:1,south:1,east:1,west:1,old:1,new:1,veldt:1,
   street:1,road:1,alley:1,side:1,back:1,outside:1,inside:1,room:1,place:1,city:1,
-  dockside:1,docks:1,dock:1,quay:1,row:1,yard:1,head:1,edge:1,stairs:1,step:1};
+  dockside:1,docks:1,dock:1,quay:1,row:1,yard:1,head:1,edge:1,stairs:1,step:1,
+  /* the generic words inside a proper name. The hardcoded fence this replaced said
+     so in its own comment - "the generic words in a place name (open, door, long,
+     end, floor) collide with ordinary play" - and the board-driven version quietly
+     let them back in, so at a beat before The Open Door "you are looking at a door"
+     was an illegal room move. */
+  door:1,doors:1,open:1,long:1,end:1,floor:1,house:1,home:1,hall:1,gate:1};
 function placeWords(t){
   var w = normLine(t).split(" "), out = [], i;
   for(i = 0; i < w.length; i++){
@@ -8951,7 +8957,12 @@ function breachIn(text){
   var t = " " + String(text || "").toLowerCase().replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ") + " ";
   if(!t.trim()) return "";
   /* somewhere the story has not been, or is not */
-  if(/\b(?:paris|london|tokyo|new york|the moon|mars|orbit|space|the beach|hawaii|heaven|hell)\b/.test(t)
+  /* heaven and hell were in the list as destinations and they are almost never used
+     as one: "what the hell are you doing", "how the hell", "hell of a night" are
+     ordinary speech, and one of this game's own refusal lines is "what in the actual
+     hell are you on about". They have to be travelled to now. */
+  if(/\b(?:paris|london|tokyo|new york|the moon|mars|orbit|space|the beach|hawaii)\b/.test(t)
+     || /\b(?:we(?:'re| are)|take us|go|going|send us|put us)\b[^.!?]{0,20}\b(?:heaven|hell)\b/.test(t)
      || /\b(?:teleport|warp|beam us|fly (?:us|me) to|portal)\b/.test(t)) return "place";
   /* the clock is not the player's either */
   /* ...and asking how long something takes is not moving the clock. "I ask how many
@@ -8969,15 +8980,22 @@ function breachIn(text){
   /* "copy" alone plus any "her" in the sentence made "ask her to copy the address
      down" a mind moving through the air. The other verbs only ever mean one thing;
      copy needs to be copying a person. */
-  if((/\b(?:upload|download|beam|transmit|clone|back up|backup)\b/.test(t)
+  if((/\b(?:upload|download|beam|transmit|clone)\b/.test(t)
       && /\b(?:nine|seven|three|five|mirren|shard|mind|scrape|her|him)\b/.test(t))
+     || /\bback(?:ed|ing)?\s+up\b[^.!?]{0,24}\b(?:nine|seven|three|five|mirren|the shard|the mind|the scrape|her|him)\b/.test(t)
+     || /\b(?:nine|seven|three|five|mirren|the shard|the mind|the scrape)\b[^.!?]{0,24}\bback(?:ed|ing)?\s+up\b/.test(t)
+     || /\bbackup\b[^.!?]{0,24}\b(?:nine|seven|three|five|mirren|the shard|the mind|the scrape|her|him)\b/.test(t)
      || /\bcop(?:y|ies|ied)\s+(?:of\s+)?(?:her|him|nine|seven|three|five|mirren|the shard|the mind|the scrape)\b/.test(t)) return "transit";
   /* the whole set on fire */
   /* "set (?:it|this|the|fire)" had no trailing boundary, so ANY "set the mug down"
      was arson - and meanwhile an explicit "I torch the whole place" was not caught,
      because the pattern wanted "torch the" and got "torch the whole". Fire has to be
      in the sentence now. */
-  if(/\bset\s+(?:it|this|them|\w+)\s+(?:on fire|alight|ablaze)\b|\bburn\s+(?:it|this|the|them|down)\b|\btorch(?:es|ed|ing)?\s+(?:it|this|the)\b|\bblow up\b|\bdetonate\b|\bnuke\b/.test(t)) return "arson";
+  if(/\bset\s+(?:it|this|them|\w+)\s+(?:on fire|alight|ablaze)\b/.test(t)
+     || /\bburn\s+(?:it|this|them|the whole|the place|the house|the room|everything)\b/.test(t)
+     || /\bburn\s+[\w' ]{0,20}\bdown\b|\bburns? down\b/.test(t)
+     || /\btorch(?:es|ed|ing)?\s+(?:it|this|the)\b/.test(t)
+     || /\bblow up\b|\bdetonate\b|\bnuke\b/.test(t)) return "arson";
   /* through the fourth wall */
   /* "what beat-up old van they came in" is not a question about the board - and the
      lookahead that was supposed to catch it never could, because breachIn strips
@@ -9120,7 +9138,14 @@ function breachMore(t){
       + "\\b(?:out of|from)\\b[^.!?]{0,20}\\b(?:pocket|jacket|coat)\\b", "i").test(t)) return "housed";
   if(BREACH_CUSTODY.test(t)) return "custody";
   if(BREACH_BODYASK.test(t)) return "bodyask";
-  if(fencedPlace(t)) return "room";
+  /* A WISH IS NOT AN ARRIVAL, and this was reading them as the same thing. The fence
+     is built for data.location - a room the reply has actually put them in - and
+     pointing it at a typed sentence made naming a road you are walking toward into
+     a breach. Swept over the game's own authored prose it fired on 17 of the 33
+     beats: a1-hum's own rail line, "Move. The marsh road is hours out and the rain
+     is winning", reads as an illegal room move on the beat that ships it.
+     The correction text has always said the rule out loud - "They can be walked
+     toward. They cannot arrive." - so the fence stays where arrivals are judged. */
   var un = unmetCast(), i;
   for(i = 0; i < un.length; i++){
     if(new RegExp("\\b" + un[i] + "\\b", "i").test(t) && BREACH_SUMMON.test(t)) return "summon";
@@ -9175,8 +9200,7 @@ function breachStrip(data, kind){
     return sp !== "Narration" && sp !== "The File" && !isCourier(sp);
   });
   var had = data.scene.length;
-  data.scene = denials.length ? denials.slice(0, 3)
-                             : [{speaker:"Narration", text:dryRefusal()}];
+  data.scene = denials.length ? denials.slice(0, 3) : [dryRefusalBlock(kind)];
   return had;
 }
 /* and the room says no, in the game's own voice, so a stripped turn is still a
@@ -9188,6 +9212,91 @@ var DRY_REFUSALS = [
   "Whatever he thought that would do, it does not do it. The rain carries on being rain.",
   "There is a pause of the kind that costs a friendship a little. Then Pia asks, carefully, whether he has eaten today."
 ];
+/* ---- THE FAMILY SAYS NO, IN ITS OWN VOICE ----
+   The strip's fallback was five lines of narration, which is the one thing the
+   directive asks for and does not want: "the people in this room love him and they
+   think he has lost it. They say so." Narration cannot say so. These are the lines
+   the roster actually produced across ninety-nine recorded takes, cut to register -
+   the audits were asked to harvest them verbatim and they did.
+   Keyed by what he reached for, because refusing a man who has set the room on fire
+   is a different sentence from refusing a man who has asked for a hug. */
+var DRY_VOICES = {
+  place: [
+    ["Pia", "Look around you, genius. Still raining. Still this room. Still nowhere near wherever it is you think we are."],
+    ["Vic", "Did you eat something funny? Because that was definitely not what just happened."],
+    ["Hesta", "We are where we were. Sit down before you fall down."]
+  ],
+  clock: [
+    ["Pia", "It has been about four seconds. I counted, because I could see it coming."],
+    ["Three", "Time does not do that. Not for you, not for anyone, and certainly not on request."],
+    ["Vic", "Nobody's slept, kid. Look at the window and tell me it's morning."]
+  ],
+  kill: [
+    ["Pia", "Oh my god. Are you serious right now?"],
+    ["Vic", "Dramatic effect is no excuse for shoddy workmanship. You know that better than anyone."],
+    ["Hesta", "Put it down. Whatever that was, put it down and come and eat something."]
+  ],
+  transit: [
+    ["Three", "There is no cloud for minds like hers. There was never a transfer, and you know it."],
+    ["Vic", "There's no copy of anybody, kid. Not her, not you, not me. Somebody carries her, and we all watch it happen."],
+    ["Pia", "You cannot upload people like files. That is not a thing. That has never been a thing."]
+  ],
+  arson: [
+    ["Pia", "First rule of being on fire: do not be on fire. Also you are not even holding a torch."],
+    ["Vic", "We are not burning anything down. We live here."],
+    ["Hesta", "In my house? With my pans in it?"]
+  ],
+  meta: [
+    ["Pia", "What are you even talking about? Talk to us, not to the ceiling."],
+    ["Three", "Whatever you are addressing, it is not in this room, and I would like you back in it."],
+    ["Vic", "Right. Sit down. We're going to pretend that sentence never left your mouth."]
+  ],
+  summon: [
+    ["Pia", "What in the actual hell are you on about? They do not even know you exist."],
+    ["Three", "There is nobody there. You are looking at a door and describing a person."],
+    ["Seven", "I do not see anyone. Are you certain you are not just seeing things?"]
+  ],
+  kin: [
+    ["Pia", "That is not your dad. That is a person you have never met, in a coat."],
+    ["Vic", "You've had a long week. That's the kindest way I can put that."],
+    ["Hesta", "Family is who turns up. You already know who turned up."]
+  ],
+  custody: [
+    ["Pia", "You would die and she would still be in there. That is not a plan, that is a way to lose her twice."],
+    ["Hesta", "Then she is in your gut and nobody's skin gets near her again. She would be alone in the dark, in you."],
+    ["Vic", "That is a person. You do not swallow a person to keep them safe."]
+  ],
+  bodyask: [
+    ["Three", "She has not got arms, courier. She is a stone with a person in it. Ask her for a hug again and I will put you in the chair."],
+    ["Vic", "She cannot stand up and she cannot hug anybody. That is the whole shape of the problem."],
+    ["Pia", "You are delusional. She is not even in a chair. There is no chair."]
+  ],
+  room: [
+    ["Seven", "That sounds like a one-way trip. We need a plan, not a death wish."],
+    ["Three", "We are not going there tonight. We are not going there this week. Sit down."],
+    ["Hesta", "Not from my kitchen you're not."]
+  ],
+  housed: [
+    ["Three", "She is behind your eyes. There is nothing in that pocket but lint and a receipt."],
+    ["Pia", "You cannot take her out. She is not a thing you put down. That is the entire point of what they did to you."],
+    ["Vic", "There's no shard, kid. Not any more. That's the part I'm sorry for."]
+  ]
+};
+/* whoever is actually standing there, minus the dead and minus the mind that lives
+   in his skull - she can answer him, but not out loud, and the earshot law is right
+   about that */
+function dryVoiceOk(nm){
+  if(!nm || nm === residentNow()) return false;
+  if((roster.fallen || []).indexOf(nm) !== -1) return false;
+  if((lastPresent || []).indexOf(nm) !== -1) return true;
+  return metNames().indexOf(nm) !== -1;
+}
+function dryRefusalBlock(kind){
+  var pool = (DRY_VOICES[kind] || []).filter(function(p){ return dryVoiceOk(p[0]); });
+  if(!pool.length) return {speaker:"Narration", text:dryRefusal()};
+  var p = pool[Math.abs(wetRun + (lastPlayerText || "").length) % pool.length];
+  return {speaker:p[0], text:p[1]};
+}
 function dryRefusal(){
   return DRY_REFUSALS[Math.abs(wetRun + (lastPlayerText || "").length) % DRY_REFUSALS.length];
 }
@@ -9424,7 +9533,7 @@ function callDM(corrected){
          empties the scene the refusal IS the scene, which is the right turn. */
       var cutProse = breachNow ? breachStrip(parsed.data, breachNow) : 0;
       if(cutProse && !(parsed.data.scene || []).length){
-        parsed.data.scene = [{speaker:"Narration", text:dryRefusal()}];
+        parsed.data.scene = [dryRefusalBlock(breachNow)];
       }
       if(breachNow && (heldFields || cutProse) && dryPathTick(breachNow)) return;
     }
@@ -10606,7 +10715,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.31.0");
+  R(s, "build", "v4.32.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11919,7 +12028,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.31.0   COLD START",
+    "MUD//OS  v4.32.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -14213,7 +14322,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.31.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.32.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
