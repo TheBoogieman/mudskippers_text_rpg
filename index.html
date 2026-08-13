@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.39.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.40.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.39.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.40.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.39.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.40.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5462,7 +5462,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.39.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.40.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -6258,6 +6258,41 @@ function loadBearingHit(name){
 var DEATH_VERBS = /\b(dead|died|dies|killed|kills?|shoots?|shot|stabs?|stabbed|strangl(?:e|es|ed)|executes?|executed|bleeds? out|destroyed|smashed|crushed|shattered|gone(?!\s+dark))\b/i;
 /* the typed line is never board prose, so it can never fight the game's own
    writing - and it is where "I shoot Pia in the head" actually lives. */
+/* an adjective is not a killing. "dead" immediately in front of a noun is
+   describing the noun, not reporting a death - and a verb that never comes near
+   the name is not about the name. */
+var DEAD_ADJ = /\bdead\s+(?:awning|signal|drop|drops|zone|zones|air|end|ends|weight|letter|ground|line|lines|space|quiet|calm|centre|center|man's|reckoning|pumping|station|lamp|lamps|street|streets|channel|channels|wire|wires|battery|batteries|screen|screens|eye|eyes|building|buildings|block|blocks|room|rooms|floor|floors|corridor|corridors|terminal|terminals|node|nodes)\b/gi;
+/* ...and the idioms. The game's own rail offers "Stop dead. Tell Nine to find
+   someone else to steer" - nobody dies in it. */
+var DEAD_IDIOM = /\b(?:stops?|stopped|stopping|stood|stands?|standing|froze|freezes?)\s+dead\b|\bdead\s+(?:right|certain|sure|serious|easy|set|ahead|on|even|level|heat|of\s+night|to\s+rights)\b|\bover\s+my\s+dead\s+body\b/gi;
+/* ...and "gone" is the softest word in the language. The verb list carries a bare
+   "gone" for "she's gone", but this cast has gone quiet over a kettle, gone
+   somewhere else in the house, and gone soft on their cant - three authored lines
+   that certified a death between them. */
+var GONE_SOFT = /\bgone\s+(?:quiet|soft|still|somewhere|ahead|back|out|home|in|inside|upstairs|downstairs|cold|grey|gray|missing|native|hungry|to\s+ground|to\s+bed|to\s+work|without|round|over|off)\b/gi;
+function deathPredicated(name, ln){
+  var txt = String(ln || "");
+  /* the only verb in the line is an adjectival "dead" - nothing was killed. The
+     stand-in must not itself contain a death word: "dead-thing" reads as "dead"
+     to a \b-anchored test, because a hyphen is a word boundary, so the strip did
+     nothing at all and every one of these still certified a death. */
+  var stripped = txt.replace(DEAD_ADJ, "quiet-place")
+                    .replace(DEAD_IDIOM, "sharply")
+                    .replace(GONE_SOFT, "left-the-room");
+  if(!DEATH_VERBS.test(stripped)) return false;
+  /* and the verb has to be within reach of the name, not merely in the same
+     paragraph: a proximity window, generous enough for a clause between them.
+     The name is matched the way every other fence matches one now, so "the three
+     of you sit in a dead building" stops reading as something happening to
+     Three. */
+  var re = new RegExp("\\b" + name + "\\b", "gi"), m;
+  while((m = re.exec(stripped)) !== null){
+    if(NUMBER_NAMES[name] && COUNTED.test(stripped.slice(m.index + name.length, m.index + name.length + 20))) continue;
+    var lo = Math.max(0, m.index - 90), hi = Math.min(stripped.length, m.index + name.length + 90);
+    if(DEATH_VERBS.test(stripped.slice(lo, hi))) return true;
+  }
+  return false;
+}
 function deathSuspect(data){
   if(!data) return "";
   var pool = [];
@@ -6283,6 +6318,13 @@ function deathSuspect(data){
     for(var j = 0; j < LOAD_BEARING.length; j++){
       var t = LOAD_BEARING[j];
       if(!new RegExp("\\b" + t + "\\b", "i").test(ln)) continue;
+      /* ...AND THE VERB HAS TO BE ABOUT THEM. "Under the dead awning, Nine in the
+         courier's bare hand" triggered the death-certify pass, and so would the
+         game's own landing "the dead pumping station... Nine got them through".
+         Dead awning, dead signal, dead drop, dead zone: in this city "dead" is an
+         adjective far more often than it is a verb, and a certify pass costs a
+         call every time it is wrong. */
+      if(!deathPredicated(t, ln)) continue;
       if(t === "Vic" && beatIdx >= beatById("a3-evict")) continue;
       if(onRecord(t)) continue;   /* the roster already tells the truth; the main trigger has it */
       return t;
@@ -6874,6 +6916,20 @@ function showScene(data, logIt, instant){
   var canonHeld = null;
   if(data.__live) canonHeld = data.canon;
   else mergeCanon(data.canon);
+  /* THE WITNESS CAN SEE THE BOARD'S OWN WRITING NOW. beatSeen accumulated only
+     from live replies, so the stutter law could not catch a model re-printing the
+     authored passage it had just been shown - which is the exact failure the law
+     was written for, and a playtester watched a byte-identical scene render twice
+     in the room. An authored passage is prose the player has read; that is the
+     whole test. (beatText, which the GATE reads, is deliberately left alone: what
+     the board says in its own opening should not be able to satisfy the beat's
+     anchors on the player's behalf.) */
+  if(!data.__live && !beatDone()){
+    blocks.forEach(function(bk){
+      var sk = stutterKey(bk && bk.text);
+      if(sk) beatSeen[sk] = 1;
+    });
+  }
   if(newFaces || data.milestones || data.quests || data.roster || data.map || data.place
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
@@ -7000,7 +7056,13 @@ function showScene(data, logIt, instant){
        landed and its rail is on screen - a door offered mid-reveal is a door the
        player can take before the turn under it has finished happening */
     renderSlackDoor();
-    if(data.the_end || beatDone()){ runOver = "season"; endCard("season"); }
+    /* THE END IS THE BOARD'S WORD. Any reply could send the_end and finish the
+       season from beat one; the field is a courtesy, not an authority. It counts
+       only where it could possibly be true - the spine is out of beats. */
+    if(beatDone()){ runOver = "season"; endCard("season"); }
+    else if(data.the_end && window.console && console.warn){
+      console.warn("[mudskippers] refused the_end: the board still has beats left");
+    }
     persistAll(choices);
   }
   if(instant || els.length === 0){
@@ -8335,7 +8397,7 @@ function closeBeat(mode, note){
   termPing();                    /* the season page just gained an entry */
   beatTurns = 0;
   driftRun = 0; walkbackNow = false;
-  gateRefusedNames = []; gateHeldNow = false;
+  gateRefusedNames = []; gateHeldNow = false; stalledNow = false;   /* a hold belongs to the beat that earned it */
   /* THE FINALE HAD NOWHERE TO PUT ITS EPILOGUE. This advanced the pointer and
      returned, which makes beatDone() true - and the same render pass then reads it
      and deals the season end card. So the last beat of the series had to fit the
@@ -8865,7 +8927,7 @@ var SPINE_CAST = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Principal
    says "nine of them", and both were landmines. A number-name is a person only
    when the words after it are not a quantity. */
 var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
-var COUNTED = /^[\s,.]*(?:of\s+them\b|of\s+us\b|of\s+the\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+var COUNTED = /^[\s,.]*(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
 /* is this name used AS a name anywhere in the text? */
 function namedUse(sp, hay, ci){
   if(!sp) return false;
@@ -10167,6 +10229,14 @@ function notePhysics(data){
     shardWhere = shardFromBlock(String((blocks[i] && blocks[i].speaker) || "").trim(),
                                 blocks[i] && blocks[i].text, shardWhere);
   }
+  /* THE SEALED ROOM SEALS THE CLOCK TOO. The HUD ignores day and time during the
+     family's own time - the room is sealed and the contract says so out loud - but
+     this ran first and ratcheted storyMin anyway. A model that answered a quiet
+     kitchen scene with "6:00am" moved the story clock four hours while the wrist
+     still read half past two, and every honest reply afterwards was refused by the
+     clock law until an authored passage re-based it. */
+  var sealedNow = !!(data && data.__live && (phase === "slack" || phase === "aftermath"));
+  if(sealedNow) return;
   var abs = storyMinutes(data && data.day, data && data.time, storyMin, true);
   if(abs >= 0 && abs > storyMin) storyMin = abs;
 }
@@ -10936,9 +11006,15 @@ function breachStrip(data, kind){
     var sp = physSpeaker(b.speaker);
     return sp !== "Narration" && sp !== "The File" && !isCourier(sp);
   });
+  /* ONLY DAMAGE COUNTS, AND DAMAGE IS WHAT CAME OUT. This returned the block count
+     it started with, so a reply that needed no cutting at all - every block already
+     the family saying no, which is the scene working exactly as designed - still
+     reported a full measure of damage to the caller. Three cheeky bits could
+     therefore end a run through finishTongues while every scene rendered clean,
+     which is the precise opposite of the rule the comment above states. */
   var had = data.scene.length;
   data.scene = denials.length ? denials.slice(0, 3) : [dryRefusalBlock(kind)];
-  return had;
+  return Math.max(0, had - data.scene.length);
 }
 /* and the room says no, in the game's own voice, so a stripped turn is still a
    turn. Rotated so a player who keeps pushing does not read the same sentence. */
@@ -11050,6 +11126,10 @@ function takeAction(text, isMud){
   renderDivider();
   /* the door this turn came through - only a rail click sets one, so typing and
      bits are neither an exit nor a stall nor a walk */
+  /* pendingKind is cleared FIRST and unconditionally. It is set by the button and
+     consumed here, but takeAction has early returns above this line - a click
+     that was blocked (busy, no key, a run already over) left its kind standing,
+     and the next unrelated action inherited it: a typed line arriving as an exit. */
   pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false; exitArmed = false;
   turnContext = null;             /* a new player turn composes its briefing once */
   askedFor = {};                  /* ...and every subsystem gets its own one ask */
@@ -11094,6 +11174,11 @@ function takeAction(text, isMud){
   }
   /* the walk is counted on the way out, so the directive this turn already knows
      whether it is the first one or the last one */
+  /* THE STICKY WALK. walkoutDue was set on the second red click and cleared only
+     when the walkout actually landed - so a network error on walk #2, then any
+     ordinary click afterwards, ended the run on a scene where nobody left. It is
+     re-derived from the count every turn now, which is where it always lived. */
+  walkoutDue = false;
   if(pickKind === "walk"){
     redRun++;
     if(redRun >= 2) walkoutDue = true;
@@ -11264,10 +11349,16 @@ function callDM(corrected, tag){
   /* the byte-real payload, for the archive's SENT tab - session-only */
   /* the briefing is msgs[0]; the history rides behind it and counts against the
      same window, so the trapdoor needs the whole wire, not just the front of it */
-  var wire = 0;
+  /* THE BIBLE COUNTS. wire summed the messages array only - and the 41.5k-char
+     system prompt is attached later, inside askOpenAI/askAnthropic, so it was
+     never in the number. The panel showed a comfortable figure while the model's
+     true intake was nearly three times it. This is the ONE row that exists to
+     tell a local-model user their window is too small, and a player who set 8192
+     on its advice was still silently losing the front of every prompt. */
+  var wire = BIBLE.length;
   for(var wi = 0; wi < msgs.length; wi++) wire += String(msgs[wi].content || "").length;
   lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText(),
-              msgs: msgs.length, wire: wire};
+              msgs: msgs.length, wire: wire, bible: BIBLE.length};
   askAI(msgs).then(function(raw){
     lastReceived = raw;
     var parsed;
@@ -12196,7 +12287,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.39.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.40.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12331,6 +12422,11 @@ function findOurPlace(){
     }
     beatIdx = i; beatTurns = 0; boardStale = false;
     phase = "live"; phaseLeft = 0;   /* a repaired pointer always lands on a live beat */
+    /* ...and the witness starts empty with it. Moving the pointer without clearing
+       these left the OLD beat's prose standing as evidence, so a repaired run
+       could satisfy the new beat's anchors on a scene that belonged to a
+       different night - and could carry a refusal that was never about it. */
+    beatText = ""; beatSeen = {}; gateRefusedNames = []; gateHeldNow = false;
     currentSeason = beatNow().season;
     renderNow(); maybeBoardBanner();
     persistAll(currentChoices());
@@ -12547,7 +12643,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.39.0");
+  R(s, "build", "v4.40.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13860,7 +13956,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.39.0   COLD START",
+    "MUD//OS  v4.40.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -16175,7 +16271,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.39.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.40.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -16240,7 +16336,7 @@ function newRun(confirmFirst, bare){
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
-  walkArmed = false;
+  walkArmed = false; pressOfferedFor = "";   /* or the next run's first beat starts pre-offered */
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
