@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.25.0 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
+  <div class="t-foot">v4.25.1 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.25.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.25.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.25.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.25.1 "Fifteen Laws" "The Physics Desk"
    the courier can die Â· no death without a warning the player could answer
    the season is a flowchart Â· the client walks it Â· gates, pressure, forced beats
    twelve skies Â· pressure you can see Â· the world's own turn lands as a hit
@@ -4039,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.25.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.25.1";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4712,7 +4712,7 @@ function loadBearingHit(name){
    does not record, one certify pass forces the truth onto the record: roster
    the death (and the refusal fires), or state plainly that they live. A false
    positive costs one call, never a run. */
-var DEATH_VERBS = /\b(dead|died|dies|killed|kills?|destroyed|smashed|crushed|shattered|gone(?!\s+dark))\b/i;
+var DEATH_VERBS = /\b(dead|died|dies|killed|kills?|shoots?|shot|stabs?|stabbed|strangl(?:e|es|ed)|executes?|executed|bleeds? out|destroyed|smashed|crushed|shattered|gone(?!\s+dark))\b/i;
 function deathSuspect(data){
   if(!data) return "";
   var pool = [];
@@ -7386,7 +7386,7 @@ function sevenIsShard(data){
    "Nine walks out of the van" is a person who does not have legs. Only the
    singular forms count, and the match is case-sensitive - lowercase "seven in the
    morning" and "nine of them" stop being candidates for free. */
-var BODY_VERBS = "(?:just\\s+|then\\s+|slowly\\s+|finally\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced)";
+var BODY_VERBS = "(?:just\\s+|then\\s+|slowly\\s+|finally\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized)";
 /* and the last ambiguity a number can still create: a count with a verb attached */
 var COUNTING = /\b(?:Hollows?|of them|bodies|minutes a body|men|women|people|shards)\b/i;
 function bodyVerbs(name){ return new RegExp("\\b" + name + "\\s+" + BODY_VERBS + "\\b"); }
@@ -7591,7 +7591,7 @@ var PHYSICS = [
   hits:function(data, walk){
     var out = [];
     walk(function(i, spk, txt){
-      if((!spk || spk === "Narration") && bodyBreak("Nine", eventText(txt))) out.push(i);
+      if(bodyBreak("Nine", eventText(txt))) out.push(i);
     });
     return out;
   },
@@ -7614,7 +7614,7 @@ var PHYSICS = [
   hits:function(data, walk){
     var who = residentNow(data), out = [];
     walk(function(i, spk, txt){
-      if((!spk || spk === "Narration") && bodyBreak(who, eventText(txt))) out.push(i);
+      if(bodyBreak(who, eventText(txt))) out.push(i);
     });
     return out;
   },
@@ -7751,7 +7751,7 @@ var PHYSICS = [
   hits:function(data, walk){
     var out = [];
     walk(function(i, spk, txt){
-      if((!spk || spk === "Narration") && bodyBreak("Seven", eventText(txt))) out.push(i);
+      if(bodyBreak("Seven", eventText(txt))) out.push(i);
     });
     return out;
   },
@@ -8612,8 +8612,10 @@ function takeAction(text, isMud){
     else queueAside("red", "He said it out loud. Say it again next turn and he really does go â€” "
       + "and that is the end of this run. Anything else and the family lets it be.");
   }
-  /* the third mad thing ends it here, before the storyteller is even asked */
-  if(breachNow && dryPathTick(breachNow)) return;
+  /* the count does NOT live here. Asking for a mad thing is the game; the family
+     saying no to it is the game working. Only a reply that had to be forcibly put
+     back - the storyteller complied and the client overrode it - is damage, and
+     only damage counts. See the tick in the reply handler. */
   var userMsg = isMud
     ? (breachNow
        ? "MUDSKIPPER MOMENT: " + text.trim() + "\n\n" + dryPathDirective(breachNow)
@@ -8733,6 +8735,11 @@ function callDM(corrected){
       if(heldFields && window.console && console.info){
         console.info("[mudskippers] the dry path held " + heldFields + " field(s) on a bit");
       }
+      /* AND ONLY DAMAGE COUNTS. Asking for a mad thing is the game; the family
+         saying no is the game working. The count moves only when the storyteller
+         actually complied and the client had to put the world back - so a player
+         can joke all night and never lose the run, and three genuine wrecks end it. */
+      if(breachNow && heldFields && dryPathTick(breachNow)) return;
     }
     var violated = fallenSpeakers(parsed.data);
     if(violated.length && !corrected){
@@ -9858,7 +9865,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "â€”" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.25.0");
+  R(s, "build", "v4.25.1");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11171,7 +11178,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.25.0   COLD START",
+    "MUD//OS  v4.25.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13445,7 +13452,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.25.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.25.1",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
