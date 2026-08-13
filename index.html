@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.37.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.38.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.37.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.38.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.37.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.38.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5462,7 +5462,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.37.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.38.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8472,6 +8472,20 @@ function boardTurn(data){
      scar, which is the true account of a night that happened without them - and it
      costs the player nothing, because the player did their part. */
   if(pickKind === "exit" && !said){
+    /* ...but not before the night has been lived. doorDirective orders the
+       storyteller NOT to send the gate below the floor; this branch sat ABOVE the
+       floor check and force-closed the beat anyway, landing the scar on turn one.
+       Obey the directive and the beat thin-closed; disobey it and the gate was
+       held. Compliance was punished both ways. Below the floor the door now HOLDS
+       - the same held gate the floor already serves, with no toll, no scar and no
+       anchor check - and the player keeps the night they reached the end of. */
+    if(beatTurns < beatFloor(beatNow())){
+      gateHeldNow = true;
+      if(window.console && console.info){
+        console.info("[mudskippers] the door was taken below the floor - held, not closed");
+      }
+      return;
+    }
     var xmiss = anchorsMissing(beatNow());
     if(xmiss.length && window.console && console.warn){
       console.warn("[mudskippers] the door closed on a scene without " + xmiss.join(", ")
@@ -10181,6 +10195,28 @@ function topicTokens(txt){
 /* Scoring, not matching: a bare word is worth one, a written-out phrase two, and
    the best score over zero takes the turn. Whole words only - "her" must never
    find "there". */
+/* a word that is in half this scene's cards tells you nothing about which card
+   the player reached for. "shard" sits in several keys of a beat that is ABOUT
+   the shard, and it is in half of what players type, so it dealt whichever card
+   listed it first - over and over. Derived per scene rather than hand-listed,
+   because every beat has its own ubiquitous nouns. */
+function scenewideTerms(list){
+  var count = {}, out = {}, i, j, w, term;
+  for(i = 0; i < list.length; i++){
+    w = String(list[i].key || "").split(" ");
+    var seenHere = {};
+    for(j = 0; j < w.length; j++){
+      term = String(w[j] || "").replace(/-/g, " ");
+      if(!term || term.indexOf(" ") !== -1) continue;   /* phrases stay specific */
+      if(seenHere[term]) continue;
+      seenHere[term] = 1;
+      count[term] = (count[term] || 0) + 1;
+    }
+  }
+  var half = list.length / 2;
+  for(var k in count){ if(count[k] >= half && count[k] > 1) out[k] = 1; }
+  return out;
+}
 function pickTopic(sc, key){
   var list = sc.topics || [];
   if(!list.length) return null;
@@ -10188,7 +10224,9 @@ function pickTopic(sc, key){
   var t = String(lastPlayerText || "").toLowerCase().replace(/[^a-z0-9]+/g, " ");
   t = " " + t.replace(/^\s+|\s+$/g, "") + " ";
   var tok = topicTokens(lastPlayerText);
-  var best = -1, bestHits = 0, i, j, w, hits, term;
+  var wide = scenewideTerms(list);
+  var i, j, w, hits, term;
+  var score = [];
   for(i = 0; i < list.length; i++){
     hits = 0;
     w = String(list[i].key || "").split(" ");
@@ -10197,19 +10235,42 @@ function pickTopic(sc, key){
       term = w[j].replace(/-/g, " ");
       if(term.indexOf(" ") !== -1){
         if(t.indexOf(" " + term + " ") !== -1) hits += 2;
-      } else if(TOPIC_STOP.indexOf(" " + term + " ") === -1
+      } else if(TOPIC_STOP.indexOf(" " + term + " ") === -1 && !wide[term]
                 && tok.indexOf(" " + term + " ") !== -1){
         hits++;
       }
     }
-    if(hits > bestHits){ bestHits = hits; best = i; }
+    score.push(hits);
   }
-  if(best < 0){
+  /* THE SPENT LIST IS NOT A FALLBACK. It was only ever consulted when nothing
+     matched, so any keyword hit re-dealt a card the run had already played - and
+     ties resolved to authored order rather than to what was left. Two consecutive
+     stalls dealt the same card, and the second forced a character to re-explain
+     something she had said the turn before: the exact drift the scene book exists
+     to prevent. The README's "never deals the same card twice in a run" was false
+     in the common case; it is true now until the deck is genuinely empty. */
+  var best = -1, bestHits = 0;
+  for(i = 0; i < list.length; i++){
+    if(spent.indexOf(i) !== -1) continue;
+    if(score[i] > bestHits){ bestHits = score[i]; best = i; }
+  }
+  if(best < 0){                       /* nothing unspent matched: authored order */
     for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1){ best = i; break; } }
+  }
+  if(best < 0){                       /* the deck is empty - now the score decides */
+    bestHits = -1;
+    for(i = 0; i < list.length; i++){ if(score[i] > bestHits){ bestHits = score[i]; best = i; } }
     if(best < 0) best = spent.length % list.length;
   }
   if(spent.indexOf(best) === -1) spent.push(best);
   return list[best];
+}
+/* an ending that is a conversation cannot happen through a jacket */
+var DOOR_TWO_WAY = /(two-way|conversation|talks? to her|speaks? to her|speak to her|ask(?:s|ing)? her|answers? (?:him|back)|hears? him|hear her|like a person|like one|her a vote|treat(?:s|ing)? her)/i;
+function doorWantsHerVoice(){
+  if(beatDone()) return false;
+  var b = beatNow();
+  return DOOR_TWO_WAY.test(String(lastPlayerText || "") + " " + String((b && b.exit) || ""));
 }
 function contractDoor(){
   if(pickKind === "stall") return "STALL - they chose to stay in the scene rather than end it. Do NOT send the gate this turn.";
@@ -10938,6 +10999,19 @@ function takeAction(text, isMud){
   /* stated, not inferred: what the player says he does, he does - so this one
      skips the hedge filter that keeps the world's prose honest */
   shardWhere = shardAfter(lastPlayerText, shardWhere, true);
+  /* THE DOOR MOVES THE WORLD TOO. The pinned exit rotates its wording and only
+     some of those wordings mention the shard: "Shard out of the jacket and into
+     my bare hand" trips the tracker above, "She's a person, so I talk to her like
+     one" does not. On that rotation the payload said EXIT - land the gate: a
+     two-way conversation, and three times over told the storyteller she CANNOT
+     hear, CANNOT answer and DOES NOT SPEAK this turn. An obedient model wrote a
+     gateless scene; a playtester had to disobey the board to land the board's own
+     gate. Taking the exit is a client decision, so the client applies what the
+     door plainly does: if tonight's ending is her voice, taking the door is
+     putting skin on the shard. */
+  if(pickKind === "exit" && nineIsShard() && shardWhere !== "hand" && doorWantsHerVoice()){
+    shardWhere = "hand";
+  }
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   askAgain = 0;                   /* the re-asks are per turn, not per run */
   dryTicked = false;              /* ...and so is the dry path's count */
@@ -11326,8 +11400,14 @@ function callDM(corrected){
        a word, and the client wrote the conversation into canon on its own authority.
        The close is not in question - the player spent their move on it. Whether the
        STORY gets to be the thing that closes it is, and it only takes asking. */
+    /* ...and never below the floor. doorDirective has just told the storyteller in
+       so many words NOT to send the gate yet, and this asked for it anyway - twice
+       - so a model that obeyed the board was corrected for obeying it, and the
+       only way to satisfy both was to lie. Below the floor the door holds, which
+       is now true of the board as well as the directive. */
     if(askAgain < 2 && pickKind === "exit" && !forcingNow && !lastTurnMud
-       && phase === "live" && !beatDone() && !foldPending && !walkbackNow){
+       && !beatDone() && beatTurns + 1 >= beatFloor(beatNow())
+       && phase === "live" && !foldPending && !walkbackNow){
       var xg = parsed.data.gate === true || parsed.data.gate === "true";
       var xgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
       if(!xg || !xgn){
@@ -12011,7 +12091,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.37.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.38.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12362,7 +12442,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.37.0");
+  R(s, "build", "v4.38.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13675,7 +13755,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.37.0   COLD START",
+    "MUD//OS  v4.38.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15990,7 +16070,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.37.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.38.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
