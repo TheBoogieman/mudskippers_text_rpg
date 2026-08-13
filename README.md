@@ -104,8 +104,16 @@ distills itself once, ceremonially, into a **Season Record** — what happened, 
 are now, what we carry, what it cost, where things stand — written from the run's own
 registers, no AI calls, and filed into the ledger under a season break. The record
 resets the working memory (jokes are family heirlooms; the best eight travel), zeroes
-the season's tolls, and becomes the next season's **PREVIOUSLY ON**: the new book
-opens with time having passed and the family where the record left them.
+the season's tolls, and is then dealt to the reader as an on-screen **PREVIOUSLY ON**
+— the season's real story in order, folded beats marked as the ones the world did
+without you, and the names it cost underneath in red.
+
+The seam itself is written, not asked for. The board is the only thing that knows how
+long the gap is — six days between Book One and Book Two, eight between Book Two and
+Book Three — so the board writes it: the finale lands in a scene of its own, the
+record closes the book, and the **premiere** opens the next one in a new room, on the
+new day, with people already mid-sentence. No model is called at a season boundary at
+all, and the first move of a new book is yours.
 
 Nothing distilled is truly gone. Everything the ritual retires drops into an
 entity-indexed archive, and **the game remembers on demand** — walk back into a place

@@ -617,6 +617,17 @@
   }
   .block.beatcard.brief .tag{color:var(--gold)}
   .block.beatcard.brief .sum{color:var(--ink);text-align:left}
+  /* PREVIOUSLY ON — the season's own record, dealt to the player between books.
+     The DM has always been shown this; the reader never was. */
+  .block.beatcard.prevon{color:var(--gold);border-color:#7a5f22;text-align:left;
+    background:linear-gradient(90deg,rgba(242,193,78,.07),transparent)}
+  .block.beatcard.prevon .tag{color:var(--gold);text-align:left;letter-spacing:.34em}
+  .block.beatcard.prevon .pv{
+    display:block;font-family:Georgia,serif;font-size:13px;letter-spacing:0;
+    color:var(--ink);line-height:1.62;margin:7px 0 0;padding-left:15px;text-indent:-15px;
+  }
+  .block.beatcard.prevon .pv b{color:var(--gold);font-weight:400;font-style:normal}
+  .block.beatcard.prevon .pvcost{color:#e8b7b7}
   /* living weather: canvas above the ambience wash, below every word */
   #fx{position:fixed;inset:0;pointer-events:none;z-index:1;display:none}
   #fxover{position:fixed;inset:0;pointer-events:none;z-index:3;display:none}
@@ -1017,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.16.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.17.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1128,7 +1139,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.16.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.17.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1407,7 +1418,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.16.0 "The Long Way Round"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.17.0 "The Premiere"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2106,6 +2117,59 @@ var SPINE = [
               "Vic looks at the fifth plate for a long moment and then does not object, which is the loudest thing he has done all week."],
        rail:["Ask who taught her to set a place for a rock.",
              "Eat first. Whatever this is, it keeps better fed."]}],
+ lands:[{day:"3", time:"9:40pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 3, evening, in the safehouse kitchen. It has been said out loud at the table, and the table is still sitting there with it.",
+       lines:["You say it, and the sentence turns out to be much shorter than the amount of your life it just spent.",
+              "Nobody applauds. This is not a house that applauds. Vic puts down a fork he was not using and then picks it up again.",
+              ["Vic","Right. Well. That's the job renegotiated."],
+              ["Pia","That's not a renegotiation. That's a resignation with extra steps."],
+              ["Vic","It's a renegotiation. I wrote the job, I get to say what it turns into."],
+              "The fifth plate goes cold in front of the shard, which is exactly what it was laid for.",
+              ["Nine","I heard you. I want that on record. Whatever the record is in this house - a wall, a kid, whatever it is you people use."],
+              ["Pia","We use me."],
+              "Outside, the rain gets an early start on the rest of the week."],
+       rail:["Ask Vic what the job turns into, then.",
+             "Tell Nine the record is not a wall and not a kid. It is me.",
+             "Eat. The plate that matters is the cold one, and you cannot fix that tonight."]},
+      {day:"3", time:"9:55pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 3, evening, in the safehouse kitchen, after the thing that could not be unsaid was said.",
+       lines:["It comes out of you flatter than it deserved to, and it lands anyway.",
+              "There is a particular silence a kitchen makes when something permanent has happened in it, and most of that silence is the fridge.",
+              ["Vic","You understand this means you don't get paid."],
+              ["Pia","He understands."],
+              ["Vic","I'm saying it out loud because in my experience a man says the big thing, and then remembers the money at three in the morning, and gets angry at the nearest available surgeon."],
+              ["Nine","Say the actual thing to me, not to the room. The room already agrees with you."],
+              "So you say it again, smaller, in her direction, and this time nobody in the kitchen has a joke ready.",
+              "The rain finds a new gap in the roof, celebrates, and moves in."],
+       rail:["Say it again, smaller, and let that be the last thing tonight.",
+             "Ask Vic what happens to us now that nobody is getting paid.",
+             "Go and put a bucket under the new leak."]}],
+ landsHard:[{day:"3", time:"10:20pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 3, late evening. She was kept, and nobody ever said so out loud, and she noticed.",
+       lines:["Nobody ever says it. That is the part you will keep coming back to.",
+              "The table breaks up the way tables do - one person at a time, each getting up for a reason - until the decision has simply been made by everyone leaving in the same direction.",
+              ["Vic","Well. She's here. Nobody's arguing. I'll take a night without arguing."],
+              ["Pia","Somebody should still say it."],
+              ["Vic","Somebody should do a lot of things, Pia."],
+              "The fifth plate is cleared with the rest, washed with the rest, put away with the rest. Depending on who you ask that is either the kindest thing that happened tonight or the worst, and nobody asks her.",
+              ["Nine","It's fine. I'm - it's fine. I know what I am in a room."],
+              "That is a sentence somebody taught her."],
+       rail:["Say it now. Late is still a time.",
+             "Ask her who taught her that sentence.",
+             "Let it go tonight. Pick it up in the morning, if morning bothers."]},
+      {day:"3", time:"10:20pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+       now:"Day 3, late evening. The keeping happened without being spoken, and the whole of it happened in the passive voice.",
+       lines:["The decision gets made the way weather gets made: no announcement, and then it is simply the conditions.",
+              "You keep her. It never goes into words, so it never goes onto the table, so it never has to survive being looked at.",
+              ["Pia","Are we doing this? Only I'd like to know whether I'm packing for two or for three."],
+              ["Vic","Pack for three."],
+              ["Pia","Right, but who actually said -"],
+              ["Vic","Pack for three, Pia."],
+              "Nine says nothing at all, which she is very good at, and which is not the same as agreeing.",
+              "Later you will remember that the largest thing you ever did was conducted entirely in the passive voice."],
+       rail:["Say the thing that was never said.",
+             "Ask Nine what she would have wanted to hear.",
+             "Pack. We can talk on the road."]}],
  budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:[],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -2727,6 +2791,58 @@ var SPINE = [
               ["Pia","I'm the calm one."]],
        rail:["Tell Pia to stop being the calm one.",
              "Ask what the Exchange actually is, out loud, for the room."]}],
+ lands:[{day:"23", time:"1:30am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+       now:"Small hours in the long room. The family has said the word Exchange out loud and nobody has taken it back.",
+       lines:["You say the word Exchange, and the room does not argue - which is how you find out it was decided some time ago and everyone was waiting to be told.",
+              ["Three","Then I will say the part nobody wants to. Some of us do not come back from that. I am not being dramatic. I am being accurate, and I would like us accurate before we are brave."],
+              ["Hesta","Noted. Sit down. Eat something on your way to being accurate."],
+              ["Three","I do not eat."],
+              ["Hesta","I know. Sit down anyway."],
+              "The paper with Pia's name on it stays on the table all night. Nobody moves it and nobody sets anything down on top of it, so it develops a small exclusion zone, like a hole in ice.",
+              ["Pia","I want it kept. Not framed. Kept."],
+              "Under the city, a week and a bit from now, there is a door that is exactly as narrow as you were warned."],
+       rail:["Ask Three to say the accurate part in full.",
+             "Take the paper off the table and give it to Pia to keep.",
+             "Let the room stay up. Nobody is sleeping through this one."]},
+      {day:"23", time:"1:10am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+       now:"Small hours in the long room. The family has run out of other sentences and turned itself toward the Exchange.",
+       lines:["It turns out you do not decide to go to the Exchange. You simply run out of other sentences.",
+              ["Seven","I've made a list. It's not a good list. It's mostly things we don't have."],
+              ["Vic","Read it anyway."],
+              ["Seven","That's the thing, though - I read it out, and then everybody looks at me like I'm the one who made the list be true."],
+              ["Hesta","Read it, love."],
+              "He reads it. It takes four minutes and nobody interrupts him once, which is the most respect this family has ever paid a document.",
+              ["Nine","We are going after her. And I want it on the record that I have opinions about the word 'her' which we are not going to have time for tonight."],
+              "You will have time for it. Not for a week or so. But you will."],
+       rail:["Ask Nine for the opinions now, while there is still a room to have them in.",
+             "Ask Seven what is at the top of the list.",
+             "Call it a night. We start on the list at first light."]}],
+ landsHard:[{day:"23", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+       now:"Small hours in the long room. The trade executed itself while the family argued; the choosing was done for them.",
+       lines:["The argument is still going when it stops being relevant, which is a thing arguments do and which nobody warns you about.",
+              "It is done. Somewhere else, by other people, on the timetable in the watermark, while this room was still working out what it believed.",
+              ["Hesta","Everybody stop talking."],
+              "Everybody stops talking. She is holding the wire the way you hold a thing you have already read twice.",
+              ["Pia","Is it me? Just say it if it's me."],
+              ["Hesta","It's done, is what it is. It didn't wait for us."],
+              ["Three","Then the question of what we would have chosen is now academic. I would like it minuted regardless. It will matter to us later, even though it never mattered to them."],
+              "The Exchange stops being a plan and becomes an address."],
+       rail:["Ask Hesta to read it out. All of it.",
+             "Minute it. Say out loud what we would have chosen.",
+             "Everyone off the walls. We move tonight."]},
+      {day:"23", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+       now:"Small hours in the long room. The world answered the paper before the family did, and the family is looking at the answer.",
+       lines:["You lose an hour to being right at each other, and at the end of the hour the world hands you its own answer with the ink already dry.",
+              ["Seven","I want to apologise for the last thing I said. Not because it was wrong. Because of when."],
+              ["Vic","Sit down, son."],
+              ["Seven","I'm apologising for apologising now, aren't I."],
+              ["Vic","You are. Sit down."],
+              "The paper is where it was. The name on it is where it was. Only the world moved, and it moved without asking - which is the entire thing this family exists to object to.",
+              ["Pia","So we go and get it back."],
+              "Nobody asks get what back, because everybody knows, and because saying it out loud would turn it into a list of names."],
+       rail:["Say what it is we are going to get back. All of it, out loud.",
+             "Ask Vic what he needs out of the shop before we go under.",
+             "Everyone sleeps. We leave when it is light and not before."]}],
  budget:5, floor:3, reveals:[], anchors:["Pia"],
  press:["The Choir offers the trade in writing: peace, in exchange for the girl on their salvage list. Make it a real offer, and make sure the family understands what fate three means for her.",
         "The trade is taken out of their hands and executed without them."],
@@ -3624,6 +3740,13 @@ function renderBlock(b){
     el.className = "block beatcard brief";
     el.innerHTML = '<span class="tag">' + esc(b.tag || "BEFORE TONIGHT") + '</span>'
       + '<span class="sum">' + esc(b.sum || "") + '</span>';
+  } else if(b.kind === "prevon"){
+    el.className = "block beatcard prevon";
+    el.innerHTML = '<span class="tag">' + esc(b.title || "PREVIOUSLY ON") + '</span>'
+      + (b.items || []).map(function(it){
+          return '<span class="pv' + (it.cost ? ' pvcost' : '') + '">· <b>'
+            + esc(it.head) + '</b>' + (it.text ? " — " + esc(it.text) : "") + '</span>';
+        }).join("");
   } else if(b.kind === "dmaside"){
     el.className = "block dmaside" + (b.invite ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
@@ -5217,8 +5340,10 @@ function seasonBreakButtons(){
 }
 function seasonBreakCard(){
   var b = beatNow();
+  /* the season's own line, not the finale beat's - the beat card printed that one
+     three turns ago and printing it again read like the board stuttering */
   var card = {kind:"beat", title:"SEASON " + currentSeason + " — " + SEASON_NAMES[currentSeason],
-              forced:false, arcturn:true, sum:gateNotes[b.id] || b.exit, arcname:""};
+              forced:false, arcturn:true, sum:b.stone || gateNotes[b.id] || b.exit, arcname:""};
   renderBlock(card); feedLog.push(card);
   ledgerText += "\n\n_Season " + currentSeason + " closed — " + SEASON_NAMES[currentSeason] + "_";
   seasonBreakButtons();
@@ -5227,31 +5352,86 @@ function seasonBreakCard(){
 /* the wrap: the fold's gold card, mirrored - there the world's hands closed the
    season; here the player's did. Dealt at CONTINUE, before the next book opens. */
 function seasonWrapCard(closedSeason, opening){
-  var titles = [], carried = [];
-  SPINE.forEach(function(b){ if(b.season === closedSeason) titles.push(b.title); });
+  var carried = [];
   quests.forEach(function(q){ if(q.status === "active" || q.status === "offered") carried.push(q.title); });
-  var body = "By your hands, the season closed: " + titles.join(", ")
-    + ". Carried forward: " + (carried.length ? carried.join(", ") : "nothing that was written down — just the family")
-    + ". Season " + opening + " — " + SEASON_NAMES[opening] + " begins."
-    + " Tolls paid in full — the meter starts clean.";
+  var body = (pickVariant(SEASON_WRAP[closedSeason] || [], "wrap" + closedSeason) || "The season is closed.")
+    + " Carried forward: " + (carried.length ? carried.join(", ") : "nothing anybody wrote down — just the family")
+    + ". Tolls paid in full — the meter starts clean."
+    + " Season " + opening + " — " + SEASON_NAMES[opening] + " begins.";
   var card = {kind:"gold", title:"THE SEASON IS IN THE RECORD", text:body};
   renderBlock(card); feedLog.push(card);
   ledgerText += "\n\n**THE SEASON IS IN THE RECORD.** " + body;
   scrollFeed();
 }
+/* PREVIOUSLY ON, dealt to the PLAYER. The record has always been built for the
+   seam and has always been shown to the DM; the person actually reading the story
+   got a gold card and a jump of six days. It is the season's own gateNotes in
+   order - the run's real spine, deterministic, free, unhallucinatable - and the
+   cost underneath it in red, because a recap that omits what it took is an advert. */
+function previouslyOnCard(n){
+  var r = seasonRecords[n];
+  if(!r || !r.happened.length) return;
+  var items = [];
+  r.happened.forEach(function(t){
+    var i = t.indexOf(" — "), head = i > 0 ? t.slice(0, i) : t, text = i > 0 ? t.slice(i + 3) : "";
+    /* a folded beat is not a thing they did, and a recap that pretends otherwise
+       is the one lie the record is built to prevent */
+    if(text.indexOf("folded — ") === 0){ text = text.slice(9); head += " (without us)"; }
+    items.push({head:head, text:text});
+  });
+  (r.cost || []).forEach(function(t){
+    if(t.indexOf("FALLEN — ") === 0) items.push({head:"AND WE LOST", text:t.slice(9), cost:true});
+  });
+  var card = {kind:"prevon", title:"PREVIOUSLY ON — SEASON " + n + ", " + SEASON_NAMES[n], items:items};
+  renderBlock(card); feedLog.push(card);
+  ledgerText += "\n\n_PREVIOUSLY ON — Season " + n + ", " + SEASON_NAMES[n] + "_";
+  scrollFeed();
+}
+/* THE PREMIERE. This used to end in callDM() and a blank page: the DM was asked
+   for a re-establishment scene covering an interval only the board knew the
+   length of, and then armBeat's authored opening landed in the same reply and
+   wrote over it. The seam is the board's now, start to finish - wrap, record,
+   premiere, rail - and the player moves first, exactly as they do at a cold open. */
 function seasonContinue(){
   if(busy || !epilogueNow) return;
-  var opening = currentSeason + 1;
+  var ending = currentSeason, opening = ending + 1;
   epilogueNow = false;
   runSeasonRitual();
-  seasonWrapCard(currentSeason, opening);   /* the wrap, then the transition scene */
-  phase = "seasonopen"; phaseLeft = 0;
+  seasonWrapCard(ending, opening);
+  previouslyOnCard(ending);
   $("choices").innerHTML = "";
   renderSeasonBanner();        /* the door closes behind them */
   if($("termmodal").classList.contains("open")){ $("termmodal").classList.remove("open"); }
-  chatLog.push({role:"user", content:"(Season " + opening + " opens. Serve the re-establishment scene as directed.)"});
-  persistAll([]);
-  callDM();
+  /* the handover, served once. WHO WE ARE NOW and WHAT WE CARRY ride every turn
+     already; WHAT HAPPENED used to ride the season-open directive, and when that
+     turn went away it would have gone with it. It is said here instead, in the
+     transcript, at the only moment it is news - and it lives in the retrieval
+     index afterwards, which is where a season's story is supposed to end up. */
+  var rec = seasonRecords[ending] || {happened:[]};
+  chatLog.push({role:"user", content:"(SEASON " + ending + " IS OVER. PREVIOUSLY ON — "
+    + SEASON_NAMES[ending] + ", the record of the season just closed:\n"
+    + (rec.happened.length ? rec.happened.map(function(x){ return "- " + x; }).join("\n")
+                           : "- (the record is thin; trust the registers)")
+    + "\nSeason " + opening + " — " + SEASON_NAMES[opening] + " opens below, on a day the board"
+    + " has already chosen. Time has passed - days, not minutes - and the board writes the"
+    + " premiere itself. Read it, then pick up on the far side of it: new season, new register,"
+    + " and none of last season's business reopens unless the road says it does.)"});
+  var out = playPremiere();
+  showChoices(out);
+  scrollFeed();
+  persistAll(out);
+}
+/* the premiere itself, split out because a save can be sitting at the seam right
+   now - written by the version that asked the DM for this page and then reloaded
+   mid-call. Restoring one used to hand the player the cold open's rail, from Day
+   1, at the top of Book Two. It finishes the ceremony instead. */
+function playPremiere(){
+  armBeat();                   /* into the new book: the pointer moves, the season turns */
+  beatJustArmed = "";          /* the premiere IS this beat's opening - never both */
+  var rail = playAuthored(pickVariant(SEASON_OPENS[currentSeason] || [], "premiere" + currentSeason),
+                          "premiere" + currentSeason);
+  if(!rail) rail = playOpening(beatNow().id);   /* a season without a written premiere still opens */
+  return rail ? railFor(rail, true) : [];
 }
 /* ---- THE STORYBOARD ----
    The road, in the DM's hand, every turn - cleared behind, tonight, and what is
@@ -5450,13 +5630,11 @@ function boardDirective(){
       + " question either - offer them things to do with THIS one. The season is holding its breath"
       + " on purpose.)";
   }
-  if(phase === "seasonopen"){
-    var rec = seasonRecords[currentSeason] || {happened:[]};
-    var nx = SPINE[beatIdx + 1] || beatNow();
-    return "(SEASON " + nx.season + " — " + SEASON_NAMES[nx.season] + " BEGINS. PREVIOUSLY ON, the record of the last season:\n"
-      + (rec.happened.length ? rec.happened.map(function(x){ return "- " + x; }).join("\n") : "- (the record is thin; trust the registers)")
-      + "\nOpen the season: write ONE re-establishment scene, time having passed - days, not minutes - the family where the record left them, changed by what it cost. No new business, no new jobs, no reveals: the family, alive, where we find them. Roll the day forward. End with the floor open.)";
-  }
+  /* there was a season-open directive here, asking the DM for a re-establishment
+     scene. The board writes the premiere itself now - it is the only one that
+     knows how many days the seam is - and the phase no longer survives long
+     enough to have a directive. seasonContinue and the restore path both play it
+     and go straight to live. */
   if(phase === "slack") return "";
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
@@ -7651,7 +7829,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.16.0");
+  R(s, "build", "v4.17.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -8270,6 +8448,90 @@ var ACT_NAMES = {
   2:{1:"the hunt ends", 2:"the vow tested", 3:"what we carry"},
   3:{1:"the war topside", 2:"the way down", 3:"custody"}
 };
+/* ---- THE PREMIERE ----
+   The seam between two books used to be the one page in the whole game handed to
+   the DM blank: "days have passed, write the family somewhere." It could not
+   possibly work. The board owns the calendar - Day 3 to Day 9, Day 23 to Day 31 -
+   and it owns the room the next question opens in, so the DM was being asked to
+   invent an interval it had no facts about, and then the next beat's authored
+   opening landed in the SAME reply and overwrote it. Two establishing scenes, in
+   two rooms, on two days, one after the other, at the biggest moment in the run.
+   So the premiere is written, like everything else at a seam. Each one carries
+   the interval AND the room, which is why it runs longer than a beat's opening:
+   it is doing two jobs, and it is the first page of a book. */
+var SEASON_OPENS = {
+2:[
+  {day:"9", time:"9:15pm", place:"THE OPEN DOOR, OUTSIDE", amb:"rain-neon",
+   now:"Day 9, evening, outside a diner with its lights on and its door held open by a brick.",
+   lines:[
+     "Six days.",
+     "Six days is long enough to learn that a group of people who have never sat down together is not a family yet; it is a set of people going the same way. You have gone the same way as these people through two districts, one flooded underpass, and a night in a stairwell that Pia has already started describing as characterful.",
+     "Nobody has eaten at a table since the kitchen. You have eaten standing, walking, and once, memorably, at a run - which Vic maintains does not count and Pia maintains counts double.",
+     ["Pia","There's a place. An actual place, with chairs. I've been saving it."],
+     ["Vic","You've been saving it for six days?"],
+     ["Pia","I've been saving it since I was nine. You lot just weren't worth it yet."],
+     "The Open Door is a diner with a name that is either a promise or a maintenance failure. In weather like this the door is held open with a brick, which tells you everything about the person inside and none of it is bad.",
+     ["Nine","Does she know what I am, or am I a coat pocket again tonight?"],
+     "Inside, somebody is laying out more cutlery than there are people on this street."],
+   rail:["Ask Pia what finally made us worth it.",
+         "Answer Nine before we go in."]},
+  {day:"9", time:"9:40pm", place:"THE OPEN DOOR, OUTSIDE", amb:"rain-neon",
+   now:"Day 9, evening, outside a diner that has propped its door open in the rain.",
+   lines:[
+     "The six days go like this: you move at night, you sleep badly in the day, and you become extremely good at a very small number of extremely boring skills.",
+     "Nine learns the city from inside a pocket, by sound, and by the fourth day is better at it than you have been in eleven years.",
+     "Pia acquires - from sources she declines to name - a coat that fits her, a coat that fits Nine, and a bruise she says came off a door. Nine does not have a body. Pia bought her a coat anyway. Nobody has yet found the way to talk about that.",
+     ["Vic","Which door."],
+     ["Pia","A door."],
+     ["Vic","Pia."],
+     ["Pia","We're nearly there. That's it. The one with the brick in it."],
+     "It is a diner called The Open Door, and its door is open, held that way by a brick, in this weather, on purpose.",
+     ["Nine","Ask her whether the second coat was for me or for her. I would like to know which of us she was being kind to."],
+     "Inside, somebody is setting out more cutlery than there are people on this street."],
+   rail:["Ask about the door that made that bruise.",
+         "Ask Pia who the second coat was really for."]}
+],
+3:[
+  {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
+   now:"Day 31, first light on Cannery Row. The Choir holds this street and the family has come to take it.",
+   lines:[
+     "Eight days between deciding and doing, and the eight days are not the part anybody will tell stories about.",
+     "You spend them the way people actually spend the run-up to something enormous: doing its paperwork. Three builds a schedule. Seven builds a schedule for Three's schedule and then apologises for it. Hesta feeds forty people who are not in this family, on the reasoning that forty people who have been fed will tell you where the Hollows are standing.",
+     "They do. That is how you know which street to take first.",
+     ["Hesta","This one. Nine of them, and a man who opens at six regardless."],
+     "Cannery Row at six in the morning is nine Hollows standing very still, and one man putting his shutters up around them anyway, because he opens at six.",
+     "The Hollows are not doing anything. That is the entire problem with Hollows and it has never once got easier to look at.",
+     ["Three","Eleven minutes a body, done kindly. That is the number and I am not going to pretend it is a different number."],
+     ["Pia","Nine of them. That's - hang on."],
+     ["Pia","...That's a long time to be standing in the open."]],
+   rail:["Ask the man with the shutters to go back inside.",
+         "Start the clock. Eleven minutes, first one."]},
+  {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
+   now:"Day 31, dawn. The family has come to take a street off the Choir, in public, kindly, on a schedule.",
+   lines:[
+     "In the eight days after the Exchange stopped being a plan and became an address, this family turns into something it has no word for and badly needs one.",
+     "It is not an army. Armies have budgets. It is closer to a very determined removals firm with a medical wing and strong opinions about how people should be spoken to.",
+     ["Seven","We agreed we weren't going to call it an operation. It makes me feel like I'm about to get somebody hurt."],
+     ["Three","It is an operation. You may call it a morning, if that is easier to carry."],
+     ["Seven","...I'll call it a morning."],
+     "So: a morning. Cannery Row, quarter past six, the light doing the thing it does over the water where it makes everything look forgivable.",
+     "Nine Hollows stand in it, not doing anything, which is what they do. One man puts his shutters up around them, because he opens at six and has done for thirty years and is not consulting anybody about it.",
+     ["Three","Eleven minutes a body, done kindly. That is the number and I will not be pretending it is a different number."],
+     ["Pia","...That's a long time to be standing in the open."]],
+   rail:["Ask the man with the shutters to go back inside.",
+         "Start the clock. Eleven minutes, first one."]}
+]
+};
+/* the wrap card's body: what the book was about, said once, in the board's voice.
+   It used to be the list of every beat title in the season, which read like a
+   receipt for a night out rather than the end of a book. The run's real numbers
+   still ride underneath it - they are the part that is different every time. */
+var SEASON_WRAP = {
+1:["Book One is three days long and takes a whole life to get through. A courier picked up a job, lost the person it was going to, and came out the far end holding somebody he had been paid to hand over. Nothing about his situation improved. Everything about him did.",
+   "That is Book One: a man with a delivery, a girl with a plan, and a rock that turned out to be a person. He was hired to move something. He stopped, which is the most expensive thing a courier can do, and he did it in a kitchen, in front of witnesses, over a plate nobody was going to eat."],
+2:["Book Two is a table, a rule stuck crooked to a wall, and the discovery that keeping people costs precisely as much as it sounds like it costs. A set of survivors who ate together became a thing with a law, a doctor, a cook, a scary aunt, and a name on Choir paper.",
+   "That is Book Two: they built a family in a city that files people, and the city sent an invoice. Bacon first, bread after, same pan - and a piece of very good watermarked paper with a twelve-year-old's name on it."]
+};
 var termTab = "status", termCastSel = "";
 
 /* pixel weather - an 8x8 bitmap per sky, drawn as SVG rects so it stays crisp.
@@ -8877,7 +9139,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.16.0   COLD START",
+    "MUD//OS  v4.17.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10344,7 +10606,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.16.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.17.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10560,6 +10822,13 @@ function restoreFromBlob(s){
   /* a run that ended stays ended, however it is reloaded */
   if(runOver) endCard(runOver, deathLine);
   else if(phase === "seasonend") seasonBreakButtons();   /* the door survives a reload */
+  else if(phase === "seasonopen"){
+    /* a save from the version that asked the DM for the premiere. Finish it here
+       and write it down, or the next reload arms the beat a second time. */
+    var pr = playPremiere();
+    showChoices(pr);
+    persistAll(pr);
+  }
   else showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   maybeRehydrate();
