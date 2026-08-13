@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.42.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.43.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5392,6 +5392,16 @@ var chatLog = [];
 var feedLog = [];
 var busy = false;
 var runSlug = null;
+/* THE RUN A REPLY WAS ASKED FOR. MENU is deliberately never disabled - it is the
+   escape hatch from a call that will not land - so a player can leave a rehearsal,
+   load another run, or retire the current one while a request is in flight. Before
+   this, whatever came back was applied to whatever run happened to be standing
+   there: an audit found that leaving a rehearsal mid-call handed the rehearsal's
+   reply to the REAL run, merged its canon, charged its tolls, and wrote it to the
+   player's folder - strictly worse than the leak the fix had just closed.
+   Every reply now carries the epoch it was asked under, and a stale one is
+   dropped rather than applied. */
+var runEpoch = 0;
 var ledgerText = "";
 var pendingRetry = null;
 var settings = {provider:"anthropic", base:PRESETS.anthropic.base, model:PRESETS.anthropic.model, key:"", style:"anthropic", visuals:"full"};
@@ -5467,7 +5477,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.42.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.43.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10554,10 +10564,16 @@ function askAnthropic(msgs){
     body: JSON.stringify(dmThinking({model:settings.model, max_tokens:REPLY_TOKENS,
       system:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}],
       messages:msgs}))
-  }).then(function(r){ tm.done(); return r.json(); }, function(e){
-    tm.done();
-    throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
-  }).then(function(data){
+  /* the ceiling covers the BODY too. Clearing the timer when the headers arrive
+     disarmed the abort before r.json() had read a byte, so a server that answers
+     200 and then stalls mid-generation - llama.cpp, vLLM, anything behind a proxy -
+     hung forever with the rail dead, which is the exact failure this was added for. */
+  }).then(function(r){ return r.json().then(function(d){ tm.done(); return d; },
+                                            function(e){ tm.done(); throw e; }); },
+    function(e){
+      tm.done();
+      throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
+    }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
     if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
     return (data.content||[]).filter(function(x){return x.type==="text";})
@@ -10586,14 +10602,21 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
   }
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
-  if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
+  /* ...and only where a key means something. Keeping the player's Anthropic key
+     through a launcher load was the right fix; sending it in an Authorization
+     header to http://localhost:11434 every turn was not, and the key field is
+     hidden for those providers so they could not even see it happening. */
+  var pk = PRESETS[settings.provider];
+  if(settings.key && (!pk || pk.needsKey || pk.keyOptional)) headers["Authorization"] = "Bearer " + settings.key;
   var tm = callTimer();
   return fetch(settings.base.replace(/\/$/,"") + "/chat/completions", {
     method:"POST", headers:headers, body:JSON.stringify(body), signal: tm.signal
-  }).then(function(r){ tm.done(); return r.json(); }, function(e){
-    tm.done();
-    throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
-  }).then(function(data){
+  }).then(function(r){ return r.json().then(function(d){ tm.done(); return d; },
+                                            function(e){ tm.done(); throw e; }); },
+    function(e){
+      tm.done();
+      throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
+    }).then(function(data){
     if(data.error){
       var m = (data.error.message||"") + "";
       /* OpenRouter refuses the whole request when the CEILING outruns the key's
@@ -11345,6 +11368,7 @@ function chairStrip(data){
 var turnContext = null;
 function callDM(corrected, tag){
   if(runOver) return;
+  var epoch = runEpoch;               /* the run this reply is being asked for */
   setBusy(true);
   pendingRetry = function(){ callDM(corrected, tag); };
   if(tag) askedFor[tag] = 1;
@@ -11376,6 +11400,13 @@ function callDM(corrected, tag){
   lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText(),
               msgs: msgs.length, wire: wire, bible: BIBLE.length};
   askAI(msgs).then(function(raw){
+    /* the run moved out from under this call - a rehearsal was left, another save
+       was loaded, this one was retired. Nothing it says applies to where we are. */
+    if(epoch !== runEpoch){
+      setBusy(false);
+      if(window.console && console.info) console.info("[mudskippers] dropped a reply for a run that is no longer open");
+      return;
+    }
     lastReceived = raw;
     var parsed;
     try{
@@ -12041,6 +12072,12 @@ function migrateLegacy(){
   }catch(e){}
 }
 function persistAll(choices){
+  /* ...and never under a slug that is not a run. With runSlug null - which is now
+     the state after leaving a rehearsal with no real run to go back to - this keyed
+     the entry "null", stored the string "null" as the active pointer, and listed
+     the rehearsal's day, location and canon in RUNS as a real playthrough. The pry
+     buttons reach this with no guard of their own. */
+  if(!runSlug) return;
   try{
     var mm = loadRunsMap();
     mm[runSlug] = saveBlob();
@@ -12297,13 +12334,23 @@ function scanFolderSaves(){
   return step().catch(function(){ return out; });
 }
 function isRehBlob(raw){
-  try{ return !!JSON.parse(raw).reh; }catch(e){ return false; }
+  try{
+    var j = JSON.parse(raw);
+    if(j.reh) return true;
+    /* ...and the ones that leaked BEFORE the stamp existed, which are the only
+       ones any real player has. They carry no reh field at all, so the flag alone
+       recognised nothing it claimed to - but a rehearsal always opens with its own
+       brief card, and that card says so. */
+    var f0 = j.feedLog && j.feedLog[0];
+    if(f0 && f0.kind === "brief" && /REHEARSAL/i.test(String(f0.tag || ""))) return true;
+    return false;
+  }catch(e){ return false; }
 }
 function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.42.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.43.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -16127,6 +16174,7 @@ function rehSeedTo(idx){
   return {canon: seeded.length, cast: Object.keys(names), chassisHolder: chassisHolder};
 }
 function startRehearsal(beatId, label){
+  runEpoch++;
   var idx = beatById(beatId);
   if(idx < 0) return;
   var store = rehTakesLoad();
@@ -16166,6 +16214,7 @@ function startRehearsal(beatId, label){
   callDM();
 }
 function endRehearsal(){
+  runEpoch++;
   rehFinishTake();
   rehearsing = false; rehBeatId = ""; rehTurns = []; rehSeed = null;
   /* THE LEAK. Clearing the flag re-points rehRunsKey()/rehActiveKey() at the real
@@ -16358,6 +16407,7 @@ function openRehearsal(){
    THE RAIN over whatever rail is there by then. Every one of those buttons is
    dead, because the beat's own first call is still in flight. */
 function newRun(confirmFirst, bare){
+  runEpoch++;
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
@@ -16431,6 +16481,7 @@ function newRun(confirmFirst, bare){
 
 function restoreFromBlob(s){
   if(!s || !s.feedLog || !s.feedLog.length) return false;
+  runEpoch++;
   /* ...and never loads, either - including through CONTINUE, which reads
      mud-active directly and would otherwise resume a leaked rehearsal */
   if(s.reh && !rehearsing) return false;
@@ -16623,8 +16674,15 @@ function applyLaunchParams(){
      it silently, with nothing on screen and no way back. Keep it: a local
      endpoint ignores a key it was not asked for, and switching providers in
      Settings then costs nothing. */
-  if(settings.key) {
-    try{ localStorage.setItem("mud-settings-prev", JSON.stringify(settings)); }catch(e){}
+  /* the stash keeps what the player would have to retype, and NOT the credential:
+     nothing in the build reads this back, so a plaintext copy of the key living
+     here forever was a second place to leak it from and no way to restore it. */
+  if(settings.key){
+    try{
+      localStorage.setItem("mud-settings-prev", JSON.stringify({
+        provider:settings.provider, base:settings.base, model:settings.model, style:settings.style
+      }));
+    }catch(e){}
   }
   settings.provider = ai;
   settings.style = pre.style;

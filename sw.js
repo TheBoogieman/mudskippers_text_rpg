@@ -1,5 +1,9 @@
 /* MUDSKIPPERS service worker — offline shell, update-friendly */
-var CACHE = "mudskippers-v4-36-0";
+// BUMP THIS EVERY RELEASE. The browser only reinstalls a service worker whose
+// BYTES changed, so a cache name left behind keeps serving the shell it was named
+// for: this said v4-36-0 while the game inside it was six releases further on, and
+// every offline player was reading the old build.
+var CACHE = "mudskippers-v4-43-0";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){
@@ -30,8 +34,12 @@ self.addEventListener("fetch", function(e){
         if(r.ok){
           var copy = r.clone();
           caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+          return r;
         }
-        return r;
+        // ...and a bad reply is not served either. Refusing to CACHE the 404 stopped
+        // it sticking forever, but the visitor still got the error page while a
+        // working shell sat in the cache one line away.
+        return caches.match(e.request).then(function(m){ return m || caches.match("./").then(function(m2){ return m2 || r; }); });
       }).catch(function(){
         return caches.match(e.request).then(function(m){ return m || caches.match("./"); });
       })
