@@ -1022,13 +1022,14 @@
   <div class="t-menu">
     <button class="menu-btn primary" id="t-continue" style="display:none">CONTINUE<small id="t-continue-sub"></small></button>
     <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
+    <button class="menu-btn" id="t-story">THE STORY SO FAR<small id="t-story-sub">Everything this run has been through, in order.</small></button>
     <button class="menu-btn" id="t-runs">RUNS</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.19.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.20.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1065,6 +1066,19 @@
 </div>
 
 <!-- RUNS / SAVE MANAGER MODAL -->
+<!-- THE STORY SO FAR — this run's own road, and behind a plate, the rest of it -->
+<div class="modal" id="storymodal">
+  <div class="card">
+    <div class="cardhead">THE STORY SO FAR</div>
+    <div class="cardsub" id="story-sub">What this courier has been through, in the order it happened.</div>
+    <div id="story-run"></div>
+    <div id="story-road"></div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" id="story-close">CLOSE</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="runmodal">
   <div class="card">
     <div class="cardhead">YOUR RUNS</div>
@@ -1140,7 +1154,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.20.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1419,7 +1433,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.19.3 "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.20.0 "The Story So Far" "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -8170,7 +8184,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.19.3");
+  R(s, "build", "v4.20.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9483,7 +9497,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.19.3   COLD START",
+    "MUD//OS  v4.20.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9582,6 +9596,95 @@ function refreshTitle(){
     $("t-continue").style.display = "none";
   }
 }
+/* ---- THE STORY SO FAR ----
+   Two documents in one panel, and the difference between them is the whole point.
+   The first is THIS RUN: the nights it has actually closed, in order, told with
+   the record each one wrote - which is the run's own history and cannot spoil
+   anything, because the player was there for all of it.
+   The second is the road itself, all thirty-three, and it is behind the same
+   plate the archive uses. Reading it does not break the game; it breaks the
+   surprises, and it should take a deliberate hand to do it. */
+function storyRunHTML(){
+  var out = [], s = 0, a = 0, any = false;
+  SPINE.forEach(function(b, i){
+    var note = gateNotes[b.id];
+    if(!note) return;
+    any = true;
+    if(b.season !== s){ s = b.season; a = 0;
+      out.push('<div class="canonsub">BOOK ' + s + " — " + esc(SEASON_NAMES[s]) + "</div>"); }
+    if(b.act !== a){ a = b.act;
+      out.push('<div class="hint" style="margin:10px 0 4px">Act ' + a + " — " + esc(ACT_NAMES[s][a]) + "</div>"); }
+    var folded = foldedBeats.indexOf(b.id) !== -1;
+    out.push('<div style="margin-bottom:12px;padding-left:13px;border-left:2px solid '
+      + (folded ? "#6b3030" : "var(--line)") + '">'
+      + '<div style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.16em;'
+      + 'text-transform:uppercase;color:' + (folded ? "#e08b8b" : "var(--sodium)") + ';margin-bottom:3px">'
+      + (i + 1) + " · " + esc(b.title) + (folded ? " · the world did this one" : "") + "</div>"
+      + '<div style="font-size:13.5px;color:var(--ink-dim);line-height:1.6">'
+      + esc(String(note).replace(/^folded — /, "")) + "</div></div>");
+  });
+  if(!any){
+    return '<div class="hint">Nothing yet. This courier has not closed a night, so there is no story to tell '
+      + "back — which is the correct amount of story for someone standing in the rain at 11:47 with a shard "
+      + "that has started humming.</div>";
+  }
+  return out.join("");
+}
+function storyRoadHTML(){
+  var out = [], s = 0, a = 0;
+  out.push('<div class="canonsub" style="margin-top:26px">THE WHOLE ROAD</div>');
+  out.push('<div class="hint" style="margin-bottom:14px">All thirty-three nights, in the order they always come. '
+    + "What changes between runs is not which of these happens - it is whether the courier reached each ending, "
+    + "or the night ran out and the world reached it for him.</div>");
+  SPINE.forEach(function(b, i){
+    if(b.season !== s){ s = b.season; a = 0;
+      out.push('<div class="canonsub">BOOK ' + s + " — " + esc(SEASON_NAMES[s]) + "</div>"); }
+    if(b.act !== a){ a = b.act;
+      out.push('<div class="hint" style="margin:10px 0 4px">Act ' + a + " — " + esc(ACT_NAMES[s][a]) + "</div>"); }
+    var done = !!gateNotes[b.id];
+    out.push('<div style="margin-bottom:13px;padding-left:13px;border-left:2px solid '
+      + (done ? "var(--gold)" : "var(--line)") + '">'
+      + '<div style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.16em;'
+      + 'text-transform:uppercase;color:' + (done ? "var(--gold)" : "var(--ink-dim)") + ';margin-bottom:3px">'
+      + (i + 1) + " · " + esc(b.title) + (done ? " · done" : "") + "</div>"
+      + '<div style="font-size:13.5px;color:var(--ink-dim);line-height:1.6">' + esc(b.exit) + ".</div>"
+      + (b.scar ? '<div style="font-size:12.5px;color:#c78a8a;line-height:1.55;margin-top:4px;font-style:italic">'
+          + "If the world closes it: " + esc(b.scar) + "</div>" : "")
+      + (b.stone ? '<div style="font-size:12.5px;color:var(--gold);line-height:1.55;margin-top:4px">'
+          + esc(b.stone) + "</div>" : "")
+      + "</div>");
+  });
+  return out.join("");
+}
+function renderStory(){
+  $("story-run").innerHTML = storyRunHTML();
+  var road = $("story-road");
+  if(prySpoilers){ road.innerHTML = storyRoadHTML(); return; }
+  road.innerHTML = "";
+  var d = document.createElement("div"); d.className = "warn"; d.style.marginTop = "22px";
+  d.appendChild(document.createTextNode(
+    "Behind this plate is the rest of the road - every night this run has not reached yet, and what each one"
+    + " is about. Reading it will not break the game. It will break the surprises. DO NOT PRY unless you mean it."));
+  var pry = document.createElement("button"); pry.className = "small"; pry.textContent = "PRY ANYWAY";
+  pry.onclick = function(){ prySpoilers = true; persistAll(currentChoices()); renderStory(); };
+  var leave = document.createElement("button"); leave.className = "small"; leave.textContent = "LEAVE IT";
+  leave.onclick = function(){ $("storymodal").classList.remove("open"); };
+  d.appendChild(pry); d.appendChild(leave);
+  road.appendChild(d);
+}
+function openStory(){
+  var n = 0;
+  SPINE.forEach(function(b){ if(gateNotes[b.id]) n++; });
+  $("story-sub").textContent = n
+    ? "What this courier has been through, in the order it happened — " + n
+      + " night" + (n === 1 ? "" : "s") + " of thirty-three."
+    : "Nothing has happened yet. That is where every courier starts.";
+  renderStory();
+  $("storymodal").classList.add("open");
+}
+$("t-story").onclick = openStory;
+$("story-close").onclick = function(){ $("storymodal").classList.remove("open"); };
+
 function openTitle(){
   refreshTitle();
   $("titlescreen").classList.add("open");
@@ -10948,7 +11051,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.3",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.20.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
