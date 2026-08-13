@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.34.2 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.34.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.34.2</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.34.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.34.2 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.34.3 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5457,7 +5457,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.34.2";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.34.3";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5608,6 +5608,16 @@ function castName(raw){
   if(!nm || nm.length > 32) return "";
   if(!/[A-Za-z]/.test(nm)) return "";
   if(/^(?:narr?at?ion|other|you|player|the player|dm|system)$/i.test(nm)) return "";
+  /* ...and NINE is Nine. The storyteller shouts a name now and then - a live run
+     ended up with "NINE" and "VIC" filed as two more people alongside the two who
+     already existed - and a register keyed by exact string believes it. Anybody the
+     board knows about gets their own spelling back; anybody it does not keeps
+     whatever they arrived in, because inventing a canonical case for a stranger is
+     not the client's business. */
+  for(var i = 0; i < SPINE_CAST.length; i++){
+    if(SPINE_CAST[i].toLowerCase() === nm.toLowerCase()) return SPINE_CAST[i];
+  }
+  if(nm.toLowerCase() === "courier") return "Courier";
   return nm;
 }
 function castSheet(nm){
@@ -12175,7 +12185,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.34.2");
+  R(s, "build", "v4.34.3");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13488,7 +13498,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.34.2   COLD START",
+    "MUD//OS  v4.34.3   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15782,7 +15792,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.34.2",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.34.3",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
