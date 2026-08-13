@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.35.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.36.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.35.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.36.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.35.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.36.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5373,8 +5373,13 @@ var PRESETS = {
     hint:"Fully offline. Install from ollama.com, then: ollama pull mistral-small3.2:24b (~15GB, needs about 18GB of VRAM; mistral-nemo:12b runs on far less but writes much thinner scenes). Set OLLAMA_ORIGINS=* so this page may connect, and OLLAMA_CONTEXT_LENGTH=24576 — this game's prompt is ~12,500 tokens and Ollama's default window of 4096 would silently throw most of it away."},
   lmstudio:{style:"openai", base:"http://localhost:1234/v1", model:"local-model", needsKey:false,
     hint:"Fully offline. In LM Studio: load a model, start the local server, enable CORS in server settings."},
-  custom:{style:"openai", base:"", model:"", needsKey:true,
-    hint:"Any OpenAI-compatible /chat/completions endpoint (Groq, Together, vLLM, etc.)."}
+  /* vLLM, llama.cpp and a LAN box behind a reverse proxy need no key, and the
+     transport has always handled an empty one correctly - but needsKey:true
+     hard-blocked the first action, FIND OUR PLACE and REBUILD, and the
+     documented workaround (pick ollama, overwrite the base) drags in
+     response_format and temperature that some servers refuse outright. */
+  custom:{style:"openai", base:"", model:"", needsKey:false, keyOptional:true,
+    hint:"Any OpenAI-compatible /chat/completions endpoint (Groq, Together, vLLM, etc.). Leave the key blank if your endpoint doesn't want one."}
 };
 
 /* ============ STATE ============ */
@@ -5457,7 +5462,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.35.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.36.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10266,9 +10271,24 @@ function dmThinking(body){
   }
   return body;
 }
+/* NO TURN WAITS FOREVER. busy=true disables the entire rail until a reply lands,
+   and a local model that hangs - which they do - left the only way out being a
+   reload. The ceiling is generous: a 24B on a cold cache genuinely takes a
+   minute. RETRY already exists and does the right thing from here. */
+var CALL_TIMEOUT_MS = 120000;
+function callTimer(){
+  var ctl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+  var t = ctl ? setTimeout(function(){ ctl.abort(); }, CALL_TIMEOUT_MS) : 0;
+  return {signal: ctl ? ctl.signal : undefined, done: function(){ if(t) clearTimeout(t); }};
+}
+function timedOut(e){
+  var nm = (e && (e.name || e.message)) || "";
+  return /abort/i.test(String(nm));
+}
 function askAnthropic(msgs){
+  var tm = callTimer();
   return fetch(settings.base.replace(/\/$/,"") + "/v1/messages", {
-    method:"POST",
+    method:"POST", signal: tm.signal,
     headers:{
       "Content-Type":"application/json",
       "x-api-key": settings.key,
@@ -10284,7 +10304,10 @@ function askAnthropic(msgs){
     body: JSON.stringify(dmThinking({model:settings.model, max_tokens:REPLY_TOKENS,
       system:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}],
       messages:msgs}))
-  }).then(function(r){ return r.json(); }).then(function(data){
+  }).then(function(r){ tm.done(); return r.json(); }, function(e){
+    tm.done();
+    throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
+  }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
     if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
     return (data.content||[]).filter(function(x){return x.type==="text";})
@@ -10314,9 +10337,13 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
+  var tm = callTimer();
   return fetch(settings.base.replace(/\/$/,"") + "/chat/completions", {
-    method:"POST", headers:headers, body:JSON.stringify(body)
-  }).then(function(r){ return r.json(); }).then(function(data){
+    method:"POST", headers:headers, body:JSON.stringify(body), signal: tm.signal
+  }).then(function(r){ tm.done(); return r.json(); }, function(e){
+    tm.done();
+    throw timedOut(e) ? new Error("the model did not answer within two minutes - it may be loading, or stuck") : e;
+  }).then(function(data){
     if(data.error){
       var m = (data.error.message||"") + "";
       /* OpenRouter refuses the whole request when the CEILING outruns the key's
@@ -11606,6 +11633,9 @@ function saveBlob(){
   /* history is a short tail on purpose - the canon, the cast and the ledger are the memory */
   return JSON.stringify({
     v:1, slug:runSlug, updated:new Date().toISOString(),
+    /* a rehearsal fragment that ever reaches the real drawer can be recognised
+       and refused there, whatever went wrong upstream of it */
+    reh:!!rehearsing,
     history:chatLog.slice(-HISTORY_KEEP), trimmed:true, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
@@ -11704,7 +11734,7 @@ function fillSettingsForm(){
   $("s-visuals").value = settings.visuals || "full";
   var p = PRESETS[settings.provider]||PRESETS.custom;
   $("hint-base").textContent = p.hint;
-  $("fld-key").style.display = p.needsKey ? "block" : "none";
+  $("fld-key").style.display = (p.needsKey || p.keyOptional) ? "block" : "none";
 }
 function openSettings(){ fillSettingsForm(); $("setmodal").classList.add("open"); }
 $("setbtn").onclick = openSettings;
@@ -11714,7 +11744,7 @@ $("s-provider").onchange = function(){
   settings.provider = id; settings.style = p.style;
   $("s-base").value = p.base; $("s-model").value = p.model;
   $("hint-base").textContent = p.hint;
-  $("fld-key").style.display = p.needsKey ? "block" : "none";
+  $("fld-key").style.display = (p.needsKey || p.keyOptional) ? "block" : "none";
 };
 $("s-save").onclick = function(){
   settings.provider = $("s-provider").value;
@@ -11921,10 +11951,16 @@ function scanFolderSaves(){
   }
   return step().catch(function(){ return out; });
 }
+function isRehBlob(raw){
+  try{ return !!JSON.parse(raw).reh; }catch(e){ return false; }
+}
 function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.36.0
+       could leak one; it stays in storage, but it never lists and never loads. */
+    if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
     if(s) runsOut[slug] = {blob:mm[slug], src:"browser", info:s};
   });
@@ -11971,6 +12007,10 @@ function renderRuns(){
       delB.onclick = function(){
         if(!confirm("Retire this run? The save is deleted. Any story-log (.md) in your folder is kept \u2014 the chronicle survives the courier.")) return;
         var m2 = loadRunsMap(); delete m2[slug]; saveRunsMap(m2);
+        /* the pointer goes with it. Retiring a run that mud-active named left the
+           pointer aimed at a deleted slug, and CONTINUE then fell through to a
+           silent new run. */
+        try{ if(localStorage.getItem(rehActiveKey()) === slug) localStorage.removeItem(rehActiveKey()); }catch(e){}
         var done = Promise.resolve();
         if(r.src==="folder" && dirHandle && r.file){
           done = dirHandle.removeEntry(r.file).catch(function(){});
@@ -12269,7 +12309,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.35.0");
+  R(s, "build", "v4.36.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13582,7 +13622,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.35.0   COLD START",
+    "MUD//OS  v4.36.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -14502,7 +14542,14 @@ $("t-continue").onclick = function(){
       if(active && mm[active]) restoreFromBlob(JSON.parse(mm[active]));
     }catch(e){}
   }
-  if(runSlug) closeTitle(); else newRun(false);
+  if(runSlug){ closeTitle(); return; }
+  /* CONTINUE never silently starts a new run. It used to: a dangling mud-active
+     (a retired run, a cleared browser, a leaked rehearsal now refused above) sent
+     the player who asked to carry on into Day 1 of a run they did not ask for,
+     with no confirmation and the old one apparently gone. */
+  if(!confirm("There is no run to carry on \u2014 the last save is gone or was retired."
+    + "\n\nStart a new run from Day 1?")) { openRuns(); return; }
+  newRun(false);
 };
 $("t-new").onclick = function(){ newRun(true); };
 $("t-runs").onclick = openRuns;
@@ -15748,6 +15795,20 @@ function startRehearsal(beatId, label){
 function endRehearsal(){
   rehFinishTake();
   rehearsing = false; rehBeatId = ""; rehTurns = []; rehSeed = null;
+  /* THE LEAK. Clearing the flag re-points rehRunsKey()/rehActiveKey() at the real
+     drawer, but the run state left standing here was still the rehearsal's - so
+     the next persistAll wrote a rehearsal fragment into mud-runs under the
+     rehearsal's own slug and repointed mud-active at it. A playtester watched a
+     real Day-1 run's CONTINUE describe the rehearsal, and RUNS list the fragment
+     as CURRENT above the real run; with a folder connected, writeFiles - whose
+     only guard is this flag - would have put it on disk. startRehearsal is
+     careful on the way in; this is the mirror it never had. */
+  runSlug = null; feedLog = []; chatLog = [];
+  try{
+    var active = localStorage.getItem("mud-active");
+    var mm = loadRunsMap();                 /* reads the real drawer now */
+    if(active && mm[active]) restoreFromBlob(JSON.parse(mm[active]));
+  }catch(e){}
   renderRehChip();
   openTitle();
 }
@@ -15876,7 +15937,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.35.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.36.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -15997,6 +16058,9 @@ function newRun(confirmFirst, bare){
 
 function restoreFromBlob(s){
   if(!s || !s.feedLog || !s.feedLog.length) return false;
+  /* ...and never loads, either - including through CONTINUE, which reads
+     mud-active directly and would otherwise resume a leaked rehearsal */
+  if(s.reh && !rehearsing) return false;
   runSlug = s.slug || "restored";
   chatLog = s.history||s.chatLog||[];
   ledgerText = s.ledgerText||"";
@@ -16180,10 +16244,18 @@ function applyLaunchParams(){
   var ai = String(q.ai || "").toLowerCase();
   if(ai !== "ollama" && ai !== "lmstudio") return false;
   var pre = PRESETS[ai];
+  /* the key is not ours to throw away. This runs on EVERY load of a ?ai=ollama
+     URL, and the Windows launcher always appends one - so a player with an
+     Anthropic or OpenRouter key who double-clicks the launcher once used to lose
+     it silently, with nothing on screen and no way back. Keep it: a local
+     endpoint ignores a key it was not asked for, and switching providers in
+     Settings then costs nothing. */
+  if(settings.key) {
+    try{ localStorage.setItem("mud-settings-prev", JSON.stringify(settings)); }catch(e){}
+  }
   settings.provider = ai;
   settings.style = pre.style;
   settings.base = pre.base;              /* the preset's localhost, never the link's */
-  settings.key = "";
   var m = String(q.model || "").trim();
   if(m && /^[\w.:\/-]{1,64}$/.test(m)) settings.model = m; else settings.model = pre.model;
   try{ saveSettings(); }catch(e){}

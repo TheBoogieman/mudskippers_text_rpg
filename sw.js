@@ -1,5 +1,5 @@
 /* MUDSKIPPERS service worker — offline shell, update-friendly */
-var CACHE = "mudskippers-v4-34-4";
+var CACHE = "mudskippers-v4-36-0";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){
@@ -23,8 +23,14 @@ self.addEventListener("fetch", function(e){
     // network-first so updates flow; cache fallback so offline works
     e.respondWith(
       fetch(e.request).then(function(r){
-        var copy = r.clone();
-        caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+        // only a good reply becomes the offline shell. Caching unconditionally meant
+        // one bad deploy - or a Pages 404 during one - installed itself permanently,
+        // and every later visit was served the error from cache before the network
+        // was ever consulted.
+        if(r.ok){
+          var copy = r.clone();
+          caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+        }
         return r;
       }).catch(function(){
         return caches.match(e.request).then(function(m){ return m || caches.match("./"); });
@@ -35,8 +41,10 @@ self.addEventListener("fetch", function(e){
   e.respondWith(
     caches.match(e.request).then(function(m){
       return m || fetch(e.request).then(function(r){
-        var copy = r.clone();
-        caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+        if(r.ok){
+          var copy = r.clone();
+          caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
+        }
         return r;
       });
     })
