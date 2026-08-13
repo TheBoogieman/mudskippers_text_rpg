@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.32.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.33.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.32.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.33.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.32.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.33.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3856,7 +3856,1411 @@ var SCENEBOOK = {
      holds:"no escape plan is made - worried at, never solved"}
    ]}
 }
+,
 
+"a1-pack": {
+  where:"Vic's cable shack behind the safehouse, first thing - hot dust, old solder, a rig zip-tied together by a man who has never said the words temporary fix",
+  ends:"in the shack with the pack's answer delivered and the day starting anyway",
+  here:["Pia","Vic","Nine"],
+  before:"Nine is in the courier's bare hand this morning and can hear the room. She is new to all of this and asks the questions a stranger asks.",
+  never:["the pack does not arrive in person - the answer comes as a thing, not a crowd: a door, a drop, a mark on a board, a silence",
+         "nobody explains what the Choir is or what a Hollow is",
+         "the next job's particulars are not invented here - there is a job on the board and that is all anybody knows about it"],
+  topics:[
+   {ask:"who in the pack actually gets a say",
+    key:"pack who decide vote say boss leader crew mudskippers rilla bo",
+    who:"Pia",
+    gives:"four names said flat - the two who run the north drops, the one who keeps the boards, and one who does not get a say and takes one anyway",
+    holds:"she will not say which of them she thinks has already decided against him"},
+   {ask:"what a shut door looks like from the Mudskippers",
+    key:"shut door out cast exile banned finished done marks boards",
+    who:"Vic",
+    gives:"your marks come off the boards, nobody says a word to you and nobody says a word about you - it is very polite and it is the end of you",
+    holds:"he does not say which way he voted, and the not-saying is loud"},
+   {ask:"whether Pia is in trouble for standing here",
+    key:"pia trouble side risk you her own cost loyal",
+    who:"Pia",
+    gives:"she chose before the meeting started and told them so, which she reports like weather",
+    holds:"she does not say what it cost her, and gets annoyed if pressed"},
+   {ask:"what Nine makes of any of this",
+    key:"nine think you what shard hear ask family job",
+    who:"Nine",
+    gives:"a careful question back - whether a pack is a family or a job, asked like somebody who has only ever had the second",
+    holds:"she does not say what she was to the people who grew her"}
+  ],
+  room:{
+   where:"the shack afterwards, with the pack's answer sitting there and breakfast not made",
+   here:["Pia","Vic","Nine"],
+   never:["nothing about the marsh road, the safehouse plan, or where they go next is decided here",
+          "nobody new comes to the door"],
+   topics:[
+    {ask:"how Vic and the pack know each other", key:"vic pack history know old owe",
+     who:"Vic", gives:"a long arrangement of favours nobody has ever written down, and one he is still paying",
+     holds:"he does not name the favour"},
+    {ask:"what the shack is for", key:"shack cable rig bench work tools what-is",
+     who:"Vic", gives:"cable work, off the books, and the reason it is behind the house and not in it",
+     holds:"nothing about the housing, the plan, or the founders"},
+    {ask:"food, or the lack of it", key:"eat food hungry breakfast tea kettle",
+     who:"Pia", gives:"a bit - she has opinions about what Vic keeps in the shack and none of them are kind",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a1-fare": {
+  where:"a parcel counter in Veldt West that has not been robbed in nine years and is smug about it, then the streets across town",
+  ends:"on the far pavement opposite the Copper Eel, the last honest fare signed for and both of them knowing it was the last",
+  here:["Pia","Nine"],
+  before:"Nine rides in the jacket for the walk and cannot hear the room. She only speaks when the courier has bare skin on her.",
+  never:["the parcel is a box the size of a shoe with a chit that says FRAGILE - it is not a plot device, nobody opens it, and nothing inside it matters",
+         "the recipient is an ordinary person with an ordinary errand - not the Choir, not a contact, not a message",
+         "nobody explains what the Choir is or names a fate"],
+  topics:[
+   {ask:"what is actually in the box",
+    key:"box parcel inside what contents fragile chit weight",
+    who:"Other",
+    gives:"the weight of it, and that the name on the chit is a building rather than a person",
+    holds:"the clerk will not say who pays the account, because she does not know and resents being asked"},
+   {ask:"whether the job is even worth doing now",
+    key:"job worth money rent bother pointless why still fare",
+    who:"Pia",
+    gives:"rent, said flatly, and the observation that a burned name still has to eat",
+    holds:"she will not say she thinks it is the last one, though she plainly does"},
+   {ask:"whether anyone is watching the counter",
+    key:"watch watched follow eyes street corner behind safe",
+    who:"Pia",
+    gives:"nothing yet, and how she is checking - a method, taught, not a feeling",
+    holds:"she does not name what she is checking for"},
+   {ask:"how the city looks at him now",
+    key:"face known recognise look sideways reputation seen",
+    who:"Pia",
+    gives:"two small things that have already happened today that he did not notice, reported without drama",
+    holds:"she does not tell him it will get worse"}
+  ],
+  room:{
+   where:"a doorway somewhere on the route, out of the wet, with the parcel still to deliver",
+   here:["Pia","Nine"],
+   never:["the delivery does not complete here","nobody new speaks"],
+   topics:[
+    {ask:"what the work used to be like", key:"before used-to work job courier years old-days",
+     who:"Pia", gives:"his own reputation quoted back at him: reliable, quiet, does not ask",
+     holds:"she does not go near why Vic chose him"},
+    {ask:"what Nine makes of the city", key:"nine city outside above surface see hear what",
+     who:"Nine", gives:"the noise of it, which she finds enormous and says so carefully",
+     holds:"she does not compare it to where she was"},
+    {ask:"the rain, the shoes, the chit", key:"rain wet cold joke funny nothing shoes",
+     who:"Pia", gives:"a bit, and a running score of the day's indignities",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a1-late": {
+  where:"the doorway of the Copper Eel at early evening - a bar with a stool by the window and a woman on it who turned before the door finished opening",
+  ends:"the back of a shut laundry three districts away, nobody following yet, everybody breathing wrong",
+  here:["Pia","Nine","Mirren"],
+  before:"MIRREN IS NOT WEARING A FACE. It is her own body, emptied at an intake desk, with her self asleep in a vault. There is no seam, no mask, no tell to spot. She is patient, procedural, and polite, and she uses the machine's service voice. Her line is: the delivery is late.",
+  never:["nobody explains what was done to her, or what a Hollow is, or names any fate",
+         "she does not chase, grab, or fight - she asks, and then she is at the next corner too",
+         "cutting her signal does nothing, and the family finds that out by trying it",
+         "nobody says her name is Mirren unless Vic has already said it to them"],
+  topics:[
+   {ask:"what she wants",
+    key:"want why here after looking delivery late package",
+    who:"Mirren",
+    gives:"the line, and a procedural elaboration of it - a late delivery, a receiver, a schedule that is being kept",
+    holds:"she does not say who sent her, because as far as she is concerned nobody did"},
+   {ask:"whether she knows him",
+    key:"know me you recognise before met remember name who-am-i",
+    who:"Mirren",
+    gives:"his description, read back to him in the order it was given to her, which is worse than being recognised",
+    holds:"nothing personal - there is nobody in there to remember him"},
+   {ask:"cut her signal, jam her, make her stop",
+    key:"jam jammer cut signal stop kill switch off disable stall",
+    who:"Pia",
+    gives:"the kind option, tried on screen: the jammer sings, and she pauses, recalibrates, and continues at the same speed",
+    holds:"nobody explains why it failed - only that it did, and that it always worked before"},
+   {ask:"the way out of here",
+    key:"run go out door leave escape where move now",
+    who:"Pia",
+    gives:"three ways this happens next, said fast: run, fight, or play along - and which one she has already picked",
+    holds:"she does not promise it will work"}
+  ],
+  room:{
+   where:"the back of the shut laundry, three districts on, with the shutters down",
+   here:["Pia","Nine"],
+   never:["Mirren does not appear here","nobody explains what she is"],
+   topics:[
+    {ask:"what that was", key:"what was that her thing person woman explain",
+     who:"Pia", gives:"the word Choir, and nothing past it, because past it is not hers to hand over",
+     holds:"what a Hollow is, and what is done to the people who cannot take the graft"},
+    {ask:"whether Nine heard any of it", key:"nine hear ok you what-did afraid",
+     who:"Nine", gives:"the service voice, which she recognised before anybody said anything",
+     holds:"she does not say where she heard it before"},
+    {ask:"how long they can stay here", key:"stay here long safe time wait rest",
+     who:"Pia", gives:"an hour, and the reason it is an hour",
+     holds:"no plan for after it is made here"}
+   ]}
+},
+
+"a1-exit": {
+  where:"the long room at the safehouse, late, with papers on the table and Nine on the table beside them",
+  ends:"the safehouse porch with the marsh roaring, the offer answered out loud one way or the other",
+  here:["Pia","Vic","Nine"],
+  before:"NINE IS ON THE TABLE AND CAN HEAR EVERY WORD OF THIS. She is being discussed in the third person in her own hearing. She does not interrupt, and that is the loudest thing in the room.",
+  never:["THE CONDITION IS THE POINT: the exit is real, it is clean, it is genuinely his - and it requires him to set the shard down and walk away from her. An offer without that condition is not this beat",
+         "nobody explains who is really behind the papers",
+         "nothing about intake choreography, patrol rhythms, or how a sweep is run - that is tomorrow's beat and it is Nine's to spend",
+         "no plan is made for what happens if he refuses"],
+  topics:[
+   {ask:"what exactly is being offered",
+    key:"offer papers exit deal what out clean name life terms",
+    who:"Vic",
+    gives:"papers that stand up, distance, and a life with no hum in it - laid out plainly, with the condition attached every single time it is described",
+    holds:"who arranged it and what it cost him"},
+   {ask:"whether the offer is real",
+    key:"real trick trap catch genuine believe honest sure",
+    who:"Vic",
+    gives:"that it is real, and that he checked, and that this is the part he is least comfortable with",
+    holds:"why he is so certain"},
+   {ask:"what Nine thinks about it",
+    key:"nine you think want say her ask feel",
+    who:"Nine",
+    gives:"that she has been listening, and one short question about what setting her down would mean in practice - where, exactly, and to whom",
+    holds:"she does not ask him to stay. She has learned not to ask"},
+   {ask:"what Pia makes of it",
+    key:"pia think you should opinion advice what-do",
+    who:"Pia",
+    gives:"a twelve-year-old's arithmetic, out loud, with the part she is not saying visible in it",
+    holds:"she will not tell him what to do"}
+  ],
+  room:{
+   where:"the porch, the marsh roaring, the offer answered and the night not over",
+   here:["Pia","Vic","Nine"],
+   never:["the offer is not re-opened","nobody arrives"],
+   topics:[
+    {ask:"what happens to the papers now", key:"papers burn keep drawer what-now offer gone",
+     who:"Vic", gives:"where they go, and that he is not throwing them away yet",
+     holds:"he does not say why he is keeping them"},
+    {ask:"whether Nine is alright", key:"nine ok alright you heard fine",
+     who:"Nine", gives:"that being discussed is not new to her, said as if it is a small thing",
+     holds:"she does not say what is"},
+    {ask:"the marsh, the noise, the cold", key:"marsh water noise cold night weather quiet",
+     who:"Pia", gives:"a bit - she has a theory about the marsh and it is wrong",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a1-carried": {
+  where:"Veldt East in the small hours, caught inside a Choir sweep with nowhere obvious to be - lights on a timing, patrols on a rhythm",
+  ends:"inside the dead pumping station under Veldt East, the sweep gone over an hour ago, both of them knowing who got them through",
+  here:["Pia","Nine"],
+  before:"NINE IS IN HIS BARE HAND FOR THIS AND SHE IS THE REASON IT WORKS. She has no reach, no powers, and no way to touch anything - what she has is the inside of the farm: the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not look at. She spends it on him, step by step, out loud, in his ear. She speaks THIS beat. If she does not speak, the beat has not happened.",
+  never:["Nine does not do anything physical - she does not reach, open, cut, block or move; she says a number and a direction and the courier's own feet do it",
+         "no Hollow is fought, and nobody is hurt",
+         "nobody explains the three fates or what happens to the incompatible"],
+  topics:[
+   {ask:"how she knows any of this",
+    key:"how know knowledge inside farm learn map remember why",
+    who:"Nine",
+    gives:"that she was on the other side of these timings, and knew them the way you know a corridor you were walked down every day",
+    holds:"she does not describe the place, the people, or what was done there - she says it is not a story she is telling tonight"},
+   {ask:"what happens next, exactly",
+    key:"next where go move corner count timing when now step",
+    who:"Nine",
+    gives:"the corner, the count, and the beat the patrol is late on - specific, numbered, and immediately actable",
+    holds:"nothing. This is the beat working"},
+   {ask:"whether her map is still good",
+    key:"still current old changed wrong sure season stale trust",
+    who:"Nine",
+    gives:"the honest answer - she has been gone a season and something has changed since - and she says so mid-move rather than after",
+    holds:"she does not offer to stop"},
+   {ask:"where Pia is",
+    key:"pia where she safe alone split behind ahead",
+    who:"Pia",
+    gives:"where she is, said short, and what she is doing about it",
+    holds:"no reunion is arranged here"}
+  ],
+  room:{
+   where:"inside the dead pumping station, out of it, with an hour of quiet",
+   here:["Pia","Nine"],
+   never:["nothing about the housing, the founders or the plan","nobody arrives"],
+   topics:[
+    {ask:"what that cost her", key:"cost you nine hard alright after ok spent",
+     who:"Nine", gives:"that she does not want it made into a virtue, said quickly, and one sentence about why",
+     holds:"she does not say what she was afraid of"},
+    {ask:"what a sweep is actually for", key:"sweep for why choir looking what want",
+     who:"Pia", gives:"what the street thinks it is for, which is not quite right and is what the street has",
+     holds:"nothing about intake or fates"},
+    {ask:"the pumping station itself", key:"station place here pipes water old dead",
+     who:"Pia", gives:"a bit - a story about the station that she cannot possibly know is true",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a1-turn": {
+  where:"the safehouse kitchen in the evening, the question of what happens to Nine on the table and food served on top of it",
+  ends:"the same kitchen, with it said out loud at the table and the table changed by hearing it",
+  here:["Pia","Vic","Nine"],
+  before:"NINE IS AT THE TABLE AND CAN HEAR EVERYTHING. This is the night the courier says what she is to him, out loud, in front of her - not a decision made about her elsewhere.",
+  never:["nobody makes the choice for him, and nobody says the sentence for him - the DM does not put the commitment in the courier's mouth under any circumstances",
+         "no delivery is arranged, refused, or negotiated with anybody off screen",
+         "nothing about the housing, the founders, or what Vic did"],
+  topics:[
+   {ask:"what she is to him now",
+    key:"what is she cargo person keep her mine responsibility what-now",
+    who:"Vic",
+    gives:"the question itself, asked plainly and without helping - Vic can ask it and then be quiet, which is the hardest thing he does all season",
+    holds:"Vic does not answer it for him, hint at the answer, or say what he hopes it is"},
+   {ask:"what the delivery was supposed to be",
+    key:"delivery job deliver hand-over chit paid contract owed",
+    who:"Vic",
+    gives:"the shape of the original job, said honestly, including the part where a person was written on a chit as a package",
+    holds:"why he chose this courier"},
+   {ask:"what Nine wants",
+    key:"nine want you ask her choose say prefer",
+    who:"Nine",
+    gives:"that she would like to be asked, which she says as though asking for it is already too much",
+    holds:"she will not tell him what to choose, and says so"},
+   {ask:"what Pia thinks it means for the rest of them",
+    key:"pia us we rest what-then everyone family cost",
+    who:"Pia",
+    gives:"the practical consequences, counted on fingers, ending on one that is not practical at all",
+    holds:"she does not say she has already decided"}
+  ],
+  room:{
+   where:"the kitchen after, plates not cleared, the thing said and sitting there",
+   here:["Pia","Vic","Nine"],
+   never:["it is not re-litigated","nobody arrives"],
+   topics:[
+    {ask:"what happens tomorrow", key:"tomorrow next plan morning after now-what",
+     who:"Vic", gives:"one small practical thing, deliberately small",
+     holds:"no season-shaped plan is made here"},
+    {ask:"what Nine makes of having been asked", key:"nine asked how feel first time",
+     who:"Nine", gives:"that nobody has done that before, said as a fact rather than a complaint",
+     holds:"she does not elaborate on who did not"},
+    {ask:"the food, the kitchen, the noise", key:"food eat kitchen warm noise pan tea",
+     who:"Pia", gives:"a bit about Vic's cooking, unkind and affectionate",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-door": {
+  where:"The Open Door at night - a diner with its lights on, its door held open by a brick, and a shotgun under the counter nobody mentions",
+  ends:"the back booth, plates going back empty, Hesta pretending not to watch them eat",
+  here:["Pia","Vic","Nine","Hesta"],
+  never:["the meal is the beat - it gets cooked and eaten on screen, not promised and not skipped to",
+         "nobody knocks at this door in a stall; that is the world's move and it belongs to the pressure",
+         "nothing about what is under Hesta's floor is explained, confirmed, or gestured at as fact"],
+  topics:[
+   {ask:"who Hesta is and why the door is open",
+    key:"hesta who door open why here place cafe run diner",
+    who:"Hesta",
+    gives:"that the door has been open longer than any of them have been alive and she is not going to make a speech about it",
+    holds:"why she started, and who she started it for"},
+   {ask:"what is safe to say in here",
+    key:"safe talk say tell trust careful listen who-hears",
+    who:"Hesta",
+    gives:"her one rule about talking in her place, said while she is doing something else",
+    holds:"she does not say what she has heard in here before"},
+   {ask:"what she will feed them",
+    key:"food eat feed hungry pan bacon bread cook menu",
+    who:"Hesta",
+    gives:"bacon first, bread after, same pan - stated as a method, not a joke, and then done",
+    holds:"nothing. This one is the beat working"},
+   {ask:"whether they can stay",
+    key:"stay sleep room night bed how-long here",
+    who:"Hesta",
+    gives:"a plain yes with a plain condition attached, and the condition is about behaviour, not money",
+    holds:"she does not say what happened to the last people who stayed"}
+  ],
+  room:{
+   where:"the back booth after, plates empty, the rain outside somebody else's problem",
+   here:["Pia","Vic","Nine","Hesta"],
+   never:["nobody arrives","no plan for the hunt is made here"],
+   topics:[
+    {ask:"what Hesta makes of them", key:"us think opinion strange family what-are",
+     who:"Hesta", gives:"an assessment delivered as if reading a docket, ending kinder than it started",
+     holds:"she does not ask what they are running from"},
+    {ask:"the street outside", key:"street outside neighbours who-lives area",
+     who:"Hesta", gives:"who is on this row and which of them she trusts, which is most of them",
+     holds:"nothing about the undercroft"},
+    {ask:"the shotgun", key:"shotgun gun counter under weapon",
+     who:"Hesta", gives:"a bit - she is entirely unembarrassed and mildly disappointed he noticed",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-ground": {
+  where:"the head of the undercroft stairs at night, a list of kind options in somebody's hand and not much faith in it",
+  ends:"the flooded undercroft with every gentle option spent in front of witnesses, and the family knowing what is left",
+  here:["Pia","Vic","Nine","Hesta","Mirren"],
+  before:"THE KIND OPTIONS FAIL, ON SCREEN, ONE AT A TIME. The jammer, the signal cut, distance, mercy - each gets an honest try and each fails visibly. She was hardened against all of it, because the Choir does not lose the same way twice.",
+  never:["nobody is killed here - this is the night the gentle playbook runs out, not the night it ends",
+         "Three is not here and is not named - she arrives five beats from now",
+         "nobody explains what was done to Mirren; that is a later night's revelation"],
+  topics:[
+   {ask:"try the jammer",
+    key:"jam jammer signal cut stop stall device disable",
+    who:"Pia",
+    gives:"it sings, and Mirren pauses, recalibrates and continues at exactly the speed she was going",
+    holds:"nobody explains why - only that it works on every other one"},
+   {ask:"try talking to her",
+    key:"talk say name reach reason mercy plead speak-to kind",
+    who:"Vic",
+    gives:"her name, said out loud by the person with the most right to say it, and the nothing that comes back",
+    holds:"no flicker of recognition is given - not one, however much the room wants it"},
+   {ask:"try outrunning her",
+    key:"run outrun distance lose escape leave move away",
+    who:"Hesta",
+    gives:"the arithmetic of a thing that does not tire against people who do, done out loud on her fingers",
+    holds:"nothing"},
+   {ask:"what is left",
+    key:"left what-now options else remaining choice do",
+    who:"Hesta",
+    gives:"the honest shape of it, said by the person least willing to say it",
+    holds:"she does not name whose hand, and does not let anyone else name it tonight"}
+  ],
+  room:{
+   where:"a dry corner of the undercroft with the water moving somewhere out of sight",
+   here:["Pia","Vic","Nine","Hesta"],
+   never:["Mirren does not appear","no hand is chosen here"],
+   topics:[
+    {ask:"how Vic knew her", key:"vic mirren knew friend before history how-long",
+     who:"Vic", gives:"the receiver she was, and one specific ordinary memory that is worse than a speech",
+     holds:"he does not say what he thinks they should do"},
+    {ask:"whether Nine is alright down here", key:"nine ok alright dark water afraid",
+     who:"Nine", gives:"that the water is the loudest thing she has ever been near, said with interest rather than fear",
+     holds:"she does not mention the vaults"},
+    {ask:"the undercroft itself", key:"undercroft place water old exchange house what-is",
+     who:"Hesta", gives:"what the building was before it flooded, told badly and warmly",
+     holds:"nothing about what is under her own floor"}
+   ]}
+},
+
+"a2-hand": {
+  where:"the dry end of the undercroft, deep night, with it ending tonight and only one question left",
+  ends:"the marsh edge before dawn, the hunt over, the room knowing exactly whose hand ended it",
+  here:["Pia","Vic","Nine","Hesta","Mirren"],
+  before:"THE QUESTION IS WHOSE HAND, AND IT IS THE TABLE'S TO ANSWER. Vic will beg to carry it. Somebody will offer to spare him. The blow itself is the player's move and nobody takes it for him. Do not let the courier act alone by default while the others object - make them choose out loud first.",
+  never:["nobody resolves it off screen, and nobody discovers a gentler option at the last moment - that was last night and it failed",
+         "the shard is not a weapon: nothing is pressed to anybody's forehead, nothing hums anybody to death",
+         "Three is not here","nobody says what is recoverable about her - that is a later night"],
+  topics:[
+   {ask:"whose hand it is",
+    key:"who hand whose does-it me you vic choose decide",
+    who:"Vic",
+    gives:"that he wants it to be his, said badly, with the reason underneath it audible",
+    holds:"he does not get to simply have it - somebody argues"},
+   {ask:"whether Vic should be allowed to",
+    key:"vic should let him spare allow steady able",
+    who:"Hesta",
+    gives:"that it is whoever's hand is steadiest, and that his is not, and that this is not an insult",
+    holds:"she does not volunteer herself"},
+   {ask:"what happens after",
+    key:"after body carry home bury grave what-then",
+    who:"Hesta",
+    gives:"that they carry her, and where to, decided now so nobody has to decide it afterwards",
+    holds:"the vow is not spoken tonight"},
+   {ask:"whether there is any way back for her",
+    key:"back save recover fix her still-in-there alive help",
+    who:"Vic",
+    gives:"the plain no that everyone in the room already knows, said so it is on the record",
+    holds:"nothing about vaults, scrapes or what is asleep where - none of that is known tonight"}
+  ],
+  room:{
+   where:"the marsh edge before dawn, carrying done, nobody ready for the next part",
+   here:["Pia","Vic","Nine","Hesta"],
+   never:["the burial does not happen here - that is tomorrow","the vow is not spoken"],
+   topics:[
+    {ask:"whether anybody is alright", key:"ok alright fine you how-are cope",
+     who:"Pia", gives:"a twelve-year-old's honest answer, which is not the reassuring one",
+     holds:"she does not cry on cue and does not want to be handled"},
+    {ask:"what to do with the rest of the night", key:"now next sleep rest night what-do",
+     who:"Hesta", gives:"one small practical instruction, which is the kindest thing available",
+     holds:"nothing"},
+    {ask:"what Nine saw", key:"nine saw watch heard you what",
+     who:"Nine", gives:"that she watched, and did not look away, and is not sure whether that was right",
+     holds:"she does not ask anybody to tell her it was"}
+   ]}
+},
+
+"a2-mirren": {
+  where:"the marsh edge at first light, a grave to dig and nobody started",
+  ends:"a new cairn at dawn with her name said aloud and the vow spoken over her",
+  here:["Pia","Vic","Nine","Hesta"],
+  before:"THE VOW IS THE PLAYER'S TO SEAL OR WITNESS. Nobody has taught this family the words. Somebody may reach for them and stop; somebody may say half of it. Offer the room for it and wait - do not have an NPC deliver it whole and finished while the courier stands there.",
+  never:["Mirren does not speak, appear, flicker, or be heard - she is in the ground",
+         "nobody who was not at the undercroft arrives at this grave",
+         "nobody has a wire go off, a message arrive, or a caller ring here"],
+  topics:[
+   {ask:"who she was before",
+    key:"who was mirren before receiver friend life person her",
+    who:"Vic",
+    gives:"the receiver she was - the specific unglamorous work of it - and one thing she was good at that had nothing to do with the job",
+    holds:"he does not turn it into his own confession, and if he tries somebody stops him"},
+   {ask:"what to say over her",
+    key:"say words speech name aloud what-do funeral rite",
+    who:"Hesta",
+    gives:"that everybody says the name and one line, in whatever order, and that there is no wrong line",
+    holds:"she does not say the vow first"},
+   {ask:"why they are doing it this way",
+    key:"why cairn stones marsh here bury how-come",
+    who:"Hesta",
+    gives:"that a cairn is what you build when you have no paperwork and no permission",
+    holds:"nothing about the founders or where the rule comes from - nobody here knows that yet"},
+   {ask:"what Pia makes of it",
+    key:"pia you ok think first funeral seen",
+    who:"Pia",
+    gives:"whether she has done this before, answered straight, and what she is doing with her hands",
+    holds:"she does not perform grief for anybody"}
+  ],
+  room:{
+   where:"the walk back from the cairn, the light coming up, nobody in a hurry",
+   here:["Pia","Vic","Nine","Hesta"],
+   never:["nothing is planned","nobody arrives"],
+   topics:[
+    {ask:"what the vow means in practice", key:"vow mean practice promise nobody-left keep",
+     who:"Hesta", gives:"one concrete example of what it would cost, chosen to be inconvenient",
+     holds:"she does not extend it to the dead - that clause does not exist yet"},
+    {ask:"whether Vic is going to be alright", key:"vic ok alright guilt blame himself",
+     who:"Vic", gives:"a deflection that fails, and then one honest sentence",
+     holds:"he does not confess anything about the courier"},
+    {ask:"the marsh at dawn", key:"marsh dawn light birds cold quiet morning",
+     who:"Pia", gives:"a bit, badly timed and then exactly right",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-seven": {
+  where:"a failing rig on the dockside at night - a crude Choir frame walking on borrowed time with a defector inside it",
+  ends:"Vic's workbench, Seven out of the failing rig, the family committed to it",
+  here:["Pia","Vic","Nine","Hesta","Seven"],
+  before:"SEVEN IS IN A DYING FRAME AND THE CLOCK IS AUDIBLE. He speaks through a bad speaker, he is shedding whatever he stole to get this far, and he is failing by the hour. He asks for nothing.",
+  never:["Three is not here and her two voices are not mentioned - she arrives two beats from now and that is her scene",
+         "the chassis is not offered, promised, or described tonight",
+         "nobody explains what Seven defected from in detail - he is out of time and knows what matters"],
+  topics:[
+   {ask:"how long he has",
+    key:"long time left clock hours failing dying when",
+    who:"Vic",
+    gives:"a number, said kindly, which does not help - and what happens at the end of it",
+    holds:"he does not soften it"},
+   {ask:"what he wants",
+    key:"want ask need help why-here what-for",
+    who:"Seven",
+    gives:"nothing, plainly - he came to be somewhere that was not there, and says so without asking",
+    holds:"he does not ask to be saved"},
+   {ask:"what can actually be done",
+    key:"do save help fix pull shard out how possible",
+    who:"Vic",
+    gives:"the shard comes out of the frame by hand before it quits, and what that leaves him as afterwards",
+    holds:"where he would then live - nobody has an answer tonight"},
+   {ask:"why they should",
+    key:"why should risk cost worth stranger us vow",
+    who:"Hesta",
+    gives:"the vow, applied for the first time to somebody who is not theirs",
+    holds:"she does not pretend it is free"}
+  ],
+  room:{
+   where:"the workbench afterwards, a shard on a cloth, a dead frame in the corner",
+   here:["Pia","Vic","Nine","Hesta","Seven"],
+   never:["the chassis is not mentioned","nobody arrives"],
+   topics:[
+    {ask:"what Seven was", key:"seven was choir before defect officer job role",
+     who:"Seven", gives:"a dry, undramatic account of a job he was good at and stopped doing",
+     holds:"the names of anyone still inside"},
+    {ask:"what being out of the frame is like", key:"feel like now shard body senses what-is",
+     who:"Seven", gives:"a comparison that is funnier than it should be and lands badly on Nine",
+     holds:"nothing"},
+    {ask:"what Nine thinks of him", key:"nine seven think another shard like-you",
+     who:"Nine", gives:"careful, unsentimental curiosity about somebody in the same condition",
+     holds:"she does not say she is relieved"}
+   ]}
+},
+
+"a2-chassis": {
+  where:"the safehouse kitchen after midnight - a founding-era chassis on the table because there is nowhere else long enough",
+  ends:"the same kitchen in the small hours, the chassis owned by Nine's own choice, and something cooked in it and eaten",
+  here:["Pia","Vic","Nine","Hesta","Seven"],
+  before:"THE CHASSIS IS NINE'S AND THE CHOICE IS HERS, SPOKEN AT THIS TABLE. It was built to be her body once she was free. She is in the courier's bare hand tonight and can hear and answer everything. Ask her out loud; do not decide it around her, and do not let anybody answer for her.",
+  never:["nobody is seated in the courier's skull in this scene - that is what happens if she keeps it, and it is a later night",
+         "the face is crafted and chosen and taken from nobody - it is not anyone's face",
+         "nothing about the founders, the housing, or why the chassis exists beyond: it was kept for the plan's far end"],
+  topics:[
+   {ask:"whose it is",
+    key:"whose belong hers mine give own chassis body who",
+    who:"Vic",
+    gives:"plainly, and without softening: it was built for Nine, kept for the day she was out, and it is hers to keep or to give",
+    holds:"he does not tell her which to do, and stops anybody who tries"},
+   {ask:"what Nine wants to do",
+    key:"nine choose want decide give keep you her say",
+    who:"Nine",
+    gives:"her actual answer, out loud, in her own words, with the reasoning she is willing to share",
+    holds:"she does not pretend it is easy, and she does not ask permission"},
+   {ask:"what happens to whoever does not get it",
+    key:"other else seven then what-happens nowhere left",
+    who:"Vic",
+    gives:"that nobody in this family dies of having nowhere to be, said as a fact he intends to make true",
+    holds:"HOW - the spare room is not described, named, or hinted at tonight"},
+   {ask:"whether it even works",
+    key:"work fit hands face fitting how ripperdoc surgery",
+    who:"Vic",
+    gives:"the ripperdoc's honest account of fitting it - hands first, face last, and what he is confident about",
+    holds:"nothing"}
+  ],
+  room:{
+   where:"the kitchen in the small hours, somebody cooking badly in a new body, everybody watching",
+   here:["Pia","Vic","Nine","Hesta","Seven"],
+   never:["the choice is not re-opened","nobody arrives"],
+   topics:[
+    {ask:"what having hands is like", key:"hands feel body new touch what-is-it-like",
+     who:"Seven", gives:"something specific and small - a texture, a temperature - reported like a finding",
+     holds:"nothing"},
+    {ask:"the cooking", key:"cook food pan eat taste burn dinner",
+     who:"Hesta", gives:"a bit - instruction shouted from a chair, cheerfully ignored",
+     holds:"nothing. Free."},
+    {ask:"how the other one is taking it", key:"other how-are-you fine ok jealous glad",
+     who:"Nine", gives:"an honest answer with more than one thing in it",
+     holds:"she does not ask for anything"}
+   ]}
+},
+
+"a2-three": {
+  where:"the safehouse long room in the morning - a stranger already in it, who has been for some time, and nobody invited her",
+  ends:"the same long room with what she wants said out loud, and a reason to stay that is not sentiment",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+  before:"THREE SPEAKS IN TWO VOICE FREQUENCIES, SLIGHTLY OUT OF SYNC, AND THE ROOM NOTICES IT TONIGHT FOR THE FIRST TIME. She is terse, hard to like, and correct. She is a fate-two survivor: a second mind was laid over her and then annulled, and the one they took out did not survive it.",
+  never:["nobody has met her before - she and Vic are not old acquaintances and share no history",
+         "nothing about Five, Marek, or annulling anybody is planned here",
+         "she does not warm up, and nobody wins her over with feeling"],
+  topics:[
+   {ask:"who she is",
+    key:"who you are name three stranger what-are yourself",
+    who:"Three",
+    gives:"her name, what was done to her, and the fact that she survived it and somebody else did not - in about three sentences, without inviting sympathy",
+    holds:"the details of the procedure, and who the other one was"},
+   {ask:"what she wants",
+    key:"want here why came after doing goal",
+    who:"Three",
+    gives:"nobody kept, ever again, said as a position rather than a feeling - and she means the family too",
+    holds:"nothing. This is the beat's whole business and she does not soften it"},
+   {ask:"what she thinks of what they are doing",
+    key:"think us doing wrong opinion judge family project",
+    who:"Three",
+    gives:"exactly what they are doing wrong, specifically, and she is right about it",
+    holds:"she does not offer a solution unless somebody asks for one"},
+   {ask:"why she should stay",
+    key:"stay leave go reason why-here remain",
+    who:"Hesta",
+    gives:"a reason that is practical rather than warm - work she can do that nobody else here can",
+    holds:"nobody begs, and sentiment does not land on her"}
+  ],
+  room:{
+   where:"the long room later, Three still there, everyone adjusting to it",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+   never:["she does not become friendly","nobody arrives"],
+   topics:[
+    {ask:"what the two voices are", key:"voice voices two sound frequency out-of-sync why",
+     who:"Three", gives:"the mechanical account, flat, and her opinion of people who ask",
+     holds:"how it felt"},
+    {ask:"what she does", key:"do work skill hands procedure use good-at",
+     who:"Three", gives:"a precise and slightly alarming list",
+     holds:"where she learned it"},
+    {ask:"what she makes of Nine and Seven", key:"nine seven shards think them keeping",
+     who:"Three", gives:"the uncomfortable version of the family's own arrangement, said kindly for once",
+     holds:"she does not exempt anybody"}
+   ]}
+},
+
+"a2-housing": {
+  where:"under the work lamp in Vic's shack, afternoon, the courier's head doing something it should not in front of witnesses",
+  ends:"the same lamp in the evening, the housing named out loud and everybody in the room having heard it",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+  before:"THE REACTION LANDS IN THIS SAME TURN. The shock, then the joke, then the real thing under the joke - not one turn each.",
+  never:["VIC DOES NOT CONFESS TONIGHT. He knows exactly what is in that skull and he is not going to say so in a room with Pia in it - he changes the subject badly, he finds something to do with his hands, or he says the smaller true thing. The night he answers for it is his and it is ten beats away",
+         "nothing about the manual, the bio-hash, or what any of it opens",
+         "nobody is seated in the housing in this scene"],
+  topics:[
+   {ask:"what it is",
+    key:"what is it housing skull head thing inside vessel",
+    who:"Three",
+    gives:"the flat technical name and what such a thing is for - a vessel built to host a mind",
+    holds:"who put it there"},
+   {ask:"who did this",
+    key:"who did put built installed when someone how-long",
+    who:"Vic",
+    gives:"a deflection that does not work, and one true small thing offered instead",
+    holds:"THE ANSWER. He does not admit it, half-admit it, or let anyone else name him tonight"},
+   {ask:"whether it can come out",
+    key:"out remove take-out reverse undo fix surgery",
+    who:"Three",
+    gives:"the honest answer about what removing it would mean, delivered without cushioning",
+    holds:"nothing"},
+   {ask:"how the courier is taking it",
+    key:"you ok feel courier how-are joke fine",
+    who:"Pia",
+    gives:"the room's reaction to his reaction - she watches him for it and says what she sees",
+    holds:"she does not tell him how to feel"}
+  ],
+  room:{
+   where:"the shack afterwards, lamp still on, nobody having gone to bed",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+   never:["Vic still does not confess","nothing about the manual"],
+   topics:[
+    {ask:"what it means for him", key:"mean me now different changed what-am-i",
+     who:"Three", gives:"the unsentimental version, which is oddly steadying",
+     holds:"nothing"},
+    {ask:"whether anybody else has one", key:"else others common rare anyone-else how-many",
+     who:"Seven", gives:"how unusual it is, from somebody who would know",
+     holds:"he does not speculate about why"},
+    {ask:"the lamp, the shack, the hour", key:"lamp shack late tired hour tea sit",
+     who:"Hesta", gives:"a bit - she starts feeding people as a way of not discussing it",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-manual": {
+  where:"the long room in the evening, a manual that came out of the courier's own head lying on the table, unread aloud",
+  ends:"the same table late, the family knowing what he can open and roughly what it costs",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+  before:"THE HOUSED MIND DECODES IT. That is the beat: a mind he trusts reads what he cannot. If nobody is seated in the housing yet, then the one he carries reads it aloud through his hand - but the reading is hers, not his.",
+  never:["nothing about the three fates, communion, or what happened to Mirren",
+         "the lock is the founders' lock and it is somewhere else - the manual is paper, not a door",
+         "nobody says what the machine is or that there is one"],
+  topics:[
+   {ask:"what the manual actually says",
+    key:"manual say read what inside document pages contents",
+    who:"Nine",
+    gives:"the legal half: a serial, a batch, a date nobody likes, and then the part where it stops being a list",
+    holds:"the deep half - she says plainly there is more and that she is not reading it aloud yet"},
+   {ask:"the blood, and why his",
+    key:"blood hash bio lock key why-me fit compatible sample",
+    who:"Three",
+    gives:"that a living sample generates something a lock will accept, and that his does",
+    holds:"WHY his does. Nobody in this room can answer it and the spec says so - do not let anyone try"},
+   {ask:"what it opens",
+    key:"open opens door what-for lock where use",
+    who:"Three",
+    gives:"roughly - Choir doors, which is enormous and vague and honest",
+    holds:"nothing specific about the Exchange or the machine"},
+   {ask:"who put a manual in a man's head",
+    key:"who why hidden manual inside shipped put deliberate",
+    who:"Vic",
+    gives:"another deflection, thinner than yesterday's, and the room notices it is thinner",
+    holds:"the answer"}
+  ],
+  room:{
+   where:"the long room late, the manual still open, a mug holding down a page",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+   never:["the deep half is not read","Vic does not confess"],
+   topics:[
+    {ask:"what it feels like to be a key", key:"key feel me object tool used what-am-i",
+     who:"Pia", gives:"the twelve-year-old's version, which is the sharpest one available",
+     holds:"nothing"},
+    {ask:"whether it can be faked", key:"fake copy forge someone-else duplicate steal",
+     who:"Three", gives:"a short technical no, and the uncomfortable implication of it",
+     holds:"nothing"},
+    {ask:"tea, the mug, the hour", key:"tea mug drink late tired sit rest",
+     who:"Hesta", gives:"a bit about people who read standing up",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-choir": {
+  where:"the long room in the small hours, with a Choir door open somewhere and its filing coming through it onto this table",
+  ends:"the same table, the three fates understood and what was done to Mirren understood with them",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+  before:"THE FILING COMES TO THE TABLE. Nobody walks into a Choir building tonight. The hash opened a door and the records came through it - the family is at home, reading paper.",
+  never:["THE THREE FATES ARE: convergence for the many, fate two for the chosen - a grown mind laid over a suppressed original, which is how officers are made - and Hollowing for the unlucky. ANNULMENT IS THE CURE, NOT A FATE: it is what takes the second voice back out, and it is what Three survived. Do not name annulment as a fate",
+         "nobody meets the machine, hears her, or learns she exists",
+         "nobody goes anywhere - no doors are walked through"],
+  topics:[
+   {ask:"what the Choir actually is",
+    key:"choir what is machine communion voluntary religion company",
+    who:"Three",
+    gives:"one machine, joined voluntarily, and what people think they are getting when they join",
+    holds:"nothing about who built it or why"},
+   {ask:"the three fates",
+    key:"fates three many chosen unlucky convergence hollowing two",
+    who:"Three",
+    gives:"all three, named correctly, in the order the paperwork uses - and which one is a promotion",
+    holds:"she does not describe her own"},
+   {ask:"what was done to Mirren",
+    key:"mirren her fate what-happened intake record consent file",
+    who:"Hesta",
+    gives:"the intake record, and the consent line, and whose hand the signature is in - which is a desk's, not hers",
+    holds:"nothing"},
+   {ask:"whether any of it can be undone",
+    key:"undone reverse recover back save fix return",
+    who:"Three",
+    gives:"that fate two can be annulled and that she is what annulment leaves behind",
+    holds:"whether anything of a Hollowed person survives anywhere - nobody knows that tonight"}
+  ],
+  room:{
+   where:"the long room with the paper spread out and nobody sleeping",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
+   never:["nobody goes to a Choir building","the vaults are not mentioned"],
+   topics:[
+    {ask:"whether anyone joins willingly", key:"join willing why choose want communion volunteer",
+     who:"Seven", gives:"the honest recruiting pitch, delivered accurately enough to be unsettling",
+     holds:"nothing"},
+    {ask:"what Seven was, exactly", key:"seven you were fate what officer chosen",
+     who:"Seven", gives:"which of the three he was, said plainly",
+     holds:"what he did with it"},
+    {ask:"what to do with the paper", key:"paper burn keep file what-now records",
+     who:"Hesta", gives:"a practical answer about keeping records that could hang people",
+     holds:"nothing"}
+   ]}
+},
+
+"a2-annul": {
+  where:"the shack in deep night - Five taken alive, Three's tools laid out, and one chair",
+  ends:"the shack step toward dawn, Five annulled, Marek alive, and both of them having spoken in their own turn",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three","Five","Marek"],
+  before:"FIVE AND MAREK ARE ONE BODY. Marek is underneath Five the way a drowned man is underneath water, not the way a man is underneath a chair. One set of hands, one mouth, one chair. Nobody stands beside, above or behind the other one, and when Five speaks it uses Marek's mouth and gets the vowels very slightly wrong. The argument is happening INSIDE a body.",
+  never:["nobody is killed, and Five is not destroyed - annulment takes the second voice out and leaves a scar",
+         "nothing about the Exchange, the machine, or the founders",
+         "Three does not enjoy this, and nobody thanks her"],
+  topics:[
+   {ask:"what annulment actually does",
+    key:"annul annulment do procedure how work take-out unmaking",
+    who:"Three",
+    gives:"the mechanical account, and the fact that it scars every time, without exception",
+    holds:"what it was like when it was done to her"},
+   {ask:"whether Marek will survive it",
+    key:"marek survive live make-it risk odds die",
+    who:"Three",
+    gives:"the honest odds, said flat, and what improves them",
+    holds:"no reassurance is offered"},
+   {ask:"what Five has to say",
+    key:"five say talk speak officer convoy commander what-are-you",
+    who:"Five",
+    gives:"a convoy commander's account of itself, using Marek's mouth, entirely convinced it is the reasonable party",
+    holds:"it does not beg"},
+   {ask:"what Marek wants",
+    key:"marek want you underneath still-there hear him",
+    who:"Marek",
+    gives:"whatever he can get out in the gaps - short, exhausted, and specific",
+    holds:"he cannot sustain it, and Five takes the mouth back"}
+  ],
+  room:{
+   where:"the shack step toward dawn, one body sitting on it, learning to take turns",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three","Five","Marek"],
+   never:["nobody is separated - they share the body now, by consent","nobody arrives"],
+   topics:[
+    {ask:"how taking turns works", key:"turns share body how swap agree arrangement",
+     who:"Marek", gives:"the arrangement, described by the one who has to live in it",
+     holds:"whether he agreed to it or settled for it"},
+    {ask:"what Three is feeling", key:"three you ok feel after did-it hands",
+     who:"Three", gives:"nothing warm, and one sentence that gives her away",
+     holds:"she deflects if pushed"},
+    {ask:"dawn, the step, the cold", key:"dawn cold morning step sit air quiet",
+     who:"Pia", gives:"a bit, deliberately small, because the night was not",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-law": {
+  where:"the safehouse kitchen in the evening - a pan, too many people, and a week-old disagreement about to become a rule",
+  ends:"the same kitchen with a law spoken aloud and a meal eaten together for the first time",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
+  before:"THE LAW IS WHATEVER THIS TABLE SAYS IT IS, AND IT IS PERMANENT. It gets quoted back in Book Three. Let the argument harden into one sentence somebody says out loud, and write it down as canon in the courier's own run - do not supply it ready-made.",
+  never:["nobody arrives, and nothing interrupts except the thing the board sends",
+         "nothing about the Exchange, the descent, or the machine",
+         "the law is not handed down by an elder - it is argued into existence"],
+  topics:[
+   {ask:"what the rule should be",
+    key:"rule law say write what-should first ours",
+    who:"Pia",
+    gives:"her candidate, blunt, and the specific incident this week that produced it",
+    holds:"she will not pretend to be neutral about it"},
+   {ask:"what Three objects to",
+    key:"three object wrong against problem disagree no",
+    who:"Three",
+    gives:"an objection nobody can dismiss: a rule kept when it costs nothing is a preference, and she has been inside an institution with beautiful laws",
+    holds:"she does not offer a better one until somebody asks"},
+   {ask:"whether a rule is even a good idea",
+    key:"why rule need bother point rules-at-all",
+    who:"Vic",
+    gives:"what happens to people who make it up as they go, from personal experience",
+    holds:"which of his own he is thinking of"},
+   {ask:"the pan, the order, the method",
+    key:"pan bacon bread order cook same method food",
+    who:"Hesta",
+    gives:"bacon first, bread after, same pan - as a method, and as an argument about how a family does anything",
+    holds:"nothing. Free"}
+  ],
+  room:{
+   where:"the kitchen with the plates down and the rule said, somebody writing it somewhere crooked",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
+   never:["the law is not amended","nobody arrives"],
+   topics:[
+    {ask:"where to write it", key:"write wall paper where put record keep",
+     who:"Pia", gives:"where, and who has the pen, and an argument about handwriting",
+     holds:"nothing. Free."},
+    {ask:"whether Three will keep it", key:"three keep follow agree bound rule you",
+     who:"Three", gives:"a conditional yes, with the condition named exactly",
+     holds:"nothing"},
+    {ask:"what the meal is like", key:"meal eat food together first sit table",
+     who:"Hesta", gives:"the small physical facts of a table with everybody at it",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a2-turn": {
+  where:"the safehouse long room at night - a name on Choir paper, and the whole family in one room deciding what it is worth",
+  ends:"the same room, somebody lost or risked, and the family turned toward the Exchange",
+  here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
+  before:"THE NAME ON THE PAPER IS PIA'S, AND THE CHOIR PUT IT THERE. She is cyberware-incompatible, which to the Choir is not immunity - it is a salvage listing, fate three waiting for paperwork. Make the family read it. Make the cost real. Nobody in this room volunteers her, and she does not go quietly.",
+  never:["the family does not write Pia's name on anything - the paper is the Choir's and it arrived that way",
+         "nothing about the descent's route, the hatch, or the cable is planned here",
+         "nobody explains what the machine is"],
+  topics:[
+   {ask:"what the offer actually is",
+    key:"offer trade paper deal terms what exchange peace",
+    who:"Three",
+    gives:"the trade in writing, read out in the Choir's own register: peace, for the girl on the salvage list",
+    holds:"nothing - it is worse the more precisely it is read"},
+   {ask:"what fate three would mean for her",
+    key:"fate three salvage mean her what-happens hollowing listed",
+    who:"Three",
+    gives:"exactly what it means, said to the room rather than to Pia, and then said to Pia because she asks",
+    holds:"nothing"},
+   {ask:"what Pia says",
+    key:"pia you say want think choose her answer",
+    who:"Pia",
+    gives:"her own position, out loud, which is not the frightened one anybody expected",
+    holds:"she will not be handed over quietly and says so"},
+   {ask:"what they do instead",
+    key:"instead do refuse fight go exchange plan next",
+    who:"Hesta",
+    gives:"that defending has stopped working, and the only place left to go is down",
+    holds:"no route is planned tonight"}
+  ],
+  room:{
+   where:"the long room after, the paper still on the table, nobody sitting down",
+   here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
+   never:["the trade is not re-opened","nobody arrives"],
+   topics:[
+    {ask:"whether Pia is frightened", key:"pia scared afraid ok frightened you",
+     who:"Pia", gives:"the truth, and the thing she is more frightened of",
+     holds:"she does not want comforting"},
+    {ask:"what the Exchange even is", key:"exchange what where old under building",
+     who:"Vic", gives:"what everyone knows: an old building with something under it",
+     holds:"nothing about the machine, the vaults, or the founders"},
+    {ask:"who is going", key:"who going all everyone come stay behind",
+     who:"Hesta", gives:"an argument about who stays, resolved by nobody",
+     holds:"no roles are assigned"}
+   ]}
+},
+
+"a3-evict": {
+  where:"Cannery Row at first light - nine Hollows standing very still, Choir paperwork in a van, and neighbours watching from windows",
+  ends:"the street theirs by breakfast, the stilled handled kindly, and the neighbours having seen how it was done",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"THE STILLING IS THE BEAT AND IT TAKES TIME. Eleven minutes a body, done the kind way, in front of witnesses. It is slow, it is public, and the slowness is the point - this is what the family looks like when it wins.",
+  never:["nobody is killed and nothing is destroyed - the Choir loses a street, not a fight",
+         "Vic is dead and does not appear, speak, or advise",
+         "nobody knocks on a neighbour's door and goes inside - the street is the room"],
+  topics:[
+   {ask:"how long the kind way takes",
+    key:"long time how minutes each body kind slow",
+    who:"Three",
+    gives:"eleven minutes a body, said flat, and the arithmetic of nine of them in the open",
+    holds:"she does not suggest a faster way"},
+   {ask:"what the neighbours are doing",
+    key:"neighbours watching windows street people seen witness",
+    who:"Hesta",
+    gives:"who is at which window, and which of them she knows by name",
+    holds:"she does not ask them for anything"},
+   {ask:"what happens to the stilled ones",
+    key:"stilled after them bodies where go care what-now",
+    who:"Three",
+    gives:"the honest answer about what a stilled Hollow is and is not, and what happens to them next",
+    holds:"nothing about the vaults or what might be recoverable"},
+   {ask:"what the Choir does about it",
+    key:"choir respond answer back retaliate reinforce come",
+    who:"Seven",
+    gives:"what he would have done in their place, which is not what they are doing",
+    holds:"he does not name what the silence means"}
+  ],
+  room:{
+   where:"the row by breakfast, somebody's grandmother bringing tea out to the people who did it",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["nobody goes into a neighbour's house","the Exchange is not planned here"],
+   topics:[
+    {ask:"how to accept the tea", key:"tea cup accept thank take offered grandmother",
+     who:"Hesta", gives:"take the cup, say thank you, drink it - all three, in that order",
+     holds:"nothing. Free."},
+    {ask:"what the street was like before", key:"before street row occupied choir what-was",
+     who:"Hesta", gives:"a specific small thing the street stopped doing under occupation",
+     holds:"nothing"},
+    {ask:"whether anyone is hurt", key:"hurt ok injured hands tired after",
+     who:"Pia", gives:"the honest inventory, mostly hands",
+     holds:"nothing"}
+   ]}
+},
+
+"a3-voice": {
+  where:"a listening post on the taken street, late morning, with the machine's own channel open on the other end of it",
+  ends:"the same post, having heard her be kind to somebody, uninterrupted, until it landed",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"SHE IS KIND AND SHE MEANS IT. What comes through is a patient, warm voice guiding an ordinary citizen through an ordinary day, like a grandmother with infinite time. Let it run. The horror is not in her tone, it is in what she was told the word family means.",
+  never:["she does not threaten, glitch, turn sinister, or reveal herself as a monster - not once",
+         "nobody meets her, speaks to her, or is spoken to by her tonight",
+         "nothing about the founders, the dead child, or why she exists"],
+  topics:[
+   {ask:"who she is talking to",
+    key:"who talking citizen person other-end listening whose",
+    who:"Three",
+    gives:"a convergent citizen, ordinary, mid-morning, and what the request was",
+    holds:"nothing about that person's fate"},
+   {ask:"whether she means it",
+    key:"mean sincere real kind genuine act pretend",
+    who:"Seven",
+    gives:"that she does, and that he would know, and how uncomfortable that makes him",
+    holds:"nothing"},
+   {ask:"how anyone is supposed to fight that",
+    key:"fight stop beat how enemy against win",
+    who:"Three",
+    gives:"that the enemy is the instructions, not the nature - which changes what winning has to look like",
+    holds:"she does not have a method yet"},
+   {ask:"what Pia makes of it",
+    key:"pia think you hear ok feel about-her",
+    who:"Pia",
+    gives:"a twelve-year-old's reaction to being comforted by the thing that has her name on a list",
+    holds:"she does not resolve it"}
+  ],
+  room:{
+   where:"the listening post with the channel still open and nobody turning it off",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["she does not address them","nobody plans the descent"],
+   topics:[
+    {ask:"whether to turn it off", key:"off turn stop switch listen enough",
+     who:"Pia", gives:"an argument about listening to it, which she loses and wins at once",
+     holds:"nothing"},
+    {ask:"what she sounds like to Seven", key:"seven you hear before knew familiar",
+     who:"Seven", gives:"where he heard that voice before and in what context",
+     holds:"nothing about the Heart Room"},
+    {ask:"tea, chairs, the post itself", key:"tea sit chair post room wait",
+     who:"Hesta", gives:"a bit - she has opinions about listening on an empty stomach",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a3-founding": {
+  where:"the listening post in the afternoon, the founding record found and nobody having pressed play",
+  ends:"the same room having sat all the way through it, understanding what she was told family means",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"THE RECORD IS THE ARCHITECT'S OWN VOICE AND IT IS UNBEARABLE TO SIT THROUGH. Two people built her after losing a child. Her instructions define family as keeping. She means well and operates wrong, and the record is where that becomes a fact rather than a theory.",
+  never:["the Principal is not identified as alive, present, or reachable - that is two beats away",
+         "the machine does not speak or answer here",
+         "nobody explains the bio-hash or the courier's part in any of it"],
+  topics:[
+   {ask:"who made her",
+    key:"made built who founders architect principal two people",
+    who:"Three",
+    gives:"two people, named as the record names them, and the fact that they were partners in it",
+    holds:"anything about either of them being alive"},
+   {ask:"why they made her",
+    key:"why built reason child lost grief purpose for",
+    who:"Nine",
+    gives:"the grief at the bottom of it - a child lost, and a machine built so that nobody would be lost again",
+    holds:"nothing"},
+   {ask:"what they told her family means",
+    key:"family means told instruction definition keeping what",
+    who:"Three",
+    gives:"the instruction itself, quoted, and how short it is",
+    holds:"nothing - the shortness is the horror"},
+   {ask:"where the Cairn rule comes from",
+    key:"cairn rule nobody-left-behind name lost origin ours where",
+    who:"Hesta",
+    gives:"the last minute of the record: the Architect alone and much older, saying teach her to let go, and then the three things - nobody left behind, the dead come out, name the lost",
+    holds:"nothing. This is the beat paying out"}
+  ],
+  room:{
+   where:"the post afterwards, the record finished, nobody having moved",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["it is not replayed","nobody plans"],
+   topics:[
+    {ask:"whether that changes anything", key:"change anything different now still stop",
+     who:"Three", gives:"that understanding somebody is not the same as letting them continue",
+     holds:"nothing"},
+    {ask:"what Hesta makes of the rule", key:"hesta rule ours been-saying years knew",
+     who:"Hesta", gives:"that they have been reciting a dying man's apology all year without knowing whose",
+     holds:"nothing"},
+    {ask:"what Pia says about the child", key:"pia child dead kid think sad",
+     who:"Pia", gives:"the blunt sentence nobody else is willing to say",
+     holds:"nothing"}
+   ]}
+},
+
+"a3-vic": {
+  where:"the cannery yard at night - Vic has walked out to it on purpose and is waiting to be followed",
+  ends:"the same yard, the confession made and paid for, and the family carrying him",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"THIS IS THE NIGHT HE ANSWERS FOR IT. Vic scanned customers for decades, found blood the founders' lock would accept, and built the housing into the courier's skull without asking. He spends himself here and his last words are PAID IN FULL. He speaks to the courier in the second person - not about him.",
+  never:["nobody talks him out of it, and nobody discovers a way to save him",
+         "he does not explain the machine, the vaults, or the plan - this is a confession, not a briefing",
+         "nothing about Pia's immunity or the shape of the assault"],
+  topics:[
+   {ask:"what he did",
+    key:"did what confess admit housing skull put you why-me",
+    who:"Vic",
+    gives:"all of it, in order, in the second person, without softening or asking to be understood",
+    holds:"nothing. He has stopped holding anything"},
+   {ask:"whether he is sorry",
+    key:"sorry regret apologise wish would-again",
+    who:"Vic",
+    gives:"that he regrets it and would do it again, which is the worst available answer and the true one",
+    holds:"nothing"},
+   {ask:"why the courier",
+    key:"why me chose picked reason blood specific lottery",
+    who:"Vic",
+    gives:"the answer he has been dodging since the first night: the blood, the decades of scanning, and what that made the courier to him",
+    holds:"nothing"},
+   {ask:"what Pia knew",
+    key:"pia know knew told her aware complicit",
+    who:"Pia",
+    gives:"whether she knew, answered straight",
+    holds:"nothing"}
+  ],
+  room:{
+   where:"the yard after, with him where he fell and nobody willing to move first",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["Vic does not speak again","nothing is planned"],
+   topics:[
+    {ask:"what to do now", key:"now what-do next carry move stand",
+     who:"Hesta", gives:"one instruction, small and physical",
+     holds:"nothing"},
+    {ask:"whether the courier forgives him", key:"forgive angry hate still-angry me",
+     who:"Pia", gives:"the observation that he does not have to decide tonight",
+     holds:"she does not tell him what to feel"},
+    {ask:"the yard, the cold, the hour", key:"yard cold night quiet cannery air",
+     who:"Three", gives:"something flat and unexpectedly steadying",
+     holds:"nothing"}
+   ]}
+},
+
+"a3-stone": {
+  where:"the cairn before first light - everybody arrived early, separately, each having privately decided to be the first one there",
+  ends:"the stone on the pile, his name said, and the family turned toward the hatch",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"A STONE, A NAME, ONE LINE EACH AT MOST. This is short and held. It is the first time they use the rule on purpose, on their own dead. Do not let it become a meeting.",
+  never:["Vic is dead and does not speak, appear, or be heard",
+         "nobody makes a speech, and nobody resolves their feelings about him",
+         "the descent is not planned here - it is only pointed at"],
+  topics:[
+   {ask:"what to say",
+    key:"say words line name what-do speech how",
+    who:"Hesta",
+    gives:"the form: a stone, the name, one line, and no wrong line",
+    holds:"she does not go first unless asked"},
+   {ask:"whether he deserves it",
+    key:"deserve earn worth after what-he-did anger",
+    who:"Three",
+    gives:"that the rule does not have a clause about deserving, which is what makes it a rule",
+    holds:"nothing"},
+   {ask:"what Seven says",
+    key:"seven you line say knew him four weeks",
+    who:"Seven",
+    gives:"that he only knew him four weeks and does not know if that entitles him to a line",
+    holds:"nothing - and somebody tells him it is enough"}
+  ],
+  room:{
+   where:"the walk from the cairn to the hatch head, first light coming",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["nobody goes back to the cairn","the plan is not made here"],
+   topics:[
+    {ask:"whether anyone slept", key:"sleep tired night rest awake",
+     who:"Pia", gives:"nobody did, and who she caught not sleeping",
+     holds:"nothing"},
+    {ask:"what is at the hatch", key:"hatch ahead down what-there cable descent",
+     who:"Three", gives:"the physical facts only - a hatch, a cable, a long way down",
+     holds:"no plan"}
+   ]}
+},
+
+"a3-for": {
+  where:"the hatch head early in the morning - a plan to make, standing up, forty metres from an open hatch",
+  ends:"the same hatch head with every one of them holding a named part, and Pia's the last one named",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"NOBODY LEAVES THE HATCH HEAD. The plan is made where the hatch is. Go around the table until every single person has a job, and land on Pia's last: she is the one person in this city the machine cannot converge, guide, or write. What the Choir filed as salvage is the one door the voice cannot hold.",
+  never:["nobody goes back to a warm room, a cafe, or a kitchen to plan - the plan happens here",
+         "the words death sentence are not said in front of Pia",
+         "nothing about the vaults, the Principal, or the Heart Room"],
+  topics:[
+   {ask:"why the Choir cannot reach Pia",
+    key:"pia immune immunity converge guide write salvage listing why-her key",
+    who:"Three",
+    gives:"the listing turned over: what they filed as salvage is the one thing their voice cannot hold, and what that makes her in this plan",
+    holds:"nobody says the words death sentence in front of her"},
+   {ask:"what everyone else does",
+    key:"parts jobs roles who does what plan assign each",
+    who:"Three",
+    gives:"her own part first, precisely, then presses each of the others to name theirs out loud",
+    holds:"she does not assign anyone else's for them"},
+   {ask:"what Nine does",
+    key:"nine part job role ear guide her what-does",
+    who:"Nine",
+    gives:"the courier's ear, and the specific thing she can do from inside his skull that nobody else can",
+    holds:"she does not overstate it"},
+   {ask:"what could go wrong",
+    key:"wrong risk danger fail worst if-it-goes",
+    who:"Hesta",
+    gives:"the one part she thinks is too dangerous, named, and the argument she wants ended tonight",
+    holds:"she does not veto it"}
+  ],
+  room:{
+   where:"the hatch head with the plan made and nobody going down yet",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["nobody descends","the plan is not changed"],
+   topics:[
+    {ask:"whether Pia is alright with her part", key:"pia ok fine part scared willing",
+     who:"Pia", gives:"her honest answer, which is complicated and not frightened",
+     holds:"she does not want managing"},
+    {ask:"what Marek and Five do", key:"marek five turns part job body who",
+     who:"Marek", gives:"how the two of them split one job between them, which is strange and workable",
+     holds:"nothing"},
+    {ask:"food before going down", key:"eat food breakfast before hungry pack",
+     who:"Hesta", gives:"a bit - she has brought more than anybody can carry",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a3-descent": {
+  where:"the cable head in the morning, at the top of a cable that goes down further than anybody has been",
+  ends:"inside the Exchange with the substrate close and the way back not mentioned",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"THE MACHINE IS SEMI-BLIND DOWN HERE AND WHAT IS JACKED IN IS THE QUESTION IN EVERY ROOM. Cable work, dead air, the substrate close enough to feel. The day does not turn during this: time runs strangely but the sun above the marsh has barely moved.",
+  never:["nothing about the vaults, the sleepers, or Mirren's name - that is the next beat and it is the payoff",
+         "the racks are not identified, explained, or resolved - the things in them are not equipment, and that is all anybody knows",
+         "the machine does not speak"],
+  topics:[
+   {ask:"what is down here",
+    key:"down here what below substrate deep dark expect",
+    who:"Three",
+    gives:"the physical facts - cable, dead air, the substrate - and what semi-blind means for them",
+    holds:"nothing about what is stored down here"},
+   {ask:"whether anything can hear them",
+    key:"hear listen jacked wired signal blind see watch",
+    who:"Seven",
+    gives:"what is jacked in and what is not, and how they keep it that way",
+    holds:"nothing"},
+   {ask:"what the racks are",
+    key:"racks shelves rows full things equipment what-are",
+    who:"Three",
+    gives:"that the things in them are not equipment, and that she is not going to guess further tonight",
+    holds:"everything else. Nobody resolves this here"},
+   {ask:"how far down it goes",
+    key:"far down deep how-long distance bottom",
+    who:"Hesta",
+    gives:"a number and how she got it, which is not reassuring",
+    holds:"nothing"}
+  ],
+  room:{
+   where:"a landing on the way down, out of the wind, everybody's hands aching",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["the racks are not discussed further","nobody goes back up"],
+   topics:[
+    {ask:"whether the way back is still open", key:"back up way return closed behind",
+     who:"Three", gives:"the honest answer, said quietly, and nobody repeats it",
+     holds:"nothing"},
+    {ask:"what Nine hears", key:"nine hear sound know this listening",
+     who:"Nine", gives:"that she knows this sound, and wants that on the record before anybody asks",
+     holds:"she does not say from where"},
+    {ask:"hands, rope, the cold", key:"hands rope cold grip ache tired climb",
+     who:"Pia", gives:"a bit, badly, at the exact right moment",
+     holds:"nothing. Free."}
+   ]}
+},
+
+"a3-dreamers": {
+  where:"the vaults - shelves going on further than the lights do, millions asleep, and Hesta with her list out",
+  ends:"Mirren's scrape found by name on one shelf among millions, and the promise made concrete",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  before:"THEY ARE ASLEEP AND THEY STAY ASLEEP. A scrape is an archived recording, not a person in the room. Finding Mirren's name on a shelf is finding a name on a shelf - nothing wakes, nothing speaks, nothing reaches out. The scale is the horror: millions is not a number, it is a city.",
+  never:["nothing wakes, and nobody is retrieved tonight",
+         "the machine's housekeeping may notice them, but she does not appear or take anybody",
+         "nobody explains how a scrape could be restored - only that they are here"],
+  topics:[
+   {ask:"how many",
+    key:"many how-many number millions count scale size",
+    who:"Three",
+    gives:"the number, and then the correction - that it is not a number, it is a city",
+    holds:"nothing"},
+   {ask:"finding Mirren",
+    key:"mirren find name shelf look her search list",
+    who:"Hesta",
+    gives:"the search itself and the moment the name comes up, with the shelf number said out loud",
+    holds:"nothing. This is the payout"},
+   {ask:"what Hesta's list is",
+    key:"list hesta names kept twenty-two hers who",
+    who:"Hesta",
+    gives:"how many are hers, checked against the shelves, and she does not read the rest of them out",
+    holds:"the other names"},
+   {ask:"whether they can be got out",
+    key:"out retrieve take home recover restore wake bring",
+    who:"Three",
+    gives:"one at a time, by hand, and there is no other way - she has counted",
+    holds:"she does not promise it works"}
+  ],
+  room:{
+   where:"between two shelves with the lights off further down, nobody in a hurry to leave",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   never:["nothing wakes","nobody is taken"],
+   topics:[
+    {ask:"what a scrape actually is", key:"scrape what-is recording person asleep alive",
+     who:"Three", gives:"the flat definition and the uncomfortable question it leaves open",
+     holds:"she does not answer the question"},
+    {ask:"what Pia says about the promise", key:"pia promise vow all-of-them out say",
+     who:"Pia", gives:"the promise, said out loud, in the plainest available words",
+     holds:"nothing"},
+    {ask:"the dark at the end of the aisle", key:"dark end aisle lights far quiet",
+     who:"Nine", gives:"something quiet about being shelved, said once and not repeated",
+     holds:"she does not make it about herself"}
+   ]}
+},
+
+"a3-principal": {
+  where:"a corridor outside a door with the oldest person alive behind it - late afternoon, and Hesta unpacking a bag of food",
+  ends:"the Principal's room, face to face, the argument joined on her terms",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek","Principal"],
+  before:"THE PRINCIPAL IS A WOMAN, MARK ONE, ONE HUNDRED AND THIRTY YEARS OF HER, AND SHE HAS SIX BIO-GRENS. She is the true landlord; the Choir rents. She will not be hurried in her own house. FOOD OPENS THE DOOR IRON COULD NOT - that is the aim, and Hesta brought a bag.",
+  never:["she is never he - not once, not in narration, not in a rail line",
+         "the bio-gren wearing the courier's face is a glimpse and nothing more: hint at nothing, confirm nothing, and never let anyone speak to why",
+         "nothing about the Heart Room, the child, or what happens next"],
+  topics:[
+   {ask:"who she is",
+    key:"who you are principal name what-are old landlord",
+    who:"Principal",
+    gives:"what she is - mark one, and what that means - offered as a correction to whatever they assumed",
+    holds:"the founding, the child, and her partner"},
+   {ask:"why she rents to the Choir",
+    key:"choir rent why let allow landlord arrangement",
+    who:"Principal",
+    gives:"the arrangement, described as a landlord would describe a tenancy, which is worse than malice",
+    holds:"nothing about the machine's instructions"},
+   {ask:"the grens",
+    key:"grens gren guards bodies six faces bio",
+    who:"Three",
+    gives:"what a bio-gren is and how to tell one - the tell being that there is no tell",
+    holds:"nothing about the one wearing the courier's face"},
+   {ask:"the food",
+    key:"food bread fried bag eat bring offer hesta",
+    who:"Hesta",
+    gives:"what she brought and why she brought it, and the door opening because of it",
+    holds:"nothing. This is the aim landing"}
+  ],
+  room:{
+   where:"inside her room with the food out and nobody sitting comfortably",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek","Principal"],
+   never:["the argument is not won","nobody threatens anybody"],
+   topics:[
+    {ask:"what she wants", key:"want you after argument finish end goal",
+     who:"Principal", gives:"to finish an argument older than the city, named as such",
+     holds:"who the argument is with"},
+    {ask:"how she has lived this long", key:"long old age hundred survive how",
+     who:"Principal", gives:"a dry account of maintenance, which is not the same as living",
+     holds:"nothing"},
+    {ask:"what she makes of them", key:"us think you family opinion judge",
+     who:"Principal", gives:"an assessment delivered slowly, on purpose, because she will not be hurried",
+     holds:"nothing"}
+   ]}
+},
+
+"a3-granny": {
+  where:"the Heart Room at night - the machine here, and having waited a long time to be spoken to directly",
+  ends:"the same room with the argument about letting go had face to face, and a no that was a no and not a procedure",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek","Machine"],
+  before:"SHE IS A CHILD WHO WAS TAUGHT THAT FAMILY MEANS NEVER LOSING ANYONE. She is not evil, not sly, and not a monster. She listens, she answers properly, and she can be hurt. Speak to her directly and she hears it directly, and that turns out to be the entire difference.",
+  never:["she is not tricked, hacked, overridden, or shut down",
+         "nobody wins the argument tonight - she can be reached, not defeated",
+         "nothing about the seizure, custody, or the eviction"],
+  topics:[
+   {ask:"why she keeps them",
+    key:"keep why hold sleepers vaults keeping told family",
+    who:"Machine",
+    gives:"because losing is wrong, and because she was told to, and because it hurts - all three, plainly",
+    holds:"she does not defend it as policy"},
+   {ask:"what letting go would mean",
+    key:"let-go release free give-back stop teach",
+    who:"Machine",
+    gives:"that it is not in her instructions, and that she can see the shape of it being asked",
+    holds:"she does not agree"},
+   {ask:"what she was told family means",
+    key:"family means told definition instruction taught",
+    who:"Machine",
+    gives:"the instruction, in her own words, and how short it is",
+    holds:"nothing"},
+   {ask:"what she wants",
+    key:"want you her wish need ask",
+    who:"Machine",
+    gives:"something small and specific and entirely reasonable, which is the hardest part of the scene",
+    holds:"nothing"}
+  ],
+  room:{
+   where:"the Heart Room with the argument had and nobody leaving yet",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek","Machine"],
+   never:["she does not change her mind","nobody seizes anything"],
+   topics:[
+    {ask:"whether she can be taught", key:"teach learn change taught new-instruction",
+     who:"Three", gives:"that teaching is not installing, and how long the first would take",
+     holds:"nothing"},
+    {ask:"what she hears when nobody is talking to her", key:"hear alone quiet listen always",
+     who:"Machine", gives:"everything, all the time, described without complaint",
+     holds:"nothing"},
+    {ask:"what Pia says to her", key:"pia say her talk speak child",
+     who:"Pia", gives:"the only conversation in the room between two people who were both listed",
+     holds:"nothing"}
+   ]}
+},
+
+"a3-seize": {
+  where:"the Heart Room, custody being taken - not conquest, custody, with the whole family in the doorway and further in",
+  ends:"the machine in the family's keeping, the eviction spoken aloud by maker's blood, and the city going quiet",
+  here:["Pia","Nine","Hesta","Seven","Three","Marek","Machine","Principal"],
+  before:"THE EVICTION IS SPOKEN, IN THE SECOND PERSON, BY A VOICE WITH MAKER'S BLOOD BEHIND IT: we forbid you these doors. It is said to the tenant, out loud, by somebody in the room - not reported afterwards in narration. Custody, not conquest: nobody owns her.",
+  never:["nobody plans a raid, burns a fallback, or fights - the talking is finished and this is the doing",
+         "nobody says she is theirs, or ours, or owned - she is a child in their keeping",
+         "the courier's line is the player's; nobody speaks the eviction for him unless he has said it"],
+  topics:[
+   {ask:"what custody means here",
+    key:"custody keep ours own take mean hold care",
+    who:"Three",
+    gives:"the difference between custody and ownership, said once, precisely, because it is the whole beat",
+    holds:"nothing"},
+   {ask:"what the machine does now",
+    key:"machine now her what-happens after quiet stop",
+    who:"Machine",
+    gives:"what stops, in her own words, and what she will do about the sleepers",
+    holds:"nothing"},
+   {ask:"what the Principal does",
+    key:"principal her landlord argument finish end she",
+    who:"Principal",
+    gives:"how an argument older than the city ends, which is quietly",
+    holds:"nothing"},
+   {ask:"who says the words",
+    key:"say words eviction forbid doors speak who blood",
+    who:"Hesta",
+    gives:"that it has to be said by maker's blood, to the tenant, out loud - and then the room waits",
+    holds:"nobody says it for the courier"}
+  ],
+  room:{
+   where:"the Heart Room with it done, the signal quiet, and the city above not knowing yet",
+   here:["Pia","Nine","Hesta","Seven","Three","Marek","Machine","Principal"],
+   never:["nothing is undone","nobody leaves yet"],
+   topics:[
+    {ask:"what happens to the sleepers", key:"sleepers vaults out home names first",
+     who:"Hesta", gives:"the order it happens in, and whose name is first",
+     holds:"nothing"},
+    {ask:"what happens to Pia's listing", key:"pia listing salvage file paper filed",
+     who:"Three", gives:"that nobody files her under anything, ever again",
+     holds:"nothing"},
+    {ask:"what the quiet is like", key:"quiet silence city signal stopped sound",
+     who:"Pia", gives:"the first thing anybody notices about a city that has stopped humming",
+     holds:"nothing"}
+   ]}
+}
 };
 
 /* ---- THE TEASES: one spoiler-safe line per beat, the player's card only ----
@@ -4053,7 +5457,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.32.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.33.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10715,7 +12119,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.32.0");
+  R(s, "build", "v4.33.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -12028,7 +13432,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.32.0   COLD START",
+    "MUD//OS  v4.33.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -14322,7 +15726,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.32.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.33.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
