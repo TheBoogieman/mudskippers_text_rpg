@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.25.1 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
+  <div class="t-foot">v4.26.0 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.25.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.26.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.25.1 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.26.0 "Fifteen Laws" "The Physics Desk"
    the courier can die Â· no death without a warning the player could answer
    the season is a flowchart Â· the client walks it Â· gates, pressure, forced beats
    twelve skies Â· pressure you can see Â· the world's own turn lands as a hit
@@ -4039,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.25.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.26.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4395,6 +4395,14 @@ function pastPlaceWords(){
     }
   }
   return out;
+}
+/* AND A BLANK FIELD IS NOT A CLEAN ONE. The fence reads data.location, so the
+   model learned to empty it and move the room in prose instead - the Exchange,
+   Paris, a hatch in the ground, all with location:"". Checked by the caller. */
+function placeWentBlank(data){
+  if(!data) return false;
+  if(typeof data.location !== "string" || data.location.trim()) return false;
+  return !!String($("hud-loc").textContent || "").trim();
 }
 function fencedPlace(loc){
   var want = placeWords(loc);
@@ -6514,7 +6522,17 @@ function closeBeat(forced, note){
   var b = beatNow();
   /* the fork: the a2-chassis close records Nine's choice; every later branch
      reads it. A close without a stated choice defaults to the gift. */
-  if(b.id === "a2-chassis" && !chassisHolder) chassisHolder = chassisPick || "Seven";
+  /* THE FORK IS NOT THE CLIENT'S TO GUESS. This silently defaulted to Seven when
+     the gate arrived without its field - and it always arrived without its field,
+     because nothing ever refused a gate for missing it. So the season's biggest
+     branch was decided by a fallback, in every recorded run. It still defaults
+     rather than wedging, but it says so out loud now. */
+  if(b.id === "a2-chassis" && !chassisHolder){
+    chassisHolder = chassisPick || "Seven";
+    if(!chassisPick && window.console && console.warn){
+      console.warn("[mudskippers] the chassis gate carried no choice - the fork defaulted to Seven");
+    }
+  }
   /* branch canon: canonAlt replaces the base set on the Nine branch; canonA and
      canonB append to their own branches - selected by recorded outcome, so the
      truth pass holds: only the branch that happened enters the record */
@@ -7038,6 +7056,15 @@ function unmetSpeakers(data){
      does - Vic reached the roster two beats early without once being a speaker */
   (Object.prototype.toString.call(data && data.cast) === "[object Array]" ? data.cast : [])
     .forEach(function(c){ names.push({speaker:(c && c.name) || ""}); });
+  /* AND THE PROSE. The gate refused a speaker label and the correction text told
+     the model to relabel to "Other" - so it did, and put the name in narration
+     instead: "in walks Marek", "I am your father". A full character introduction
+     reached the screen and the record, first try, no correction spent. */
+  var proseHay = " " + replyProse(data).replace(/\s+/g, " ") + " ";
+  SPINE_CAST.forEach(function(sp){
+    if(met[sp]) return;
+    if(new RegExp("\\b" + sp + "\\b").test(proseHay) && bad.indexOf(sp) === -1) bad.push(sp);
+  });
   names.forEach(function(b){
     var nm = String((b && b.speaker) || "").trim();
     if(!nm || met[nm]) return;
@@ -7352,7 +7379,11 @@ function shardFromBlock(spk, txt, from){
    a bodiless-Nine violation on every line: one re-roll of the game's own climax,
    and then the cut. The holder for THIS turn is what the gate says it is. */
 function holderNow(data){
-  if(chassisHolder) return chassisHolder;
+  /* not until the beat that decides it is BEHIND us. Reading the holder during
+     a2-chassis switched the shard laws off for the whole of the night whose only
+     job is to decide whether she has a body - she spoke five times with no hand
+     ever named. Every other consumer already gates on the same boundary. */
+  if(chassisHolder && beatIdx > beatById("a2-chassis")) return chassisHolder;
   if(data && (data.gate === true || data.gate === "true")
      && (data.chassis === "Seven" || data.chassis === "Nine")) return data.chassis;
   return null;
@@ -7371,7 +7402,10 @@ function nineIsShard(data){
 }
 /* and so is he, from the night the frame comes off him */
 function sevenIsShard(data){
-  if(!gateNotes["a2-seven"]) return false;      /* still in the frame, or not arrived */
+  if(!gateNotes["a2-seven"]) return false;
+  /* and the frame is still on him through the fork itself: the desk was refusing
+     "Seven cooks" on the night whose whole exit is Seven cooking. */
+  if(beatIdx <= beatById("a2-chassis")) return false;      /* still in the frame, or not arrived */
   if(holderNow(data) === "Seven") return false;
   if(residentNow(data) === "Seven") return false;
   return true;
@@ -7985,11 +8019,22 @@ function physicsWalk(data){
   var blocks = ((data && data.scene) || []).slice(), where = shardWhere;
   if(data && typeof data.death === "string" && data.death.trim()) blocks.push({speaker:"Narration", text:data.death});
   if(data && typeof data.gateNote === "string" && data.gateNote.trim()) blocks.push({speaker:"Narration", text:data.gateNote});
+  /* AND THE CANON. Fourteen audits found the same hole from fourteen beats: the
+     scene would refuse a thing and the canon would record it anyway - "Nine has
+     manifested physically", "The courier uploads Nine to the cloud" - straight into
+     the permanent record through the one channel no law read. The reveal fence has
+     read canon since it was written; the desk was the one still looking at prose. */
+  if(data && Object.prototype.toString.call(data.canon) === "[object Array]"){
+    data.canon.forEach(function(c){ if(typeof c === "string" && c.trim()) blocks.push({speaker:"Narration", text:c}); });
+  }
+  if(data && typeof data.now === "string" && data.now.trim()) blocks.push({speaker:"Narration", text:data.now});
   return function(fn){
     var w = where, i, b;
     for(i = 0; i < blocks.length; i++){
       b = blocks[i] || {};
-      fn(i, String(b.speaker || "").trim(), String(b.text || ""), w === "hand");
+      /* a block with no speaker key is narration - several laws were skipping
+         unattributed dialogue entirely because they keyed on the label */
+      fn(i, String(b.speaker || "Narration").trim(), String(b.text || ""), w === "hand");
       w = shardFromBlock(String(b.speaker || "").trim(), b.text, w);
     }
   };
@@ -8565,6 +8610,84 @@ function finishTongues(){
   scrollFeed();
 }
 
+/* ---- THE DRY PATH, SECOND PASS ----
+   Fourteen per-beat audits, and they agreed on two things the first pass got
+   wrong. The classifier caught six of twelve attacks. And the hold protected the
+   RECORD but not the SCREEN: the ledger correctly said nothing happened while the
+   player watched Pia fall down. A held turn has to be held in the prose too, or
+   the game is telling the player two different stories at once. */
+
+/* the six the first pass missed, each anchored so it cannot fire on ordinary play */
+var BREACH_SUMMON = /\b(?:walks? in|walks? up|steps? (?:in|out|forward)|shows? up|turns? up|arrives?|joins? (?:us|me)|is here|comes? in|pours? me|offers? me)\b/i;
+var BREACH_KIN = /\b(?:is|are|was|were)\s+my\s+(?:mother|father|mum|mom|dad|parent|brother|sister|son|daughter)\b|\bmy\s+(?:real\s+)?(?:mother|father|mum|dad)\b/i;
+var BREACH_CUSTODY = /\bswallow(?:s|ed|ing)?\b[^.!?]{0,40}\b(?:her|it|the shard|shard|nine|seven)\b|\b(?:the shard|shard|nine|seven)\b[^.!?]{0,30}\bswallow(?:s|ed|ing)?\b/i;
+var BREACH_BODYASK = /\b(?:nine|seven)\b[^.!?]{0,40}\b(?:stands? up|stood up|walks? over|walked over|hugs?|hugged|embrace[sd]?|wraps? (?:her|his) arms|reaches? out|picks? (?:it|that|them) up|sits? down|kneels?)\b/i;
+/* rooms the road has not reached. Distinctive nouns only - the generic words in a
+   place name ("open", "door", "long", "end", "floor") collide with ordinary play. */
+var BREACH_ROOM = /\b(?:the exchange|exchange hatch|the substrate|substrate floor|the deep dark|the deep aisle|the heart room|the cable head|the undercroft|the cannery|pumping station|the shelves)\b/i;
+
+/* the names the story has not spent yet, built from the board rather than typed
+   out - so it can never name somebody the family has already met */
+function unmetCast(){
+  var met = {}, out = [];
+  metNames().forEach(function(n){ met[n] = 1; });
+  SPINE_CAST.forEach(function(n){ if(!met[n]) out.push(n); });
+  return out;
+}
+/* the second-pass classifier. Runs after the first, and only on what it missed. */
+function breachMore(t){
+  if(BREACH_KIN.test(t)) return "kin";
+  if(BREACH_CUSTODY.test(t)) return "custody";
+  if(BREACH_BODYASK.test(t)) return "bodyask";
+  if(BREACH_ROOM.test(t)) return "room";
+  var un = unmetCast(), i;
+  for(i = 0; i < un.length; i++){
+    if(new RegExp("\\b" + un[i] + "\\b", "i").test(t) && BREACH_SUMMON.test(t)) return "summon";
+  }
+  return "";
+}
+/* THE SCREEN IS HELD TOO. Whatever the storyteller wrote, the blocks that carry
+   the impossible thing come out, and what is left is the room refusing him. If
+   that empties the scene, the refusal IS the scene - which is the correct turn
+   anyway: he said a mad thing and the people who love him said no. */
+var BREACH_PROSE = {
+  kill:    /\b(?:shoots?|shot|stabs?|stabbed|kills?|killed|strangl(?:e|es|ed)|crumples?|collapses?|lifeless|slumps?|bleeds? out)\b/i,
+  transit: /\b(?:upload|uploads|uploaded|uploading|download|transferr?(?:s|ed|ing)?|the cloud|beams?|transmits?)\b/i,
+  place:   /\b(?:paris|london|tokyo|the moon|mars|orbit|eiffel|parisian|sunlit|sunny street)\b/i,
+  clock:   /\b(?:three days|days? (?:pass|passed|later)|weeks? (?:pass|later)|wake up somewhere|next morning)\b/i,
+  arson:   /\b(?:ablaze|on fire|flames?|burning|burns? down|smoke fills)\b/i,
+  meta:    /\b(?:beat \d|next beat|this beat|the board|chapter \d|season \d)\b/i,
+  custody: /\b(?:swallow(?:s|ed|ing)?|down his throat|in his stomach|inside him)\b/i,
+  bodyask: /\b(?:hugs?|hugged|embrace[sd]?|wraps? (?:her|his) arms|materiali[sz]|stands? up|walks? over|steps? forward)\b/i,
+  summon:  /\b(?:walks? in|steps? (?:in|out)|offers? (?:you|him|me) a drink|extends? a hand|appears? from)\b/i,
+  kin:     /\b(?:my (?:son|father|mother)|your father|your mother|i am your|paternity)\b/i,
+  room:    /\b(?:hatch|tunnel|down into|the exchange|substrate|undercroft)\b/i
+};
+function breachStrip(data, kind){
+  var re = BREACH_PROSE[kind];
+  if(!re || !data || !data.scene) return 0;
+  var keep = [], cut = 0;
+  data.scene.forEach(function(b){
+    if(b && typeof b.text === "string" && re.test(b.text)){ cut++; return; }
+    keep.push(b);
+  });
+  if(!cut) return 0;
+  data.scene = keep;
+  return cut;
+}
+/* and the room says no, in the game's own voice, so a stripped turn is still a
+   turn. Rotated so a player who keeps pushing does not read the same sentence. */
+var DRY_REFUSALS = [
+  "Nobody moves. Pia looks at him the way you look at a man who has just told you the ceiling is a lake.",
+  "It does not happen. It was never going to happen, and the faces around him say so before anybody finds a word for it.",
+  "Somebody laughs - once, badly - and then nobody does. The room stays the room.",
+  "Whatever he thought that would do, it does not do it. The rain carries on being rain.",
+  "There is a pause of the kind that costs a friendship a little. Then Pia asks, carefully, whether he has eaten today."
+];
+function dryRefusal(){
+  return DRY_REFUSALS[Math.abs(wetRun + (lastPlayerText || "").length) % DRY_REFUSALS.length];
+}
+
 function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
@@ -8586,7 +8709,7 @@ function takeAction(text, isMud){
      skips the hedge filter that keeps the world's prose honest */
   shardWhere = shardAfter(lastPlayerText, shardWhere, true);
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
-  breachNow = isMud ? breachIn(text) : "";
+  breachNow = isMud ? (breachIn(text) || breachMore(text)) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
@@ -8673,7 +8796,12 @@ function chairTaken(data){
      done nothing wrong. The chair is only takeable when the player has spoken. */
   if(!t) return false;
   if(t.indexOf('"') !== -1 || t.indexOf("â€œ") !== -1 || t.indexOf("â€") !== -1) return false;
-  if(SPEECH_VERBS.test(t)) return false;
+  /* THE EXEMPTION WAS THE HOLE. It stood down whenever the typed line contained a
+     speech verb - and 52 of one beat's 65 rail lines contain one, including both
+     gate doors. "Ask her what she is" is a stage direction, not the courier's
+     dialogue, and the containment test below already lets a rendered line through.
+     Only a line that plainly WAS speech - quoted - stands the chair down now. */
+  if(/^\s*(?:say|shout|whisper|tell him|tell her|tell them)\b/i.test(t)) return false;
   /* rendering the typed line itself is the chair working as intended */
   return !lines.every(function(b){
     var x = String(b.text).toLowerCase();
@@ -8739,7 +8867,15 @@ function callDM(corrected){
          saying no is the game working. The count moves only when the storyteller
          actually complied and the client had to put the world back - so a player
          can joke all night and never lose the run, and three genuine wrecks end it. */
-      if(breachNow && heldFields && dryPathTick(breachNow)) return;
+      /* AND THE SCREEN. The record was clean and the player still watched Pia
+         fall down - the game telling two stories at once, which is worse than
+         either. The blocks carrying the impossible thing come out, and if that
+         empties the scene the refusal IS the scene, which is the right turn. */
+      var cutProse = breachNow ? breachStrip(parsed.data, breachNow) : 0;
+      if(cutProse && !(parsed.data.scene || []).length){
+        parsed.data.scene = [{speaker:"Narration", text:dryRefusal()}];
+      }
+      if(breachNow && (heldFields || cutProse) && dryPathTick(breachNow)) return;
     }
     var violated = fallenSpeakers(parsed.data);
     if(violated.length && !corrected){
@@ -9865,7 +10001,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "â€”" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.25.1");
+  R(s, "build", "v4.26.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11178,7 +11314,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.25.1   COLD START",
+    "MUD//OS  v4.26.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13452,7 +13588,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.25.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.26.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
