@@ -1163,7 +1163,7 @@
   <div id="choices"></div>
   <div class="mudrow">
     <input id="mudinput" type="text" maxlength="400"
-      placeholder="…or go off the flowchart. Type anything." />
+      placeholder="…or say what the courier does. Enter to do it, the button for a bit." />
     <button id="mudbtn">MUDSKIPPER MOMENT</button>
   </div>
 </div></div>
@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.38.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.39.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.38.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.39.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.38.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.39.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5462,7 +5462,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.38.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.39.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5533,6 +5533,12 @@ var pickKind = "";           /* "exit" | "stall" | "walk" - this turn's door */
 var pendingKind = "";        /* set by the button, consumed by takeAction */
 var stalledNow = false;      /* a gate was held because the player stalled */
 var askAgain = 0;            /* re-asks spent on THIS turn - one correction is a request */
+/* ONE POLITE ASK PER SUBSYSTEM. Ten unrelated validators shared a single budget -
+   the truthiness of "corrected" - so after ANY first correction the physics went
+   straight to cutting lines, the chair to stripping, and the cast to relabelling,
+   without ever asking. A model corrected once about a spoiler was then silently
+   mutilated over a body-verb it would gladly have rewritten. */
+var askedFor = {};
 var dryTicked = false;       /* the dry path has already counted this turn's damage */
 var walkArmed = false;       /* the way out asks twice, every time - session only */
 var exitArmed = false;       /* and so does the door that ends the night */
@@ -8366,8 +8372,11 @@ function boardTurn(data){
      rides it, and the rain neither ticks nor forgives while the table laughs.
      A bit can never be TAKEN. */
   if(lastTurnMud){
-    knock = false;
     said = false;
+    /* ...but the knock survives. Immunity means a bit cannot be TAKEN, and a
+       knock takes nothing: it is a doorbell, not a key - it offers the way on and
+       the player still has to reach for it. Stripping it here meant a reach
+       wrapped in a joke was not a reach at all. */
   }
   /* an interlude that rode this exchange is spent once the reply lands */
   if(interludeServedId){
@@ -10089,6 +10098,56 @@ function physicsWalk(data){
     }
   };
 }
+/* which channel a walk index belongs to. physicsWalk reads the scene and then
+   five more channels the player also reads - death, gateNote, canon, now and the
+   rail - but the cut filtered data.scene by index, so every hit outside the scene
+   fell past it untouched: a law-breaking canon line went into the permanent
+   record and a law-breaking choice rendered as a button, both AFTER the desk had
+   named them. Detected and uncuttable is worse than undetected. */
+function physicsLayout(data){
+  var i = ((data && data.scene) || []).length;
+  var L = {scene:i, death:-1, gateNote:-1, canon:[], now:-1, choices:[]};
+  if(data && typeof data.death === "string" && data.death.trim()) L.death = i++;
+  if(data && typeof data.gateNote === "string" && data.gateNote.trim()) L.gateNote = i++;
+  if(data && Object.prototype.toString.call(data.canon) === "[object Array]"){
+    data.canon.forEach(function(c){ if(typeof c === "string" && c.trim()) L.canon.push(i++); });
+  }
+  if(data && typeof data.now === "string" && data.now.trim()) L.now = i++;
+  if(data && Object.prototype.toString.call(data.choices) === "[object Array]"){
+    data.choices.forEach(function(c){ if(typeof c === "string" && c.trim()) L.choices.push(i++); });
+  }
+  return L;
+}
+/* cut what the desk named, wherever it lives */
+function physicsCut(data, doomed){
+  var L = physicsLayout(data), dropped = [];
+  data.scene = (data.scene || []).filter(function(b, i){ return doomed.indexOf(i) === -1; });
+  if(L.death >= 0 && doomed.indexOf(L.death) !== -1){ delete data.death; dropped.push("death"); }
+  if(L.gateNote >= 0 && doomed.indexOf(L.gateNote) !== -1){
+    /* a gate whose note broke a law does not get to file itself */
+    delete data.gateNote; data.gate = false; dropped.push("gateNote+gate");
+  }
+  if(L.canon.length){
+    var keepC = [], ci = 0;
+    (data.canon || []).forEach(function(c){
+      if(typeof c !== "string" || !c.trim()){ keepC.push(c); return; }
+      if(doomed.indexOf(L.canon[ci]) === -1) keepC.push(c); else dropped.push("canon");
+      ci++;
+    });
+    data.canon = keepC;
+  }
+  if(L.now >= 0 && doomed.indexOf(L.now) !== -1){ delete data.now; dropped.push("now"); }
+  if(L.choices.length){
+    var keepX = [], xi = 0;
+    (data.choices || []).forEach(function(c){
+      if(typeof c !== "string" || !c.trim()){ keepX.push(c); return; }
+      if(doomed.indexOf(L.choices[xi]) === -1) keepX.push(c); else dropped.push("choice");
+      xi++;
+    });
+    data.choices = keepX;
+  }
+  return dropped;
+}
 function physicsBreaks(data){
   var out = [], walk = physicsWalk(data);
   PHYSICS.forEach(function(r){
@@ -10992,6 +11051,8 @@ function takeAction(text, isMud){
   /* the door this turn came through - only a rail click sets one, so typing and
      bits are neither an exit nor a stall nor a walk */
   pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false; exitArmed = false;
+  turnContext = null;             /* a new player turn composes its briefing once */
+  askedFor = {};                  /* ...and every subsystem gets its own one ask */
   if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
   lastPlayerText = text.trim();   /* the chair lint checks the reply against this */
   /* his hands are the player's. Reaching for the shard IS taking it out, so the
@@ -11178,11 +11239,24 @@ function chairStrip(data){
   data.scene = (data.scene || []).filter(function(bk, i){ return doomed.indexOf(i) === -1; });
   return doomed.length;
 }
-function callDM(corrected){
+/* the composed briefing for THIS player turn, held so a correction resends it
+   byte for byte */
+var turnContext = null;
+function callDM(corrected, tag){
   if(runOver) return;
   setBusy(true);
-  pendingRetry = function(){ callDM(corrected); };
-  var msgs = buildContext();
+  pendingRetry = function(){ callDM(corrected, tag); };
+  if(tag) askedFor[tag] = 1;
+  /* "WRITE THE TURN AGAIN" MEANS THE SAME TURN. buildContext() is not pure: it
+     spends a topic card, advances the maintenance rotation, arms interlude ids
+     and resets pendingCompaction. Rebuilding it on a correction therefore asked
+     the storyteller to rewrite a turn it had never been given - a DIFFERENT card,
+     a different nudge - and then judged the answer against the first one. The
+     composition happens once per player turn now, and every correction resends
+     exactly what was sent. */
+  var msgs;
+  if(corrected && turnContext){ msgs = turnContext.slice(); }
+  else { msgs = buildContext(); turnContext = msgs.slice(); }
   if(corrected){
     msgs = msgs.slice();
     msgs[0] = {role:"user", content: msgs[0].content + "\n\n" + corrected};
@@ -11229,17 +11303,17 @@ function callDM(corrected){
       if(breachNow && (heldFields || cutProse) && dryPathTick(breachNow)) return;
     }
     var violated = fallenSpeakers(parsed.data);
-    if(violated.length && !corrected){
+    if(violated.length && !askedFor.chairFacts){
       return callDM("(CORRECTION: " + violated.join(" and ")
         + (violated.length === 1 ? " is fallen and cannot appear alive." : " are fallen and cannot appear alive.")
-        + " Rewrite the turn honoring the roster.)");
+        + " Rewrite the turn honoring the roster.)", "chairFacts");
     }
     if(violated.length && window.console && console.warn){
       console.warn("[mudskippers] roster violation stood after one correction:", violated.join(", "));
     }
     /* the cast gate: a later book's person on tonight's stage is spent, not
        introduced - and the name is the tell, so it costs one correction */
-    if(!corrected){
+    if(!askedFor.cast){
       var early = unmetSpeakers(parsed.data);
       if(early.length){
         return callDM("(NOT YET CAST: " + early.join(" and ") + " belong" + (early.length === 1 ? "s" : "")
@@ -11247,7 +11321,7 @@ function callDM(corrected){
           + (early.length === 1 ? "them" : "them") + ", and putting a name on screen before its"
           + " night spends it. Rewrite this turn with the same events: if the scene needs another"
           + " body, they are \"Other\" and they are nobody the story is keeping. Only the names in"
-          + " ON STAGE may speak.)");
+          + " ON STAGE may speak.)", "cast");
       }
       /* and the same rule for rooms: a later question's address, reached tonight,
          spends that question exactly as surely as its people do.
@@ -11258,14 +11332,14 @@ function callDM(corrected){
         return callDM("(YOU LEFT THE ROOM BLANK. You moved them somewhere in the prose and sent no"
           + " location with it, which is not a way round the map - it is just a turn the board"
           + " cannot file. They are still at " + ($("hud-loc").textContent || "where they were")
-          + ". Send the turn again with them where they actually are.)");
+          + ". Send the turn again with them where they actually are.)", "cast");
       }
       var whoPlace = personPlace(parsed.data && parsed.data.location);
       if(whoPlace){
         return callDM("(THAT IS A PERSON, NOT AN ADDRESS. You have just put " + whoPlace
           + "'s name on a door, in a street " + whoPlace + " has never stood in. Name the room for"
           + " what it is - a neighbour's kitchen, a shopfront, a hallway, a back room - and leave"
-          + " " + whoPlace + " where " + whoPlace + " lives.)");
+          + " " + whoPlace + " where " + whoPlace + " lives.)", "cast");
       }
       var earlyPlace = fencedPlace(parsed.data && parsed.data.location);
       if(earlyPlace){
@@ -11273,7 +11347,7 @@ function callDM(corrected){
           + " \"" + earlyPlace + "\" happens, and that is a later question. Arriving early spends it"
           + " - the beat that owned it has nothing left to be about. Rewrite this turn with the same"
           + " events somewhere they have not got to yet: the road there, the weather on the way, the"
-          + " last street before it. They can be walked toward. They cannot arrive.)");
+          + " last street before it. They can be walked toward. They cannot arrive.)", "cast");
       }
     }
     /* IT INSISTED. One correction is a request, and every gate in this file that
@@ -11316,7 +11390,7 @@ function callDM(corrected){
        the leaked line never reaches the screen. */
     var leaked = revealLeak(parsed.data);
     if(leaked.length){
-      if(!corrected){
+      if(!askedFor.reveal){
         return callDM("(TOO EARLY, AND IT IS THE ONE THING THAT CANNOT BE TAKEN BACK. This turn"
           + " says out loud: " + leaked.map(function(k){ return REVEALS[k]; }).join("; ")
           + ". That belongs to a question the story has not asked yet, and once the player has read"
@@ -11326,7 +11400,7 @@ function callDM(corrected){
           + " they say what they are willing to say tonight, which is not the same list."
           + " If somebody would plainly reach for it: they get interrupted, they change the"
           + " subject badly, they say the smaller true thing instead, or they say they are not"
-          + " doing this tonight. Any of those is better than the answer.)");
+          + " doing this tonight. Any of those is better than the answer.)", "reveal");
       }
       /* it insisted. One correction is a request - and a spoiler is the one thing
          that cannot be walked back once it is on screen, so the lines come out. */
@@ -11359,8 +11433,8 @@ function callDM(corrected){
        correction is a request, so the second refusal cuts the lines. */
     var broke = physicsBreaks(parsed.data);
     if(broke.length){
-      if(!corrected){
-        return callDM(broke.map(function(x){ return x.rule.say(); }).join("\n"));
+      if(!askedFor.physics){
+        return callDM(broke.map(function(x){ return x.rule.say(); }).join("\n"), "physics");
       }
       /* one cut, from the union. Two rules filtering in turn is how the second
          one ends up deleting by indices the first one already moved. */
@@ -11368,8 +11442,11 @@ function callDM(corrected){
       broke.forEach(function(x){
         x.hits.forEach(function(i){ if(doomed.indexOf(i) === -1) doomed.push(i); });
       });
-      parsed.data.scene = (parsed.data.scene || []).filter(function(b, i){ return doomed.indexOf(i) === -1; });
+      var cutAlso = physicsCut(parsed.data, doomed);
       broke.forEach(function(x){ if(x.rule.after) x.rule.after(parsed.data); });
+      if(cutAlso.length && window.console && console.warn){
+        console.warn("[mudskippers] physics also cut outside the scene: " + cutAlso.join(", "));
+      }
       if(!(parsed.data.scene || []).length){
         parsed.data.scene = [{speaker:"Narration",
           text:"The moment passes without it. Nothing in the room does the impossible thing, and the night goes on."}];
@@ -11380,12 +11457,12 @@ function callDM(corrected){
       }
     }
     if(deathRefused(parsed.data)){
-      if(!corrected){
+      if(!askedFor.death){
         return callDM("(CORRECTION: you killed the courier without ever declaring peril."
           + " The player had no warning and no chance to answer it, so that death does not stand."
           + " Rewrite this turn: put him in the danger, send \"peril\": true, name plainly what is"
           + " about to kill him, and give three choices including at least one real way out."
-          + " Do NOT send \"death\" this turn.)");
+          + " Do NOT send \"death\" this turn.)", "death");
       }
       /* it insisted. The player still does not die unwarned - the death is dropped. */
       delete parsed.data.death;
@@ -11476,14 +11553,14 @@ function callDM(corrected){
     }
     /* the refusal's certify pass: a suspected load-bearing death must enter the
        record or be denied on it - it does not get to live in prose alone */
-    if(!corrected){
+    if(!askedFor.roster){
       var suspect = deathSuspect(parsed.data);
       if(suspect){
         return callDM("(CHECK THE ROSTER: this turn reads like " + suspect + " was killed or"
           + " destroyed. If so, that is a death and it is permanent: keep the scene exactly as"
           + " written and send roster with " + suspect + " in fallen - the game will take it from"
           + " there. If " + suspect + " is alive, resend the turn making that plainly true in the"
-          + " prose and the canon.)");
+          + " prose and the canon.)", "roster");
       }
     }
     /* THE CHAIR, ENFORCED. Asking once and then shrugging is how "you own the
@@ -11496,10 +11573,10 @@ function callDM(corrected){
        disguise comes off the rail: everything the player did not say goes, the
        rest of the scene stands, and it is logged rather than quietly allowed. */
     if(chairTaken(parsed.data)){
-      if(!corrected){
+      if(!askedFor.chair){
         return callDM("(THE CHAIR WAS TAKEN - your reply spoke in the courier's voice beyond what"
           + " the player typed. Rewrite the turn: render the player's typed action and its consequences"
-          + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)");
+          + " only; give the courier no words or decisions of your own. Same scene, same events otherwise.)", "chair");
       }
       var cut = chairStrip(parsed.data);
       if(cut){
@@ -11529,12 +11606,22 @@ function callDM(corrected){
        asking for them was cut off the front before it ever read a word. Three
        ledgers running have looked exactly like this. The client cannot see the
        model's context length, but it can see the shape, and it can say so. */
-    if(sceneBlocks && choiceCount) thinReplies = 0;
+    /* AN ENDING OWES NOBODY A RAIL. The walkout directive says in so many words
+       "this is the last scene of this run - end on the door and the rain", and
+       then this rejected the scene it had just ordered and demanded "two dead
+       ends as instructed" - on a turn whose reply ends the run and whose rail
+       will never be rendered. The same holds for a death, a season's last turn
+       and the fold. runOver is not set until after this, so it cannot be the
+       test; what the turn IS has to be. */
+    var endingTurn = walkoutDue || foldPending || walkbackNow
+      || (parsed.data && (parsed.data.the_end === true || parsed.data.the_end === "true"))
+      || (parsed.data && typeof parsed.data.death === "string" && !!parsed.data.death.trim());
+    if(sceneBlocks && (choiceCount || endingTurn)) thinReplies = 0;
     else thinReplies++;
-    if(!choiceCount && sceneBlocks && !corrected && !runOver && !beatDone()){
+    if(!choiceCount && sceneBlocks && !askedFor.choices && !runOver && !beatDone() && !endingTurn){
       return callDM("(YOU SENT NO CHOICES. The reply had a scene but no \"choices\" array, so the"
         + " player has nothing to pick from and the rail had to repeat itself. Resend this same"
-        + " turn, same scene, with \"choices\": two dead ends as instructed.)");
+        + " turn, same scene, with \"choices\": two dead ends as instructed.)", "choices");
     }
     if(thinReplies >= 3 && !truncWarned && !runOver){
       truncWarned = true;
@@ -11549,10 +11636,10 @@ function callDM(corrected){
       scrollFeed();
     }
     if(!sceneBlocks){
-      if(!corrected){
+      if(!askedFor.noScene){
         return callDM("(YOU SENT NO SCENE. The reply had no \"scene\" blocks in it, so the player"
           + " is looking at a blank turn. Write the turn now: three or four blocks of speaker/text,"
-          + " the player's action and what it costs, in the register you were given.)");
+          + " the player's action and what it costs, in the register you were given.)", "noScene");
       }
       setBusy(false);
       if(window.console && console.warn){
@@ -11583,9 +11670,27 @@ function callDM(corrected){
   });
 }
 
+/* WHAT TYPING MEANS. Both of these shipped every typed line as a MUDSKIPPER
+   MOMENT, so there was no plain typed-action channel at all - and the game's two
+   most-quoted promises, "what you do is law" and "your bits can't be spent",
+   shared one button. The casualty was the knock: the slack directive tells the
+   storyteller to send knock:true when the PLAYER's typed action plainly reaches
+   for the season's next matter, the storyteller obeys, and boardTurn stripped it
+   because the turn was a bit. A playtester typed "Enough sitting. Take me to the
+   safehouse", the DM knocked, and nothing happened - the doorbell was wired
+   through a dead switch, and could only ever ring on a rail click, i.e. on
+   choices the DM had been told must lean nowhere.
+   The contract is now explicit rather than guessed, because a classifier that
+   gets it wrong either spends a bit that was promised free or makes a joke cost
+   the run: ENTER is the courier doing a thing, the BUTTON is a bit, and a line
+   opened with "!" is a bit for people who never leave the keyboard. */
 $("mudbtn").onclick = function(){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); };
 $("mudinput").addEventListener("keydown", function(e){
-  if(e.key==="Enter"){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); }
+  if(e.key!=="Enter") return;
+  var v=$("mudinput").value;
+  if(!v.trim()) return;
+  var bang = /^\s*!/.test(v);
+  takeAction(bang ? v.replace(/^\s*!\s?/, "") : v, bang);
 });
 
 /* ============ THE CHRONICLE AS SOURCE (repair reads only) ============
@@ -12091,7 +12196,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.38.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.39.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12442,7 +12547,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.38.0");
+  R(s, "build", "v4.39.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13755,7 +13860,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.38.0   COLD START",
+    "MUD//OS  v4.39.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -16070,7 +16175,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.38.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.39.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
