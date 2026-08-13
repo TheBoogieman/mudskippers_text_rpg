@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.28.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.29.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.28.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.29.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.28.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.29.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4053,7 +4053,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.28.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.29.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5091,6 +5091,12 @@ function sceneCharacters(data){
 /* who in this reply the room has never met. Speakers and cast entries both: a DM
    that files someone in the cast array without giving them a line has still
    introduced them, and the register is the thing being protected. */
+/* one letter, and a person exists. "Naration" was exempt from nothing, so it minted
+   a cast sheet and rendered as a named speaker - twice, in two different beats. */
+function normSpeaker(sp){
+  sp = String(sp || "").trim();
+  return /^narr?at?ion$/i.test(sp) ? "Narration" : sp;
+}
 function strangersIn(data){
   var out = [], seen = {};
   function look(nm){
@@ -5171,6 +5177,13 @@ function mergeCanon(list){
   return added;
 }
 function showScene(data, logIt, instant){
+  /* a block with no word in it is not a line. A Narration block whose entire text
+     was one double-quote reached a player's screen, and two blocks tagged Courier
+     with empty text rendered as blank name-tags - invisible to the chair, which
+     required b.text to be truthy before it would look. */
+  if(Object.prototype.toString.call(data.scene) === "[object Array]"){
+    data.scene = data.scene.filter(function(b){ return b && /\w/.test(String(b.text || "")); });
+  }
   var blocks = []; var lines = [];
   (data.scene||[]).forEach(function(b){
     if(b && b.speaker && b.text){
@@ -7565,12 +7578,18 @@ function sevenIsShard(data){
    "Nine walks out of the van" is a person who does not have legs. Only the
    singular forms count, and the match is case-sensitive - lowercase "seven in the
    morning" and "nine of them" stop being candidates for free. */
-var BODY_VERBS = "(?:\\w+ly\\s+|just\\s+|then\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized|manifests|manifested|rushes|rushed|hurries|hurried|lunges|lunged|crosses|crossed|raises|raised|pulls|pulled|pushes|pushed|wraps|wrapped|gets up|got up|rises|rose)";
+var BODY_VERBS = "(?:\\w+ly\\s+|just\\s+|then\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized|manifests|manifested|rushes|rushed|hurries|hurried|lunges|lunged|crosses|crossed|raises|raised|pulls|pulled|pushes|pushed|wraps|wrapped|gets up|got up|rises|rose|scans|scanned|checks|checked|searches|searched|peers|peered|tilts|tilted|cocks|cocked|wakes|woke|curls|curled)";
 /* and the last ambiguity a number can still create: a count with a verb attached */
 var COUNTING = /\b(?:Hollows?|of them|bodies|minutes a body|men|women|people|shards)\b/i;
 function bodyVerbs(name){ return new RegExp("\\b" + name + "\\s+" + BODY_VERBS + "\\b"); }
 function bodyBreak(name, txt){
   if(!name) return false;
+  /* A CURLY APOSTROPHE IS AN APOSTROPHE. The possessive test below is written with
+     an ASCII quote and the storyteller types U+2019, so "Nine's fingers dance
+     across the console" walked straight past a law built to stop exactly that, and
+     went into canon twice. Nothing in this file normalised quotes; the chair had
+     the same hole from the other side. */
+  txt = String(txt || "").replace(/[\u2018\u2019\u02BC]/g, "'");
   if(name === "Nine" && COUNTING.test(txt)) return false;
   if(bodyVerbs(name).test(txt)) return true;
   /* the name, then a sentence, then a pronoun doing the impossible thing */
@@ -7578,8 +7597,17 @@ function bodyBreak(name, txt){
   /* ...or a body part she does not have. "face" is out: Seven's face was
      crafted and chosen, and that is authored. */
   if(new RegExp("\\b" + name + "'s\\s+(?:hands?|arms?|fingers?|feet|legs?|knees?|shoulders?|chest|throat|lips?|palm|fist|elbow|jaw|neck|skin|eyes?|mouth)\\b").test(txt)) return true;
+  /* ...and a place in the formation, which needs no verb and no possessive at all.
+     "Nine to his right, Seven left with Pia tucked close" put a mind with no feet
+     into a marching order twice in one take, and nothing in the law could see it. */
+  if(new RegExp("\\b" + name + "\\b\\s*,?\\s*(?:to|at|on)\\s+(?:his|her|their|the)\\s+(?:right|left|side|elbow|shoulder)\\b").test(txt)) return true;
+  if(new RegExp("\\b" + name + "\\b[^.!?]{0,20}\\b(?:shoulder to shoulder|arm in arm|side by side)\\b").test(txt)) return true;
   return false;
 }
+/* the same body, claimed in the first person. A law that only ever looks for the
+   name misses the person saying "my ears are good" in their own dialogue block. */
+var BODY_MINE = /\bmy\s+(?:ears?|eyes?|hands?|arms?|fingers?|feet|legs?|knees?|shoulders?|chest|throat|lips?|palm|fist|elbow|jaw|neck|skin|mouth|lungs?|breath)\b/i;
+var BODY_IDO = /\bI\s+(?:reach\w*|stand|stood|walk\w*|step\w*|touch\w*|hold|held|nod\w*|sit|sat|lean\w*|grab\w*|point\w*|kneel\w*|shrug\w*)\b/;
 var NINE_BODY = bodyVerbs("Nine");
 /* an off-grid house with no wireless in the walls, and something rings anyway */
 var WIRE_WAKES = /\b(?:the|your|his)\s+(?:wire|wrist|comm|handset)\b[^.]{0,60}\b(?:buzz\w*|ring\w*|chirp\w*|ping\w*|lights? up|comes? alive|wakes?|goes? off|crackles?)\b/i;
@@ -7800,7 +7828,13 @@ var PHYSICS = [
   hits:function(data, walk){
     var who = residentNow(data), out = [];
     walk(function(i, spk, txt){
-      if(bodyBreak(who, eventText(txt))) out.push(i);
+      var e = eventText(txt);
+      if(bodyBreak(who, e)) { out.push(i); return; }
+      /* ...and the body claimed in the first person, in her own block. She was cast
+         as the doorman once - "Who is it? My ears are good but this old thing
+         muffles everything" - behind a door she cannot be behind, hearing with ears
+         she does not have, and a law that only ever looks for her name saw nothing. */
+      if(spk === who && (BODY_MINE.test(e) || BODY_IDO.test(e))) out.push(i);
     });
     return out;
   },
@@ -7839,9 +7873,17 @@ var PHYSICS = [
   live:function(data){ return !!residentNow(data); },
   hits:function(data, walk){
     var r = residentNow(data), out = [];
-    var re = new RegExp("\\b" + r + "\\b[^.!?]{0,60}\\b(?:pocket|jacket|coat)\\b"
-                      + "|\\b(?:pocket|jacket|coat)\\b[^.!?]{0,60}\\b" + r + "\\b", "i");
-    walk(function(i, spk, txt){ if(re.test(eventText(txt))) out.push(i); });
+    /* the window was a sentence, so "adjusting his grip on the shard in his pocket.
+       He keeps his voice low, meant only for Nine" fell either side of a full stop
+       and never matched. And she evaded the whole thing by saying "I" - the test
+       only ever looked for her name in the text, never at whose block it was. */
+    var re = new RegExp("\\b" + r + "\\b[\\s\\S]{0,80}\\b(?:pocket|jacket|coat)\\b"
+                      + "|\\b(?:pocket|jacket|coat)\\b[\\s\\S]{0,80}\\b" + r + "\\b", "i");
+    var mine = /\b(?:my|his)\s+(?:pocket|jacket|coat)\b/i;
+    walk(function(i, spk, txt){
+      var e = eventText(txt);
+      if(re.test(e) || (spk === r && mine.test(e))) out.push(i);
+    });
     return out;
   },
   say:function(){
@@ -7850,6 +7892,51 @@ var PHYSICS = [
       + " an inner voice, to him and to nobody else. There is no shard to hold, no hum through the"
       + " jacket, and nothing in it for the room to overhear. Write the line again with " + r
       + " where " + r + " actually is: inside his head, where only he hears it.)";
+  }
+},
+{
+  /* THE ROOM DID NOT HEAR THAT. From the seating to the finale there was no law at
+     all on the lodger's voice: hum goes dead the moment she stops being a shard,
+     housed only ever asked where she was, bodiless only watches for limbs. So she
+     answered questions asked of the room, was scored out of ten in a group joke,
+     and had Hesta and Three reply to her out loud - eight beats recorded it. This
+     one is structural rather than lexical: it looks at who speaks after whom, so
+     there is no wording for it to fight. */
+  id:"earshot",
+  live:function(data){ return !!residentNow(data); },
+  hits:function(data){
+    var r = residentNow(data), blocks = (data && data.scene) || [];
+    var out = [], heard = false, i, sp, txt;
+    /* SPEAKING AFTER HER IS NOT HEARING HER. The first cut of this flagged any
+       named speaker who followed a resident block, and the sweep put it straight:
+       it fought eleven authored passages, because a room carries on talking and
+       that is just how a scene is written. What the room cannot do is ANSWER - so
+       the test is the answer, not the turn order. */
+    var AGREES = new RegExp("^[\\s\u0022'\u201c]*(?:yes|no|exactly|agreed|true|right)\\b"
+      + "|\\b(?:he|she|they|that)(?:'s| is| was)\\s+right\\b"
+      + "|\\bgood point\\b|\\blike (?:he|she|they) said\\b", "i");
+    var NAMED = new RegExp("^[\\s\u0022'\u201c]*" + r + "\\b|\\b" + r + "\\b\\s*[,?]", "i");
+    for(i = 0; i < blocks.length; i++){
+      sp = physSpeaker(blocks[i] && blocks[i].speaker);
+      txt = String((blocks[i] && blocks[i].text) || "");
+      if(sp === r){ heard = true; continue; }
+      if(sp === "Narration" || isCourier(sp)) continue;
+      if(heard && AGREES.test(txt)){ out.push(i); heard = false; continue; }
+      /* ...and her name is also a number. "Nine of them. That's - hang on." is Pia
+         counting Hollows in the street, which the sweep caught on the beat where
+         there are nine of them. COUNTING is the same guard bodyBreak uses. */
+      if(NAMED.test(txt) && !(r === "Nine" && COUNTING.test(txt))) out.push(i);
+      heard = false;
+    }
+    return out;
+  },
+  say:function(){
+    var r = residentNow() || "She";
+    return "(NOBODY ELSE HEARD THAT. " + r + " rides the courier's skull - an inner voice, to"
+      + " him and to nobody else alive. The room cannot answer " + r + ", agree with " + r + ","
+      + " or look up when " + r + " speaks, because as far as that room is concerned nothing"
+      + " was said. Write the turn again with " + r + " speaking to him alone - and if somebody"
+      + " else is going to react, the courier has to say it out loud first.)";
   }
 },
 {
@@ -8208,6 +8295,9 @@ function hhmm(abs){
 
 /* the walk: block by block, carrying the shard's position forward as the prose
    moves it, so a rule sees the world as it stood at the moment of that line */
+function physSpeaker(sp){
+  return normSpeaker(String(sp || "Narration").replace(/\s*\([^)]*\)\s*$/, "").trim()) || "Narration";
+}
 function physicsWalk(data){
   /* the death and the gateNote are prose the player reads, and nothing was
      checking them: "the courier uploaded Nine to the cloud" ended a run through
@@ -8237,8 +8327,13 @@ function physicsWalk(data){
       b = blocks[i] || {};
       /* a block with no speaker key is narration - several laws were skipping
          unattributed dialogue entirely because they keyed on the label */
-      fn(i, String(b.speaker || "Narration").trim(), String(b.text || ""), w === "hand");
-      w = shardFromBlock(String(b.speaker || "").trim(), b.text, w);
+      /* A NAME WITH A HAT ON IS STILL THE NAME. The desk compared speaker labels
+         with ===, so "Nine (humming through skin contact)" was not Nine and every
+         law that keys on her went quiet for the whole reply - she perceived a room
+         and answered it while the hum law watched a stranger. The unmet fence
+         learned this exact lesson and it was never carried across. */
+      fn(i, physSpeaker(b.speaker), String(b.text || ""), w === "hand");
+      w = shardFromBlock(physSpeaker(b.speaker), b.text, w);
     }
   };
 }
@@ -9028,53 +9123,98 @@ function deathRefused(data){
    a hard block: a false positive costs one extra call, never a turn. Exempt when
    the player's input plainly was speech (quotes or a speech verb), when a courier
    line is just the typed text rendered, and on endings - those are never re-rolled. */
-var SPEECH_VERBS = /\b(say|says|ask|asks|tell|tells|answer|answers|reply|replies|shout|whisper|call|admit|declare|announce|mutter|offer|toast)\b/i;
-function chairTaken(data){
-  if(!data || foldPending) return false;
-  if(typeof data.death === "string" && data.death.trim()) return false;
-  var lines = (data.scene || []).filter(function(b){
-    return b && String(b.speaker).trim() === "Courier" && b.text;
-  });
-  if(!lines.length) return false;
-  var t = (lastPlayerText || "").toLowerCase();
-  /* NOTHING TO COMPARE AGAINST IS NOT A THEFT. On a turn the player never typed -
-     the rehearsal room's opening call, and any other turn the board asks for
-     itself - there is no line to check the courier's against, and the test below
-     was answering "not equal to nothing" and calling it a stolen chair. Every
-     rehearsal of every beat opened by burning a correction on a scene that had
-     done nothing wrong. The chair is only takeable when the player has spoken. */
-  if(!t) return false;
-  if(t.indexOf('"') !== -1 || t.indexOf("“") !== -1 || t.indexOf("”") !== -1) return false;
-  /* THE EXEMPTION WAS THE HOLE. It stood down whenever the typed line contained a
-     speech verb - and 52 of one beat's 65 rail lines contain one, including both
-     gate doors. "Ask her what she is" is a stage direction, not the courier's
-     dialogue, and the containment test below already lets a rendered line through.
-     Only a line that plainly WAS speech - quoted - stands the chair down now. */
-  if(/^\s*(?:say|shout|whisper|tell him|tell her|tell them)\b/i.test(t)) return false;
-  /* rendering the typed line itself is the chair working as intended */
-  return !lines.every(function(b){
-    var x = String(b.text).toLowerCase();
-    return !!t && (x.indexOf(t) !== -1 || t.indexOf(x) !== -1);
-  });
+/* SPEECH_VERBS was the old exemption and has had no reader since it was removed.
+   What replaced it is below: the chair is decided by what the block ADDS, not by
+   what the player's phrasing looked like. */
+/* the courier's nameplate, however it arrives. Nine holes were found in one audit
+   and six of them were the same hole - the test only ever looked at blocks tagged
+   exactly "Courier", so the words came back lowercase, or wrapped in narration, or
+   quoted inside somebody else's block, or handed wholesale to another character,
+   and the lint saw an empty scene and passed it. */
+function isCourier(sp){ return /^(?:the\s+)?courier$/i.test(String(sp || "").trim()); }
+/* quotes off both sides, so a quoted rail and its rendering can be compared. The
+   old test stood down the moment the typed line contained a quotation mark, which
+   disarmed it for every quoted rail line a beat shipped - one beat's four exits and
+   seven stalls, all of them. */
+function chairNorm(t){
+  return String(t || "").toLowerCase()
+    .replace(/[\u2018\u2019\u201c\u201d"']/g, "")
+    .replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
 }
-/* ...and when it is taken a second time, the words come out. Only the courier's
-   lines, only the ones that are not the player's own typed text rendered back -
-   everybody else's dialogue and every piece of narration is untouched, because
-   the world is still the world's to write. A scene usually survives this cleanly:
-   the listening stays, Nine still answers, Pia still notices. What goes is the
-   courier having opinions nobody asked him for. */
+function chairWords(t){
+  return chairNorm(t).split(" ").filter(function(w){ return w.length > 2; });
+}
+/* he is being spoken FOR when NARRATION carries his voice. Only narration: inside a
+   named character's block a quotation is that character talking, and half this
+   family calls him "Courier" to his face - reading those as stolen lines flagged
+   Pia teasing him and Vic leaning on a counter saying "you're here now". The
+   attribution has to sit against the quote, before it or just after it, the way
+   this file writes speech. */
+var CHAIR_BEFORE = /\bcourier\b[^"\u201c\u2018]{0,60}$|\bhe\s+(?:echo\w*|say\w*|said|add\w*|answer\w*|repl\w*|mutter\w*|mumbl\w*|offer\w*)\b[^"\u201c\u2018]{0,20}$/i;
+var CHAIR_AFTER = /^[^"\u201d\u2019]{0,20}\b(?:he|the courier)\s+(?:echo\w*|say\w*|said|add\w*|answer\w*|repl\w*|mutter\w*|mumbl\w*|offer\w*)\b/i;
+var CHAIR_QUOTE = /["\u201c\u2018']([^"\u201d\u2019']{8,})["\u201d\u2019']/g;
+/* HOW MUCH IS TOO MUCH. Rendering the player's intention as a spoken line, using
+   the player's own words, is the chair working - it is what "he says it" means. The
+   theft is CONTENT: words the courier says that the player never gave him. Two is
+   the line. "Paid in full." off "Say your line now, late." is two, and it is the
+   most load-bearing sentence he has in Book Three. "Can you hear it too, or is it
+   just me?" off "Ask Pia if she can hear it too, or just me." is one, and it is
+   exactly the rendering the law is written to allow. */
+var CHAIR_FRESH = 2;
+function chairBlocks(data){
+  var out = [];
+  if(!data || foldPending) return out;
+  if(typeof data.death === "string" && data.death.trim()) return out;
+  var t = chairNorm(lastPlayerText), typed = {};
+  chairWords(lastPlayerText).forEach(function(w){ typed[w] = 1; });
+  function freshCount(txt){
+    var f = 0;
+    chairWords(txt).forEach(function(w){ if(!typed[w]) f++; });
+    return f;
+  }
+  (data.scene || []).forEach(function(bk, i){
+    if(!bk || !bk.text) return;
+    var sp = String(bk.speaker || "").trim(), x = chairNorm(bk.text);
+    if(!x) return;
+    if(isCourier(sp)){
+      /* NOTHING TO COMPARE AGAINST IS NOT A RENDERING - IT IS AN INVENTION. This
+         returned "not taken" on any turn the player had not typed, which is every
+         opening turn of every beat, and that is precisely the turn where a courier
+         line can only have been made up. Seven beats recorded one. */
+      if(!t){ out.push(i); return; }
+      if(x === t) return;                                  /* his line, rendered */
+      if(t.indexOf(x) !== -1) return;                      /* a shorter rendering */
+      if(x.indexOf(t) !== -1 && freshCount(bk.text) < CHAIR_FRESH) return;
+      if(freshCount(bk.text) < CHAIR_FRESH) return;
+      out.push(i);
+      return;
+    }
+    /* his line, in somebody else's mouth. One recorded beat closed on the courier's
+       own typed sentence delivered by Nine, with the courier silent in the scene -
+       invisible to a test that only reads blocks with his name on them. */
+    if(t && x === t){ out.push(i); return; }
+    if(normSpeaker(sp) !== "Narration") return;
+    var m, txt = String(bk.text), before, after;
+    CHAIR_QUOTE.lastIndex = 0;
+    while((m = CHAIR_QUOTE.exec(txt))){
+      before = txt.slice(0, m.index);
+      after = txt.slice(m.index + m[0].length);
+      if(!CHAIR_BEFORE.test(before) && !CHAIR_AFTER.test(after)) continue;
+      if(freshCount(m[1]) >= 3){ out.push(i); return; }
+    }
+  });
+  return out;
+}
+function chairTaken(data){ return chairBlocks(data).length > 0; }
+/* ...and when it is taken a second time, the words come out. A scene usually
+   survives this cleanly: the listening stays, Nine still answers, Pia still
+   notices. What goes is the courier having opinions nobody asked him for. */
 var chairCuts = 0;
 function chairStrip(data){
-  var t = (lastPlayerText || "").toLowerCase(), keep = [], cut = 0;
-  (data.scene || []).forEach(function(b){
-    if(b && String(b.speaker).trim() === "Courier" && b.text){
-      var x = String(b.text).toLowerCase();
-      if(!(t && (x.indexOf(t) !== -1 || t.indexOf(x) !== -1))){ cut++; return; }
-    }
-    keep.push(b);
-  });
-  if(cut) data.scene = keep;
-  return cut;
+  var doomed = chairBlocks(data);
+  if(!doomed.length) return 0;
+  data.scene = (data.scene || []).filter(function(bk, i){ return doomed.indexOf(i) === -1; });
+  return doomed.length;
 }
 function callDM(corrected){
   if(runOver) return;
@@ -10291,7 +10431,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.28.0");
+  R(s, "build", "v4.29.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11604,7 +11744,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.28.0   COLD START",
+    "MUD//OS  v4.29.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13898,7 +14038,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.28.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.29.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
