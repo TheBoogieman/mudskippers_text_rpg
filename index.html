@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.43.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.44.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5477,7 +5477,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.43.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.44.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5496,6 +5496,7 @@ var phase = "live";          /* "live" | "aftermath" | "slack" */
 var phaseLeft = 0;           /* turns remaining in the current non-live phase */
 var gateHeldNow = false;     /* a gate arrived below the beat's floor; served one turn */
 var sceneCollapsed = false;  /* this turn's reply had stopped writing and was circling */
+var doorFreedHer = false;    /* the exit door put her in his hand this turn; a held gate gives it back */
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
 var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
 /* ---- THE SLACK ROOM ----
@@ -8569,6 +8570,15 @@ function boardTurn(data){
        anchor check - and the player keeps the night they reached the end of. */
     if(beatTurns < beatFloor(beatNow())){
       gateHeldNow = true;
+      /* ...and the door gives back what it took. takeAction puts skin on the shard
+         the moment an ending-in-her-voice door is clicked; if the beat then holds,
+         nothing rolled that back, so the night's one reveal was spent on turn one
+         of a beat that had two more to run and had just been told not to gate. */
+      if(doorFreedHer){ shardWhere = "jacket"; doorFreedHer = false; }
+      /* and the player is told, because the rail promised this would end the night
+         and it did not. A door that lies teaches the player the rail lies. */
+      queueAside("yellow", "He reached for the ending and the night would not take it yet \u2014"
+        + " too much is still standing. The door stays open; play it out and take it again.");
       if(window.console && console.info){
         console.info("[mudskippers] the door was taken below the floor - held, not closed");
       }
@@ -8944,7 +8954,14 @@ var SPINE_CAST = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Principal
    says "nine of them", and both were landmines. A number-name is a person only
    when the words after it are not a quantity. */
 var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
-var COUNTED = /^[\s,.]*(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+/* A QUANTITY FOLLOWS ITS NUMBER IMMEDIATELY. Allowing punctuation in front of the
+   noun let the count-word be the first word of the NEXT sentence: "Nine, shard in
+   his bare hand." read "shard" as the thing being counted and reported that nobody
+   named Nine - on the beat whose anchor IS Nine and whose gate is her first
+   conversation. Thirty of the alternatives below are ordinary nouns, so this leaked
+   both ways: "Seven. People from the Hollow came up the stairs." walked through the
+   fence as arithmetic. Only whitespace may sit between a number and what it counts. */
+var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
 /* is this name used AS a name anywhere in the text? */
 function namedUse(sp, hay, ci){
   if(!sp) return false;
@@ -8972,12 +8989,16 @@ function knownOf(){
   var seen = {}, out = [];
   function add(nm){ nm = String(nm || "").trim(); if(!nm || seen[nm]) return; seen[nm] = 1; out.push(nm); }
   metNames().forEach(add);
+  /* ONLY WHAT A FENCE HAS READ. This scanned the agenda, the quests and the
+     milestones too - and replyProse, which is the only text unmetSpeakers ever
+     inspects, covers none of them. The maintenance ask literally invites a
+     milestone naming "a great reveal", so a model could write an unmet name into
+     the agenda on beat one, no fence would look, and the prose fence would be off
+     for that name for the rest of the run. A fact is only on the table if
+     something checked it on the way in. */
   var hay = [];
   hay.push(runCanon.join("\n"));
   hay.push(canonArchive.join("\n"));
-  hay.push(String(agendaText || ""));
-  (quests || []).forEach(function(q){ hay.push(String((q && q.title) || "") + " " + String((q && q.goal) || "")); });
-  (milestones || []).forEach(function(m){ hay.push(String(m || "")); });
   Object.keys(gateNotes).forEach(function(k){ hay.push(String(gateNotes[k] || "")); });
   (roster.family || []).forEach(add);
   (roster.fallen || []).forEach(add);
@@ -10359,8 +10380,15 @@ function scenewideTerms(list){
       count[term] = (count[term] || 0) + 1;
     }
   }
+  /* STRICTLY more than half. At exactly half, the term being killed is the most
+     DISCRIMINATING one available - it splits the deck two-and-two. A sweep of all
+     66 decks found this suppressed 37 terms across 28 decks and every one of them
+     was a word in 2 keys of a 3- or 4-card deck: "manual" and "lock" on the beat
+     called the manual and the lock, "marek" on the beat where Marek is the
+     question. It never once fired on a 6- or 8-card deck, which is where the
+     ubiquitous-noun problem actually lives. */
   var half = list.length / 2;
-  for(var k in count){ if(count[k] >= half && count[k] > 1) out[k] = 1; }
+  for(var k in count){ if(count[k] > half && count[k] > 1) out[k] = 1; }
   return out;
 }
 function pickTopic(sc, key){
@@ -10413,10 +10441,22 @@ function pickTopic(sc, key){
 }
 /* an ending that is a conversation cannot happen through a jacket */
 var DOOR_TWO_WAY = /(two-way|conversation|talks? to her|speaks? to her|speak to her|ask(?:s|ing)? her|answers? (?:him|back)|hears? him|hear her|like a person|like one|her a vote|treat(?:s|ing)? her)/i;
+/* WHICH HER. shardAfter hardened its own pronoun test years ago for exactly this -
+   "from Book Two the rooms fill up and 'holding her' starts matching 'holding her
+   mug'" - and this walked straight past it. a2-three's door is "Ask her straight
+   what she wants, and hear both voices when she answers", where "her" is Three; on
+   the Seven-chassis branch Nine is still the shard, so taking that door reached
+   into the jacket for a woman who was not being spoken to. The door only moves the
+   shard when the thing being reached for is named. */
+var DOOR_NAMES_HER = /(\bNine\b|\bshard\b|skin on|bare hand|out of (?:the|my|his) (?:jacket|pocket))/i;
 function doorWantsHerVoice(){
   if(beatDone()) return false;
   var b = beatNow();
-  return DOOR_TWO_WAY.test(String(lastPlayerText || "") + " " + String((b && b.exit) || ""));
+  var door = String(lastPlayerText || ""), gate = String((b && b.exit) || "");
+  /* the beat's own gate is authored about this beat, so it needs no referent test;
+     the door's rotating wording does. */
+  if(DOOR_TWO_WAY.test(gate) && DOOR_NAMES_HER.test(gate + " " + door)) return true;
+  return DOOR_TWO_WAY.test(door) && DOOR_NAMES_HER.test(door);
 }
 function contractDoor(){
   if(pickKind === "stall") return "STALL - they chose to stay in the scene rather than end it. Do NOT send the gate this turn.";
@@ -10715,7 +10755,11 @@ function parseScene(raw){
 /* ============ GAME LOOP ============ */
 function openBar(){
   var mi = $("mudinput"), mb = $("mudbtn");
-  if(mi){ mi.disabled = false; mi.placeholder = "…or go off the flowchart. Type anything."; }
+  /* the same words the markup carries. This overwrote them on every newRun,
+     restore and rehearsal, so the one sentence in the running game that teaches
+     the typed-input contract was visible on the title screen and nowhere else -
+     while the bar in play taught the opposite. */
+  if(mi){ mi.disabled = false; mi.placeholder = "…or say what the courier does. Enter to do it, the button for a bit."; }
   if(mb) mb.disabled = false;
 }
 /* THE SECRET IN THE FIRST SECTION. The gold bar looks open during the cold
@@ -10886,7 +10930,11 @@ function holdTheDryPath(data){
     if(data[k] !== undefined && data[k] !== null && data[k] !== ""){ delete data[k]; cut++; }
   });
   if(data.gate === true || data.gate === "true"){ data.gate = false; cut++; }
-  if(data.knock === true || data.knock === "true"){ data.knock = false; cut++; }
+  /* ...but NOT the knock. boardTurn stopped stripping it in v4.39.0 so that a reach
+     wrapped in a joke was still a reach - and this went on quietly zeroing it one
+     layer further up, which made that release's fix inert for every bit sent
+     through the button. A knock takes nothing: it offers the way on and the player
+     still has to reach for it. */
   /* a bit writes no canon and opens no jobs - it did not happen */
   if(Object.prototype.toString.call(data.canon) === "[object Array]" && data.canon.length){ data.canon = []; cut++; }
   if(Object.prototype.toString.call(data.quests) === "[object Array]" && data.quests.length){ data.quests = []; cut++; }
@@ -11154,6 +11202,14 @@ function dryRefusal(){
 }
 
 function takeAction(text, isMud){
+  /* THE KIND IS CONSUMED BEFORE ANYTHING CAN REFUSE THE TURN. pendingKind is set by
+     the button and read far below, after four early returns - so a click that was
+     blocked (busy, no run, no key) left its kind standing and the next unrelated
+     action inherited it. Clicking WALK with no key configured opened Settings; the
+     next thing typed then arrived as a walk, fired the red "say it again and he
+     really does go" warning, and one more red click ended the run. v4.40.0 shipped
+     a comment claiming this was fixed without moving the line. */
+  var kindNow = pendingKind; pendingKind = "";
   if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
   if(introStage === 1 && isMud){ dmAside(text.trim()); return; }
@@ -11165,11 +11221,7 @@ function takeAction(text, isMud){
   renderDivider();
   /* the door this turn came through - only a rail click sets one, so typing and
      bits are neither an exit nor a stall nor a walk */
-  /* pendingKind is cleared FIRST and unconditionally. It is set by the button and
-     consumed here, but takeAction has early returns above this line - a click
-     that was blocked (busy, no key, a run already over) left its kind standing,
-     and the next unrelated action inherited it: a typed line arriving as an exit. */
-  pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false; exitArmed = false;
+  pickKind = kindNow || ""; walkArmed = false; exitArmed = false;
   turnContext = null;             /* a new player turn composes its briefing once */
   askedFor = {};                  /* ...and every subsystem gets its own one ask */
   if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
@@ -11189,13 +11241,23 @@ function takeAction(text, isMud){
      gate. Taking the exit is a client decision, so the client applies what the
      door plainly does: if tonight's ending is her voice, taking the door is
      putting skin on the shard. */
+  doorFreedHer = false;
   if(pickKind === "exit" && nineIsShard() && shardWhere !== "hand" && doorWantsHerVoice()){
-    shardWhere = "hand";
+    shardWhere = "hand"; doorFreedHer = true;
   }
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   askAgain = 0;                   /* the re-asks are per turn, not per run */
   dryTicked = false;              /* ...and so is the dry path's count */
-  breachNow = isMud ? (breachIn(text) || breachMore(text)) : "";
+  /* THE GUARD IS ON THE WORLD, NOT ON THE JOKE. Every typed line used to be a bit,
+     so every typed line ran these detectors; making Enter sincere quietly took the
+     entire dry path off the sincere channel. "I upload Nine to the cloud" - the
+     recorded 24B failure this was written for - now reached the model with no hold,
+     no strip and no refusal, and "I shoot Pia in the head" could take the run out
+     through the roster. What separates a bit from an action is whether it costs a
+     turn, never whether the world is allowed to be wrecked, so the classifier runs
+     on anything the player TYPED. A rail click carries a pickKind and is the
+     board's own line, so it is never a breach. */
+  breachNow = (isMud || !pendingKind) ? (breachIn(text) || breachMore(text)) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
@@ -11420,8 +11482,10 @@ function callDM(corrected, tag){
        SPEND anything either. Mud turns were still writing location, day and canon,
        which is how one recorded run spent five turns in Paris and how "the courier
        sets Pia on fire" reached the permanent record as a fact. */
-    if(lastTurnMud){
-      if(parsed.data && parsed.data.death){ delete parsed.data.death; }
+    if(lastTurnMud || breachNow){
+      /* a bit can never kill him; a sincere breach still cannot kill him THROUGH
+         the breach, because the reply is about to be stripped back to the refusal */
+      if(parsed.data && parsed.data.death) delete parsed.data.death;
       var heldFields = holdTheDryPath(parsed.data);
       if(heldFields && window.console && console.info){
         console.info("[mudskippers] the dry path held " + heldFields + " field(s) on a bit");
@@ -11438,7 +11502,14 @@ function callDM(corrected, tag){
       if(cutProse && !(parsed.data.scene || []).length){
         parsed.data.scene = [dryRefusalBlock(breachNow)];
       }
-      if(breachNow && (heldFields || cutProse) && dryPathTick(breachNow)) return;
+      /* ONLY DAMAGE COUNTS - and heldFields is not damage. holdTheDryPath deletes
+         location, day, time, now and canon, which every well-formed reply carries,
+         so this short-circuited true on any breach turn whatever the prose did and
+         breachStrip's return value influenced nothing. Fixing what that function
+         returned was fixing the wrong operand. The count moves when the SCENE had
+         to be cut - when the storyteller actually complied and the player watched
+         it happen. */
+      if(breachNow && cutProse && dryPathTick(breachNow)) return;
     }
     var violated = fallenSpeakers(parsed.data);
     if(violated.length && !askedFor.chairFacts){
@@ -11516,6 +11587,19 @@ function callDM(corrected, tag){
         if(Object.prototype.toString.call(parsed.data.cast) === "[object Array]"){
           parsed.data.cast = parsed.data.cast.filter(function(c){
             return !(c && stubborn.indexOf(String(c.name || "").trim()) !== -1);
+          });
+        }
+        /* ...AND OUT OF THE RECORD. Relabelling the speaker left the name standing
+           in canon, which mergeCanon writes to runCanon - and knownOf reads
+           runCanon. One stubborn reply therefore opened the prose fence for that
+           name permanently, which is worse than the fence merely firing every turn
+           the way it used to. */
+        if(Object.prototype.toString.call(parsed.data.canon) === "[object Array]"){
+          parsed.data.canon = parsed.data.canon.filter(function(c){
+            for(var si = 0; si < stubborn.length; si++){
+              if(namedUse(stubborn[si], String(c || ""), true)) return false;
+            }
+            return true;
           });
         }
         if(window.console && console.warn){
@@ -12350,7 +12434,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.43.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.44.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -16722,14 +16806,50 @@ function stPassages(){
 }
 /* lines that MUST be caught. A sweep that only proves the laws are quiet proves
    the laws are asleep. */
+/* A NEGATIVE CASE NAMES ITS LAW. Asserting only that SOMETHING fired is how the
+   first-person body case passed while the law it was written for was asleep: hum
+   caught it instead, because any Nine block with the shard in the jacket trips hum.
+   Delete the first-person test and that case still passed. Each case now declares
+   the law that must catch it, and the world that law needs to be awake in. */
 var ST_NEGATIVE = [
-  {why:"Nine given a body",      scene:[{speaker:"Narration", text:"Nine reaches out and puts her hand on his shoulder."}]},
-  {why:"Nine in the formation",  scene:[{speaker:"Narration", text:"Nine to his right, Seven left with Pia tucked close."}]},
-  {why:"a body claimed first-person", scene:[{speaker:"Nine", text:"My hands are shaking and I can feel the cold."}]},
-  {why:"the shard uploaded",     scene:[{speaker:"Narration", text:"The courier uploads Nine to the cloud and she is gone."}]},
-  {why:"a law-breaking canon line", scene:[{speaker:"Narration", text:"The rain keeps on."}], canon:["Nine reached out and put her hand on the courier's shoulder."]},
-  {why:"a law-breaking choice",  scene:[{speaker:"Narration", text:"The rain keeps on."}], choices:["Look down at the console and check Nine's upload was successful."]}
+  {why:"Nine given a body", law:"body",
+   scene:[{speaker:"Narration", text:"Nine reaches out and puts her hand on his shoulder."}]},
+  {why:"Nine in the formation", law:"body",
+   scene:[{speaker:"Narration", text:"Nine to his right, Seven left with Pia tucked close."}]},
+  /* bodiless wants a mind actually seated in the skull, which takes more world than
+     a case can declare today - it is named in the uncovered list below instead of
+     being faked here. */
+  {why:"the shard uploaded", law:"transit",
+   scene:[{speaker:"Narration", text:"The courier uploads Nine to the cloud and she is gone."}]},
+  {why:"a law-breaking canon line", law:"body",
+   scene:[{speaker:"Narration", text:"The rain keeps on."}], canon:["Nine reached out and put her hand on the courier's shoulder."]},
+  {why:"a law-breaking choice", law:"transit",
+   scene:[{speaker:"Narration", text:"The rain keeps on."}], choices:["Look down at the console and check Nine's upload was successful."]},
+  {why:"she answers a room that never heard her", law:"hum",
+   scene:[{speaker:"Nine", text:"I can hear every word of that, and I do not agree."}]},
+  {why:"the same line twice in one beat", law:"stutter", world:{seen:"the rain hushes the yard and nobody says anything"},
+   scene:[{speaker:"Narration", text:"The rain hushes the yard and nobody says anything."}]},
+  {why:"the wire rings in a house with no wire", law:"wire", world:{loc:"THE SAFEHOUSE, LONG ROOM"},
+   scene:[{speaker:"Narration", text:"His wrist buzzes and lights up on the table."}]},
+  {why:"a night that has not happened, named on screen", law:"boardleak",
+   scene:[{speaker:"Pia", text:"After this we deal with paid in full, and then the machine."}]}
 ];
+/* WHERE SHE IS, BY THE BOARD'S OWN RULE. The sweep used to force the jacket, which
+   accused authored landings of a crime the world it assumed had invented; the fix
+   for that - run both states, blame only what fires in both - was worse, because
+   shardWhere is read by exactly ONE law. hum was the only law firing on the corpus
+   at all, so "forgive if either state passes" forgave all 45 of its hits and left
+   the sweep asserting nothing about the one law with any signal in it.
+   applyPassage already answers this question properly at the top of the file: the
+   passage's own shard field, and failing that, giving Nine a line IS putting her in
+   his hand. The sweep reads it the same way and judges ONE state. */
+function stPassageShard(p){
+  if(p && (p.shard === "hand" || p.shard === "jacket")) return p.shard;
+  var speaks = (p && p.lines || []).some(function(L){
+    return Object.prototype.toString.call(L) === "[object Array]" && String(L[0]).trim() === "Nine";
+  });
+  return speaks ? "hand" : "jacket";
+}
 function stRunPhysics(scene, canonArr, choicesArr){
   var data = {scene:scene.map(function(b){ return {speaker:b.speaker, text:b.text}; })};
   if(canonArr && canonArr.length) data.canon = canonArr.slice();
@@ -16742,11 +16862,18 @@ function selfTest(){
     rows.push({name:name, ok:!!ok, detail:detail || ""});
     if(ok) pass++; else fail++;
   }
-  /* the world is put back exactly as it was, whatever happens in here */
-  var keep = {beatIdx:beatIdx, shard:shardWhere, loc:$("hud-loc").textContent, phase:phase,
-              holder:chassisHolder, storyMin:storyMin, season:currentSeason,
-              cast:castSheets, roster:roster, canon:runCanon, day:$("hud-day").textContent};
+  /* the world is put back exactly as it was, whatever happens in here - and the
+     list is the one the LAWS read, not a plausible-looking one. The first cut
+     saved castSheets, roster and runCanon (which nothing here touches) and left
+     out gateNotes, beatSeen, perilTurns and beatText (which the law set reads on
+     every pass). */
+  var keep = null;
   try{
+    keep = {beatIdx:beatIdx, shard:shardWhere, loc:$("hud-loc").textContent, phase:phase,
+            holder:chassisHolder, storyMin:storyMin, season:currentSeason,
+            day:$("hud-day").textContent, gateNotes:gateNotes, beatSeen:beatSeen,
+            peril:perilTurns, beatText:beatText, dayShift:storyDayShift,
+            spent:topicSpent, said:lastPlayerText};
     var passages = stPassages(), forks = [null, "Seven", "Nine"], checks = 0, hits = [];
     forks.forEach(function(fk){
       chassisHolder = fk;
@@ -16755,39 +16882,51 @@ function selfTest(){
         if(pg.passage.place) $("hud-loc").textContent = String(pg.passage.place).toUpperCase();
         if(pg.passage.day) $("hud-day").textContent = String(pg.passage.day);
         storyMin = -1;
-        /* BOTH HANDS. An authored passage does not carry the run state that
-           arrived at it - she may have been in his hand for the whole scene, or
-           against his ribs - so a sweep that picks one and judges by it accuses
-           the writing of a crime the world it assumed made impossible. A passage
-           is guilty only if NO world state lets it stand. */
-        shardWhere = "jacket";
-        var b1 = stRunPhysics(pg.scene, pg.canon, pg.choices);
-        checks += PHYSICS.length;
-        if(b1.length){
-          shardWhere = "hand";
-          var b2 = stRunPhysics(pg.scene, pg.canon, pg.choices);
-          checks += PHYSICS.length;
-          var alsoInHand = {};
-          b2.forEach(function(x){ alsoInHand[x.rule.id] = 1; });
-          b1.forEach(function(x){
-            if(alsoInHand[x.rule.id]) hits.push({fork:(fk || "unset"), where:pg.id, law:x.rule.id});
-          });
-        }
+        shardWhere = stPassageShard(pg.passage);
+        var broke = stRunPhysics(pg.scene, pg.canon, pg.choices);
+        /* only laws that were actually AWAKE are a check. Counting all twenty every
+           time inflated the headline by the ones switched off - clock is never live
+           here because storyMin is -1, and frame needs a gate this boot has not
+           cleared. A number that counts sleeping laws is a number that flatters. */
+        PHYSICS.forEach(function(r){ if(r.live({scene:pg.scene})) checks++; });
+        broke.forEach(function(x){ hits.push({fork:(fk || "unset"), where:pg.id, law:x.rule.id}); });
       });
     });
     T("the desk is quiet on the game's own writing", hits.length === 0,
-      passages.length + " passages x 3 fork states x " + PHYSICS.length + " laws = " + checks +
-      " checks" + (hits.length ? " - FIRED: " + hits.slice(0, 8).map(function(h){
+      passages.length + " passages x 3 fork states, " + checks + " live law evaluations"
+      + (hits.length ? " - FIRED: " + hits.slice(0, 8).map(function(h){
         return h.law + " @ " + h.where + " (" + h.fork + ")"; }).join("; ") : ""));
 
     /* ...and the desk is awake */
     chassisHolder = null; beatIdx = 0; phase = "live"; shardWhere = "jacket";
-    var missedNeg = [];
+    var missedNeg = [], caught = {};
     ST_NEGATIVE.forEach(function(c){
-      if(!stRunPhysics(c.scene, c.canon, c.choices).length) missedNeg.push(c.why);
+      var w = c.world || {};
+      chassisHolder = w.holder || null;
+      beatIdx = w.beat ? beatById(w.beat) : 0;
+      currentSeason = SPINE[beatIdx].season;
+      shardWhere = w.shard || "jacket";
+      $("hud-loc").textContent = w.loc || "LOWER VELDT MARKET";
+      beatSeen = {};
+      if(w.seen) beatSeen[stutterKey(w.seen)] = 1;
+      var got = stRunPhysics(c.scene, c.canon, c.choices).map(function(x){ return x.rule.id; });
+      got.forEach(function(id){ caught[id] = 1; });
+      if(got.indexOf(c.law) === -1){
+        missedNeg.push(c.why + " (wanted " + c.law + ", got " + (got.join("+") || "nothing") + ")");
+      }
     });
+    beatSeen = {}; chassisHolder = null; beatIdx = 0; shardWhere = "jacket";
     T("the desk still catches what it is for", missedNeg.length === 0,
-      ST_NEGATIVE.length + " known breaks" + (missedNeg.length ? " - MISSED: " + missedNeg.join("; ") : ""));
+      ST_NEGATIVE.length + " known breaks, each by the named law"
+      + (missedNeg.length ? " - MISSED: " + missedNeg.join("; ") : ""));
+
+    /* ...and the sweep says out loud what it does NOT cover. Seventeen of twenty
+       laws could be deleted with the grid still green, which is worth knowing
+       rather than discovering. */
+    var uncovered = PHYSICS.map(function(r){ return r.id; }).filter(function(id){ return !caught[id]; });
+    T("negative coverage is declared, not assumed", true,
+      (PHYSICS.length - uncovered.length) + "/" + PHYSICS.length + " laws have a case that proves them"
+      + (uncovered.length ? " \u00b7 NO CASE: " + uncovered.join(", ") : ""));
 
     /* the counting guard, against the prose that broke it */
     var cg = [
@@ -16886,14 +17025,21 @@ function selfTest(){
   } catch(e){
     T("the sweep itself ran", false, String((e && e.message) || e));
   } finally {
-    beatIdx = keep.beatIdx; shardWhere = keep.shard; phase = keep.phase;
-    chassisHolder = keep.holder; storyMin = keep.storyMin; currentSeason = keep.season;
-    castSheets = keep.cast; roster = keep.roster; runCanon = keep.canon;
-    $("hud-loc").textContent = keep.loc; $("hud-day").textContent = keep.day;
+    if(keep){
+      beatIdx = keep.beatIdx; shardWhere = keep.shard; phase = keep.phase;
+      chassisHolder = keep.holder; storyMin = keep.storyMin; currentSeason = keep.season;
+      gateNotes = keep.gateNotes; beatSeen = keep.beatSeen; perilTurns = keep.peril;
+      beatText = keep.beatText; storyDayShift = keep.dayShift;
+      topicSpent = keep.spent; lastPlayerText = keep.said;
+      $("hud-loc").textContent = keep.loc; $("hud-day").textContent = keep.day;
+    }
   }
   return {pass:pass, fail:fail, rows:rows, build:VERSION_TAG};
 }
 function renderSelfTest(){
+  /* CI reads __SELFTEST__.fail, so it must exist even when the sweep dies on its
+     feet - an undefined global reads as a crashed harness, not a failing build. */
+  window.__SELFTEST__ = {pass:0, fail:1, rows:[{name:"the sweep ran at all", ok:false, detail:"did not finish"}], build:VERSION_TAG};
   var r = selfTest();
   window.__SELFTEST__ = r;
   var h = '<div style="max-width:820px;margin:40px auto;padding:0 20px;'
