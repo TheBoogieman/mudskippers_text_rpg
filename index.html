@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.40.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.41.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.40.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.41.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.40.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.41.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4897,7 +4897,11 @@ var SCENEBOOK = {
 "a3-vic": {
   where:"the cannery yard at night - Vic has walked out to it on purpose and is waiting to be followed",
   ends:"the same yard, the confession made and paid for, and the family carrying him",
-  here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+  /* VIC IS IN THE ROOM ON THE NIGHT THAT IS ABOUT VIC. He was missing from this
+     list while three of the four cards below name him as the one who answers, so
+     the contract put the whole family on stage except the man whose confession
+     the beat exists for - and then ordered him to speak. The sweep found it. */
+  here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
   before:"THIS IS THE NIGHT HE ANSWERS FOR IT. Vic scanned customers for decades, found blood the founders' lock would accept, and built the housing into the courier's skull without asking. He spends himself here and his last words are PAID IN FULL. He speaks to the courier in the second person - not about him.",
   never:["nobody talks him out of it, and nobody discovers a way to save him",
          "he does not explain the machine, the vaults, or the plan - this is a confession, not a briefing",
@@ -5462,7 +5466,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.40.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.41.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -12287,7 +12291,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.40.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.41.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12643,7 +12647,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.40.0");
+  R(s, "build", "v4.41.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13956,7 +13960,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.40.0   COLD START",
+    "MUD//OS  v4.41.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -16271,7 +16275,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.40.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.41.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -16595,8 +16599,240 @@ function applyLaunchParams(){
   try{ saveSettings(); }catch(e){}
   return true;
 }
+/* ============ THE SWEEP =============================================
+   The game's own authored prose is the regression corpus. Every law here was
+   added to stop a real failure, and every one of them is a regex pointed at
+   English - so the thing that must never happen is a law that fights the
+   writing. Three separate detectors have been caught doing exactly that, each
+   time by running the whole spine through the desk before shipping.
+   That check lived in a scratch file and ran when somebody remembered. It is
+   part of the artifact now: open index.html?selftest, or in CI read
+   window.__SELFTEST__ after load. ==================================== */
+function stPassages(){
+  /* every authored passage in the build, with the world it claims */
+  var out = [];
+  SPINE.forEach(function(b, i){
+    ["opens", "lands", "landsHard"].forEach(function(k){
+      (b[k] || []).forEach(function(p, j){
+        var scene = [];
+        (p.lines || []).forEach(function(l){
+          if(typeof l === "string") scene.push({speaker:"Narration", text:l});
+          else if(l && l.length >= 2) scene.push({speaker:String(l[0]), text:String(l[1])});
+        });
+        if(!scene.length) return;
+        out.push({id:b.id + "/" + k + "[" + j + "]", beat:i, passage:p, scene:scene,
+                  canon:(b.canon || []), choices:(p.rail || [])});
+      });
+    });
+  });
+  return out;
+}
+/* lines that MUST be caught. A sweep that only proves the laws are quiet proves
+   the laws are asleep. */
+var ST_NEGATIVE = [
+  {why:"Nine given a body",      scene:[{speaker:"Narration", text:"Nine reaches out and puts her hand on his shoulder."}]},
+  {why:"Nine in the formation",  scene:[{speaker:"Narration", text:"Nine to his right, Seven left with Pia tucked close."}]},
+  {why:"a body claimed first-person", scene:[{speaker:"Nine", text:"My hands are shaking and I can feel the cold."}]},
+  {why:"the shard uploaded",     scene:[{speaker:"Narration", text:"The courier uploads Nine to the cloud and she is gone."}]},
+  {why:"a law-breaking canon line", scene:[{speaker:"Narration", text:"The rain keeps on."}], canon:["Nine reached out and put her hand on the courier's shoulder."]},
+  {why:"a law-breaking choice",  scene:[{speaker:"Narration", text:"The rain keeps on."}], choices:["Look down at the console and check Nine's upload was successful."]}
+];
+function stRunPhysics(scene, canonArr, choicesArr){
+  var data = {scene:scene.map(function(b){ return {speaker:b.speaker, text:b.text}; })};
+  if(canonArr && canonArr.length) data.canon = canonArr.slice();
+  if(choicesArr && choicesArr.length) data.choices = choicesArr.slice();
+  return physicsBreaks(data);
+}
+function selfTest(){
+  var rows = [], pass = 0, fail = 0;
+  function T(name, ok, detail){
+    rows.push({name:name, ok:!!ok, detail:detail || ""});
+    if(ok) pass++; else fail++;
+  }
+  /* the world is put back exactly as it was, whatever happens in here */
+  var keep = {beatIdx:beatIdx, shard:shardWhere, loc:$("hud-loc").textContent, phase:phase,
+              holder:chassisHolder, storyMin:storyMin, season:currentSeason,
+              cast:castSheets, roster:roster, canon:runCanon, day:$("hud-day").textContent};
+  try{
+    var passages = stPassages(), forks = [null, "Seven", "Nine"], checks = 0, hits = [];
+    forks.forEach(function(fk){
+      chassisHolder = fk;
+      passages.forEach(function(pg){
+        beatIdx = pg.beat; currentSeason = SPINE[pg.beat].season; phase = "live";
+        if(pg.passage.place) $("hud-loc").textContent = String(pg.passage.place).toUpperCase();
+        if(pg.passage.day) $("hud-day").textContent = String(pg.passage.day);
+        storyMin = -1;
+        /* BOTH HANDS. An authored passage does not carry the run state that
+           arrived at it - she may have been in his hand for the whole scene, or
+           against his ribs - so a sweep that picks one and judges by it accuses
+           the writing of a crime the world it assumed made impossible. A passage
+           is guilty only if NO world state lets it stand. */
+        shardWhere = "jacket";
+        var b1 = stRunPhysics(pg.scene, pg.canon, pg.choices);
+        checks += PHYSICS.length;
+        if(b1.length){
+          shardWhere = "hand";
+          var b2 = stRunPhysics(pg.scene, pg.canon, pg.choices);
+          checks += PHYSICS.length;
+          var alsoInHand = {};
+          b2.forEach(function(x){ alsoInHand[x.rule.id] = 1; });
+          b1.forEach(function(x){
+            if(alsoInHand[x.rule.id]) hits.push({fork:(fk || "unset"), where:pg.id, law:x.rule.id});
+          });
+        }
+      });
+    });
+    T("the desk is quiet on the game's own writing", hits.length === 0,
+      passages.length + " passages x 3 fork states x " + PHYSICS.length + " laws = " + checks +
+      " checks" + (hits.length ? " - FIRED: " + hits.slice(0, 8).map(function(h){
+        return h.law + " @ " + h.where + " (" + h.fork + ")"; }).join("; ") : ""));
+
+    /* ...and the desk is awake */
+    chassisHolder = null; beatIdx = 0; phase = "live"; shardWhere = "jacket";
+    var missedNeg = [];
+    ST_NEGATIVE.forEach(function(c){
+      if(!stRunPhysics(c.scene, c.canon, c.choices).length) missedNeg.push(c.why);
+    });
+    T("the desk still catches what it is for", missedNeg.length === 0,
+      ST_NEGATIVE.length + " known breaks" + (missedNeg.length ? " - MISSED: " + missedNeg.join("; ") : ""));
+
+    /* the counting guard, against the prose that broke it */
+    var cg = [
+      ["Three days ago", namedUse("Three", "Three days ago, a man called Vic"), false],
+      ["nine of them",   namedUse("Nine", "there were nine of them in the dark", true), false],
+      ["seven in the morning", namedUse("Seven", "seven in the morning", true), false],
+      ["Nine as a person", namedUse("Nine", "Nine speaks from the shard"), true],
+      ["a count then a name", namedUse("Seven", "Seven of them, and Seven counted every one"), true]
+    ];
+    var cgBad = cg.filter(function(r){ return r[1] !== r[2]; });
+    T("a number-name is a person only when it is one", cgBad.length === 0,
+      cg.length + " cases" + (cgBad.length ? " - WRONG: " + cgBad.map(function(r){ return r[0]; }).join("; ") : ""));
+
+    /* the death pass, against every load-bearing name in every authored line */
+    var dpBad = [], dpLines = 0;
+    var NAMES = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Five","Mirren","Marek"];
+    SPINE.forEach(function(b){
+      var prose = [];
+      ["opens","lands","landsHard"].forEach(function(k){ (b[k] || []).forEach(function(p){
+        (p.lines || []).forEach(function(l){ prose.push(typeof l === "string" ? l : (l[1] || "")); });
+        if(p.now) prose.push(p.now);
+        (p.rail || []).forEach(function(r){ prose.push(r); });
+      }); });
+      (b.canon || []).forEach(function(c){ prose.push(c); });
+      (b.press || []).forEach(function(c){ prose.push(c); });
+      (b.exits || []).forEach(function(c){ prose.push(c); });
+      if(b.scar) prose.push(b.scar);
+      if(b.walkLine) prose.push(b.walkLine);
+      prose.forEach(function(ln){ dpLines++; NAMES.forEach(function(nm){
+        if(deathPredicated(nm, ln)) dpBad.push(b.id + ": " + nm + " - " + String(ln).slice(0, 60));
+      }); });
+    });
+    T("no authored line certifies a death", dpBad.length === 0,
+      dpLines + " lines x " + NAMES.length + " names" + (dpBad.length ? " - FIRED: " + dpBad.slice(0, 5).join(" | ") : ""));
+    var dpMiss = [];
+    if(!deathPredicated("Pia", "He shot Pia in the head and she went down")) dpMiss.push("a shooting");
+    if(!deathPredicated("Nine", "The shard is smashed. Nine is gone.")) dpMiss.push("a smashed shard");
+    T("...but a real death still certifies", dpMiss.length === 0, dpMiss.join("; "));
+
+    /* every anchor still findable in its own beat's authored prose */
+    var anchLost = [];
+    SPINE.forEach(function(b){
+      var hay = [];
+      ["opens","lands","landsHard"].forEach(function(k){ (b[k] || []).forEach(function(p){
+        (p.lines || []).forEach(function(l){ hay.push(typeof l === "string" ? l : (l[1] || "")); });
+      }); });
+      (b.canon || []).forEach(function(c){ hay.push(c); });
+      if(b.scar) hay.push(b.scar);
+      var txt = hay.join("\n");
+      (b.anchors || []).forEach(function(a){
+        if(new RegExp("\\b" + a + "\\b", "i").test(txt) && !namedUse(a, txt, true)) anchLost.push(b.id + "/" + a);
+      });
+    });
+    T("the counting guard costs no anchor", anchLost.length === 0, anchLost.join("; "));
+
+    /* the topic deck deals every card before it repeats one */
+    var deckBad = [], keptSpent = topicSpent, keptText = lastPlayerText;
+    try{
+      Object.keys(SCENEBOOK).forEach(function(k){
+        var e = SCENEBOOK[k];
+        if(!e || !e.topics || e.topics.length < 2) return;
+        topicSpent = {}; lastPlayerText = "the shard";
+        var seen = {}, dupes = 0;
+        for(var i = 0; i < e.topics.length; i++){
+          var idx = e.topics.indexOf(pickTopic(e, "ST|" + k));
+          if(seen[idx]) dupes++;
+          seen[idx] = 1;
+        }
+        if(dupes) deckBad.push(k + " re-dealt " + dupes);
+      });
+    } finally { topicSpent = keptSpent; lastPlayerText = keptText; }
+    T("no card is dealt twice while the deck has cards", deckBad.length === 0, deckBad.slice(0, 5).join("; "));
+
+    /* every scene contract names people the scene book has actually cast */
+    var castBad = [];
+    Object.keys(SCENEBOOK).forEach(function(k){
+      var e = SCENEBOOK[k];
+      [e, e && e.room].forEach(function(sc){
+        if(!sc || !sc.topics) return;
+        sc.topics.forEach(function(t){
+          var w = String((t && t.who) || "");
+          /* Other and Narration are labels for a voice with no name, which is a
+             perfectly good answer to a card - the check is about PEOPLE */
+          if(w && !/^(?:other|narration|nobody|the room)$/i.test(w)
+             && (sc.here || []).indexOf(w) === -1 && !isCourier(w)){
+            castBad.push(k + ": " + w + " answers but is not in the room");
+          }
+        });
+      });
+    });
+    T("every card is answered by somebody in the room", castBad.length === 0, castBad.slice(0, 5).join("; "));
+
+    /* the board covers the whole spine */
+    var noBook = SPINE.filter(function(b){ return !SCENEBOOK[b.id]; }).map(function(b){ return b.id; });
+    T("every beat has a scene contract", noBook.length === 0, noBook.join(", "));
+  } catch(e){
+    T("the sweep itself ran", false, String((e && e.message) || e));
+  } finally {
+    beatIdx = keep.beatIdx; shardWhere = keep.shard; phase = keep.phase;
+    chassisHolder = keep.holder; storyMin = keep.storyMin; currentSeason = keep.season;
+    castSheets = keep.cast; roster = keep.roster; runCanon = keep.canon;
+    $("hud-loc").textContent = keep.loc; $("hud-day").textContent = keep.day;
+  }
+  return {pass:pass, fail:fail, rows:rows, build:VERSION_TAG};
+}
+function renderSelfTest(){
+  var r = selfTest();
+  window.__SELFTEST__ = r;
+  var h = '<div style="max-width:820px;margin:40px auto;padding:0 20px;'
+    + 'font-family:ui-monospace,Menlo,monospace;color:#d8d2c4;line-height:1.7">';
+  h += '<div style="font-size:20px;letter-spacing:.18em;color:#f2c14e">MUDSKIPPERS \u00b7 THE SWEEP</div>';
+  h += '<div style="opacity:.7;margin:6px 0 22px">' + esc(r.build)
+    + ' \u00b7 the game\u2019s own writing, run through its own laws</div>';
+  h += '<div style="font-size:26px;margin-bottom:20px;color:' + (r.fail ? "#e08b8b" : "#8bd98b") + '">'
+    + (r.fail ? r.fail + " FAILED" : "ALL " + r.pass + " PASSED") + '</div>';
+  r.rows.forEach(function(row){
+    h += '<div style="border-left:3px solid ' + (row.ok ? "#3f6b3f" : "#8b3f3f")
+      + ';padding:8px 0 8px 14px;margin-bottom:12px">'
+      + '<div style="color:' + (row.ok ? "#8bd98b" : "#e08b8b") + '">'
+      + (row.ok ? "PASS" : "FAIL") + ' \u00b7 ' + esc(row.name) + '</div>'
+      + (row.detail ? '<div style="opacity:.65;font-size:12.5px">' + esc(row.detail) + '</div>' : "")
+      + '</div>';
+  });
+  h += '<div style="opacity:.5;font-size:12px;margin-top:28px">'
+    + 'CI: load this page and read window.__SELFTEST__.fail \u2014 zero is the only passing number.</div></div>';
+  document.body.innerHTML = h;
+  document.body.style.background = "#0d0c0a";
+}
 (function boot(){
   try{ loadSettings(); }catch(e){}
+  /* the sweep runs instead of the game, and touches no save */
+  if(/[?&]selftest\b/.test(location.search)){
+    try{ renderSelfTest(); }catch(e){
+      document.body.innerHTML = "<pre style='color:#e08b8b;padding:30px'>the sweep could not run: "
+        + esc(String((e && e.message) || e)) + "</pre>";
+    }
+    return;
+  }
   try{ applyLaunchParams(); }catch(e){}
   try{ fxInit(); applyVisuals(); }catch(e){}
   try{ shardInit(); }catch(e){}
