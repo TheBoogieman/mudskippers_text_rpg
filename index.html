@@ -1028,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.18.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.19.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1140,7 +1140,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.18.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.19.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1419,7 +1419,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.18.0 "The Room"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.19.0 "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3770,8 +3770,14 @@ function renderBlock(b){
     el.className = "block dmaside" + (b.invite ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
   } else if(b.kind === "aside"){
-    el.className = "block dmaside" + (b.tone === "yellow" ? " aside-yellow" : b.tone === "green" ? " invite" : "");
-    el.innerHTML = '<span class="tag">' + (b.tone === "green" ? "TONIGHT" : "THE RAIN") + '</span>' + esc(b.text);
+    /* TONIGHT is the question's own card and nothing else may wear it: the room's
+       invitation used to, and it sat directly above the next beat's opening
+       reading like a tease for a night that had already started. */
+    el.className = "block dmaside" + (b.tone === "yellow" ? " aside-yellow"
+      : (b.tone === "green" || b.tone === "room") ? " invite" : "");
+    el.innerHTML = '<span class="tag">'
+      + (b.tone === "green" ? "TONIGHT" : b.tone === "room" ? "THE FAMILY&rsquo;S OWN TIME" : "THE RAIN")
+      + '</span>' + esc(b.text);
   } else if(b.kind === "player"){
     el.className = "block you-said" + (b.mud ? " mud-said" : "");
     el.innerHTML = '<span class="tag">' + (b.mud ? "MUDSKIPPER MOMENT" : "YOU") + '</span>' + esc(b.text);
@@ -5008,6 +5014,94 @@ function lockedReveals(){
   }
   return out;
 }
+/* ---- THE TELLS ----
+   NOT YET was the last law in this file that was only ever a request. The board
+   printed the locked list to the DM every turn and hoped, and for a long time that
+   held, because a DM steering hard at tonight's gate has no reason to reach past
+   it. Then the family's own time opened the lore, and the very first quiet turn
+   went: "the rain is a reminder of the founders' grief and the machine they
+   built." Season one, beat three, day one. Asked to elaborate, it named the
+   Architect and the Principal in one sentence.
+   That is not a bad model. That is a model told the room is for lore, reaching for
+   the most resonant thing it can see - and the most resonant thing in this world
+   is always the thing being saved. So the fence stops being advice.
+   Phrases, not concepts: each is a form of words that cannot be said by accident
+   about anything else in this fiction. Missing a paraphrase costs nothing (the
+   list is a floor, the instruction still rides every turn); a false positive costs
+   one re-roll, so nothing here is a word that has innocent uses. */
+var REVEAL_TELLS = {
+  nine:      ["what she is running from", "the farm she came from"],
+  housing:   ["skull-housing", "skull housing", "housing in his skull", "housing in your skull",
+              "housing in my skull", "in your skull", "in his skull", "spare room in",
+              "seat for a mind", "built to host"],
+  hash:      ["bio-hash", "biohash", "bio hash", "hash-key", "hash key", "maker's blood",
+              "hidden manual", "manual inside the", "manual that shipped"],
+  choir:     ["three fates", "fate three", "fate one", "fate two", "one machine, three",
+              "the choir's one machine", "salvage listing"],
+  founding:  ["the architect", "founders' grief", "founders grief", "founding grief",
+              "cairn rule", "dying wish", "what the founders lost", "the founders lost",
+              "founders - the architect", "grief of the founders"],
+  /* "I would do it again" was here and had to come out: it caught Pia being
+     unrepentant about a shootout. A tell has to be a sentence about THIS, not a
+     sentence anybody in the family might say about their own week. */
+  vicsin:    ["without your consent", "without his consent", "without the courier's consent",
+              "did it knowingly", "knew exactly what he was doing to", "knew what he was putting",
+              "would do it to you again", "would do it to him again", "and i would do it to you"],
+  principal: ["the principal", "mark one", "true landlord", "130 years", "a hundred and thirty"]
+};
+/* every word of a reply that reaches the player or the record. A leak in a choice
+   or in canon is a leak: the rail is read, and canon is quoted back forever. */
+function replyProse(data){
+  var parts = [];
+  (data && data.scene || []).forEach(function(b){ if(b && b.text) parts.push(String(b.text)); });
+  (Object.prototype.toString.call(data && data.choices) === "[object Array]" ? data.choices : [])
+    .forEach(function(c){ if(typeof c === "string") parts.push(c); });
+  (Object.prototype.toString.call(data && data.canon) === "[object Array]" ? data.canon : [])
+    .forEach(function(c){ if(typeof c === "string") parts.push(c); });
+  if(data && typeof data.gateNote === "string") parts.push(data.gateNote);
+  if(data && typeof data.now === "string") parts.push(data.now);
+  return parts.join("\n");
+}
+/* which locked reveals this reply said out loud. Only the strictly-future are
+   checked - a reveal whose night has come is the DM's to spend freely. */
+function revealLeak(data){
+  var locked = lockedKeys(), hay = " " + replyProse(data).toLowerCase().replace(/[‘’]/g, "'") + " ";
+  var out = [];
+  locked.forEach(function(k){
+    (REVEAL_TELLS[k] || []).forEach(function(t){
+      if(out.indexOf(k) === -1 && hay.indexOf(t) !== -1) out.push(k);
+    });
+  });
+  return out;
+}
+/* the same walk as lockedReveals, but keyed - the lint needs the key, the prompt
+   needs the sentence */
+function lockedKeys(){
+  var out = [];
+  for(var i = beatIdx + 1; i < SPINE.length; i++){
+    (SPINE[i].reveals || []).forEach(function(k){
+      if(k === "housing" && chassisHolder === "Nine") return;
+      if(REVEALS[k] && out.indexOf(k) === -1) out.push(k);
+    });
+  }
+  return out;
+}
+/* which scene blocks did it, so a second offence can be cut without taking the
+   whole turn down with it */
+function leakingBlocks(data, keys){
+  var hits = [];
+  (data && data.scene || []).forEach(function(b, i){
+    var t = b && b.text ? " " + String(b.text).toLowerCase().replace(/[‘’]/g, "'") + " " : "";
+    if(!t) return;
+    for(var k = 0; k < keys.length; k++){
+      var tells = REVEAL_TELLS[keys[k]] || [];
+      for(var j = 0; j < tells.length; j++){
+        if(t.indexOf(tells[j]) !== -1){ hits.push(i); return; }
+      }
+    }
+  });
+  return hits;
+}
 /* a reveal is open the moment its beat is in play; only the strictly-future is locked */
 function revealOpen(key){
   if(key === "housing" && chassisHolder === "Nine") return true;   /* opened at the seating */
@@ -5492,7 +5586,7 @@ function seasonContinue(){
    of arguing about the pan gets nine more turns of arguing about the pan. */
 function openSlackDoor(){
   slackDoorUp = true;
-  queueAside("green", "The room is yours as long as you want it - nothing out there is counting."
+  queueAside("room", "The room is yours as long as you want it - nothing out there is counting."
     + " When you have had enough of each other, the night still has one more question in it.");
   renderSlackDoor();
 }
@@ -5531,6 +5625,13 @@ function slackArm(){
     + " pick up on the far side of it.)"});
   armBeat();
   beatJustArmed = "";          /* the opening plays here, not on the next reply */
+  /* THE TEASE BELONGS TO THIS MOMENT. armBeat queues it, and in the ordinary flow
+     it deals on the next reply - a turn late, but with a DM scene between it and
+     the opening, so it still reads as an announcement. Here there is no next reply
+     to wait for: the player pressed a button and the new night starts on the same
+     screen. Left queued, the card arrived AFTER they had already acted in a beat
+     nobody had named. It goes first, which is also the order a title card goes in. */
+  dealTease();
   var rail = playOpening(beatNow().id);
   var out = rail ? railFor(rail, true) : [];
   applyTension();
@@ -5542,9 +5643,24 @@ function slackArm(){
    now - written by the version that asked the DM for this page and then reloaded
    mid-call. Restoring one used to hand the player the cold open's rail, from Day
    1, at the top of Book Two. It finishes the ceremony instead. */
+/* pull the question's own green card out of the queue and deal it now. Used by
+   the two places the board arms a beat without a DM reply behind it - the player's
+   door out of the room, and the season premiere - where leaving it queued means
+   the card announcing tonight arrives after tonight has been played into. */
+function dealTease(){
+  for(var i = 0; i < pendingAsides.length; i++){
+    if(pendingAsides[i].tone !== "green") continue;
+    var t = pendingAsides.splice(i, 1)[0];
+    renderBlock(t); feedLog.push(t);
+    ledgerText += "\n\n_" + t.text + "_";
+    return true;
+  }
+  return false;
+}
 function playPremiere(){
   armBeat();                   /* into the new book: the pointer moves, the season turns */
   beatJustArmed = "";          /* the premiere IS this beat's opening - never both */
+  dealTease();                 /* the new book's first question names itself here */
   var rail = playAuthored(pickVariant(SEASON_OPENS[currentSeason] || [], "premiere" + currentSeason),
                           "premiere" + currentSeason);
   if(!rail) rail = playOpening(beatNow().id);   /* a season without a written premiere still opens */
@@ -5682,12 +5798,25 @@ function boardBlock(){
       + " actually means on a day it is inconvenient, what they did before, who they miss."
       + " Argue. Let someone be wrong and stay in the room. Be funny: this family is at its"
       + " funniest when nothing whatsoever is happening, and a joke here costs nothing."
-      + "\nTHE LORE IS YOURS TO SPEND, inside the fence. Anything the world already knows,"
-      + " anything these people would know, anything the record holds - the pack, the canals,"
-      + " the founders, how a Hollow works from the inside, why bacon first and bread after,"
-      + " what the rain is actually for. Answer properly and at length when you are asked."
-      + " What is FENCED stays fenced: a later question's answer is not lore, it is that"
-      + " question, and handing it over in the quiet spends a night that has not arrived yet."
+      + "\nTHE LORE IS YOURS TO SPEND, and there are two limits on it, both of them"
+      + " character rather than rule. Nobody in this room narrates the world; they only ever"
+      + " say WHAT THEY THEMSELVES KNOW - their own trade, their own city, their own history,"
+      + " the parts of it they were actually present for. Vic knows shops and bodies and the"
+      + " last thirty years of this district. Pia knows the street this month. Nine knows the"
+      + " inside of a place none of them have been. None of them is an encyclopedia and none of"
+      + " them speaks in the voice of one: no summaries of what the city means, no lines that"
+      + " begin \"the rain is a symbol of\". People say what they saw."
+      + "\nAnd they only say WHAT THEY ARE WILLING TO SAY TONIGHT, which is a shorter list than"
+      + " what they know, and it is shorter for reasons the player can feel - it is early, they"
+      + " are tired, the kid is in the room, it costs them something, or they have decided this"
+      + " is not the night. Read WANTS: the WILL NOT line is the person, not a restriction on"
+      + " you. Somebody refusing well is better television than somebody explaining well."
+      + "\nWhat is FENCED is not theirs to give at all: a later question's answer is not lore,"
+      + " it is that question, and handing it over in the quiet spends a night that has not"
+      + " arrived yet. The board checks the fence on every reply and will make you write the"
+      + " turn again, so do not go near it - if somebody would plainly reach for one of those"
+      + " things, they get interrupted, they say the smaller true thing, or they say plainly"
+      + " that they are not doing this tonight."
       + "\nFOLLOW THE PLAYER. If they ask, answer. If they push, let the person they are"
       + " pushing push back. If they joke, be funnier. If they sit there saying nothing, let"
       + " somebody else in the room start it - that is what rooms are like.");
@@ -5928,6 +6057,7 @@ function armBeat(){
   beatIdx++;
   phase = "live"; phaseLeft = 0;
   beatTurns = 0; driftRun = 0; walkbackNow = false;
+  slackTurns = 0; slackRoom = "";   /* the room is behind them; its counter goes with it */
   beatText = ""; gateRefusedNames = []; gateHeldNow = false;
   if(!beatDone() && beatNow().season !== currentSeason) currentSeason = beatNow().season;
   /* the question is live; the room it opens in is ours to write */
@@ -7010,6 +7140,49 @@ function callDM(corrected){
         }
       }
     }
+    /* NOT YET, ENFORCED. Checked before render, like the chair: a spoiler the
+       player has already read cannot be taken back, so the turn is re-rolled and
+       the leaked line never reaches the screen. */
+    var leaked = revealLeak(parsed.data);
+    if(leaked.length){
+      if(!corrected){
+        return callDM("(TOO EARLY, AND IT IS THE ONE THING THAT CANNOT BE TAKEN BACK. This turn"
+          + " says out loud: " + leaked.map(function(k){ return REVEALS[k]; }).join("; ")
+          + ". That belongs to a question the story has not asked yet, and once the player has read"
+          + " it, the night that was supposed to land it has nothing left to be about."
+          + " Write this turn again, the same events, without it."
+          + " Nobody in this room is holding back to be difficult - they say what they know, and"
+          + " they say what they are willing to say tonight, which is not the same list."
+          + " If somebody would plainly reach for it: they get interrupted, they change the"
+          + " subject badly, they say the smaller true thing instead, or they say they are not"
+          + " doing this tonight. Any of those is better than the answer.)");
+      }
+      /* it insisted. One correction is a request - and a spoiler is the one thing
+         that cannot be walked back once it is on screen, so the lines come out. */
+      var cut = leakingBlocks(parsed.data, leaked);
+      if(cut.length){
+        parsed.data.scene = (parsed.data.scene || []).filter(function(b, i){ return cut.indexOf(i) === -1; });
+        if(!parsed.data.scene.length){
+          parsed.data.scene = [{speaker:"Narration",
+            text:"The answer does not come. Whoever was about to give it thinks better of it, and the room lets the moment go by."}];
+        }
+      }
+      /* and out of the record, or the run canonises what the screen refused */
+      if(Object.prototype.toString.call(parsed.data.canon) === "[object Array]"){
+        parsed.data.canon = parsed.data.canon.filter(function(c){
+          var t = " " + String(c).toLowerCase() + " ";
+          for(var i = 0; i < leaked.length; i++){
+            var tells = REVEAL_TELLS[leaked[i]] || [];
+            for(var j = 0; j < tells.length; j++){ if(t.indexOf(tells[j]) !== -1) return false; }
+          }
+          return true;
+        });
+      }
+      if(window.console && console.warn){
+        console.warn("[mudskippers] refused an early reveal, twice - cut " + cut.length
+          + " line(s): " + leaked.join(", "));
+      }
+    }
     if(deathRefused(parsed.data)){
       if(!corrected){
         return callDM("(CORRECTION: you killed the courier without ever declaring peril."
@@ -8003,7 +8176,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.18.0");
+  R(s, "build", "v4.19.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9316,7 +9489,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.18.0   COLD START",
+    "MUD//OS  v4.19.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10783,7 +10956,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.18.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.19.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10876,6 +11049,20 @@ function newRun(confirmFirst, bare){
     applyVisuals();
     return;
   }
+  /* THE COLD OPEN'S PEOPLE ARE MET. The board names Pia and Nine in its own
+     hardcoded first scene - "I'm Pia. Vic sent me." - but names them in NARRATION,
+     so neither of them ever becomes a speaker and neither gets a sheet. The cast
+     gate then reads Pia as a name belonging to a later question (she anchors "the
+     pack answers") and does exactly what it is built to do: refuses her, strips
+     her from the payload, and relabels her OTHER. Four turns of a run whose whole
+     subject is the kid who would not go away, with the kid's name taken off her.
+     playAuthored has had the rule since it was written - anyone the board puts on
+     stage is met by definition - and the cold open is a board passage like any
+     other. It just predates the rule. */
+  ["Pia", "Nine"].forEach(function(nm){
+    var sh = castSheet(nm);
+    sh.seen = "Day 1, " + String(OPENING.location).toUpperCase();
+  });
   var brief = {kind:"brief", tag:"BEFORE TONIGHT", sum:BACKSTORY};
   renderBlock(brief); feedLog.push(brief);
   chatLog.push({role:"user", content:"(Begin a fresh run at Day 1. The player has read the courier's backstory and the opening scene below - both already shown.)"});
