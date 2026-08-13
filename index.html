@@ -921,6 +921,161 @@
 
   @media (max-width:600px){.block{font-size:15px}.title{letter-spacing:.2em}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rain{display:none}}
+  /* ============ THE WRITERS' BOARD ============
+     The authoring surface, living inside the game so it reads the real spine
+     rather than a copy of it. Every rule is scoped under #wbmodal and every
+     class is wb- prefixed, because the game already owns .card, .tag, .hint,
+     .btn, table, h3 and p, and an unscoped board would repaint the whole app.
+     One colour idea carries the whole thing: GOLD is a line a person wrote,
+     SLATE is a line the storyteller improvises. */
+  #wbmodal{
+    display:none;position:fixed;inset:0;z-index:60;background:var(--bg);
+    overflow:hidden;
+  }
+  #wbmodal.open{display:grid;grid-template-columns:266px minmax(0,1fr)}
+  @media(max-width:900px){ #wbmodal.open{grid-template-columns:1fr;overflow-y:auto} }
+  #wbmodal .wb-slate{--wb-slate:#6ea3ad;--wb-slate-dim:#4d757d;--wb-slate-sunk:#16262a}
+  #wbmodal{--wb-slate:#6ea3ad;--wb-slate-dim:#4d757d;--wb-slate-sunk:#16262a}
+
+  #wbmodal .wb-rail{
+    background:linear-gradient(180deg,var(--panel),#120e0a);
+    border-right:1px solid var(--line);overflow-y:auto;height:100vh;
+  }
+  @media(max-width:900px){ #wbmodal .wb-rail{height:auto;border-right:none;border-bottom:1px solid var(--line)} }
+  #wbmodal .wb-brand{padding:15px 15px 11px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  #wbmodal .wb-brand h2{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.26em;
+    color:var(--gold);text-transform:uppercase;font-weight:700}
+  #wbmodal .wb-brand p{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.16em;
+    color:#8a7c68;text-transform:uppercase;margin-top:4px}
+  #wbmodal .wb-nav{display:flex;flex-wrap:wrap;gap:4px;padding:9px 11px;border-bottom:1px solid var(--line)}
+  #wbmodal .wb-nb{font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.13em;
+    text-transform:uppercase;padding:5px 8px;border:1px solid #4a3a29;background:transparent;
+    color:var(--ink-dim);cursor:pointer;border-radius:2px}
+  #wbmodal .wb-nb:hover{color:var(--ink);border-color:var(--sodium)}
+  #wbmodal .wb-nb[aria-current="true"]{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:700}
+
+  #wbmodal .wb-sb{font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--sodium);padding:14px 13px 4px;border-top:1px solid var(--line);margin-top:5px}
+  #wbmodal .wb-ab{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.15em;
+    color:#8a7c68;padding:6px 13px 2px;text-transform:uppercase}
+  #wbmodal .wb-row{display:grid;grid-template-columns:24px 1fr;gap:7px;align-items:baseline;width:100%;
+    text-align:left;padding:5px 13px;background:none;border:0;border-left:2px solid transparent;
+    cursor:pointer;color:var(--ink-dim);font-family:Georgia,serif;font-size:13px}
+  #wbmodal .wb-row:hover{color:var(--ink);background:rgba(232,161,60,.07)}
+  #wbmodal .wb-row[aria-current="true"]{color:var(--ink);border-left-color:var(--gold);background:rgba(242,193,78,.11)}
+  #wbmodal .wb-row .wb-n{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8a7c68}
+  #wbmodal .wb-row .wb-m{grid-column:2;height:2px;background:transparent;border-radius:2px;overflow:hidden;margin-top:3px}
+  #wbmodal .wb-row .wb-m.any{background:rgba(77,117,125,.45)}
+  #wbmodal .wb-row .wb-m i{display:block;height:100%;background:var(--gold)}
+
+  #wbmodal .wb-main{overflow-y:auto;height:100vh;padding:22px 26px 80px;max-width:1080px}
+  @media(max-width:900px){ #wbmodal .wb-main{height:auto;padding:18px 15px 60px} }
+  #wbmodal .wb-view{display:none}
+  #wbmodal .wb-view.on{display:block}
+  #wbmodal .wb-eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+  #wbmodal .wb-h{font-family:Georgia,serif;font-size:21px;line-height:1.25;color:var(--ink);margin-bottom:9px;font-weight:400}
+  #wbmodal .wb-sh{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.19em;
+    text-transform:uppercase;color:var(--sodium);margin:24px 0 8px}
+  #wbmodal .wb-p{max-width:66ch;margin-bottom:10px;color:var(--ink-dim);font-size:14px;line-height:1.6}
+  #wbmodal .wb-p b{color:var(--ink);font-weight:600}
+  #wbmodal .wb-p i{color:var(--ink)}
+  #wbmodal .wb-lede{font-size:15.5px;color:var(--ink);max-width:64ch;line-height:1.6;margin-bottom:12px}
+
+  #wbmodal .wb-c{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:14px 16px;margin-bottom:12px}
+  #wbmodal .wb-c.gold{border-left:3px solid var(--gold)}
+  #wbmodal .wb-c.slate{border-left:3px solid var(--wb-slate-dim);background:#1a1a18}
+  #wbmodal .wb-c.red{border-left:3px solid #e08b8b}
+  #wbmodal .wb-t{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.2em;
+    text-transform:uppercase;display:block;margin-bottom:7px;color:#8a7c68}
+  #wbmodal .wb-t.gold{color:var(--gold)} #wbmodal .wb-t.slate{color:var(--wb-slate)} #wbmodal .wb-t.red{color:#e08b8b}
+  #wbmodal .wb-pass{font-family:Georgia,serif;font-size:14.5px;line-height:1.6;color:var(--ink)}
+  #wbmodal .wb-narr{color:var(--ink-dim);font-style:italic;margin-bottom:8px}
+  #wbmodal .wb-said{margin-bottom:8px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline}
+  #wbmodal .wb-who{font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+  #wbmodal .wb-stamp{font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.13em;color:#8a7c68;
+    text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px dashed #4a3a29}
+  #wbmodal .wb-rl{font-family:Georgia,serif;font-size:13.5px;color:var(--ink);padding:5px 0 5px 14px;
+    border-left:1px solid #4a3a29;margin-bottom:2px}
+
+  #wbmodal .wb-g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:10px;margin-bottom:12px}
+  #wbmodal .wb-stat{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:12px 13px}
+  #wbmodal .wb-stat b{display:block;font-family:ui-monospace,Menlo,monospace;font-size:23px;color:var(--gold);line-height:1.15}
+  #wbmodal .wb-stat b.s{color:var(--wb-slate)}
+  #wbmodal .wb-stat span{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:#8a7c68;display:block;margin-top:4px}
+
+  #wbmodal .wb-chip{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.12em;
+    text-transform:uppercase;padding:3px 7px;border:1px solid #4a3a29;border-radius:2px;color:var(--ink-dim);
+    margin:0 4px 4px 0;background:none;cursor:default}
+  #wbmodal button.wb-chip{cursor:pointer}
+  #wbmodal button.wb-chip:hover{border-color:var(--sodium);color:var(--ink)}
+  #wbmodal .wb-chip.on{border-color:var(--gold);color:var(--gold)}
+
+  #wbmodal .wb-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:3px;background:var(--panel);margin-bottom:12px}
+  #wbmodal table.wb-tb{width:100%;border-collapse:collapse;font-family:ui-monospace,Menlo,monospace;font-size:11px}
+  #wbmodal table.wb-tb th{text-align:left;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:#8a7c68;
+    padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  #wbmodal table.wb-tb td{padding:7px 10px;border-bottom:1px solid rgba(58,47,36,.55);color:var(--ink-dim);vertical-align:top}
+  #wbmodal table.wb-tb td.n{text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+  #wbmodal table.wb-tb tr:last-child td{border-bottom:0}
+  #wbmodal .wb-link{background:none;border:0;color:var(--sodium);cursor:pointer;font:inherit;text-align:left;padding:0}
+  #wbmodal .wb-link:hover{text-decoration:underline}
+
+  #wbmodal .wb-slot{border:1px dashed var(--wb-slate-dim);border-radius:3px;padding:12px 14px;margin-bottom:9px;background:rgba(22,38,42,.3)}
+  #wbmodal .wb-slot.done{border-style:solid;border-color:var(--gold);background:rgba(242,193,78,.07)}
+  #wbmodal .wb-sh2{display:flex;justify-content:space-between;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+  #wbmodal .wb-sid{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--wb-slate)}
+  #wbmodal .wb-slot.done .wb-sid{color:var(--gold)}
+  #wbmodal .wb-hint{font-family:Georgia,serif;font-size:13px;color:#8a7c68;font-style:italic;margin-bottom:8px;max-width:62ch}
+  #wbmodal .wb-lb{display:block;font-family:ui-monospace,Menlo,monospace;font-size:8px;letter-spacing:.15em;
+    text-transform:uppercase;color:#8a7c68;margin:8px 0 3px}
+  #wbmodal .wb-in,#wbmodal .wb-ta,#wbmodal .wb-sel{
+    width:100%;background:#120e0a;border:1px solid #4a3a29;border-radius:2px;color:var(--ink);
+    font-family:Georgia,serif;font-size:13.5px;padding:6px 8px;line-height:1.5}
+  #wbmodal .wb-ta{min-height:66px;resize:vertical}
+  #wbmodal .wb-sel{font-family:ui-monospace,Menlo,monospace;font-size:10.5px}
+  #wbmodal .wb-in:focus,#wbmodal .wb-ta:focus,#wbmodal .wb-sel:focus{border-color:var(--sodium);outline:none}
+
+  #wbmodal .wb-det{border:1px solid var(--line);border-radius:3px;background:var(--panel);margin-bottom:8px}
+  #wbmodal .wb-det>summary{cursor:pointer;padding:10px 14px;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim);list-style:none}
+  #wbmodal .wb-det>summary::-webkit-details-marker{display:none}
+  #wbmodal .wb-det>summary:before{content:"\25B8 ";color:var(--sodium)}
+  #wbmodal .wb-det[open]>summary{color:var(--gold);border-bottom:1px solid var(--line)}
+  #wbmodal .wb-det[open]>summary:before{content:"\25BE "}
+  #wbmodal .wb-db{padding:13px 14px}
+
+  #wbmodal .wb-note{border-left:2px solid var(--sodium);padding:2px 0 2px 13px;margin:13px 0;color:var(--ink-dim);
+    max-width:64ch;font-size:14px;line-height:1.6}
+  #wbmodal .wb-legend{display:flex;gap:14px;flex-wrap:wrap;margin:9px 0 16px;font-family:ui-monospace,Menlo,monospace;
+    font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8a7c68}
+  #wbmodal .wb-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+  #wbmodal .wb-places{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  #wbmodal .wb-place{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--sodium);
+    border-radius:3px;padding:9px 11px}
+  #wbmodal .wb-place b{font-family:ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.11em;color:var(--ink);display:block;margin-bottom:4px}
+  #wbmodal .wb-place span{font-family:ui-monospace,Menlo,monospace;font-size:8.5px;color:#8a7c68}
+
+  /* the flow, drawn in boxes rather than a diagram library - the game ships as
+     one file and does not fetch anything, so mermaid was never an option here */
+  #wbmodal .wb-flow{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:18px}
+  #wbmodal .wb-node{border:1px solid var(--line);border-radius:3px;padding:9px 14px;background:var(--panel);
+    text-align:center;max-width:430px;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim)}
+  #wbmodal .wb-node.w{border-color:var(--gold);color:var(--gold);background:#2a2114}
+  #wbmodal .wb-node.m{border-color:var(--wb-slate-dim);color:var(--wb-slate);background:#16262a}
+  #wbmodal .wb-node.c{border-color:#6b3030;color:#e08b8b;background:#2a1717}
+  #wbmodal .wb-node small{display:block;font-family:Georgia,serif;font-size:12px;letter-spacing:0;
+    text-transform:none;color:var(--ink-dim);margin-top:4px}
+  #wbmodal .wb-arrow{width:1px;height:16px;background:#4a3a29}
+  #wbmodal .wb-branch{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:660px}
+  /* the board lives in the grid; the plate takes the whole screen instead */
+  #wbmodal #wbboard{display:contents}
+  #wbmodal #wbgate{display:none;grid-column:1/-1;padding:38px 18px;overflow-y:auto;height:100vh}
+
 </style>
 </head>
 <body>
@@ -1026,10 +1181,11 @@
     <button class="menu-btn" id="t-runs">RUNS</button>
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
+    <button class="menu-btn" id="t-board">THE WRITERS&rsquo; BOARD<small>Every night, every written page, and what is still improvised.</small></button>
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.20.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.21.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1066,6 +1222,47 @@
 </div>
 
 <!-- RUNS / SAVE MANAGER MODAL -->
+<!-- THE WRITERS' BOARD — the authoring surface, behind the same plate as the archive -->
+<div id="wbmodal">
+  <div id="wbgate">
+    <div class="card">
+      <div class="cardhead">THE WRITERS' BOARD</div>
+      <div class="cardsub">The authoring surface: every night, every written page, the whole bible.</div>
+      <div class="warn" style="margin-bottom:0">
+        This is the entire plot on one screen — all thirty-three nights, what each one is about, every secret and
+        the night it belongs to. It is built for writing the game, not playing it. Reading it will not break
+        anything. It will break every surprise this run has left. DO NOT PRY unless you mean it.
+        <button class="small" id="wbgate-pry">PRY ANYWAY</button>
+        <button class="small" id="wbgate-close">LEAVE IT</button>
+      </div>
+    </div>
+  </div>
+  <div id="wbboard">
+    <nav class="wb-rail">
+      <div class="wb-brand">
+        <div>
+          <h2>The Writers' Board</h2>
+          <p id="wb-sub">Authoring surface</p>
+        </div>
+        <button class="small" id="wb-close">CLOSE</button>
+      </div>
+      <div class="wb-nav" id="wb-nav"></div>
+      <div id="wb-spine"></div>
+    </nav>
+    <div class="wb-main" id="wb-main">
+      <div class="wb-view on" id="wbv-start"></div>
+      <div class="wb-view" id="wbv-story"></div>
+      <div class="wb-view" id="wbv-beat"></div>
+      <div class="wb-view" id="wbv-flow"></div>
+      <div class="wb-view" id="wbv-map"></div>
+      <div class="wb-view" id="wbv-bible"></div>
+      <div class="wb-view" id="wbv-mech"></div>
+      <div class="wb-view" id="wbv-scope"></div>
+      <div class="wb-view" id="wbv-export"></div>
+    </div>
+  </div>
+</div>
+
 <!-- THE STORY SO FAR — this run's own road, and behind a plate, the rest of it -->
 <div class="modal" id="storymodal">
   <div class="card">
@@ -1154,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.20.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.21.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1433,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.20.0 "The Story So Far" "The Tells"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.21.0 "The Writers’ Board" "The Tells"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3577,6 +3774,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
+var VERSION_TAG = "v4.21.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8184,7 +8382,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.20.0");
+  R(s, "build", "v4.21.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -9497,7 +9695,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.20.0   COLD START",
+    "MUD//OS  v4.21.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -9684,6 +9882,660 @@ function openStory(){
 }
 $("t-story").onclick = openStory;
 $("story-close").onclick = function(){ $("storymodal").classList.remove("open"); };
+
+/* ============ THE WRITERS' BOARD ============
+   The authoring surface, and it lives inside the game on purpose: it reads SPINE,
+   BIBLE, WANTS and REVEALS as they actually are at this moment, so it cannot
+   drift from the thing it describes the way a copied document would. Everything
+   it shows is computed here, at open time, from the same arrays the storyteller
+   is briefed from.
+   It is behind the pry plate. It is the whole plot on one screen. */
+var wbTab = "start", wbBeat = "", wbKey = "mudskippers-board-v1", wbW = {};
+try{ wbW = JSON.parse(localStorage.getItem(wbKey) || "{}"); }catch(e){ wbW = {}; }
+function wbSave(){ try{ localStorage.setItem(wbKey, JSON.stringify(wbW)); }catch(e){} }
+function wbDone(id){ var w = wbW[id]; return !!(w && w.lines && w.lines.trim()); }
+var WB_TABS = [["start","Start"],["story","The Story"],["beat","Storyboard"],["flow","Flow"],
+               ["map","Map"],["bible","Bible"],["mech","Mechanics"],["scope","Scope"],["export","Export"]];
+var WB_COLOR = {Nine:"nine",Seven:"seven",Three:"three",Pia:"pia",Vic:"vic",Hesta:"hesta",
+  Granny:"granny",Principal:"principal",Marek:"marek"};
+function wbCol(n){ return WB_COLOR[n] ? "var(--" + WB_COLOR[n] + ")" : "var(--granny)"; }
+
+/* ---- who is really in the room, from hard evidence only ---- */
+function wbStage(b){
+  var s = {};
+  (b.anchors || []).forEach(function(a){ s[a] = 1; });
+  ["opens","lands","landsHard"].forEach(function(k){
+    (b[k] || []).forEach(function(V){
+      (V.lines || []).forEach(function(L){
+        if(Object.prototype.toString.call(L) === "[object Array]"){
+          var w = String(L[0]).trim();
+          if(w && w !== "Narration" && w !== "Other") s[w] = 1;
+        }
+      });
+    });
+  });
+  return Object.keys(s);
+}
+function wbMet(i){
+  var s = {}, j;
+  for(j = 0; j <= i; j++) wbStage(SPINE[j]).forEach(function(n){ s[n] = 1; });
+  return Object.keys(s);
+}
+function wbWant(name, b, i){
+  var pick = null;
+  (WANTS || []).forEach(function(w){
+    if(w.who !== name) return;
+    if((w.season || 1) > b.season) return;
+    if(w.afterBeat && beatById(w.afterBeat) >= i) return;
+    if(w.untilBeat && beatById(w.untilBeat) < i) return;
+    pick = w;
+  });
+  return pick;
+}
+
+/* ---- the gaps: what the storyteller writes that a person could ---- */
+function wbGaps(b){
+  var out = [], n = b.budget || 4, i;
+  for(i = 1; i <= n; i++){
+    out.push({id:b.id + "/T" + i + "/A", hint:"Turn " + i + " of " + n
+      + ", first of the two lines that do NOT end the night. Someone gives the player something real -"
+      + " the answer under the answer, a detail, a person read properly - and the night stays open."});
+    out.push({id:b.id + "/T" + i + "/B", hint:"Turn " + i + " of " + n
+      + ", the other one. Make it unlike the first: if A is earnest, B is sideways or funny. Both lean at “"
+      + (b.aim || "") + "” without arriving."});
+  }
+  return out;
+}
+function wbRoom(b, n){
+  var out = [], i;
+  for(i = 1; i <= n; i++){
+    out.push({id:b.id + "/ROOM/" + i, hint:"A moment in the room after “" + b.title
+      + "” closes. No clock, no gate, nobody new, same place. Somebody says a thing there is never"
+      + " time for when something is on fire."});
+  }
+  return out;
+}
+function wbProg(b){
+  var g = wbGaps(b).concat(wbRoom(b, 10)), d = 0;
+  g.forEach(function(x){ if(wbDone(x.id)) d++; });
+  return {done:d, total:g.length};
+}
+
+/* ---- the bible, sectioned and wired to the nights it touches ---- */
+var wbBibleCache = null;
+function wbBible(){
+  if(wbBibleCache) return wbBibleCache;
+  var secs = [], cur = {title:"OPENING CHARGE", rows:[]};
+  /* BIBLE is a joined STRING at runtime, not the array it is written as: the
+     declaration ends in .join(), which is easy to miss reading the source. */
+  var lines = (typeof BIBLE === "string") ? BIBLE.split(String.fromCharCode(10)) : BIBLE;
+  lines.forEach(function(line){
+    var t = String(line).trim();
+    if(!t) return;
+    if(t.length < 130 && t.indexOf("- ") !== 0 && /:$/.test(t)){
+      if(cur.rows.length) secs.push(cur);
+      cur = {title:t.replace(/:$/, ""), rows:[]};
+    } else cur.rows.push(t.replace(/^- /, ""));
+  });
+  if(cur.rows.length) secs.push(cur);
+
+  var PEOPLE = ["Nine","Pia","Vic","Hesta","Seven","Three","Mirren","Marek","Granny","Principal","Architect","Courier"];
+  var TELLS = {housing:["skull-housing","housing","spare room"], hash:["bio-hash","hash","manual"],
+    choir:["three fates","fate three","salvage"], founding:["Architect","founders","Cairn"],
+    vicsin:["consent","knowingly"], principal:["Principal","mark one","landlord"]};
+  var opensAt = {};
+  SPINE.forEach(function(b){ (b.reveals || []).forEach(function(k){ opensAt[k] = b.id; }); });
+  var pb = {};
+  SPINE.forEach(function(b){
+    wbStage(b).forEach(function(n){ (pb[n] = pb[n] || {})[b.id] = 1; });
+  });
+  secs.forEach(function(sec){
+    sec.rows = sec.rows.map(function(text){
+      var who = PEOPLE.filter(function(p){ return new RegExp("\\b" + p + "\\b").test(text); });
+      var sec2 = Object.keys(TELLS).filter(function(k){
+        return TELLS[k].some(function(w){ return new RegExp("\\b" + w + "\\b", "i").test(text); });
+      }).filter(function(k){ return opensAt[k]; });
+      var beats = {};
+      who.forEach(function(p){ Object.keys(pb[p] || {}).forEach(function(id){ beats[id] = 1; }); });
+      sec2.forEach(function(k){ beats[opensAt[k]] = 1; });
+      return {text:text, who:who, secrets:sec2, beats:Object.keys(beats),
+              lands:sec2.map(function(k){ return opensAt[k]; }),
+              kind: sec2.length ? "secret" : (who.length ? "people" : "law")};
+    });
+  });
+  wbBibleCache = secs;
+  return secs;
+}
+
+/* ---- the arithmetic ---- */
+var wbScopeCache = null;
+function wbScope(){
+  if(wbScopeCache) return wbScopeCache;
+  var t = {pass:0, lines:0, rail:0, doors:0, walks:0, press:0, live:0, room:0, after:0};
+  var places = [], seen = {};
+  SPINE.forEach(function(b, i){
+    ["opens","lands","landsHard"].forEach(function(k){
+      (b[k] || []).forEach(function(V){
+        t.pass++; t.lines += (V.lines || []).length; t.rail += (V.rail || []).length;
+        if(V.place && !seen[V.place]){ seen[V.place] = {name:V.place, beats:[]}; places.push(seen[V.place]); }
+        if(V.place) seen[V.place].beats.push(b.id);
+      });
+    });
+    t.doors += (b.exits || []).length;
+    t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
+    t.press += (b.press || []).length;
+    t.live += (b.budget || 4);
+    t.after += (SPINE[i+1] && SPINE[i+1].act !== b.act) ? 2 : 1;
+    t.room += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
+  });
+  t.turns = t.live + t.room + t.after;
+  t.stalls = t.live * 2 + t.room * 2;
+  wbScopeCache = {t:t, places:places};
+  return wbScopeCache;
+}
+
+/* ---- rendering helpers ---- */
+function wbPassage(V){
+  var h = '<div class="wb-stamp">Day ' + esc(V.day || "?") + " &middot; " + esc(V.time || "")
+        + " &middot; " + esc(V.place || "") + (V.amb ? " &middot; " + esc(V.amb) : "") + "</div>";
+  h += '<div class="wb-pass">';
+  (V.lines || []).forEach(function(L){
+    if(Object.prototype.toString.call(L) === "[object Array]"){
+      h += '<div class="wb-said"><span class="wb-who" style="color:' + wbCol(String(L[0])) + '">'
+         + esc(L[0]) + '</span><span>' + esc(L[1]) + "</span></div>";
+    } else h += '<div class="wb-narr">' + esc(L) + "</div>";
+  });
+  h += "</div>";
+  (V.rail || []).forEach(function(r, i){
+    if(!i) h += '<div class="wb-lb">What it offers next</div>';
+    h += '<div class="wb-rl">' + esc(r) + "</div>";
+  });
+  return h;
+}
+function wbSlot(g){
+  var w = wbW[g.id] || {}, done = wbDone(g.id);
+  return '<div class="wb-slot' + (done ? " done" : "") + '" data-wbslot="' + esc(g.id) + '">'
+    + '<div class="wb-sh2"><span class="wb-sid">' + esc(g.id) + '</span>'
+    + '<span class="wb-sid">' + (done ? "written" : "not written yet") + "</span></div>"
+    + '<div class="wb-hint">' + esc(g.hint) + "</div>"
+    + '<span class="wb-lb">Who speaks (must already be in the room)</span>'
+    + '<input class="wb-in" type="text" data-wbf="who" value="' + esc(w.who || "") + '" placeholder="Pia" />'
+    + '<span class="wb-lb">When this can fire (blank for any time)</span>'
+    + '<input class="wb-in" type="text" data-wbf="when" value="' + esc(w.when || "") + '" placeholder="only after Nine has spoken aloud" />'
+    + '<span class="wb-lb">The lines, as the player will read them</span>'
+    + '<textarea class="wb-ta" data-wbf="lines">' + esc(w.lines || "") + "</textarea>"
+    + '<span class="wb-lb">What it offers next (one per line, two is right)</span>'
+    + '<textarea class="wb-ta" data-wbf="rail">' + esc(w.rail || "") + "</textarea>"
+    + '<span class="wb-lb">Can it come round again?</span>'
+    + '<select class="wb-sel" data-wbf="once"><option value="once"' + (w.once === "once" ? " selected" : "") + ">Once per run</option>"
+    + '<option value="repeat"' + (w.once === "repeat" ? " selected" : "") + ">Can repeat</option></select>"
+    + '<span class="wb-lb">What it marks (optional)</span>'
+    + '<input class="wb-in" type="text" data-wbf="marks" value="' + esc(w.marks || "") + '" placeholder="Nine has told him where she came from" />'
+    + "</div>";
+}
+
+/* ---- the rail ---- */
+function wbDrawRail(){
+  var h = "", s = 0, a = 0;
+  SPINE.forEach(function(b, i){
+    if(b.season !== s){ s = b.season; a = 0;
+      h += '<div class="wb-sb">Season ' + s + " &middot; " + esc(SEASON_NAMES[s]) + "</div>"; }
+    if(b.act !== a){ a = b.act;
+      h += '<div class="wb-ab">Act ' + a + " — " + esc(ACT_NAMES[s][a]) + "</div>"; }
+    var p = wbProg(b), pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+    h += '<button class="wb-row" data-wbbeat="' + esc(b.id) + '" aria-current="' + (b.id === wbBeat) + '">'
+      + '<span class="wb-n">' + (i + 1) + '</span><span>' + esc(b.title) + "</span>"
+      + '<span class="wb-m' + (p.done ? " any" : "") + '"><i style="width:' + pct + '%"></i></span></button>';
+  });
+  $("wb-spine").innerHTML = h;
+}
+function wbGo(t){
+  wbTab = t;
+  WB_TABS.forEach(function(x){
+    $("wbv-" + x[0]).classList.toggle("on", x[0] === t);
+    var b = document.querySelector('[data-wbtab="' + x[0] + '"]');
+    if(b) b.setAttribute("aria-current", String(x[0] === t));
+  });
+  if(t === "beat") wbDrawBeat();
+  if(t === "scope") wbDrawScope();
+  if(t === "export") wbDrawExport();
+  wbDrawRail();
+  $("wb-main").scrollTop = 0;
+}
+
+/* ---- views ---- */
+function wbDrawBeat(){
+  var b = null, i = 0;
+  SPINE.forEach(function(x, n){ if(x.id === wbBeat){ b = x; i = n; } });
+  if(!b){ b = SPINE[0]; i = 0; wbBeat = b.id; }
+  var here = wbStage(b), met = wbMet(i).filter(function(n){ return here.indexOf(n) === -1; });
+  var h = '<div class="wb-eyebrow">Beat ' + (i + 1) + " of " + SPINE.length + " &middot; Season " + b.season + " &middot; Act " + b.act + "</div>";
+  h += '<div class="wb-h">' + esc(b.title) + "</div>";
+  h += '<p class="wb-lede">' + esc(b.goal) + "</p>";
+  h += '<div class="wb-g3"><div class="wb-stat"><b>' + (b.budget || 4) + "</b><span>turns before the world acts</span></div>"
+    + '<div class="wb-stat"><b>' + (b.floor || 3) + "</b><span>turns before it may close</span></div>"
+    + '<div class="wb-stat"><b class="s">' + ((b.budget || 4) * 2) + "</b><span>stall lines improvised</span></div></div>";
+
+  h += '<div class="wb-sh">The question, and the line that answers it</div>';
+  h += '<div class="wb-c gold"><span class="wb-t gold">The gate — what must become true</span><div class="wb-pass">' + esc(b.exit) + "</div></div>";
+  h += '<div class="wb-c gold"><span class="wb-t gold">The door — authored, rotates, always slot one</span>';
+  (b.exits || []).forEach(function(x){ h += '<div class="wb-rl">' + esc(x) + "</div>"; });
+  h += "</div>";
+  h += '<div class="wb-c red"><span class="wb-t red">The red line — putting the whole job down</span>'
+    + '<div class="wb-pass" style="margin-bottom:7px">' + esc(b.walkLine || "") + "</div>";
+  (b.walks || []).forEach(function(x){ h += '<div class="wb-rl">' + esc(x) + "</div>"; });
+  h += "</div>";
+
+  if((b.anchors || []).length){
+    h += '<div class="wb-sh">Anchors — the gate does not count until these names are on screen</div><div>';
+    b.anchors.forEach(function(a){ h += '<span class="wb-chip on">' + esc(a) + "</span>"; });
+    h += "</div>";
+  }
+  if((b.reveals || []).length){
+    h += '<div class="wb-sh">This beat is allowed to say</div><div>';
+    b.reveals.forEach(function(r){ h += '<span class="wb-chip on">' + esc(REVEALS[r] || r) + "</span>"; });
+    h += "</div>";
+  }
+
+  h += '<div class="wb-sh">Who is in the room</div>';
+  if(here.length){
+    h += '<p class="wb-p">On stage in this night’s written pages — they speak in it, or the night will not close until they are named.</p>';
+    here.forEach(function(n){
+      var w = wbWant(n, b, i);
+      h += '<div class="wb-c"><span class="wb-t" style="color:' + wbCol(n) + '">' + esc(n) + "</span>"
+        + '<div class="wb-pass">' + (w ? esc(w.line) : '<span style="color:#8a7c68">No standing want written for them yet.</span>') + "</div></div>";
+    });
+  } else h += '<p class="wb-p">Nobody is pinned to this night in writing.</p>';
+  if(met.length){
+    h += '<p class="wb-p">Met by now, and available to be in the room.</p><div>';
+    met.forEach(function(n){ h += '<span class="wb-chip" style="border-color:' + wbCol(n) + ';color:' + wbCol(n) + '">' + esc(n) + "</span>"; });
+    h += "</div>";
+  }
+  var away = [];
+  (WANTS || []).forEach(function(w){
+    if((w.season || 1) > b.season) return;
+    if(here.indexOf(w.who) !== -1 || met.indexOf(w.who) !== -1) return;
+    if(away.indexOf(w.who) === -1) away.push(w.who);
+  });
+  if(away.length){
+    h += '<p class="wb-p">Out in the world, wanting things, but <i>not</i> in this room — do not write them into it.</p><div>';
+    away.forEach(function(n){ h += '<span class="wb-chip">' + esc(n) + "</span>"; });
+    h += "</div>";
+  }
+
+  h += '<div class="wb-sh">Written already — the opening</div>';
+  if((b.opens || []).length){
+    b.opens.forEach(function(V, n){
+      h += '<div class="wb-c gold"><span class="wb-t gold">Opening, version ' + (n + 1) + "</span>" + wbPassage(V) + "</div>";
+    });
+  } else h += '<div class="wb-c slate"><span class="wb-t slate">No opening written</span><p class="wb-p" style="margin:0">This beat opens straight out of the cold open, so it needs none.</p></div>';
+
+  h += '<div class="wb-sh">Written already — the landing</div>';
+  (b.lands || []).forEach(function(V, n){
+    h += '<div class="wb-c gold"><span class="wb-t gold">Landing ' + (n + 1) + " — the player finished it</span>" + wbPassage(V) + "</div>";
+  });
+  (b.landsHard || []).forEach(function(V, n){
+    h += '<div class="wb-c red"><span class="wb-t red">Landing ' + (n + 1) + " — the world took it, and it cost</span>" + wbPassage(V) + "</div>";
+  });
+  if(b.scar) h += '<div class="wb-c red"><span class="wb-t red">The scar</span><div class="wb-pass">' + esc(b.scar) + "</div></div>";
+
+  h += '<div class="wb-sh">What the run will remember either way</div><div class="wb-c">';
+  (b.canon || []).forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
+  if(b.stone) h += '<div class="wb-rl" style="color:var(--gold)">' + esc(b.stone) + "</div>";
+  h += "</div>";
+
+  if((b.press || []).length){
+    h += '<div class="wb-sh">Pressure — offered when the night runs short</div>';
+    b.press.forEach(function(p, n){
+      h += '<div class="wb-c"><span class="wb-t">' + (n ? "Out of room" : "Squeeze") + '</span><div class="wb-pass">' + esc(p) + "</div></div>";
+    });
+  }
+
+  var gaps = wbGaps(b), gd = 0;
+  gaps.forEach(function(g){ if(wbDone(g.id)) gd++; });
+  h += '<div class="wb-sh">The middle — improvised today, ' + gd + " of " + gaps.length + " written</div>";
+  h += '<p class="wb-p">Between the opening and the landing the player gets <b>' + (b.budget || 4)
+    + ' turns</b>. Every one offers the door above and two lines that keep the night open. Those two are written'
+    + " fresh by the storyteller each time. Each card below is one of them.</p>";
+  gaps.forEach(function(g){ h += wbSlot(g); });
+
+  var rg = wbRoom(b, 10), rd = 0;
+  rg.forEach(function(g){ if(wbDone(g.id)) rd++; });
+  h += '<div class="wb-sh">The room afterwards — ' + rd + " of 10 written</div>";
+  h += '<p class="wb-p">When this beat closes the family gets its own time in one sealed room: same place, same hour,'
+    + " nobody new at the door. It runs as long as the player wants and the way out only appears after <b>"
+    + (typeof SLACK_ARM === "number" ? SLACK_ARM : 7) + " turns</b>.</p>";
+  rg.forEach(function(g){ h += wbSlot(g); });
+  $("wbv-beat").innerHTML = h;
+}
+
+var WB_BOOKS = {
+ 1:{b:"Three days. A courier with a shard that hums, a job from the only person who ever looked after him, and a receiver who has been dead since Tuesday. Nothing about his situation improves. Everything about him does.",
+    a:{1:"It starts with a delivery and a piece of rock that will not stop making a noise. By the end of the first night the rock has a name, the way home has closed behind him, and the door he is knocking on is the door of the man who sent him.",
+       2:"He finds out where he stands with his own pack, runs the last honest fare of his working life, and meets the thing wearing his contact’s face, asking politely after a late delivery. Somewhere in there he is offered a clean way out of all of it.",
+       3:"A frightened person spends everything she knows to walk him through a sweep he cannot see. Then a kitchen, five plates, four people, and a sentence that costs him the fee and the job and the life he had."}},
+ 2:{b:"Six days later, a diner that props its door open with a brick in the rain. This is the book where a group of people going the same way becomes a family, discovers that keeping people has a price, and gets handed the invoice.",
+    a:{1:"A table, hot food, and the first meal anybody has eaten sitting down. Then the hunt that has been walking after them since the first night ends — by the family’s own hand, and the room knows exactly whose. Afterwards a name is said properly over a grave, and a vow is made on it.",
+       2:"The vow gets tested immediately: a defector dying, a body that only one of two people can have, and a frightening woman who does not ask to be trusted, only to stay.",
+       3:"The courier learns what is in his skull, what it opens, and what the Choir actually does with people. A law goes up crooked on a wall and stays permanent. And a very good piece of watermarked paper arrives with a twelve-year-old’s name on it."}},
+ 3:{b:"The offensive. Eight days of paperwork, then a street taken back at six in the morning in front of witnesses — and after that, only the deep.",
+    a:{1:"They take the city back the kind way, publicly, on a schedule, and the city watches people it wrote off do the impossible politely. In among it: the gentle voice, the grief the founders built the machine out of, the bill Vic has been carrying, and the first stone.",
+       2:"What the family is actually for, said out loud, and then the way down: the deep dark, and the ones still dreaming in it.",
+       3:"The surviving founder, the child under the Exchange, and the last move — custody, not conquest."}}
+};
+function wbDrawStory(){
+  var h = '<div class="wb-eyebrow">The Story</div><div class="wb-h">All three books, start to finish</div>';
+  h += '<p class="wb-lede">The events are fixed — every playthrough goes through these ' + SPINE.length
+    + " nights in this order. What changes is <i>how</i> each one closes: the player reaches the ending themselves,"
+    + " or the night runs out and the world reaches it for them, which costs something and leaves a mark. Both are shown.</p>";
+  [1,2,3].forEach(function(s){
+    var bk = WB_BOOKS[s], act = 0;
+    h += '<div class="wb-sh" style="margin-top:30px">Book ' + s + "</div>";
+    h += '<div class="wb-h">' + esc(SEASON_NAMES[s]) + "</div>";
+    h += '<p class="wb-lede" style="margin-bottom:16px">' + esc(bk.b) + "</p>";
+    SPINE.forEach(function(b, i){
+      if(b.season !== s) return;
+      if(b.act !== act){
+        act = b.act;
+        h += '<div class="wb-sh">Act ' + act + " — " + esc(ACT_NAMES[s][act]) + "</div>";
+        if(bk.a[act]) h += '<p class="wb-p">' + esc(bk.a[act]) + "</p>";
+      }
+      var fin = /SEASON FINALE|SERIES FINALE/.test(b.goal || "");
+      h += '<div class="wb-c' + (fin ? " gold" : "") + '"><span class="wb-t' + (fin ? " gold" : "") + '">'
+        + (i + 1) + " &middot; " + esc(b.title) + (fin ? " &middot; the book ends here" : "") + "</span>";
+      h += '<div class="wb-pass" style="margin-bottom:9px">' + esc(b.exit) + ".</div>";
+      (b.canon || []).forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
+      if(b.canonAlt || b.canonA || b.canonB) h += '<div class="wb-rl" style="color:var(--wb-slate)">This night forks, and the run remembers whichever way it went.</div>';
+      if(b.scar) h += '<div class="wb-rl" style="color:#e08b8b;border-left-color:#6b3030">If the world closed it: ' + esc(b.scar) + "</div>";
+      (b.reveals || []).forEach(function(r){
+        h += '<div class="wb-rl" style="color:var(--wb-slate);border-left-color:var(--wb-slate-dim)">The story finally says it here: ' + esc(REVEALS[r] || r) + "</div>";
+      });
+      if(b.stone) h += '<div class="wb-rl" style="color:var(--gold);border-left-color:var(--gold)">' + esc(b.stone) + "</div>";
+      h += '<div style="margin-top:9px"><button class="wb-chip" data-wbjump="' + esc(b.id) + '">Open this night on the board</button></div></div>';
+    });
+    if(s < 3) h += '<div class="wb-note">Between the books the family drops out of sight for '
+      + (s === 1 ? "six days" : "a week") + ". The board writes that gap itself: the record of the book that just"
+      + " closed, a recap, and then the first page of the next one in a new room on a new day.</div>";
+  });
+  h += '<div class="wb-note" style="margin-top:26px">Two endings sit outside this list and neither is a failure state.'
+    + " If the world answers four questions without the player it <b>folds the table</b>: the story catches itself up"
+    + " and hands them the book’s finale with a clean slate. And the red line is always there — used twice in a"
+    + " row, the courier puts the job down and walks, and that run ends quietly with nobody dead.</div>";
+  $("wbv-story").innerHTML = h;
+}
+function wbNode(cls, title, sub){
+  return '<div class="wb-node ' + cls + '">' + title + (sub ? "<small>" + sub + "</small>" : "") + "</div>";
+}
+function wbDrawFlow(){
+  var h = '<div class="wb-eyebrow">Flow</div><div class="wb-h">How one night moves</div>';
+  h += '<p class="wb-lede">One question is live at a time. It opens on a written page, runs a handful of turns, and'
+    + " closes either because the player reached for the ending or because the night ran out and the world reached"
+    + " it instead. Then a written landing, then the room.</p>";
+  h += '<div class="wb-legend"><span><i style="background:var(--gold)"></i>written by a person</span>'
+    + '<span><i style="background:var(--wb-slate)"></i>improvised</span>'
+    + '<span><i style="background:#e08b8b"></i>costs something</span></div>';
+  var A = '<div class="wb-arrow"></div>';
+  h += '<div class="wb-flow">'
+    + wbNode("w", "The opening", "The board plays a written page: the room, the hour, people mid-sentence.") + A
+    + wbNode("", "The player’s turn", "Three lines on the rail, or type anything.") + A
+    + '<div class="wb-branch">' + wbNode("w", "Takes the door", "The night ends, because they ended it.")
+    + wbNode("m", "Takes a stall", "The night stays open. Costs a turn.")
+    + wbNode("c", "Takes the red line", "Warned once. Twice and the run is over.") + "</div>" + A
+    + wbNode("c", "Or the turns run out", "The world answers the question for them, and a toll is paid.") + A
+    + wbNode("w", "The landing", "A written page — the warm one, or the scarred one.") + A
+    + wbNode("m", "The landing settles", "One or two turns where nothing new may begin.") + A
+    + wbNode("m", "The room", "Sealed: same place, same hour, nobody new. Runs as long as they want.") + A
+    + wbNode("w", "The next question", "Opens when the player says so, on another written page.")
+    + "</div>";
+  h += '<div class="wb-sh">The three books</div>';
+  [1,2,3].forEach(function(s){
+    var list = SPINE.filter(function(b){ return b.season === s; });
+    h += '<p class="wb-p"><b>Season ' + s + " — " + esc(SEASON_NAMES[s]) + "</b><br />"
+      + list.map(function(b, n){ return (n + 1) + ". " + esc(b.title); }).join(" &rarr; ") + "</p>";
+  });
+  $("wbv-flow").innerHTML = h;
+}
+function wbDrawMap(){
+  var sc = wbScope();
+  var h = '<div class="wb-eyebrow">Map</div><div class="wb-h">Every room the written pages name</div>';
+  h += '<p class="wb-lede">Not invented for this screen. Each one is the place stamped on a written passage, so this'
+    + " is the real route through the three books — " + sc.places.length + " rooms across " + SPINE.length + " nights.</p>";
+  h += '<div class="wb-places">';
+  sc.places.forEach(function(p){
+    h += '<div class="wb-place"><b>' + esc(p.name) + "</b><span>" + esc(p.beats.join(" · ")) + "</span></div>";
+  });
+  h += "</div>";
+  $("wbv-map").innerHTML = h;
+}
+function wbDrawBible(){
+  var h = '<div class="wb-eyebrow">The Bible</div><div class="wb-h">What the storyteller is told, and which nights it touches</div>';
+  h += '<p class="wb-lede">The whole standing brief, handed over on every single turn. Most of it is <i>law</i>: it'
+    + " governs every night equally, which is why it reads as background. Some names a person. Some is a secret with a"
+    + " night of its own.</p>";
+  h += '<div class="wb-legend"><span><i style="background:#8a7c68"></i>law</span>'
+    + '<span><i style="background:var(--gold)"></i>names a person</span>'
+    + '<span><i style="background:#e08b8b"></i>fenced secret</span></div>';
+  wbBible().forEach(function(sec){
+    h += '<details class="wb-det"><summary>' + esc(sec.title) + " (" + sec.rows.length + ")</summary><div class=\"wb-db\">";
+    sec.rows.forEach(function(e){
+      var cls = e.kind === "secret" ? "red" : (e.kind === "people" ? "gold" : "");
+      h += '<div class="wb-c ' + cls + '">';
+      if(e.kind === "secret") h += '<span class="wb-t red">Fenced — belongs to ' + e.lands.map(esc).join(", ") + "</span>";
+      else if(e.who.length) h += '<span class="wb-t gold">' + e.who.map(esc).join(" · ") + "</span>";
+      else h += '<span class="wb-t">Law — every beat</span>';
+      h += '<div class="wb-pass">' + esc(e.text) + "</div>";
+      if(e.beats.length && e.beats.length < 12){
+        h += '<div style="margin-top:8px">';
+        e.beats.forEach(function(id){ h += '<button class="wb-chip" data-wbjump="' + esc(id) + '">' + esc(id) + "</button>"; });
+        h += "</div>";
+      }
+      h += "</div>";
+    });
+    h += "</div></details>";
+  });
+  $("wbv-bible").innerHTML = h;
+}
+var WB_MECH = [
+ ["The beat","One question the night asks. Their order never changes. A beat is live until it is answered."],
+ ["The gate","The moment the question is answered and the beat closes. The board holds the sentence — it is not the storyteller’s to decide."],
+ ["The door","The one line on the rail that really does end the night. Always first, written by us, rotating between three wordings."],
+ ["The stalls","The other two. They cannot end the night, so they are free to be about anything. Improvised today, and the largest single thing a person could take over."],
+ ["The red line","Putting the whole job down. It asks twice: the first time the family feels it, the second time the courier goes and that run is over."],
+ ["Anchors","Named people who must appear in the night’s own prose before the gate is allowed to count."],
+ ["Pressure","Each beat has a number of turns. Run out and the world answers the question for you."],
+ ["The toll","The fee for a question the night answered without you. Three are survivable and the count resets each book. A fourth folds the table."],
+ ["The scar","What a beat leaves behind when the world closed it instead of the player. Every beat has one written."],
+ ["The room","The family’s own time after a beat lands. Sealed: same place, same hour, nobody new. The way out appears after seven turns."],
+ ["Wants and will-nots","One standing desire and one thing each person will not say. Gravity, not dialogue."],
+ ["The fence","Secrets belonging to a night that has not happened yet. Saying one early spends that night, and the board checks every reply for them."],
+ ["Peril","The storyteller declaring the courier is one wrong move from dying. It must be declared, with a way out on the rail, before a wrong answer can be fatal."],
+ ["The record","What the run remembers. Written by the board when a gate falls, not by the storyteller."]
+];
+function wbDrawMech(){
+  var h = '<div class="wb-eyebrow">Mechanics</div><div class="wb-h">Every moving part, in plain words</div>';
+  WB_MECH.forEach(function(m){
+    h += '<div class="wb-c"><span class="wb-t gold">' + esc(m[0]) + '</span><div class="wb-pass">' + esc(m[1]) + "</div></div>";
+  });
+  h += '<div class="wb-sh">The interludes already written</div>';
+  h += '<p class="wb-p">Optional scenes offered during the room. Each is dealt at most once a season.</p>';
+  (INTERLUDES || []).forEach(function(c){
+    h += '<div class="wb-c gold"><span class="wb-t gold">' + esc(c.id || "interlude") + '</span><div class="wb-pass">' + esc(c.text || "") + "</div></div>";
+  });
+  $("wbv-mech").innerHTML = h;
+}
+function wbDrawScope(){
+  var sc = wbScope(), t = sc.t, w = 0, tot = 0;
+  SPINE.forEach(function(b){ var p = wbProg(b); w += p.done; tot += p.total; });
+  var h = '<div class="wb-eyebrow">Scope</div><div class="wb-h">How much is written, and how much is not</div>';
+  h += '<p class="wb-lede">The storyteller currently writes <b>' + t.turns + " turns</b> of a full run. That is the"
+    + " number to bring down. Everything below is counted off the live spine.</p>";
+  h += '<div class="wb-sh">Written by a person today</div><div class="wb-g3">'
+    + '<div class="wb-stat"><b>' + t.pass + "</b><span>passages</span></div>"
+    + '<div class="wb-stat"><b>' + t.lines + "</b><span>lines inside them</span></div>"
+    + '<div class="wb-stat"><b>' + t.doors + "</b><span>door lines</span></div>"
+    + '<div class="wb-stat"><b>' + t.walks + "</b><span>red lines</span></div>"
+    + '<div class="wb-stat"><b>' + t.rail + "</b><span>rail lines</span></div>"
+    + '<div class="wb-stat"><b>' + t.press + "</b><span>pressure offers</span></div></div>";
+  h += '<div class="wb-sh">Improvised today</div><div class="wb-g3">'
+    + '<div class="wb-stat"><b class="s">' + t.live + "</b><span>turns inside beats</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.room + "</b><span>turns in the rooms</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.after + "</b><span>landing turns</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.stalls + "</b><span>stall lines</span></div></div>";
+  h += '<div class="wb-note"><b>Why a branching tree is the wrong shape.</b> If each of the ' + t.live
+    + " live turns branched into the next, the paths would multiply past counting before the end of the first book.</div>";
+  h += '<div class="wb-sh">The shape that works: a pool per room</div>';
+  h += '<p class="wb-p">Instead of a tree, each beat gets a <b>pool</b> of moments. Any can fire on any turn as long'
+    + " as its condition is true — who is present, what has been said, how deep into the night it is. Order does not"
+    + " multiply the cost: ten moments stay ten moments however they are dealt.</p>";
+  h += '<div class="wb-c"><span class="wb-lb">Moments per beat, for the middle of the night</span>'
+    + '<input id="wb-s1" type="range" min="0" max="12" value="4" style="width:100%" />'
+    + '<span class="wb-lb">Moments per room, for the family’s own time</span>'
+    + '<input id="wb-s2" type="range" min="0" max="20" value="10" style="width:100%" />'
+    + '<div id="wb-so" style="margin-top:12px"></div></div>';
+  h += '<div class="wb-sh">Beat by beat</div><div class="wb-scroll"><table class="wb-tb"><thead><tr>'
+    + "<th>#</th><th>Beat</th><th>Bk</th><th>Turns</th><th>Open</th><th>Land</th><th>Doors</th><th>Anchors</th><th>Written</th>"
+    + "</tr></thead><tbody>";
+  SPINE.forEach(function(b, i){
+    var p = wbProg(b);
+    h += '<tr><td class="n">' + (i + 1) + "</td>"
+      + '<td><button class="wb-link" data-wbjump="' + esc(b.id) + '">' + esc(b.title) + "</button></td>"
+      + '<td class="n">' + b.season + '</td><td class="n">' + (b.budget || 4) + "</td>"
+      + '<td class="n">' + (b.opens || []).length + '</td><td class="n">' + ((b.lands || []).length + (b.landsHard || []).length) + "</td>"
+      + '<td class="n">' + (b.exits || []).length + '</td><td class="n">' + (b.anchors || []).length + "</td>"
+      + '<td class="n" style="color:var(--gold)">' + p.done + "/" + p.total + "</td></tr>";
+  });
+  h += "</tbody></table></div>";
+  h += '<p class="wb-p">Written across the whole board so far: <b>' + w + " of " + tot + "</b> cards.</p>";
+  $("wbv-scope").innerHTML = h;
+  function calc(){
+    var a = +$("wb-s1").value, bb = +$("wb-s2").value;
+    var beats = SPINE.length, rooms = beats - 1, cards = a * beats + bb * rooms;
+    var ratio = cards / t.turns, read;
+    if(!cards) read = "Nothing written: the storyteller writes all " + t.turns + " turns, as it does today.";
+    else if(ratio < 0.5) read = "About " + ratio.toFixed(2) + " written moments for every improvised turn. The storyteller is still doing most of the talking and the writing shows up as highlights.";
+    else if(ratio < 1) read = "About " + ratio.toFixed(2) + " written moments per improvised turn. Most turns could be written ones, but a player who lingers will run the pool dry.";
+    else read = "About " + ratio.toFixed(2) + " written moments per improvised turn, with " + (cards - t.turns)
+      + " spare. A whole run could be played on written material, provided the conditions spread the cards evenly — ten moments in a kitchen do not cover a turn on a rooftop, so the real number lands higher.";
+    $("wb-so").innerHTML = '<div class="wb-g3">'
+      + '<div class="wb-stat"><b>' + cards + "</b><span>cards to write</span></div>"
+      + '<div class="wb-stat"><b>' + (cards * 45).toLocaleString() + "</b><span>words at ~45 a card</span></div>"
+      + '<div class="wb-stat"><b>' + Math.ceil(cards / 12) + "</b><span>days at 12 a day</span></div></div>"
+      + '<p class="wb-p" style="margin-top:9px">' + read + "</p>";
+  }
+  $("wb-s1").addEventListener("input", calc);
+  $("wb-s2").addEventListener("input", calc);
+  calc();
+}
+function wbDrawExport(){
+  var keys = Object.keys(wbW).filter(wbDone);
+  var h = '<div class="wb-eyebrow">Export</div><div class="wb-h">Hand the writing back</div>';
+  h += '<p class="wb-lede">Everything typed into this board lives in this browser. When there is a batch worth'
+    + " implementing, export it as one file.</p>";
+  h += '<div class="wb-g3"><div class="wb-stat"><b>' + keys.length + "</b><span>cards written</span></div></div>";
+  h += '<div class="btnrow"><button class="btn" id="wb-dl">DOWNLOAD THE FILE</button>'
+    + '<button class="btn ghost" id="wb-cp">COPY TO CLIPBOARD</button><span id="wb-msg" class="hint"></span></div>';
+  h += '<div class="wb-scroll" style="margin-top:14px"><table class="wb-tb"><thead><tr><th>Card</th><th>Who</th><th>Opens</th></tr></thead><tbody>';
+  keys.forEach(function(k){
+    h += "<tr><td>" + esc(k) + "</td><td>" + esc(wbW[k].who || "—") + "</td><td>" + esc((wbW[k].lines || "").slice(0, 60)) + "</td></tr>";
+  });
+  h += "</tbody></table></div>";
+  $("wbv-export").innerHTML = h;
+  function payload(){ return JSON.stringify({board:"mudskippers", build:VERSION_TAG, written:wbW}, null, 1); }
+  $("wb-dl").onclick = function(){
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([payload()], {type:"application/json"}));
+    a.download = "mudskippers-writing.json"; a.click();
+    $("wb-msg").textContent = "Downloaded";
+  };
+  $("wb-cp").onclick = function(){
+    if(navigator.clipboard) navigator.clipboard.writeText(payload()).then(function(){ $("wb-msg").textContent = "Copied"; });
+  };
+}
+function wbDrawStart(){
+  var sc = wbScope(), t = sc.t;
+  var h = '<div class="wb-eyebrow">Mudskippers &middot; ' + esc(VERSION_TAG) + '</div><div class="wb-h">The Writers’ Board</div>';
+  h += '<p class="wb-lede">Roughly half of what a player reads is written by hand; the rest is improvised by the'
+    + " storyteller as they play. This board exists to shift that ratio. Everything on it is read out of the game"
+    + " itself, so it is never out of date.</p>";
+  h += '<div class="wb-g3"><div class="wb-stat"><b>' + SPINE.length + "</b><span>nights</span></div>"
+    + '<div class="wb-stat"><b>' + t.pass + "</b><span>passages written</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.turns + "</b><span>turns still improvised</span></div></div>";
+  h += '<div class="wb-sh">How to use this</div>';
+  h += '<p class="wb-p"><b>Storyboard</b> is the working surface. Pick any night from the list on the left and you get'
+    + " the whole of it: the question it asks, the line that answers it, everything already written, and then a stack"
+    + " of blank cards for the parts the storyteller currently invents. Fill in any card and it saves itself.</p>";
+  h += '<p class="wb-p"><b>Scope</b> counts what exists and what does not, and lets you try sizes.'
+    + " <b>Bible</b> is the world as the storyteller is told it, secrets marked and linked to the night each belongs to."
+    + " <b>Map</b> is every room. <b>Flow</b> is the shape of a night. <b>Mechanics</b> is the vocabulary."
+    + " <b>Export</b> hands the writing back.</p>";
+  h += '<p class="wb-p">If you read one thing first, read <b>The Story</b> — all three books end to end.</p>';
+  h += '<div class="wb-note">A <b>beat</b> is one night, one question. The <b>room</b> is the quiet afterwards, where'
+    + " the family talk and nothing is at stake — it is the largest unwritten space in the game and probably the"
+    + " best place to start.</div>";
+  h += '<div class="wb-sh">The one rule about the cards</div>';
+  h += '<p class="wb-p">A card is a moment, not a branch. It does not need to know what came before it or what follows'
+    + " — only a condition saying when it may fire. That is what keeps the job finite.</p>";
+  $("wbv-start").innerHTML = h;
+}
+
+/* ---- wiring ---- */
+$("wbmodal").addEventListener("input", function(e){
+  var box = e.target.closest ? e.target.closest("[data-wbslot]") : null;
+  if(!box) return;
+  var f = e.target.getAttribute("data-wbf");
+  if(!f) return;
+  var id = box.getAttribute("data-wbslot");
+  wbW[id] = wbW[id] || {};
+  wbW[id][f] = e.target.value;
+  wbSave();
+  var d = wbDone(id);
+  box.classList.toggle("done", d);
+  box.querySelectorAll(".wb-sid")[1].textContent = d ? "written" : "not written yet";
+  wbDrawRail();
+});
+$("wbmodal").addEventListener("change", function(e){
+  var box = e.target.closest ? e.target.closest("[data-wbslot]") : null;
+  if(box && e.target.tagName === "SELECT"){
+    var id = box.getAttribute("data-wbslot");
+    wbW[id] = wbW[id] || {};
+    wbW[id][e.target.getAttribute("data-wbf")] = e.target.value;
+    wbSave();
+  }
+});
+$("wbmodal").addEventListener("click", function(e){
+  var t = e.target.closest ? e.target.closest("[data-wbtab]") : null;
+  if(t){ wbGo(t.getAttribute("data-wbtab")); return; }
+  var b = e.target.closest ? e.target.closest("[data-wbbeat]") : null;
+  if(b){ wbBeat = b.getAttribute("data-wbbeat"); wbGo("beat"); return; }
+  var j = e.target.closest ? e.target.closest("[data-wbjump]") : null;
+  if(j){ wbBeat = j.getAttribute("data-wbjump"); wbGo("beat"); }
+});
+function wbOpen(){
+  if(!prySpoilers){
+    $("wbgate").style.display = "block";
+    $("wbboard").style.display = "none";
+  } else {
+    $("wbgate").style.display = "none";
+    $("wbboard").style.display = "";
+    /* open on the night the run is actually standing in - that is the one the
+       writer is most likely to have just watched the storyteller improvise */
+    if(!wbBeat) wbBeat = (runSlug && !beatDone()) ? beatNow().id : SPINE[0].id;
+    $("wb-nav").innerHTML = WB_TABS.map(function(x){
+      return '<button class="wb-nb" data-wbtab="' + x[0] + '" aria-current="' + (x[0] === wbTab) + '">' + x[1] + "</button>";
+    }).join("");
+    wbDrawStart(); wbDrawStory(); wbDrawFlow(); wbDrawMap(); wbDrawBible(); wbDrawMech();
+    wbGo(wbTab);
+  }
+  $("wbmodal").classList.add("open");
+}
+$("t-board").onclick = wbOpen;
+$("wb-close").onclick = function(){ $("wbmodal").classList.remove("open"); };
+$("wbgate-close").onclick = function(){ $("wbmodal").classList.remove("open"); };
+$("wbgate-pry").onclick = function(){
+  prySpoilers = true;
+  if(runSlug) persistAll(currentChoices());
+  wbOpen();
+};
 
 function openTitle(){
   refreshTitle();
@@ -11051,7 +11903,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.20.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.21.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
