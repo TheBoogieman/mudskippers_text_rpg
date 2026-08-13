@@ -109,7 +109,7 @@ the season's tolls, and is then dealt to the reader as an on-screen **PREVIOUSLY
 without you, and the names it cost underneath in red.
 
 The seam itself is written, not asked for. The board is the only thing that knows how
-long the gap is — six days between Book One and Book Two, eight between Book Two and
+long the gap is — six days between Book One and Book Two, seven between Book Two and
 Book Three — so the board writes it: the finale lands in a scene of its own, the
 record closes the book, and the **premiere** opens the next one in a new room, on the
 new day, with people already mid-sentence. No model is called at a season boundary at
@@ -330,17 +330,27 @@ The DM does not decide the plot and cannot wander off it:
 - **A beat closes completely before the next one opens.** Every gate is followed by
   the **landing** — a turn (two on an arc turn) where nothing new is allowed to
   begin: reactions, cost, quiet, the family being people about what just happened.
-- **Then the clock stops.** After the landing comes slack — two free turns, three
-  after an arc turn — and during it **gates are dead**: no clock, no gate, nothing
-  owed, and the board doesn't even tell the DM what the next beat is. The family's
-  time. Sometimes the game deals the DM an **interlude** there: a small optional
-  scene from a hand-authored deck — a paying run everyone insists on joining, a
-  ceremonial tasting, a rooftop where nothing happens on purpose. Suggestions, never
-  orders, and each one is dealt at most once a season.
-- **The season knocks when *you* knock.** If your typed action during the family's
-  time is plainly reaching for the next matter, the board answers and the next beat
-  arms at once. Momentum, convenience, or the DM's good segue is not a knock — only
-  the player's hand is.
+- **Then the clock stops, and the room is yours.** After the landing comes **the
+  family's own time**, and it lasts exactly as long as you want it to. Gates are
+  dead. The clock does not move, the day does not roll, nobody arrives and nobody
+  leaves — the board seals the room: it ignores any day, time or place the DM sends,
+  and refuses to file any name the family has not already met. Nothing the DM writes
+  ends it. It is the only part of the night that is allowed to be about nothing, and
+  that is what it is for: ask what the rain actually is, argue about what the vow
+  means on a day it is inconvenient, find out what somebody did before, be funny at
+  each other. The DM is told to spend the lore here — everything except what is
+  fenced for a later question.
+- **You open the next door.** After seven turns of conversation a card appears:
+  *take the night on*. It does not nag and it does not expire. Press it when you have
+  had enough of each other and the next question opens in a written room, with no AI
+  call at all. Sometimes the game deals the DM an **interlude** during the family's
+  time: a small optional scene from a hand-authored deck — a paying run everyone
+  insists on joining, a ceremonial tasting, a rooftop where nothing happens on
+  purpose. Suggestions, never orders, and each one is dealt at most once a season.
+- **The knock is a doorbell, not a key.** If your typed action during the family's
+  time is plainly reaching for the next matter, the DM can knock and the board brings
+  the card forward early — but it is still your hand that opens it. Momentum,
+  convenience, or the DM's good segue is not a knock.
 
 The series runs **~80 / ~110 / ~100 turns per season — roughly 300 for all three
 books** played with intent, longer played leisurely — and it cannot fail to end:

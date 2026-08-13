@@ -1028,7 +1028,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.17.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.18.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1056,7 +1056,8 @@
       <p>While a question is live the rail always reads the same way down the screen. <b>First</b> is the way out of tonight — a real attempt at the thing that finishes it. Take it and the night ends, because you decided it did, and the story walks straight on. <b>Second and third</b> go nowhere on purpose: dig in, ask the question under the question, get the detail, press the person, say the human thing. They hold the night open — nobody closes a beat you're still standing in — and cost nothing but a turn. Mudskipping does the same and doesn't even cost the turn.</p>
       <p>Under them, in red, is the way out of <i>everything</i>: put the whole job down and walk. That one is the game's, not the storyteller's — it always asks twice, and what leaving means is written fresh for each question the story asks. Use it and the family feels it. Use it again the very next turn and the courier really does go, and that is the end of that run. Anything else in between and it's forgotten.</p>
       <p>If the night runs out, the game refuses to stall — that is its oldest promise — so the world answers the question for you, and that costs a <b>toll</b>: not a punishment for what you did, a fee for what went undone. Your bits never feed the clock: mudskipping stalls the night for as long as you're playing. You'll see everything coming — a yellow card when the road is short, a second when the world stirs — and every toll explains itself when it's paid. Three are survivable and the meter re-zeroes every season. A fourth doesn't end anything: the world folds the table, catches the story up without you, tells you exactly what it did on a gold card, and hands you the season's finale with a clean meter. Every hard ending in this game is one you see coming first — the mortality rules warn you, and so does the third door.</p>
-      <p>Between questions there is no clock at all. The aftermath, the slack, the family's time — those are yours, forever, free.</p>
+      <p>Between questions there is no clock at all. After a beat lands you get <b>the family's own time</b>, and it lasts exactly as long as you want it to. The room is sealed while you are in it — same place, same hour, same people, nobody at the door — and nothing the storyteller writes can end it. It is the one part of the night that is allowed to be about nothing, which is the point: ask what the rain actually is, argue about what the vow means on a day it's inconvenient, find out what somebody did before all this, be funny at each other. Ask about the world and you'll get a real answer, as long as it isn't the answer to a question the story hasn't asked yet.</p>
+      <p>After seven turns of that, a card appears offering the way on. It doesn't nag and it doesn't expire. Press it when you've had enough of each other.</p>
       <p>One more rule, and it protects you: you own the courier, and the world owns the world. What you <i>do</i> is law. What you <i>guess</i> is a guess — say "it was Mirren" and be wrong, and the only casualty is the courier's pride.</p>
     </div>
     <button class="btn" style="display:block;margin:6px auto 0" id="wel-close">INTO THE RAIN</button>
@@ -1139,7 +1140,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.17.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.18.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1418,7 +1419,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.17.0 "The Premiere"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.18.0 "The Room"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1529,7 +1530,7 @@ var BIBLE = [
 "FORMAT RULES - CRITICAL:",
 "- Respond with ONLY a JSON object. No markdown fences, no commentary.",
 "- JSON VALIDITY: string values must never contain unescaped double-quote characters - use apostrophes for quoted speech inside dialogue. No trailing commas. The reply must parse with JSON.parse.",
-"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, \"drift\" only as THE RAIN describes, and \"knock\" only as BETWEEN BEATS allows.",
+"- Schema, every turn: {\"scene\":[{\"speaker\":\"...\",\"text\":\"...\"}],\"choices\":[\"...\",\"...\",\"...\"],\"day\":1,\"time\":\"...\",\"location\":\"...\",\"now\":\"...\",\"ambience\":\"...\",\"gate\":false,\"canon\":[\"...\"],\"cast\":[{\"name\":\"...\",\"note\":\"...\"}]}. Add \"peril\" and \"death\" only as MORTALITY describes, \"drift\" only as THE RAIN describes, and \"knock\" only as THE FAMILY'S OWN TIME allows. During the family's own time the board ignores \"day\", \"time\" and \"location\" entirely and refuses names it does not already know - the room is sealed and you cannot move it.",
 "- Occasional extra fields, only when the turn asks for one or when the thing genuinely changed: milestones, roster, quests, agenda, map, place, bits, compacted. Never send all of them; never invent an update just to fill a field.",
 "- now: send it if you like, but the board writes this one. Day, time and place are its coordinates, not yours, and it keeps them itself - so never move the family by describing them somewhere else. If they walk to a new room, say so in the scene AND send \"location\". If you did not send a location, they are exactly where the NOW block above says they are.",
 "- THE INSTRUMENTS - day, time, location and ambience are REQUIRED ON EVERY TURN, without exception. They are not metadata: they are the only picture the player gets. The game paints the screen from them - ambience is the weather and the light, location is the place-name on the display, day and time are the clock on the courier's terminal. Send all four every single turn, restating them unchanged when nothing has moved, and correcting them the instant the scene does. A turn that omits them or leaves them stale shows the player the wrong world.",
@@ -1543,7 +1544,7 @@ var BIBLE = [
 "- time: REQUIRED. A short clock reading for the moment of this scene, as the courier would say it - '11:47pm', 'a little past three', 'first light', 'mid-afternoon'. Twelve words at the outside. Advance it as scenes take time, roll it past midnight into the next day, and keep it honest against day and ambience: dawn light and '11pm' together is a contradiction the player will notice.",
 "- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" or \"season\" field; the board owns the season.",
 "- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia. In the same reply, refresh \"agenda\" - a closed gate always changes what tonight is about.",
-"- \"knock\": true - send only during BETWEEN BEATS, and only when the PLAYER's typed action is plainly reaching for the season's next matter. The knock is theirs, never yours: momentum, convenience, or a good segue is not a knock.",
+"- \"knock\": true - send only during THE FAMILY'S OWN TIME, and only when the PLAYER's typed action is plainly reaching for the season's next matter. It is a doorbell, not a key: it offers them the way on a little early, and they still have to take it. Nothing you send ends their time - not a knock, not a gate, not a good segue. Momentum and convenience are not a knock.",
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
@@ -2791,7 +2792,7 @@ var SPINE = [
               ["Pia","I'm the calm one."]],
        rail:["Tell Pia to stop being the calm one.",
              "Ask what the Exchange actually is, out loud, for the room."]}],
- lands:[{day:"23", time:"1:30am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+ lands:[{day:"24", time:"1:30am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
        now:"Small hours in the long room. The family has said the word Exchange out loud and nobody has taken it back.",
        lines:["You say the word Exchange, and the room does not argue - which is how you find out it was decided some time ago and everyone was waiting to be told.",
               ["Three","Then I will say the part nobody wants to. Some of us do not come back from that. I am not being dramatic. I am being accurate, and I would like us accurate before we are brave."],
@@ -2800,11 +2801,11 @@ var SPINE = [
               ["Hesta","I know. Sit down anyway."],
               "The paper with Pia's name on it stays on the table all night. Nobody moves it and nobody sets anything down on top of it, so it develops a small exclusion zone, like a hole in ice.",
               ["Pia","I want it kept. Not framed. Kept."],
-              "Under the city, a week and a bit from now, there is a door that is exactly as narrow as you were warned."],
+              "Under the city, a week from now, there is a door that is exactly as narrow as you were warned."],
        rail:["Ask Three to say the accurate part in full.",
              "Take the paper off the table and give it to Pia to keep.",
              "Let the room stay up. Nobody is sleeping through this one."]},
-      {day:"23", time:"1:10am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
+      {day:"24", time:"1:10am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
        now:"Small hours in the long room. The family has run out of other sentences and turned itself toward the Exchange.",
        lines:["It turns out you do not decide to go to the Exchange. You simply run out of other sentences.",
               ["Seven","I've made a list. It's not a good list. It's mostly things we don't have."],
@@ -2817,7 +2818,7 @@ var SPINE = [
        rail:["Ask Nine for the opinions now, while there is still a room to have them in.",
              "Ask Seven what is at the top of the list.",
              "Call it a night. We start on the list at first light."]}],
- landsHard:[{day:"23", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+ landsHard:[{day:"24", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
        now:"Small hours in the long room. The trade executed itself while the family argued; the choosing was done for them.",
        lines:["The argument is still going when it stops being relevant, which is a thing arguments do and which nobody warns you about.",
               "It is done. Somewhere else, by other people, on the timetable in the watermark, while this room was still working out what it believed.",
@@ -2830,7 +2831,7 @@ var SPINE = [
        rail:["Ask Hesta to read it out. All of it.",
              "Minute it. Say out loud what we would have chosen.",
              "Everyone off the walls. We move tonight."]},
-      {day:"23", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+      {day:"24", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
        now:"Small hours in the long room. The world answered the paper before the family did, and the family is looking at the answer.",
        lines:["You lose an hour to being right at each other, and at the end of the hour the world hands you its own answer with the ink already dry.",
               ["Seven","I want to apologise for the last thing I said. Not because it was wrong. Because of when."],
@@ -3581,7 +3582,25 @@ var phaseLeft = 0;           /* turns remaining in the current non-live phase */
 var gateHeldNow = false;     /* a gate arrived below the beat's floor; served one turn */
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
 var lastPlayerText = "";     /* what the player actually typed, for the chair lint */
-var SLACK_STD = 2, SLACK_ARC = 3;
+/* ---- THE SLACK ROOM ----
+   Slack used to be two or three turns of grace and then the board opened the next
+   door by itself, which meant the family's own time was something that happened
+   TO the player rather than something they had. It is a room now, and they hold
+   the key: it runs as long as they want it, the door out appears once the
+   conversation has actually been one, and nothing the DM sends ends it. The whole
+   point is the part of the night that is not urgent - what these people believe,
+   what they are frightened of, what the vow means when it is inconvenient, and
+   who is funny about it.
+   The room is sealed while they are in it: same place, same people. A DM given a
+   scene with no gate and no clock will walk everybody somewhere new and introduce
+   a fixer, because that is what "nothing is happening" looks like to a model
+   trained on plot. Nothing is happening is the feature. */
+var SLACK_ARM = 7;           /* turns of conversation before the door appears */
+var slackTurns = 0;          /* turns spent in the room, this slack */
+var slackRoom = "";          /* the room slack opened in; the strip does not leave it */
+var slackDoorUp = false;     /* the way on is showing, and it is the player's */
+var slackMovedTo = "";       /* a move the sealed room refused, owed as a correction */
+var slackWalkedIn = [];      /* names the sealed room refused, owed as a correction */
 /* THE PAGE TURN belongs to the closing, not the opening. A beat ends one of two
    ways - the player calls it at the end of the road, on their terms, or the road
    runs out and the world ends it for them - and either way the reply that ends it
@@ -4243,6 +4262,7 @@ function finishBreak(name){
   deathLine = name;            /* the card names who the story could not lose */
   perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
   seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
+  slackDoorUp = false; slackTurns = 0; renderSlackDoor();
   var aside = {kind:"dmaside", text:"The rain has too much to offer. It can not end like this."};
   renderBlock(aside); feedLog.push(aside);
   ledgerText += "\n\n---\n\n**THE RAIN REFUSED.** " + name + " held the story up, and the story cannot stand without them.\n";
@@ -4261,6 +4281,7 @@ function finishWalkout(){
   walkoutDue = false; redRun = 0; perilTurns = 0;
   foldPending = false; foldServed = false; epilogueNow = false;
   seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
+  slackDoorUp = false; slackTurns = 0; renderSlackDoor();
   ledgerText += "\n\n---\n\n**HE PUT IT DOWN.** The courier walked, and this time nobody talked him out of it.\n";
   applyTension();
   endCard("walked", "");
@@ -4553,8 +4574,25 @@ function sceneCharacters(data){
   });
   return present;
 }
-function deriveFromScene(data){
+/* who in this reply the room has never met. Speakers and cast entries both: a DM
+   that files someone in the cast array without giving them a line has still
+   introduced them, and the register is the thing being protected. */
+function strangersIn(data){
+  var out = [], seen = {};
+  function look(nm){
+    nm = String(nm || "").trim();
+    if(!nm || nm === "Narration" || nm === "Other" || nm === "Courier") return;
+    if(castSheets[nm] || seen[nm]) return;
+    seen[nm] = 1; out.push(nm);
+  }
+  (data.scene || []).forEach(function(b){ if(b) look(b.speaker); });
+  (Object.prototype.toString.call(data.cast) === "[object Array]" ? data.cast : [])
+    .forEach(function(c){ if(c) look(c.name); });
+  return out;
+}
+function deriveFromScene(data, skip){
   var present = sceneCharacters(data);
+  if(skip && skip.length) present = present.filter(function(n){ return skip.indexOf(n) === -1; });
   if(!present.length) return 0;
   if(present.indexOf("Courier") === -1) present.push("Courier");   /* always in the room */
   var day = $("hud-day").textContent || "", where = $("hud-loc").textContent || "";
@@ -4588,15 +4626,29 @@ function showScene(data, logIt, instant){
       lines.push((b.speaker==="Narration" ? "" : b.speaker.toUpperCase()+": ") + b.text);
     }
   });
-  if(data.day){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
-  if(typeof data.time === "string" && data.time.trim()) nowTime = data.time.trim();
+  /* ---- THE SEALED ROOM ----
+     The family's own time is a conversation, not a journey. Everything that
+     locates the scene - the day, the clock, the place - is frozen for its whole
+     length, because a DM handed a scene with no gate and no clock will move
+     people to fill the silence: three turns of slack used to reliably produce a
+     walk, a new room and an hour gone, and the next beat's authored opening then
+     had to argue with wherever they had wandered to.
+     The prose still renders - it is what the player read - but the strip does not
+     move, and the correction rides the next outgoing turn. */
+  var sealed = !!(data.__live && phase === "slack");
+  if(data.day && !sealed){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
+  if(typeof data.time === "string" && data.time.trim() && !sealed) nowTime = data.time.trim();
   /* the map has to know about the move before we can name the route we took */
-  mergeMap(data.map);
+  if(!sealed) mergeMap(data.map);
   if(data.location){
     var was = $("hud-loc").textContent;
     var now = String(data.location).toUpperCase();
-    if(was && was !== now) noteMove(was, now);
-    $("hud-loc").textContent = now;
+    if(sealed && slackRoom && now !== slackRoom){
+      slackMovedTo = now;
+    } else {
+      if(was && was !== now) noteMove(was, now);
+      $("hud-loc").textContent = now;
+    }
   }
   mergeMilestones(data.milestones);
   /* the refusal watches the fallen list's live transitions only - names already
@@ -4641,10 +4693,21 @@ function showScene(data, logIt, instant){
       if(cn && !castSheets[cn]){ newFaces = true; break; }
     }
   }
+  /* and the door is shut: nobody new exists in the family's own time. A stranger
+     who speaks here is not filed, gets no sheet, and is written back out next
+     turn. Refusing the REGISTER rather than the prose is the whole trick - the
+     line the player already read stands, and the person simply never becomes
+     someone this story has to keep track of. */
+  var strangers = sealed ? strangersIn(data) : [];
+  if(strangers.length){
+    strangers.forEach(function(n){ if(slackWalkedIn.indexOf(n) === -1) slackWalkedIn.push(n); });
+    data.cast = (Object.prototype.toString.call(data.cast) === "[object Array]" ? data.cast : [])
+      .filter(function(c){ return !(c && c.name && strangers.indexOf(String(c.name).trim()) !== -1); });
+  }
   mergeCast(data.cast);
-  deriveFromScene(data);        /* co-presence, sheets, last-seen: all client-side */
+  deriveFromScene(data, strangers);   /* co-presence, sheets, last-seen: all client-side */
   /* who was on stage this turn: speakers plus cast entries, for the walk-on wants */
-  lastPresent = sceneCharacters(data);
+  lastPresent = sceneCharacters(data).filter(function(n){ return strangers.indexOf(n) === -1; });
   (Object.prototype.toString.call(data.cast) === "[object Array]" ? data.cast : []).forEach(function(c){
     var pn = c && c.name ? String(c.name).trim() : "";
     if(pn && lastPresent.indexOf(pn) === -1) lastPresent.push(pn);
@@ -5145,6 +5208,7 @@ function finishFold(){
   }
   beatIdx = fin;
   phase = "live"; phaseLeft = 0;
+  slackTurns = 0; slackRoom = ""; slackDoorUp = false; renderSlackDoor();
   beatTurns = 0; driftRun = 0; walkbackNow = false;
   beatText = ""; gateRefusedNames = []; gateHeldNow = false;
   tolls = 0;                     /* paid in full; the meter starts clean */
@@ -5421,6 +5485,59 @@ function seasonContinue(){
   scrollFeed();
   persistAll(out);
 }
+/* ---- THE WAY ON, AND IT IS THEIRS ----
+   The door out of the family's time appears once the conversation has actually
+   been one, and then it just stands there. It does not nag, it does not expire,
+   and the night does not move while it waits - a player who wants nine more turns
+   of arguing about the pan gets nine more turns of arguing about the pan. */
+function openSlackDoor(){
+  slackDoorUp = true;
+  queueAside("green", "The room is yours as long as you want it - nothing out there is counting."
+    + " When you have had enough of each other, the night still has one more question in it.");
+  renderSlackDoor();
+}
+function renderSlackDoor(){
+  var box = $("boardbox"); if(!box) return;
+  var live = phase === "slack" && slackDoorUp && !runOver && !beatDone() && !foldPending;
+  if(!live){
+    if(box.getAttribute("data-slack-door")){ box.innerHTML = ""; box.removeAttribute("data-slack-door"); }
+    return;
+  }
+  /* the flag alone is not proof the door is there: the box is shared furniture and
+     another banner may have emptied it out from under us. Rebuild unless the door
+     is actually still standing in the DOM. */
+  if(box.getAttribute("data-slack-door") && box.firstChild) return;
+  box.innerHTML = ""; box.setAttribute("data-slack-door", "1");
+  var nx = SPINE[beatIdx + 1];
+  var d = document.createElement("div"); d.className = "warn";
+  d.appendChild(document.createTextNode(
+    "Nothing is owed and nothing is counting. Stay in this room as long as you like"
+    + (nx ? " - the night's next question waits on you, not the other way round." : ".")));
+  var go = document.createElement("button"); go.className = "small"; go.textContent = "TAKE THE NIGHT ON";
+  go.title = "Ends the family's time and opens the next question. No AI call - the board writes the room.";
+  go.onclick = slackArm;
+  d.appendChild(go);
+  box.appendChild(d);
+}
+/* the player's hand on the door. Same shape as the premiere and for the same
+   reason: the room the next question opens in is authored, so there is nothing
+   to ask a model for - the board plays it and the player moves first. */
+function slackArm(){
+  if(busy || phase !== "slack" || !slackDoorUp || beatDone() || runOver) return;
+  slackDoorUp = false;
+  var box = $("boardbox"); box.innerHTML = ""; box.removeAttribute("data-slack-door");
+  chatLog.push({role:"user", content:"(The player has taken the night on: the family's own time is over,"
+    + " by their hand, and the next question is live. The board plays the room it opens in - read it and"
+    + " pick up on the far side of it.)"});
+  armBeat();
+  beatJustArmed = "";          /* the opening plays here, not on the next reply */
+  var rail = playOpening(beatNow().id);
+  var out = rail ? railFor(rail, true) : [];
+  applyTension();
+  showChoices(out);
+  scrollFeed();
+  persistAll(out);
+}
 /* the premiere itself, split out because a save can be sitting at the seam right
    now - written by the version that asked the DM for this page and then reloaded
    mid-call. Restoring one used to hand the player the cold open's rail, from Day
@@ -5518,14 +5635,20 @@ function roadBlock(){
   if(phase === "live"){
     out.push("Tonight's question is the only one on this table - and the last line of this turn"
       + " is aimed at NEXT, without arriving anywhere near it.");
+  } else if(phase === "slack"){
+    /* the landing leans at NEXT; the family's own time does not. Leaning every
+       turn through a conversation the player opened on purpose is how downtime
+       turns back into a briefing with jokes in it. */
+    out.push("You are not playing NEXT and you are not steering at it either - this is the part of"
+      + " the night that is allowed to be about nothing. It may be mentioned the way people mention"
+      + " a thing they are not doing yet. It may not be prepared, planned, scouted or begun."
+      + " If the player is plainly reaching for it anyway, do not hand it over: send \"knock\": true"
+      + " and the board will offer them the way on - THEY decide, not you, and the night stays"
+      + " exactly where it is until they do.");
   } else {
     out.push("You are not playing NEXT yet and you may not reach its gate - but everything you write"
       + " from here leans that way: what people are half-thinking about, what somebody nearly says,"
-      + " what the street is already doing about it. End the turn pointed at it."
-      + (phase === "slack"
-          ? " If the player is plainly reaching for it anyway, do not hand it over: send \"knock\":"
-            + " true and the board will bring that question forward properly, and then you may play it."
-          : ""));
+      + " what the street is already doing about it. End the turn pointed at it.");
   }
   return out.join("\n");
 }
@@ -5542,7 +5665,32 @@ function boardBlock(){
     return out.join("\n");
   }
   if(phase === "slack"){
-    out.push("THE BOARD - BETWEEN BEATS. The last gate has fallen and landed. This is the family's time: no clock, no gate, nothing owed, and the season will knock when it knocks. Let the player wander, and follow them. Do not start new season business. If the player's typed action is plainly reaching for the season's next matter, you may send \"knock\": true and the board will answer.");
+    out.push("THE BOARD - THE FAMILY'S OWN TIME, AND THE ROOM IS SEALED."
+      + " The last gate has fallen and landed. There is no clock, no gate and nothing owed,"
+      + " and - this is the part that is new - NOTHING YOU WRITE ENDS THIS. The player closes"
+      + " it themselves, with a button, whenever they have had enough. Until they press it the"
+      + " night does not move on, and you should stop expecting it to."
+      + "\nTHE ROOM: " + (slackRoom || $("hud-loc").textContent || "where they are")
+      + ". Nobody arrives. Nobody leaves. Nobody new exists. Do not change the location, do not"
+      + " move the clock, do not roll the day, and do not introduce a name this family has not"
+      + " already met - not a neighbour, not a courier at the door, not a voice on the wire."
+      + " If you send a new place or a new person the board will refuse it and you will be"
+      + " asked to write them back out, which wastes the player's turn."
+      + "\nWHAT IT IS FOR: talking. This is the only part of the night with room in it, so"
+      + " spend it. Let these people say the things there is never time for when something is"
+      + " on fire - what they believe, what they are afraid of, what they think the vow"
+      + " actually means on a day it is inconvenient, what they did before, who they miss."
+      + " Argue. Let someone be wrong and stay in the room. Be funny: this family is at its"
+      + " funniest when nothing whatsoever is happening, and a joke here costs nothing."
+      + "\nTHE LORE IS YOURS TO SPEND, inside the fence. Anything the world already knows,"
+      + " anything these people would know, anything the record holds - the pack, the canals,"
+      + " the founders, how a Hollow works from the inside, why bacon first and bread after,"
+      + " what the rain is actually for. Answer properly and at length when you are asked."
+      + " What is FENCED stays fenced: a later question's answer is not lore, it is that"
+      + " question, and handing it over in the quiet spends a night that has not arrived yet."
+      + "\nFOLLOW THE PLAYER. If they ask, answer. If they push, let the person they are"
+      + " pushing push back. If they joke, be funnier. If they sit there saying nothing, let"
+      + " somebody else in the room start it - that is what rooms are like.");
     locked = lockedReveals();
     if(locked.length) out.push("NOT YET — do not reveal, confirm, hint at or write canon about any of this: " + locked.join("; "));
     out.push(roadBlock());
@@ -5635,7 +5783,26 @@ function boardDirective(){
      knows how many days the seam is - and the phase no longer survives long
      enough to have a directive. seasonContinue and the restore path both play it
      and go straight to live. */
-  if(phase === "slack") return "";
+  /* the sealed room corrects on the turn after it is broken, in the fiction and
+     without a scolding: the person was passing, the clock was wrong, nobody moved */
+  if(phase === "slack"){
+    var fix = [];
+    if(slackMovedTo){
+      fix.push("THE ROOM DID NOT MOVE. Your last reply put the family at " + slackMovedTo
+        + "; they are still at " + (slackRoom || "where they were") + ", and they have not"
+        + " been anywhere. Pick the scene back up in that room, and leave the clock alone -"
+        + " nobody is going anywhere until the player says so.");
+      slackMovedTo = "";
+    }
+    if(slackWalkedIn.length){
+      fix.push("NOBODY CAME IN. Your last reply had " + slackWalkedIn.join(", ")
+        + " in the room; the board has not filed them and they are not here. Write them back"
+        + " out in one line - they were leaving, they were on the wire, they were never"
+        + " actually in the doorway - and give the scene back to the people who live in it.");
+      slackWalkedIn = [];
+    }
+    return fix.length ? "(" + fix.join(" ") + ")" : "";
+  }
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -5805,18 +5972,24 @@ function boardTurn(data){
         }
         renderSeasonBanner();
       } else {
-        phase = "slack";
-        phaseLeft = actTurnAhead() ? SLACK_ARC : SLACK_STD;
+        /* into the room, and the room is theirs: no counter runs down toward the
+           next question, because nothing but the player opens that door */
+        phase = "slack"; phaseLeft = 0;
+        slackTurns = 0; slackDoorUp = false;
+        slackRoom = $("hud-loc").textContent || "";
+        slackMovedTo = ""; slackWalkedIn = [];
       }
     }
     return;
   }
-  /* the family's time: gates are dead, and only the player's own reach - the
-     knock - opens the next door early */
+  /* the family's time. Gates are dead here and so is the DM's key: nothing it
+     sends arms the next question. The knock survives as a doorbell rather than a
+     key - a player who is plainly reaching for the next matter gets the door
+     early instead of sitting through the rest of a conversation they have
+     finished - but it is still their hand that opens it. */
   if(phase === "slack"){
-    if(knock){ armBeat(); return; }
-    phaseLeft--;
-    if(phaseLeft <= 0) armBeat();
+    slackTurns++;
+    if(!slackDoorUp && (slackTurns >= SLACK_ARM || knock)) openSlackDoor();
     return;
   }
   /* the walk-back reply: clock resets and the toll is paid - unless the gate
@@ -7175,6 +7348,7 @@ function saveBlob(){
     cast:castSheets, canon:runCanon, archive:canonArchive,
     milestones:milestones, quests:quests, interludesUsed:interludesUsed,
     tolls:tolls, phase:phase, phaseLeft:phaseLeft, driftRun:driftRun,
+    slackTurns:slackTurns, slackRoom:slackRoom, slackDoor:slackDoorUp,
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
@@ -7829,7 +8003,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.17.0");
+  R(s, "build", "v4.18.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -7935,7 +8109,10 @@ function dbgReport(){
     chairCuts ? "warn" : "ok");
   R(s, "arc checkpoint due", actCheckpointDue);
   R(s, "maintenance index", maintIndex);
-  R(s, "slack length", "std " + SLACK_STD + " · act " + SLACK_ARC);
+  R(s, "slack room", phase === "slack"
+    ? (slackTurns + " turn" + (slackTurns === 1 ? "" : "s") + " of " + SLACK_ARM
+       + " · door " + (slackDoorUp ? "UP" : "not yet") + " · sealed to " + (slackRoom || "?"))
+    : "—  (arms at " + SLACK_ARM + " turns)", (phase === "slack" && slackDoorUp) ? "warn" : "");
   R(s, "interlude riding", interludeServedId);
   R(s, "interludes used", interludesUsed.length);
   R(s, "asides queued", pendingAsides.length);
@@ -8495,7 +8672,7 @@ var SEASON_OPENS = {
   {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
    now:"Day 31, first light on Cannery Row. The Choir holds this street and the family has come to take it.",
    lines:[
-     "Eight days between deciding and doing, and the eight days are not the part anybody will tell stories about.",
+     "Seven days between deciding and doing, and the seven days are not the part anybody will tell stories about.",
      "You spend them the way people actually spend the run-up to something enormous: doing its paperwork. Three builds a schedule. Seven builds a schedule for Three's schedule and then apologises for it. Hesta feeds forty people who are not in this family, on the reasoning that forty people who have been fed will tell you where the Hollows are standing.",
      "They do. That is how you know which street to take first.",
      ["Hesta","This one. Nine of them, and a man who opens at six regardless."],
@@ -8509,7 +8686,7 @@ var SEASON_OPENS = {
   {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
    now:"Day 31, dawn. The family has come to take a street off the Choir, in public, kindly, on a schedule.",
    lines:[
-     "In the eight days after the Exchange stopped being a plan and became an address, this family turns into something it has no word for and badly needs one.",
+     "In the seven days after the Exchange stopped being a plan and became an address, this family turns into something it has no word for and badly needs one.",
      "It is not an army. Armies have budgets. It is closer to a very determined removals firm with a medical wing and strong opinions about how people should be spoken to.",
      ["Seven","We agreed we weren't going to call it an operation. It makes me feel like I'm about to get somebody hurt."],
      ["Three","It is an operation. You may call it a morning, if that is easier to carry."],
@@ -8622,9 +8799,9 @@ function renderTermStatus(){
     tb.innerHTML = seasonLine
       + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
       + esc(agendaText || "Nothing owed tonight. The night is the family's.") + '</div>'
-      + '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn' + (phaseLeft === 1 ? "" : "s") + '</div>'
+      + '<div class="board-turns">THE FAMILY&rsquo;S OWN TIME — ' + slackTurns + ' turn' + (slackTurns === 1 ? "" : "s") + ' in the room</div>'
       + '<div class="hint" style="margin-top:5px">' + shut + ' beat' + (shut === 1 ? "" : "s")
-      + ' of the season closed. No clock, no gate, nothing owed. The season knocks when it knocks.</div>';
+      + ' of the season closed. No clock, no gate, nothing owed. The night moves on when you say so.</div>';
   } else {
     var b = beatNow(), t = boardTension();
     /* one vocabulary: the wrist says exactly what the strip says, always */
@@ -8763,8 +8940,8 @@ function renderTermJobs(){
         } else if(phase === "slack"){
           nowd.innerHTML = '<b>' + esc(SPINE[i].title.toUpperCase()) + '</b><span>'
             + esc(gateNotes[SPINE[i].id] || SPINE[i].exit) + '</span>'
-            + '<div class="board-turns">BETWEEN BEATS — ' + phaseLeft + ' free turn'
-            + (phaseLeft === 1 ? "" : "s") + '</div>';
+            + '<div class="board-turns">THE FAMILY&rsquo;S OWN TIME — ' + slackTurns + ' turn'
+            + (slackTurns === 1 ? "" : "s") + ' in the room</div>';
         } else {
           nowd.innerHTML = '<b>&#9656; IN PLAY</b><span>Still being written. The title goes on this entry when it closes.</span>'
             + '<div class="board-turns">' + turnDots(SPINE[i]) + '</div>';
@@ -9139,7 +9316,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.17.0   COLD START",
+    "MUD//OS  v4.18.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10606,7 +10783,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.17.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.18.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -10666,6 +10843,7 @@ function newRun(confirmFirst, bare){
   canonArchive = []; pendingCompaction = null;
   milestones = []; quests = []; interludesUsed = []; agendaText = "";
   tolls = 0; phase = "live"; phaseLeft = 0; driftRun = 0; walkbackNow = false; foldPending = false;
+  slackTurns = 0; slackRoom = ""; slackDoorUp = false; slackMovedTo = ""; slackWalkedIn = [];
   foldServed = false; foldedBeats = []; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
@@ -10786,6 +10964,15 @@ function restoreFromBlob(s){
   } else {
     phase = "live"; phaseLeft = 0;
   }
+  /* the room, restored. A save from before the room existed comes back with a
+     fresh conversation rather than a door it never earned - the counter is the
+     only thing that opens it, and it costs the player nothing to talk more. */
+  slackTurns = (typeof s.slackTurns === "number" && s.slackTurns > 0) ? s.slackTurns : 0;
+  slackRoom = (phase === "slack")
+    ? (typeof s.slackRoom === "string" && s.slackRoom ? s.slackRoom : ($("hud-loc").textContent || ""))
+    : "";
+  slackDoorUp = phase === "slack" && (s.slackDoor === true || slackTurns >= SLACK_ARM);
+  slackMovedTo = ""; slackWalkedIn = [];
   seasonRecords = (s.seasonRecords && typeof s.seasonRecords === "object") ? s.seasonRecords : {};
   archiveIndex = Object.prototype.toString.call(s.archiveIndex) === "[object Array]" ? s.archiveIndex : [];
   seasonBreakDue = false;
@@ -10835,6 +11022,7 @@ function restoreFromBlob(s){
   maybeBoardBanner();
   maybeRecordBanner();
   renderSeasonBanner();          /* the standing door survives a reload */
+  renderSlackDoor();             /* and so does the way out of the family's time */
   applyVisuals();          /* the weather follows the run into the scene */
   return true;
 }
