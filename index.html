@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.34.3 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.34.4 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.34.3</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.34.4</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.34.3 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.34.4 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5457,7 +5457,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.34.3";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.34.4";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5600,6 +5600,16 @@ function normalizeCast(raw){
    And the three labels that are not people never needed sheets at all: narration is
    not a character, "Other" is the label for anybody the story is not keeping, and
    the courier is the player. */
+/* what goes on the nameplate. castName decides who somebody IS, for the register;
+   this decides what the player reads, which is not the same question - Narration and
+   Other are not people but they are perfectly good labels. */
+function speakerName(raw){
+  var nm = String(raw || "").trim();
+  if(!nm) return "Narration";
+  nm = nm.split(/\s[-\u2013\u2014|]\s/)[0].split(":")[0].trim().replace(/[.,;]+$/, "");
+  nm = normSpeaker(nm);
+  return castName(nm) || nm || "Narration";
+}
 function castName(raw){
   var nm = String(raw || "").trim();
   if(!nm) return "";
@@ -6682,7 +6692,20 @@ function showScene(data, logIt, instant){
     /* ...and nobody speaks in markdown. Asterisk pairs reached the screen inside
        dialogue and, worse, onto the rail buttons: "**Say** Mirren's name, now that
        you're here again." */
-    data.scene.forEach(function(b){ b.text = String(b.text).replace(/\*\*(.+?)\*\*/g, "$1"); });
+    data.scene.forEach(function(b){
+      b.text = String(b.text).replace(/\*\*(.+?)\*\*/g, "$1");
+      /* THE NAMEPLATE IS A NAME. The register stopped accepting sheet-dumps as
+         people, but the label still went on screen exactly as it arrived, so a
+         player watched somebody called COURIER - VOICE: HE SPEAKS WITH A QUICK WIT
+         AND A SHARP TONGUE. HIS JOKES ARE HIS WAY OF COPING say a line. Cleaning it
+         here fixes the screen, the ledger, the witness and the laws at once,
+         because everything downstream reads the scene after this. */
+      b.speaker = speakerName(b.speaker);
+      /* ...and the backtick. The format rules forbid unescaped double quotes inside
+         a JSON string, so the storyteller reaches for the next thing on the keyboard
+         and the player gets `There are enough chairs for all of you` in the prose. */
+      b.text = b.text.replace(/`([^`\n]{1,400})`/g, "\u201c$1\u201d").replace(/`/g, "");
+    });
   }
   var blocks = []; var lines = [];
   (data.scene||[]).forEach(function(b){
@@ -12185,7 +12208,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.34.3");
+  R(s, "build", "v4.34.4");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13498,7 +13521,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.34.3   COLD START",
+    "MUD//OS  v4.34.4   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15792,7 +15815,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.34.3",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.34.4",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
