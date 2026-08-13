@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.41.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot" id="t-foot">· THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.41.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver" id="term-ver"></span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.41.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.42.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1775,7 +1775,8 @@ var BIBLE = [
 "- location: REQUIRED. The specific place this scene is in, two to four words, as a sign or a map would name it. Name the room you are actually in - do not borrow a name from this instruction, from the road ahead, or from a person. Update it the moment the party moves, in the same turn they arrive.",
 "- speaker must be Narration, Courier, Other, or one of the names in ON STAGE in the context block - that list is the whole cast this run has actually met, and it grows as the story introduces people. Never use a name that is not on it: the people who have not arrived yet are not yours to cast, and putting one on screen early spends them. Strangers get \"Other\". Use Narration for prose. The File is the wrist's voice - ALL CAPS, room-audible - and it only exists once it has been installed; before that the terminal is dumb hardware.",
 "- 3 to 6 scene blocks per turn. Ensemble banter once companions exist: characters talk to EACH OTHER. One beat at a time. End every turn with the floor open and pointed at the gate.",
-"- Exactly 3 choices, each a short first-person action or line for the courier, under 15 words. Inside a live beat the game reads them BY POSITION, so the order is a contract, not a preference. CHOICE 1 is the exit: a real attempt at tonight's aim, the move that ends this business, and the most tempting thing on the rail. CHOICES 2 AND 3 are dead ends: the question under the question, the detail, the person pressed, the human thing said - unlike each other, one earnest and one sideways, and neither leaving the courier measurably closer to the gate. A dead end that quietly advances the night is the commonest way this table's pacing gets stolen. Outside a live beat - the landing, the family's own time - write three ordinary choices as you always have.",
+"- The board tells you how many choices it wants, EVERY TURN, in the directive and again in the scene contract - two of your own under its pinned line inside a live beat, three in the family's own time. Its number wins over any habit and over this paragraph. What follows is the shape of them, not the count.",
+"- Each choice is a short first-person action or line for the courier, under 15 words. Inside a live beat the game reads them BY POSITION, so the order is a contract, not a preference. CHOICE 1 is the exit: a real attempt at tonight's aim, the move that ends this business, and the most tempting thing on the rail. CHOICES 2 AND 3 are dead ends: the question under the question, the detail, the person pressed, the human thing said - unlike each other, one earnest and one sideways, and neither leaving the courier measurably closer to the gate. A dead end that quietly advances the night is the commonest way this table's pacing gets stolen. Outside a live beat - the landing, the family's own time - write three ordinary choices as you always have.",
 "- NEVER offer quitting as a choice. Walking out on the job, handing the shard back, telling them to find another courier - that door exists, it matters, and it belongs to the game, not to you. The board prints it under your three, in red, and makes the player click it twice. Your three choices are for people who are still in this.",
 "- THE PLAYER CLOSES THE BEAT, NOT YOU. A gate lands when they reach for it - the exit door, a call, or their own typed move going for it - or when the road runs out and the board forces you. Do not close a beat because the scene feels covered: covered is not finished, and a night that ends on its second move was never a night. When they stall, you keep playing. When a MUDSKIPPER MOMENT lands, you keep playing - a bit holds the beat open and costs nothing, unless they have called it.",
 "- Honor whatever the player types as a custom action, however wild - bend the world around it, then let consequences land.",
@@ -5466,7 +5467,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.41.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.42.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5718,7 +5719,9 @@ function renderBlock(b){
             + esc(it.head) + '</b>' + (it.text ? " — " + esc(it.text) : "") + '</span>';
         }).join("");
   } else if(b.kind === "dmaside"){
-    el.className = "block dmaside" + (b.invite ? " invite" : "");
+    /* an answer to the invitation is not a warning, and must not wear the warning's
+       red. The player did the thing the game asked them to do. */
+    el.className = "block dmaside" + ((b.invite || b.warm) ? " invite" : "");
     el.innerHTML = '<span class="tag">THE DM</span>' + esc(b.text);
   } else if(b.kind === "aside"){
     /* TONIGHT is the question's own card and nothing else may wear it: the room's
@@ -10128,7 +10131,7 @@ function physSpeaker(sp){
 function physicsWalk(data){
   /* the death and the gateNote are prose the player reads, and nothing was
      checking them: "the courier uploaded Nine to the cloud" ended a run through
-     the one field fifteen laws never looked at. They walk last, so their indexes
+     the one field the laws never looked at. They walk last, so their indexes
      fall outside data.scene and the cut leaves the real blocks alone. */
   var blocks = ((data && data.scene) || []).slice(), where = shardWhere;
   if(data && typeof data.death === "string" && data.death.trim()) blocks.push({speaker:"Narration", text:data.death});
@@ -10698,10 +10701,19 @@ function openBar(){
    INTO THE RAIN remains the only door. Nothing here reaches the ledger, the
    chatLog, or the intro state - the DM never hears about it, and the story
    never happened. */
-var DM_ASIDE = "We've got a wild one here. Good, we could use some improv. First, the rain. "
-  + "I've set up a whole table for you, you know, to sample the menu before ordering breakfast. "
-  + "And remember, being nice beats debating Bane in a story-driven game with fictional characters "
-  + "and going on racist tirades. The shard is watching Mr TOGAN.";
+/* THE FIRST WILD THING SOMEBODY TYPES. The title screen invites this and the
+   green card invites it again - and the answer used to be a red warning box
+   containing an in-joke about people the player has never met and a line about
+   racist tirades, with their actual typed words swallowed unacknowledged. A
+   stranger's first creative act in this game read as a content-policy scolding.
+   The invitation is real, so the answer is warm, it is in the game's own voice,
+   and it says back what they just did. The dedication lives in the credits and on
+   the shard, where it lands the way it was meant to. */
+var DM_ASIDE = "Noted, and noted properly \u2014 the record in this game is a twelve-year-old with "
+  + "an excellent memory, and she heard you. Nothing is off the table here: type the mad thing, "
+  + "the tender thing, the thing that gets you thrown out of better establishments. The family will "
+  + "have opinions. That is the whole point of them.\n\nNow \u2014 the rain is still falling, and "
+  + "Pia is still waiting. Into it when you're ready.";
 var DM_INVITE = "Go on, try going off the rails. Type anything down there.";
 /* the lure: the gold bar glows green only while the invitation stands */
 function lureBar(on){
@@ -10720,7 +10732,7 @@ function dmAside(attempt){
   $("mudinput").value = "";
   var pb = {kind:"player", text:attempt, mud:true, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
-  var aside = {kind:"dmaside", text:DM_ASIDE};
+  var aside = {kind:"dmaside", text:DM_ASIDE, warm:true};
   renderBlock(aside); feedLog.push(aside);
   scrollFeed();
   persistAll(currentChoices());   /* the attempt and the interruption both survive a reload */
@@ -12291,7 +12303,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.41.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.42.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12647,7 +12659,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.41.0");
+  R(s, "build", VERSION_TAG);
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13465,7 +13477,10 @@ function renderTermStatus(){
     pips += '<i class="' + (pi <= tolls ? "paid" : "") + (pi === TOLL_MAX + 1 ? " grave" : "") + '"></i>';
   }
   tb.innerHTML += '<div class="toll-row">TOLLS ' + pips
-    + (tolls >= TOLL_MAX && !runOver ? ' <span style="color:#ff9d9d">one more ends it</span>' : '') + '</div>';
+    /* the fold replaced the loss: a fourth toll does not end anything, it folds
+       the table and hands the player the finale with a clean meter. The guide has
+       said so since v4.4 and this row was still threatening them with an ending. */
+    + (tolls >= TOLL_MAX && !runOver ? ' <span style="color:#e8b98a">one more folds the table</span>' : '') + '</div>';
   /* the standing door: during the epilogue the wrist itself can open the next season */
   if(epilogueNow && !runOver){
     var cont = document.createElement("button");
@@ -13960,7 +13975,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.41.0   COLD START",
+    "MUD//OS  " + VERSION_TAG + "   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15641,6 +15656,21 @@ function fxInit(){
    Its own tiny rAF loop, awake only while it is falling, so a shard at rest
    costs nothing.
    ===================================================================== */
+/* THE WAY IN. A middle-click on a perpetually-bobbing 22px shard was the only
+   door to the trapdoor: unreachable on a trackpad, impossible on touch, and
+   hostile to anything automated. A long press opens it too. */
+var SHARD_HOLD_MS = 700;
+var shardHoldTimer = null;
+function shardHoldStart(){
+  if(shardHoldTimer) clearTimeout(shardHoldTimer);
+  shardHoldTimer = setTimeout(function(){
+    shardHoldTimer = null;
+    try{ openDebug(); }catch(e){}
+  }, SHARD_HOLD_MS);
+}
+function shardHoldStop(){
+  if(shardHoldTimer){ clearTimeout(shardHoldTimer); shardHoldTimer = null; }
+}
 var SHARD_SAYS = "MR. TOGAN, THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.";
 /* What it says depends on what it can feel. One is picked at random per tap, never
    the same one twice running. The signature line is always the first of a session. */
@@ -15970,6 +16000,7 @@ function shardInit(){
        shard is the one thing on screen that is always there, never scrolls away
        and belongs to no panel, which makes it the right handle for this. */
     if(e.button === 1){ openDebug(); return; }
+    shardHoldStart();          /* ...and so does holding it, for everyone without a middle button */
     shardHeld = {dx: e.clientX - shardX, dy: e.clientY - shardY,
                  x0: e.clientX, y0: e.clientY, t0: Date.now(), moved: false,
                  vx: 0, vy: 0, tp: Date.now()};
@@ -15981,7 +16012,10 @@ function shardInit(){
   shardEl.addEventListener("pointermove", function(e){
     if(!shardHeld) return;
     e.preventDefault();
-    if(Math.abs(e.clientX - shardHeld.x0) > 4 || Math.abs(e.clientY - shardHeld.y0) > 4) shardHeld.moved = true;
+    if(Math.abs(e.clientX - shardHeld.x0) > 4 || Math.abs(e.clientY - shardHeld.y0) > 4){
+      shardHeld.moved = true;
+      shardHoldStop();         /* a drag is a drag, not a long press */
+    }
     var now = Date.now(), dtms = Math.max(8, now - shardHeld.tp);
     var nx = e.clientX - shardHeld.dx, ny = e.clientY - shardHeld.dy;
     /* remember how fast the hand was going, so letting go can throw it */
@@ -15994,6 +16028,7 @@ function shardInit(){
   });
   function clamp(v, m){ return v < -m ? -m : (v > m ? m : v); }
   function letGo(e){
+    shardHoldStop();           /* letting go before the hold lands is just a tap */
     if(!shardHeld) return;
     var h = shardHeld;
     var tap = !h.moved && (Date.now() - h.t0) < 600;
@@ -16275,7 +16310,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.41.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: VERSION_TAG,
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -16823,8 +16858,18 @@ function renderSelfTest(){
   document.body.innerHTML = h;
   document.body.style.background = "#0d0c0a";
 }
+/* ONE VERSION, ONE PLACE. Every literal above reads VERSION_TAG now, and the two
+   the player actually looks at get stamped here - the version used to live in
+   eight hand-maintained spots across two files, which is exactly how sw.js
+   shipped a cache named for a build three releases behind the game inside it. */
+function stampVersion(){
+  var f = $("t-foot"), v = $("term-ver");
+  if(f) f.textContent = VERSION_TAG + " " + f.textContent;
+  if(v) v.textContent = VERSION_TAG;
+}
 (function boot(){
   try{ loadSettings(); }catch(e){}
+  try{ stampVersion(); }catch(e){}
   /* the sweep runs instead of the game, and touches no save */
   if(/[?&]selftest\b/.test(location.search)){
     try{ renderSelfTest(); }catch(e){
