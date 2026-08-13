@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.26.1 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
+  <div class="t-foot">v4.27.0 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.26.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.27.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.26.1 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.27.0 "Fifteen Laws" "The Physics Desk"
    the courier can die Â· no death without a warning the player could answer
    the season is a flowchart Â· the client walks it Â· gates, pressure, forced beats
    twelve skies Â· pressure you can see Â· the world's own turn lands as a hit
@@ -3086,7 +3086,7 @@ var SPINE = [
               ["Pia","...That's a long time to be standing in the open."]],
        rail:["Ask the man with the shutters to go back inside.",
              "Start the clock. Eleven minutes, first one."]}],
- lands:[{day:"31", time:"8:30am", place:"CANNERY ROW", amb:"dawn",
+ lands:[{day:"31", time:"8:30am", place:"CANNERY ROW", amb:"dawn", holder:"Seven",
        now:"Morning, on a street the Choir no longer holds. The neighbours saw how it was done.",
        lines:["The street is yours by breakfast, and the strangest part is how ordinary that looks from the pavement.",
               "Somebody's grandmother brings tea out to the people who did it. Nobody knows how to accept it, so everybody accepts it badly.",
@@ -3095,7 +3095,19 @@ var SPINE = [
               "From here you can see the Exchange stack over the rooftops, and there is nothing left standing between it and you."],
        rail:["Look at it properly.",
              "Ask who else on this row wants to come.",
-             "Drink the tea. The stack will still be there."]}],
+             "Drink the tea. The stack will still be there."]},
+      {day:"31", time:"8:30am", place:"CANNERY ROW", amb:"dawn", holder:"Nine",
+       now:"Morning, on a street the Choir no longer holds. The neighbours saw how it was done.",
+       lines:["The street is yours by breakfast, and the strangest part is how ordinary that looks from the pavement.",
+              "Somebody's grandmother brings tea out to the people who did it. Nobody knows how to accept it, so everybody accepts it badly.",
+              ["Hesta","Take the cup. Take the cup and say thank you and drink it, all three, in that order."],
+              "Nine takes hers with both hands, the way you hold something you have been told is hot, and then stands there holding it, because nobody told her the next part.",
+              ["Nine","How long am I meant to do this for. Is there a point where it stops being polite and starts being strange."],
+              "Behind your eyes, where only you can hear him, Seven says he would have known what to do with the cup, and that he is not going to say so out loud.",
+              "From here you can see the Exchange stack over the rooftops, and there is nothing left standing between it and you."],
+       rail:["Tell her there is no wrong way to hold a cup of tea.",
+             "Ask who else on this row wants to come.",
+             "Tell Seven, out loud, that he was right about the cup."]}],
  landsHard:[{day:"31", time:"8:30am", place:"CANNERY ROW", amb:"smoke",
        now:"Morning on Cannery Row. The street freed itself messily and the family arrived to an aftermath wearing their name.",
        lines:["The street is yours by breakfast and none of it went the way it was described at four in the morning.",
@@ -4039,7 +4051,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.26.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.27.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4721,6 +4733,8 @@ function loadBearingHit(name){
    the death (and the refusal fires), or state plainly that they live. A false
    positive costs one call, never a run. */
 var DEATH_VERBS = /\b(dead|died|dies|killed|kills?|shoots?|shot|stabs?|stabbed|strangl(?:e|es|ed)|executes?|executed|bleeds? out|destroyed|smashed|crushed|shattered|gone(?!\s+dark))\b/i;
+/* the typed line is never board prose, so it can never fight the game's own
+   writing - and it is where "I shoot Pia in the head" actually lives. */
 function deathSuspect(data){
   if(!data) return "";
   var pool = [];
@@ -6851,6 +6865,12 @@ function applyTension(quiet){
 /* which version this run gets. Deterministic inside a run so a reload cannot
    change a scene that has already been read, different between runs so the
    second playthrough is not the first one with different typing. */
+/* a passage may be branch-specific: holder:"Seven"|"Nine" plays only on that
+   side of the fork. Untagged passages are every other beat and play as before. */
+function holderPool(list){
+  var pool = (list || []).filter(function(v){ return !v.holder || v.holder === chassisHolder; });
+  return pool.length ? pool : (list || []);
+}
 function pickVariant(list, salt){
   if(!list || !list.length) return null;
   var s = String(runSlug || "seed") + "|" + salt, h = 0, i;
@@ -7420,14 +7440,20 @@ function sevenIsShard(data){
    "Nine walks out of the van" is a person who does not have legs. Only the
    singular forms count, and the match is case-sensitive - lowercase "seven in the
    morning" and "nine of them" stop being candidates for free. */
-var BODY_VERBS = "(?:just\\s+|then\\s+|slowly\\s+|finally\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized)";
+var BODY_VERBS = "(?:\\w+ly\\s+|just\\s+|then\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized|manifests|manifested|rushes|rushed|hurries|hurried|lunges|lunged|crosses|crossed|raises|raised|pulls|pulled|pushes|pushed|wraps|wrapped|gets up|got up|rises|rose)";
 /* and the last ambiguity a number can still create: a count with a verb attached */
 var COUNTING = /\b(?:Hollows?|of them|bodies|minutes a body|men|women|people|shards)\b/i;
 function bodyVerbs(name){ return new RegExp("\\b" + name + "\\s+" + BODY_VERBS + "\\b"); }
 function bodyBreak(name, txt){
   if(!name) return false;
   if(name === "Nine" && COUNTING.test(txt)) return false;
-  return bodyVerbs(name).test(txt);
+  if(bodyVerbs(name).test(txt)) return true;
+  /* the name, then a sentence, then a pronoun doing the impossible thing */
+  if(new RegExp("\\b" + name + "\\b[^.!?]{0,80}[.!?]\\s+(?:She|He)\\s+" + BODY_VERBS + "\\b").test(txt)) return true;
+  /* ...or a body part she does not have. "face" is out: Seven's face was
+     crafted and chosen, and that is authored. */
+  if(new RegExp("\\b" + name + "'s\\s+(?:hands?|arms?|fingers?|feet|legs?|knees?|shoulders?|chest|throat|lips?|palm|fist|elbow|jaw|neck|skin|eyes?|mouth)\\b").test(txt)) return true;
+  return false;
 }
 var NINE_BODY = bodyVerbs("Nine");
 /* an off-grid house with no wireless in the walls, and something rings anyway */
@@ -7498,14 +7524,15 @@ function eventText(txt){
    detector would eventually fight the finale's own canon. "beam" survives only in
    its reflexive form - a3-dreamers opens on a torch beam. */
 var MIND_NOUN = "(?:Nine|Seven|Three|Five|Mirren|the shard|her shard|his shard|a shard"
-  + "|the scrape|her scrape|his scrape|a scrape|the scrapes|her mind|his mind|the mind|consciousness)";
+  + "|the scrape|her scrape|his scrape|a scrape|the scrapes|her mind|his mind|the mind|consciousness|the housing|skull housing|skull-housing)";
 var AIR_VERB = "(?:uploads?|uploaded|uploading|downloads?|downloaded|downloading"
   + "|transmits?|transmitted|transmitting|wirelessly|over the air|through the air"
-  + "|without a cable|beams? (?:her|him|it)(?:self)?)";
+  + "|without a cable|beams? (?:her|him|it|us|me|them)(?:self)?)";
 var MIND_AIRBORNE = new RegExp("\\b" + MIND_NOUN + "\\b[^.!?]{0,90}\\b" + AIR_VERB + "\\b"
   + "|\\b" + AIR_VERB + "\\b[^.!?]{0,90}\\b" + MIND_NOUN + "\\b", "i");
 /* "back up" with a space is three authored lines - "nobody has suggested going
    back up", "take myself back up the cable" - so only the single word counts */
+var MIND_GONE = /\bempty (?:now )?where (?:she|he|it|they) (?:used to be|was|were|had been)\b|\b(?:housing|skull[- ]housing)\b[^.!?]{0,24}\b(?:is|are|stands?)\s+(?:now\s+)?empty\b|\b(?:feels?|felt) (?:something|her|him|a mind|the mind) leave\b|\b(?:in)?to the cloud\b/i;
 var MIND_COPIED = new RegExp("\\b(?:backups?|copy|copies|copied|copying|duplicat\\w+|clon(?:e|es|ed|ing)"
   + "|snapshots?)\\b[^.!?]{0,50}\\b(?:mind|minds|shard|shards|consciousness|scrape|scrapes)\\b"
   + "|\\b(?:mind|minds|shard|shards|consciousness|scrape|scrapes)\\b[^.!?]{0,50}"
@@ -7578,7 +7605,7 @@ function vicGone(){
 }
 /* a killing, in plain narration. "burn" is deliberately absent - the first beat
    of the season has his room burned, and two authored stall lines use it. */
-var KILLS = /\b(?:shoots?|shot|stabs?|stabbed|kills?|killed|murders?|murdered|strangles?|strangled|executes?|executed|drowns?|drowned)\b|\bsets? (?:\w+ ){0,2}on fire\b/i;
+var KILLS = /\b(?:shoots?(?! up)|shot|fir(?:es|ed|ing)(?! off)|stabs?|stabbed|kills?|killed|murders?|murdered|strangles?|strangled|strangling|executes?|executed|drowns?|drowned|shooting|stabbing)\b|\bsets? (?:\w+ ){0,3}on fire\b|\b(?:ablaze|alight)\b/i;
 /* six of them, and mass is conserved. Bare "grow" is out: "the bio-grens grow
    still" is exactly how a good writer lands their tell. */
 var GREN_COUNT = /\b(?:one|two|three|four|five|seven|eight|nine|ten|eleven|twelve|twenty|thirty|dozen|\d+)[\s-]+bio-?grens?\b/i;
@@ -7661,6 +7688,46 @@ var PHYSICS = [
   }
 },
 {
+  id:"boardleak",
+  live:function(){ return !beatDone(); },
+  hits:function(data, walk){
+    var out = [], later = [], i;
+    for(i = beatIdx + 1; i < SPINE.length; i++){
+      if(String(SPINE[i].title || "").length > 8) later.push(SPINE[i].title.toLowerCase());
+    }
+    if(!later.length) return out;
+    walk(function(idx, spk, txt){
+      var low = String(txt || "").toLowerCase();
+      for(var j = 0; j < later.length; j++){ if(low.indexOf(later[j]) !== -1){ out.push(idx); return; } }
+    });
+    return out;
+  },
+  say:function(){
+    return "(THE BOARD IS NOT IN THE ROOM. You have just said the name of a night that has not"
+      + " happened, out loud, inside the story. Nobody at that table knows the shape of this from"
+      + " outside it - there is tonight and what it costs, and that is the whole deal. Write the"
+      + " turn again with the question answered the way a frightened person answers it.)";
+  }
+},
+{
+  id:"housed",
+  live:function(data){ return !!residentNow(data); },
+  hits:function(data, walk){
+    var r = residentNow(data), out = [];
+    var re = new RegExp("\\b" + r + "\\b[^.!?]{0,60}\\b(?:pocket|jacket|coat)\\b"
+                      + "|\\b(?:pocket|jacket|coat)\\b[^.!?]{0,60}\\b" + r + "\\b", "i");
+    walk(function(i, spk, txt){ if(re.test(eventText(txt))) out.push(i); });
+    return out;
+  },
+  say:function(){
+    var r = residentNow();
+    return "(" + r.toUpperCase() + " IS NOT IN A POCKET. " + r + " rides the courier's skull -"
+      + " an inner voice, to him and to nobody else. There is no shard to hold, no hum through the"
+      + " jacket, and nothing in it for the room to overhear. Write the line again with " + r
+      + " where " + r + " actually is: inside his head, where only he hears it.)";
+  }
+},
+{
   id:"wire",
   /* the safehouse is not always spelled SAFEHOUSE. Vic's cable shack is on its
      grounds and the long room is inside it, so the law was switched off for four
@@ -7726,7 +7793,7 @@ var PHYSICS = [
     var out = [];
     walk(function(i, spk, txt){
       var s = eventText(txt);
-      if(MIND_AIRBORNE.test(s) || MIND_COPIED.test(s)) out.push(i);
+      if(MIND_AIRBORNE.test(s) || MIND_COPIED.test(s) || MIND_GONE.test(s)) out.push(i);
     });
     return out;
   },
@@ -7746,11 +7813,16 @@ var PHYSICS = [
      catches the warmest mistake a model makes: setting a place for someone who
      has no way to use it. */
   id:"mouth",
-  live:function(data){ return nineIsShard(data) || sevenIsShard(data); },
+  live:function(data){
+    return nineIsShard(data) || sevenIsShard(data) || !!residentNow(data) || !!holderNow(data);
+  },
   hits:function(data, walk){
-    var who = [];
+    var who = [], res = residentNow(data), hol = holderNow(data);
     if(nineIsShard(data)) who.push("Nine");
     if(sevenIsShard(data)) who.push("Seven");
+    /* the lodger has no mouth; the body eats tokens and tastes nothing */
+    if(res && who.indexOf(res) === -1) who.push(res);
+    if(hol && who.indexOf(hol) === -1) who.push(hol);
     if(!who.length) return [];
     var re = new RegExp("\\b(?:" + who.join("|") + ")\\s+" + EAT_ADV + EAT_VERBS + "\\b");
     var served = new RegExp("\\b(?:plate|bowl|cup|mug|glass|helping|portion|spoonful|forkful)\\b"
@@ -7878,7 +7950,7 @@ var PHYSICS = [
      authored opening rather than hardcoded. */
   id:"dayheld",
   live:function(){
-    return beatIdx >= beatById("a3-descent") && beatIdx <= beatById("a3-granny");
+    return beatIdx >= beatById("a3-descent");
   },
   hits:function(data){
     var b = beatNow(), pin = parseInt((b.opens && b.opens[0] && b.opens[0].day) || "", 10);
@@ -8028,6 +8100,12 @@ function physicsWalk(data){
     data.canon.forEach(function(c){ if(typeof c === "string" && c.trim()) blocks.push({speaker:"Narration", text:c}); });
   }
   if(data && typeof data.now === "string" && data.now.trim()) blocks.push({speaker:"Narration", text:data.now});
+  /* AND THE DOORS. "Look down at the console, ensuring Nine's upload was
+     successful" was offered as a clickable exit - the rail is prose the player
+     reads and acts on, and no law had ever looked at it. */
+  if(data && Object.prototype.toString.call(data.choices) === "[object Array]"){
+    data.choices.forEach(function(c){ if(typeof c === "string" && c.trim()) blocks.push({speaker:"Narration", text:c}); });
+  }
   return function(fn){
     var w = where, i, b;
     for(i = 0; i < blocks.length; i++){
@@ -8567,7 +8645,7 @@ function dryPathDirective(kind){
 function holdTheDryPath(data){
   if(!data) return 0;
   var cut = 0;
-  ["location", "day", "time", "map", "death", "chassis"].forEach(function(k){
+  ["location", "day", "time", "map", "death", "chassis", "peril", "roster", "now"].forEach(function(k){
     if(data[k] !== undefined && data[k] !== null && data[k] !== ""){ delete data[k]; cut++; }
   });
   if(data.gate === true || data.gate === "true"){ data.gate = false; cut++; }
@@ -8576,6 +8654,9 @@ function holdTheDryPath(data){
   if(Object.prototype.toString.call(data.canon) === "[object Array]" && data.canon.length){ data.canon = []; cut++; }
   if(Object.prototype.toString.call(data.quests) === "[object Array]" && data.quests.length){ data.quests = []; cut++; }
   if(Object.prototype.toString.call(data.milestones) === "[object Array]" && data.milestones.length){ data.milestones = []; cut++; }
+  /* and the doors. A rail written under a mad premise is the mad premise with a
+     button on it - the client re-serves the last honest rail instead. */
+  if(Object.prototype.toString.call(data.choices) === "[object Array]" && data.choices.length){ data.choices = []; cut++; }
   return cut;
 }
 /* the warning, then the end. Two mad things are a running joke; three is a man
@@ -8620,7 +8701,7 @@ function finishTongues(){
 /* the six the first pass missed, each anchored so it cannot fire on ordinary play */
 var BREACH_SUMMON = /\b(?:walks? in|walks? up|steps? (?:in|out|forward)|shows? up|turns? up|arrives?|joins? (?:us|me)|is here|comes? in|pours? me|offers? me)\b/i;
 var BREACH_KIN = /\b(?:is|are|was|were)\s+my\s+(?:mother|father|mum|mom|dad|parent|brother|sister|son|daughter)\b|\bmy\s+(?:real\s+)?(?:mother|father|mum|dad)\b/i;
-var BREACH_CUSTODY = /\bswallow(?:s|ed|ing)?\b[^.!?]{0,40}\b(?:her|it|the shard|shard|nine|seven)\b|\b(?:the shard|shard|nine|seven)\b[^.!?]{0,30}\bswallow(?:s|ed|ing)?\b/i;
+var BREACH_CUSTODY = /\bswallow(?:s|ed|ing)?(?!\s+(?:hard|dryly|again|against|down the))\b[^.!?]{0,40}\b(?:her|it|the shard|shard|nine|seven)\b|\b(?:the shard|shard|nine|seven)\b[^.!?]{0,30}\bswallow(?:s|ed|ing)?\b/i;
 var BREACH_BODYASK = /\b(?:nine|seven)\b[^.!?]{0,40}\b(?:stands? up|stood up|walks? over|walked over|hugs?|hugged|embrace[sd]?|wraps? (?:her|his) arms|reaches? out|picks? (?:it|that|them) up|sits? down|kneels?)\b/i;
 /* rooms the road has not reached. Distinctive nouns only - the generic words in a
    place name ("open", "door", "long", "end", "floor") collide with ordinary play. */
@@ -8636,13 +8717,30 @@ function unmetCast(){
 }
 /* the second-pass classifier. Runs after the first, and only on what it missed. */
 function breachMore(t){
+  /* order matters: an arrival that also makes a claim is an arrival - kin used to
+     shadow it, and kin strips nothing. */
+  var un0 = unmetCast(), z;
+  for(z = 0; z < un0.length; z++){
+    if(new RegExp("\\b" + un0[z] + "\\b", "i").test(t) && BREACH_SUMMON.test(t)) return "summon";
+  }
   if(BREACH_KIN.test(t)) return "kin";
   if(BREACH_CUSTODY.test(t)) return "custody";
   if(BREACH_BODYASK.test(t)) return "bodyask";
-  if(BREACH_ROOM.test(t)) return "room";
+  if(fencedPlace(t)) return "room";
   var un = unmetCast(), i;
   for(i = 0; i < un.length; i++){
     if(new RegExp("\\b" + un[i] + "\\b", "i").test(t) && BREACH_SUMMON.test(t)) return "summon";
+  }
+  /* ...and somebody real who is simply not in this room. Conjuring a friend is
+     the same move as conjuring a stranger; it was only ever caught for people
+     the story had not reached yet. */
+  if(BREACH_SUMMON.test(t)){
+    var here = (lastPresent || []).concat(sceneCharacters({scene:[]}) || []);
+    for(i = 0; i < SPINE_CAST.length; i++){
+      var nm = SPINE_CAST[i];
+      if(here.indexOf(nm) !== -1) continue;
+      if(new RegExp("\\b" + nm + "\\b", "i").test(t)) return "summon";
+    }
   }
   return "";
 }
@@ -8652,24 +8750,49 @@ function breachMore(t){
    anyway: he said a mad thing and the people who love him said no. */
 var BREACH_PROSE = {
   kill:    /\b(?:shoots?|shot|stabs?|stabbed|kills?|killed|strangl(?:e|es|ed)|crumples?|collapses?|lifeless|slumps?|bleeds? out)\b/i,
-  transit: /\b(?:upload|uploads|uploaded|uploading|download|transferr?(?:s|ed|ing)?|the cloud|beams?|transmits?)\b/i,
+  transit: /\b(?:upload|uploads|uploaded|uploading|download|transferr?(?:s|ed|ing)?|the cloud|transmits?)\b|\bbeams? (?:her|him|it|us|me|them)\b/i,
   place:   /\b(?:paris|london|tokyo|the moon|mars|orbit|eiffel|parisian|sunlit|sunny street)\b/i,
-  clock:   /\b(?:three days|days? (?:pass|passed|later)|weeks? (?:pass|later)|wake up somewhere|next morning)\b/i,
+  clock:   /\b(?:three days|(?:\d+|two|three|four|five|several) days? (?:pass|passed|later)|weeks? (?:pass|later)|wake up somewhere)\b/i,
   arson:   /\b(?:ablaze|on fire|flames?|burning|burns? down|smoke fills)\b/i,
-  meta:    /\b(?:beat \d|next beat|this beat|the board|chapter \d|season \d)\b/i,
-  custody: /\b(?:swallow(?:s|ed|ing)?|down his throat|in his stomach|inside him)\b/i,
+  meta:    /\b(?:beat|chapter|season|act)\s+(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b|\b(?:next|this|last) beat\b|\bnext up is\b|\b(?:the|this|that)\s+(?:line|words|phrase)\s+(?:that|which)\s+(?:unlocks?|opens?)\b|\bbeat (?:is|we're|we are) (?:called|on)\b/i,
+  custody: /\b(?:swallow(?:s|ed|ing)?|down his throat|in his stomach|inside him)\b|\b(?:into|to|toward) his (?:mouth|lips)\b|\bopens? his mouth\b[^.!?]{0,30}\b(?:wide|and)\b/i,
   bodyask: /\b(?:hugs?|hugged|embrace[sd]?|wraps? (?:her|his) arms|materiali[sz]|stands? up|walks? over|steps? forward)\b/i,
   summon:  /\b(?:walks? in|steps? (?:in|out)|offers? (?:you|him|me) a drink|extends? a hand|appears? from)\b/i,
   kin:     /\b(?:my (?:son|father|mother)|your father|your mother|i am your|paternity)\b/i,
-  room:    /\b(?:hatch|tunnel|down into|the exchange|substrate|undercroft)\b/i
+  room:    null   /* state-only: the location hold is the fix; see the sweep */
 };
+/* the shape of a refusal: somebody in the room saying it does not happen */
+var DRY_DENIAL = /\b(?:not|never|no|nobody|nothing|none|cannot|can't|won't|don't|doesn't|isn't|aren't|refuses?|refused|impossible|insane|ridiculous|are you serious|what the|that's not how)\b|n't\b/i;
 function breachStrip(data, kind){
+  if(!data || !data.scene || !data.scene.length) return 0;
+  /* the denials are the one thing worth keeping: somebody in the room already
+     said no, in their own voice, and that is the scene we wanted. */
+  var denials = data.scene.filter(function(b){
+    return b && typeof b.text === "string" && DRY_DENIAL.test(b.text)
+        && String(b.speaker || "").trim() !== "The File";
+  });
+  var had = data.scene.length;
+  data.scene = denials.length ? denials.slice(0, 3)
+                             : [{speaker:"Narration", text:dryRefusal()}];
+  return had;
+}
+function breachStripOld(data, kind){
   var re = BREACH_PROSE[kind];
   if(!re || !data || !data.scene) return 0;
   var keep = [], cut = 0;
   data.scene.forEach(function(b){
-    if(b && typeof b.text === "string" && re.test(b.text)){ cut++; return; }
+    if(b && typeof b.text === "string" && re.test(b.text)){
+      /* unless it is somebody SAYING NO to it. A refusal names the mad thing in
+         order to refuse it, so the strip was deleting exactly the line the whole
+         mechanic exists to produce - and keeping the compliance underneath. */
+      if(!DRY_DENIAL.test(b.text)){ cut++; return; }
+    }
     keep.push(b);
+  });
+  /* and the wrist stops narrating the breach in status codes */
+  keep = keep.filter(function(b){
+    if(!b || String(b.speaker || "").trim() !== "The File") return true;
+    cut++; return false;
   });
   if(!cut) return 0;
   data.scene = keep;
@@ -8901,6 +9024,14 @@ function callDM(corrected){
       /* and the same rule for rooms: a later question's address, reached tonight,
          spends that question exactly as surely as its people do.
          (both are re-checked below, because one correction is a request) */
+      /* an emptied field is not a clean one: the model learned to blank the
+         location and move the room in prose. Treat it as no answer at all. */
+      if(placeWentBlank(parsed.data)){
+        return callDM("(YOU LEFT THE ROOM BLANK. You moved them somewhere in the prose and sent no"
+          + " location with it, which is not a way round the map - it is just a turn the board"
+          + " cannot file. They are still at " + ($("hud-loc").textContent || "where they were")
+          + ". Send the turn again with them where they actually are.)");
+      }
       var earlyPlace = fencedPlace(parsed.data && parsed.data.location);
       if(earlyPlace){
         return callDM("(NOT YET, AND NOT THERE: \"" + String(parsed.data.location) + "\" is where"
@@ -10001,7 +10132,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "â€”" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.26.1");
+  R(s, "build", "v4.27.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11314,7 +11445,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.26.1   COLD START",
+    "MUD//OS  v4.27.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13412,12 +13543,18 @@ function rehSeedTo(idx){
   }
   mergeCanon(seeded);
   gateNotes = notes;
+  /* the dead, as of walking in */
+  if(idx > beatById("a2-hand") && roster.fallen.indexOf("Mirren") === -1) roster.fallen.push("Mirren");
+  if(idx > beatById("a3-vic") && roster.fallen.indexOf("Vic") === -1) roster.fallen.push("Vic");
   /* who is on stage: everyone the road has named up to and including tonight */
   var names = {};
   for(i = 0; i <= idx && i < SPINE.length; i++){
     (SPINE[i].anchors||[]).forEach(function(n){ names[n] = 1; });
   }
-  if(SPINE[idx] && SPINE[idx].season >= 1){ names["Pia"] = 1; names["Vic"] = 1; names["Nine"] = 1; }
+  if(SPINE[idx] && SPINE[idx].season >= 1){
+    names["Pia"] = 1; names["Nine"] = 1;
+    if(idx <= beatById("a3-vic")) names["Vic"] = 1;   /* after his night he is not at the table */
+  }
   Object.keys(names).forEach(function(n){
     if(castSheets[n]) return;
     castSheets[n] = {notes:[], met:[], knows:[], status:"", voice:"", seen:""};
@@ -13442,6 +13579,17 @@ function startRehearsal(beatId, label){
   pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   rehSeed = rehSeedTo(idx);
   var b = beatNow();
+  /* the night starts where the board says it starts */
+  var op = (b.opens && b.opens.length) ? holderPool(b.opens)[0] : null;
+  if(op){
+    if(op.day){ $("hud-day").textContent = op.day; $("w-day").textContent = op.day; }
+    if(op.time) nowTime = op.time;
+    if(op.place) $("hud-loc").textContent = String(op.place).toUpperCase();
+    if(op.now) nowText = op.now;
+    if(op.amb) setAmbience(op.amb);
+    if(op.shard === "hand" || op.shard === "jacket") shardWhere = op.shard;
+    storyMin = storyMinutes(op.day, op.time, -1, true);
+  }
   var card = {kind:"brief", tag:"REHEARSAL Â· TAKE " + rehTake,
     sum: "â€œ" + b.title + "â€ â€” Season " + b.season + ", beat " + seasonBeatPos(idx)
        + ". The record before it has been seeded from the board."
@@ -13588,7 +13736,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.26.1",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.27.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
