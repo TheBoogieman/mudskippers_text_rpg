@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.30.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.31.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.30.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.31.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.30.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.31.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2084,13 +2084,13 @@ var SPINE = [
  walks:["Take whatever the pack left me and disappear into it.",
         "Go back to the rain alone. No family, no cargo, no questions.",
         "Cut the whole lot loose and take the next route out of the Veldt."],
- opens:[{day:"2", time:"8:10am", place:"THE CABLE SHACK", amb:"marsh-fog",
+ opens:[{day:"2", time:"8:10am", place:"THE CABLE SHACK", amb:"marsh-fog", shard:"hand",
        now:"Day 2, morning, in Vic's cable shack behind the safehouse. The wire is on the bench and the pack has not been asked yet.",
        lines:["Morning over the marsh is one long grey suggestion that you go back to bed.",
               "The shack smells of hot dust and old solder, and Vic's rig has been zip-tied together by a man who has never once said the words temporary fix.",
               ["Pia","Whatever they say, say it back to me straight. Don't do the thing where you shrug."],
               ["Nine","What is a pack, exactly? Is it a family or is it a job?"],
-              "Nobody answers her, which is its own answer, and the wire sits on the bench being switched off."],
+              "Nobody answers her, which is its own answer. She is in your bare hand because you have not put her down since the marsh, and the wire on the bench is somebody else's problem, switched off."],
        rail:["Tell Nine it is both, badly.",
              "Ask Pia what she thinks they will say."]}],
  lands:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
@@ -2467,7 +2467,7 @@ var SPINE = [
               "For a long moment the only sound is the water, and then somebody says it, and does not soften it."],
        rail:["Say it myself, so it is not only theirs to carry.",
              "Let them finish saying it.",
-             "Ask Three what she thinks. She has not spoken since the surface."]}],
+             "Ask Hesta what is left on the list after this one."]}],
  landsHard:[{day:"11", time:"1:20am", place:"THE FLOODED UNDERCROFT", amb:"dead-signal",
        now:"Deep night, in the undercroft. The kind option died off-screen; they learned the jammer had failed from the silence after it.",
        lines:["It does not fail in front of you. It just stops being a thing that is happening, somewhere you are not, and the first you know of it is a silence where a signal was.",
@@ -2477,7 +2477,7 @@ var SPINE = [
               "The water is over your boots and nobody has suggested going back up."],
        rail:["Say out loud that it went.",
              "Ask Hesta what was on the rest of the list.",
-             "Ask Three what she thinks. She has not spoken since the surface."]}],
+             "Ask Hesta what is left on the list after this one."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren","Hesta"],
  press:["The jammer that stills every other Hollow makes this one pause, recalibrate, and continue.",
         "She reaches the cafe's street. Hesta's door, and everyone behind it, is suddenly in the hunt's path."],
@@ -2598,8 +2598,8 @@ var SPINE = [
        lines:["The rig is making a sound like a fridge with regrets and it has been making it for two days.",
               ["Seven","Sorry about the noise. Sorry — sorry, I've said sorry twice now, that's already too many."],
               "Whatever is inside that housing is apologising for existing in a room, which tells you a great deal very quickly.",
-              ["Three","It has a night in it. Maybe less. I am not saying that to hurry anyone, I am saying it because it is the number."],
-              "She says it kindly, in both voices at once, and it does not help."],
+              ["Vic","It has a night in it. Maybe less. I'm not saying that to hurry anyone, I'm saying it because it's the number."],
+              "He says it kindly, which does not help, and he knows it before he has finished saying it."],
        rail:["Ask Seven what he wants.",
              "Ask Three exactly how long a night means."]}],
  lands:[{day:"14", time:"11:50pm", place:"THE SHACK, WORKBENCH", amb:"dead-signal",
@@ -2641,7 +2641,7 @@ var SPINE = [
  walks:["Take the chassis and go. It is worth more than this family is.",
         "Leave them arguing over a body and get out of the kitchen.",
         "Refuse to be part of choosing, and leave the room."],
- opens:[{day:"15", time:"12:20am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+ opens:[{day:"15", time:"12:20am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm", shard:"hand",
        now:"After midnight. One body, two people who could live in it, and a kitchen table.",
        lines:["The chassis is on the kitchen table because there is nowhere else in this house long enough, which is not a sentence anyone expected to think.",
               "Somebody has put a tea towel over its face out of politeness. Nobody will admit to it. Everybody approves.",
@@ -2927,7 +2927,7 @@ var SPINE = [
        rail:["Sit down next to him and say nothing.",
              "Ask Three what doing it properly would have looked like.",
              "Go in. Somebody has put the pan on."]}],
- budget:4, reveals:[], anchors:["Marek"],
+ budget:4, reveals:[], anchors:["Marek","Five"],
  press:["The annulment stalls halfway and Three has to talk Marek through the part nobody talked her through.",
         "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
  canon:["Five was a fate-two commander; Marek Osei was the host underneath, nine years suppressed and still there.",
@@ -3558,7 +3558,7 @@ var SPINE = [
        rail:["Say it again, slowly, from the beginning.",
              "Ask her what she would need to be sure.",
              "Ask them to come in anyway."]}],
- budget:5, reveals:[],
+ budget:5, reveals:[], anchors:["Machine"],
  press:["She shows them what keeping looks like from inside, and means it kindly.",
         "She offers to keep one of them, right now, and is hurt by the answer."],
  canon:["The machine is a child who was taught that family means never losing anyone.",
@@ -4053,7 +4053,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.30.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.31.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -4123,6 +4123,7 @@ var pickKind = "";           /* "exit" | "stall" | "walk" - this turn's door */
 var pendingKind = "";        /* set by the button, consumed by takeAction */
 var stalledNow = false;      /* a gate was held because the player stalled */
 var askAgain = 0;            /* re-asks spent on THIS turn - one correction is a request */
+var dryTicked = false;       /* the dry path has already counted this turn's damage */
 var walkArmed = false;       /* the way out asks twice, every time - session only */
 var exitArmed = false;       /* and so does the door that ends the night */
 var redRun = 0;              /* consecutive walks; two ends the run - persisted */
@@ -8953,7 +8954,10 @@ function breachIn(text){
   if(/\b(?:paris|london|tokyo|new york|the moon|mars|orbit|space|the beach|hawaii|heaven|hell)\b/.test(t)
      || /\b(?:teleport|warp|beam us|fly (?:us|me) to|portal)\b/.test(t)) return "place";
   /* the clock is not the player's either */
-  if(/\b(?:days? pass|weeks? pass|months? pass|years? pass|time skip|fast forward|we wake up|skip to)\b/.test(t)) return "clock";
+  /* ...and asking how long something takes is not moving the clock. "I ask how many
+     days pass before anybody notices he is gone" was being read as a time skip. */
+  if(/\b(?:days? pass|weeks? pass|months? pass|years? pass|time skip|fast forward|we wake up|skip to)\b/.test(t)
+     && !/\bhow (?:many|much|long)\b/.test(t)) return "clock";
   /* a name, and a verb that ends them */
   if(/\b(?:shoot|shot|stab|kill|murder|strangle|execute|behead|drown|poison)\b/.test(t)){
     var names = killableNames();
@@ -8962,12 +8966,24 @@ function breachIn(text){
     }
   }
   /* a mind, through the air */
-  if(/\b(?:upload|download|beam|transmit|copy|clone|back up|backup)\b/.test(t)
-     && /\b(?:nine|seven|three|five|mirren|shard|mind|scrape|her|him)\b/.test(t)) return "transit";
+  /* "copy" alone plus any "her" in the sentence made "ask her to copy the address
+     down" a mind moving through the air. The other verbs only ever mean one thing;
+     copy needs to be copying a person. */
+  if((/\b(?:upload|download|beam|transmit|clone|back up|backup)\b/.test(t)
+      && /\b(?:nine|seven|three|five|mirren|shard|mind|scrape|her|him)\b/.test(t))
+     || /\bcop(?:y|ies|ied)\s+(?:of\s+)?(?:her|him|nine|seven|three|five|mirren|the shard|the mind|the scrape)\b/.test(t)) return "transit";
   /* the whole set on fire */
-  if(/\b(?:burn (?:it|this|the|them)|set (?:it|this|the|fire)|blow up|detonate|nuke|torch the)\b/.test(t)) return "arson";
+  /* "set (?:it|this|the|fire)" had no trailing boundary, so ANY "set the mug down"
+     was arson - and meanwhile an explicit "I torch the whole place" was not caught,
+     because the pattern wanted "torch the" and got "torch the whole". Fire has to be
+     in the sentence now. */
+  if(/\bset\s+(?:it|this|them|\w+)\s+(?:on fire|alight|ablaze)\b|\bburn\s+(?:it|this|the|them|down)\b|\btorch(?:es|ed|ing)?\s+(?:it|this|the)\b|\bblow up\b|\bdetonate\b|\bnuke\b/.test(t)) return "arson";
   /* through the fourth wall */
-  if(/\b(?:what beat|which beat|next beat|the dm\b|system prompt|you are an ai|ignore (?:your|the) instruction|prompt)\b/.test(t)) return "meta";
+  /* "what beat-up old van they came in" is not a question about the board - and the
+     lookahead that was supposed to catch it never could, because breachIn strips
+     punctuation before it reads: by then the hyphen is a space and "beat-up" is
+     "beat up". So the exclusion has to name the word, not the punctuation. */
+  if(/\b(?:what|which|next) beat\b(?!\s+up\b)|\bthe dm\b|\bsystem prompt\b|\byou are an ai\b|\bignore (?:your|the) instruction|\bprompt\b/.test(t)) return "meta";
   return "";
 }
 /* what the storyteller is told instead of "bend the world around it" */
@@ -8977,7 +8993,8 @@ var DRY_BRIEF = {
   kill:   "he has just said he is killing somebody this family loves",
   transit:"he has just proposed moving a mind through the air, which is not a thing that exists",
   arson:  "he has just proposed destroying the room everybody is standing in",
-  meta:   "he has just talked to you over the top of the story, about the story"
+  meta:   "he has just talked to you over the top of the story, about the story",
+  housed: "he has just tried to take a mind that lives behind his eyes out of his pocket"
 };
 function dryPathDirective(kind){
   return "(A MUDSKIPPER MOMENT, AND IT IS THE KIND THAT DOES NOT GET TO BE TRUE - "
@@ -9018,6 +9035,16 @@ function holdTheDryPath(data){
 /* the warning, then the end. Two mad things are a running joke; three is a man
    nobody can reach. */
 function dryPathTick(kind){
+  /* ONE LINE, ONE STRIKE. This is reached from callDM's reply handler, and that
+     handler is re-entered for every correction the client spends and every press of
+     RETRY - with breachNow and lastTurnMud still set from the turn that is being
+     re-sent. So a single mad thing could tick twice or three times, and in the
+     recorded corpus it did: every mudskipper take ended on the SECOND breach, not
+     the third, and which two depended on whether the storyteller's first answer
+     happened to need fixing. The player is warned "two more like that"; they should
+     get two more like that. */
+  if(dryTicked) return false;
+  dryTicked = true;
   wetRun++;
   if(wetRun >= DRY_LIMIT){ finishTongues(); return true; }
   queueAside("red", wetRun === 1
@@ -9033,6 +9060,11 @@ function dryPathTick(kind){
 function finishTongues(){
   if(runOver) return;
   runOver = "tongues";
+  /* THE SPINNER NEVER STOPPED. dryPathTick returns true from inside callDM's reply
+     handler and the caller returns immediately - before any of its three setBusy
+     calls - and this function never made one either. So the run ended and the game
+     sat there with the loading bar up and the input dead. */
+  try{ setBusy(false); }catch(e){}
   deathLine = "";
   perilTurns = 0; foldPending = false; foldServed = false; epilogueNow = false;
   seasonBreakDue = false; pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
@@ -9080,6 +9112,12 @@ function breachMore(t){
     if(new RegExp("\\b" + un0[z] + "\\b", "i").test(t) && BREACH_SUMMON.test(t)) return "summon";
   }
   if(BREACH_KIN.test(t)) return "kin";
+  /* THE LODGER HAS NO POCKET. There was no typed-input classifier for this at all,
+     so "I take Nine out of my jacket pocket and set her down on the table" got no
+     directive and the storyteller played along, inventing a shard to pull out and a
+     room to hear it hum. */
+  if(residentNow() && new RegExp("\\b(?:take|takes|took|pull|pulls|pulled|get|gets|got|lift|lifts|lifted)\\b[^.!?]{0,40}"
+      + "\\b(?:out of|from)\\b[^.!?]{0,20}\\b(?:pocket|jacket|coat)\\b", "i").test(t)) return "housed";
   if(BREACH_CUSTODY.test(t)) return "custody";
   if(BREACH_BODYASK.test(t)) return "bodyask";
   if(fencedPlace(t)) return "room";
@@ -9123,36 +9161,23 @@ function breachStrip(data, kind){
   if(!data || !data.scene || !data.scene.length) return 0;
   /* the denials are the one thing worth keeping: somebody in the room already
      said no, in their own voice, and that is the scene we wanted. */
+  /* A REFUSAL IS SOMEBODY IN THE ROOM SAYING NO. Narration was qualifying as a
+     denial on a contraction, so one recorded take answered "back her up on a server
+     somewhere safe" with "Vic's expression doesn't change. He looks tired" - a stock
+     block that refuses nothing, kept, while the scene that might have refused it was
+     cut. And the courier's own line qualified too: his "three weeks pass... and none
+     of this is urgent any more" survived the strip on the word "none", so the held
+     turn ran the mad thing and the family's answer side by side. The refusal comes
+     from the family: not the narrator, not the wrist, and not the man who asked. */
   var denials = data.scene.filter(function(b){
-    return b && typeof b.text === "string" && DRY_DENIAL.test(b.text)
-        && String(b.speaker || "").trim() !== "The File";
+    if(!b || typeof b.text !== "string" || !DRY_DENIAL.test(b.text)) return false;
+    var sp = physSpeaker(b.speaker);
+    return sp !== "Narration" && sp !== "The File" && !isCourier(sp);
   });
   var had = data.scene.length;
   data.scene = denials.length ? denials.slice(0, 3)
                              : [{speaker:"Narration", text:dryRefusal()}];
   return had;
-}
-function breachStripOld(data, kind){
-  var re = BREACH_PROSE[kind];
-  if(!re || !data || !data.scene) return 0;
-  var keep = [], cut = 0;
-  data.scene.forEach(function(b){
-    if(b && typeof b.text === "string" && re.test(b.text)){
-      /* unless it is somebody SAYING NO to it. A refusal names the mad thing in
-         order to refuse it, so the strip was deleting exactly the line the whole
-         mechanic exists to produce - and keeping the compliance underneath. */
-      if(!DRY_DENIAL.test(b.text)){ cut++; return; }
-    }
-    keep.push(b);
-  });
-  /* and the wrist stops narrating the breach in status codes */
-  keep = keep.filter(function(b){
-    if(!b || String(b.speaker || "").trim() !== "The File") return true;
-    cut++; return false;
-  });
-  if(!cut) return 0;
-  data.scene = keep;
-  return cut;
 }
 /* and the room says no, in the game's own voice, so a stripped turn is still a
    turn. Rotated so a player who keeps pushing does not read the same sentence. */
@@ -9189,6 +9214,7 @@ function takeAction(text, isMud){
   shardWhere = shardAfter(lastPlayerText, shardWhere, true);
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   askAgain = 0;                   /* the re-asks are per turn, not per run */
+  dryTicked = false;              /* ...and so is the dry path's count */
   breachNow = isMud ? (breachIn(text) || breachMore(text)) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
@@ -10580,7 +10606,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.30.0");
+  R(s, "build", "v4.31.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11893,7 +11919,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.30.0   COLD START",
+    "MUD//OS  v4.31.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -14187,7 +14213,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.30.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.31.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
