@@ -622,7 +622,7 @@ board's pressure rises it reddens, brightens and goes restless.
 **It talks.** Tap it and it tells you what it can feel — thirty-six lines across the
 twelve skies, two more when the pressure is on, and one it always says first:
 
-> MR. TOGAN, THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.
+> THE SHARD IS WATCHING. GO GENTLY INTO THE RAIN.
 
 *For Mr. Togan.*
 
