@@ -287,7 +287,43 @@ own narration, in the affirmative, moves anything.
 
 The clock is tracked the same way and only ever goes forward — with the midnight
 amendment, because the board's authored landings roll past twelve and keep the same
-day on purpose. A night is a night.
+day on purpose. A night is a night. It stands down below the hatch, where time runs
+about a minute inside the machine per second outside and a turn coming back out is
+legitimately stamped *earlier* than the turn that went in; down there the day is
+guarded instead, because a subjective week inside is still minutes on the surface.
+
+### Fifteen laws, and the sweep that keeps them honest
+
+The laws now run the length of the spine — the hum, the bodiless (a mind in the
+courier's skull has *less* body than a shard: a shard at least sits somewhere), the
+fork (whoever did not get the one chassis does not walk or cook), the machine (she
+is a room, and a room that kneels and takes your hand is a different story), the
+mouth (a stone does not eat, and the warmest mistake a model makes is setting a
+place for someone who cannot use it), the Hollows (nobody home, so no line), transit
+(**no mind is ever uploaded, copied or backed up** — a world with backups has no
+permanent death in it), the one chassis, the sleepers on the shelves, the six
+bio-grens, and the vessel law: when the family's only ripperdoc dies, the skill dies
+with him and what is broken stays broken.
+
+Keeping fifteen detectors honest needs a test bigger than reading them. There is
+one, and it is free: **the game's own authored prose is legal by definition.** Every
+one of the 102 written passages is replayed past the desk at its own beat, in the
+state the game would actually be in, on all three sides of the chassis fork — 306
+checks. A single hit is a bug in a rule. Then the same grid runs backwards: for
+every beat, every rule that claims to be live there is fed a scene that plainly
+breaks it, and must catch it — 814 checks.
+
+That sweep has earned its keep. It found that the board's own writing broke the
+board's own law (from night two onward every authored page has Nine talking, but
+only the first declared where she was, so after the *hard* landing she was left in
+the jacket); that `holding her` had started matching **"holding her mug"** once the
+rooms filled with other women; that **"Nine" is also a number**, so nine Hollows
+walking down a street read as one bodiless person with legs; and two bugs of mine
+that would have been very hard to find by playing — the fork lands in the same reply
+that reports it, so the scene where Nine finally stands up in a body was checked as
+if she were still a shard and would have been *cut*; and authored passages never fed
+the clock, so a single overshooting turn could freeze it permanently, silently, and
+into the save file.
 
 ## The trapdoor — when something goes wrong
 

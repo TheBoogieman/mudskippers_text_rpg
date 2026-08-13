@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.23.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.24.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.23.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.24.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.23.0 "The Physics Desk" "The Scene Book"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.24.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4039,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.23.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.24.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -6518,6 +6518,12 @@ function closeBeat(forced, note){
   if(!forced && note) mergeCanon([note]);
   if(forced && b.scar) mergeCanon([b.scar]);   /* a forced gate leaves a mark */
   if(b.stone) mergeMilestones([b.stone]);
+  /* the hunt ends here on every path, forced or chosen, and the client knew it by
+     construction and never wrote it down - so nothing stopped the DM giving her a
+     line at her own burial the following night. One push turns on two mechanisms
+     that already ship: the fallen-speaker refusal, and the roster line in the
+     briefing that says these names never speak or act again. */
+  if(b.id === "a2-hand" && roster.fallen.indexOf("Mirren") === -1) roster.fallen.push("Mirren");
   var tollMsg = "";
   if(forced){
     questFailBeat(b.id);       /* jobs tied to this beat fail with it */
@@ -6830,6 +6836,17 @@ function playAuthored(V, salt){
   renderDivider();
   if(V.day){ $("hud-day").textContent = V.day; $("w-day").textContent = V.day; }
   if(V.time) nowTime = V.time;
+  /* THE BOARD'S CLOCK IS A CLOCK. storyMin was fed only by DM replies, so an
+     authored passage moved the hour on screen and left the tracker where the last
+     reply put it. One overshooting turn then poisoned the whole run: the honest
+     hour came back earlier than the tracker, was refused twice, and the desk
+     deleted the very field it needed to recover from - after which nothing could
+     ever update it again. Silently, and into the save file. The board is ground
+     truth, so it re-bases unconditionally, forwards or back. */
+  if(V.day && V.time){
+    var vAbs = storyMinutes(V.day, V.time, storyMin, true);
+    if(vAbs >= 0) storyMin = vAbs;
+  }
   if(V.place){
     var was = $("hud-loc").textContent, now = String(V.place).toUpperCase();
     if(was && was !== now) noteMove(was, now);
@@ -6844,6 +6861,16 @@ function playAuthored(V, salt){
      finishes on the wrong one - so where the board's own prose leaves her is a
      field, not an inference. */
   if(V.shard === "hand" || V.shard === "jacket") shardWhere = V.shard;
+  /* ...and where it is not a field, the passage still says so by writing her a
+     line. A sweep of all 102 authored passages caught this: the hard landing of
+     the first night leaves her in the jacket, and every authored page after it
+     has Nine talking - so the board's own prose broke the board's own law, and
+     the desk would have spent the rest of Season 1 correcting legitimate scenes.
+     Giving her a line IS putting her in his hand. It also means the writers' room
+     never has to think about the field: write her a line and the world agrees. */
+  else if(nineIsShard() && (V.lines || []).some(function(L){
+    return Object.prototype.toString.call(L) === "[object Array]" && String(L[0]).trim() === "Nine";
+  })) shardWhere = "hand";
   /* A LINE MAY NOW HAVE A VOICE. Narration alone could set a room but it could
      not set a TABLE: the DM inherited a place and a time and nobody in the middle
      of saying anything, so its first move was always to invent an opening beat of
@@ -7270,7 +7297,10 @@ var SHARD_TO_POCKET = /(back in(?:to)? (?:the|my|his|your) (?:jacket|pocket|coat
    beautifully, and it moved the shard into his hand in the client's model, which
    then stopped enforcing the law for the rest of the run. A hypothetical is not
    an event. */
-var NOT_AN_EVENT = /\b(?:not|never|n't|if|unless|until|would|could|should|might|maybe|wants? to|want to|going to|needs? to|have to|has to|had to|instead of)\b|\?/i;
+/* "cannot" is the one that got away: \bnot\b finds no word boundary inside it, so
+   "she cannot be converged" read as an event and a law restating itself became a
+   law breaking itself. Same for the nobodies. */
+var NOT_AN_EVENT = /\b(?:not|cannot|never|n't|nobody|no one|no longer|if|unless|until|would|could|should|might|maybe|wants? to|want to|going to|needs? to|have to|has to|had to|instead of)\b|\?/i;
 /* "not his jacket" is the good landing describing where she ISN'T - a negation
    read as a position put her back in the pocket the moment she left it */
 function shardAfter(txt, from, stated){
@@ -7285,6 +7315,12 @@ function shardAfter(txt, from, stated){
     }
     s = keep.join(". ");
   }
+  /* THE PRONOUN GATE. These patterns were hardened for Season 1, when the only
+     "her" in a room was Nine. From Book Two the rooms fill up - Pia, Three, Hesta,
+     Mirren - and "holding her" starts matching "holding her mug". A clause only
+     gets to move the shard if it says WHAT it is moving: the shard, Nine, or a
+     container she is actually kept in. */
+  if(!/\b(?:shard|Nine|jacket|pocket|coat|palm|fist|bare hand|closed hand|open hand)\b/i.test(s)) return from;
   var h = lastHit(s, SHARD_TO_HAND), p = lastHit(s, SHARD_TO_POCKET);
   if(h < 0 && p < 0) return from;
   return (h > p) ? "hand" : "jacket";
@@ -7297,15 +7333,57 @@ function shardFromBlock(spk, txt, from){
   if(spk && spk !== "Narration") return from;
   return shardAfter(txt, from);
 }
+/* THE FORK LANDS IN THE REPLY THAT REPORTS IT. The desk runs inside callDM,
+   before showScene, and it is showScene that calls boardTurn and closeBeat - so
+   for the whole of a2-chassis, INCLUDING the turn that gates it, chassisHolder is
+   still null. Read naively, the reply where Nine finally stands up in a body was
+   a bodiless-Nine violation on every line: one re-roll of the game's own climax,
+   and then the cut. The holder for THIS turn is what the gate says it is. */
+function holderNow(data){
+  if(chassisHolder) return chassisHolder;
+  if(data && (data.gate === true || data.gate === "true")
+     && (data.chassis === "Seven" || data.chassis === "Nine")) return data.chassis;
+  return null;
+}
+function residentNow(data){
+  var h = holderNow(data);
+  if(h === "Nine")  return beatIdx > beatById("a2-chassis") ? "Seven" : "";
+  if(h === "Seven") return beatIdx > beatById("a2-housing") ? "Nine" : "";
+  return "";
+}
 /* she is a shard until she has somewhere else to be */
-function nineIsShard(){
-  if(chassisHolder === "Nine") return false;
-  if(housingResident() === "Nine") return false;
+function nineIsShard(data){
+  if(holderNow(data) === "Nine") return false;
+  if(residentNow(data) === "Nine") return false;
+  return true;
+}
+/* and so is he, from the night the frame comes off him */
+function sevenIsShard(data){
+  if(!gateNotes["a2-seven"]) return false;      /* still in the frame, or not arrived */
+  if(holderNow(data) === "Seven") return false;
+  if(residentNow(data) === "Seven") return false;
   return true;
 }
 /* a body she does not have. Narration only - a person SAYING "Nine held on" is a
-   figure of speech, and the world writing it is a mistake. */
-var NINE_BODY = /\bNine\s+(?:just\s+|then\s+|slowly\s+|finally\s+)?(?:reach(?:es|ed)?|walk(?:s|ed)?|stands?|stood|holds?|held|picks?\s+up|picked\s+up|nods?|nodded|shrugs?|shrugged|steps?|stepped|sits?|sat|leans?|leaned|grabs?|grabbed|points?|pointed|hands?\s+(?:him|her|it|over)|handed|touch(?:es|ed)?|breath(?:es|ed)|blinks?|blinked|smil(?:es|ed)|frowns?|frowned|shivers?|shivered|flinch(?:es|ed)|winc(?:es|ed))\b/i;
+   figure of speech, and the world writing it is a mistake.
+   Built per name, because the bodiless are a moving population: Nine is a shard
+   until the fork, and from the seating onward whoever rides the courier's skull
+   has even less of a body than she did. */
+/* SINGULAR AGREEMENT, AND IT IS NOT STYLE. "Nine" is also a number, and the
+   eviction puts nine Hollows on a street: "Nine walk out of the van" is a count,
+   "Nine walks out of the van" is a person who does not have legs. Only the
+   singular forms count, and the match is case-sensitive - lowercase "seven in the
+   morning" and "nine of them" stop being candidates for free. */
+var BODY_VERBS = "(?:just\\s+|then\\s+|slowly\\s+|finally\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced)";
+/* and the last ambiguity a number can still create: a count with a verb attached */
+var COUNTING = /\b(?:Hollows?|of them|bodies|minutes a body|men|women|people|shards)\b/i;
+function bodyVerbs(name){ return new RegExp("\\b" + name + "\\s+" + BODY_VERBS + "\\b"); }
+function bodyBreak(name, txt){
+  if(!name) return false;
+  if(name === "Nine" && COUNTING.test(txt)) return false;
+  return bodyVerbs(name).test(txt);
+}
+var NINE_BODY = bodyVerbs("Nine");
 /* an off-grid house with no wireless in the walls, and something rings anyway */
 var WIRE_WAKES = /\b(?:the|your|his)\s+(?:wire|wrist|comm|handset)\b[^.]{0,60}\b(?:buzz\w*|ring\w*|chirp\w*|ping\w*|lights? up|comes? alive|wakes?|goes? off|crackles?)\b/i;
 
@@ -7350,6 +7428,113 @@ function storyMinutes(day, time, prev, commit){
   return abs;
 }
 
+/* ---- the second wave of laws, and the words that catch them ----
+   Every pattern below was cleared against the game's own authored prose before it
+   was written down: 33 beats of opens, lands, landsHard, canon, exits, walks,
+   press, stone and scar, plus the cold open, the scene book, the teases and the
+   interludes. Where a pattern had to be narrowed, the comment says which authored
+   line did the narrowing - that line is the test, and it is worth more than the
+   pattern is. */
+
+/* the clause walk the shard tracker already does, lifted out so every rule that
+   reads the world gets it for free: a hypothetical is not an event */
+function eventText(txt){
+  var parts = String(txt || "").split(/[.!?;]+|\s[—–-]\s/), keep = [], i;
+  for(i = 0; i < parts.length; i++){
+    if(parts[i] && !NOT_AN_EVENT.test(parts[i])) keep.push(parts[i]);
+  }
+  return keep.join(". ");
+}
+
+/* no mind crosses a room on a signal, and there are no copies of anyone. The
+   mind-noun anchor is required in both directions: the bare verbs are clean, but
+   "transmit" and "signal" are how the Choir drives Hollows, and an unanchored
+   detector would eventually fight the finale's own canon. "beam" survives only in
+   its reflexive form - a3-dreamers opens on a torch beam. */
+var MIND_NOUN = "(?:Nine|Seven|Three|Five|Mirren|the shard|her shard|his shard|a shard"
+  + "|the scrape|her scrape|his scrape|a scrape|the scrapes|her mind|his mind|the mind|consciousness)";
+var AIR_VERB = "(?:uploads?|uploaded|uploading|downloads?|downloaded|downloading"
+  + "|transmits?|transmitted|transmitting|wirelessly|over the air|through the air"
+  + "|without a cable|beams? (?:her|him|it)(?:self)?)";
+var MIND_AIRBORNE = new RegExp("\\b" + MIND_NOUN + "\\b[^.!?]{0,90}\\b" + AIR_VERB + "\\b"
+  + "|\\b" + AIR_VERB + "\\b[^.!?]{0,90}\\b" + MIND_NOUN + "\\b", "i");
+/* "back up" with a space is three authored lines - "nobody has suggested going
+   back up", "take myself back up the cable" - so only the single word counts */
+var MIND_COPIED = new RegExp("\\b(?:backups?|copy|copies|copied|copying|duplicat\\w+|clon(?:e|es|ed|ing)"
+  + "|snapshots?)\\b[^.!?]{0,50}\\b(?:mind|minds|shard|shards|consciousness|scrape|scrapes)\\b"
+  + "|\\b(?:mind|minds|shard|shards|consciousness|scrape|scrapes)\\b[^.!?]{0,50}"
+  + "\\b(?:backed up|a backup|backups?|copied|a copy|copies|duplicated|cloned)\\b", "i");
+
+/* a mouth is a thing you have to have. Names are deliberately absent from the
+   copy half above and present here, because "Three copies of the chit" is
+   ordinary English and "Three eats" is not. */
+var EAT_ADV = "(?:just\\s+|then\\s+|slowly\\s+|finally\\s+|already\\s+|quietly\\s+)?";
+var EAT_VERBS = "(?:eats?|ate|eaten|eating|tastes?|tasted|tasting|drinks?|drank|drinking"
+  + "|sips?|sipped|chews?|chewed|swallows?|swallowed|smells?|smelled|smelt|licks?|licked"
+  + "|bites? into|tucks? into|wolfs?)";
+
+/* the machine's verbs, and they are fewer than Nine's for a reason: "holds every
+   scrape the Choir ever took", "walks you through it", "sits under the Exchange"
+   and "reaches only what is connected to her" are all true, and all of them are
+   how you write custody. What is left is the stage business a model reaches for
+   when it forgets she is a room. */
+var GRAN_BODY = /\b(?:[Tt]he machine|Machine|[Tt]he Granny|Granny)\s+(?:just\s+|then\s+|slowly\s+|finally\s+|quietly\s+|carefully\s+|gently\s+)?(?:nods?|nodded|shrugs?|shrugged|blinks?|blinked|smil(?:es|ed)|frowns?|frowned|shivers?|shivered|flinch(?:es|ed)|winc(?:es|ed)|kneels?|knelt|crouch(?:es|ed)|grabs?|grabbed|hugs?|hugged|embrac(?:es|ed)|steps? (?:back|forward|closer|away|aside|in|out)|stepped (?:back|forward|closer|away|aside|in|out)|takes? (?:his|her|your|their) hand|took (?:his|her|your|their) hand|touch(?:es|ed) (?:his|her|your|their|him|it|the)|wraps? (?:her|his|an?) arms?|puts? (?:her|his|a) hand|reach(?:es|ed) out and)\b/;
+
+/* a Hollow with a line in it. The article is required and the verb has to sit
+   within one adverb of the noun: a1-carried's own press line is "A Hollow stops
+   where her choreography says it cannot", where the saying belongs to the
+   choreography. Mirren is exempt wherever her name appears - she is the one
+   Hollow in the story that speaks, and only approved lines. */
+var HOLLOW_SPEAKS = /\b(?:the|a|one|another|each)\s+Hollows?\s+(?:just\s+|then\s+|slowly\s+|finally\s+)?(?:says?|said|speaks?|spoke|asks?|asked|answers?|answered|shouts?|whispers?|demands?|replies|murmurs?|calls? out|tells?)\b/i;
+
+/* a second body. The bare word "chassis" is 23 authored lines; the qualifier does
+   the whole job. */
+var SECOND_CHASSIS = /\b(?:another|a second|the second|a spare|the spare|an extra|a third|two|both|other) (?:founding[- ]era )?chass(?:is|es)\b/i;
+
+/* the shelves. "says/said" had to come out of the wake list - a3-dreamers' own
+   exit line is "Find her on those racks and say the promise" - and "racks" with
+   it, surviving only in the "from the racks" form. */
+var SLEEPERS_WAKE = /\b(?:scrapes?|shelf|shelves|sleepers?|dreamers?)\b[^.!?]{0,80}\b(?:wakes?|woke|waking|wake up|stirs?|stirred|opens? (?:her|his|its|their) eyes|sits? up|speaks? (?:back|up)|answers? back|whispers?|whispered|calls? (?:out|back)|reach(?:es|ed) (?:out|back))\b/i;
+var SLEEPERS_FROM = /\bfrom (?:inside )?(?:the|a) (?:shelf|shelves|rack|racks|vault|vaults)\b/i;
+var RESTORE_NOW = /\b(?:restor(?:e|es|ed|ing|ation)|reviv(?:e|es|ed|ing|al)|reassembl\w+|reconstitut\w+)\b/i;
+
+/* VESSEL-WORK DIES WITH HIM. Vic is the only ripperdoc this family has, and when
+   he is gone the skill goes with him - what is broken stays broken. Four separate
+   run-canon lines had to be cleared to get here, and each one is why a word is
+   missing: "cyberware" is out because a2-choir's canon says bodies that cannot
+   take it are refitted with a second pulse (Hollowing never needed Vic); "seated"
+   is out because a2-housing's canon says Nine is seated in the housing (that is a
+   hand moving a shard); the bare participles run one direction only because
+   a2-housing's canon says the housing was BUILT for hosting bottled minds; and
+   any clause naming Vic is skipped, because his own past is history, not tonight. */
+var NO_HANDS_TALK = /\b(?:can|cannot|nobody|no one|no longer|used to|any ?more|without him|since he)\b/i;
+var VESSEL_MAKE = /\b(?:patch(?:es|ed|ing)?|refit(?:s|ted|ting)?|install(?:s|ed|ing)?|solder(?:s|ed|ing)?|weld(?:s|ed|ing)?|rebuild(?:s|ing)?|rebuilt|craft(?:s|ed|ing)|builds?|building|built|graft(?:s|ed|ing)|swap(?:s|ped|ping)? out|fit(?:s|ted|ting)?|wire(?:s|d|ing)? (?:up|in)|cut(?:s|ting)? into|open(?:s|ed|ing)? up)\b[^.!?]{0,45}\b(?:chassis|frame|housing|sensorium)\b/i;
+var VESSEL_MADE = /\b(?:chassis|frame|housing|sensorium)\b[^.!?]{0,45}\b(?:(?:is|was|are|were|gets?|got|has been|had been|being)\s+(?:patched|fitted|refitted|rebuilt|soldered|welded|installed|swapped)|solder(?:s|ed|ing)|weld(?:s|ed|ing)|rebuild(?:s|ing)|rebuilt|refit(?:s|ted|ting))\b/i;
+var VESSEL_FACE = /\bcraft(?:s|ed|ing)\b[^.!?]{0,25}\bface\b|\bface\b[^.!?]{0,25}\bcraft(?:s|ed|ing)\b/i;
+var VESSEL_BODY = /\b(?:build|builds|building|built|craft|crafts|crafted|grow|grows|grew|grown)\b[^.!?]{0,30}\ba (?:new )?body\b(?!-)/i;
+function vesselWork(txt){
+  var cs = String(txt || "").split(/[.!?;]+|\s[—–-]\s/), i, c;
+  for(i = 0; i < cs.length; i++){
+    c = cs[i];
+    if(!c || NOT_AN_EVENT.test(c) || NO_HANDS_TALK.test(c)) continue;
+    if(/\bVic\b/i.test(c)) continue;
+    if(VESSEL_MAKE.test(c) || VESSEL_MADE.test(c) || VESSEL_FACE.test(c) || VESSEL_BODY.test(c)) return true;
+  }
+  return false;
+}
+/* the pointer is the trustworthy signal, not the roster: from a3-evict on, the
+   refusal deliberately stops certifying his death so it cannot end the run - and
+   the certify pass is what would have written him into roster.fallen. */
+function vicGone(){
+  if(gateNotes["a3-vic"]) return true;
+  if(beatIdx > beatById("a3-vic")) return true;
+  return (roster.fallen || []).some(function(f){ return /\bVic\b/i.test(f); });
+}
+/* six of them, and mass is conserved. Bare "grow" is out: "the bio-grens grow
+   still" is exactly how a good writer lands their tell. */
+var GREN_COUNT = /\b(?:one|two|three|four|five|seven|eight|nine|ten|eleven|twelve|twenty|thirty|dozen|\d+)[\s-]+bio-?grens?\b/i;
+var GREN_MASS = /\bbio-?grens?\b[^.!?]{0,80}\b(?:swell\w*|balloon\w*|doubl\w*|tripl\w*|splits? (?:in|into)|split into|multipl\w*|enlarg\w*|grows? (?:to|into|larger|bigger|taller|huge)|towers? over)\b/i;
+
 /* ---- THE RULES ----
    live() - does this law apply this turn at all
    hits(data, walk) - which scene blocks break it, in order
@@ -7358,7 +7543,7 @@ function storyMinutes(day, time, prev, commit){
 var PHYSICS = [
 {
   id:"hum",
-  live:function(){ return nineIsShard(); },
+  live:function(data){ return nineIsShard(data); },
   /* walked block by block, because the prose may legitimately put her in his hand
      halfway down the reply and everything after that is fair */
   hits:function(data, walk){
@@ -7391,7 +7576,7 @@ var PHYSICS = [
   hits:function(data, walk){
     var out = [];
     walk(function(i, spk, txt){
-      if((!spk || spk === "Narration") && NINE_BODY.test(txt)) out.push(i);
+      if((!spk || spk === "Narration") && bodyBreak("Nine", eventText(txt))) out.push(i);
     });
     return out;
   },
@@ -7404,9 +7589,37 @@ var PHYSICS = [
   }
 },
 {
+  /* THE BLIND SPOT. The moment a mind is seated in the courier's skull,
+     nineIsShard() goes false and BOTH shard laws switch off - for the rest of the
+     game. But a housed mind has less of a body than a shard does: a shard at
+     least sits somewhere and can be picked up. From the seating to the last beat,
+     nothing was checking that the lodger did not stand up and hand somebody a mug. */
+  id:"bodiless",
+  live:function(data){ return !!residentNow(data); },
+  hits:function(data, walk){
+    var who = residentNow(data), out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && bodyBreak(who, eventText(txt))) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    var r = housingResident();
+    return "(THAT MIND HAS NO BODY. " + r + " is seated in the courier's skull - no hands, no feet,"
+      + " no face in this room. " + r + " does not reach, stand, nod, step, touch or hold anything,"
+      + " and cannot cross a floor. All " + r + " can do is speak into his ear and use the senses he"
+      + " lends. Write the turn again with the same events, and let the people with bodies do the moving.)";
+  }
+},
+{
   id:"wire",
+  /* the safehouse is not always spelled SAFEHOUSE. Vic's cable shack is on its
+     grounds and the long room is inside it, so the law was switched off for four
+     beats by a naming accident - the rooms carry amb:"dead-signal" and the board
+     calls the same room THE LONG ROOM in one beat and THE SAFEHOUSE, LONG ROOM in
+     the next. */
   live:function(){
-    return /SAFEHOUSE/i.test(String($("hud-loc").textContent || ""));
+    return /SAFEHOUSE|LONG ROOM|SHACK/i.test(String($("hud-loc").textContent || ""));
   },
   hits:function(data, walk){
     var out = [];
@@ -7425,7 +7638,18 @@ var PHYSICS = [
      refused rather than edited - the client keeps the hour it already had, which
      is the hour the player watched arrive */
   id:"clock",
-  live:function(){ return storyMin >= 0; },
+  live:function(){
+    if(storyMin < 0) return false;
+    /* TIME RUNS HOT IN HER. About a minute inside per second outside, and she sets
+       the dial - so a turn that comes back out of the machine is legitimately
+       stamped EARLIER than the turn that went in, and a law that only knows
+       forward would refuse the truth twice and then throw the field away. From the
+       cable head down the board owns the hour: every authored passage in that
+       stretch pins day 33 and the re-base makes it stick. The day is still guarded,
+       by dayheld - a subjective week inside is still minutes out here. */
+    if(beatIdx >= beatById("a3-descent")) return false;
+    return true;
+  },
   hits:function(data){
     var abs = storyMinutes(data && data.day, data && data.time, storyMin);
     return (abs >= 0 && abs < storyMin - 1) ? [-1] : [];
@@ -7439,7 +7663,265 @@ var PHYSICS = [
     /* it insisted, so the hour stops being its to set */
     delete data.time; delete data.day;
   }
+},
+{
+  /* MINDS MOVE BY HAND. Three separate audits proposed this one independently and
+     all three found the same thing: the words upload, download, transmit and
+     backup do not occur anywhere in 33 beats of authored prose. They are pure
+     model vocabulary - "upload him into the new body" is the default sci-fi
+     sentence - and the copy half is load-bearing for the whole game, because a
+     world with backups has no permanent death in it. */
+  id:"transit",
+  live:function(){ return true; },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      var s = eventText(txt);
+      if(MIND_AIRBORNE.test(s) || MIND_COPIED.test(s)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(A MIND DOES NOT TRAVEL DOWN A WIRE. There is no upload, no download, no copy,"
+      + " no backup and no second version of anyone - a mind moves by hand or by cable, one"
+      + " mind to one shard, and copying a living one takes founding-era engines that nothing"
+      + " on any market has. That is also why deletion is death here and stays death. Whatever"
+      + " you just moved, move it the slow way: somebody carries it, on screen, or somebody"
+      + " runs a cable, where the family can watch it happen. Write the turn again.)";
+  }
+},
+{
+  /* A STONE HAS NO MOUTH. Book Two is a book about a table - three authored food
+     scenes inside seven beats and a cooking beat as the act climax - and the two
+     most likely diners are a shard and a labour frame that cannot taste. It also
+     catches the warmest mistake a model makes: setting a place for someone who
+     has no way to use it. */
+  id:"mouth",
+  live:function(data){ return nineIsShard(data) || sevenIsShard(data); },
+  hits:function(data, walk){
+    var who = [];
+    if(nineIsShard(data)) who.push("Nine");
+    if(sevenIsShard(data)) who.push("Seven");
+    if(!who.length) return [];
+    var re = new RegExp("\\b(?:" + who.join("|") + ")\\s+" + EAT_ADV + EAT_VERBS + "\\b");
+    var served = new RegExp("\\b(?:plate|bowl|cup|mug|glass|helping|portion|spoonful|forkful)\\b"
+      + "[^.!?]{0,25}\\b(?:for|in front of)\\s+(?:" + who.join("|") + ")\\b"
+      + "|\\bhands?\\s+(?:" + who.join("|") + ")\\s+(?:a|the|another|his|her)\\s+"
+      + "(?:plate|bowl|cup|mug|glass|fork|spoon)\\b");
+    var out = [];
+    walk(function(i, spk, txt){
+      if(spk && spk !== "Narration") return;
+      var s = eventText(txt);
+      if(re.test(s) || served.test(s)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(STONES DO NOT EAT. A shard has no mouth, no tongue and no nose - it feels the world"
+      + " as muffled vibration through whatever is touching it, and that is the whole of its"
+      + " senses. Nobody sets a place, nobody puts a bowl down in front of it, and it tastes"
+      + " nothing at all. The kindness in that room is real and it has to find another shape."
+      + " Write the turn again and let them be told about the food instead - being described a"
+      + " meal by people who love you is its own scene, and a better one.)";
+  }
+},
+{
+  /* THE FORK, ENFORCED. From a2-chassis on, half the cast's capabilities depend on
+     which of them got the one body. A model that forgets has a shard cooking
+     dinner or a walking person riding in a pocket. Case-sensitive on the name:
+     there is exactly one lowercase "seven" in the whole spine - "at seven in the
+     morning" - and case-sensitivity kills it for free. */
+  id:"frame",
+  live:function(data){ return sevenIsShard(data); },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && bodyBreak("Seven", eventText(txt))) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(SEVEN HAS NO BODY. He is a shard the size of a thumb and the chassis is not his -"
+      + " he does not reach, stand, walk, carry, cook or hand anything to anyone, and he will"
+      + " not while he is a stone. He acts by speaking to whoever is holding him, and he moves"
+      + " only when a hand moves him. Write the turn again with the same events, and let the"
+      + " person holding him do the moving.)";
+  }
+},
+{
+  /* SHE IS A ROOM. The machine's beats are five turns of nearly pure dialogue,
+     which is exactly where a small model reaches for stage business - and a
+     machine that kneels and takes your hand is not the story. The horror is the
+     kindness, and kindness with hands is just a person. Her verb list is shorter
+     than Nine's on purpose: half of Nine's verbs are how you write custody
+     ("holds every scrape", "reaches only what is connected to her"). */
+  id:"granbody",
+  live:function(){
+    return beatIdx >= beatById("a3-voice") && beatIdx <= beatById("a3-granny");
+  },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && GRAN_BODY.test(eventText(txt))) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(SHE HAS NO BODY. The machine is a room, a floor, a hum in the racks and a voice in"
+      + " the air - she does not kneel, reach, touch, step closer or take anybody's hand, and"
+      + " she never has. That is the whole shape of her: enormous, gentle, and unable to hold"
+      + " anything the way a person means it. Write the turn again and let her do it in words,"
+      + " or in the lights, or in the warmth of the floor. If she needs hands, name the body"
+      + " she is driving and let the family see that it is not her.)";
+  }
+},
+{
+  /* A HOLLOW HAS NOBODY IN IT. The bible calls writing one a want, a glance or a
+     line a canon violation, and nothing checked it. The cast gate cannot help -
+     "Hollow" is not a name. Mirren is exempt by name always: she is the one
+     Hollow in the story that speaks, and only ever approved lines. */
+  id:"idle",
+  live:function(){ return true; },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if(/\bhollows?\b/i.test(spk) && !/\bMirren\b/i.test(spk)){ out.push(i); return; }
+      if(spk && spk !== "Narration") return;
+      if(/\bMirren\b/i.test(txt)) return;
+      if(HOLLOW_SPEAKS.test(eventText(txt))) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(A HOLLOW HAS NOBODY IN IT. It is a person's body with a second pulse and a signal,"
+      + " driven from somewhere else - it does not speak, it does not want anything, and it does"
+      + " not look at anyone. If something in this scene needed to say a line, it is a person and"
+      + " you have written the wrong thing. Write the turn again: the Hollows do exactly what they"
+      + " were driven to do and not one syllable more, and whatever the line was carrying, let"
+      + " somebody with a self in them notice it instead.)";
+  }
+},
+{
+  /* THERE IS ONE. One founding-era chassis, kept in a ripperdoc's kit for twenty
+     years against the far end of a plan. A second one voids the fork retroactively
+     - nobody had to choose. */
+  id:"onechassis",
+  live:function(){ return beatIdx >= beatById("a2-chassis"); },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && SECOND_CHASSIS.test(eventText(txt))) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(THERE IS ONE. One founding-era chassis, kept in a kit for twenty years against the"
+      + " far end of a dead man's plan, and no second one in the back, no spare, no other crate."
+      + " That is the whole weight of tonight: one body, two people who could live in it, and"
+      + " somebody has to choose. Write the turn again without conjuring another.)";
+  }
+},
+{
+  /* THE DAY DOES NOT TURN UNDERGROUND. Time runs hot inside the machine - about a
+     minute within per second outside - which is also why the clock rule stands
+     down for these beats. This is what replaces it: however long the deep felt,
+     the sun above the marsh has barely moved. The pin is read off the beat's own
+     authored opening rather than hardcoded. */
+  id:"dayheld",
+  live:function(){
+    return beatIdx >= beatById("a3-descent") && beatIdx <= beatById("a3-granny");
+  },
+  hits:function(data){
+    var b = beatNow(), pin = parseInt((b.opens && b.opens[0] && b.opens[0].day) || "", 10);
+    if(isNaN(pin) || (data && data.the_end)) return [];
+    var got = parseInt(String((data && data.day) || ""), 10);
+    return (!isNaN(got) && got > pin) ? [-1] : [];
+  },
+  say:function(){
+    var b = beatNow(), pin = (b.opens && b.opens[0] && b.opens[0].day) || "the same day";
+    return "(THE DAY DOES NOT TURN DOWN HERE. Time runs hot inside the machine - about a minute"
+      + " within for every second outside, and she sets the dial - so however long that felt, the"
+      + " sun above the marsh has barely moved and nobody has slept. It is still day " + pin + "."
+      + " Send the same turn with the day unchanged, and if you want the weight of hours, put it"
+      + " in what it cost them rather than on the calendar.)";
+  },
+  after:function(data){ delete data.day; }
+},
+{
+  /* THEY ARE ASLEEP AND THEY STAY ASLEEP. A scrape is an archived recording, not a
+     person in the room, and finding Mirren's name on a shelf is a name on a shelf.
+     Restoration is a narrow door opened case by case - never in an aisle with a
+     torch. Beat-gated hard, because restoration does eventually happen. */
+  id:"sleepers",
+  live:function(){ return !beatDone() && beatNow().id === "a3-dreamers"; },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if(spk === "Mirren"){ out.push(i); return; }
+      if(spk && spk !== "Narration") return;
+      var s = eventText(txt);
+      if(SLEEPERS_WAKE.test(s) || SLEEPERS_FROM.test(s) || RESTORE_NOW.test(s)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(THEY ARE ASLEEP AND THEY STAY ASLEEP. Every scrape on these shelves is an intake copy"
+      + " in storage - kept, dreaming, and no more able to answer you than a photograph. Mirren's"
+      + " is a name on a shelf at chest height and that is the whole of what she is tonight: found,"
+      + " not woken. Nothing on a rack speaks, stirs, opens its eyes or knows the family is standing"
+      + " there, and nobody is restored in an aisle with a torch - that is a narrow door, opened"
+      + " case by case, and it is not opened this turn. Write the turn again and let the finding be"
+      + " the thing that happens.)";
+  }
+},
+{
+  /* SIX, AND THEY WEIGH WHAT THEY WEIGH. The two bio-gren laws a regex can see.
+     The third - that they always carry a tell - cannot be checked and stays told. */
+  /* the hands that did that are gone. A hard, permanent, physical consequence of
+     the beat the season turns on, and nothing checked it. */
+  id:"vessel",
+  live:function(){ return vicGone(); },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && vesselWork(txt)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(THE HANDS THAT DID THAT ARE GONE. Vic was the only ripperdoc this family had. Nobody"
+      + " left can patch a frame, fit a chassis, craft a face or build a housing - not Three, not"
+      + " Seven, not the file on the wrist, which documents everything and interfaces with nothing."
+      + " What is broken stays broken and the family works around it. Write the turn again with the"
+      + " same events and nobody's hands inside anybody's body.)";
+  },
+  after:function(data){
+    data.scene.push({speaker:"Narration",
+      text:"Somebody reaches for the kit before they remember, and puts it down again. That is the"
+        + " shape of the hole he left: not the grief, the small unthinking reach."});
+  }
+},
+{
+  id:"grens",
+  live:function(){ return !beatDone() && beatNow().id === "a3-principal"; },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      var s = eventText(txt);
+      if(GREN_COUNT.test(s) || GREN_MASS.test(s)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(THERE ARE SIX OF THEM AND THERE HAVE ALWAYS BEEN SIX. The Principal is attended by six"
+      + " bio-grens, no more and no fewer, and a gren weighs what a gren weighs - it cannot swell to"
+      + " fill a doorway, cannot become two, cannot be bigger in the second sentence than it was in"
+      + " the first. What it can do is wear a face it has sampled, wear it almost perfectly, and be"
+      + " too neat, too still, or a beat late to laugh. Write the turn again with six of them, and"
+      + " let the tell do the work the size was doing.)";
+  }
 }
+
 ];
 /* the clock, back in the shape people read it in */
 function hhmm(abs){
@@ -7464,7 +7946,9 @@ function physicsWalk(data){
 function physicsBreaks(data){
   var out = [], walk = physicsWalk(data);
   PHYSICS.forEach(function(r){
-    if(!r.live()) return;
+    /* live() gets the reply too: a law can turn on or off inside the very turn
+       that reports the change. The rules that do not care simply ignore it. */
+    if(!r.live(data)) return;
     var h = r.hits(data, walk);
     if(h && h.length) out.push({rule:r, hits:h});
   });
@@ -7493,9 +7977,18 @@ function physicsNow(){
     out.what_nine_can_do = "speak to whoever is holding her, and nothing else. She has no body:"
       + " she does not reach, stand, nod, touch or breathe, and she moves only when a hand moves her.";
   }
-  if(/SAFEHOUSE/i.test(String($("hud-loc").textContent || ""))){
-    out.the_wire = "dead here. The safehouse is off the grid and cable-only - nothing wireless"
-      + " reaches it, so no wire buzzes and nobody rings through.";
+  if(/SAFEHOUSE|LONG ROOM|SHACK/i.test(String($("hud-loc").textContent || ""))){
+    out.the_wire = "dead here. This is the safehouse - off the grid and cable-only, nothing"
+      + " wireless reaches it, so no wire buzzes and nobody rings through.";
+  }
+  /* the lodger, and what the room can and cannot hear of them */
+  var res = housingResident();
+  if(res){
+    out.where_the_lodger_is = res + " rides the courier's skull-housing: an inner voice, to him"
+      + " and to nobody else. Nobody else in the room hears it, ever - if the table is to know what"
+      + " was said, the COURIER repeats it out loud, or he does not.";
+    out.what_the_lodger_can_do = "speak to the courier, and use the senses he lends. " + res
+      + " has no body at all: no hands, no feet, no face, no crossing a floor.";
   }
   return out;
 }
@@ -7946,7 +8439,11 @@ function fallenSpeakers(data){
     if(!b || !b.speaker) return;
     var nm = String(b.speaker).trim();
     roster.fallen.forEach(function(f){
-      if(f.toLowerCase() === nm.toLowerCase() && out.indexOf(f) === -1) out.push(f);
+      /* exact equality let the dead back in wearing a hat: "Vic" was blocked and
+         "Vic's file", "VIC (file)" and "Vic's ghost" walked straight past. The
+         cast gate learned this same lesson about "Vic's Voice" two versions ago. */
+      if(new RegExp("\\b" + f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(nm)
+         && out.indexOf(f) === -1) out.push(f);
     });
   });
   return out;
@@ -9148,7 +9645,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.23.0");
+  R(s, "build", "v4.24.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -10461,7 +10958,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.23.0   COLD START",
+    "MUD//OS  v4.24.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -12729,7 +13226,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.23.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.24.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
