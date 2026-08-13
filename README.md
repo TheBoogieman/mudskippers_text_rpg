@@ -241,6 +241,54 @@ night with no entry behaves exactly as it did before — the prose block, and th
 storyteller's judgment. The Writers' Board shows both on the same page, so what has
 been written and what has not sit next to each other.
 
+## The physics desk — the body of the world
+
+The bible has always *told* the storyteller the physical laws, and telling is not
+keeping. Nine speaks only through bare skin on the shard — the most-repeated law in
+the whole file — and a 24B still had her answer a question through a closed jacket,
+in the same reply where Pia says *you can't hear that through cloth.* The model
+wasn't being careless. It was being asked to hold a fact about the world across a
+turn, which is the one job it reliably cannot do.
+
+So the client keeps the body of the world, the way it already keeps the roster, the
+fence and the clock. Every law needs three parts, or it is just prose again:
+
+- **Track.** The client knows where the shard is, what hour it is, and what room they
+  are standing in — derived from the player's own move first, then from the prose
+  that came back. The player's hands are the player's: reaching for the shard *is*
+  taking it out, so the world moves on the move rather than waiting to be told.
+- **Tell.** The true state rides every briefing and every scene contract, phrased as
+  a fact rather than a rule. Not *she needs skin contact* but **she is in his jacket
+  right now, and she does not speak this turn.**
+- **Enforce.** A reply that breaks it is re-rolled once, and on the second refusal the
+  offending lines are cut — same shape as the chair, the fence and the cast gate,
+  because one correction is a request and every gate here that stopped at asking has
+  been walked through.
+
+Three laws so far, and they are data, not pipeline — adding one is a table entry:
+
+- **The hum.** Nine reaches a person only through skin on the shard. Unheld she is a
+  stone: she cannot hear the question, cannot answer, does not speak. Checked block
+  by block down the reply, so prose that legitimately puts her in his hand halfway
+  through frees everything after it.
+- **The body she does not have.** She does not reach, stand, nod, step, touch or
+  breathe, and she moves only when a hand moves her. Narration only — a *person*
+  saying "Nine held on longer than most" is a figure of speech.
+- **The dead house.** Vic's safehouse is off the grid and cable-only. No wire buzzes
+  there, nobody rings through. The silence is architecture, not mood.
+
+The hard part turned out to be reading the fiction correctly rather than writing the
+rules. Two passes were lost to it: **dialogue is not an event** — Pia saying *"I'm not
+taking her out of your pocket, that's a you job"* is a scene obeying the law
+beautifully, and it moved the shard into his hand in the client's model, which then
+stopped enforcing for the rest of the run. And **a hypothetical is not an event** —
+*if he took her out, she would hear him* is not him taking her out. Only the world's
+own narration, in the affirmative, moves anything.
+
+The clock is tracked the same way and only ever goes forward — with the midnight
+amendment, because the board's authored landings roll past twelve and keep the same
+day on purpose. A night is a night.
+
 ## The trapdoor — when something goes wrong
 
 **Middle-click the shard.** A panel opens over the run with every number the night is

@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.22.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.23.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.22.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.23.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.22.0 "The Scene Book" "The Writers’ Board"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.23.0 "The Physics Desk" "The Scene Book"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1948,7 +1948,7 @@ var SPINE = [
  walks:["Give the shard to Pia and walk back the way I came.",
         "Hand her over. This was a delivery job and I am done delivering.",
         "Put it in the kid's hand and go home while home still exists."],
- lands:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+ lands:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"hand",
        now:"Day 1, past midnight, under the Veldt overpass. Nine rides in the courier's closed hand, not his jacket. Pia is watching the road back.",
        lines:["The market lets you go the way it lets everyone go — all at once, into a road that stopped being a road years ago.",
               "You are under the overpass before anyone says anything else, the rain going at the concrete overhead like it has been told there is money in it, and she is still in your hand.",
@@ -1958,7 +1958,7 @@ var SPINE = [
        rail:["Tell her it is always like this up here.",
              "Ask Pia what she is looking at.",
              "Move. The marsh road is hours out and the rain is winning."]}],
- landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon",
+ landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"jacket",
        now:"Day 1, past midnight, under the overpass. Nine is in the courier's jacket. The conversation happened at a jog, half-heard, and she has gone quiet.",
        lines:["It gets said in the end, most of it, at a jog, into a jacket — which is not how anybody would have chosen to meet a person.",
               "Under the overpass you finally stop. There is a silence out of your chest pocket with a shape to it.",
@@ -3912,6 +3912,17 @@ function physicsLines(){
   if(beatIdx > ci && chassisHolder === "Nine"){
     out.push("NINE'S CHASSIS: full sensorium, runs on charge, eats tokens only - and she is learning what hands are for.");
   }
+  /* the law is the first line; where she actually is, this turn, is the next one.
+     The law alone was never enough - it is a rule to remember, and this is a fact
+     to read. The client knows it, so the client says it. */
+  if(nineIsShard()){
+    out.push(shardWhere === "hand"
+      ? "WHERE SHE IS RIGHT NOW: in the courier's bare hand, skin on the shard. She can hear him and answer him this turn."
+      : "WHERE SHE IS RIGHT NOW: in the courier's jacket, and no skin is on her. She is a stone this"
+        + " turn - she cannot hear the question, cannot answer it, and DOES NOT SPEAK. If she would"
+        + " answer, she does not: Pia answers, or guesses, or nobody does. Taking her out is the"
+        + " COURIER'S move and only the player makes it.");
+  }
   var res = housingResident();
   if(res){
     out.push("THE HOUSING: " + res + " rides the courier's skull - consent-locked inner voice, to the courier alone, never room-audible. The wrist talks to the room; the skull talks to him.");
@@ -4028,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.22.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.23.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5105,6 +5116,9 @@ function showScene(data, logIt, instant){
      had to argue with wherever they had wandered to.
      The prose still renders - it is what the player read - but the strip does not
      move, and the correction rides the next outgoing turn. */
+  /* the world moves to wherever the turn left it. After the lints, before the
+     render: what reaches the screen is what the physics desk now believes. */
+  notePhysics(data);
   var sealed = !!(data.__live && phase === "slack");
   if(data.day && !sealed){ $("hud-day").textContent = data.day; $("w-day").textContent = data.day; }
   if(typeof data.time === "string" && data.time.trim() && !sealed) nowTime = data.time.trim();
@@ -6825,6 +6839,11 @@ function playAuthored(V, salt){
   /* the NOW line has to move with them or the next turn opens in the old room
      with a new name on the strip */
   if(V.now) nowText = V.now;
+  /* an authored passage does not get guessed at. The good landing says she rides
+     in his closed hand, "not his jacket" - a sentence that names both places and
+     finishes on the wrong one - so where the board's own prose leaves her is a
+     field, not an inference. */
+  if(V.shard === "hand" || V.shard === "jacket") shardWhere = V.shard;
   /* A LINE MAY NOW HAVE A VOICE. Narration alone could set a room but it could
      not set a TABLE: the DM inherited a place and a time and nobody in the middle
      of saying anything, so its first move was always to invent an opening beat of
@@ -7206,6 +7225,281 @@ function doorDirective(){
   }
   return "";
 }
+/* ---- THE PHYSICS DESK ----
+   The bible has always TOLD the storyteller the physical laws, and telling is not
+   keeping. Nine speaks only through skin on the shard - the single most stated law
+   in the file - and a 24b still had her answer a question through a closed jacket,
+   in the same reply where Pia says "you can't hear that through cloth". The model
+   was not being careless. It was being asked to remember a fact about the world
+   across a turn, and that is the one job it reliably cannot do.
+
+   So the client keeps the body of the world, the way it already keeps the roster,
+   the fence and the clock. Three parts, and every law needs all three or it is
+   just prose again:
+
+     1. TRACK  - the client knows where the shard is, what hour it is, and what
+                 room they are standing in, derived from the player's own move and
+                 from the prose that came back.
+     2. TELL   - the true state rides every briefing and every scene contract, as
+                 a statement of fact rather than a rule to obey.
+     3. ENFORCE - a reply that breaks it is re-rolled once, and on the second
+                 refusal the offending lines are cut, because a law that is only
+                 asked for is a law that gets walked through. Same shape as the
+                 chair, the fence and the cast gate.
+
+   Rules are data. Adding one is an entry in PHYSICS, not a new pipeline. */
+
+var shardWhere = "jacket";   /* "jacket" | "hand" - where Nine physically is */
+var storyMin = -1;           /* the story clock in absolute minutes; it only goes up */
+
+/* the last position of a pattern in a blob, or -1. Position matters because a
+   sentence can move her twice - "out of the jacket and into my hand" - and the
+   one that counts is the one it finishes on. */
+function lastHit(s, re){
+  var g = new RegExp(re.source, "gi"), m, at = -1;
+  while((m = g.exec(s)) !== null){
+    at = m.index;
+    if(g.lastIndex === m.index) g.lastIndex++;
+  }
+  return at;
+}
+var SHARD_TO_HAND = /(bare hand|into (?:my|his|your|the courier's) hand|in (?:my|his|your) (?:bare |closed |open )?hand|out of (?:the|my|his|your) (?:jacket|pocket|coat)|skin (?:on|to) (?:the )?shard|shard (?:out|into)|closed (?:hand|fist)|(?:my|his|your) palm|palm (?:up|down|open)|takes? her out|took her out|pulls? her out|holding her|hold her|her in (?:my|his|your) hand)/;
+var SHARD_TO_POCKET = /(back in(?:to)? (?:the|my|his|your) (?:jacket|pocket|coat)|put (?:her|it) (?:back|away)|into (?:the|his|your|my) (?:jacket|pocket)|in (?:his|your|my) (?:chest )?(?:jacket|pocket)|against (?:his|your) ribs|pockets? her|puts? her away|slips? her (?:back|in))/;
+/* Sentences that are not describing something that happened. Pia saying "I'm not
+   taking her out of your pocket - that's a you job" is a scene obeying the law
+   beautifully, and it moved the shard into his hand in the client's model, which
+   then stopped enforcing the law for the rest of the run. A hypothetical is not
+   an event. */
+var NOT_AN_EVENT = /\b(?:not|never|n't|if|unless|until|would|could|should|might|maybe|wants? to|want to|going to|needs? to|have to|has to|had to|instead of)\b|\?/i;
+/* "not his jacket" is the good landing describing where she ISN'T - a negation
+   read as a position put her back in the pocket the moment she left it */
+function shardAfter(txt, from, stated){
+  var s = String(txt || "").replace(/\bnot\s+(?:his|your|my|the)\s+(?:jacket|pocket|coat)/gi, " ");
+  /* clauses, not sentences: the door's own line is "Shard out of the jacket and
+     into my bare hand - I want to hear her myself", and a dash is where one
+     thought stops and the next begins. */
+  if(!stated){
+    var parts = s.split(/[.!?;]+|\s[—–-]\s/), keep = [], i;
+    for(i = 0; i < parts.length; i++){
+      if(parts[i] && !NOT_AN_EVENT.test(parts[i])) keep.push(parts[i]);
+    }
+    s = keep.join(". ");
+  }
+  var h = lastHit(s, SHARD_TO_HAND), p = lastHit(s, SHARD_TO_POCKET);
+  if(h < 0 && p < 0) return from;
+  return (h > p) ? "hand" : "jacket";
+}
+/* and only the world moves things. A character TALKING about the shard - offering
+   to hold it, refusing to, telling him what he would have to do - is dialogue, and
+   dialogue is not an event either. His hands are the player's; the narration is
+   the world's; everybody else is just talking. */
+function shardFromBlock(spk, txt, from){
+  if(spk && spk !== "Narration") return from;
+  return shardAfter(txt, from);
+}
+/* she is a shard until she has somewhere else to be */
+function nineIsShard(){
+  if(chassisHolder === "Nine") return false;
+  if(housingResident() === "Nine") return false;
+  return true;
+}
+/* a body she does not have. Narration only - a person SAYING "Nine held on" is a
+   figure of speech, and the world writing it is a mistake. */
+var NINE_BODY = /\bNine\s+(?:just\s+|then\s+|slowly\s+|finally\s+)?(?:reach(?:es|ed)?|walk(?:s|ed)?|stands?|stood|holds?|held|picks?\s+up|picked\s+up|nods?|nodded|shrugs?|shrugged|steps?|stepped|sits?|sat|leans?|leaned|grabs?|grabbed|points?|pointed|hands?\s+(?:him|her|it|over)|handed|touch(?:es|ed)?|breath(?:es|ed)|blinks?|blinked|smil(?:es|ed)|frowns?|frowned|shivers?|shivered|flinch(?:es|ed)|winc(?:es|ed))\b/i;
+/* an off-grid house with no wireless in the walls, and something rings anyway */
+var WIRE_WAKES = /\b(?:the|your|his)\s+(?:wire|wrist|comm|handset)\b[^.]{0,60}\b(?:buzz\w*|ring\w*|chirp\w*|ping\w*|lights? up|comes? alive|wakes?|goes? off|crackles?)\b/i;
+
+/* the clock, in minutes, tolerantly. An hour it cannot read is an hour it does
+   not judge - a wrong refusal costs the player a turn, and a missed one costs
+   nothing the next turn will not catch. */
+function clockMinutes(t){
+  var s = String(t || "").toLowerCase().replace(/\./g, "");
+  if(/\bmidnight\b/.test(s)) return 0;
+  if(/\bnoon\b|\bmidday\b/.test(s)) return 720;
+  var m = /(\d{1,2})(?::(\d{2}))?\s*(am|pm)/.exec(s);
+  if(!m) return -1;
+  var h = parseInt(m[1], 10) % 12, mm = m[2] ? parseInt(m[2], 10) : 0;
+  if(m[3] === "pm") h += 12;
+  return h * 60 + mm;
+}
+function dayNumber(d){
+  var n = parseInt(String(d === undefined || d === null ? $("hud-day").textContent : d), 10);
+  return isNaN(n) ? 1 : n;
+}
+/* the story's own clock, absolute. The midnight amendment: the board's authored
+   landings roll past twelve and keep the same day on purpose - a night is a night
+   - so 11:52pm followed by 12:26am on day 1 is four in the morning arriving, not
+   the clock running backwards.
+
+   The amendment has to STICK, and in the first version it did not: it added a day
+   to the one reading that crossed midnight, and every reading after it went back
+   to being computed off day 1, came out lower than the clock it had just set, and
+   was discarded. The clock froze at three minutes past twelve and stayed there for
+   the rest of the night, silently. So the crossing is remembered, not re-derived -
+   and only the commit pass remembers it, because the lint asks the same question
+   first and a shift counted twice is a day the story never had. */
+var storyDayShift = 0;
+function storyMinutes(day, time, prev, commit){
+  var mm = clockMinutes(time);
+  if(mm < 0) return -1;
+  var abs = dayNumber(day) * 1440 + mm + storyDayShift * 1440;
+  if(prev >= 0 && abs < prev && (prev % 1440) >= 21 * 60 && mm < 6 * 60){
+    if(commit) storyDayShift++;
+    abs += 1440;
+  }
+  return abs;
+}
+
+/* ---- THE RULES ----
+   live() - does this law apply this turn at all
+   hits(data, walk) - which scene blocks break it, in order
+   say - the correction, said as fact
+   fix(data, hits) - what the client does when asking twice has not worked */
+var PHYSICS = [
+{
+  id:"hum",
+  live:function(){ return nineIsShard(); },
+  /* walked block by block, because the prose may legitimately put her in his hand
+     halfway down the reply and everything after that is fair */
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt, heldHere){
+      if(spk === "Nine" && !heldHere) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(SHE IS IN HIS JACKET. Nine reaches a person only through bare skin on the shard,"
+      + " and nobody has put her there - so this turn she cannot hear the question, cannot answer"
+      + " it, and does not speak. Write the turn again with the same events and no line from Nine:"
+      + " Pia answers instead, or guesses, or tells him what he would have to do to hear it himself,"
+      + " and the thing Nine would have said stays unsaid. If the courier is to take her out, that"
+      + " is HIS move to make and the player has not made it.)";
+  },
+  /* the cut is done for us, from the union of every rule's hits. What is left to
+     a rule is what the scene needs instead - a promised answer cannot simply go
+     missing, so the silence gets written. */
+  after:function(data){
+    data.scene.push({speaker:"Narration",
+      text:"Whatever she makes of that, it stays where she is - a hum through cloth, shaped like"
+        + " something, and no way through to it."});
+  }
+},
+{
+  id:"body",
+  live:function(){ return nineIsShard(); },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if((!spk || spk === "Narration") && NINE_BODY.test(txt)) out.push(i);
+    });
+    return out;
+  },
+  say:function(){
+    return "(NINE HAS NO BODY. She is a shard the size of a thumb - she does not reach, stand,"
+      + " nod, step, touch, breathe or hold anything, and she never will while she is a stone."
+      + " She acts only by speaking to whoever is holding her, and she moves only when a hand"
+      + " moves her. Write the turn again with the same events, and let the person holding her"
+      + " do the moving.)";
+  }
+},
+{
+  id:"wire",
+  live:function(){
+    return /SAFEHOUSE/i.test(String($("hud-loc").textContent || ""));
+  },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){ if(WIRE_WAKES.test(txt)) out.push(i); });
+    return out;
+  },
+  say:function(){
+    return "(NOTHING REACHES THIS HOUSE. Vic's safehouse is off the grid and cable-only - there"
+      + " is no wireless in the walls, which is the entire reason it is still standing. No wire"
+      + " buzzes here, no wrist lights up, nobody rings through. That silence is not a mood, it"
+      + " is the architecture. Write the turn again without it.)";
+  }
+},
+{
+  /* the one rule with nothing to cut: the clock is a field, not a line, so it is
+     refused rather than edited - the client keeps the hour it already had, which
+     is the hour the player watched arrive */
+  id:"clock",
+  live:function(){ return storyMin >= 0; },
+  hits:function(data){
+    var abs = storyMinutes(data && data.day, data && data.time, storyMin);
+    return (abs >= 0 && abs < storyMin - 1) ? [-1] : [];
+  },
+  say:function(){
+    return "(THE CLOCK ONLY GOES FORWARD. This turn is stamped earlier than the scene before it,"
+      + " and the night cannot un-happen. Send the same turn with a time at or after "
+      + hhmm(storyMin) + ", and if the scene is meant to be a few minutes later, say so.)";
+  },
+  after:function(data){
+    /* it insisted, so the hour stops being its to set */
+    delete data.time; delete data.day;
+  }
+}
+];
+/* the clock, back in the shape people read it in */
+function hhmm(abs){
+  var m = ((abs % 1440) + 1440) % 1440, h = Math.floor(m / 60), mm = m % 60;
+  var ap = h < 12 ? "am" : "pm", h12 = h % 12; if(h12 === 0) h12 = 12;
+  return h12 + ":" + (mm < 10 ? "0" : "") + mm + ap;
+}
+
+/* the walk: block by block, carrying the shard's position forward as the prose
+   moves it, so a rule sees the world as it stood at the moment of that line */
+function physicsWalk(data){
+  var blocks = (data && data.scene) || [], where = shardWhere;
+  return function(fn){
+    var w = where, i, b;
+    for(i = 0; i < blocks.length; i++){
+      b = blocks[i] || {};
+      fn(i, String(b.speaker || "").trim(), String(b.text || ""), w === "hand");
+      w = shardFromBlock(String(b.speaker || "").trim(), b.text, w);
+    }
+  };
+}
+function physicsBreaks(data){
+  var out = [], walk = physicsWalk(data);
+  PHYSICS.forEach(function(r){
+    if(!r.live()) return;
+    var h = r.hits(data, walk);
+    if(h && h.length) out.push({rule:r, hits:h});
+  });
+  return out;
+}
+/* the commit, after the lint has had its look: the world moves on to wherever the
+   turn actually left it */
+function notePhysics(data){
+  var blocks = (data && data.scene) || [], i;
+  for(i = 0; i < blocks.length; i++){
+    shardWhere = shardFromBlock(String((blocks[i] && blocks[i].speaker) || "").trim(),
+                                blocks[i] && blocks[i].text, shardWhere);
+  }
+  var abs = storyMinutes(data && data.day, data && data.time, storyMin, true);
+  if(abs >= 0 && abs > storyMin) storyMin = abs;
+}
+/* what the board knows about the body of the world, said as fact. This rides
+   every turn, contract or no contract, because the laws outlive the scene book. */
+function physicsNow(){
+  var out = {};
+  if(nineIsShard()){
+    out.where_nine_is = (shardWhere === "hand")
+      ? "in the courier's bare hand, skin on the shard - she can hear him and answer him this turn"
+      : "in the courier's jacket, and nobody has put bare skin on her. She is a stone: she cannot"
+        + " hear the question, cannot answer it, and DOES NOT SPEAK this turn. Pia answers, or nobody does.";
+    out.what_nine_can_do = "speak to whoever is holding her, and nothing else. She has no body:"
+      + " she does not reach, stand, nod, touch or breathe, and she moves only when a hand moves her.";
+  }
+  if(/SAFEHOUSE/i.test(String($("hud-loc").textContent || ""))){
+    out.the_wire = "dead here. The safehouse is off the grid and cable-only - nothing wireless"
+      + " reaches it, so no wire buzzes and nobody rings through.";
+  }
+  return out;
+}
+
 /* ---- THE SCENE CONTRACT ----
    The briefing is prose because the story is prose, and a large model reads six
    thousand characters of it and does as it is told. A cheap one reads the front,
@@ -7331,6 +7625,9 @@ function sceneContract(){
      further down the road. A fence is only a fence where the model is reading. */
   var nope = lockedReveals();
   if(nope.length) o.not_yet = nope;
+  /* the body of the world, tracked rather than remembered */
+  var phys = physicsNow();
+  for(var pk in phys){ if(Object.prototype.hasOwnProperty.call(phys, pk)) o[pk] = phys[pk]; }
   o.choices = s.room
     ? "three things to say or do IN THIS ROOM, to the people already in it. Never offer moving on,"
       + " getting going, heading out, or anything that reads as leaving - the way out of this room is"
@@ -7602,6 +7899,11 @@ function takeAction(text, isMud){
   pickKind = pendingKind || ""; pendingKind = ""; walkArmed = false; exitArmed = false;
   if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
   lastPlayerText = text.trim();   /* the chair lint checks the reply against this */
+  /* his hands are the player's. Reaching for the shard IS taking it out, so the
+     world moves on the move rather than waiting to be told it happened. */
+  /* stated, not inferred: what the player says he does, he does - so this one
+     skips the hedge filter that keeps the world's prose honest */
+  shardWhere = shardAfter(lastPlayerText, shardWhere, true);
   lastTurnMud = !!isMud;          /* immunity: a bit cannot be spent */
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
@@ -7825,6 +8127,31 @@ function callDM(corrected){
       if(window.console && console.warn){
         console.warn("[mudskippers] refused an early reveal, twice - cut " + cut.length
           + " line(s): " + leaked.join(", "));
+      }
+    }
+    /* THE PHYSICS DESK. Checked before render for the same reason the fence is:
+       a body that did a thing it does not have cannot be un-done once read. One
+       correction is a request, so the second refusal cuts the lines. */
+    var broke = physicsBreaks(parsed.data);
+    if(broke.length){
+      if(!corrected){
+        return callDM(broke.map(function(x){ return x.rule.say(); }).join("\n"));
+      }
+      /* one cut, from the union. Two rules filtering in turn is how the second
+         one ends up deleting by indices the first one already moved. */
+      var doomed = [];
+      broke.forEach(function(x){
+        x.hits.forEach(function(i){ if(doomed.indexOf(i) === -1) doomed.push(i); });
+      });
+      parsed.data.scene = (parsed.data.scene || []).filter(function(b, i){ return doomed.indexOf(i) === -1; });
+      broke.forEach(function(x){ if(x.rule.after) x.rule.after(parsed.data); });
+      if(!(parsed.data.scene || []).length){
+        parsed.data.scene = [{speaker:"Narration",
+          text:"The moment passes without it. Nothing in the room does the impossible thing, and the night goes on."}];
+      }
+      if(window.console && console.warn){
+        console.warn("[mudskippers] physics refused twice - cut lines for: "
+          + broke.map(function(x){ return x.rule.id; }).join(", "));
       }
     }
     if(deathRefused(parsed.data)){
@@ -8170,6 +8497,7 @@ function saveBlob(){
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
     beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent,
+    shardWhere:shardWhere, storyMin:storyMin, storyDayShift:storyDayShift,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     foldedBeats:foldedBeats, chassisHolder:chassisHolder,
@@ -8820,7 +9148,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.22.0");
+  R(s, "build", "v4.23.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -10133,7 +10461,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.22.0   COLD START",
+    "MUD//OS  v4.23.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -10835,6 +11163,17 @@ function wbDrawMech(){
   var h = '<div class="wb-eyebrow">Mechanics</div><div class="wb-h">Every moving part, in plain words</div>';
   WB_MECH.forEach(function(m){
     h += '<div class="wb-c"><span class="wb-t gold">' + esc(m[0]) + '</span><div class="wb-pass">' + esc(m[1]) + "</div></div>";
+  });
+  /* the physics desk, listed for the writer: these are the things the game will
+     not let a scene do, so a card that needs one of them will not survive */
+  h += '<div class="wb-sh">The laws the game enforces itself</div>';
+  h += '<p class="wb-p">The storyteller is told these every turn <i>and</i> checked against them afterwards.'
+    + " A reply that breaks one is written again, and if it breaks the same law twice the offending lines are"
+    + " cut before anybody reads them. Worth knowing while writing: a card that needs one of these to bend"
+    + " will not survive contact with the game.</p>";
+  PHYSICS.forEach(function(r){
+    h += '<div class="wb-c red"><span class="wb-t red">' + esc(r.id) + '</span><div class="wb-pass">'
+      + esc(String(r.say()).replace(/^\(|\)$/g, "")) + "</div></div>";
   });
   h += '<div class="wb-sh">The interludes already written</div>';
   h += '<p class="wb-p">Optional scenes offered during the room. Each is dealt at most once a season.</p>';
@@ -12390,7 +12729,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.22.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.23.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
@@ -12462,6 +12801,7 @@ function newRun(confirmFirst, bare){
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
   beatText = ""; gateNotes = {}; gateRefusedNames = []; topicSpent = {};
+  shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
   runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
@@ -12613,6 +12953,12 @@ function restoreFromBlob(s){
   /* a save from before the scene book has spent nothing: it starts at the top of
      every topic list, which is the right place for a run that has never had one */
   topicSpent = (s.topicSpent && typeof s.topicSpent === "object") ? s.topicSpent : {};
+  /* a save from before the physics desk: she goes back in the jacket, which is
+     the safe end of the guess - it costs a re-roll if she was in his hand, and
+     nothing at all if she was not */
+  shardWhere = (s.shardWhere === "hand" || s.shardWhere === "jacket") ? s.shardWhere : "jacket";
+  storyMin = (typeof s.storyMin === "number") ? s.storyMin : -1;
+  storyDayShift = (typeof s.storyDayShift === "number") ? s.storyDayShift : 0;
   /* the fork - derived AFTER gateNotes lands: old saves past the chassis
      played the only branch that existed */
   chassisHolder = (s.chassisHolder === "Seven" || s.chassisHolder === "Nine") ? s.chassisHolder
