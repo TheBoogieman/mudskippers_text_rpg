@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.26.0 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
+  <div class="t-foot">v4.26.1 Â· THREE BOOKS Â· ONE FAMILY Â· SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.26.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.26.1</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.26.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS â€” THE COURIER'S RUN Â· v4.26.1 "Fifteen Laws" "The Physics Desk"
    the courier can die Â· no death without a warning the player could answer
    the season is a flowchart Â· the client walks it Â· gates, pressure, forced beats
    twelve skies Â· pressure you can see Â· the world's own turn lands as a hit
@@ -4039,7 +4039,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.26.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.26.1";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7578,7 +7578,7 @@ function vicGone(){
 }
 /* a killing, in plain narration. "burn" is deliberately absent - the first beat
    of the season has his room burned, and two authored stall lines use it. */
-var KILLS = /(?:shoots?|shot|stabs?|stabbed|kills?|killed|murders?|murdered|strangles?|strangled|executes?|executed|drowns?|drowned)|sets? (?:w+ ){0,2}on fire/i;
+var KILLS = /\b(?:shoots?|shot|stabs?|stabbed|kills?|killed|murders?|murdered|strangles?|strangled|executes?|executed|drowns?|drowned)\b|\bsets? (?:\w+ ){0,2}on fire\b/i;
 /* six of them, and mass is conserved. Bare "grow" is out: "the bio-grens grow
    still" is exactly how a good writer lands their tell. */
 var GREN_COUNT = /\b(?:one|two|three|four|five|seven|eight|nine|ten|eleven|twelve|twenty|thirty|dozen|\d+)[\s-]+bio-?grens?\b/i;
@@ -7966,7 +7966,7 @@ var PHYSICS = [
       var s = eventText(txt);
       if(!KILLS.test(s)) return;
       for(var k = 0; k < who.length; k++){
-        if(new RegExp("\b" + who[k] + "\b").test(s)){ out.push(i); return; }
+        if(new RegExp("\\b" + who[k] + "\\b").test(s)){ out.push(i); return; }
       }
     });
     return out;
@@ -10001,7 +10001,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "â€”" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.26.0");
+  R(s, "build", "v4.26.1");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -11314,7 +11314,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.26.0   COLD START",
+    "MUD//OS  v4.26.1   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -13588,7 +13588,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.26.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.26.1",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
