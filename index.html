@@ -1185,7 +1185,7 @@
     <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
-  <div class="t-foot">v4.36.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
+  <div class="t-foot">v4.37.0 · THREE BOOKS · ONE FAMILY · SAME PAN</div>
 </div>
 
 <!-- WELCOME MODAL -->
@@ -1351,7 +1351,7 @@
             <div id="term-screen">
               <div id="term-boot"></div>
               <div id="term-ui">
-                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.36.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
+                <div class="term-glasshead"><span class="os">MUD//OS</span><span class="ver">v4.37.0</span><span class="tab" id="term-tablabel">STATUS</span></div>
     <div class="term-pane on" id="tpane-status">
       <div id="term-fix"></div>
       <div id="term-now"></div>
@@ -1630,7 +1630,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.36.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.37.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5462,7 +5462,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.36.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.37.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8201,7 +8201,10 @@ function boardDirective(){
 function anchorsMissing(b){
   var out = [];
   (b.anchors || []).forEach(function(nm){
-    if(!new RegExp("\\b" + nm + "\\b", "i").test(beatText)) out.push(nm);
+    /* the inverse of the fence's problem, from the same missing guard: "nine of
+       them" and "seven in the morning" satisfied the witness for gates the scene
+       had never earned, so a beat closed on an anchor who was never in it. */
+    if(!namedUse(nm, beatText, true)) out.push(nm);
   });
   return out;
 }
@@ -8832,6 +8835,54 @@ function nowLine(){
    introduces people, and nobody arrives before their night. */
 var SPINE_CAST = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Principal",
                   "Marek","Five","Mirren","Architect","Machine","The File"];
+/* THREE DAYS. SEVEN OF THEM. FIVE MINUTES. Four of this cast are numbers, and
+   every fence that went looking for them by name found the counting instead. The
+   physics desk solved this years ago for Nine and the solution was never carried
+   anywhere else: the game's own cold open says "Three days ago", its own landing
+   says "nine of them", and both were landmines. A number-name is a person only
+   when the words after it are not a quantity. */
+var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
+var COUNTED = /^[\s,.]*(?:of\s+them\b|of\s+us\b|of\s+the\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+/* is this name used AS a name anywhere in the text? */
+function namedUse(sp, hay, ci){
+  if(!sp) return false;
+  /* the window is a LOOKAHEAD. A capture group consumes what it captures, so
+     lastIndex used to jump twenty characters past every count and step clean over
+     whatever followed - "nine of them, Nine got them through" saw the count, ate
+     the name behind it, and reported that nobody was named. */
+  var re = new RegExp("\\b" + sp + "\\b(?=([\\s\\S]{0,20}))", ci ? "gi" : "g"), m;
+  while((m = re.exec(hay)) !== null){
+    if(NUMBER_NAMES[sp] && COUNTED.test(m[1] || "")) continue;   /* a quantity, not a person */
+    return true;
+  }
+  return false;
+}
+/* THE FACTS ON THE TABLE. metNames answers "who may speak"; this answers the
+   different and much older question "who does the player already know about" -
+   every name the run's OWN dealt text has printed. Vic is in the backstory card,
+   five canon lines, the active quest and on the wrist from turn 0, and the fence
+   still called him a spoiler until beat 3: an obedient model rewrote Pia's line
+   to call him "the doc" while the quest panel beside it said his name, and the
+   scene book had its own authored sentence about him rejected. Being talked
+   about is not the same as walking in - so this list opens the prose, and the
+   speaker fence below is left exactly as strict as it was. */
+function knownOf(){
+  var seen = {}, out = [];
+  function add(nm){ nm = String(nm || "").trim(); if(!nm || seen[nm]) return; seen[nm] = 1; out.push(nm); }
+  metNames().forEach(add);
+  var hay = [];
+  hay.push(runCanon.join("\n"));
+  hay.push(canonArchive.join("\n"));
+  hay.push(String(agendaText || ""));
+  (quests || []).forEach(function(q){ hay.push(String((q && q.title) || "") + " " + String((q && q.goal) || "")); });
+  (milestones || []).forEach(function(m){ hay.push(String(m || "")); });
+  Object.keys(gateNotes).forEach(function(k){ hay.push(String(gateNotes[k] || "")); });
+  (roster.family || []).forEach(add);
+  (roster.fallen || []).forEach(add);
+  var text = " " + hay.join(" \n ").replace(/\s+/g, " ") + " ";
+  SPINE_CAST.forEach(function(sp){ if(!seen[sp] && namedUse(sp, text)) add(sp); });
+  return out;
+}
 function metNames(){
   var seen = {}, out = [], i;
   function add(n){
@@ -8864,9 +8915,11 @@ function unmetSpeakers(data){
      instead: "in walks Marek", "I am your father". A full character introduction
      reached the screen and the record, first try, no correction spent. */
   var proseHay = " " + replyProse(data).replace(/\s+/g, " ") + " ";
+  var known = {};
+  knownOf().forEach(function(nm){ known[nm] = 1; });
   SPINE_CAST.forEach(function(sp){
-    if(met[sp]) return;
-    if(new RegExp("\\b" + sp + "\\b").test(proseHay) && bad.indexOf(sp) === -1) bad.push(sp);
+    if(met[sp] || known[sp]) return;      /* a fact already on the table is sayable */
+    if(namedUse(sp, proseHay) && bad.indexOf(sp) === -1) bad.push(sp);
   });
   names.forEach(function(b){
     var nm = String((b && b.speaker) || "").trim();
@@ -11958,7 +12011,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.36.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.37.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -12309,7 +12362,7 @@ function dbgReport(){
   function B(o, h, t){ o.blocks.push({h:h, t:(t === null || t === undefined || t === "") ? "—" : String(t)}); }
 
   s = S("THE RUN");
-  R(s, "build", "v4.36.0");
+  R(s, "build", "v4.37.0");
   R(s, "read at", new Date().toISOString());
   R(s, "provider / model", settings.provider + " / " + settings.model);
   R(s, "base", settings.base);
@@ -13622,7 +13675,7 @@ function termBootLines(){
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
   return [
-    "MUD//OS  v4.36.0   COLD START",
+    "MUD//OS  v4.37.0   COLD START",
     "CELL ........ 61%   TEMP 31C",
     "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
     "STRAP ....... INTACT",
@@ -15937,7 +15990,7 @@ function tempoLineFor(season){
 function rehExtract(all){
   var store = rehTakesLoad();
   var ids = all ? Object.keys(store) : [ $("reh-beat").value ];
-  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.36.0",
+  var out = {kind: "mudskippers-rehearsal", v: 1, build: "v4.37.0",
     captured: new Date().toISOString(), beats: []};
   ids.forEach(function(id){
     var one = rehExtractOne(id, store);
