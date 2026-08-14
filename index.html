@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.68.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.69.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7214,7 +7214,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.68.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.69.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -9956,8 +9956,18 @@ function callSceneTurn(){
   if(runOver) return false;
   var sc = sceneNow();
   if(!sc || !sc.sc) return false;
-  var t = pickTopic(sc.sc, sc.key);
-  if(!t || !t.plays || !t.plays.length) return false;
+  /* F5: only a card he has not seen. A dry deck is not a licence to re-deal - in the
+     room that is how one question came back six times, verbatim. */
+  var t = pickTopicFresh(sc.sc, sc.key);
+  if(!t){
+    lastSent = {text:"[template] asked and answered", chars:0, trim:trimFlagsText(),
+                msgs:0, wire:0, bible:0};
+    lastReceived = "[template] the deck is spent; the family says so";
+    lastReplyVerdict = "template: asked and answered, zero calls";
+    serveSceneTurn(askedAnswered(String(lastPlayerText || "").slice(0, 24)));
+    return true;
+  }
+  if(!t.plays || !t.plays.length) return false;
   var blocks = sceneBlocksFor(t);
   if(!blocks.length) return false;
   lastSent = {text:"[template] " + t.ask, chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
@@ -9971,8 +9981,19 @@ function callSceneTurn(){
    the very next turn and a model that never heard this scene opens the next one
    mid-conversation. */
 function serveSceneTurn(blocks){
+  /* F6: THE GUILLOTINE, RECONNECTED. boardDirective is what ARMS the world's own turn -
+     it reads the budget, prints the warnings and sets forcingNow - and it only ever ran
+     on the composing path, because that is where the board briefed the DM. A template
+     turn composes nothing, so the warnings kept firing off the odometer and the close
+     they threatened never came: "one more turn and it moves on" followed by fifteen
+     more turns, twice, with no toll and no scar. A threat the world never keeps teaches
+     the player the pressure bar is scenery.
+     It runs here now, before the board takes the turn - which is the same order the
+     degenerate run has been proving sixty-six times a build. */
+  if(!beatDone() && !runOver) boardDirective();
   chatLog.push({role:"assistant", content:JSON.stringify({scene:blocks})});
-  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  var eb = $("errbox");
+  if(eb && eb.firstChild) eb.innerHTML = "";
   setBusy(false);
   showScene({scene:blocks, __live:true}, true);
 }
@@ -10004,7 +10025,8 @@ function callInterludeTurn(){
      put its own card on screen. The press still has to answer: give them the rail
      back and let the banner speak, rather than spending the click on silence. */
   chatLog.push({role:"assistant", content:JSON.stringify({scene:[]})});
-  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  var eb = $("errbox");
+  if(eb && eb.firstChild) eb.innerHTML = "";
   applyTension();
   showChoices(lastRail.slice());
   scrollFeed();
@@ -10215,7 +10237,8 @@ function serveBitTurn(slots, fills){
      that is the saving - but the next full turn composes from it, and a model that
      never heard the bit opens the next scene mid-conversation. */
   chatLog.push({role:"assistant", content:JSON.stringify({scene:blocks})});
-  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  var eb = $("errbox");
+  if(eb && eb.firstChild) eb.innerHTML = "";
   setBusy(false);
   showScene({scene:blocks, __live:true}, true);
 }
@@ -13911,6 +13934,50 @@ function sceneConfident(){
   var s = sceneNow();
   return !!(s && s.sc && topicEvidence(s.sc, lastPlayerText) > 0);
 }
+/* F5: ASKED AND ANSWERED. Players repeat themselves - that is the finding, and it is
+   the last law in the book. The Architect clicked one rail four times and got four
+   different scenes, three of them about something else; in the room he asked one
+   question six times and got the same authored scene six times, word for word. Two
+   faces, one missing fact: the deck did not remember what it had already put in front
+   of him.
+   pickTopic keeps its own contract - it must always hand the DM a card, because a stall
+   spends the deck on purpose and that is how the middle stays authored. What the
+   deterministic path needs is a different question: is there a card here this player
+   has NOT already been dealt? When the answer is no, the family says so - once, in
+   register, with the turn spent and everybody's dignity intact - instead of reheating
+   a scene or serving a different one as though it were an answer.
+   Presence- and era-gated like the bit pool, and keyed to whoever answered where the
+   card knows: the person who told you the first time is the person who says you have
+   already been told. */
+var ASKED_ANSWERED = [
+ ["Pia","You asked that one already. The answer has not moved and neither has the corner - new question, or pick up the pace."],
+ ["Pia","Same question twice is how you check a liar. I will assume you were checking. I passed. Move on."],
+ ["Nine","I heard you ask that before. I keep everything - the answer is where you left it. Ask me a new one; I have so few and I want more."],
+ ["Hesta","Asked and answered. In this house we do not reheat questions. Eat something."],
+ ["Three","Repetition is a test protocol. Fine: same input, same output. Confirmed stable. Next."],
+ ["Seven","I logged that question the first time it was asked. The minutes stand. New business, please."],
+ ["Vic","You asked me that one already. The answer is in the drawer with the rest of them, and it has not improved."],
+ ["Narration","The question goes out a second time and comes back the same shape - the night not being rude about it, just consistent."]
+];
+/* the card this player has not been dealt yet, or nothing. Side-effect free until it
+   commits, unlike pickTopic, which marks as it goes. */
+function pickTopicFresh(sc, key){
+  var list = (sc && sc.topics) || [], spent = topicSpent[key] || [], i;
+  if(!list.length) return null;
+  for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return pickTopic(sc, key); }
+  return null;                      /* the deck is dry: nothing here is new to him */
+}
+/* who says it: the voice the room can actually hear, preferring one who has already
+   answered him tonight. Narration is always available and always last. */
+function askedAnswered(salt){
+  var live = [], i;
+  for(i = 0; i < ASKED_ANSWERED.length; i++){
+    if(bitAudible(ASKED_ANSWERED[i][0])) live.push(ASKED_ANSWERED[i]);
+  }
+  if(!live.length) live = [ASKED_ANSWERED[ASKED_ANSWERED.length - 1]];
+  var p = pickVariant(live, "asked|" + (beatDone() ? "end" : beatNow().id) + "|" + (salt || ""));
+  return [{speaker:p[0], text:p[1]}];
+}
 function pickTopic(sc, key){
   var list = sc.topics || [];
   if(!list.length) return null;
@@ -15737,7 +15804,8 @@ function callDM(corrected, tag){
        out again, so one bad reply left SIGNAL LOST standing on screen through every
        good turn after it - the game looked broken long after it had recovered, and
        the player was being offered a RETRY for a turn that had already happened. */
-    if($("errbox").firstChild) $("errbox").innerHTML = "";
+    var eb = $("errbox");
+  if(eb && eb.firstChild) eb.innerHTML = "";
     setBusy(false);
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
     showScene(parsed.data, true);
@@ -21276,7 +21344,7 @@ function selfTest(){
     /* ...and Phase B, which is the channel that carries the story */
     "sceneSkeletonNow", "sceneBlocksFor", "callSceneTurn", "serveSceneTurn", "playForks",
     "interludeNow", "callInterludeTurn", "topicEvidence", "sceneConfident", "vocativeName", "topicTokens", "pickVariant",
-    "housingResident", "residentNow", "holderNow",
+    "housingResident", "residentNow", "holderNow", "pickTopicFresh", "askedAnswered",
     "playSpeaker", "playText", "pickTopic", "sentenceHead"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
@@ -22342,14 +22410,21 @@ function selfTest(){
       try{
         barBoard(at); V5SCENE = true;
         window.askAI = function(){ slkWire++; throw new Error("the endpoint is dead"); };
-        while(barCanPlay() && barWouldServe() && beatIdx === at && g++ < 12) barTurn(g);
-        /* the world closes the night on its own budget arithmetic */
-        beatTurns = beatNow().budget + 1; boardDirective(); boardTurn({});
-        if(phase !== "aftermath") slkBad.push("the close did not settle: phase=" + phase);
+        while(barCanPlay() && barWouldServe() && beatIdx === at && phase === "live" && g++ < 20) barTurn(g);
+        /* THE WORLD MAY HAVE ALREADY TAKEN IT. Since F6 the guillotine is connected on
+           the template path, so a night that runs out of road closes itself mid-loop -
+           which is the fix, and the row would be lying if it insisted on closing the
+           night by hand. It only forces a close that has not happened. */
+        if(phase === "live"){ beatTurns = beatNow().budget + 1; boardDirective(); boardTurn({}); }
+        if(phase !== "aftermath" && phase !== "slack"){
+          slkBad.push("the close did not settle: phase=" + phase);
+        }
         /* ...and the settling turn, which is the one that used to go to the wire */
-        if(!interludeNow()) slkBad.push("the interlude turn had no route: phase=" + phase);
-        else { lastPlayerText = "Move. The marsh road is hours out.";
-               lastRail = [lastPlayerText]; turnToken++; callDM(); }
+        if(phase === "aftermath"){
+          if(!interludeNow()) slkBad.push("the interlude turn had no route: phase=" + phase);
+          else { lastPlayerText = "Move. The marsh road is hours out.";
+                 lastRail = [lastPlayerText]; turnToken++; callDM(); }
+        }
         if(phase !== "slack") slkBad.push("the settling did not open the room: phase=" + phase);
         else {
           var roomBlocks = feedLog.length;
