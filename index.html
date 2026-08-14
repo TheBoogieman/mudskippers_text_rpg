@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.3 "The Door Costs Nothing"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.4 "Say Her Name"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4003,7 +4003,13 @@ var SCENEBOOK = {
      "For half a second - less - there is a shape in it. Not sound. The place where a word would be, arriving against your skin: warm, patterned, PATIENT. Then it folds itself back down into hum, the way a person steps back from a door they were about to open.",
      ["Pia","Skin. That is the channel. Through the jacket it is weather - on your hand it is... whatever that just was, going by your face."],
      "Your hand stays where it is. The hum waits against it, one held note, exactly the way a question waits.",
-     "Whatever is in there can talk to you. It is choosing not to start. Which means starting - when it happens - is going to be yours."]},
+     /* she is NAMED here on purpose - the beat's anchor is her name in the played
+        prose (the opening cannot witness for it, by law), and this is the moment
+        the courier starts thinking of the hum as somebody: Nine, the name Pia
+        handed him, attached to something that just almost spoke. v4.71.4 - the
+        register pass took the name out of the walk and made the anchor unmeetable,
+        so every door close here recorded the scar. */
+     "Nine can talk to you. She is choosing not to start. Which means starting - when it happens - is going to be yours."]},
    /* Same correction, and this one was double-wrong: no skin was ever staged, so the
       original scene had her speaking through cloth - against this beat's own `before`
       block - and Pia answering words she could not have heard. The worded version of
@@ -4016,7 +4022,9 @@ var SCENEBOOK = {
     holds:"words. The fear arrives as behaviour, never as a sentence - her first worded anything belongs to the exit, and what going back would mean is nobody's to say tonight",
     rail:"Ask her the question you'd want asked, if you were the one in somebody's hand.",
     plays:["You do not need the word. The hum has been answering that question all night in its own alphabet: it goes small at crossings, smaller at sirens, and it presses toward your ribs at corners the way a child moves to the inside of the pavement.",
-     ["Pia","Whatever is in there has better ears than us and fewer options. Do the maths on how that feels."],
+     /* Pia uses the name - she introduced it, and the anchor needs it in play (see
+        the note on the card above) */
+     ["Pia","Nine has better ears than us and fewer options. Do the maths on how that feels."],
      "At the next corner the hum makes itself almost nothing - and then, deliberately, like something practising courage, comes back up to size.",
      "Frightened, then. And working on it. You find you have put your hand over the pocket without deciding to, the way you would steady anything small on a rough crossing."]},
    {ask:"who sent Pia, and why she is here",
@@ -7253,7 +7261,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.3";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.4";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -11552,7 +11560,14 @@ function closeBeat(mode, note){
      moment the future is allowed a title card. A season boundary announces
      nothing here: the season break card and PREVIOUSLY ON own that ceremony. */
   var nb = SPINE[beatIdx + 1];
-  beatJustCleared = {title:b.title, forced:hard, arcturn:turned, sum:rec, toll:tollMsg,
+  /* TWO FACTS, TWO FIELDS (v4.71.4). `forced` (= hard) picks the landing - a thin
+     night keeps the jog-and-jacket close, because the good landing shows a scene
+     the night never printed. `world` is the BANNER's truth alone: THE WORLD MOVED
+     ON belongs to the world's own arm, and a player who walked through the door -
+     even thin - closed the beat himself. The Architect took a legal door and read
+     the world's banner over it as a toll; the card now says CLOSED, and the scar
+     line under it carries the cost without misattributing the agency. */
+  beatJustCleared = {title:b.title, forced:hard, world:forced, arcturn:turned, sum:rec, toll:tollMsg,
     id: b.id,
     arcname: (turned && nb && !seasonAhead())
       ? "ACT " + nb.act + " — " + ACT_NAMES[nb.season][nb.act].toUpperCase() : ""};
@@ -12454,11 +12469,11 @@ function playOpening(id){
   return playAuthored(pickVariant(b.opens, id + "|open"), id);
 }
 function pushBeatCard(info){
-  var b = {kind:"beat", title:info.title, forced:!!info.forced, arcturn:!!info.arcturn,
+  var b = {kind:"beat", title:info.title, forced:!!info.world, arcturn:!!info.arcturn,
            sum:info.sum || "", arcname:info.arcname || "", toll:info.toll || "",
            };
   renderBlock(b); feedLog.push(b);
-  ledgerText += "\n\n_" + (info.forced ? "The world moved on" : "Beat closed")
+  ledgerText += "\n\n_" + (info.world ? "The world moved on" : "Beat closed")
     + " — " + info.title + (info.sum ? ": " + info.sum : "") + "_"
     + (info.toll ? "\n\n_" + info.toll + "_" : "")
     + (info.arcname ? "\n\n## " + info.arcname : "");
@@ -21581,11 +21596,19 @@ function verdictMap(){
    nobody dies, breaches, or is miscounted in it, and the board it plays on already
    holds her where the scene says she is. Corpus 3,751 -> 3,759: plus the fear card's
    nine lines, minus the one block the frightened rewrite tightened away. */
+/* v4.71.4: TWO ENTRIES GAINED, AND THEY ARE THE REGRESSION'S REPAIR. The register
+   pass above took Nine's NAME out of both pre-door walk scenes - shape, not words,
+   applied one word too far - and since the opening is barred from witnessing, the
+   beat's "Nine" anchor became unmeetable by any played turn: every door close at
+   a1-hum recorded the scar under the world's banner, which is how the Architect
+   met it. named:Nine now fires on a1-hum/t1p4 ("Nine can talk to you...") and
+   a1-hum/t2p1 (Pia's "Nine has better ears than us...") - the name restored where
+   the courier would in truth be using it, he has known it since the reveal. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
@@ -23127,6 +23150,39 @@ function selfTest(){
           tdBad.push("the held door did not leave the yellow box");
         }
         tdSaw.push("and below the floor the door greys and answers for free - nothing spent, wire silent");
+        /* ...AND THE ANCHOR IS MEETABLE IN THE WALK (v4.71.4). The register pass took
+           her NAME out of both pre-door scenes, so the beat's "Nine" anchor could not
+           be met by any played turn - the opening is barred from witnessing by law -
+           and every door close at a1-hum recorded the scar under the world's banner.
+           Both Nine cards must anchor on their own prose; the Mirren card must not,
+           because a night that never engaged her SHOULD close thin. */
+        barBoard(at); V5SCENE = true;
+        var tdE = SCENEBOOK["a1-hum"];
+        var tdAnch = function(t){
+          var tx = (t.plays || []).map(function(p){ return playText(p) || ""; }).join("\n");
+          var kt = beatText; beatText = tx;
+          var miss = anchorsMissing(beatNow());
+          beatText = kt; return miss;
+        };
+        if(tdAnch(tdE.topics[1]).length) tdBad.push("the hears card no longer anchors the beat");
+        if(tdAnch(tdE.topics[2]).length) tdBad.push("the frightened card no longer anchors the beat");
+        if(!tdAnch(tdE.topics[0]).length) tdBad.push("the Mirren card anchors a beat it is not about");
+        /* ...and the card wears the right banner: a thin close is the player's close,
+           with the hard landing and the scar; only the world's own arm says the
+           world moved on. */
+        barBoard(at); V5SCENE = true;
+        closeBeat("thin", "");
+        if(!beatJustCleared) tdBad.push("the thin close staged no card");
+        else {
+          if(beatJustCleared.world) tdBad.push("a player door wearing the world's banner");
+          if(!beatJustCleared.forced) tdBad.push("a thin close lost its hard landing");
+          if(beatJustCleared.sum !== SPINE[at].scar) tdBad.push("the thin close dropped the scar");
+        }
+        barBoard(at); V5SCENE = true;
+        closeBeat(true, "");
+        if(beatJustCleared && !beatJustCleared.world) tdBad.push("the world's own close lost its banner");
+        beatJustCleared = null;
+        tdSaw.push("both Nine cards anchor the walk, the thin close is the player's card, the world keeps its own banner");
       } finally { barPut(k); }
     })();
     T("a door the player typed is still a door", tdBad.length === 0,
