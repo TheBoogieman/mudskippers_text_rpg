@@ -8091,6 +8091,33 @@ function bitSkeleton(text){
 function bitSkeletonNow(){
   return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
+/* THE SHAPE IS THE WHOLE CONTRACT, so validating it is four lines and there is no
+   excuse for skipping any of them. It matters more here than anywhere else in the
+   file: a fill is rendered as somebody's SPEECH, under a real person's nameplate,
+   so an object or a number that slips through does not land as a malformed field -
+   it lands as Pia saying [object Object]. Anything but the exact shape is not a
+   partial answer to be salvaged; it is no answer, and the pool is standing by.
+   THE COUNT IS PART OF THE SHAPE. Three slots asked and two fills returned is a
+   turn with a hole in it, and the hole would be perfectly silent - one voice in the
+   room simply never speaks, which reads as writing rather than as a fault.
+   repairJSON gets its turn because fills are DIALOGUE: unescaped quotes inside
+   speech are the exact fault it was written for. */
+function parseFills(raw, want){
+  var clean = String(raw || "").replace(/```json|```/g, "").trim();
+  var a = clean.indexOf("{");
+  if(a < 0) return null;
+  var cut = jsonSlice(clean, a);
+  if(!cut) return null;
+  var d = null;
+  try{ d = JSON.parse(cut); }
+  catch(e){ try{ d = JSON.parse(repairJSON(cut)); }catch(e2){ return null; } }
+  if(!d || Object.prototype.toString.call(d.fills) !== "[object Array]") return null;
+  if(d.fills.length !== want) return null;
+  for(var i = 0; i < d.fills.length; i++){
+    if(typeof d.fills[i] !== "string") return null;
+  }
+  return d.fills;
+}
 
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
    every card of which is spent has started replaying itself, and that is the turn the
@@ -18549,7 +18576,8 @@ function selfTest(){
        release that wrote it quietly demotes every subsystem built afterwards to
        amber - the harness would be saying "unproved" about code it simply had not
        been introduced to. Phase A's six. */
-    "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor"];
+    "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
+    "parseFills", "jsonSlice"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19311,6 +19339,32 @@ function selfTest(){
          try{ window.bitAudible = w; out = humVoices("jacket"); }
          finally { window.bitAudible = real; }
          return out.indexOf("Nine") === -1;
+       }});
+
+    /* Rung 2. One good shape and four broken ones. */
+    var pfGood = parseFills('{"fills": ["one", "two", "three"]}', 3);
+    var pfTook = [["a short count", '{"fills": ["one", "two"]}'],
+                  ["a fill that is not a string", '{"fills": ["one", {"text":"two"}, "three"]}'],
+                  ["no object at all", "Sure - here are the lines. Pia says hello."],
+                  ["fills that is not an array", '{"fills": "one, two, three"}']]
+      .filter(function(p){ return parseFills(p[1], 3) !== null; })
+      .map(function(p){ return p[0]; });
+    T("only the exact shape is an answer",
+      pfTook.length === 0 && !!pfGood && pfGood.length === 3 && pfGood[2] === "three",
+      pfTook.length ? "accepted: " + pfTook.join("; ")
+                    : "3 fills in, 3 out · four broken shapes refused, each to the pool",
+      {label:"JSON.parse alone - the shape trusted because the bytes parsed",
+       was:function(raw){
+         var a0 = String(raw).indexOf("{");
+         if(a0 < 0) return null;
+         return (JSON.parse(jsonSlice(String(raw), a0)) || {}).fills;
+       },
+       /* it parses, so the naive version hands back a single STRING as though it
+          were the turn's three lines - and .length on it is 12 */
+       check:function(w){
+         var got;
+         try{ got = w('{"fills": "one, two, three"}'); }catch(e){ return true; }
+         return got === null || got === undefined;
        }});
 
     /* ================== THE DEGENERATE RUN ==================
