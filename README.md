@@ -250,14 +250,21 @@ refusing well. **1,145 blocks across 251 cards, 768 of them spoken aloud.** The 
 is not needed to write the middle of a night any more. It is needed to paint between
 the turns — which is the job it is actually good at.
 
-The engine that plays them is in as of v4.66.0, and it is **dark**. With its one switch
-up, a scene turn is served from the card the client just dealt — the authored blocks,
-the fork's own frame — and **nothing reaches the wire**: no gate field for a reply to
-set, no day to skip, no canon to write. The world never lived in the reply; it lived in
-the fences that policed the reply, and with no reply there is nothing to police. It
-stays off until it has played a full night open-to-close and closed all thirty-three
-beats with the same bookings it makes today, because a switch that flips before its own
-bar is met is just a switch.
+**And since v4.67.0 that is how a scene turn actually plays.** The card the client just
+dealt is served straight to the screen — the authored blocks, the fork's own frame — and
+**nothing reaches the wire**: no gate field for a reply to set, no day to skip, no canon
+to write. The world never lived in the reply; it lived in the fences that policed the
+reply, and with no reply there is nothing to police. Gate landing is the client's: a
+night ends when you take the twice-asked exit, or when the world closes it on its own
+budget arithmetic.
+
+It did not flip until it had earned it. One night, a1-chase, open to close on authored
+blocks with the wire at zero — then **the same night again with the endpoint throwing on
+sight, transcript for transcript identical**, which is the only proof that matters that
+the model was never in it. Then all thirty-three beats closed twice, once with the flag
+up and once without, booking the same thing at every step — checked against a booking
+moved on purpose, because a comparison that cannot see a moved booking is not a
+comparison.
 
 ## The physics desk — the body of the world
 

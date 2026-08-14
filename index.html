@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.66.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.67.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7214,7 +7214,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.66.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.67.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -9924,19 +9924,26 @@ function bitSkeleton(text){
    for after this is paint - the optional fill slots the contract allows around the
    authored blocks - and the paint is not in this release. Worst case is one call; this
    release makes the worst case zero and says so. */
-var V5SCENE = false;         /* Phase B. One switch, and it flips when its bar is met. */
+var V5SCENE = true;          /* Phase B is live. Its bar was met first - see the three rows. */
 function sceneSkeletonNow(){
   var s = V5SCENE ? sceneNow() : null;
   return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
             && !attemptOn && !beatDone() && s && s.sc && (s.sc.topics || []).length);
 }
 /* WHICH SIDE OF THE FORK THIS ROOM IS ON. An untagged card has one variant and it
-   plays in both worlds; a framed one has two and the body decides. Before the fork is
-   taken there is no answer, so the first variant stands - and every framed card in the
-   book is in Book Three, a long way past the table where the choice is spoken. */
+   plays in both worlds; a framed one has two and the body decides.
+   AND WITH NO BODY DECIDED, IT REFUSES. The first cut fell to the first variant and
+   reported that as a finding, on the reasoning that every framed card lives in Book
+   Three and the fork is settled long before - which is true, and is an INFERENCE
+   standing where a fence belongs. Every headline defect of the first four waves got in
+   through exactly that gap. Unreachable by the road is now unreachable by the code:
+   serving nothing sends the turn out to the wire, which is the safe direction, and the
+   sweep asserts the refusal rather than trusting the road. */
 function sceneBlocksFor(t){
-  var vs = playForks(t), pick = vs[0], out = [], i;
+  var vs = playForks(t), pick = null, out = [], i;
+  for(i = 0; i < vs.length; i++){ if(!vs[i].holder) pick = vs[i]; }        /* untagged: both worlds */
   for(i = 0; i < vs.length; i++){ if(vs[i].holder && vs[i].holder === chassisHolder) pick = vs[i]; }
+  if(!pick) return [];                     /* framed, and nobody is in the body yet */
   pick.blocks.forEach(function(b){
     var sp = playSpeaker(b), tx = playText(b);
     if(sp && tx) out.push({speaker:sp, text:tx});
@@ -21919,7 +21926,11 @@ function selfTest(){
         window.persistAll = function(){};
         window.showScene = function(d){ served = d; };
         lastTurnMud = false; runOver = ""; foldPending = false; walkbackNow = false;
-        attemptOn = false; chassisHolder = null; roster = {family:[], fallen:[]};
+        attemptOn = false; roster = {family:[], fallen:[]};
+        /* A BODY IS DECIDED, because by Book Three one always is. The four framed
+           cards refuse outright with the holder unset - that is the fence, and it is
+           asserted below rather than tripped over here. */
+        chassisHolder = "Seven";
         for(var bi = 0; bi < SPINE.length; bi++){
           ["live", "slack"].forEach(function(ph){
             beatIdx = bi; phase = ph; chatLog = []; feedLog = []; topicSpent = {};
@@ -21962,6 +21973,27 @@ function selfTest(){
         window.persistAll = k.per;
       }
     })();
+    /* ...AND THE REFUSAL, ON PURPOSE. Unreachable by the road is unreachable by the
+       code: with nobody in the body, a framed card serves nothing at all and the turn
+       goes out to the wire, which is the safe direction. An untagged card is unmoved -
+       it plays in both worlds and always did. */
+    (function(){
+        var k = chassisHolder, framed = null, plain = null, e = SCENEBOOK["a3-dreamers"];
+        ((e.room && e.room.topics) || []).forEach(function(t){
+          var tagged = false;
+          (t.plays || []).forEach(function(b){ if(b && b.holder) tagged = true; });
+          if(tagged && !framed) framed = t;
+          if(!tagged && !plain) plain = t;
+        });
+        try{
+          chassisHolder = null;
+          if(!framed) pbBad.push("no framed card to test the fork fence with");
+          else if(sceneBlocksFor(framed).length) pbBad.push("a framed card served with nobody in the body");
+          if(plain && !sceneBlocksFor(plain).length) pbBad.push("an untagged card refused for want of a body it never needed");
+          chassisHolder = "Seven";
+          if(framed && !sceneBlocksFor(framed).length) pbBad.push("a framed card refused with a body decided");
+        } finally { chassisHolder = k; }
+    })();
     T("a scene turn plays from the book and never reaches the wire",
       pbBad.length === 0,
       pbBad.length ? pbBad.slice(0, 6).join("; ")
@@ -21988,6 +22020,214 @@ function selfTest(){
             taken and the turn goes out to the wire like every turn this game has ever
             played - which is the shipped behaviour, and the thing the flag changes. */
          return armed;
+       }});
+
+    /* ================== PHASE B'S BAR ==================
+       Three rows, and the flag does not go up until all three are green. They are the
+       architect's, not mine, and they are written here rather than described anywhere:
+       a night, the same night with the endpoint dead, and the board booking the same
+       things either way.
+       Every one of them drives the real functions through the real one door. The
+       harness law this wave earned applies throughout: a broken form interrogates the
+       router, never the wire, because the last one that reached for the wire set busy
+       and took three later rows down with it. */
+    var barBad = [], barSaw = [];
+    function barKeep(){
+      return {bi:beatIdx, ph:phase, pl:phaseLeft, bt:beatTurns, to:tolls, dr:driftRun,
+              sw:shardWhere, ch:chassisHolder, ro:roster, cast:castSheets, canon:runCanon,
+              gn:gateNotes, fb:foldedBeats, fp:foldPending, fs:foldServed, ov:runOver,
+              sc:V5SCENE, said:lastPlayerText, mud:lastTurnMud, an:attemptOn, wb:walkbackNow,
+              log:chatLog, feed:feedLog, led:ledgerText, txt:beatText, seen:beatSeen,
+              spent:topicSpent, cs:currentSeason, sl:slackTurns, sr:slackRoom,
+              ask:window.askAI, per:window.persistAll, dl:deathLine, tk:turnToken};
+    }
+    function barPut(k){
+      beatIdx = k.bi; phase = k.ph; phaseLeft = k.pl; beatTurns = k.bt; tolls = k.to;
+      driftRun = k.dr; shardWhere = k.sw; chassisHolder = k.ch; roster = k.ro;
+      castSheets = k.cast; runCanon = k.canon; gateNotes = k.gn; foldedBeats = k.fb;
+      foldPending = k.fp; foldServed = k.fs; runOver = k.ov; V5SCENE = k.sc;
+      lastPlayerText = k.said; lastTurnMud = k.mud; attemptOn = k.an; walkbackNow = k.wb;
+      chatLog = k.log; feedLog = k.feed; ledgerText = k.led; beatText = k.txt;
+      beatSeen = k.seen; topicSpent = k.spent; currentSeason = k.cs; slackTurns = k.sl;
+      slackRoom = k.sr; window.askAI = k.ask; window.persistAll = k.per;
+      deathLine = k.dl; turnToken = k.tk;
+    }
+    function barBoard(at){
+      beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
+      slackTurns = 0; slackRoom = ""; runOver = ""; deathLine = ""; walkbackNow = false;
+      foldPending = false; foldServed = false; attemptOn = false; lastTurnMud = false;
+      chassisHolder = "Seven"; roster = {family:[], fallen:[]}; castSheets = {};
+      runCanon = []; gateNotes = {}; foldedBeats = []; topicSpent = {};
+      chatLog = []; feedLog = []; ledgerText = ""; beatText = ""; beatSeen = {};
+      currentSeason = SPINE[at].season;
+      window.persistAll = function(){};
+    }
+    /* CAN A SCENE TURN HAPPEN AT ALL, flag aside. sceneSkeletonNow answers this AND the
+       flag together, which is right for the router and wrong for a driver: both legs of
+       the booking run have to stop at the same place for the same reason, and one of
+       them has the flag down by construction. */
+    function barCanPlay(){
+      var sc = sceneNow();
+      return !!(!runOver && !foldPending && !walkbackNow && !attemptOn && !beatDone()
+                && sc && sc.sc && (sc.sc.topics || []).length);
+    }
+    /* ...and the driver never hands callDM a turn the template would decline, because
+       a declined template goes to a wire this harness does not have. The refusal is a
+       row of its own; it is not this run's subject. */
+    function barWouldServe(){
+      var sc = sceneNow(), spent, card, ok;
+      if(!sc || !sc.sc) return false;
+      spent = JSON.stringify(topicSpent);
+      card = pickTopic(sc.sc, sc.key);
+      ok = !!(card && card.plays && card.plays.length && sceneBlocksFor(card).length);
+      topicSpent = JSON.parse(spent);        /* the peek costs the deck nothing */
+      return ok;
+    }
+    /* one turn, taken the way a player takes it: through callDM, the only door */
+    function barTurn(i){
+      lastPlayerText = "what happens now, exactly (" + i + ")";
+      lastTurnMud = false;
+      turnToken++;                 /* a real player action; the context latch reads it */
+      callDM();
+    }
+    function barScript(){
+      /* what the night PRINTED, in order - the transcript the twin run compares */
+      return feedLog.map(function(b){
+        return b && b.kind === "player" ? "P:" + b.text
+                                        : (b ? String(b.speaker || "?") + ":" + String(b.text || "") : "");
+      }).join("\n");
+    }
+
+    /* ---- BAR (i) AND (ii): ONE NIGHT, TWICE, WITH THE ENDPOINT KILLED THE SECOND TIME.
+       With no calls to kill, the kill test collapses into a twin run - and the identity
+       of the two transcripts IS the proof that the wire was never in it. A single
+       reached call would make the two legs differ, because one leg's endpoint answers
+       and the other one throws on sight. */
+    var barWire = 0;
+    function barNight(kill){
+      var at = beatById("a1-chase"), guard = 0;
+      barBoard(at);
+      V5SCENE = true;
+      window.askAI = kill
+        ? function(){ barWire++; throw new Error("the endpoint is dead"); }
+        : function(){ barWire++; return {then:function(){ return {catch:function(){}}; }}; };
+      while(barCanPlay() && barWouldServe() && beatIdx === at && guard++ < 40){
+        barTurn(guard);
+        if(beatTurns > beatNow().budget + 2) break;    /* the world will close it below */
+      }
+      /* open to CLOSE: the world takes the night on its own budget arithmetic */
+      beatTurns = beatNow().budget + 1; boardDirective();
+      boardTurn({});
+      var g2 = 0; while(phase === "aftermath" && g2++ < 6) boardTurn({});
+      return {script:barScript(), turns:guard, book:[beatIdx, phase, tolls, runCanon.length].join("/")};
+    }
+    (function(){
+      var k = barKeep(), liveRun, deadRun;
+      try{
+        barWire = 0; liveRun = barNight(false);
+        var wireLive = barWire;
+        barWire = 0; deadRun = barNight(true);
+        var wireDead = barWire;
+        if(wireLive !== 0 || wireDead !== 0){
+          barBad.push("the wire was reached: " + wireLive + " live, " + wireDead + " with the endpoint dead");
+        }
+        if(!liveRun.script) barBad.push("the night printed nothing at all");
+        if(liveRun.script !== deadRun.script) barBad.push("the two nights are not the same night");
+        if(liveRun.book !== deadRun.book){
+          barBad.push("the two nights booked differently: " + liveRun.book + " vs " + deadRun.book);
+        }
+        barSaw.push("a1-chase open to close on authored blocks, " + liveRun.turns
+          + " turns, wire 0 - and the same night again with the endpoint throwing on"
+          + " sight, transcript for transcript identical (" + liveRun.script.length + " chars)");
+      } finally { barPut(k); }
+    })();
+
+    /* ---- BAR (iii): THE BOOKINGS, FLAG UP AND FLAG DOWN, ACROSS ALL THIRTY-THREE.
+       The variable under test is the ROUTING and nothing else, so both legs put the
+       same authored blocks in front of the board: one leg through Phase B, the other by
+       handing the board those blocks directly, which is what the flag is claimed to be
+       a no-op over. Every close is the same close. If routing a turn through the
+       template path costs one extra tick, one toll, one canon line, this sees it. */
+    var barBookBad = [], barBookLen = 0;
+    function barBookRun(up, nudge){
+      var log = [], i, j, sc, card, blocks;
+      barBoard(0);
+      V5SCENE = up;
+      window.askAI = function(){ barWire++; return {then:function(){ return {catch:function(){}}; }}; };
+      for(i = 0; i < SPINE.length && !beatDone(); i++){
+        for(j = 0; j < 2; j++){
+          if(!barCanPlay() || !barWouldServe()) break;
+          if(up){ barTurn(j); }
+          else {
+            sc = sceneNow(); card = sc && sc.sc ? pickTopic(sc.sc, sc.key) : null;
+            blocks = card ? sceneBlocksFor(card) : [];
+            if(!blocks.length) break;      /* the flag-up leg would have gone to the wire */
+            lastPlayerText = "what happens now, exactly (" + j + ")"; lastTurnMud = false;
+            turnToken++;
+            showScene({scene:blocks.map(function(b){ return {speaker:b.speaker, text:b.text}; }),
+                       __live:true}, true);
+          }
+        }
+        beatTurns = beatNow().budget + 1; boardDirective();
+        boardTurn({gate:true, gateNote:"the booking run closed it"});
+        /* THE DELIBERATELY MOVED BOOKING, and it took two goes to place. The first cut
+           nudged beatTurns one line before the forced close overwrites it, so the row
+           dutifully reported that it could not fail - which is the harness catching a
+           decorative case for the sixth time in this project and the first time on a
+           case of mine that was otherwise entirely correct. The meter is not rewritten
+           by a close, so a toll moved here reaches the log and every step after it. */
+        if(nudge && i === 4) tolls++;
+        log.push([beatIdx, phase, beatTurns, tolls, runCanon.length, foldedBeats.length].join("/"));
+        var g = 0; while(phase === "aftermath" && g++ < 6) boardTurn({});
+        if(phase === "slack") armBeat();
+        log.push([beatIdx, phase, beatTurns, tolls].join("/"));
+      }
+      return log.join(" | ");
+    }
+    var barUpBook = "", barDownBook = "";
+    (function(){
+      var k = barKeep();
+      try{
+        barWire = 0;
+        barUpBook = barBookRun(true, false);
+        if(barWire !== 0) barBookBad.push(barWire + " call(s) reached the wire on the flag-up run");
+        barDownBook = barBookRun(false, false);
+        barBookLen = barUpBook.split(" | ").length;
+        if(!barBookLen || barBookLen < 33) barBookBad.push("the run booked only " + barBookLen + " steps");
+        if(barUpBook !== barDownBook){
+          var u = barUpBook.split(" | "), d = barDownBook.split(" | "), at = -1;
+          for(var z = 0; z < Math.max(u.length, d.length); z++){ if(u[z] !== d[z]){ at = z; break; } }
+          barBookBad.push("bookings diverge at step " + at + ": \"" + u[at] + "\" vs \"" + d[at] + "\"");
+        }
+      } finally { barPut(k); }
+    })();
+
+    T("a night plays itself, and plays the same with the endpoint dead",
+      barBad.length === 0, barBad.length ? barBad.join("; ") : barSaw.join(" \u00b7 "),
+      {label:"the router with the flag down - the shipped path, which goes to the wire",
+       was:false,
+       check:function(w){
+         var k = barKeep(), armed;
+         try{
+           barBoard(beatById("a1-chase")); V5SCENE = w; armed = sceneSkeletonNow();
+         } finally { barPut(k); }
+         return armed;
+       }});
+
+    T("the board books the same night whether or not the flag is up",
+      barBookBad.length === 0,
+      barBookBad.length ? barBookBad.join("; ")
+        : barBookLen + " booking steps across " + SPINE.length + " beats, identical up and down,"
+          + " and the flag-up leg never reached the wire",
+      {label:"one booking moved on purpose, five beats in",
+       was:true,
+       /* a comparison that cannot see a moved booking is not a comparison. One extra
+          tick is put into the flag-up leg at beat five and the two runs must diverge. */
+       check:function(w){
+         var k = barKeep(), same;
+         try{ same = barBookRun(true, w) === barBookRun(false, false); }
+         finally { barPut(k); }
+         return same;   /* false means the moved booking was SEEN, which is the catch */
        }});
 
     /* THE STYLE LAW THE CASE RULE RESTS ON. The pre-filter says a lowercase number-word
@@ -23173,7 +23413,11 @@ function selfTest(){
     T("the degenerate run put the drawer back", window.persistAll === realPersist,
       wrote + " save(s) intercepted and discarded - a synthetic run never reaches a player's folder");
   } catch(e){
-    T("the sweep itself ran", false, String((e && e.message) || e));
+    /* AND WHERE. A sweep that dies says only what went wrong, and "cannot read 'content'"
+       is true of a hundred lines in this file. Three frames of stack is the difference
+       between a bisect and a look. */
+    T("the sweep itself ran", false, String((e && e.message) || e)
+      + " \u00b7 " + String((e && e.stack) || "").split(/[\r\n]+/).slice(1, 4).join(" <- "));
   } finally {
     if(keep){
       beatIdx = keep.beatIdx; shardWhere = keep.shard; phase = keep.phase;
