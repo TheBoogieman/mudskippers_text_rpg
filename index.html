@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.60.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.61.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5598,7 +5598,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.60.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.61.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8057,8 +8057,19 @@ function bitFallbackFor(salt, taken, who){
 var V5MODE = true;           /* the skeleton is live; this is its only switch */
 /* who answers, in order. She goes first whenever she can be heard at all: a bit
    said with bare skin on the shard is said TO her, and answering him is the only
-   thing she can still do. Two voices and the room - three fills is a bit; six is a
-   scene, and a scene is the one thing this turn is guaranteed not to be. */
+   thing she can still do.
+   TWO VOICES AND THE ROOM, AND THE WRITER'S REASON IS ON THE RECORD BECAUSE THE NEXT
+   PERSON WILL WANT TO RAISE IT. Two and a button is the classic gag shape: setup,
+   counter, button. Three blocks is a jab thrown in the middle of the night's real
+   business; six is a scene, and a scene is the one thing a bit must never be.
+   The deeper reason is pacing across the night rather than inside one turn: with the
+   rotation live, the HOUSE answers even though only two people do - Hesta gets the
+   next one, Seven the one after - and the family reads as a household taking turns
+   rather than a panel show where everybody must comment on everything.
+   And the intimacy law only works at two: her keeping slot one whenever skin touches
+   shard means something BECAUSE the room behind her is one voice and not five.
+   If a moment ever earns the whole table talking at once, it earns AUTHORING - that
+   is what beat closes are for, and the sextet already sings there. */
 var BIT_VOICE_CAP = 2;
 function bitVoices(){
   var sc = sceneNow(), here = (sc && sc.sc && sc.sc.here) || [], room = [], out = [], i, nm, pick;
@@ -8120,8 +8131,26 @@ var BIT_VOICE_CARDS = {
  "Three":"Three: two voices, one throat, an armistice. Split over the line and settle it by vote, report the tally deadpan, or land the stereo observation nobody wanted said. Quorum comedy; unison once at most, and only when it is worth two people.",
  "Vic":"Vic: charm paying interest on an unnamed debt. Slide the remark into rates and customers, agree slightly too fast, or say the true thing one clause short of finished. Guilt in a good coat; the question of why this courier never survives his mouth.",
  "Marek":"Marek: half in the doorway, loyal on a technicality. Report the room's vote wrong on purpose, treat the remark as a service complaint, or back him with the enthusiasm of a man signing for a parcel. Dry; if it is one all, he says so.",
+ "Five":"Five: a decommissioned convoy commander sharing Marek's mouth by treaty, the vowels very slightly wrong. File the remark as convoy traffic, assess it as the reasonable party it is certain it is, or hand the mouth to Marek mid-thought because the turn is his. Logistics applied to feelings; it never begs, and never takes a turn that is not theirs.",
+ "Principal":"Principal: a hundred and thirty years of being right at one table, disarmed by food and by nothing else. Grant the remark an audience, schedule it for later, or fold it into the only argument she has ever had - safe against alive. Difficult about everything except what is delicious; she notices what goes uneaten and files it as a point scored.",
+ "Machine":"Machine: the child under the Exchange, terrifyingly gentle, keeping track of whether everybody has eaten. Answer the remark properly and not quickly, ask after the small practical need underneath it, or hear it slightly wrong in the way that gives everything away. Kind without exception; capable of being hurt, and it shows; listening is the one thing she never stops doing.",
  "Narration":"Room flavor: objects set down harder than necessary, the marsh minding its own business, the hum against ribs adjusting by half a note. React to the mood of what was said, never the meaning of it."
 };
+/* AN EXCLUSION THAT OUTLIVES ITS REASON IS A FENCE THAT OUTLIVES ITS LAW. A name may be
+   closed rather than carded - but closed is not forgotten, so the reason is written down
+   beside it and the sweep holds the reason rather than the entry. The general form of
+   every reason worth writing here is the same: a card for this name would be dead data,
+   because no bit can ever seat it. So the tripwire is that sentence, checked - if the
+   board seats an excluded name anywhere, the exclusion has outlived its law and the row
+   goes red rather than quiet.
+   EMPTY AT REST, and deliberately, exactly as VERDICT_ALLOW is. The one entry this was
+   commissioned to carry - Mirren, "fallen before the first bit can fire" - is refused by
+   its own tripwire: she is alive and in the room for three beats (a1-late, a2-ground,
+   a2-hand) and falls only at the close of the third, so every bit fired in those rooms
+   seats her, in both shard states. She is named as uncarded instead, which is the honest
+   state and the writer's call to close. The machinery stands ready for the day an
+   exclusion is true. */
+var BIT_CARD_EXCLUDED = {};
 /* a voice with no card gets the role alone, which is the old behaviour and is not a
    failure - it is the sweep's job to say which seats are still uncarded rather than
    let an engineer invent a voice the writer has not written */
@@ -19853,7 +19882,7 @@ function selfTest(){
        of the one room somebody happened to test in. An uncarded seat is not a failure:
        it is a voice the writer has not written yet, and the row names it rather than
        letting an engineer invent one. */
-    var seats = {}, uncarded = {}, cardBad = [];
+    var seats = {}, seatWhere = {}, uncarded = {}, cardBad = [];
     (function(){
       var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
                fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText};
@@ -19876,7 +19905,11 @@ function selfTest(){
                 lastPlayerText = said;
                 bitSlots().forEach(function(sl){
                   seats[sl.who] = (seats[sl.who] || 0) + 1;
-                  if(!BIT_VOICE_CARDS[sl.who]) uncarded[sl.who] = (uncarded[sl.who] || 0) + 1;
+                  if(!seatWhere[sl.who]) seatWhere[sl.who] = [];
+                  if(seatWhere[sl.who].indexOf(SPINE[bi].id) === -1) seatWhere[sl.who].push(SPINE[bi].id);
+                  if(!BIT_VOICE_CARDS[sl.who] && !BIT_CARD_EXCLUDED[sl.who]){
+                    uncarded[sl.who] = (uncarded[sl.who] || 0) + 1;
+                  }
                 });
               });
             });
@@ -19892,6 +19925,18 @@ function selfTest(){
     BIT_FALLBACK.forEach(function(e){
       if(!BIT_VOICE_CARDS[e.who]) cardBad.push("the pool speaks as " + e.who + ", who has no card");
     });
+    /* THE TRIPWIRE. Every exclusion here says the same thing in its own words: a card
+       for this name would be dead data because no bit can seat it. That is checkable,
+       so it is checked - and an exclusion whose reason has lapsed is worse than an
+       uncarded name, because the file now asserts something untrue and the row that
+       would have said so has been told to be quiet. Red, not a note. */
+    Object.keys(BIT_CARD_EXCLUDED).forEach(function(nm){
+      if(seats[nm]){
+        cardBad.push(nm + " is excluded as dead data (\"" + BIT_CARD_EXCLUDED[nm] + "\")"
+          + " but the board seats " + nm + " on " + (seatWhere[nm] || []).join(", ")
+          + " - the exclusion has outlived its reason");
+      }
+    });
     Object.keys(BIT_VOICE_CARDS).forEach(function(nm){
       if(!seats[nm]) cardBad.push(nm + " has a card and no seat the board can offer");
     });
@@ -19900,6 +19945,7 @@ function selfTest(){
       cardBad.length ? cardBad.join("; ")
         : Object.keys(seats).length + " voices seated across 33 beats × 2 phases × 2 shard"
           + " states × 12 bits · carded: " + Object.keys(BIT_VOICE_CARDS).length
+          + " · excluded with a live reason: " + Object.keys(BIT_CARD_EXCLUDED).length
           + (Object.keys(uncarded).length
              ? " · STILL UNCARDED: " + Object.keys(uncarded).join(", ")
              : " · no uncarded seat"),
@@ -19941,6 +19987,52 @@ function selfTest(){
            lastPlayerText = k2.said;
          }
          return Object.keys(BIT_VOICE_CARDS).filter(function(nm2){ return !hit[nm2]; }).length === 0;
+       }});
+
+    /* THE EXCLUSION'S OWN ROW, because it is a different claim from coverage and T()
+       carries one broken form per row. Stacking the two on one call makes the second
+       object an ignored fifth argument, and the row goes green reporting a proof it
+       never ran - which is the sweep flattering itself, in the file whose harness was
+       rebuilt to stop exactly that. */
+    T("no exclusion has outlived its reason",
+      Object.keys(BIT_CARD_EXCLUDED).filter(function(nm){ return !!seats[nm]; }).length === 0,
+      Object.keys(BIT_CARD_EXCLUDED).length
+        ? Object.keys(BIT_CARD_EXCLUDED).length + " exclusion(s), each still dead data"
+        : "the registry is empty at rest, as VERDICT_ALLOW is - nothing is being kept quiet",
+      {label:"the Mirren exclusion as commissioned - dead data, on a name the board seats for three beats",
+       was:{"Mirren":"fallen before the first bit can fire; a card here would be dead data"},
+       /* THE TRIPWIRE, RUN AGAINST THE ENTRY THAT MOTIVATED IT. She is alive and in
+          the room at a1-late, a2-ground and a2-hand, and falls only at the close of
+          the third - so every bit fired in those rooms seats her, in both shard
+          states. An exclusion saying a card for her would be dead data is a claim the
+          board contradicts sixteen times in the first of those rooms alone.
+          Counted through bitSlots rather than off a scene-book list, because the
+          question is what the composer DOES, not what the rooms look like. */
+       check:function(w){
+         var kept = BIT_CARD_EXCLUDED, hit = 0;
+         var k3 = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+                   said:lastPlayerText, fp:foldPending, wb:walkbackNow, ov:runOver};
+         try{
+           BIT_CARD_EXCLUDED = w;
+           chassisHolder = null; foldPending = false; walkbackNow = false; runOver = "";
+           roster = {family:[], fallen:[]}; phase = "live";
+           for(var b3 = 0; b3 < SPINE.length; b3++){
+             beatIdx = b3;
+             ["hand", "jacket"].forEach(function(sw3){
+               shardWhere = sw3;
+               ["a", "bb", "ccc", "dddd"].forEach(function(t3){
+                 lastPlayerText = t3;
+                 bitSlots().forEach(function(sl){ if(BIT_CARD_EXCLUDED[sl.who]) hit++; });
+               });
+             });
+           }
+         } finally {
+           BIT_CARD_EXCLUDED = kept;
+           beatIdx = k3.bi; phase = k3.ph; shardWhere = k3.sw; chassisHolder = k3.ch;
+           roster = k3.ro; lastPlayerText = k3.said; foldPending = k3.fp;
+           walkbackNow = k3.wb; runOver = k3.ov;
+         }
+         return hit === 0;
        }});
 
     /* WHAT THE LIVE PASS FOUND. Both of these are defects in the ask rather than in
