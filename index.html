@@ -7901,7 +7901,11 @@ function bitFallbackFor(){
     live.push(e);
   }
   if(!live.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
-  return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id) + "|" + beatTurns);
+  /* keyed on the bit itself, not the clock: bits tick nothing, so beatTurns would
+     have handed two bits in a row the same answer. */
+  return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id)
+                     + "|" + String(lastPlayerText || "").length
+                     + "|" + String(lastPlayerText || "").slice(0, 12));
 }
 
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
