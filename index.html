@@ -548,6 +548,8 @@
      the one you have to mean. Never labelled - the colour is the whole tell. */
   .choice.exit{border-color:#6a5a2a;box-shadow:inset 2px 0 0 var(--sodium)}
   .choice.exit:hover{border-color:var(--sodium);background:#191408}
+  .choice.held{opacity:.42;cursor:default}
+  .choice.held:hover{transform:none;border-color:#6a5a2a;background:none}
   .choice.walk{border-color:#5a2f2f;color:#c99a9a;box-shadow:inset 2px 0 0 #8d3b3b;opacity:.82}
   .choice.walk:hover{border-color:#a04a4a;background:#190f0f;opacity:1}
   .choice.walk .n{color:#c96a6a}
@@ -1636,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.2 "Stopping Is a Choice"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.3 "The Door Costs Nothing"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7251,7 +7253,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.2";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.3";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8077,10 +8079,18 @@ function showChoices(choices){
          beat prints two, and a shared flag would have armed A and taken B on its
          first click - which is the exact thing "it asks twice" exists to prevent,
          on the one night where the two doors are different futures. */
-      var armedHere = exitArmed && exitArmedAt === i;
+      /* ...AND HELD BELOW THE FLOOR (v4.71.3). A door that cannot close tonight
+         does not arm, does not ask twice, and does not cost a click to discover:
+         it greys, its hint says held instead of open, and a press answers with
+         the yellow box and nothing spent. The hint said "Open." from turn one
+         even when the door was not - a door that lies teaches the rail lies. */
+      var heldDoor = V5SCENE && !doorMeetsFloor();
+      var armedHere = !heldDoor && exitArmed && exitArmedAt === i;
       if(armedHere) btn.classList.add("armed");
+      if(heldDoor) btn.classList.add("held");
       btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(armedHere ? ("Sure? " + c) : c);
       btn.onclick = function(){
+        if(heldDoor){ doorHoldServe(); return; }
         if(!armedHere){ exitArmed = true; exitArmedAt = i; walkArmed = false; showChoices(choices); return; }
         exitArmed = false; exitArmedAt = -1;
         pendingKind = "exit"; pendingClick = true; takeAction(c, false);
@@ -8091,8 +8101,11 @@ function showChoices(choices){
     box.appendChild(btn);
     if(kind === "exit" && live){
       var eh = document.createElement("div"), twin = !!forkDoorsNow();
-      eh.className = "choice-hint exithint open";
-      if(exitArmed && exitArmedAt === i){
+      var heldHint = V5SCENE && !doorMeetsFloor();
+      eh.className = "choice-hint exithint" + (heldHint ? "" : " open");
+      if(heldHint){
+        eh.textContent = "Held. Tonight is not ready to end — play it out, and the door opens.";
+      } else if(exitArmed && exitArmedAt === i){
         eh.textContent = "This ends tonight's business. Pick anything else and it is forgotten.";
       } else if(twin){
         /* the fork owes the player the truth that BOTH of these end the night and
@@ -10169,11 +10182,54 @@ function callSceneTurn(){
    is spent on a night that is over.
    Only when the door will actually take it. Below the floor the door HOLDS - three
    releases of doctrine - and a held night still has road, so it still gets a scene. */
+/* ONE FLOOR, ONE FRAME (v4.71.3). The renderer that greys the door, the router
+   that holds it, and the door turn that closes the night all ask the same
+   question at the same instant - would the press that happens NOW meet the
+   floor - so they ask it through one function. Two of these computed separately
+   is the drift law's opening move. */
+function doorMeetsFloor(){
+  return beatDone() || (beatTurns + 1) >= beatFloor(beatNow());
+}
 function doorSkeletonNow(){
   if(!V5SCENE || lastTurnMud || runOver || foldPending || walkbackNow) return false;
   if(attemptOn || beatDone() || phase !== "live") return false;
   if(pickKind !== "exit") return false;
-  return (beatTurns + 1) >= beatFloor(beatNow());
+  return doorMeetsFloor();
+}
+/* THE HELD DOOR COSTS NOTHING (v4.71.3). Below the floor the door holds - v4.44
+   doctrine, "the door costs the player nothing", fourth pass, do not fix it a
+   fifth time - but under V5SCENE the held press was still walking the scene
+   path: a topic card dealt as if the door were a question, the clock ticked,
+   the toll arithmetic run, and THEN the yellow box. The Architect named it:
+   we were punishing players for reaching for the ending early. A door that
+   cannot close tonight answers as information, not as a turn - the aside, the
+   shard given back, the rail intact, nothing spent. The row greys the door to
+   say so before the click; this is the same rule for the player who typed it.
+   On a gauntlet beat the floor is honoured first (the peril opens only at the
+   floor, as it has since the teeth shipped), so below it this hold serves
+   there too. */
+var DOOR_HELD_ASIDE = "He reached for the ending and the night would not take it yet —"
+  + " too much is still standing. The door stays open; play it out and take it again.";
+function doorHoldNow(){
+  if(!V5SCENE || lastTurnMud || runOver || foldPending || walkbackNow) return false;
+  if(attemptOn || beatDone() || phase !== "live") return false;
+  if(pickKind !== "exit") return false;
+  return !doorMeetsFloor();
+}
+function doorHoldServe(){
+  if(doorFreedHer){ shardWhere = "jacket"; doorFreedHer = false; }
+  gateHeldNow = true;
+  exitArmed = false; exitArmedAt = -1;
+  /* one box, not a stutter: a second click on the held door in the same breath
+     re-reads the same answer instead of stacking it */
+  var last = feedLog.length ? feedLog[feedLog.length - 1] : null;
+  if(!(last && last.kind === "aside" && last.text === DOOR_HELD_ASIDE)){
+    var ad = {kind:"aside", tone:"yellow", text:DOOR_HELD_ASIDE};
+    renderBlock(ad); feedLog.push(ad);
+    ledgerText += "\n\n_" + ad.text + "_";
+  }
+  showChoices(lastRail);
+  scrollFeed();
 }
 function callDoorTurn(){
   lastSent = {text:"[template] the door: " + String(lastPlayerText || "").slice(0, 48),
@@ -11991,9 +12047,9 @@ function boardTurn(data){
          of a beat that had two more to run and had just been told not to gate. */
       if(doorFreedHer){ shardWhere = "jacket"; doorFreedHer = false; }
       /* and the player is told, because the rail promised this would end the night
-         and it did not. A door that lies teaches the player the rail lies. */
-      queueAside("yellow", "He reached for the ending and the night would not take it yet \u2014"
-        + " too much is still standing. The door stays open; play it out and take it again.");
+         and it did not. A door that lies teaches the player the rail lies.
+         (Same words as the client-side hold - one aside, two roads to it.) */
+      queueAside("yellow", DOOR_HELD_ASIDE);
       if(window.console && console.info){
         console.info("[mudskippers] the door was taken below the floor - held, not closed");
       }
@@ -15393,6 +15449,11 @@ function takeAction(text, isMud){
     chatLog.push({role:"user", content:"The courier is mid-sentence: " + text.trim()});
     if(attemptOpen()) return;
   }
+  /* THE HELD DOOR, TYPED (v4.71.3). The row greys a door that cannot close tonight
+     and answers its click for free; a player who wrote tonight's door wording out
+     by hand below the floor gets the identical answer by the identical rule - the
+     aside, the shard given back, the rail restored, nothing spent, no wire. */
+  if(doorHoldNow()){ doorHoldServe(); return; }
   var userMsg = isMud
     ? (bitSkeletonNow()
        ? "MUDSKIPPER MOMENT: " + text.trim()
@@ -23043,6 +23104,29 @@ function selfTest(){
         /* ...and below the floor the door still HOLDS, so the night keeps its scene */
         barBoard(at); V5SCENE = true; beatTurns = 0; pickKind = "exit";
         if(doorSkeletonNow()) tdBad.push("the door took a turn it is doctrine-bound to hold");
+        /* ...AND THE HELD PRESS COSTS NOTHING (v4.71.3). The hold arms exactly where
+           the door turn does not - both frames read one floor function - and serving
+           it spends no card, ticks no clock, reaches no wire, and leaves the yellow
+           box on the record. The broken form is the release before this one: the
+           held press walked the scene path, dealt a card as though the door were a
+           question, and ran the toll arithmetic on a player reaching for the end. */
+        if(!doorHoldNow()) tdBad.push("the held door did not offer the free answer");
+        var tdFl = beatFloor(beatNow());
+        beatTurns = tdFl - 1;
+        if(doorHoldNow()) tdBad.push("the hold armed on the turn the door opens");
+        if(!doorSkeletonNow()) tdBad.push("the door turn did not arm at its own floor");
+        beatTurns = 0;
+        var tdAsk = window.askAI, tdWire = 0;
+        window.askAI = function(){ tdWire++; return {then:function(){ return {catch:function(){}}; }}; };
+        var tdSpent = JSON.stringify(topicSpent), tdTurns = beatTurns, tdFeed = feedLog.length;
+        try{ doorHoldServe(); } finally { window.askAI = tdAsk; }
+        if(tdWire !== 0) tdBad.push("the held door reached the wire");
+        if(beatTurns !== tdTurns) tdBad.push("the held door ticked the clock");
+        if(JSON.stringify(topicSpent) !== tdSpent) tdBad.push("the held door spent a card");
+        if(feedLog.length <= tdFeed || feedLog[feedLog.length - 1].text !== DOOR_HELD_ASIDE){
+          tdBad.push("the held door did not leave the yellow box");
+        }
+        tdSaw.push("and below the floor the door greys and answers for free - nothing spent, wire silent");
       } finally { barPut(k); }
     })();
     T("a door the player typed is still a door", tdBad.length === 0,
