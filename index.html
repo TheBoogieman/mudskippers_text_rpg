@@ -8118,6 +8118,40 @@ function parseFills(raw, want){
   }
   return d.fills;
 }
+/* THE LINT IS PER BLOCK, and that is the point of it: a bad fill costs its own slot
+   and nothing else. The alternative - one violation takes the whole turn down to the
+   pool - punishes a model that got two lines right out of three, and the player
+   watches a good scene get replaced by a template. Four checks, each one a thing a
+   line of dialogue is not allowed to do:
+     1. THE SPEAKER MUST STILL BE AUDIBLE. The slots were built at compose time and
+        the reply lands a wire round-trip later. Nothing moves the shard in between
+        today - and "nothing moves it today" is exactly the assumption the teeth
+        runtime is written to break.
+     2. THE LENGTH, BOTH WAYS. A slot that asked for 200 characters and got 900 is a
+        model writing a scene into a bit, and in a bit the length IS the register.
+        An empty string is a legal JSON string and it renders as a nameplate with
+        nothing under it - two blocks tagged Courier once did exactly that to a live
+        screen - so a fill has to BE a line before it can be a short one.
+     3. NO NAME THE STORY HAS NOT MET - and the fence is the exact complement of the
+        list the ask went out with, computed from that same list rather than from
+        metNames a second time. The first cut read unmetCast() alone, which at
+        a1-hum makes PIA an unmet name: the brief said "the only names are Nine,
+        Pia", the model obeyed it, and the fence would have struck the line for the
+        obedience. A brief and a fence that compute their roster separately WILL
+        drift, and the one that drifts punishes compliance.
+     4. NO REVEAL THE PLAYER HAS NOT REACHED. revealLeak, the same predicate the
+        full path uses, reading the same tells. A bit is immune to being spent; it
+        was never a licence to say the thing the story has not earned. */
+function bitLint(slot, fill, allowed){
+  if(!slot || !bitAudible(slot.who)) return "speaker";
+  if(typeof fill !== "string" || !/\w/.test(fill) || fill.length > slot.cap) return "length";
+  var ok = {}, i;
+  (allowed || []).forEach(function(x){ ok[x] = 1; });
+  var hay = " " + fill.replace(/\s+/g, " ") + " ", un = unmetCast();
+  for(i = 0; i < un.length; i++){ if(!ok[un[i]] && namedUse(un[i], hay)) return "name"; }
+  if(revealLeak({scene:[{speaker:slot.who, text:fill}]}).length) return "era";
+  return "";
+}
 
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
    every card of which is spent has started replaying itself, and that is the turn the
@@ -18577,7 +18611,7 @@ function selfTest(){
        amber - the harness would be saying "unproved" about code it simply had not
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
-    "parseFills", "jsonSlice"];
+    "parseFills", "jsonSlice", "bitLint"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19279,14 +19313,21 @@ function selfTest(){
        whether Nine can be heard, so its room is where the speaker law is loudest. */
     function atHum(fn){
       var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder,
-               fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText};
+               fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText,
+               cast:castSheets, ro:roster, canon:runCanon, gn:gateNotes};
       try{
         beatIdx = beatById("a1-hum"); phase = "live"; chassisHolder = null;
         foldPending = false; walkbackNow = false; runOver = "";
+        /* COLD, not merely staged. metNames and knownOf read the cast sheets, the
+           roster and every canon line written so far, and the sections above this
+           one write all four - so an uncold fixture would have the lint judging
+           a1-hum against a roster from Book Two. */
+        castSheets = {}; roster = {family:[], fallen:[]}; runCanon = []; gateNotes = {};
         return fn();
       } finally {
         beatIdx = k.bi; phase = k.ph; shardWhere = k.sw; chassisHolder = k.ch;
         foldPending = k.fp; walkbackNow = k.wb; runOver = k.ov; lastPlayerText = k.said;
+        castSheets = k.cast; roster = k.ro; runCanon = k.canon; gateNotes = k.gn;
       }
     }
     function humVoices(sw){
@@ -19365,6 +19406,52 @@ function selfTest(){
          var got;
          try{ got = w('{"fills": "one, two, three"}'); }catch(e){ return true; }
          return got === null || got === undefined;
+       }});
+
+    /* Rung 3. One canned violation per check, and a clean line that trips none. */
+    var lintBad = [], lintSaw = [];
+    atHum(function(){
+      shardWhere = "hand";
+      var sl = bitSlots(), allow = bitNamesAllowed(sl);
+      var voice = sl[0], room = sl[sl.length - 1], stranger = "";
+      unmetCast().forEach(function(nm){ if(!stranger && allow.indexOf(nm) === -1) stranger = nm; });
+      function want(tag, slot, fill, why){
+        var got = bitLint(slot, fill, allow);
+        lintSaw.push(tag + " → " + (got || "clean"));
+        if(got !== why) lintBad.push(tag + ": wanted " + (why || "clean") + ", got " + (got || "clean"));
+      }
+      want("a line that answers him", voice,
+           "You are the mayor of a puddle. I am filing that, and I am keeping it.", "");
+      want("a slot speaker the room can no longer hear", {who:"Vic", cap:200},
+           "I heard that from the kitchen.", "speaker");
+      want("a scene written into a bit", room, new Array(40).join("weather and more weather "), "length");
+      want("a fill with no line in it", room, "   ", "length");
+      want("a name nobody at this table has met", voice,
+           stranger + " would have something to say about that.", "name");
+      want("a reveal nobody has reached yet", voice, "Ask me about the bio-hash sometime.", "era");
+      /* ...and the one the brief permitted. She is a slot speaker at a1-hum and she
+         is NOT in metNames there, so this is the exact line the two-roster version
+         strikes for obeying the ask. */
+      want("the name the ask itself listed", voice, sl[1].who + ", tell him.", "");
+      shardWhere = "jacket";
+      want("her voice through the cloth", voice, "I am ignoring that, and it is costing me.", "speaker");
+      return null;
+    });
+    T("each check catches its own violation and the clean lines pass",
+      lintBad.length === 0,
+      lintBad.length ? lintBad.join("; ") : lintSaw.join(" · "),
+      {label:"the fence read off unmetCast alone, without the list the ask went out with",
+       was:function(slot, fill){
+         var hay = " " + String(fill).replace(/\s+/g, " ") + " ", un = unmetCast(), i;
+         for(i = 0; i < un.length; i++){ if(namedUse(un[i], hay)) return "name"; }
+         return "";
+       },
+       check:function(w){
+         return atHum(function(){
+           shardWhere = "hand";
+           var sl = bitSlots();
+           return w(sl[0], sl[1].who + ", tell him.") === "";
+         });
        }});
 
     /* ================== THE DEGENERATE RUN ==================
