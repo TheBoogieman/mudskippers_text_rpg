@@ -522,10 +522,9 @@ Two promises, enforced by the game rather than asked of the storyteller:
   immune — a gate cannot ride it, the rain neither ticks nor forgives on it, and no
   amount of goofing can be converted into the scene's sincerity. Sincerity arrives
   when you type it, and not one turn before.
-- **And under the hood, a bit is becoming a different kind of turn entirely.**
-  Everything above is currently enforced by the client stripping a world change back
-  out of the reply after the fact. There is now a second path — dark by default,
-  behind one switch — where a bit does not send the storyteller a scene brief at all.
+- **And under the hood, a bit is a different kind of turn entirely.** It used to be
+  enforced by the client stripping a world change back out of the reply after the
+  fact. Since v4.60.0 a bit does not send the storyteller a scene brief at all.
   It sends a **skeleton**: two or three dialogue slots, each naming its speaker, what
   that speaker is doing with your line, and how long the line may be. The model
   answers with strings, one per slot, and nothing else. There is no location field to
@@ -533,7 +532,10 @@ Two promises, enforced by the game rather than asked of the storyteller:
   the model is forbidden them, but because the ask has no such field in it. A fill
   that fails its own lint costs its own slot and nothing more, answered instead from
   nine written house lines that are presence-gated to the room. A bit has stopped
-  needing to be *caught* rewriting the world and has become unable to say one.
+  needing to be *caught* rewriting the world and has become unable to say one. Each
+  slot also carries that speaker's **voice card** — how Hesta answers a joke is not
+  how Vic does — and the room takes turns, so the same two people do not do all the
+  talking for thirty-three nights.
 
 The **LEDGER** panel and the courier's terminal both show the board: which beat you
 are on, which arc, how many turns it has left, and how far along the season you are.

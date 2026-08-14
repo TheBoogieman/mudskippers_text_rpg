@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.59.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.60.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5598,7 +5598,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.59.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.60.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8044,8 +8044,17 @@ function bitFallbackFor(salt, taken, who){
    location field to move the room, no day to skip, no canon to write, no gate to
    land, no death to declare, because there is no field. The breach apparatus does
    not get a better fence here; it gets nothing left to guard.
-   V5MODE is false by the TEETH_LIVE standard: built, proved, and dark. */
-var V5MODE = false;          /* the skeleton is built; this is its only switch */
+   V5MODE SHIPPED DARK FOR ONE RELEASE AND IS NOW ON, on evidence rather than nerve:
+   36 bit turns against a live 32B with the world snapshot identical on every one; two
+   lint failures that each cost one slot and were covered by an authored line; a whole
+   twelve-bit pass with the endpoint unreachable throughout that nobody could have told
+   was offline; and the recorded 24B failure line answered with banter instead of a
+   classifier's suspicion. The premise strengthens upward - a bigger model fills three
+   slots more easily, not less - and the floor under all of them is the pool.
+   The switch stays, and it stays meaningful: turn it off and every layer the old path
+   had is still there, unchanged, because the retirement removed nothing. The sweep
+   asserts that in both directions rather than trusting it. */
+var V5MODE = true;           /* the skeleton is live; this is its only switch */
 /* who answers, in order. She goes first whenever she can be heard at all: a bit
    said with bare skin on the shard is said TO her, and answering him is the only
    thing she can still do. Two voices and the room - three fills is a bit; six is a
@@ -14458,8 +14467,9 @@ function dbgReport(){
   R(s, "folded beats", foldedBeats);
   R(s, "peril turns left", perilTurns, perilTurns ? "warn" : "");
   R(s, "last turn was a bit", lastTurnMud);
-  R(s, "skeleton mode", V5MODE ? "V5MODE on - bits are dialogue slots" : "off",
-    V5MODE ? "warn" : "");
+  R(s, "skeleton mode", V5MODE ? "on - bits are dialogue slots, and the world has no field here"
+                               : "OFF - bits take the old briefing and the whole dry path",
+    V5MODE ? "ok" : "warn");
   R(s, "pool served last bit", bitPoolServed.length ? bitPoolServed.join(" · ") : "—",
     bitPoolServed.length ? "warn" : "");
   R(s, "chair lines cut", chairCuts + " (courier speech the player never typed)",
@@ -19933,29 +19943,6 @@ function selfTest(){
          return Object.keys(BIT_VOICE_CARDS).filter(function(nm2){ return !hit[nm2]; }).length === 0;
        }});
 
-    /* Rung 6. DORMANCY, ASSERTED RATHER THAN ASSUMED. TEETH_LIVE set the standard
-       two releases ago and it is the right one: a switch that is off has to be
-       PROVABLY off, or "dark" is only a variable nobody happened to read this week.
-       Two claims. The flag is down in the shipped file - which is the one thing a
-       reviewer cannot check by reading the sweep, because the sweep is what would
-       flip it. And with the flag down every predicate Phase A put its hands on
-       answers exactly what it answered before Phase A existed, across the whole
-       truth table rather than on the one row somebody thought to try. */
-    var dormBad = [];
-    if(V5MODE !== false) dormBad.push("V5MODE ships ON");
-    (function(){
-      var km = lastTurnMud;
-      try{
-        lastTurnMud = true;
-        if(atHum(function(){ return bitSkeletonNow(); })) dormBad.push("the skeleton claims a bit with the flag down");
-        [[true, true], [true, false], [false, true], [false, false]].forEach(function(c){
-          var before = !!(c[0] || !c[1]);
-          if(atHum(function(){ return breachScanned(c[0], c[1]); }) !== before){
-            dormBad.push("breachScanned(" + c[0] + ", " + c[1] + ") moved");
-          }
-        });
-      } finally { lastTurnMud = km; }
-    })();
     /* WHAT THE LIVE PASS FOUND. Both of these are defects in the ask rather than in
        the model, and neither was reachable from a fixture: one needs a model lazy
        enough to copy, the other a model polite enough to punctuate. */
@@ -20028,19 +20015,63 @@ function selfTest(){
        was:function(x){ return String(x); },
        check:function(w){ return w("\u201cheard\u201d") === bitClean("\u201cheard\u201d"); }});
 
-    T("the switch is down, and with it down nothing moved",
-      dormBad.length === 0,
-      dormBad.length ? dormBad.join("; ")
-        : "V5MODE off · bitSkeletonNow false on a bit · breachScanned unchanged on all four rows",
-      {label:"the flag shipped on - which is how a switch nobody re-read before pushing gets left",
-       was:true,
+    /* THE SWITCH IS UP, AND THE PATH IT REPLACED STILL ANSWERS. Dormancy was the right
+       row while the flag was down; the flag is up now and the claim that matters has
+       turned over. It is no longer "nothing changed" - things changed on purpose - it
+       is that the retirement REMOVED nothing, so the old path is one variable away
+       from being back, whole. Three directions, because a flag flipped carelessly
+       takes more than it was pointed at:
+         - up, on a bit: the skeleton owns the turn.
+         - forced down: every predicate answers exactly what it answered before Phase A
+           existed, across the whole truth table rather than on one row.
+         - up, on the turns the flag was never meant to cover: the fold and the
+           walk-back are the world taking its own turn and they need the world, so a
+           bit fired while either is pending still goes the long way and is still
+           classified. That is the direction a flip that over-reached would fail in,
+           and it is the one nobody would have thought to look at. */
+    var flagBad = [];
+    if(V5MODE !== true) flagBad.push("V5MODE ships OFF - the release says it is on");
+    (function(){
+      var kv = V5MODE, km = lastTurnMud, kf = foldPending, kw = walkbackNow;
+      try{
+        lastTurnMud = true;
+        V5MODE = true;
+        if(!atHum(function(){ return bitSkeletonNow(); })) flagBad.push("the flag is up and a bit does not reach the skeleton");
+        if(atHum(function(){ return breachScanned(true, false); }) !== false) flagBad.push("a bit under the raised flag still reaches the classifiers");
+        foldPending = true;
+        if(bitSkeletonNow()) flagBad.push("the skeleton took the fold's turn");
+        if(breachScanned(true, false) !== true) flagBad.push("a bit during the fold stopped being classified");
+        foldPending = false; walkbackNow = true;
+        if(bitSkeletonNow()) flagBad.push("the skeleton took the walk-back's turn");
+        if(breachScanned(true, false) !== true) flagBad.push("a bit during the walk-back stopped being classified");
+        walkbackNow = false;
+        V5MODE = false;
+        if(atHum(function(){ return bitSkeletonNow(); })) flagBad.push("the skeleton claims a bit with the flag down");
+        [[true, true], [true, false], [false, true], [false, false]].forEach(function(c){
+          var before = !!(c[0] || !c[1]);
+          if(atHum(function(){ return breachScanned(c[0], c[1]); }) !== before){
+            flagBad.push("with the flag down, breachScanned(" + c[0] + ", " + c[1] + ") moved");
+          }
+        });
+      } finally { V5MODE = kv; lastTurnMud = km; foldPending = kf; walkbackNow = kw; }
+    })();
+    T("the switch is up, and the path it replaced still answers",
+      flagBad.length === 0,
+      flagBad.length ? flagBad.join("; ")
+        : "V5MODE on · the fold and the walk-back keep the long way · forced down,"
+          + " breachScanned is unchanged on all four rows",
+      {label:"a flip that retired the classifier outright instead of stepping around it",
+       was:function(isMud, clickNow){ return false; },
        check:function(w){
-         var kv = V5MODE, km = lastTurnMud, out;
+         /* with the flag DOWN a bit must still be classified. A predicate that retired
+            the classifier rather than stepping around it says no in both worlds, and
+            nothing above this row would have noticed. */
+         var kv = V5MODE, km = lastTurnMud, mine;
          try{
-           V5MODE = w; lastTurnMud = true;
-           out = atHum(function(){ return bitSkeletonNow(); });
+           V5MODE = false; lastTurnMud = true;
+           mine = atHum(function(){ return breachScanned(true, false); });
          } finally { V5MODE = kv; lastTurnMud = km; }
-         return out === false;
+         return mine === true && w(true, false) === true;
        }});
 
     /* ================== THE DEGENERATE RUN ==================
