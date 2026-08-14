@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.52.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.53.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1763,6 +1763,7 @@ var BIBLE = [
 "- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia. In the same reply, refresh \"agenda\" - a closed gate always changes what tonight is about.",
 "- \"knock\": true - send only during THE FAMILY'S OWN TIME, and only when the PLAYER's typed action is plainly reaching for the season's next matter. It is a doorbell, not a key: it offers them the way on a little early, and they still have to take it. Nothing you send ends their time - not a knock, not a gate, not a good segue. Momentum and convenience are not a knock.",
 "- THE FAMILY'S OWN TIME IS A SANCTUARY: while the room is sealed, peril cannot arm and death cannot land. That is deliberate - the one part of the night that is allowed to be safe. Do not declare a peril there; nothing will come of it and the scene will read as a threat the world forgot to keep.",
+"- peril: NAME IT IF YOU LIKE. Send true, or send the threat itself as a short phrase - \"the flooded shaft\", \"the third rail\" - and the player's own strip will read ONE MORE WRONG MOVE followed by your words. Either arms it. Only false, empty or omitted means no peril.",
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
@@ -1958,11 +1959,22 @@ var SPINE = [
         "Put it in the kid's hand and go home while home still exists."],
  lands:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"hand",
        now:"Day 1, past midnight, under the Veldt overpass. Nine rides in the courier's closed hand, not his jacket. Pia is watching the road back.",
+       /* NOVEL GRADE, five movements. COST: the road and the hand. BANTER-DOOR: Pia's
+          committal joke, which Nine walks straight through. ABYSS-GLANCE: 'always' was a
+          setting. WARMTH: three people deciding, at different speeds, to be a unit.
+          STING: the light that has not moved. */
        lines:["The market lets you go the way it lets everyone go — all at once, into a road that stopped being a road years ago.",
-              "You are under the overpass before anyone says anything else, the rain going at the concrete overhead like it has been told there is money in it, and she is still in your hand.",
+              "You are under the overpass before your heartbeat notices you stopped running. She is still in your bare hand. You could put her back in the jacket. You notice yourself not doing it, and you notice yourself noticing, and somewhere in that hall of mirrors a delivery quietly becomes a decision.",
               ["Pia","Talking to your own pocket in public is a choice, you know. People get committed for less."],
-              ["Nine","I can hear the rain through your hand. Is it always like this up here?"],
-              "Pia opens her mouth, closes it, and looks back the way you came instead — at the market, at the one set of lights that has not moved since you left."],
+              ["Nine","Then we are both lucky it was his hand. A man talking to his hand is only a philosopher."],
+              ["Pia","...She does jokes. Nobody told me she does jokes."],
+              ["Nine","I have exactly two. I am rationing."],
+              "The rain goes at the concrete overhead like it has been told there is money in it. Under it the quiet gets a new texture — the specific quiet of three people who have all just heard a stolen mind ration her jokes, and are deciding, at different speeds, to be a unit about it.",
+              ["Nine","Is it always like this up here? The rain. And — check something for me. The word 'always'. I want to be sure it means what I think it means. Where I was grown, 'always' was a setting."],
+              "You tell her the truth, which is that up here 'always' is more of a bet the city keeps winning. Her hum settles half a note — filed, kept, hers now. The first possession of her life is your weather.",
+              ["Pia","Right. Lovely. Church is over — that light at the market's edge hasn't moved since we left, and things that don't move are aiming."],
+              "She says it in the tone of a weather report, which is how you learn that Pia keeps two voices: one for the jokes, and one for the arithmetic underneath them. She has been running the arithmetic the whole time.",
+              "You move. The overpass gives you back to the rain, and the light behind you stays exactly, patiently, professionally still."],
        rail:["Tell her it is always like this up here.",
              "Ask Pia what she is looking at.",
              "Move. The marsh road is hours out and the rain is winning."]}],
@@ -2016,11 +2028,19 @@ var SPINE = [
              "Walk. Save every question for the man himself."]}],
  landsHard:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
        now:"Day 1, deep night, on the causeway. Nobody said it out loud; the courier found the door shut and the Choir chose the moment.",
-       lines:["Nobody says it, so the city says it — a door that does not open, a lock that has been changed by somebody with a form, a room that belongs to the Choir's paperwork by morning.",
+       /* NOVEL GRADE, HARD. A failure close is colder in the same voice, never a
+          different voice: it leads with the STING (paperwork as horror - a lock is
+          policy, fire would have been personal) and the warmth arrives smaller and
+          later, in a wet bun and somebody else's dead father. */
+       lines:["Nobody says it, so the city says it — a changed lock, a form in a municipal font, a room that belongs to the Choir's paperwork by morning.",
+              "Here is the thing about the tidy ones: fire would have been personal. A lock is policy. Somewhere a clerk closed your whole life between sips of tea and never learned your name, and that is the part your hands won't stop shaking about. Not the losing. The filing.",
+              ["Pia","For what it's worth, they picked when you found out. Not you. That's their whole thing — they don't take your stuff first. They take your timing."],
               "You walk out onto the causeway with the fact following at a polite distance, the way facts do when you have refused to look at them.",
-              ["Pia","For what it's worth, they picked when you found out. Not you. That's their whole thing."],
-              "She offers you half a wet bun out of her coat. It is the worst thing you have ever eaten and you finish all of it.",
-              "Out on the marsh there is one light that has not moved, and it is the only thing ahead of you that is not water."],
+              ["Pia","Bun?"],
+              "She produces half a wet bun from her coat with the exact solemnity of a state funeral. It is the worst thing you have ever eaten. You finish all of it, and the crumbs, and the finishing is the first thing since the market that the Choir did not schedule.",
+              ["Pia","My da used to say you're not homeless if somebody's holding your dinner. He was wrong about nearly everything else."],
+              "Against your ribs the shard hums small — a passenger's hum, a sorry-about-your-room hum — and you catch yourself patting the jacket the way you'd pat a shoulder, and you decide not to examine that either.",
+              "Out on the marsh there is one light that has not moved, and for once that is the good kind of stillness. You aim yourselves at it. Behind you, the city keeps filing."],
        rail:["Ask where she even keeps buns.",
              "Say it now. Late is not the same as never.",
              "Walk. The light is not getting closer on its own."]}],
@@ -2347,7 +2367,13 @@ var SPINE = [
               "The fifth plate goes cold in front of the shard. That is exactly what it was laid for.",
               ["Nine","I heard you. I want that on record. Whatever the record is in this house - a wall, a kid, whatever it is you people use."],
               ["Pia","We use me."],
-              "Outside, the rain gets an early start on the rest of the week."],
+              "Outside, the rain gets an early start on the rest of the week.",
+              ["Vic","Renegotiated, then. One clause. When it goes wrong — and it's a when, son, I've read the weather — it goes wrong for all of us together. Sign here."],
+              "He taps the table. There is no paper. You shake his hand over the cold plate anyway, and the kitchen files it the way kitchens file everything that matters: under nothing, forever.",
+              ["Nine","For the record — my record, the one I am apparently allowed to have now — tonight is the first time I have been kept by someone who asked."],
+              ["Pia","We keep minutes in this family now. She's the minutes."],
+              "Later, on the edge of sleep, you will try to name the exact moment the job died and the family started, and you will get it wrong on purpose, because the true answer is embarrassing. It was the plate. It was somebody laying a plate for a rock.",
+              "And three districts east, on a stool by a window, something wearing patience instead of a face begins to wonder — in the machine's own tidy handwriting — where its delivery has got to."],
        rail:["Ask Vic what the job turns into, then.",
              "Tell Nine the record is not a wall and not a kid. It is me.",
              "Eat. The plate that matters is the cold one, and you cannot fix that tonight."]},
@@ -5506,7 +5532,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.52.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.53.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7213,12 +7239,19 @@ function showScene(data, logIt, instant){
   if(newFaces || data.milestones || data.quests || data.roster || data.map || data.place
      || data.bits || (typeof data.agenda === "string" && data.agenda.trim())) termPing();
   if(data.__live){
-    if(perilTurns > 0) perilTurns--;                     /* the standing peril ages */
+    if(perilTurns > 0){ perilTurns--; if(!perilTurns) perilName = ""; }   /* the standing peril ages, and its name with it */
     /* and a joke does not arm the thing that kills you. Immunity covered the gate,
        the knock, the clock and the drift but not peril - so a bit could not be
        spent, could not toll, could not close a night, and could still load the gun
        for the next two real turns. Three separate audits found the same shape. */
-    if(!lastTurnMud && (data.peril === true || data.peril === "true")){ perilTurns = 2; termBuzz(); }   /* this turn and the next */
+    if(!lastTurnMud){
+      var perilSaid = perilDeclared(data.peril);
+      if(perilSaid){
+        perilTurns = 2;                                  /* this turn and the next */
+        perilName = (perilSaid === "yes") ? "" : perilShortName(perilSaid);
+        termBuzz();
+      }
+    }
     /* the witness reads the reply before the gate is judged, so a gate met in
        THIS scene checks against this scene's own prose too */
     if(!beatDone() && lines.length){
@@ -7316,6 +7349,9 @@ function showScene(data, logIt, instant){
         if(orail) choices = railFor(orail, true);
       }
     }
+    /* THE ROOM TALKS. The night has run out of questions and the family is still
+       sitting there. One card a turn, so this takes the slot rather than sharing it. */
+    else if(data.__live && dealTableTalk()){ /* the banter IS this turn's card */ }
     else if(pendingAsides.length){
       var ad = pendingAsides.shift();
       renderBlock(ad); feedLog.push(ad);
@@ -7765,6 +7801,95 @@ function pickInterlude(){
   return null;
 }
 
+/* ---- THE TABLE-TALK DECK ----
+   The family being people AT each other, authored. The scene book's cards are about
+   the night; this is the deck for when the night has nothing left to ask and there is
+   still somebody at the table. Dealt during slack once the room's deck is out, at most
+   once each per run - and it is the first turn in this game that costs no model call
+   at all, which is the direction the whole of v5 is walking in.
+   The register bar for every future entry is set by these twelve: the joke carries the
+   dread, the abyss is asked the way you ask for the salt, and nobody makes a speech.
+   Every speaker must be in the room the scene book authored, or be Nine, who is
+   always in the jacket. */
+var TABLE_TALK = [
+{id:"tt-sleep", who:["Pia","Nine"], era:{season:1}, mood:"quiet",
+ lines:[["Pia","Do you sleep?"],
+        ["Nine","I stop paying attention. It's close enough."],
+        ["Pia","That's not sleep, that's what teachers do."]]},
+{id:"tt-cameras", who:["Nine"], era:{season:1}, mood:"thriller",
+ lines:[["Nine","Your heartbeat changes when we pass cameras. I never said anything. But I keep a list, and the list keeps getting longer."]]},
+{id:"tt-row", who:["Nine"], era:{season:1}, mood:"abyss",
+ lines:[["Nine","I used to be a number in a row of numbers. The frightening part is not that they might take me back. It's that some nights I can't tell which of us moved — the row, or me."]]},
+{id:"tt-boring", who:["Pia"], era:{season:1}, mood:"thriller",
+ lines:[["Pia","Rule one of being watched: be boring on purpose. Rule two: nobody watching believes rule one."]]},
+{id:"tt-labels", who:["Vic"], era:{season:1}, mood:"dread",
+ lines:[["Vic","Labelled the kettle, labelled the fuses, labelled the door. Things with labels get to stay what they are. People too, if you're careful what you call them."]]},
+{id:"tt-strays", who:["Hesta"], era:{season:2}, mood:"warm",
+ lines:[["Hesta","Every stray I ever fed came back once as a person and twice as a story. I keep the chairs for the stories."]]},
+{id:"tt-salt", who:["Hesta","Three"], era:{season:2}, mood:"abyss",
+ lines:[["Three","A rule kept when it costs nothing is a preference."],
+        ["Hesta","So's a person, love. Pass the salt."]]},
+{id:"tt-doors", who:["Seven"], era:{season:2}, mood:"dread",
+ lines:[["Seven","I've been thinking about doors. We keep going through them like they're nothing. Doors are load-bearing metaphors, and nobody maintains them."]]},
+{id:"tt-morning", who:["Marek"], era:{afterBeat:"a2-annul"}, mood:"quiet",
+ lines:[["Marek","We flipped for the morning. I lost."],
+        ["Marek","I'm the morning."]]},
+{id:"tt-keepings", who:["Three"], era:{season:2}, mood:"thriller",
+ lines:[["Three","You count exits. I count keepings. Tonight this room contains four of one and none of the other, which is why I am still sitting in it."]]},
+{id:"tt-sidechar", who:["Pia","Seven"], era:{season:2}, mood:"quiet",
+ lines:[["Seven","Do you ever worry we're side characters in the rain's story?"],
+        ["Pia","You're pot-wash in the rain's story. I'm at least a waitress."]]},
+{id:"tt-thesis", who:["Narration"], era:{}, mood:"abyss",
+ lines:["The family has a tell: when the night gets heavy, they get funnier, at a rate you could plot. All of you, balanced on the joke like it's the last rung that holds."]}
+];
+var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
+/* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
+   every card of which is spent has started replaying itself, and that is the turn the
+   room has earned some banter. Side-effect free, unlike pickTopic, which marks. */
+function roomDeckDry(){
+  if(beatDone()) return false;
+  var e = SCENEBOOK[beatNow().id], room = e && e.room;
+  if(!room || !room.topics || !room.topics.length) return true;
+  var spent = topicSpent[beatNow().id + "|room"] || [];
+  return spent.length >= room.topics.length;
+}
+function tableTalkOK(c){
+  var e = c.era || {}, s = sceneNow(), here = (s && s.sc && s.sc.here) || [];
+  if(e.season && currentSeason < e.season) return false;
+  if(e.afterBeat){ var bi = beatById(e.afterBeat); if(bi === -1 || bi >= beatIdx) return false; }
+  if(e.reveal && !revealOpen(e.reveal)) return false;
+  var who = c.who || [];
+  for(var i = 0; i < who.length; i++){
+    var nm = who[i];
+    if(nm === "Narration" || isCourier(nm)) continue;
+    if(isFallen(nm)) return false;
+    if(nm === "Nine") continue;                  /* she rides in the jacket, always here */
+    if(here.indexOf(nm) === -1) return false;    /* the scene book says who is in the room */
+  }
+  return true;
+}
+function pickTableTalk(){
+  var live = [];
+  for(var i = 0; i < TABLE_TALK.length; i++){
+    if(tableTalkUsed.indexOf(TABLE_TALK[i].id) !== -1) continue;
+    if(!tableTalkOK(TABLE_TALK[i])) continue;
+    live.push(TABLE_TALK[i]);
+  }
+  if(!live.length) return null;
+  /* the SELECTOR, with no model connected: a deterministic rotation keyed on the
+     run's own slug, which is exactly what exits and walks have always shipped */
+  return pickVariant(live, "talk|" + (beatDone() ? "end" : beatNow().id) + "|" + tableTalkUsed.length);
+}
+function dealTableTalk(){
+  if(phase !== "slack" || runOver || beatDone() || foldPending || walkbackNow) return false;
+  if(!roomDeckDry()) return false;
+  var c = pickTableTalk();
+  if(!c) return false;
+  tableTalkUsed.push(c.id);
+  playAuthored({lines:c.lines}, "tt|" + c.id);
+  return true;
+}
+
 /* ---- asides: the fourth wall, queued so they land after the scene ---- */
 var pendingAsides = [];
 function queueAside(tone, text){ pendingAsides.push({kind:"aside", tone:tone, text:text}); }
@@ -8050,14 +8175,24 @@ function seasonBreakButtons(){
   };
   ch.appendChild(go); ch.appendChild(stay);
 }
+/* THE CHAPTER-END LINE. A season break is a book closing, and it was signing off on
+   the finale beat's own exit sentence - true, and administrative. One authored line
+   per season, above PREVIOUSLY ON, in the voice the closes are written in. Books two
+   and three get theirs when their finales are written to the same standard. */
+var SEASON_CLOSE_LINE = {
+  1:"BOOK ONE closes the way all their books will close: everyone still at the table, and the bill unpaid."
+};
 function seasonBreakCard(){
   var b = beatNow();
+  var chap = SEASON_CLOSE_LINE[currentSeason] || "";
   /* the season's own line, not the finale beat's - the beat card printed that one
      three turns ago and printing it again read like the board stuttering */
   var card = {kind:"beat", title:"SEASON " + currentSeason + " — " + SEASON_NAMES[currentSeason],
-              forced:false, arcturn:true, sum:b.stone || gateNotes[b.id] || b.exit, arcname:""};
+              forced:false, arcturn:true,
+              sum:(chap ? chap + " " : "") + (b.stone || gateNotes[b.id] || b.exit), arcname:""};
   renderBlock(card); feedLog.push(card);
-  ledgerText += "\n\n_Season " + currentSeason + " closed — " + SEASON_NAMES[currentSeason] + "_";
+  ledgerText += "\n\n_Season " + currentSeason + " closed — " + SEASON_NAMES[currentSeason] + "_"
+    + (chap ? "\n\n" + chap : "");
   seasonBreakButtons();
   scrollFeed();
 }
@@ -9094,13 +9229,37 @@ var beatJustArmed = "";     /* a question just went live; its authored opening i
    no death without a peril declared on this turn or the last one. That guarantees
    the player always got a plain warning and at least one choice before the end. */
 var perilTurns = 0;          /* turns for which a declared peril stays lethal */
+var perilName = "";          /* ...and what the storyteller called it, if it said */
+/* A FIELD THAT ACCEPTS ONE VALUE IS A TRAP WHEN THE ORDER SAYS "NAME IT". The bible
+   tells the storyteller to declare peril with the threat named plainly, and the
+   natural reading of that is to name it IN THE FIELD. A descriptive string armed
+   nothing, silently, on the one turn the player's life is on the line - the single
+   worst turn in the game to fail quietly. Any non-empty answer is a declaration; the
+   words that mean "no" are a refusal; and a sentence is the peril's own name, which
+   the strip then says out loud. The field gets better, not just safer. */
+var PERIL_NO = /^(?:false|no|none|null|undefined|nil|off|0)$/i;
+function perilDeclared(v){
+  if(v === true || v === 1) return "yes";
+  if(typeof v !== "string") return "";
+  var t = v.replace(/^\s+|\s+$/g, "");
+  if(!t || PERIL_NO.test(t)) return "";
+  return /^true$/i.test(t) ? "yes" : t;
+}
+/* the strip is one line of small caps, so the name arrives short or not at all */
+function perilShortName(t){
+  var x = String(t || "").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
+  x = x.replace(/^(?:the courier is |he is |they are |it is )/i, "");
+  x = x.replace(/[.!?,;:]+$/, "");
+  if(x.length > 44) x = x.slice(0, 43).replace(/\s+\S*$/, "") + "\u2026";
+  return x;
+}
 var runOver = "";            /* "" | "season" | "death" | "lost" - a finished run is read-only */
 var deathLine = "";
 /* one gauge, one vocabulary. The strip is the beat's own odometer wearing a
    truthful countdown, and the wrist mirrors the same words exactly - the two
    surfaces can never disagree again. Tiers still drive the room's visuals. */
 function pressureLabel(){
-  if(perilTurns > 0) return "ONE MORE WRONG MOVE";
+  if(perilTurns > 0) return "ONE MORE WRONG MOVE" + (perilName ? " \u2014 " + perilName.toUpperCase() : "");
   if(beatDone() || phase !== "live") return "";
   var left = beatNow().budget + 1 - beatTurns;   /* turns until the forced close lands */
   if(left <= 0) return "OUT OF ROOM — NEXT TURN SETTLES IT";
@@ -9195,12 +9354,39 @@ function pickVariant(list, salt){
   for(i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0x7fffffff;
   return list[h % list.length];
 }
+/* THE RUN'S MOOD, in one word, so the selector has something true to choose on.
+   Read off the board rather than guessed: what the player is living in right now. */
+function runMood(){
+  if(perilTurns > 0 || boardTension() >= 3) return "thriller";
+  if(tolls >= 2 || driftRun >= DRIFT_YELLOW) return "dread";
+  if(phase === "slack" || phase === "aftermath") return "quiet";
+  return "wry";
+}
+/* THE SELECTOR - the AI's lowest-trust job and the first one worth having: choose
+   among AUTHORED variants. It cannot be wrong, only dull. With no model connected the
+   choice is a deterministic rotation keyed on the run slug, which is precisely what
+   exits and walks have shipped since v3: this generalises that precedent from a line
+   to a whole passage. A landing may carry a second full line-array in linesAlt with
+   the same stamps, and mood tags saying which run each is for. */
+function pickLines(V, salt){
+  if(!V) return [];
+  var alt = (Object.prototype.toString.call(V.linesAlt) === "[object Array]" && V.linesAlt.length)
+            ? V.linesAlt : null;
+  if(!alt) return V.lines || [];
+  var want = runMood();
+  var a = " " + String(V.mood || "") + " ", b = " " + String(V.moodAlt || "") + " ";
+  var inA = a.indexOf(" " + want + " ") !== -1, inB = b.indexOf(" " + want + " ") !== -1;
+  if(inB && !inA) return alt;
+  if(inA && !inB) return V.lines || [];
+  return pickVariant([V.lines || [], alt], salt + "|lines");
+}
 /* One authored passage, played straight into the feed. The DM never sees it
    coming and never has to write it - but it MUST land in the chat log as though
    it did, or the next turn opens with the model quietly missing a scene the
    player has already read, which is exactly the amnesia this whole file fights. */
 function playAuthored(V, salt){
   if(!V) return null;
+  var LN = pickLines(V, salt);
   renderDivider();
   if(V.day){ $("hud-day").textContent = V.day; $("w-day").textContent = V.day; }
   if(V.time) nowTime = V.time;
@@ -9236,7 +9422,7 @@ function playAuthored(V, salt){
      the desk would have spent the rest of Season 1 correcting legitimate scenes.
      Giving her a line IS putting her in his hand. It also means the writers' room
      never has to think about the field: write her a line and the world agrees. */
-  else if(nineIsShard() && (V.lines || []).some(function(L){
+  else if(nineIsShard() && LN.some(function(L){
     return Object.prototype.toString.call(L) === "[object Array]" && String(L[0]).trim() === "Nine";
   })) shardWhere = "hand";
   /* A LINE MAY NOW HAVE A VOICE. Narration alone could set a room but it could
@@ -9247,7 +9433,7 @@ function playAuthored(V, salt){
      harder than any directive does - the model continues a conversation it can
      hear much more reliably than it obeys an instruction about tone. */
   var lines = [], blocks = [];
-  (V.lines || []).forEach(function(t){
+  LN.forEach(function(t){
     var sp = "Narration", tx = t;
     if(Object.prototype.toString.call(t) === "[object Array]"){
       sp = String(t[0] || "Narration").trim() || "Narration";
@@ -9386,7 +9572,7 @@ var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
    people\b straight through the full stop - so a name could be introduced
    sentence-finally and no fence saw it. The two authored enumerations that
    prompted the widening are handled by name, above, not by opening the fence. */
-var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|districts?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
 /* THE TWO AUTHORED ENUMERATIONS, BY NAME. The bare punctuation alternative that
    used to live on the end of COUNTED made ANY number-name followed by : . ) ]
    read as a count with no count-noun at all - so "Her name is Nine.", "And then
@@ -9505,6 +9691,41 @@ function unmetSpeakers(data){
   });
   return bad;
 }
+/* ================== THE TONE FORMULA ==================
+   FAMILY SIT-COM WEARING APOCALYPSE ROBES, with heavy existentialist and
+   psychological-thriller comedic banter. That sentence has been the aim since the
+   bible; these are the craft rules that make it something a writer can execute.
+
+   - THE SITCOM ENGINE CARRIES THE DREAD. Setup-beat-punchline is never suspended
+     for the abyss. The abyss rides INSIDE the joke: "A man talking to his hand is
+     only a philosopher."
+   - JOKES ARE HOW THIS FAMILY METABOLIZES THE UNBEARABLE - the joke-door, canon
+     since the bible. A close with no laugh in it is a failed close. So is a close
+     with nothing but laughs.
+   - THE EXISTENTIALISM IS TABLE-TALK, NEVER LECTURE. Identity, keeping, what
+     "always" means to someone who was grown in a setting - asked the way you ask
+     someone to pass the salt.
+   - THE THRILLER LIVES IN WHAT IS WATCHING. Stillness is menace: things that do not
+     move are aiming. Paperwork is horror: a lock is policy, fire would have been
+     personal. The camera never gloats.
+
+   EVERY NOVEL-GRADE CLOSE RUNS FIVE MOVEMENTS. Order can flex; all five must be
+   present, and a close that is missing one reads as a scene rather than a chapter:
+     COST         - what tonight took, felt in the body.
+     BANTER-DOOR  - the joke that opens into the real thing.
+     ABYSS-GLANCE - one existential beat, in small words.
+     WARMTH       - the family being a unit about it, unspoken where possible.
+     STING        - the thriller note that points at tomorrow without naming it.
+   A HARD landing runs the same five and leads with the STING: failure closes are
+   colder in the same voice, never a different voice, and the warmth arrives smaller
+   and later.
+
+   AUTHORED CLOSES GET ROOM THE DM'S MIDDLES DO NOT. The tempo table below binds
+   the IMPROVISED middle - Book One is 3 or 4 blocks because a hunted crew has no
+   time to be characters yet. The authored closes are chapter-ends and may run 9 to
+   13 blocks: clipped SENTENCES, generous COUNT. This is stated here, beside the
+   table, so that nobody trims a close to match a rule that was never about it.
+   ====================================================== */
 /* ---- THE TEMPO ----
    The three books do not sound alike, and the difference is not decoration: in
    Book One these people are being hunted and have no time to be characters yet.
@@ -12820,7 +13041,8 @@ function saveBlob(){
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     foldedBeats:foldedBeats, chassisHolder:chassisHolder,
     redRun:redRun,
-    over:runOver, deathLine:deathLine, peril:perilTurns, intro:introStage, wet:wetRun
+    over:runOver, deathLine:deathLine, peril:perilTurns, perilName:perilName, talk:tableTalkUsed,
+    intro:introStage, wet:wetRun
   });
 }
 function currentChoices(){
@@ -17127,7 +17349,7 @@ function rehCapture(data, before){
     gateSent: data.gate === true || data.gate === "true",
     gateNote: (typeof data.gateNote === "string") ? data.gateNote : "",
     canon: (data.canon||[]).slice(),
-    peril: data.peril === true || data.peril === "true",
+    peril: !!perilDeclared(data.peril),
     railOut: {exit: rail[0]||"", stalls: rail.slice(1), walk: walkLineNow(false)},
     phaseOut: phase, turnOut: beatTurns, tolls: tolls,
     heldByStall: before.pick === "stall" && (data.gate === true || data.gate === "true"),
@@ -17302,7 +17524,8 @@ function newRun(confirmFirst, bare){
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
-  runOver = ""; deathLine = ""; perilTurns = 0;        /* a new courier, a fresh neck */
+  runOver = ""; deathLine = ""; perilTurns = 0; perilName = "";   /* a new courier, a fresh neck */
+  tableTalkUsed = [];                                 /* ...and a table with everything still to say */
   wetRun = 0; breachNow = "";                          /* and a dry path to walk off */
   openBar();                     /* looks open during the cold open - that is the trap */
   applyTension(true);
@@ -17387,6 +17610,7 @@ function restoreFromBlob(s){
     mergeQuests((s.threadsClosed||[]).map(function(t){ return {title:t, goal:t, status:"done"}; }), true);
   }
   interludesUsed = Object.prototype.toString.call(s.interludesUsed) === "[object Array]" ? s.interludesUsed.slice() : [];
+  tableTalkUsed = Object.prototype.toString.call(s.talk) === "[object Array]" ? s.talk.slice() : [];
   tolls = (typeof s.tolls === "number" && s.tolls > 0) ? s.tolls : 0;
   driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
@@ -17488,6 +17712,7 @@ function restoreFromBlob(s){
   deathLine = s.deathLine || "";
   wetRun = (typeof s.wet === "number") ? s.wet : 0;
   perilTurns = (typeof s.peril === "number" && s.peril > 0 && !runOver) ? s.peril : 0;
+  perilName = (perilTurns > 0 && typeof s.perilName === "string") ? s.perilName : "";
   lastTension = 0; applyTension(true);    /* quiet: reloading is not the world moving */
   renderNow();
   /* a run that ended stays ended, however it is reloaded */
@@ -17740,22 +17965,21 @@ var VERDICT_FIXTURE = {
     "want3", "want4"
   ],
   "named:Three": [
-    "a1-carried/never2", "a1-chase/t2g", "a1-late/lands0/now", "a1-late/t3g",
-    "a1-turn/landsHard1/l2", "a1-turn/landsHard1/l3", "a1-turn/landsHard1/l5",
-    "a2-annul/aim", "a2-annul/exits0", "a2-annul/goal", "a2-annul/lands0/r2",
-    "a2-annul/landsHard0/r1", "a2-annul/never2", "a2-annul/opens0/l0", "a2-annul/opens0/now",
-    "a2-annul/opens0/r1", "a2-annul/press0", "a2-annul/walk", "a2-choir/Rt1g",
-    "a2-choir/aim", "a2-choir/canon3", "a2-choir/exits0", "a2-choir/goal",
-    "a2-choir/lands0/l2", "a2-choir/lands0/l3", "a2-choir/lands0/l4", "a2-choir/lands0/now",
-    "a2-choir/landsHard0/l2", "a2-choir/landsHard0/l4", "a2-choir/landsHard0/now",
-    "a2-choir/never0", "a2-choir/opens0/r0", "a2-choir/scar", "a2-choir/t1g",
-    "a2-choir/walk", "a2-ground/never1", "a2-ground/opens0/l3", "a2-hand/goal",
-    "a2-hand/never2", "a2-hand/opens0/l2", "a2-housing/lands0/l4", "a2-housing/lands0/r1",
-    "a2-housing/landsHard0/l4", "a2-housing/landsHard0/r2", "a2-housing/opens0/l4",
-    "a2-housing/opens0/r0", "a2-law/before", "a2-law/landsHard0/l0", "a2-law/press0",
-    "a2-manual/never0", "a2-seven/never0", "a2-seven/opens0/r1", "a2-three/before",
-    "a2-three/canon0", "a2-three/canon1", "a2-three/exits0", "a2-three/goal",
-    "a2-three/lands0/l4", "a2-three/lands0/now", "a2-three/landsHard0/l4",
+    "a1-carried/never2", "a1-chase/t2g", "a1-late/t3g", "a1-turn/landsHard1/l2",
+    "a1-turn/landsHard1/l3", "a1-turn/landsHard1/l5", "a2-annul/aim", "a2-annul/exits0",
+    "a2-annul/goal", "a2-annul/lands0/r2", "a2-annul/landsHard0/r1", "a2-annul/never2",
+    "a2-annul/opens0/l0", "a2-annul/opens0/now", "a2-annul/opens0/r1", "a2-annul/press0",
+    "a2-annul/walk", "a2-choir/Rt1g", "a2-choir/aim", "a2-choir/canon3", "a2-choir/exits0",
+    "a2-choir/goal", "a2-choir/lands0/l2", "a2-choir/lands0/l3", "a2-choir/lands0/l4",
+    "a2-choir/lands0/now", "a2-choir/landsHard0/l2", "a2-choir/landsHard0/l4",
+    "a2-choir/landsHard0/now", "a2-choir/never0", "a2-choir/opens0/r0", "a2-choir/scar",
+    "a2-choir/t1g", "a2-choir/walk", "a2-ground/never1", "a2-ground/opens0/l3",
+    "a2-hand/goal", "a2-hand/never2", "a2-hand/opens0/l2", "a2-housing/lands0/l4",
+    "a2-housing/lands0/r1", "a2-housing/landsHard0/l4", "a2-housing/landsHard0/r2",
+    "a2-housing/opens0/l4", "a2-housing/opens0/r0", "a2-law/before", "a2-law/landsHard0/l0",
+    "a2-law/press0", "a2-manual/never0", "a2-seven/never0", "a2-seven/opens0/r1",
+    "a2-three/before", "a2-three/canon0", "a2-three/canon1", "a2-three/exits0",
+    "a2-three/goal", "a2-three/lands0/l4", "a2-three/lands0/now", "a2-three/landsHard0/l4",
     "a2-three/landsHard0/now", "a2-three/opens0/l0", "a2-three/opens0/now",
     "a2-three/press0", "a2-three/scar", "a2-three/t0g", "a2-three/walk", "a2-turn/before",
     "a2-turn/canon0", "a2-turn/goal", "a2-turn/lands0/r0", "a2-turn/press0",
@@ -17790,7 +18014,7 @@ var VERDICT_FIXTURE = {
     "a1-pack/before", "a1-pack/opens0/l4", "a1-turn/scar", "a2-chassis/before"
   ],
   "shard:stow": [
-    "open/s1", "open2/s4"
+    "a1-chase/landsHard0/l7", "a1-hum/lands0/l1", "open/s1", "open2/s4"
   ],
   "tell": [
     "a1-carried/never2", "a2-annul/canon0", "a2-annul/goal", "a2-chassis/canonAlt1",
@@ -17812,8 +18036,27 @@ var VERDICT_FIXTURE = {
     "want24"
   ]
 };
-/* what THIS release's fixes declared they were allowed to change. Empty is the normal
-   state: a release that changes no predicate's verdict declares nothing. */
+/* THE FIRST REAL USE OF THIS MECHANISM, AND IT WORKED ON ITS AUTHOR. Three
+   novel-grade closes went in and the snapshot came back RED with three flips:
+     named:Three on a1-turn/lands0/l14 - A GENUINE BUG IN THE NEW PROSE. "three
+       districts east" read as the character Three, because COUNTED knew blocks and
+       streets and not districts. namedUse feeds the unmet-cast fence, so the new
+       season close would have introduced Three, silently, in Book One.
+     ...and fixing THAT moved a neighbouring verdict, which is the exact shape this
+       exists to surface: "a closed laundry three districts from the Eel" had been a
+       false positive in every shipped build since that line was written. Reviewed,
+       and it is an improvement, so it stands.
+     shard:stow on a1-hum/lands0/l1 - a map artifact. "You could put her back in the
+       jacket. You notice yourself not doing it" is a NON-EVENT in play, because the
+       clause filter catches could and not; the map calls shardAfter with stated=true,
+       which skips that filter by design. Checked by hand, both ways.
+     shard:stow on a1-chase/landsHard0/l7 - correct. "Against your ribs" IS the
+       jacket, and that passage has her in it.
+   THE FIXTURE IS UPDATED, NOT EXEMPTED. VERDICT_ALLOW exists for work in flight - it
+   keeps the row green while a declared change is half-landed. Leaving entries in it
+   after the release ships would hold those holes open for ever, so the review lives
+   in this comment and the net closes again behind it. Empty is the correct resting
+   state. */
 var VERDICT_ALLOW = {};
 /* lines that MUST be caught. A sweep that only proves the laws are quiet proves
    the laws are asleep. */
