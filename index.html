@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.55.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.56.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3702,42 +3702,59 @@ var SCENEBOOK = {
          "Nine cannot hear anything through cloth: no jacket conversations, no answering a question she was not touched for",
          "nobody explains the Choir, communion, what a Hollow is, or what is done to the people who cannot take the graft",
          "nobody explains what the shard is worth on a market"],
+  /* THE FIRST INSTALMENT OF THE RAIL PASS. A card's `ask` is its SUBJECT - a topic
+     the scene is about - and it was never a line a courier could say; the deterministic
+     build needs the line. `rail` is that line, in the courier's own voice, first person,
+     leaning at the topic; `railAlt` is a rotation where one is written. Nothing reads
+     these yet - Phase B does - but they ship in the sweep corpus from the commit that
+     writes them, which is the rule the authoring pass runs under.
+     (These seven pair to topics 1-7. The six exemplars in the work order were written
+     against the pre-wave-3 SIX-topic deck; the Mirren card makes seven, so pasting them
+     "in deck order" would have hung every one of them on the wrong card.) */
   topics:[
    {ask:"who Mirren was to Vic, before she was a drop",
     key:"mirren who was drop receiver friend knew her tuesday name",
     who:"Pia",
     gives:"what she knows second-hand, and she says so - the real receiver, a friend of Vic's for years before she was ever a name on a chit, taken on a Tuesday",
-    holds:"how the taking is done, and anything past the word Choir"},
+    holds:"how the taking is done, and anything past the word Choir",
+    rail:"Tell me who Mirren was to Vic, before she was a drop.",
+    railAlt:"Ask Pia who Mirren was to him, before she was an address."},
    {ask:"how she hears him at all",
     key:"hear voice hum hand skin touch talk speak work how shard listen",
     who:"Nine",
     gives:"skin on the shard and nothing else - through a jacket she is a stone with weather in it, and she has been carried that way all night",
-    holds:"she does not say what she is or where she was grown; she turns it into a question about the rain, because she would rather ask than answer"},
+    holds:"she does not say what she is or where she was grown; she turns it into a question about the rain, because she would rather ask than answer",
+    rail:"Ask her — properly, skin on the shard — how any of this reaches her."},
    {ask:"is she frightened",
     key:"scared afraid frightened okay alright fear brave feel feeling",
     who:"Nine",
     gives:"yes, plainly, and then an apology for saying it out loud, which is worse than the fear",
-    holds:"she will not say what going back would mean - she says she would rather not do the words for it tonight"},
+    holds:"she will not say what going back would mean - she says she would rather not do the words for it tonight",
+    rail:"Ask her the question you'd want asked, if you were the one in somebody's hand."},
    {ask:"who sent Pia, and why she is here",
     key:"pia sent who why here vic sent-you job kid you",
     who:"Pia",
     gives:"Vic sent her, face to face, and told her to get the courier off the street before the handoff went any further wrong",
-    holds:"she does not know why Vic picked this courier and she says so like it is an insult she noticed a while ago"},
+    holds:"she does not know why Vic picked this courier and she says so like it is an insult she noticed a while ago",
+    rail:"Ask Pia who sent a twelve-year-old to do a bodyguard's job."},
    {ask:"what is behind us",
     key:"behind follow following watch watched who market lights back tail",
     who:"Pia",
     gives:"one set of lights that has not moved since they left the stalls, the way out she has already picked, and how long they have to take it - said without stopping, because she keeps him walking while she says it",
-    holds:"WHAT they are. She may say the word Choir - it was said in front of him an hour ago and it is not a secret - but not one word past it: not what a Hollow is, not what is done to the people who cannot take the graft, not how they are driven. She says the useful thing instead, which is where the corner is"},
+    holds:"WHAT they are. She may say the word Choir - it was said in front of him an hour ago and it is not a secret - but not one word past it: not what a Hollow is, not what is done to the people who cannot take the graft, not how they are driven. She says the useful thing instead, which is where the corner is",
+    rail:"Ask what she's been watching over my shoulder since the stalls."},
    {ask:"the job, the money, whether this is still a delivery",
     key:"job money paid rate delivery deliver work owe owed finish contract",
     who:"Pia",
     gives:"double rate, no questions, and the observation that a dead man's double rate is still double rate",
-    holds:"she will not agree the job is over, and she will not say what it has turned into instead"},
+    holds:"she will not agree the job is over, and she will not say what it has turned into instead",
+    rail:"Ask what a dead woman's double rate is supposed to buy tonight."},
    {ask:"nothing - the rain, the shoes, the tarp",
     key:"rain wet cold shoes joke funny nothing weather tarp",
     who:"Pia",
     gives:"a bit: the market's roof is a tarp with ambitions, and she keeps a running score of the things it has failed to keep dry",
-    holds:"nothing at all. This one is free and it should be funny"}
+    holds:"nothing at all. This one is free and it should be funny",
+    rail:"Ask about anything that isn't humming. The rain will do."}
   ],
   room:{
    where:"under the Veldt overpass, out of the rain, with the road back in sight",
@@ -5539,7 +5556,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.55.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.56.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7850,6 +7867,43 @@ var TABLE_TALK = [
  lines:["The family has a tell: when the night gets heavy, they get funnier, at a rate you could plot. All of you, balanced on the joke like it's the last rung that holds."]}
 ];
 var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
+/* ---- THE BIT FALLBACK ----
+   Phase A's template. A bit is a RESPONSE - the player typed something daft or deep
+   and the family answers it - so the fallback cannot be ambient chatter; the table-talk
+   deck ignores what was said, which is exactly what a fallback must not do. These nine
+   answer an unknown bit without pretending to have understood it, which is the only
+   honest thing a template can do and is also, usefully, how this family actually talks.
+   Presence- and era-gated: the client picks a speaker who is in the room. Nine only
+   while she is in his hand, because a bit is heard and she cannot hear through cloth.
+   Fear makes this family funnier, so these stay sharp under teeth. */
+var BIT_FALLBACK = [
+ {who:"Pia",      line:"I heard that. I'm ignoring it, and I want it noted that the ignoring is costing me."},
+ {who:"Pia",      line:"Somewhere out there a professional is doing this job with a straight face. Anyway."},
+ {who:"Nine",     line:"I'm filing that under things that happened. It is a growing file and I treasure it."},
+ {who:"Hesta",    line:"Mm. Eat something anyway."},
+ {who:"Seven",    line:"I'd like to formally second whatever that was. For the record. Which I'm told is a child."},
+ {who:"Three",    line:"Noted. Both voices heard it. Neither is dignifying it."},
+ {who:"Vic",      line:"Say things like that in front of customers and watch what happens to the rates."},
+ {who:"Marek",    line:"We took a vote in here just now. It's one all."},
+ {who:"Narration",line:"The family absorbs this the way the marsh absorbs weather - fully, and without being changed by it."}
+];
+/* who may answer a bit right now: in the room, not fallen, and audible. Narration is
+   always available, which is what stops this ever returning nothing. */
+function bitFallbackFor(){
+  var s = sceneNow(), here = (s && s.sc && s.sc.here) || [], live = [];
+  for(var i = 0; i < BIT_FALLBACK.length; i++){
+    var e = BIT_FALLBACK[i], nm = e.who;
+    if(nm === "Narration"){ live.push(e); continue; }
+    if(isFallen(nm)) continue;
+    /* she is heard through skin, not through cloth - a bit reaches her or it does not */
+    if(nm === "Nine"){ if(nineIsShard() && shardWhere !== "hand") continue; }
+    else if(here.indexOf(nm) === -1) continue;
+    live.push(e);
+  }
+  if(!live.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
+  return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id) + "|" + beatTurns);
+}
+
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
    every card of which is spent has started replaying itself, and that is the turn the
    room has earned some banter. Side-effect free, unlike pickTopic, which marks. */
@@ -9087,7 +9141,16 @@ function boardTurn(data){
      forcing turn still costs nothing - no toll, no scar - so the meter is one click
      avoidable. That is deliberate: the door IS the player doing their part, and a
      game that charges for reaching its own ending teaches the wrong lesson. This is
-     the fourth pass over these two lines; do not "fix" it a fifth time. */
+     the fourth pass over these two lines; do not "fix" it a fifth time.
+     ...AND ON A GAUNTLET BEAT THE DOOR OPENS AN ATTEMPT RATHER THAN A CLOSE, which is
+     an extension of this doctrine and not a breach of it. In the author's own words,
+     kept verbatim so the next contributor reads intent and not drift:
+       "The door still costs the player nothing - it opens the attempt. Only the
+        attempt's own tempting door, asked twice, can kill. A door that opens a fair
+        fight is still the player doing their part."
+     The click books nothing either way. The world's own close on a gauntlet beat
+     bypasses the gauntlet entirely and records the scar as normal: the world does not
+     play minigames. */
   if(bookFor(said, forcingNow, pickKind) === "door"){
     forcingNow = false;      /* both returns below skip the reset at the foot */
     /* ...but not before the night has been lived. doorDirective orders the
@@ -17901,10 +17964,18 @@ function stCorpus(){
       (sc.topics || []).forEach(function(t, i){
         add(k + "/" + q + "t" + i + "g", t && t.gives);
         add(k + "/" + q + "t" + i + "h", t && t.holds);
+        add(k + "/" + q + "t" + i + "r", t && t.rail);       /* the authored rail line */
+        add(k + "/" + q + "t" + i + "ra", t && t.railAlt);   /* ...and its rotation */
       });
     });
   });
   WANTS.forEach(function(w, i){ add("want" + i, w.line); });
+  TABLE_TALK.forEach(function(c, i){
+    (c.lines || []).forEach(function(l, j){
+      add("talk" + i + "/" + j, typeof l === "string" ? l : (l && l[1]));
+    });
+  });
+  BIT_FALLBACK.forEach(function(e, i){ add("bitfall" + i, e.line); });
   OPENING_CANON.forEach(function(l, i){ add("open/canon" + i, l); });
   (OPENING.scene || []).forEach(function(b, i){ add("open/s" + i, b && b.text); });
   (OPENING2.scene || []).forEach(function(b, i){ add("open2/s" + i, b && b.text); });
@@ -18046,6 +18117,7 @@ var VERDICT_FIXTURE = {
   "shard:hand": [
     "a1-carried/before", "a1-carried/exits2", "a1-exit/opens0/l4", "a1-hum/aim",
     "a1-hum/before", "a1-hum/exits0", "a1-hum/exits1", "a1-hum/lands0/now", "a1-hum/t1g",
+    "a1-hum/t1r",
     "a1-pack/before", "a1-pack/opens0/l4", "a1-turn/scar", "a2-chassis/before"
   ],
   "shard:stow": [
@@ -18071,7 +18143,12 @@ var VERDICT_FIXTURE = {
     "want24"
   ]
 };
-/* v5.1: TWO MORE FALSE POSITIVES, BOTH KILLED BY THE ONCE-ONLY LIST AUDIT.
+/* v5.2: a1-hum/t1r - rail 2 is "Ask her - properly, skin on the shard - how any of
+   this reaches her", and "skin on the shard" is a hand move because that is the whole
+   subject of the card. Thirty-four authored lines went in with the rail installment,
+   the table-talk deck and the bit pool; one verdict moved. Declared.
+
+   v5.1: TWO MORE FALSE POSITIVES, BOTH KILLED BY THE ONCE-ONLY LIST AUDIT.
      named:Three on a1-late/t3g - "three ways this happens next, said fast" is a
        count. COUNTED did not know "ways". The corpus bigram sweep found it.
      named:Nine on a1-fare/opens0/l4 - "standing there at four foot nine, in a coat
