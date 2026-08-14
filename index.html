@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.6 "The Quiet Is Not a Question"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.7 "A File of Good Nights"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1977,7 +1977,15 @@ var SPINE = [
               ["Pia","Right. Lovely. Church is over — that light at the market's edge hasn't moved since we left, and things that don't move are aiming."],
               "She says it in the tone of a weather report, which is how you learn that Pia keeps two voices: one for the jokes, and one for the arithmetic underneath them. She has been running the arithmetic the whole time.",
               "You move. The overpass gives you back to the rain, and the light behind you stays exactly, patiently, professionally still."],
-       rail:["Tell her it is always like this up here.",
+       /* the first rail line used to be "Tell her it is always like this up here" -
+          which is the landing's OWN beat, two paragraphs up: she asks about
+          'always', you tell her the truth, the answer becomes her first possession.
+          A rail that offers to redo the scene it hangs under reads as a glitch and
+          hands the model nothing to paint but repetition (v4.71.7). The
+          replacement leans at the same thread - her file of kept things - without
+          spending anything, and carries no room-deck evidence, so it settles as a
+          bit: the family's voices, or the model's warmer paint. */
+       rail:["Tell her the rain is usually worse than this. Start her file of good nights.",
              "Ask Pia what she is looking at.",
              "Move. The marsh road is hours out and the rain is winning."]}],
  landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"jacket",
@@ -7275,7 +7283,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.6";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.7";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
