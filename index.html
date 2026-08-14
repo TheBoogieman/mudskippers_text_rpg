@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.8 "Said Twice, Noticed"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.9 "Faster Than the Ceremony"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7283,7 +7283,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.8";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.9";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10243,6 +10243,8 @@ function doorHoldNow(){
   return !doorMeetsFloor();
 }
 function doorHoldServe(){
+  /* the held box gets the same mid-reveal courtesy as a typed line (v4.71.9) */
+  if(skipReveal){ try{ skipReveal(); }catch(e){} }
   if(doorFreedHer){ shardWhere = "jacket"; doorFreedHer = false; }
   gateHeldNow = true;
   exitArmed = false; exitArmedAt = -1;
@@ -15400,6 +15402,14 @@ function takeAction(text, isMud){
   var kindNow = pendingKind; pendingKind = "";
   var clickNow = pendingClick; pendingClick = false;
   if(busy || runOver || !text || !text.trim()) return;
+  /* TYPED FASTER THAN THE CEREMONY (v4.71.9). A line entered while a scene was
+     still revealing took its turn UNDER the reveal - two staged renders
+     interleaved and the opening broke visibly, which is exactly how the Architect
+     met it: type fast into the bar on the cold open and the scene bugs out. The
+     feed has always answered a click mid-reveal by fast-forwarding; the keyboard
+     gets the same courtesy - finish the print instantly, then take the turn
+     against the settled scene. */
+  if(skipReveal){ try{ skipReveal(); }catch(e){} }
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
   if(introStage === 1 && isMud){ dmAside(text.trim()); return; }
   /* AN OPEN ATTEMPT OWNS THE TURN AND ANSWERS IT HERE. Nothing below this line runs
