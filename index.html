@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.70.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.0 "Said Fear Is a Map"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -3964,9 +3964,10 @@ var SCENEBOOK = {
   /* THE FIRST INSTALMENT OF THE RAIL PASS. A card's `ask` is its SUBJECT - a topic
      the scene is about - and it was never a line a courier could say; the deterministic
      build needs the line. `rail` is that line, in the courier's own voice, first person,
-     leaning at the topic; `railAlt` is a rotation where one is written. Nothing reads
-     these yet - Phase B does - but they ship in the sweep corpus from the commit that
-     writes them, which is the rule the authoring pass runs under.
+     leaning at the topic. Phase B and F5(a) made the rails the row itself; `railAlt`,
+     where one is written, is a PER-RUN rotation - see sceneRails for the ruling. Both
+     wordings ship in the sweep corpus from the commit that writes them, which is the
+     rule the authoring pass runs under.
      (These seven pair to topics 1-7. The six exemplars in the work order were written
      against the pre-wave-3 SIX-topic deck; the Mirren card makes seven, so pasting them
      "in deck order" would have hung every one of them on the wrong card.) */
@@ -3983,28 +3984,39 @@ var SCENEBOOK = {
      "She keeps to the outline like it is a kerb in the dark - past the word Choir she does not put a foot.",
      ["Pia","When you meet him, do not lead with her. Let him bring her out himself - he does it like a man taking a photograph out of a wallet, and you do not grab at a man's wallet."],
      "The market noise carries on around the two of you, buying and selling, unaware it has been downgraded to background."]},
+   /* PRE-THRESHOLD REGISTER, and the author's correction. This beat has exactly one
+      dramatic event - her first worded sentence - and its exit owns it. The original
+      scene here handed out that conversation as mid-beat filler: two-way, worded,
+      joking about the rain, which conceded the beat's whole point while the door
+      stood unspent. Before the threshold, Nine answers in SHAPE, never in words:
+      the mechanic gets taught by a half-second of almost-voice that steps back,
+      and starting - when it happens - is the player's. */
    {ask:"how she hears him at all",
     key:"hear voice hum hand skin touch talk speak work how shard listen",
     who:"Nine",
-    gives:"skin on the shard and nothing else - through a jacket she is a stone with weather in it, and she has been carried that way all night",
-    holds:"she does not say what she is or where she was grown; she turns it into a question about the rain, because she would rather ask than answer",
+    gives:"the mechanic, on his own skin: through the jacket she is weather, and against a bare hand there is the shape of where a word would be - arriving, and then folding itself back down",
+    holds:"her voice. She can start and she chooses not to - the first worded sentence belongs to the exit, and everything here leans at that door instead of opening it",
     rail:"Ask her — properly, skin on the shard — how any of this reaches her.",
-    plays:["You work a bare hand in under the jacket, and the hum arrives up your arm, pleased about it.",
-     ["Nine","Skin. That is the whole trick. Through the jacket I am a stone with weather in it - you have been carrying weather all night."],
-     ["Nine","Skin on the shard and I am a person at you. It is a small door and it only opens one way at a time, so open it whenever you like. I am always on the other side of it. That is not sad. It is just the floor plan."],
-     ["Nine","Is the rain doing that thing where it comes sideways? It sounds sideways. Tell me about the rain and I will stop asking about the rain."],
-     "You tell her about the rain. It is, in fact, coming sideways. She hums one satisfied note, a scientist confirmed."]},
+    plays:["You work a bare hand in under the jacket, and the hum climbs your arm like something turning to face you.",
+     "For half a second - less - there is a shape in it. Not sound. The place where a word would be, arriving against your skin: warm, patterned, PATIENT. Then it folds itself back down into hum, the way a person steps back from a door they were about to open.",
+     ["Pia","Skin. That is the channel. Through the jacket it is weather - on your hand it is... whatever that just was, going by your face."],
+     "Your hand stays where it is. The hum waits against it, one held note, exactly the way a question waits.",
+     "Whatever is in there can talk to you. It is choosing not to start. Which means starting - when it happens - is going to be yours."]},
+   /* Same correction, and this one was double-wrong: no skin was ever staged, so the
+      original scene had her speaking through cloth - against this beat's own `before`
+      block - and Pia answering words she could not have heard. The worded version of
+      this conversation is not cut; it moved to the underpass room, after the threshold,
+      where it is legal and where it lands harder for having been behaviour first. */
    {ask:"is she frightened",
     key:"scared afraid frightened okay alright fear brave feel feeling",
     who:"Nine",
-    gives:"yes, plainly, and then an apology for saying it out loud, which is worse than the fear",
-    holds:"she will not say what going back would mean - she says she would rather not do the words for it tonight",
+    gives:"the answer in the hum's own alphabet - small at crossings, smaller at sirens, pressing toward his ribs at corners - and Pia reading the courier's face, doing the maths out loud",
+    holds:"words. The fear arrives as behaviour, never as a sentence - her first worded anything belongs to the exit, and what going back would mean is nobody's to say tonight",
     rail:"Ask her the question you'd want asked, if you were the one in somebody's hand.",
-    plays:[["Nine","Yes. Plainly yes. - I'm sorry. I should not say it out loud; it makes it heavier for the person carrying me."],
-     "The apology lands worse than the fear did, and Pia's jaw does something quiet about it.",
-     ["Nine","Do not make me do the words for going back. Not tonight. The fear is allowed; the words are not."],
-     ["Pia","New rule, effective immediately: fear gets said out loud in this company. Said fear is a map. Swallowed fear is a leak. We do not do leaks."],
-     ["Nine","...Said fear is a map. I am keeping that. I am going to be a very well-mapped person by morning."]]},
+    plays:["You do not need the word. The hum has been answering that question all night in its own alphabet: it goes small at crossings, smaller at sirens, and it presses toward your ribs at corners the way a child moves to the inside of the pavement.",
+     ["Pia","Whatever is in there has better ears than us and fewer options. Do the maths on how that feels."],
+     "At the next corner the hum makes itself almost nothing - and then, deliberately, like something practising courage, comes back up to size.",
+     "Frightened, then. And working on it. You find you have put your hand over the pocket without deciding to, the way you would steady anything small on a rough crossing."]},
    {ask:"who sent Pia, and why she is here",
     key:"pia sent who why here vic sent-you job kid you",
     who:"Pia",
@@ -4127,7 +4139,24 @@ var SCENEBOOK = {
       ["Nine","Somewhere I can hear from. That is all. I will not ask for where; I have learned about asking for wheres."],
       "The hum goes quiet the way a person does after saying the true thing slightly too early in the friendship.",
       ["Nine","You may also disregard this. That is real, not politeness: wants are new equipment and I do not know the safe load yet. If tonight only has room for surviving, surviving is a good want. It was my whole list until this week."],
-      "You move her, there in the rain, from the pocket to the inside chest fold - nearer the noise of you, nearer the warmth. It takes four seconds. The hum comes up your sternum like a struck match catching, and neither of you makes it a moment, and it is one anyway."]}
+      "You move her, there under the overpass, out of your closed hand and into the inside chest fold - nearer the noise of you, nearer the warmth. It takes four seconds. The hum comes up your sternum like a struck match catching, and neither of you makes it a moment, and it is one anyway."]},
+    /* THE WORDED FEAR CONVERSATION, moved here from the walk by the author. Before the
+       threshold it was a double physics violation - Nine speaking through cloth, and Pia
+       answering words she could not have heard. Here she is held, voiced, and audible,
+       and the confession pays off the walk's behaviour instead of pre-empting it.
+       Appended LAST deliberately: the deck deals in authored order, so the room can end
+       on the family writing its first rule. (Append-only, so an in-flight save's spent
+       indexes for this room keep their meaning across the release.) */
+    {ask:"whether she is frightened, now that she can say it", key:"scared afraid frightened fear brave okay alright feel feeling honest",
+     who:"Nine", gives:"yes, plainly, and then an apology for saying it out loud, which is worse than the fear - and Pia's new rule about said fear",
+     holds:"what going back would mean - she would rather not do the words for it tonight, and in this company nobody makes her",
+     rail:"Shard in my bare palm: ask her properly, out loud - is she frightened.",
+     plays:["You bring her up, bare-palmed, under the one stretch of overpass light, so the question can be asked properly: out loud, to her face, such as it is.",
+      ["Nine","Yes. Plainly yes. I spent the walk practising brave against your ribs, and practising is not the same as having it. - I am sorry. Saying it out loud makes it heavier for the person carrying me."],
+      "The apology lands worse than the fear did, and Pia's jaw does something quiet about it.",
+      ["Nine","Do not make me do the words for going back. Not tonight. The fear is allowed; the words are not."],
+      ["Pia","New rule, effective immediately: fear gets said out loud in this company. Said fear is a map. Swallowed fear is a leak. We do not do leaks."],
+      ["Nine","...Said fear is a map. I am keeping that. I am going to be a very well-mapped person by morning."]]}
    ]}
 },
 
@@ -7222,7 +7251,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.70.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7884,9 +7913,15 @@ function sameAsDoor(b, t){
    on offer, and the deck answered him by re-dealing. Both faces of F5 are the same
    missing fact, and this is the half that stops the game INVITING the repetition.
    Unspent cards only, in authored order, so the row visibly walks the deck as it is
-   spent and empties when the room is finished. railAlt stays a corpus line: two
-   wordings for one card would put two names on one thing in a row the player is
-   reading as a menu.
+   spent and empties when the room is finished.
+   THE railAlt RULING (v4.71.0): it gets a reason, not a retirement. The law stands -
+   two wordings for one card would put two names on one thing in a row the player is
+   reading as a menu - so a run never sees both. The rotation is BETWEEN runs: where a
+   card carries a railAlt, pickVariant chooses one wording per run off the run slug,
+   stable for the whole run, different on the next playthrough - which is exactly what
+   railAlt was authored for and the menu law never actually forbade. The binding below
+   records whichever wording was dealt, so the click still deals the card it was dealt
+   from. Four cards carry one today; the desk and the corpus judge both wordings.
    Legacy-path silence is deliberate. With the flag down the DM writes its own two
    lines, that is the whole contract of that path, and this must not crowd them out. */
 var railDeal = {};   /* scene key -> offered wording -> the card it was dealt from */
@@ -7902,6 +7937,8 @@ function sceneRails(n){
     if(spent.indexOf(i) !== -1) continue;
     t = list[i];
     ln = t && t.rail;
+    /* the per-run rotation: one wording per run, never two names for one card */
+    if(ln && t.railAlt) ln = pickVariant([t.rail, t.railAlt], "ra|" + s.key + "|" + i) || ln;
     if(!ln || out.indexOf(ln) !== -1) continue;
     railDeal[s.key][normLine(ln)] = i;
     out.push(ln);
@@ -10039,6 +10076,32 @@ function bitSkeleton(text){
    authored blocks - and the paint is not in this release. Worst case is one call; this
    release makes the worst case zero and says so. */
 var V5SCENE = true;          /* Phase B is live. Its bar was met first - see the three rows. */
+/* ==================== PHASE C: THE LEDGER CLOSES ====================
+   Declared at v4.71.0 - the auditor's sign-off, pre-granted on these rows in the
+   v5.14 audit, exercised here - against the definition of done that has stood in
+   the program's header since the day the Architect set it: a stranger plays all
+   thirty-three nights with the model OFF and gets a complete, coherent, funny,
+   occasionally lethal novel of a game - no template seams at emotional peaks.
+   With a model on, the only difference is warmer paint between turns.
+   There is no switch under this banner, because there is nothing left to switch.
+   The flags above are the phase: the skeleton is live, the board plays itself,
+   the teeth are out of the dark. Phase C is the standing it was always defined
+   as - the declaration, made on rows rather than nerve:
+   - the bar row that crosses a slack boundary: one whole night model-off, open
+     to close to interlude to the next night's open, wire at zero;
+   - booking equivalence: the degenerate run closes all thirty-three, flag up
+     and flag down, identical bookings;
+   - the fixture sets: conversational lines reach the bit path, the dealt row is
+     bound to its own cards, and a door the player typed is still a door;
+   - the teeth carrying their evidence in the sweep: ten cards live, the ambient
+     arm armed, the latch riding in the save;
+   - the season's fork reachable by play on both sides, holder read off the board.
+   From here the model is paint. The game underneath it is authored, dealt, and
+   enforced, and a night of it is a story whether or not anything is listening on
+   the wire. The program that began at "the DM invents Mirren" ends at "the deck
+   answers, and the answer is canon." Phase C is done; the ledger closes. What
+   ships after this is content and polish under the same laws - and the laws hold
+   whether anybody is watching, which was the point of writing them down. */
 function sceneSkeletonNow(){
   var s = V5SCENE ? sceneNow() : null;
   return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
@@ -14115,6 +14178,25 @@ function sceneConfident(){
   var s = sceneNow();
   return !!(s && s.sc && topicEvidence(s.sc, lastPlayerText) > 0);
 }
+/* F2, THE SEAM THE ROW HID (v4.71.0). "On the rail" is not one fact. A line sits on
+   the row for three different reasons: the DECK dealt it (bound - clicking it must
+   deal the card it was dealt from), it is a HOUSE STALL (spending the deck is its
+   whole purpose), or a LANDING put it there as conversation - and that third kind was
+   riding the first two's immunity past the evidence rule into pickTopic, where zero
+   evidence deals the first unspent card in authored order. Observed live, the release
+   this fixes it: "Take her out properly and start again" - the hard landing's own
+   tender repair line - was answered by the MUDSKIPPERS DROWN LAST constitution
+   lecture, which is the exact non-sequitur shape F2 exists to stop. A landing rail
+   with no deck evidence is a bit: the family answers the LINE, in voice, and the
+   room's own cards wait for their own rails. */
+function deckHandled(text){
+  if(PIN_STALLS.indexOf(String(text || "")) !== -1) return true;  /* a stall spends the deck on purpose */
+  /* a door pressed below the floor HOLDS, and a held night still gets a scene - the
+     door falls past doorSkeletonNow to here, and it is the beat's line, never a bit's */
+  if(doorsLive() && typedIsDoor(text)) return true;
+  var s = sceneNow(), nl = normLine(text);
+  return !!(s && railDeal[s.key] && typeof railDeal[s.key][nl] === "number");
+}
 /* F5: ASKED AND ANSWERED. Players repeat themselves - that is the finding, and it is
    the last law in the book. The Architect clicked one rail four times and got four
    different scenes, three of them about something else; in the room he asked one
@@ -15486,8 +15568,11 @@ function callDM(corrected, tag){
      authored wording is frequently pure stop-words to the topic scorer, and routing
      the ending into the bit channel would be the same defect wearing the other hat. */
   if(doorSkeletonNow() && callDoorTurn()) return;
+  /* ...and the rail exemption is by KIND, not by row membership: deck-bound lines and
+     stalls go to the deck, which handles both by design; a landing's conversational
+     rail line has to earn a card with evidence like any typed line - see deckHandled. */
   if(sceneSkeletonNow() && !sceneConfident()
-     && lastRail.indexOf(String(lastPlayerText || "")) === -1) return callBitTurn();
+     && !deckHandled(lastPlayerText)) return callBitTurn();
   if(sceneSkeletonNow() && callSceneTurn()) return;
   /* ...and the turns that are neither, which is how F1 got in */
   if(interludeNow() && callInterludeTurn()) return;
@@ -21401,6 +21486,17 @@ function verdictMap(){
    exits1 are new sentences, and both of them name Seven because both are about what he
    is owed. Door B also names Nine, because door B is addressed to her. Nothing else in
    the book moved: the corpus lost exactly the two lines the replacement removed. */
+/* v4.71.0, THE AUTHORING PASS: two entries moved, one correction each way, both at
+   a1-hum. shard:hand LOST t1p2 - the old line was Nine speaking mid-walk ("Skin on
+   the shard and I am a person at you"), and the pre-threshold rewrite removed her
+   worded voice from the walk, so the hand-move went with the words. shard:hand
+   GAINED Rt7p4 - the wants card's close was staged "there in the rain, from the
+   pocket" in a room that is out of the rain with her riding in his closed hand; the
+   corrected line moves her out of the HAND, truthfully, and the detector agrees.
+   The fear conversation appended to the room (Rt8*) fires nothing, which is right:
+   nobody dies, breaches, or is miscounted in it, and the board it plays on already
+   holds her where the scene says she is. Corpus 3,751 -> 3,759: plus the fear card's
+   nine lines, minus the one block the frightened rewrite tightened away. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -21408,7 +21504,7 @@ var VERDICT_FIXTURE = {
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1p2","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
@@ -22360,7 +22456,10 @@ function selfTest(){
           ["live", "slack"].forEach(function(ph){
             beatIdx = bi; phase = ph; chatLog = []; feedLog = []; topicSpent = {};
             runCanon = []; castSheets = {}; ledgerText = ""; beatText = ""; beatSeen = {};
-            lastPlayerText = "what is going on here"; lastRail = [lastPlayerText];
+            /* the press is a house stall - offered on every real row, and spending the
+               deck is its purpose. The fabricated "what is going on here" line lost its
+               deck immunity when the seam fix made the row exemption by KIND. */
+            lastPlayerText = PIN_STALLS[0]; lastRail = [lastPlayerText];
             /* ...with the flag DOWN first: the legacy path must still be the path */
             V5SCENE = false;
             if(sceneSkeletonNow()) pbBad.push(SPINE[bi].id + "/" + ph + ": the flag is down and the template path armed anyway");
@@ -22527,12 +22626,15 @@ function selfTest(){
       topicSpent = JSON.parse(spent);        /* the peek costs the deck nothing */
       return ok;
     }
-    /* one turn, taken the way a player takes it: through callDM, the only door */
+    /* one turn, taken the way a player takes it: through callDM, the only door.
+       THE PRESS IS THE ROW'S OWN (v4.71.0): the dealt rail while the deck has one,
+       the house stall when it is dry - which is exactly what a player can actually
+       click. The driver used to fabricate a line and mark it as offered, which rode
+       the row exemption into the deck; the seam fix narrowed that exemption to lines
+       the deck can actually answer for, and the driver follows the same law. */
     function barTurn(i){
-      lastPlayerText = "what happens now, exactly (" + i + ")";
-      /* TAKEN AS A RAIL PRESS, which is how a card is actually taken - and since F2 it
-         is the only way a line of pure stop-words takes one. The driver used to type
-         "what is going on here" and get a card, which was the defect. */
+      var deck = sceneRails(1);
+      lastPlayerText = deck.length ? deck[0] : PIN_STALLS[i % PIN_STALLS.length];
       lastRail = [lastPlayerText];
       lastTurnMud = false;
       turnToken++;                 /* a real player action; the context latch reads it */
@@ -22730,6 +22832,25 @@ function selfTest(){
         });
         evSaw.push(bits.length + " conversational lines reach the room instead of a scene"
           + " about something else, and " + asks.length + " that plainly ask still take their card");
+        /* THE SEAM (v4.71.0): the rail exemption is by kind. A deck-dealt line and a
+           house stall go to the deck; a landing's conversational rail line does not -
+           it was riding the row's immunity into pickTopic, where zero evidence deals
+           the first unspent card, and the hard landing's own repair line was answered
+           by the constitution lecture. Driven here on the real room: the dealt row is
+           exempt, the stall is exempt, the landing line is not and has no evidence,
+           so the route is the bit path - the family answers the LINE. */
+        (function(){
+          barBoard(beatById("a1-chase")); V5SCENE = true; phase = "slack";
+          var rs = sceneNow(), dealt = sceneRails(1)[0];
+          lastPlayerText = dealt;
+          if(!deckHandled(dealt)) evBad.push("a dealt rail lost its deck exemption");
+          if(!deckHandled(PIN_STALLS[0])) evBad.push("a house stall lost its deck exemption");
+          var landing = "Take her out properly and start again.";
+          lastPlayerText = landing;
+          if(deckHandled(landing)) evBad.push("a landing rail line still carries deck immunity");
+          if(sceneConfident()) evBad.push("the landing line scored a card on zero evidence");
+          evSaw.push("and the landing-rail seam is closed: unbound, unevidenced, answered as a bit");
+        })();
       } finally { barPut(k); }
     })();
     T("a line takes a card only when it is about something",
@@ -22925,17 +23046,24 @@ function selfTest(){
       try{
         barBoard(at);
         V5SCENE = true;
+        /* the railAlt ruling: a card with two authored wordings deals ONE of them per
+           run, so the row is asserted against the card, not against one wording -
+           either authored line is the deck's own. The binding assert below still runs
+           on whichever wording was actually dealt, which is the half that matters. */
+        var wordOf = function(t, ln){ return !!t && (ln === t.rail || (!!t.railAlt && ln === t.railAlt)); };
         var sc = sceneNow(), list = sc.sc.topics, row = railFor([]);
-        if(row[1] !== list[0].rail || row[2] !== list[1].rail){
+        if(!wordOf(list[0], row[1]) || !wordOf(list[1], row[2])){
           rwBad.push("the row under the door is not the deck: " + row.slice(1).join(" // "));
         }
         /* the binding: the line the row offered deals the card it was offered FROM */
         lastPlayerText = row[1];
         if(pickTopic(sc.sc, sc.key) !== list[0]) rwBad.push("clicking a rail dealt a different card");
-        /* ...and that card has now retired from the row */
+        /* ...and that card has now retired from the row - under either of its names */
         var row2 = railFor([]);
-        if(row2.indexOf(list[0].rail) !== -1) rwBad.push("a spent card is still on the row");
-        if(row2[1] !== list[1].rail) rwBad.push("the row did not walk on: " + row2[1]);
+        if(row2.indexOf(list[0].rail) !== -1 || (list[0].railAlt && row2.indexOf(list[0].railAlt) !== -1)){
+          rwBad.push("a spent card is still on the row");
+        }
+        if(!wordOf(list[1], row2[1])) rwBad.push("the row did not walk on: " + row2[1]);
         rwSaw.push("the row deals " + list.length + " cards in order and each retires as it is spent");
         /* the deck run dry: the row is the door and the house stalls, which is the
            deck telling the player this room is finished */
@@ -22957,7 +23085,7 @@ function selfTest(){
         if(!rs || !rs.room) rwBad.push("the room deck did not come up in slack");
         else {
           var rrow = railFor([]);
-          if(rrow[0] !== rs.sc.topics[0].rail){
+          if(!wordOf(rs.sc.topics[0], rrow[0])){
             rwBad.push("the family's own time still offers house stalls: " + rrow[0]);
           } else {
             rwSaw.push("the room leads with its own cards, not with PIN_STALLS");

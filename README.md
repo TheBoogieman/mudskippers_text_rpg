@@ -261,7 +261,12 @@ retiring the moment it is spent, and the line you click deals the card it was de
 from rather than the card a keyword scorer thinks you meant. When the deck runs dry
 the row falls back to the door and the stalls, which is the room telling you it is
 finished — and if you ask anyway, the family says *asked and answered* in their own
-voices instead of reheating a scene.
+voices instead of reheating a scene. Since v4.71.0 a handful of cards carry a second
+authored wording, and each run deals one of the two — stable for the whole run,
+different on the next playthrough — so a second run reads a little differently before
+it plays differently. And a suggestion the *landing* put on the row (a tender line, a
+piece of conversation) is answered as conversation, in the family's own voices — it no
+longer walks into the deck and comes back wearing whichever card was next in the pile.
 
 **And since v4.67.0 that is how a scene turn actually plays.** The card the client just
 dealt is served straight to the screen — the authored blocks, the fork's own frame — and
