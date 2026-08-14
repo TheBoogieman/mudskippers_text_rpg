@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.61.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.62.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5598,7 +5598,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.61.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.62.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7973,6 +7973,9 @@ var BIT_FALLBACK = [
  {who:"Three",    line:"Noted. Both voices heard it. Neither is dignifying it."},
  {who:"Vic",      line:"Say things like that in front of customers and watch what happens to the rates."},
  {who:"Marek",    line:"We took a vote in here just now. It's one all."},
+ {who:"Five",     line:"Logged as morale traffic. The convoy will proceed."},
+ {who:"Principal",line:"I have heard better arguments and eaten worse. Continue."},
+ {who:"Machine",  line:"I have kept that. Was it heavy to carry?"},
  {who:"Narration",line:"The family absorbs this the way the marsh absorbs weather - fully, and without being changed by it."}
 ];
 /* who may answer a bit right now: in the room, not fallen, and audible. Narration is
@@ -8076,7 +8079,9 @@ function bitVoices(){
   for(i = 0; i < here.length; i++){
     nm = here[i];
     if(nm === "Narration" || isCourier(nm) || nm === "Nine" || room.indexOf(nm) !== -1) continue;
-    if(bitAudible(nm)) room.push(nm);
+    /* audibility first, because it is the physical question; then whether there is
+       anybody in there to answer, which is not */
+    if(bitAudible(nm) && !BIT_NO_SELF[nm]) room.push(nm);
   }
   if(bitAudible("Nine")) out.push("Nine");
   /* THE ROOM TAKES TURNS, and it has to be said why. This walked here[] and took the
@@ -8151,6 +8156,23 @@ var BIT_VOICE_CARDS = {
    state and the writer's call to close. The machinery stands ready for the day an
    exclusion is true. */
 var BIT_CARD_EXCLUDED = {};
+/* THE TAKEN DO NOT TAKE TURNS. A bit is answered by a self, and hers is the thing
+   that was taken - her voice exists only where it is authored, because fixed and
+   finite IS her horror, and improvisation would hand it a personality to wear.
+   THIS IS NOT THE SAME QUESTION AS AUDIBILITY, and it is kept out of bitAudible on
+   purpose: audibility is physics - can this person hear - and Mirren hears fine.
+   Selfhood is canon. Two questions, two predicates; the day they are one predicate
+   is the day a fix aimed at either lands on the other.
+   It closes three doors from one fact, because one system with an exception is two
+   systems: no slot, no card, and no pool line. And it closes a fourth the sweep
+   measured on the way in - her NAME comes out of the ask's allowlist too, because
+   a1-late's own never-line says nobody says her name unless Vic has said it first,
+   and the ask was printing it at the head of the list on that very beat.
+   Nothing to trip and nothing to measure: this rests on a character fact the wants
+   board carries in its own hand - want: nothing, that is what was taken. */
+var BIT_NO_SELF = {
+  "Mirren": "no self to answer with - the machine's approved lines are authored, never improvised"
+};
 /* a voice with no card gets the role alone, which is the old behaviour and is not a
    failure - it is the sweep's job to say which seats are still uncarded rather than
    let an engineer invent a voice the writer has not written */
@@ -8171,7 +8193,14 @@ function bitNamesAllowed(slots){
   var out = [], seen = {};
   function add(x){ x = String(x || "").trim(); if(!x || seen[x]) return; seen[x] = 1; out.push(x); }
   (slots || []).forEach(function(sl){ if(sl.who !== "Narration") add(sl.who); });
-  metNames().forEach(add);
+  /* THE ASK OFFERS NO NAME THAT HAS NOBODY BEHIND IT. metNames is right for the cast
+     gate and wrong for this list: it counts TONIGHT'S ANCHORS as met, because on an
+     ordinary turn they are due to walk in - and on a bit nobody walks in at all. At
+     a1-late that put "Mirren" at the head of the names offered to the model, on the
+     beat whose own never-line reads: nobody says her name is Mirren unless Vic has
+     already said it to them. Measured, not reasoned: sixteen asks, her name in every
+     one. The no-self names come out here for the same reason they get no slot. */
+  metNames().forEach(function(nm){ if(!BIT_NO_SELF[nm]) add(nm); });
   /* he is in every one of these lines and the ask never named him, so the model
      spelled him off its own memory of the bible: two live fills came back with
      "theCourier", no space, which is what a model does with a name it has only
@@ -18897,7 +18926,7 @@ function selfTest(){
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
     "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow",
-    "bitClean", "bitAimFor", "bitVoices"];
+    "bitClean", "bitAimFor", "bitVoices", "bitNamesAllowed"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19994,18 +20023,119 @@ function selfTest(){
        object an ignored fifth argument, and the row goes green reporting a proof it
        never ran - which is the sweep flattering itself, in the file whose harness was
        rebuilt to stop exactly that. */
+    /* THE TAKEN DO NOT TAKE TURNS - and one fact closing four doors is four
+       assertions, not one. A rule that shuts the loudest door and leaves a quieter
+       one open is how "one system, no exceptions" becomes two systems by accident,
+       and this file has the scar: the pool was presence-gated for two releases
+       before anything asked whether it was slot-matched. So: no slot anywhere on
+       the board, no card, no pool line, and no name in the ask. The fourth is the
+       one that was already leaking. */
+    var selfBad = [], selfNames = Object.keys(BIT_NO_SELF);
+    selfNames.forEach(function(nm){
+      if(seats[nm]) selfBad.push(nm + " has no self and is seated on " + (seatWhere[nm] || []).join(", "));
+      if(BIT_VOICE_CARDS[nm]) selfBad.push(nm + " has no self and carries a voice card");
+      if(BIT_CARD_EXCLUDED[nm]) selfBad.push(nm + " is closed twice, by canon and by reachability - one reason, or the other lapses unwatched");
+    });
+    BIT_FALLBACK.forEach(function(e){
+      if(BIT_NO_SELF[e.who]) selfBad.push("the pool speaks as " + e.who + ", who has no self to speak with");
+    });
+    /* the fourth door, walked rather than reasoned about: her own beat, both shard
+       states, and the whole of Book One in case another beat anchors her early */
+    (function(){
+      var k4 = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+                cast:castSheets, canon:runCanon, gn:gateNotes, said:lastPlayerText,
+                fp:foldPending, wb:walkbackNow, ov:runOver};
+      try{
+        chassisHolder = null; foldPending = false; walkbackNow = false; runOver = "";
+        roster = {family:[], fallen:[]}; castSheets = {}; runCanon = []; gateNotes = {};
+        phase = "live"; lastPlayerText = "a bit, on the night she is the anchor";
+        for(var b4 = 0; b4 < SPINE.length; b4++){
+          beatIdx = b4;
+          ["hand", "jacket"].forEach(function(sw4){
+            shardWhere = sw4;
+            var offered = bitNamesAllowed(bitSlots());
+            selfNames.forEach(function(nm){
+              if(offered.indexOf(nm) !== -1){
+                selfBad.push("the ask offers " + nm + " as a name at " + SPINE[b4].id);
+              }
+            });
+          });
+        }
+      } finally {
+        beatIdx = k4.bi; phase = k4.ph; shardWhere = k4.sw; chassisHolder = k4.ch;
+        roster = k4.ro; castSheets = k4.cast; runCanon = k4.canon; gateNotes = k4.gn;
+        lastPlayerText = k4.said; foldPending = k4.fp; walkbackNow = k4.wb; runOver = k4.ov;
+      }
+    })();
+    T("the taken do not take turns", selfBad.length === 0,
+      selfBad.length ? selfBad.join("; ")
+        : selfNames.join(", ") + " · no slot on any of " + SPINE.length + " beats,"
+          + " no card, no pool line, and no name in the ask",
+      {label:"the seating without the canon question - audibility asked, selfhood not",
+       was:function(){
+         var sc5 = sceneNow(), h5 = (sc5 && sc5.sc && sc5.sc.here) || [], r5 = [], o5 = [], j5, nm5, pk5;
+         for(j5 = 0; j5 < h5.length; j5++){
+           nm5 = h5[j5];
+           if(nm5 === "Narration" || isCourier(nm5) || nm5 === "Nine" || r5.indexOf(nm5) !== -1) continue;
+           if(bitAudible(nm5)) r5.push(nm5);
+         }
+         if(bitAudible("Nine")) o5.push("Nine");
+         var salt5 = "bitvoice|" + (beatDone() ? "end" : beatNow().id)
+                   + "|" + String(lastPlayerText || "").length
+                   + "|" + String(lastPlayerText || "").slice(0, 12);
+         while(r5.length && o5.length < BIT_VOICE_CAP){
+           pk5 = pickVariant(r5, salt5 + "|" + o5.length);
+           o5.push(pk5); r5.splice(r5.indexOf(pk5), 1);
+         }
+         return o5.slice(0, BIT_VOICE_CAP);
+       },
+       /* she hears perfectly well, so audibility alone seats her - which is the whole
+          reason the two questions are two predicates */
+       check:function(w){
+         var real = window.bitVoices, hit = 0;
+         var k5 = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+                   said:lastPlayerText, fp:foldPending, wb:walkbackNow, ov:runOver};
+         try{
+           window.bitVoices = w;
+           chassisHolder = null; foldPending = false; walkbackNow = false; runOver = "";
+           roster = {family:[], fallen:[]}; phase = "live";
+           for(var b5 = 0; b5 < SPINE.length; b5++){
+             beatIdx = b5;
+             ["hand", "jacket"].forEach(function(sw5){
+               shardWhere = sw5;
+               ["a", "bb", "ccc", "dddd"].forEach(function(t5){
+                 lastPlayerText = t5;
+                 bitSlots().forEach(function(sl){ if(BIT_NO_SELF[sl.who]) hit++; });
+               });
+             });
+           }
+         } finally {
+           window.bitVoices = real;
+           beatIdx = k5.bi; phase = k5.ph; shardWhere = k5.sw; chassisHolder = k5.ch;
+           roster = k5.ro; lastPlayerText = k5.said; foldPending = k5.fp;
+           walkbackNow = k5.wb; runOver = k5.ov;
+         }
+         return hit === 0;
+       }});
+
     T("no exclusion has outlived its reason",
       Object.keys(BIT_CARD_EXCLUDED).filter(function(nm){ return !!seats[nm]; }).length === 0,
       Object.keys(BIT_CARD_EXCLUDED).length
         ? Object.keys(BIT_CARD_EXCLUDED).length + " exclusion(s), each still dead data"
         : "the registry is empty at rest, as VERDICT_ALLOW is - nothing is being kept quiet",
-      {label:"the Mirren exclusion as commissioned - dead data, on a name the board seats for three beats",
-       was:{"Mirren":"fallen before the first bit can fire; a card here would be dead data"},
-       /* THE TRIPWIRE, RUN AGAINST THE ENTRY THAT MOTIVATED IT. She is alive and in
-          the room at a1-late, a2-ground and a2-hand, and falls only at the close of
-          the third - so every bit fired in those rooms seats her, in both shard
-          states. An exclusion saying a card for her would be dead data is a claim the
-          board contradicts sixteen times in the first of those rooms alone.
+      {label:"an exclusion on Pia - the busiest seat on the board, called dead data",
+       was:{"Pia":"a card here would be dead data"},
+       /* THIS ROW HAS ALREADY OUTLIVED ONE BROKEN FORM, and the harness said so rather
+          than letting it rot. The Mirren exclusion was the natural case for exactly one
+          release: she was seated at a1-late, a2-ground and a2-hand, sixteen asks out of
+          sixteen in the first of them. Then BIT_NO_SELF stopped the composer seating
+          her at all - which made "a card for Mirren would be dead data" TRUE, and a
+          broken form that has become true is not a broken form. It went red as "THE
+          CASE CANNOT FAIL", which is the third time this project has watched a fixture
+          stop discriminating under a change made somewhere else.
+          So it is repointed at the seat the board can least do without. Pia is seated
+          on every beat of every night; an exclusion calling her dead data is a claim
+          nothing could make true, which is what a durable broken form looks like.
           Counted through bitSlots rather than off a scene-book list, because the
           question is what the composer DOES, not what the rooms look like. */
        check:function(w){
