@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.62.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.63.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2345,7 +2345,14 @@ var SPINE = [
  walks:["Drop her and run. I would rather be lost than led.",
         "Put her down in the dark and take my chances alone.",
         "Stop listening to the voice in my hand and get out my own way."],
- opens:[{day:"3", time:"12:40am", place:"THE CAUSEWAY, CORDONED", amb:"danger",
+ /* SHE IS IN HIS HAND FOR THIS WHOLE BEAT, AND IT IS A FIELD RATHER THAN A CLAIM.
+    The night is Nine talking him through a cordon step by step - she cannot do it
+    through cloth, and every line she has here depends on it. The brief that
+    commissioned the gauntlet said she was in-hand "by the card's own opens"; the
+    opens did not say so, and the physics desk refused all four teeth passages the
+    moment they arrived. This file already learned this exact lesson on the first
+    night's hard landing: where the board's prose leaves her is a field. */
+ opens:[{day:"3", time:"12:40am", place:"THE CAUSEWAY, CORDONED", amb:"danger", shard:"hand",
        now:"Day 3, after midnight, on the causeway with a Choir cordon across it and the ring closing on the marsh house behind them. Nine is in the courier's hand.",
        lines:["A sweep sounds like nothing at all, which is the single worst thing about it.",
               "You are eighty metres onto the causeway when the air changes pressure and every light on the far bank goes the same shade of nothing. Nobody came looking for this. It came out here, to the water, to the one road in.",
@@ -2380,7 +2387,33 @@ var SPINE = [
         "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
  canon:["Nine knows the Choir from the inside - patrol rhythms, intake choreography, what an idling Hollow does and does not see.",
         "What Nine knows is a season stale, and she said so herself."],
- scar:"The sweep passed over them more than they beat it; Nine spent what she knew and it went unthanked."},
+ scar:"The sweep passed over them more than they beat it; Nine spent what she knew and it went unthanked.",
+ teeth:{when:{onExit:true}, threat:"the cordon's last gap",
+  stages:[
+   {scene:["The last stretch is eighty metres of open causeway with one Hollow idling on it, stopped where her choreography says nothing ever stops. The gap past it is right there, wide as a door, lit like an invitation.",
+     ["Nine","That one is wrong. It is standing in my blind spot - MY blind spot, the one I told you about. Down. We wait for its turn to breathe."],
+     "Out on the water the ring is not searching. It is closing. A sweep does not look for you; it arrives where you are."],
+    rail:[{text:"Get down and wait for her count.", key:"down wait count crouch hide listen her nine word"},
+      {text:"Run the gap while it idles - it is right there.", tempt:true},
+      {text:"Slide into the drain mouth and take the water.", key:"drain water slide ditch under low crawl mud"}]},
+   {scene:["Halfway, and the sweep tightens a street early. Her map is a season stale and she says so, out loud, in your palm - the one thing she never wanted to say mid-crossing.",
+     ["Nine","They changed the interval. I am counting the new one. Twenty metres, back door, when I say and not before - I am asking you to be slower than your legs want."],
+     "The light on the water goes the same shade of nothing it went on the causeway two nights ago, forever ago."],
+    rail:[{text:"Freeze on her word and let it pass.", key:"freeze wait stop still hold word count let pass"},
+      {text:"Sprint it - twenty metres, one straight line, done.", tempt:true},
+      {text:"Take the reeds and roll the last stretch through the mud.", key:"reeds mud roll low crawl slow around flank"}]}],
+  death:"He ran the gap his own eyes liked instead of the one she knew - and a sweep does not chase; it is already where you are going.",
+  deathScene:["You run. Your eyes were right about the distance and wrong about everything else: the Hollow's head comes around at exactly the beat her choreography said it could not, because the choreography changed a season ago and she told you so.",
+   ["Nine","No no no - the interval, the interval, I had the interval - "],
+   "The ring closes the way the city closes everything: like paperwork. The last thing the night files is her voice against your palm, very small, saying the count that would have worked."],
+  clearScene:["You are slower than your legs want, twice, on her numbers, and the sweep goes over you the way weather goes over a rock.",
+   ["Nine","Now. Walk. Do not run - running is a shape they know. Walking is furniture."],
+   "The back door takes you in like it was told to expect you. Behind you the ring stands on the water all night, patient, arresting nobody."],
+  grazeScene:["The count goes wrong by one - hers or yours, there will be a family inquest - and the drain takes you the fast way: sideways, wet, and entirely out of view.",
+   ["Nine","Alive? Say alive. - Then that counts. We are counting that."],
+   "You come up under the pilings with the marsh in your coat and one boot full of the causeway's opinion of you, and you crawl the last stretch home on her whisper."],
+  grazeCanon:"The drain took the crossing's dignity and kept the coat's smell for a week.",
+  surviveCanon:"Nine counted him through the cordon's last gap on a season-stale map, and it held."}},
 
 {id:"a1-turn", season:1, act:3, title:"the keeping",
  goal:"SEASON FINALE. The courier chooses Nine - not as cargo but as a person he is now responsible for. The series' real subject starts here.",
@@ -5598,7 +5631,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.62.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.63.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7950,11 +7983,16 @@ var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
    The tempted-once ask-state rides in the save beside stage and stalls: refresh must
    not un-ask the tempting door.
 
-   THE RUNTIME IS NOT BUILT YET. This release lands the shape, the normative card and
-   the guard rails; TEETH_LIVE is the one switch that turns the substitution law on, and
-   it is off. Nothing reads `teeth` at runtime. See the brief for why the engine gets a
-   session of its own rather than the tail of this one. */
-var TEETH_LIVE = false;      /* the engine is not here yet; this is its only switch */
+   THE RUNTIME IS BUILT AND THE SWITCH IS UP. See THE TEETH ENGINE for the three
+   boundary laws and how each is held. What TEETH_LIVE gates is narrow and worth
+   knowing precisely: it turns on the SUBSTITUTION - the door opening an attempt
+   instead of a close - and nothing else. Ambient cards, which arm on their own
+   when-clause rather than on the door, do not read it.
+   AND EVERY CARD CARRIES ITS OWN SECOND SWITCH: live:false means authored, ritual-
+   checked, and dark. Lethal content is signed off separately from the code that runs
+   it, so a card can be written and shipped months before it is allowed to kill
+   anybody. attemptCard refuses a dark card outright; the ritual still checks it. */
+var TEETH_LIVE = true;       /* the substitution is live; this is its only switch */
 /* ---- THE BIT FALLBACK ----
    Phase A's template. A bit is a RESPONSE - the player typed something daft or deep
    and the family answers it - so the fallback cannot be ambient chatter; the table-talk
@@ -9557,7 +9595,219 @@ function bookFor(said, forcing, pick, gauntlet){
 function gauntletNow(){
   if(!TEETH_LIVE || beatDone() || runOver) return false;
   var t = beatNow().teeth;
-  return !!(t && t.when && t.when.onExit);
+  return !!(t && t.when && t.when.onExit && t.live !== false);
+}
+
+/* ================== THE TEETH ENGINE ==================
+   An ATTEMPT is the peril, open, owning the rail. It is opened by the door on a
+   gauntlet beat or armed ambiently by the card's own when-clause, and it resolves
+   one of three ways: clear, graze, death.
+
+   LAW ONE - THE CLOCK IS SUSPENDED, AND IT IS SUSPENDED BY UNREACHABILITY RATHER
+   THAN BY A GUARD. Nothing in here calls the model, so callDM never runs, so
+   boardTurn never runs - and boardTurn is the only place beatTurns is incremented,
+   tolls are paid, drift is counted and the beat can close. A guard would have been a
+   fourth thing to keep in step with three others; this is the same fact holding all
+   four. The sweep drives a whole attempt and asserts the four numbers do not move.
+
+   LAW TWO - TWO STALLS AND THE FAMILY MOVES. A peril is the one place in this game
+   where doing nothing is itself an answer, and the answer the fiction gives is that
+   somebody who loves you does the thing instead. That is the graze: survived, marked,
+   and not by your hand. It is deliberately the SAME number as nothing else - the
+   strip's patience is its own, because a peril runs on held breath and not on the
+   night's clock, which is suspended anyway.
+
+   LAW THREE - THE TEMPTING DOOR ASKS TWICE AND THE ASK SURVIVES A REFRESH. Every
+   consequential door in this game asks twice - the exit, the walk, and now this. The
+   armed state rides in the save beside the stage and the stall count, because a
+   player who reloads mid-peril and finds the fatal door un-asked has been handed a
+   free undo on the one decision the game refuses to take back.
+
+   AND THE ATTEMPT IS SILENT ON THE WIRE, press to resolution. A typed line resolves
+   against the stage's own keys, client-side; a bit inside an attempt is answered
+   from the pool, client-side. Nothing here composes a briefing, so "forcing never
+   meets an open attempt" is an inspection and not a claim. */
+var attemptOn = false;       /* a peril is open and owns the rail */
+var attemptStage = 0;        /* which stage of the card */
+var attemptStalls = 0;       /* stalls inside it; the family moves at two */
+var attemptTempted = false;  /* the tempting door has been asked once at this stage */
+var ATTEMPT_PATIENCE = 2;
+function attemptCard(){
+  if(beatDone() || runOver) return null;
+  var t = beatNow().teeth;
+  /* live:false is the author's own gate: a card may be written, ritual-checked and
+     dark, because lethal content is signed off separately from the code that runs it */
+  if(!t || t.live === false) return null;
+  return (t.stages && t.stages.length) ? t : null;
+}
+function attemptStageNow(){
+  var t = attemptCard();
+  if(!t) return null;
+  return t.stages[Math.min(attemptStage, t.stages.length - 1)] || null;
+}
+function attemptLast(){
+  var t = attemptCard();
+  return !!t && attemptStage >= t.stages.length - 1;
+}
+function attemptOpen(){
+  var t = attemptCard();
+  if(!t || attemptOn || runOver) return false;
+  attemptOn = true; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
+  /* the strip carries the threat by NAME while the peril is open - the warning is
+     ambient and honest, which is the half of the temptation rule the room owes */
+  perilTurns = 2; perilName = perilShortName(t.threat);
+  termBuzz();
+  attemptPlay();
+  return true;
+}
+function attemptPlay(){
+  var st = attemptStageNow();
+  if(!st) return;
+  playAuthored({lines:st.scene}, "teeth|" + beatNow().id + "|" + attemptStage);
+  applyTension();
+  renderNow();
+  attemptRail();
+  persistAll([]);
+}
+/* the attempt owns the rail outright: no exit, no walk. You do not leave a peril by
+   the front door, and offering one would be the game lying about what a peril is. */
+function attemptRail(){
+  var box = $("choices"); box.innerHTML = "";
+  var st = attemptStageNow();
+  if(!st) return;
+  (st.rail || []).forEach(function(r, i){
+    if(!r || !r.text) return;
+    var armed = !!(r.tempt && attemptTempted);
+    var btn = document.createElement("button");
+    btn.className = "choice" + (armed ? " armed" : "");
+    btn.innerHTML = '<span class="n">' + (i + 1) + '</span>'
+      + esc(armed ? ("Sure? " + r.text) : r.text);
+    btn.onclick = function(){ attemptTake(i); };
+    box.appendChild(btn);
+    if(armed){
+      var h = document.createElement("div");
+      h.className = "choice-hint walkhint";
+      h.textContent = "Pick anything else and it is forgotten.";
+      box.appendChild(h);
+    }
+  });
+  dbgTick();
+}
+function attemptSaid(text){
+  var pb = {kind:"player", text:String(text), mud:false, speaker:"__player"};
+  renderBlock(pb); feedLog.push(pb);
+  ledgerText += "\n\n> **PLAYER:** " + String(text);
+  scrollFeed();
+}
+function attemptTake(i){
+  if(!attemptOn || busy || runOver) return;
+  var st = attemptStageNow(), r = st && st.rail && st.rail[i];
+  if(!r || !r.text) return;
+  if(r.tempt){
+    /* ASKS TWICE. The first click arms and re-warns; only the second is taken. */
+    if(!attemptTempted){ attemptTempted = true; attemptRail(); persistAll([]); return; }
+    attemptTempted = false;
+    attemptSaid(r.text);
+    /* ...and the second click is deeper in, not dead, while the card has road left.
+       Only the tempting door on the last stage kills. */
+    if(attemptLast()){ attemptDeath(); return; }
+    attemptStalls = 0; attemptStage++; attemptPlay(); return;
+  }
+  attemptTempted = false;
+  attemptSaid(r.text);
+  if(attemptLast()){ attemptClear(); return; }
+  attemptStalls = 0; attemptStage++; attemptPlay();
+}
+/* A TYPED LINE RESOLVES AGAINST THE STAGE'S OWN KEYS, and the keyless door is the
+   law: the fatal option carries no key at all, so no sentence anybody types can ever
+   resolve as the death. Reaching for it in words is a stall, which is survivable. */
+function attemptTyped(text){
+  var st = attemptStageNow();
+  if(!st){ return; }
+  var tok = topicTokens(text), hit = -1, best = 0, i, j, w, sc;
+  for(i = 0; i < (st.rail || []).length; i++){
+    var r = st.rail[i];
+    if(!r || r.tempt || !r.key) continue;
+    w = String(r.key).split(" "); sc = 0;
+    for(j = 0; j < w.length; j++){
+      if(!w[j]) continue;
+      if(TOPIC_STOP.indexOf(" " + w[j] + " ") !== -1) continue;
+      if(tok.indexOf(" " + w[j] + " ") !== -1) sc++;
+    }
+    if(sc > best){ best = sc; hit = i; }
+  }
+  if(hit !== -1){ attemptTake(hit); return; }
+  attemptStall();
+}
+/* a bit inside a peril is still a bit - immune, free, and answered by the room from
+   the pool. It is not a stall: the joke is not the player failing to act, it is the
+   player being himself with a hand on the rail. */
+function attemptBit(){
+  var blocks = bitBlocks(bitSlots(), null);
+  blocks.forEach(function(b){ renderBlock(b); feedLog.push(b); });
+  scrollFeed();
+  attemptRail();
+  persistAll([]);
+}
+function attemptStall(){
+  attemptStalls++;
+  if(attemptStalls >= ATTEMPT_PATIENCE){ attemptGraze(); return; }
+  var st = attemptStageNow();
+  var b = {speaker:"Narration", text:"Nothing you said moves you, and the "
+    + ((attemptCard() || {}).threat || "night") + " does not wait to be understood."};
+  renderBlock(b); feedLog.push(b);
+  scrollFeed();
+  attemptRail();
+  persistAll([]);
+  if(st){ /* the rail stands; the stage does not advance on a stall */ }
+}
+function attemptClose(){
+  attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
+  perilTurns = 0; perilName = "";
+}
+/* the two survivals both LAND the beat, because the attempt was opened by the door
+   and the door is the player doing their part. Clear pays nothing; graze is the
+   family moving when the player did not, and it is marked in the record rather than
+   charged - the toll is for a question the night answered without you, and this one
+   the night answered WITH you, badly. */
+function attemptClear(){
+  var t = attemptCard();
+  if(t && t.clearScene) playAuthored({lines:t.clearScene}, "teeth|clear|" + beatNow().id);
+  if(t && t.surviveCanon) mergeCanon([t.surviveCanon]);
+  attemptResolveClose();
+}
+function attemptGraze(){
+  var t = attemptCard();
+  if(t && t.grazeScene) playAuthored({lines:t.grazeScene}, "teeth|graze|" + beatNow().id);
+  if(t && t.grazeCanon) mergeCanon([t.grazeCanon]);
+  attemptResolveClose();
+}
+function attemptResolveClose(){
+  var wasGauntlet = !!(attemptCard() && attemptCard().when && attemptCard().when.onExit);
+  attemptClose();
+  if(runOver) return;
+  /* a gauntlet was the door; an ambient peril was not, and the night goes on */
+  if(wasGauntlet) closeBeat(false, "");
+  renderNow();
+  var rail = currentChoices();
+  if(beatJustCleared){
+    var jc = beatJustCleared; beatJustCleared = null;
+    pushBeatCard(jc);
+    if(!runOver && !foldPending && !beatDone() && !seasonBreakDue){
+      var lr = playLanding(jc.id, jc.forced);
+      if(lr) rail = lr;
+    }
+  }
+  showChoices(rail);
+  persistAll(rail);
+}
+function attemptDeath(){
+  var t = attemptCard();
+  if(t && t.deathScene) playAuthored({lines:t.deathScene}, "teeth|death|" + beatNow().id);
+  var line = (t && t.death) || "";
+  attemptClose();
+  killCourier(line);
+  persistAll([]);
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
@@ -12673,6 +12923,27 @@ function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
   if(!runSlug){ newRun(false); return; }   /* no run yet: the opening plays, the text does not */
   if(introStage === 1 && isMud){ dmAside(text.trim()); return; }
+  /* AN OPEN ATTEMPT OWNS THE TURN AND ANSWERS IT HERE. Nothing below this line runs
+     - no kind, no door, no breach classifier, no briefing, no call. That is what
+     "silent on the wire from press to resolution" means in code rather than in a
+     comment, and it is why the clock cannot tick during a peril: boardTurn is the
+     only thing that moves it and boardTurn is downstream of a reply that never
+     comes. The rail buttons do not arrive here at all; they call attemptTake. */
+  if(attemptOn){
+    lastPlayerText = text.trim();
+    $("mudinput").value = "";
+    if(isMud){
+      var pbA = {kind:"player", text:text.trim(), mud:true, speaker:"__player"};
+      renderBlock(pbA); feedLog.push(pbA);
+      ledgerText += "\n\n> **MUDSKIPPER MOMENT:** " + text.trim();
+      scrollFeed();
+      attemptBit();
+      return;
+    }
+    attemptSaid(text.trim());
+    attemptTyped(text.trim());
+    return;
+  }
   /* the reveal turn is the game's, not the DM's - it needs no key and no call */
   var intro = (introStage === 1);
   if(!intro && !settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
@@ -12768,6 +13039,16 @@ function takeAction(text, isMud){
      the NEXT full turn composes from, where it reads as something the model was
      told and ignored. What the history needs is the fact: he did a bit, and here it
      is. */
+  /* THE DOOR OPENS THE ATTEMPT, AND THE REQUEST IS NEVER COMPOSED. The press knows
+     pick and the flag right here, a whole wire round-trip before boardTurn would
+     have booked anything - so "said" collapses to false by construction, because no
+     reply exists to land a gate on. The floor is honoured first: below it the door
+     HOLDS, as it has since v4.44, and a peril that opened on a night with two turns
+     still to run would be the door lying twice over. */
+  if(pickKind === "exit" && gauntletNow() && beatTurns >= beatFloor(beatNow())){
+    chatLog.push({role:"user", content:"The courier goes for it: " + text.trim()});
+    if(attemptOpen()) return;
+  }
   var userMsg = isMud
     ? (bitSkeletonNow()
        ? "MUDSKIPPER MOMENT: " + text.trim()
@@ -13682,6 +13963,10 @@ function saveBlob(){
     history:chatLog.slice(-HISTORY_KEEP), trimmed:true, feedLog:feedLog,
     day:$("hud-day").textContent, loc:$("hud-loc").textContent,
     choices:currentChoices(), ledgerText:ledgerText,
+    /* THE PERIL SURVIVES A REFRESH, ARMED DOOR AND ALL. A player who reloads
+       mid-attempt and finds the fatal door un-asked has been handed a free undo on
+       the one decision this game refuses to take back. */
+    att:{on:attemptOn, stage:attemptStage, stalls:attemptStalls, tempted:attemptTempted},
     now:nowText, time:nowTime, amb:currentAmbience, season:currentSeason,
     cast:castSheets, canon:runCanon, archive:canonArchive,
     milestones:milestones, quests:quests, interludesUsed:interludesUsed,
@@ -18170,6 +18455,7 @@ function newRun(confirmFirst, bare){
   slackTurns = 0; slackRoom = ""; slackDoorUp = false; slackMovedTo = ""; slackWalkedIn = [];
   foldServed = false; foldedBeats = []; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
+  attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
   pressureSent = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
@@ -18230,6 +18516,19 @@ function newRun(confirmFirst, bare){
   applyVisuals();          /* rain in the very first scene */
 }
 
+/* A PERIL COMES BACK OPEN, WITH ITS DOOR STILL ASKED. Everything else in the blob is
+   state the next turn recomputes; this is state the player is standing inside. */
+function attemptRestore(d){
+  var a = d && d.att;
+  attemptOn = !!(a && a.on);
+  attemptStage = (a && a.stage) || 0;
+  attemptStalls = (a && a.stalls) || 0;
+  attemptTempted = !!(a && a.tempted);
+  /* an older save has no att at all, and that is a save from before perils existed -
+     it restores to no peril, which is exactly right and needs no migration */
+  if(attemptOn && !attemptStageNow()){ attemptOn = false; attemptStage = 0; }
+  return attemptOn;
+}
 function restoreFromBlob(s){
   if(!s || !s.feedLog || !s.feedLog.length) return false;
   /* the rehearsal guard was eight mutations down the function, so loading a leaked
@@ -18277,6 +18576,7 @@ function restoreFromBlob(s){
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
   foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
+  attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
   agendaText = s.agenda||"";
   mapEdges = s.map||[]; placeNotes = s.places||{};
   roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
@@ -18386,6 +18686,9 @@ function restoreFromBlob(s){
     showChoices(pr);
     persistAll(pr);
   }
+  /* the peril owns the rail, so it renders its own - the saved choices array is the
+     rail from BEFORE the door was taken and would offer a way out of a peril */
+  else if(attemptRestore(s)) attemptRail();
   else showChoices(s.choices && s.choices.length ? s.choices : OPENING.choices);
   scrollFeed();
   maybeRehydrate();
@@ -18469,6 +18772,14 @@ function applyLaunchParams(){
    That check lived in a scratch file and ran when somebody remembered. It is
    part of the artifact now: open index.html?selftest, or in CI read
    window.__SELFTEST__ after load. ==================================== */
+/* the world a peril stands in: its beat's own opening. A teeth passage carries no
+   place and no clock - an attempt happens where the beat already is - but it does
+   inherit where the beat put HER, because that is the one piece of state every line
+   she has in a peril depends on. */
+function teethState(b){
+  var o = (b && b.opens && b.opens[0]) || null;
+  return (o && (o.shard === "hand" || o.shard === "jacket")) ? {shard:o.shard} : {};
+}
 function stPassages(){
   /* every authored passage in the build, with the world it claims */
   var out = [];
@@ -18490,14 +18801,19 @@ function stPassages(){
     (t.stages || []).forEach(function(st, si){
       var sc = asScene(st.scene);
       if(!sc.length) return;
-      out.push({id:b.id + "/teeth[" + si + "]", beat:i, passage:{},
+      out.push({id:b.id + "/teeth[" + si + "]", beat:i, passage:teethState(b),
                 scene:sc, canon:[], choices:(st.rail || []).map(function(r){ return r && r.text; })});
     });
+    /* A PERIL HAPPENS INSIDE ITS BEAT, so it is judged in the state that beat opens
+       in - the desk was reading every teeth passage against an unset board and
+       refusing Nine her lines on the one night whose entire content is Nine talking.
+       The passages were being asked a question about a room they were never told
+       they were standing in. */
     [["death", t.deathScene, t.death], ["clear", t.clearScene, t.surviveCanon],
      ["graze", t.grazeScene, t.grazeCanon]].forEach(function(pair){
       var sc = asScene(pair[1]);
       if(!sc.length) return;
-      out.push({id:b.id + "/teeth[" + pair[0] + "]", beat:i, passage:{},
+      out.push({id:b.id + "/teeth[" + pair[0] + "]", beat:i, passage:teethState(b),
                 scene:sc, canon:(pair[2] ? [pair[2]] : []), choices:[]});
     });
   });
@@ -18677,105 +18993,21 @@ function verdictMap(){
    the result in beside the code that changed it. Never regenerate to make a red row
    go green without reading the diff first: that is the one move this whole mechanism
    exists to prevent. */
+/* v5.9: three new entries, all of them the a1-carried gauntlet card's own prose
+   saying what it should. named:Nine on teeth/survive - the survive canon names her.
+   shard:hand on teeth/d2 and teeth1/s0 - "her voice against your palm" and "out
+   loud, in your palm", which is the whole beat: she is in his hand for it, and the
+   beat's opens now says so as a field. Read the diff before believing this line. */
 var VERDICT_FIXTURE = {
-  "death": [
-    "a3-vic/before", "open/canon6", "open/s3"
-  ],
-  "named:Nine": [
-    "a1-carried/aim", "a1-carried/before", "a1-carried/canon0", "a1-carried/canon1",
-    "a1-carried/exits0", "a1-carried/goal", "a1-carried/lands0/now",
-    "a1-carried/landsHard0/l1", "a1-carried/landsHard0/now", "a1-carried/never0",
-    "a1-carried/opens0/now", "a1-carried/scar", "a1-carried/walk", "a1-chase/Rt7g",
-    "a1-chase/lands0/r0", "a1-exit/aim", "a1-exit/before", "a1-exit/canon0",
-    "a1-exit/exits0", "a1-exit/never2", "a1-exit/opens0/l4", "a1-exit/opens0/now",
-    "a1-exit/press1", "a1-fare/before", "a1-hum/before",
-    "a1-hum/canon0", "a1-hum/canon1", "a1-hum/canon2", "a1-hum/exits1", "a1-hum/goal",
-    "a1-hum/lands0/now", "a1-hum/landsHard0/l4", "a1-hum/landsHard0/now",
-    "a1-hum/landsHard0/r1", "a1-hum/never0", "a1-hum/never1", "a1-hum/scar",
-    "a1-late/lands0/r0", "a1-late/landsHard0/r0", "a1-pack/before", "a1-pack/lands0/r2",
-    "a1-pack/opens0/r0", "a1-turn/before", "a1-turn/canon0", "a1-turn/goal",
-    "a1-turn/lands0/r1", "a1-turn/landsHard1/l6", "a1-turn/landsHard1/r1",
-    "a1-turn/opens0/now", "a1-turn/scar", "a1-vic/t2g", "a2-chassis/aim",
-    "a2-chassis/before", "a2-chassis/canon0", "a2-chassis/canon1", "a2-chassis/canonAlt0",
-    "a2-chassis/exits0", "a2-chassis/exits2", "a2-chassis/goal", "a2-chassis/lands0/now",
-    "a2-chassis/opens0/r0", "a2-chassis/t0g", "a2-door/opens0/r1", "a2-seven/Rt1g",
-    "a2-turn/lands1/r0", "a3-descent/lands0/r2", "a3-evict/lands1/l3", "a3-for/goal",
-    "a3-for/lands0/r2", "a3-for/landsHard0/r2", "open2/s3", "want0", "want1", "want2",
-    "want3", "want4"
-  ],
-  "named:Three": [
-    "a1-carried/never2", "a1-chase/t2g", "a1-turn/landsHard1/l2",
-    "a1-turn/landsHard1/l3", "a1-turn/landsHard1/l5", "a2-annul/aim", "a2-annul/exits0",
-    "a2-annul/goal", "a2-annul/lands0/r2", "a2-annul/landsHard0/r1", "a2-annul/never2",
-    "a2-annul/opens0/l0", "a2-annul/opens0/now", "a2-annul/opens0/r1", "a2-annul/press0",
-    "a2-annul/walk", "a2-choir/Rt1g", "a2-choir/aim", "a2-choir/canon3", "a2-choir/exits0",
-    "a2-choir/goal", "a2-choir/lands0/l2", "a2-choir/lands0/l3", "a2-choir/lands0/l4",
-    "a2-choir/lands0/now", "a2-choir/landsHard0/l2", "a2-choir/landsHard0/l4",
-    "a2-choir/landsHard0/now", "a2-choir/never0", "a2-choir/opens0/r0", "a2-choir/scar",
-    "a2-choir/t1g", "a2-choir/walk", "a2-ground/never1", "a2-ground/opens0/l3",
-    "a2-hand/goal", "a2-hand/never2", "a2-hand/opens0/l2", "a2-housing/lands0/l4",
-    "a2-housing/lands0/r1", "a2-housing/landsHard0/l4", "a2-housing/landsHard0/r2",
-    "a2-housing/opens0/l4", "a2-housing/opens0/r0", "a2-law/before", "a2-law/landsHard0/l0",
-    "a2-law/press0", "a2-manual/never0", "a2-seven/never0", "a2-seven/opens0/r1",
-    "a2-three/before", "a2-three/canon0", "a2-three/canon1", "a2-three/exits0",
-    "a2-three/goal", "a2-three/lands0/l4", "a2-three/lands0/now", "a2-three/landsHard0/l4",
-    "a2-three/landsHard0/now", "a2-three/opens0/l0", "a2-three/opens0/now",
-    "a2-three/press0", "a2-three/scar", "a2-three/t0g", "a2-three/walk", "a2-turn/before",
-    "a2-turn/canon0", "a2-turn/goal", "a2-turn/lands0/r0", "a2-turn/press0",
-    "a3-descent/landsHard0/r1", "a3-evict/Rt0g", "a3-evict/lands0/l2", "a3-evict/lands1/l2",
-    "a3-for/goal", "a3-founding/landsHard0/r2", "a3-granny/t0g", "a3-seize/canon7",
-    "a3-vic/lands0/l3", "want17", "want18"
-  ],
-  "named:Five": [
-    "a1-turn/opens0/l1", "a2-annul/aim", "a2-annul/before", "a2-annul/canon0",
-    "a2-annul/canon2", "a2-annul/exits0", "a2-annul/exits2", "a2-annul/goal",
-    "a2-annul/lands0/now", "a2-annul/landsHard0/now", "a2-annul/never0",
-    "a2-annul/opens0/l4", "a2-annul/opens0/now", "a2-annul/scar", "a2-annul/t3h",
-    "a2-annul/walk", "a2-ground/never1", "a2-three/never1", "want19"
-  ],
-  "named:Seven": [
-    "a2-chassis/canon2", "a2-chassis/canon3", "a2-chassis/canonAlt1", "a2-chassis/goal",
-    "a2-chassis/landsHard0/now", "a2-chassis/scar", "a2-seven/before", "a2-seven/canon0",
-    "a2-seven/goal", "a2-seven/lands0/now", "a2-seven/lands0/r2", "a2-seven/landsHard0/now",
-    "a2-seven/landsHard0/r0", "a2-seven/never2", "a2-seven/opens0/r0", "a2-seven/press0",
-    "a2-seven/scar", "a2-turn/lands1/r1", "a3-descent/opens0/r1", "a3-evict/lands1/l5",
-    "a3-evict/lands1/r2", "a3-for/goal", "a3-founding/opens0/l0", "want14", "want15",
-    "want16"
-  ],
-  "breach": [
-    "a1-turn/never0", "a2-annul/opens0/now", "a2-ground/never1", "a2-seven/goal",
-    "a2-seven/never0", "a2-three/goal", "a3-descent/never0", "a3-descent/opens0/l4",
-    "a3-dreamers/exits1", "a3-granny/opens0/now", "a3-seize/goal", "a3-vic/press1"
-  ],
-  "shard:hand": [
-    "a1-carried/before", "a1-carried/exits2", "a1-exit/opens0/l4", "a1-hum/aim",
-    "a1-hum/before", "a1-hum/exits0", "a1-hum/exits1", "a1-hum/lands0/now", "a1-hum/t1g",
-    "a1-hum/t1r",
-    "a1-pack/before", "a1-pack/opens0/l4", "a1-turn/scar", "a2-chassis/before"
-  ],
-  "shard:stow": [
-    "a1-chase/landsHard0/l7", "a1-chase/teeth0/s2", "a1-hum/lands0/l1", "open/s1",
-    "open2/s4"
-  ],
-  "tell": [
-    "a1-carried/never2", "a2-annul/canon0", "a2-annul/goal", "a2-chassis/canonAlt1",
-    "a2-chassis/goal", "a2-choir/aim", "a2-choir/canon0", "a2-choir/canon1",
-    "a2-choir/canon2", "a2-choir/canon3", "a2-choir/canon5", "a2-choir/exits0",
-    "a2-choir/goal", "a2-choir/lands0/now", "a2-choir/landsHard0/now", "a2-choir/never0",
-    "a2-choir/scar", "a2-choir/t3g", "a2-choir/walk", "a2-housing/canon0",
-    "a2-housing/canon1", "a2-housing/goal", "a2-housing/landsHard0/l0", "a2-housing/never1",
-    "a2-housing/t0g", "a2-manual/canon1", "a2-manual/goal", "a2-manual/never0",
-    "a2-three/before", "a2-three/canon0", "a2-three/goal", "a2-turn/before",
-    "a2-turn/canon0", "a2-turn/goal", "a2-turn/press0", "a3-for/goal", "a3-for/never2",
-    "a3-founding/before", "a3-founding/canon0", "a3-founding/canon3", "a3-founding/goal",
-    "a3-founding/never0", "a3-founding/never2", "a3-founding/opens0/l1",
-    "a3-founding/press0", "a3-founding/t3g", "a3-principal/before", "a3-principal/canon0",
-    "a3-principal/canon1", "a3-principal/canon2", "a3-principal/exits0", "a3-principal/goal",
-    "a3-principal/lands0/l4", "a3-principal/lands0/now", "a3-principal/landsHard0/now",
-    "a3-principal/press1", "a3-principal/scar", "a3-principal/t0g", "a3-seize/before",
-    "a3-seize/canon8", "a3-seize/canon9", "a3-seize/goal", "a3-seize/t3g", "a3-stone/goal",
-    "want24"
-  ]
+  "breach":["a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-seven/goal","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-granny/opens0/now","a3-seize/goal","a3-vic/press1"],
+  "death":["a3-vic/before","open/canon6","open/s3"],
+  "named:Five":["a1-turn/opens0/l1","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t3h","a2-annul/walk","a2-ground/never1","a2-three/never1","want19"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-vic/t2g","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-door/opens0/r1","a2-seven/Rt1g","a2-turn/lands1/r0","a3-descent/lands0/r2","a3-evict/lands1/l3","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-turn/lands1/r1","a3-descent/opens0/r1","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-for/goal","a3-founding/opens0/l0","want14","want15","want16"],
+  "named:Three":["a1-carried/never2","a1-chase/t2g","a1-turn/landsHard1/l2","a1-turn/landsHard1/l3","a1-turn/landsHard1/l5","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/walk","a2-choir/Rt1g","a2-choir/aim","a2-choir/canon3","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/lands0/now","a2-choir/landsHard0/l2","a2-choir/landsHard0/l4","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/opens0/r0","a2-choir/scar","a2-choir/t1g","a2-choir/walk","a2-ground/never1","a2-ground/opens0/l3","a2-hand/goal","a2-hand/never2","a2-hand/opens0/l2","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-law/before","a2-law/landsHard0/l0","a2-law/press0","a2-manual/never0","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0g","a2-three/walk","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/lands0/r0","a2-turn/press0","a3-descent/landsHard0/r1","a3-evict/Rt0g","a3-evict/lands0/l2","a3-evict/lands1/l2","a3-for/goal","a3-founding/landsHard0/r2","a3-granny/t0g","a3-seize/canon7","a3-vic/lands0/l3","want17","want18"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-exit/opens0/l4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/scar","a2-chassis/before"],
+  "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/lands0/l1","open/s1","open2/s4"],
+  "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t3g","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t3g","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t3g","a3-stone/goal","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -18926,7 +19158,10 @@ function selfTest(){
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
     "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow",
-    "bitClean", "bitAimFor", "bitVoices", "bitNamesAllowed"];
+    "bitClean", "bitAimFor", "bitVoices", "bitNamesAllowed",
+    /* ...and the teeth, which are the one subsystem where being wrong kills a run */
+    "attemptCard", "attemptStageNow", "attemptOpen", "attemptTake", "attemptTyped",
+    "attemptRestore", "teethState", "gauntletNow"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -20294,6 +20529,169 @@ function selfTest(){
            mine = atHum(function(){ return breachScanned(true, false); });
          } finally { V5MODE = kv; lastTurnMud = km; }
          return mine === true && w(true, false) === true;
+       }});
+
+    /* ================== THE TEETH, DRIVEN ==================
+       The engine is walked rather than described. Every row here opens a real attempt
+       on the real card through the real functions and reads what the board says
+       afterwards - because a peril is the one subsystem where being wrong is not a
+       bad turn, it is a dead courier and a run that does not come back. */
+    var teethBad = [], teethSaw = [];
+    var realPersist0 = window.persistAll, realAsk = window.askAI, realCall = window.callDM;
+    var wire = 0;
+    function inPeril(fn){
+      var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+               canon:runCanon, ov:runOver, dl:deathLine, bt:beatTurns, to:tolls,
+               sm:storyMin, dr:driftRun, pt:perilTurns, pn:perilName,
+               feed:feedLog, log:chatLog, led:ledgerText, said:lastPlayerText,
+               cast:castSheets, fp:foldPending, wb:walkbackNow, tl:TEETH_LIVE,
+               an:attemptOn, as:attemptStage, ast:attemptStalls, at:attemptTempted,
+               jc:beatJustCleared, gn:gateNotes};
+      window.persistAll = function(){};
+      window.askAI = function(){ wire++; return {then:function(){ return {catch:function(){}}; }}; };
+      window.callDM = function(){ wire++; };
+      try{
+        TEETH_LIVE = true;
+        beatIdx = beatById("a1-carried"); phase = "live"; chassisHolder = null;
+        roster = {family:[], fallen:[]}; runCanon = []; runOver = ""; deathLine = "";
+        foldPending = false; walkbackNow = false; gateNotes = {};
+        beatTurns = beatNow().budget; tolls = 0; driftRun = 0;
+        perilTurns = 0; perilName = ""; beatJustCleared = null;
+        attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
+        wire = 0;
+        return fn();
+      } finally {
+        window.persistAll = realPersist0; window.askAI = realAsk; window.callDM = realCall;
+        beatIdx = k.bi; phase = k.ph; shardWhere = k.sw; chassisHolder = k.ch;
+        roster = k.ro; runCanon = k.canon; runOver = k.ov; deathLine = k.dl;
+        beatTurns = k.bt; tolls = k.to; storyMin = k.sm; driftRun = k.dr;
+        perilTurns = k.pt; perilName = k.pn; feedLog = k.feed; chatLog = k.log;
+        ledgerText = k.led; lastPlayerText = k.said; castSheets = k.cast;
+        foldPending = k.fp; walkbackNow = k.wb; TEETH_LIVE = k.tl;
+        attemptOn = k.an; attemptStage = k.as; attemptStalls = k.ast; attemptTempted = k.at;
+        beatJustCleared = k.jc; gateNotes = k.gn;
+      }
+    }
+    function safeDoor(){
+      var st = attemptStageNow(), i;
+      for(i = 0; i < (st.rail || []).length; i++){ if(st.rail[i] && !st.rail[i].tempt) return i; }
+      return -1;
+    }
+    function temptDoor(){
+      var st = attemptStageNow(), i;
+      for(i = 0; i < (st.rail || []).length; i++){ if(st.rail[i] && st.rail[i].tempt) return i; }
+      return -1;
+    }
+
+    /* LAW ONE - the clock does not move WHILE THE PERIL IS OPEN, and nothing reaches
+       the wire at any point. The window matters and the first cut of this row got it
+       wrong: it measured open-to-RESOLVED and went red, because clearing a gauntlet
+       legitimately closes the beat - that is what the door was going to do anyway.
+       The law is that the night does not age while the courier is holding his breath,
+       so the reading is taken while he is still holding it. The wire assertion has no
+       such subtlety: zero, press to resolution, inclusive. */
+    inPeril(function(){
+      var t0 = beatTurns, l0 = tolls, m0 = storyMin, d0 = driftRun;
+      if(!attemptOpen()) teethBad.push("the attempt would not open on its own card");
+      if(beatTurns !== t0) teethBad.push("opening the peril ticked the clock");
+      attemptTake(safeDoor());          /* deeper in, still open */
+      if(!attemptOn) teethBad.push("the first safe door resolved a two-stage card");
+      if(beatTurns !== t0) teethBad.push("the clock ticked inside the peril: " + t0 + " -> " + beatTurns);
+      if(tolls !== l0) teethBad.push("a toll was paid inside a peril");
+      if(storyMin !== m0) teethBad.push("the hour moved inside a peril");
+      if(driftRun !== d0) teethBad.push("drift was counted inside a peril");
+      attemptTake(safeDoor());          /* and out the far side */
+      if(attemptOn) teethBad.push("two safe doors did not resolve the attempt");
+      if(wire !== 0) teethBad.push(wire + " request(s) reached the wire from press to resolution");
+      if(runCanon.join(" ").indexOf("season-stale map") === -1) teethBad.push("the clear wrote no canon");
+      teethSaw.push("clear: clock still while open, wire silent throughout");
+      return null;
+    });
+
+    /* LAW TWO - two stalls and the family moves */
+    inPeril(function(){
+      attemptOpen();
+      attemptTyped("I would like to state for the record that I hate this");
+      if(!attemptOn) teethBad.push("one stall ended the attempt - the patience is two");
+      if(attemptStalls !== 1) teethBad.push("the first stall did not count");
+      attemptTyped("mnnh. nope. no thoughts");
+      if(attemptOn) teethBad.push("two stalls did not resolve the attempt");
+      if(runOver) teethBad.push("a stall killed him - the family moving is a graze, never a death");
+      if(runCanon.join(" ").indexOf("receipt") !== -1 || runCanon.join(" ").indexOf("dignity") === -1){
+        teethBad.push("the graze wrote the wrong canon: " + runCanon.join(" | "));
+      }
+      teethSaw.push("two stalls -> graze, alive");
+      return null;
+    });
+
+    /* LAW THREE - the tempting door asks twice, and no typed line can ever take it */
+    inPeril(function(){
+      attemptOpen();
+      var st0 = attemptStage;
+      attemptTake(temptDoor());
+      if(!attemptTempted) teethBad.push("the tempting door did not arm");
+      if(attemptStage !== st0) teethBad.push("the tempting door advanced on its first click");
+      if(runOver) teethBad.push("the tempting door killed on its first click");
+      /* ...and the ask survives the round trip through the drawer */
+      var blob = JSON.parse(saveBlob());
+      attemptTempted = false; attemptStage = 99; attemptStalls = 7;
+      attemptRestore(blob);
+      if(!attemptTempted) teethBad.push("a reload un-asked the fatal door - a free undo on the one decision the game refuses to take back");
+      if(attemptStage !== st0) teethBad.push("a reload moved the stage");
+      attemptTake(temptDoor());
+      if(runOver) teethBad.push("the tempting door killed with road still left on the card");
+      if(attemptStage !== st0 + 1) teethBad.push("the second click did not go deeper in");
+      /* the last stage: a TYPED reach for the fatal door is a stall, never a death */
+      var tt = attemptStageNow().rail[temptDoor()].text;
+      attemptTyped(tt);
+      if(runOver) teethBad.push("a typed line resolved as the death - the keyless door was reachable by words");
+      if(attemptStalls !== 1) teethBad.push("typing the fatal door did not read as a stall");
+      /* ...and the door itself, twice, does */
+      attemptTake(temptDoor());
+      if(runOver) teethBad.push("the last stage killed on one click");
+      attemptTake(temptDoor());
+      if(runOver !== "death") teethBad.push("the tempting door on the last stage did not kill");
+      if(String(deathLine).indexOf("sweep does not chase") === -1) teethBad.push("the death is not the card's own: " + deathLine);
+      if(attemptOn) teethBad.push("the attempt outlived the courier");
+      teethSaw.push("tempt: arms, survives reload, escalates, kills only on the last stage");
+      return null;
+    });
+
+    T("a peril suspends the clock and never reaches the wire", teethBad.length === 0,
+      teethBad.length ? teethBad.join("; ") : teethSaw.join(" · "),
+      {label:"a scanner that trusts the data - skipping only keyless doors, not tempting ones",
+       was:function(rail, text, tok){
+         var hit = -1, best = 0, i, j, w2, sc;
+         for(i = 0; i < (rail || []).length; i++){
+           var r2 = rail[i];
+           if(!r2 || !r2.key) continue;          /* ...and NOT r2.tempt */
+           w2 = String(r2.key).split(" "); sc = 0;
+           for(j = 0; j < w2.length; j++){
+             if(!w2[j]) continue;
+             if(TOPIC_STOP.indexOf(" " + w2[j] + " ") !== -1) continue;
+             if(tok.indexOf(" " + w2[j] + " ") !== -1) sc++;
+           }
+           if(sc > best){ best = sc; hit = i; }
+         }
+         return hit;
+       },
+       /* KEYLESSNESS IS ENFORCED TWICE, and the first cut of this case did not know
+          it: putting a key on the tempting door changed nothing, because the scanner
+          skips tempting doors outright whatever the data says. The row went red as
+          THE CASE CANNOT FAIL and it was right to - a broken form that the OTHER lock
+          catches proves the other lock, not this one. So the broken form is now the
+          scanner that trusts the data alone. Against a keyed fatal door it returns
+          that door's index, which is a typed sentence resolving as the death: the one
+          thing the whole shape exists to forbid. */
+       check:function(w){
+         return inPeril(function(){
+           attemptOpen();
+           var st = attemptStageNow(), i = temptDoor(), r = st.rail[i], had = r.key;
+           try{
+             r.key = r.text.toLowerCase().replace(/[^a-z ]+/g, " ");
+             return w(st.rail, r.text, topicTokens(r.text)) !== i;
+           } finally { if(had === undefined) delete r.key; else r.key = had; }
+         });
        }});
 
     /* ================== THE DEGENERATE RUN ==================
