@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.4 "Say Her Name"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.5 "The Chase Chooses"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2011,7 +2011,7 @@ var SPINE = [
         "Let them take the shard. I never signed up for a manhunt."],
  opens:[{day:"1", time:"12:50am", place:"THE VELDT STAIRS", amb:"danger",
        now:"Day 1, past midnight, on the ninety iron steps out of the Veldt. The lights above are going out in order.",
-       lines:["The stairs out of the Veldt are ninety steps of wet iron and a smell that has opinions about your shoes.",
+       lines:["The stairs out of the Veldt are ninety steps of wet iron over the flood channel that eats the market's rain, and a smell that has opinions about your shoes.",
               "You are forty steps up when the lights at the top go out one after another — politely, in order, like something is switching them off as it comes down.",
               ["Pia","Don't run. Running is how they know which one of us is the one."],
               ["Pia","Your room's above the noodle place, isn't it. Third floor, blue door."],
@@ -2061,7 +2061,14 @@ var SPINE = [
     reads it exists. */
  teeth:{when:{turnMin:2}, threat:"the flooded ladder shaft",
   stages:[
-   {scene:["The ladder shaft is there, black and breathing water, and you get two rungs down before the night states its terms: the third rung is gone, the fourth is rust holding hands with memory, and the flood channel below is running full and fast enough to file a courier under lost property.",
+   /* THE PERIL ARRIVES BY THE CHASE'S OWN LOGIC (v4.71.5). This scene used to open
+      with the courier already two rungs down a shaft he was never shown deciding to
+      enter - an ambient peril can seize the moment, but it cannot have moved him
+      without the night saying how. The bridge is the flight itself: the way ahead
+      closes, the hatch is the only dark left, and the channel it drops to was
+      established in the beat's own opening line. Location-loose on purpose - walls
+      have hatches on the stairs and the streets alike. */
+   {scene:["It is the chase that chooses it, not you: the lights behind you multiply, the way ahead shuts like a drawer, and the only dark left is a maintenance hatch and its ladder shaft, dropping to the flood channel - black and breathing water. Two rungs in, the night states its terms: the third rung is gone, the fourth is rust holding hands with memory, and the channel below is running full and fast enough to file a courier under lost property.",
            ["Pia","Stop. STOP. Look at me. Two dead rungs and live water - this is not the fast way, this is the last way. Back up or I swear I will bill Vic for the paperwork."],
            "Against your ribs the shard's hum climbs half a note - the blind, buried kind of urgency, a passenger who can feel the lift cable fraying and cannot reach the alarm."],
     rail:[{text:"Climb back up and take the stairs like a person.", key:"up back climb stairs out person leave safe"},
@@ -7261,7 +7268,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.4";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.5";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10290,8 +10297,22 @@ function callInterludeTurn(){
   lastReceived = "[template] the board drained its own aftermath";
   lastReplyVerdict = "template: the night settled itself, zero calls";
   setBusy(false);
-  /* the room, if there is one - its deck is authored like every other */
-  if(phase === "slack" && sceneSkeletonNow() && callSceneTurn()) return true;
+  /* the room, if there is one - its deck is authored like every other.
+     ...AND THE SETTLING LINE IS STILL A LINE (v4.71.5). The seam fix made "on the
+     rail" three different facts, but this route drains the aftermath and then dealt
+     the room's next card as though the landing's own conversational line had asked
+     for it - "Ask him who he thought was going to steal the kettle" was answered
+     with the breakfast law, the exact non-sequitur F2 exists to stop, one phase
+     later. Same gate, same order as callDM's: a line with deck evidence or deck
+     standing takes a card; conversation gets the family's own voices, with the
+     room's row under it either way. */
+  if(phase === "slack" && sceneSkeletonNow()){
+    /* handled either way: the bit's own return value is not a verdict on whether
+       the interlude owned the turn, and a falsy one here sent the settle out to
+       the legacy wire behind the bit's back */
+    if(!sceneConfident() && !deckHandled(lastPlayerText)){ callBitTurn(); return true; }
+    if(callSceneTurn()) return true;
+  }
   /* ...and if there is not - the season seam, the last night - the board has already
      put its own card on screen. The press still has to answer: give them the rail
      back and let the banner speak, rather than spending the click on silence. */
@@ -22882,8 +22903,19 @@ function selfTest(){
         /* ...and the settling turn, which is the one that used to go to the wire */
         if(phase === "aftermath"){
           if(!interludeNow()) slkBad.push("the interlude turn had no route: phase=" + phase);
-          else { lastPlayerText = "Move. The marsh road is hours out.";
-                 lastRail = [lastPlayerText]; turnToken++; callDM(); }
+          else {
+            /* the settle press is the landing's own conversational Move line, and
+               under the settle gate (v4.71.5) a conversational line is a bit - which
+               may attempt its own wire by Phase A contract. The seam's wire-zero
+               claim is about scene turns, so the bit press gets a benign stub
+               rather than the thrower. */
+            var mAsk = window.askAI;
+            window.askAI = function(){ return {then:function(){ return {catch:function(){}}; }}; };
+            try{
+              lastPlayerText = "Move. The marsh road is hours out.";
+              lastRail = [lastPlayerText]; turnToken++; callDM();
+            } finally { window.askAI = mAsk; }
+          }
         }
         if(phase !== "slack") slkBad.push("the settling did not open the room: phase=" + phase);
         else {
@@ -22900,9 +22932,26 @@ function selfTest(){
           if(phase !== "live") slkBad.push("the next night did not arm live: phase=" + phase);
         }
         if(slkWire !== 0) slkBad.push(slkWire + " call(s) reached the wire across the seam");
+        /* ...AND THE SETTLING LINE IS STILL A LINE (v4.71.5). A conversational
+           landing rail pressed as the settle drains the aftermath and gets the
+           family's voices - never the room's next card dealt as a non-answer,
+           which is how the kettle question was served the breakfast law. The bit
+           path may attempt its own wire by Phase A contract, so it gets a benign
+           stub; the card assert is the point: nothing dealt, room open. */
+        var kAsk = window.askAI, kSpent;
+        window.askAI = function(){ return {then:function(){ return {catch:function(){}}; }}; };
+        try{
+          barBoard(at); V5SCENE = true; phase = "aftermath";
+          lastPlayerText = "Take her out properly and start again.";
+          lastRail = [lastPlayerText]; turnToken++;
+          kSpent = JSON.stringify(topicSpent);
+          callDM();
+          if(phase !== "slack") slkBad.push("the conversational settle did not open the room: " + phase);
+          if(JSON.stringify(topicSpent) !== kSpent) slkBad.push("the settling line was answered with a dealt card");
+        } finally { window.askAI = kAsk; }
         slkSaw.push("a1-hum open to close on authored blocks, the settling drained"
           + " client-side, the room served its own card, the way on opened a1-chase - "
-          + g + " turns, wire 0");
+          + g + " turns, wire 0 - and a conversational settle is a bit, not a card");
       } finally { barPut(k); }
     })();
     T("a night can be left the way a player leaves it, with nobody on the other end",
