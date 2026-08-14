@@ -246,9 +246,22 @@ A card's topic was always a *subject* — "what happened to Mirren" — which is
 the night is about and not a thing a courier can say, so the deterministic build had
 nothing to put on the button. Now each card holds the line in the courier's own voice,
 and behind it four to six authored blocks: narration, the family answering, somebody
-refusing well. **1,145 blocks across 251 cards, 768 of them spoken aloud.** The model
+refusing well. **1,152 blocks across 251 cards, 767 of them spoken aloud** — counted by
+the release check rather than by the commit that pasted them, which is why the number
+moved. The model
 is not needed to write the middle of a night any more. It is needed to paint between
 the turns — which is the job it is actually good at.
+
+**And since v4.70.0 the rails are what you are actually clicking.** They shipped in
+v4.64.0 for a reader that had not been written yet, so for six releases the row under
+the door was the same two house lines every turn of every night — which is why a
+playtester clicked one of them seven times and got the same scene seven times. The row
+is dealt from the deck now: the questions this room has left, in order, each one
+retiring the moment it is spent, and the line you click deals the card it was dealt
+from rather than the card a keyword scorer thinks you meant. When the deck runs dry
+the row falls back to the door and the stalls, which is the room telling you it is
+finished — and if you ask anyway, the family says *asked and answered* in their own
+voices instead of reheating a scene.
 
 **And since v4.67.0 that is how a scene turn actually plays.** The card the client just
 dealt is served straight to the screen — the authored blocks, the fork's own frame — and
@@ -257,6 +270,19 @@ to write. The world never lived in the reply; it lived in the fences that police
 reply, and with no reply there is nothing to police. Gate landing is the client's: a
 night ends when you take the twice-asked exit, or when the world closes it on its own
 budget arithmetic.
+
+One night in thirty-three has **two doors instead of one.** The chassis is Nine's, and
+the question of who lives in it is the biggest branch in the season — and for every
+recorded run it was decided by a fallback, because the branch lived in a field the
+reply was supposed to carry and never did. It lives in the door now: two endings on
+the rail, each one the courier saying where he stands rather than choosing for her,
+each one asked twice on its own. What you pick is which cost the family shoulders.
+
+And the door answers to the keyboard too. Its wording rotates every turn, so a player
+who read the ending on turn one and typed it on turn two used to get a scene about
+something else with the night quietly ending underneath it. A line that IS one of
+tonight's authored doors is that door — exact wording, nothing looser, because the
+cost of guessing wrong here is a night you did not mean to end.
 
 It did not flip until it had earned it. One night, a1-chase, open to close on authored
 blocks with the wire at zero — then **the same night again with the endpoint throwing on
@@ -625,6 +651,15 @@ eyes like, it never carries a keyword so no typed sentence can ever take it by
 accident, and it asks you twice, and the second ask survives a reload. Refuse to
 engage twice and the family moves you: you come out of it alive, marked, and not by
 your own hand.
+
+There are ten of them, and as of v4.70.0 all ten are live. Three are **gauntlets** —
+the door out of that night opens the peril instead of ending it, so reaching for the
+exit is reaching for the fight. The rest are **ambient**: once a night has run long
+enough, the next thing you say is said with the thing already happening, and when it
+resolves the night simply goes on. Every one of them is driven in the self-test on
+every load — clear leg and graze leg, the temptation armed and refused, the death
+text reachable only through the twice-asked door on the last stage — because a peril
+is the one part of this game where being wrong is not a bad turn.
 
 ### Pressure you can see
 

@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.69.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.70.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2596,7 +2596,7 @@ var SPINE = [
  canon:["Every kind option was tried on the hunter, honestly, and failed. The Choir hardened her against mercy.",
         "The hunt has reached the family's door. What happens next happens because nothing gentler was left."],
  scar:"The kind option died off-screen; they learned the jammer failed from the silence after it.",
- teeth:{live:false, when:{turnMin:2}, threat:"the drowned market floor",
+ teeth:{when:{turnMin:2}, threat:"the drowned market floor",
   stages:[
    {scene:["Between you and the far stair the old market floor lies flooded, black and flat, a shortcut wide as a boast. The walkway crawls the long wall - planks, rope, twenty careful minutes.",
      ["Pia","Flat water over a market floor means stalls under it. Stall frames, hooks, cellar mouths. It is not a floor, it is a lid."],
@@ -2664,7 +2664,7 @@ var SPINE = [
  canonSoft:["The family ended Mirren's hunt with their own hands. Nothing gentler was left, and they knew it."],
  falls:["Mirren"],
  scar:"The world finished it - a recall, a rail, a river - and nobody's hand got to matter.",
- teeth:{live:false, when:{onExit:true}, threat:"her reach",
+ teeth:{when:{onExit:true}, threat:"her reach",
   stages:[
    {scene:["It ends at the dry end of the undercroft, and the last of it is distance: thirty metres of open floor between the family and the thing wearing Mirren, and she does not chase, and that was never mercy - it is that she is already where you are going.",
      ["Three","Her retrieval pattern holds a reach. Inside it, she files what she touches. We approach on the count, from the blind quarter, while the pattern's cycle looks away - or we do not approach at all."],
@@ -2788,7 +2788,7 @@ var SPINE = [
         "His vessel is failing and he arrived asking for nothing.",
         "The family decided to save him anyway."],
  scar:"The family decided to save Seven after the choice had nearly closed - he heard the hesitation.",
- teeth:{live:false, when:{turnMin:2}, threat:"the frame's failing cell",
+ teeth:{when:{turnMin:2}, threat:"the frame's failing cell",
   stages:[
    {scene:["The frame's power cell is dying loud now - a coolant weep down the plating, a smell like hot coins. Vic wants ten minutes to pull it cold, by the book. The cell's release is right there on the flank, one bare clip.",
      ["Vic","That weep means the jacket is live. Cold pull or no pull - ten minutes, and nobody touches plating meanwhile."],
@@ -2814,9 +2814,14 @@ var SPINE = [
  exit:"the chassis has been given - to Seven or to Nine - by Nine's own choice, spoken at the table, and its new owner has cooked or token-tasted something of their own choosing",
  aim:"put the chassis on the table as Nine's, ask her out loud, and let whoever takes it cook",
  walkLine:"Leave them to the body and the argument. Walk.",
- exits:["Put the body on the table and ask Nine, out loud, what she wants done with it.",
-        "It is hers. Ask her in front of everyone, and abide by whatever she says.",
-        "Let Nine choose who lives in it — and let whoever takes it cook."],
+ /* THE ONE TWIN-EXIT BEAT IN THE GAME. Every other night rotates one door through
+    three wordings of the same move; this one offers two doors that are the same move
+    and different futures. Both are the courier saying WHERE HE STANDS - the choice is
+    still hers, which is the beat's own law - and what the player picks is which cost
+    the family shoulders. exitBooks is positional and rides with them. */
+ exits:["Stand with her: give Seven the body tonight. I will be her hands for as long as it takes.",
+        "Stand with her: take the body, Nine. We will carry Seven between us for as long as it takes."],
+ exitBooks:["Seven", "Nine"],
  walks:["Take the chassis and go. It is worth more than this family is.",
         "Leave them arguing over a body and get out of the kitchen.",
         "Refuse to be part of choosing, and leave the room."],
@@ -3065,7 +3070,7 @@ var SPINE = [
         "Mirren's self - her intake scrape - has been asleep in the vaults the whole time. The family killed the puppet, not the person. The vow grows its second clause on the spot: the dead come out."],
  stone:"The family learned the Choir's three fates, and Mirren's.",
  scar:"The three fates arrived as a blow, not a briefing - Mirren's record surfaced with nobody ready for it.",
- teeth:{live:false, when:{turnMin:2}, threat:"the door the hash opened",
+ teeth:{when:{turnMin:2}, threat:"the door the hash opened",
   stages:[
    {scene:["The channel the hash opened is still open - records still coming through in slow pages, and past them, visible in the door's own light, a registry drawer standing unlocked. More files. Deeper files. Right there.",
      ["Three","The channel is read-only because I built the read. The DRAWER is theirs. Reach through an open Choir door and the door learns an arm."],
@@ -3327,7 +3332,7 @@ var SPINE = [
         "The stilled were handled kindly wherever kindness worked. The vow was visible from the pavement.",
         "Only the deep remains: the Exchange, and what lives under it."],
  scar:"The street freed itself messily; the family arrived to an aftermath wearing their name.",
- teeth:{live:false, when:{turnMin:2}, threat:"the ninth body's errand",
+ teeth:{when:{turnMin:2}, threat:"the ninth body's errand",
   stages:[
    {scene:["Eight stilled, one to go, and the ninth is wrong - drifted two doorways from where its errand parked it, stopped at an angle nothing parked ever stops at. Three's isolation kit is a street away with the van between.",
      ["Three","Eight ran the pattern I know. The ninth has drifted, which means the errand is live in some way mine are not. Nobody closes with it until the kit is on this kerb."],
@@ -3648,7 +3653,7 @@ var SPINE = [
         "The machine perceives and acts only through what is physically connected to her.",
         "Time runs hot in the substrate - about a minute inside per second outside."],
  scar:"The Exchange let them in on its own schedule; the way back closed unremarked.",
- teeth:{live:false, when:{onExit:true}, threat:"the bottom of the cable",
+ teeth:{when:{onExit:true}, threat:"the bottom of the cable",
   stages:[
    {scene:["The cable ends forty metres above the landing Hesta's bolt found - the last stretch is rungs, founding iron, and the echo says some of them answer wrong. Three's light shows the landing, wide and dry and RIGHT THERE below your boots.",
      ["Three","I test every rung. That is the contract of me going first, and it holds until the landing. Rung, weight, wait - then you. It is slow. Slow is what sound iron sounds like."],
@@ -3724,7 +3729,7 @@ var SPINE = [
         "The dead come out. It stopped being a vow and became a plan.",
         "Hesta's kept names were checked against the shelves. The found and the missing are both known now."],
  scar:"They passed the sleeping shelves at speed; Mirren was found by torchlight and promised too fast.",
- teeth:{live:false, when:{turnMin:2}, threat:"the vault's housekeeping",
+ teeth:{when:{turnMin:2}, threat:"the vault's housekeeping",
   stages:[
    {scene:["Aisle forty-one is right there. Shelf nine is a lamp's throw away, and on it, filed and findable, the Tuesday name - and down the aisles, on a rhythm Nine can hear through your skin, the vault's housekeeping arm goes about its patient rounds.",
      ["Nine","The arm services this aisle on a count of forty. It does not check what it finds in its lane. It FILES what it finds in its lane. We are not in the catalogue, which is worse, not better."],
@@ -3884,7 +3889,7 @@ var SPINE = [
  canonB:["Nine answered the vessel question before anyone. The rest of it is nobody's business but hers."],
  stone:"THE SEASON ENDED: custody, not conquest.",
  scar:"Custody landed as a grab, not a keeping - the silence afterwards has edges.",
- teeth:{live:false, when:{onExit:true}, threat:"the tenant's closing doors",
+ teeth:{when:{onExit:true}, threat:"the tenant's closing doors",
   stages:[
    {scene:["Between the family and the Heart Room lies the tenant's own concourse - and the tenant's doors have begun closing on schedule, wards sealing floor by floor as the Choir's apparatus feels the evening turn against it. The straight route is a lit boulevard of a corridor, wide open, right there.",
      ["Nine","The doors close in a wave, end to end, on a count I can hear building. The straight corridor is the FIRST thing the wave takes. The service stairs go last - they always went last; staff doors forever, everywhere."],
@@ -5443,11 +5448,14 @@ var SCENEBOOK = {
     gives:"her actual answer, out loud, in her own words, with the reasoning she is willing to share",
     holds:"she does not pretend it is easy, and she does not ask permission",
     rail:"Hand on the shard, and ask her - out loud, at this table: what do you want to do.",
-    plays:[["Nine","I have been thinking about it since the door, so this is not fast, it only sounds fast."],
-     ["Nine","I want it. I want hands and doors and to be at eye height when people argue. I have wanted it so long the wanting has furniture."],
-     ["Nine","And he has five hours. Wanting can sit down for five hours. What I choose is: he goes in it tonight. My reasons are mine; the part I will say out loud is that I know what the seat costs, and I can pay it longer than he can."],
-     "Nobody breathes. She did not ask permission, and the not-asking is the loudest growing-up the kitchen has ever hosted.",
-     ["Nine","Vic. Do not argue with me in front of my body. Fit him."]]},
+    /* this card used to ANSWER the fork - she chose Seven out loud, on turn one, and
+       the two doors under it were then a vote on a thing already decided. She sets
+       both wants on the table now and asks the courier where he is standing, which
+       is the question the doors are the answer to. */
+    plays:[["Nine","I have been thinking since the door, so this is not fast - it only sounds fast. I want it. Hands, doors, eye height. I have wanted it so long the wanting has furniture."],
+     ["Nine","And he has five hours, and I know what the seat costs, and I can pay it longer than he can. Both of those are true at once, and I have room for exactly one of them."],
+     "She does not choose. She sets both wants on the table between the mugs, face up, and looks at the courier - not for permission. For company.",
+     ["Nine","Stand somewhere, courier. I decide better when I can hear where you are standing."]]},
    {ask:"what happens to whoever does not get it",
     key:"other else seven then what-happens nowhere left",
     who:"Vic",
@@ -7214,7 +7222,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.69.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.70.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7354,6 +7362,7 @@ function mayAsk(tag){
 var dryTicked = false;       /* the dry path has already counted this turn's damage */
 var walkArmed = false;       /* the way out asks twice, every time - session only */
 var exitArmed = false;       /* and so does the door that ends the night */
+var exitArmedAt = -1;        /* ...and WHICH one, because the fork beat prints two */
 var redRun = 0;              /* consecutive walks; two ends the run - persisted */
 var walkoutDue = false;      /* the second walk: this reply ends it */
 var interludesUsed = [];     /* interlude ids already dealt; saved with the run */
@@ -7375,6 +7384,7 @@ var foldedBeats = [];        /* beat ids the world closed without the family - p
    a2-chassis gate. Whoever lacks a body afterwards lives in the housing. */
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
 var chassisPick = "";        /* the gate's stated choice, captured per reply */
+var chassisDoor = "";        /* ...and the client's own, captured off the door taken */
 function housingResident(){
   if(chassisHolder === "Nine")  return beatIdx > beatById("a2-housing") ? "Seven" : "";
   if(chassisHolder === "Seven") return beatIdx > beatById("a2-housing") ? "Nine" : "";
@@ -7613,7 +7623,29 @@ function exitStage(){
    and the DM is told what to put in each. It only writes choices.
    The old catastrophe is still impossible: the way out is not on this rail at
    all, so the worst a mislabelled slot can do is end a beat a turn early. */
-function doorSlots(){ return ["exit", "stall", "stall"]; }
+/* F3: THE TWIN EXIT. The chassis gate "always arrived without its field... the
+   season's biggest branch was decided by a fallback, in every recorded run" - and
+   under V5SCENE a reply has no fields at all, so EVERY deterministic run forked to
+   Seven by console warning. A branch this size cannot live in a field the client
+   hopes for; it lives in the door, which is the one thing the client owns outright.
+   A beat with exitBooks offers BOTH of its doors, positionally paired to the
+   booking each one makes. Nothing else in the game has two, and nothing else
+   should: a rail with two ways out is only honest where the two ways out are the
+   question. */
+function forkDoors(b){
+  return (b && b.exitBooks && b.exits && b.exits.length === b.exitBooks.length) ? b.exits : null;
+}
+function forkDoorsNow(){ return doorsLive() && !beatDone() ? forkDoors(beatNow()) : null; }
+/* which future this wording books, or nothing. Matched on the normalised line, so a
+   door the player TYPED books exactly what the same door CLICKED books. */
+function forkBooking(b, t){
+  var xs = forkDoors(b) || [], nl = normLine(t), i;
+  for(i = 0; i < xs.length; i++){ if(normLine(xs[i]) === nl) return b.exitBooks[i]; }
+  return "";
+}
+function doorSlots(){
+  return forkDoorsNow() ? ["exit", "exit", "stall"] : ["exit", "stall", "stall"];
+}
 function pinnedExit(b){
   var xs = (b && b.exits && b.exits.length) ? b.exits : null;
   if(!xs) return "Finish it — " + (b ? b.exit : "end tonight's business") + ".";
@@ -7844,20 +7876,94 @@ function sameAsDoor(b, t){
   }
   return false;
 }
+/* F5(a): THE ROW IS DEALT FROM THE DECK, AND A SPENT CARD RETIRES FROM IT.
+   Wave 2 wrote a rail line for all 251 cards - "nothing reads these yet; Phase B
+   does" - and Phase B shipped without ever reading them. So the deterministic row
+   was the door plus two HOUSE STALLS, for ever: the Architect clicked "Ask what they
+   are not saying" and "Say nothing" over and over because they were the only things
+   on offer, and the deck answered him by re-dealing. Both faces of F5 are the same
+   missing fact, and this is the half that stops the game INVITING the repetition.
+   Unspent cards only, in authored order, so the row visibly walks the deck as it is
+   spent and empties when the room is finished. railAlt stays a corpus line: two
+   wordings for one card would put two names on one thing in a row the player is
+   reading as a menu.
+   Legacy-path silence is deliberate. With the flag down the DM writes its own two
+   lines, that is the whole contract of that path, and this must not crowd them out. */
+var railDeal = {};   /* scene key -> offered wording -> the card it was dealt from */
+function sceneRails(n){
+  var out = [], s, list, spent, i, t, ln;
+  if(!V5SCENE) return out;
+  s = sceneNow();
+  list = (s && s.sc && s.sc.topics) || [];
+  if(!list.length) return out;
+  spent = topicSpent[s.key] || [];
+  if(!railDeal[s.key]) railDeal[s.key] = {};
+  for(i = 0; i < list.length && out.length < n; i++){
+    if(spent.indexOf(i) !== -1) continue;
+    t = list[i];
+    ln = t && t.rail;
+    if(!ln || out.indexOf(ln) !== -1) continue;
+    railDeal[s.key][normLine(ln)] = i;
+    out.push(ln);
+  }
+  return out;                       /* empty means the room is finished */
+}
+/* F7: A DOOR THE PLAYER TYPED IS STILL A DOOR. The pinned exit rotates its wording
+   every turn and only ONE of a beat's authored doors is on the rail at a time - so a
+   player who read "Skin on the shard, and I say the name out loud. Nine. Let her
+   answer that" on turn one and typed it on turn two was reaching for a door the rail
+   had moved. The Architect did exactly that: the beat closed underneath a topic scene
+   about streetlights, with the gate silent under it.
+   This is the STRICT half of sameAsDoor and only the strict half. The gram fallback
+   exists to police the DM's choices, where a false positive costs one dropped line;
+   here a false positive costs a night the player did not mean to end, and the two
+   jobs cannot share a threshold. Exact wording, or a long enough stretch of one. */
+/* which door this turn came through, click or keyboard. It is its own function because
+   the harness has to be able to drive the promotion itself: a rule that only exists
+   inside takeAction can be tested by restating it, and a restatement proves nothing. */
+function doorKindFor(kind, text, isMud, clickNow){
+  if(kind) return kind;                     /* a rail click already said what it was */
+  if(isMud || clickNow) return "";          /* a bit is not a door; an unlabelled click is not one either */
+  return (doorsLive() && typedIsDoor(text)) ? "exit" : "";
+}
+function typedIsDoor(t){
+  var b = beatDone() ? null : beatNow(), xs = (b && b.exits) || [], nl = normLine(t), e, i;
+  if(!nl || nl.length < 16) return false;
+  for(i = 0; i < xs.length; i++){
+    e = normLine(xs[i]);
+    if(!e) continue;
+    if(nl === e) return true;
+    if(nl.length > 24 && (e.indexOf(nl) !== -1 || nl.indexOf(e) !== -1)) return true;
+  }
+  return false;
+}
 /* the rail as the player actually gets it: our door, then their two dead ends.
    "trusted" means the lines came from the board's own authored openings, which
    are allowed to lean on the beat's language - the filter is here to police the
    DM, not us, and it was quietly eating four authored opening lines. */
 function railFor(dm, trusted){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
+  var deck = sceneRails(2);
   if(!doorsLive()){
     /* the aftermath and the family's own time have no pinned door, so a rail of
        dropped choices would leave the player with nothing to click at all */
     var soft = dm.slice(0, 4).map(cleanChoice).filter(function(x){ return !!x; });
+    /* ...and the room has a deck of its own. This is where the repetition was worst:
+       the family's own time is ENTIRELY authored cards, and the row offered none of
+       them. A room with cards left leads with them; a finished room falls back to
+       the stalls, which is the deck saying so. */
+    if(deck.length) soft = deck.concat(soft).slice(0, 3);
     if(!soft.length) soft = PIN_STALLS.slice(0, 2);
     return soft;
   }
-  var b = beatNow(), out = [pinnedExit(b)], i, t, dropped = 0;
+  /* the fork beat opens both of its doors at once; every other beat rotates one */
+  var b = beatNow(), fk = forkDoors(b), out = fk ? fk.slice(0, 2) : [pinnedExit(b)], i, t, dropped = 0;
+  /* under the door: the questions this beat has left. Nothing here can be the door -
+     these are the beat's own topics, and a topic that ended the night would be a card
+     in the wrong book - so they skip the doorman entirely. */
+  for(i = 0; i < deck.length && out.length < 3; i++){
+    if(out.indexOf(deck[i]) === -1) out.push(deck[i]);
+  }
   for(i = 0; i < dm.length && out.length < 3; i++){
     t = cleanChoice(dm[i]);
     if(!t) continue;
@@ -7922,11 +8028,16 @@ function showChoices(choices){
          and the strip and the rail agree about what kind of turn this is.
          And it asks twice, like the way out does, because a door that ends the
          night should never be a thing you discover you have clicked. */
-      if(exitArmed) btn.classList.add("armed");
-      btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(exitArmed ? ("Sure? " + c) : c);
+      /* ARMED PER DOOR. One boolean was enough while there was one door; the fork
+         beat prints two, and a shared flag would have armed A and taken B on its
+         first click - which is the exact thing "it asks twice" exists to prevent,
+         on the one night where the two doors are different futures. */
+      var armedHere = exitArmed && exitArmedAt === i;
+      if(armedHere) btn.classList.add("armed");
+      btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(armedHere ? ("Sure? " + c) : c);
       btn.onclick = function(){
-        if(!exitArmed){ exitArmed = true; walkArmed = false; showChoices(choices); return; }
-        exitArmed = false;
+        if(!armedHere){ exitArmed = true; exitArmedAt = i; walkArmed = false; showChoices(choices); return; }
+        exitArmed = false; exitArmedAt = -1;
         pendingKind = "exit"; pendingClick = true; takeAction(c, false);
       };
     } else {
@@ -7934,12 +8045,15 @@ function showChoices(choices){
     }
     box.appendChild(btn);
     if(kind === "exit" && live){
-      var eh = document.createElement("div");
-      if(exitArmed){
-        eh.className = "choice-hint exithint open";
+      var eh = document.createElement("div"), twin = !!forkDoorsNow();
+      eh.className = "choice-hint exithint open";
+      if(exitArmed && exitArmedAt === i){
         eh.textContent = "This ends tonight's business. Pick anything else and it is forgotten.";
+      } else if(twin){
+        /* the fork owes the player the truth that BOTH of these end the night and
+           that they are not the same ending */
+        eh.textContent = "Open. Either of these ends the night — and they end it differently.";
       } else {
-        eh.className = "choice-hint exithint open";
         eh.textContent = "Open. This is the door that ends the night — it will ask you twice.";
       }
       box.appendChild(eh);
@@ -7957,7 +8071,7 @@ function showChoices(choices){
     walk.className = "choice walk" + (walkArmed ? " armed" : "");
     walk.innerHTML = '<span class="n">&#9587;</span>' + esc(walkArmed ? ("Sure? " + line) : line);
     walk.onclick = function(){
-      if(!walkArmed){ walkArmed = true; exitArmed = false; showChoices(choices); return; }
+      if(!walkArmed){ walkArmed = true; exitArmed = false; exitArmedAt = -1; showChoices(choices); return; }
       walkArmed = false;
       pendingKind = "walk"; pendingClick = true;
       takeAction(line, false);
@@ -9976,6 +10090,28 @@ function callSceneTurn(){
   serveSceneTurn(blocks);
   return true;
 }
+/* F7: THE DOOR OWNS ITS OWN TURN. A press on the exit was still going through the
+   topic deck, so the player reached for the ending and got a card about something
+   else with the beat's close silently underneath it - the Architect watched a night
+   end under a scene about streetlights. The close IS the turn: the beat card and the
+   authored landing carry it, exactly as they do when a peril resolves, and no topic
+   is spent on a night that is over.
+   Only when the door will actually take it. Below the floor the door HOLDS - three
+   releases of doctrine - and a held night still has road, so it still gets a scene. */
+function doorSkeletonNow(){
+  if(!V5SCENE || lastTurnMud || runOver || foldPending || walkbackNow) return false;
+  if(attemptOn || beatDone() || phase !== "live") return false;
+  if(pickKind !== "exit") return false;
+  return (beatTurns + 1) >= beatFloor(beatNow());
+}
+function callDoorTurn(){
+  lastSent = {text:"[template] the door: " + String(lastPlayerText || "").slice(0, 48),
+              chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
+  lastReceived = "[template] no scene - the beat's own close carries this turn";
+  lastReplyVerdict = "template: the door closed it, zero calls";
+  serveSceneTurn([]);
+  return true;
+}
 /* the same shape a bit reaches the screen in, and for the same reason: scene blocks
    and nothing else. The history still has to hear it, because the legacy path may be
    the very next turn and a model that never heard this scene opens the next one
@@ -10028,9 +10164,12 @@ function callInterludeTurn(){
   var eb = $("errbox");
   if(eb && eb.firstChild) eb.innerHTML = "";
   applyTension();
-  showChoices(lastRail.slice());
+  /* ...and even the empty settling turn offers the room its own cards, rather than
+     handing back whatever was on the rail before the night ended */
+  var irail = railFor([]);
+  showChoices(irail);
   scrollFeed();
-  persistAll(lastRail.slice());
+  persistAll(irail);
   return true;
 }
 function bitSkeletonNow(){
@@ -10994,7 +11133,10 @@ function boardBlock(){
     + "\nNever label them in the text and never number them yourself."
     + "\nThe player's way out of the whole job is the game's own control, printed under the rail"
     + " and worded by the board. Never put quitting, leaving or handing the shard back in \"choices\".");
-  if(b.id === "a2-chassis") out.push("THE FORK: this gate must carry \"chassis\": \"Seven\" or \"chassis\": \"Nine\" - Nine's choice, spoken at the table, decides who lives in the body.");
+  if(forkDoors(b)) out.push("THE FORK: this beat prints TWO doors and the player's pick decides who"
+    + " lives in the body - the client books it, so you do not have to. If this gate carries"
+    + " \"chassis\": \"Seven\" or \"chassis\": \"Nine\" that still wins; if it carries neither, the"
+    + " door the player took is the answer. Never decide it in prose around her.");
   if((b.anchors || []).length) out.push("NAMED IN THIS BEAT (these people, these names, no substitutes): " + b.anchors.join(", "));
   out.push("Turn " + (beatTurns + 1) + " of " + b.budget + " in this beat.");
   var open = (b.reveals || []).map(function(k){ return REVEALS[k]; }).filter(function(x){ return !!x; });
@@ -11345,9 +11487,10 @@ function bookFor(said, forcing, pick, gauntlet){
   if(!said && !forcing) return "open";
   return ((!said || forcing) && pick !== "exit") ? "world" : "clean";
 }
-/* whether THIS beat's door opens an attempt. Off at the wall until the engine that
-   reads the card exists - TEETH_LIVE is that switch, and no authored card carries
-   when.onExit either, so the substitution is provably dormant twice over. */
+/* whether THIS beat's door opens an attempt. TEETH_LIVE is the wall switch; live:false
+   is each card's own. Four cards carry when.onExit now - the three signed gauntlets
+   and the prototype - so the substitution is no longer dormant and this comment no
+   longer says it is. */
 function gauntletNow(){
   if(!TEETH_LIVE || beatDone() || runOver) return false;
   var t = beatNow().teeth;
@@ -11387,6 +11530,7 @@ var attemptOn = false;       /* a peril is open and owns the rail */
 var attemptStage = 0;        /* which stage of the card */
 var attemptStalls = 0;       /* stalls inside it; the family moves at two */
 var attemptTempted = false;  /* the tempting door has been asked once at this stage */
+var perilSpent = {};         /* beat id -> this night has already had its peril */
 var ATTEMPT_PATIENCE = 2;
 function attemptCard(){
   if(beatDone() || runOver) return null;
@@ -11405,9 +11549,34 @@ function attemptLast(){
   var t = attemptCard();
   return !!t && attemptStage >= t.stages.length - 1;
 }
+/* THE AMBIENT ARM. `when.turnMin` has been authored on six cards since the engine
+   shipped and NOTHING HAS EVER READ IT: gauntletNow asks about onExit, the door opens
+   those, and the ambient half of the when-clause was data with no engine behind it.
+   Five of the eight cards being signed off are ambient, so flipping them live without
+   this would have shipped five perils that can never happen - which is strictly worse
+   than shipping them dark, because dark is at least honest.
+   A gauntlet is a door the player chose. An ambient peril is the night not asking:
+   once the beat has run its author's count of turns, the next move the player makes
+   is made with the thing already happening. Once per beat - it does not close the
+   beat when it resolves, so without the latch the same shaft would give way every
+   turn until the night ended. The latch rides in the save beside the stage, for the
+   same reason the arming does: a reload must not hand back a peril already survived. */
+function ambientCard(){
+  var t = attemptCard();
+  if(!t || !t.when || t.when.onExit) return null;
+  return isNaN(parseInt(t.when.turnMin, 10)) ? null : t;
+}
+function ambientDue(){
+  if(!TEETH_LIVE || attemptOn || runOver || beatDone() || foldPending || walkbackNow) return false;
+  if(phase !== "live") return false;
+  var t = ambientCard();
+  if(!t || perilSpent[beatNow().id]) return false;
+  return beatTurns >= parseInt(t.when.turnMin, 10);
+}
 function attemptOpen(){
   var t = attemptCard();
   if(!t || attemptOn || runOver) return false;
+  if(!beatDone()) perilSpent[beatNow().id] = 1;   /* one night, one peril, either kind */
   attemptOn = true; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
   /* the strip carries the threat by NAME while the peril is open - the warning is
      ambient and honest, which is the half of the temptation rule the room owes */
@@ -11545,7 +11714,15 @@ function attemptResolveClose(){
   /* a gauntlet was the door; an ambient peril was not, and the night goes on */
   if(wasGauntlet) closeBeat(false, "");
   renderNow();
-  var rail = currentChoices();
+  /* THE ROW AFTER A PERIL THAT DID NOT END THE NIGHT. currentChoices() SCRAPES THE
+     DOM, and the DOM is still holding the attempt's own three doors - which is
+     harmless on a gauntlet, because the close deals a landing whose rail replaces
+     them, and wrong on an ambient one, where there is no landing and the player was
+     handed "Wade it - straight across" as an ordinary thing to say to the room. The
+     ambient half of the when-clause had never run before this release, so nothing
+     had ever reached this branch. The night that goes on gets a row built from the
+     board, like every other turn. */
+  var rail = wasGauntlet ? currentChoices() : railFor([]);
   if(beatJustCleared){
     var jc = beatJustCleared; beatJustCleared = null;
     pushBeatCard(jc);
@@ -11573,7 +11750,11 @@ function boardTurn(data){
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
   var knock = data && (data.knock === true || data.knock === "true");
   /* the chassis choice rides the gate; closeBeat consumes it */
-  chassisPick = (data && (data.chassis === "Seven" || data.chassis === "Nine")) ? data.chassis : "";
+  /* F3: and failing that, the door the player took. A reply that states the fork
+     still wins - the wire path is unchanged - but under V5SCENE there is no reply
+     to state anything, and the client has known since the click. */
+  chassisPick = (data && (data.chassis === "Seven" || data.chassis === "Nine")) ? data.chassis
+              : (chassisDoor || "");
   /* mudskipper immunity: a bit cannot be spent. No gate lands off it, no knock
      rides it, and the rain neither ticks nor forgives while the table laughs.
      A bit can never be TAKEN. */
@@ -13982,6 +14163,16 @@ function pickTopic(sc, key){
   var list = sc.topics || [];
   if(!list.length) return null;
   var spent = topicSpent[key] || (topicSpent[key] = []);
+  /* F5(a): THE ROW IS BOUND TO ITS OWN CARDS. Scoring a rail's own words against its
+     own key works nearly always, and "nearly" is how a player clicks a question and
+     is answered a different one - which is the exact complaint that opened F5. A line
+     this row offered deals the card this row offered it FROM, and nothing else in
+     here gets a vote. Typed lines are unaffected: they were never dealt. */
+  var bound = railDeal[key] && railDeal[key][normLine(lastPlayerText)];
+  if(typeof bound === "number" && list[bound] && spent.indexOf(bound) === -1){
+    spent.push(bound);
+    return list[bound];
+  }
   var t = String(lastPlayerText || "").toLowerCase().replace(/[^a-z0-9]+/g, " ");
   t = " " + t.replace(/^\s+|\s+$/g, "") + " ";
   var tok = topicTokens(lastPlayerText);
@@ -14999,7 +15190,14 @@ function takeAction(text, isMud){
   renderDivider();
   /* the door this turn came through - only a rail click sets one, so typing and
      bits are neither an exit nor a stall nor a walk */
-  pickKind = kindNow || ""; walkArmed = false; exitArmed = false;
+  /* F7: a typed door is promoted HERE, at the one place the turn's door is decided, so
+     everything downstream - the shard the door frees, the gauntlet the door opens, the
+     booking the door makes - is reached by the same road a click takes. It is not
+     asked twice: a player who wrote the whole sentence out has already said it twice. */
+  pickKind = doorKindFor(kindNow, text, isMud, clickNow);
+  walkArmed = false; exitArmed = false; exitArmedAt = -1;
+  /* F3: and which future that door books, click or keyboard, matched on the wording */
+  chassisDoor = (pickKind === "exit" && !beatDone()) ? forkBooking(beatNow(), text) : "";
   turnToken++;                    /* a new player action composes its briefing once */
   cutHeld = false;
   turnContext = null;
@@ -15094,6 +15292,15 @@ function takeAction(text, isMud){
      still to run would be the door lying twice over. */
   if(pickKind === "exit" && gauntletNow() && beatTurns >= beatFloor(beatNow())){
     chatLog.push({role:"user", content:"The courier goes for it: " + text.trim()});
+    if(attemptOpen()) return;
+  }
+  /* ...and the ambient half, at the same place and for the same reason: a peril that
+     opens here is silent on the wire by construction, because nothing below this line
+     runs. A bit does not arm it - immunity means a joke cannot load the gun - and
+     neither does the door or the way out, both of which are the player leaving by a
+     road the night already granted them. */
+  if(!isMud && pickKind !== "exit" && pickKind !== "walk" && ambientDue()){
+    chatLog.push({role:"user", content:"The courier is mid-sentence: " + text.trim()});
     if(attemptOpen()) return;
   }
   var userMsg = isMud
@@ -15274,6 +15481,11 @@ function callDM(corrected, tag){
      It is deliberately NOT given mudskipper immunity: the player did not press the
      button, and immunity on an undetected bit is a free clock-stop for anybody who
      types vaguely. The composition is a bit; the cost is a turn. */
+  /* F7: the door first of all, because a night that is ending is not a night with a
+     question left in it. This sits ABOVE the evidence rule on purpose: the door's own
+     authored wording is frequently pure stop-words to the topic scorer, and routing
+     the ending into the bit channel would be the same defect wearing the other hat. */
+  if(doorSkeletonNow() && callDoorTurn()) return;
   if(sceneSkeletonNow() && !sceneConfident()
      && lastRail.indexOf(String(lastPlayerText || "")) === -1) return callBitTurn();
   if(sceneSkeletonNow() && callSceneTurn()) return;
@@ -16028,7 +16240,8 @@ function saveBlob(){
     /* THE PERIL SURVIVES A REFRESH, ARMED DOOR AND ALL. A player who reloads
        mid-attempt and finds the fatal door un-asked has been handed a free undo on
        the one decision this game refuses to take back. */
-    att:{on:attemptOn, stage:attemptStage, stalls:attemptStalls, tempted:attemptTempted},
+    att:{on:attemptOn, stage:attemptStage, stalls:attemptStalls, tempted:attemptTempted,
+         spent:perilSpent},
     now:nowText, time:nowTime, amb:currentAmbience, season:currentSeason,
     cast:castSheets, canon:runCanon, archive:canonArchive,
     milestones:milestones, quests:quests, interludesUsed:interludesUsed,
@@ -20518,18 +20731,20 @@ function newRun(confirmFirst, bare){
   foldServed = false; foldedBeats = []; interludeServedId = null;
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
-  redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
+  redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
+  exitArmed = false; exitArmedAt = -1;
   pressureSent = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
   walkArmed = false; pressOfferedFor = "";
   turnCalls = 0; turnNotes = []; askedFor = {}; askAgain = 0; turnContext = null;
   rebuildState = null; cutHeld = false; cutHeldNote = ""; pendingClick = false;   /* or the next run's first beat starts pre-offered */
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
-  tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
+  tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = ""; chassisDoor = "";
+  perilSpent = {};
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -20586,8 +20801,12 @@ function attemptRestore(d){
   attemptStage = (a && a.stage) || 0;
   attemptStalls = (a && a.stalls) || 0;
   attemptTempted = !!(a && a.tempted);
+  perilSpent = (a && a.spent && typeof a.spent === "object") ? a.spent : {};
   /* an older save has no att at all, and that is a save from before perils existed -
-     it restores to no peril, which is exactly right and needs no migration */
+     it restores to no peril, which is exactly right and needs no migration. A save
+     from between the engine and the arm has att but no spent: it restores to an
+     unspent night, which costs that one beat a peril it may already have had and is
+     the safe direction of a one-release seam. */
   if(attemptOn && !attemptStageNow()){ attemptOn = false; attemptStage = 0; }
   return attemptOn;
 }
@@ -20712,6 +20931,9 @@ function restoreFromBlob(s){
   /* a save from before the scene book has spent nothing: it starts at the top of
      every topic list, which is the right place for a run that has never had one */
   topicSpent = (s.topicSpent && typeof s.topicSpent === "object") ? s.topicSpent : {};
+  /* the binding is rebuilt by the first row this run draws; it is a view of the deck,
+     never a fact about it, so it does not belong in the save */
+  railDeal = {};
   /* a save from before the physics desk: she goes back in the jacket, which is
      the safe end of the guess - it costs a re-roll if she was in his hand, and
      nothing at all if she was not */
@@ -20722,7 +20944,7 @@ function restoreFromBlob(s){
      played the only branch that existed */
   chassisHolder = (s.chassisHolder === "Seven" || s.chassisHolder === "Nine") ? s.chassisHolder
     : (gateNotes["a2-chassis"] ? "Seven" : null);
-  chassisPick = "";
+  chassisPick = ""; chassisDoor = "";
   forcingNow = false;
   if(!beatDone()) currentSeason = beatNow().season;   /* the board is the season, always */
   rehydDismissed = false;
@@ -20730,7 +20952,8 @@ function restoreFromBlob(s){
   runOver = (s.over === "death" || s.over === "season" || s.over === "lost"
     || s.over === "broken" || s.over === "walked") ? s.over : "";
   redRun = (typeof s.redRun === "number" && s.redRun > 0) ? s.redRun : 0;
-  walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false; exitArmed = false;
+  walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; walkArmed = false;
+  exitArmed = false; exitArmedAt = -1;
   pressureSent = false;
   deathLine = s.deathLine || "";
   wetRun = (typeof s.wet === "number") ? s.wet : 0;
@@ -21170,15 +21393,20 @@ function verdictMap(){
    whole review, and the pre-filter that silenced them can only ever pre-empt a name-fire
    and never create one - nothing GAINED here, in any predicate, which is the shape a
    safe widening leaves behind.
-   The style law those 23 rest on is asserted in its own row over all 3,753 lines: a
+   The style law those 23 rest on is asserted in its own row over all 3,751 lines: a
    number-name that is a person is capitalised, everywhere in the book. When that breaks,
    the fix is a capital letter in the prose and never a hole in the rule. */
+/* v5.14 F3: THE TWIN EXIT. Three entries moved and they are one edit - a2-chassis's
+   three rotating doors became two forking ones, so exits2 no longer exists, exits0 and
+   exits1 are new sentences, and both of them name Seven because both are about what he
+   is owed. Door B also names Nine, because door B is addressed to her. Nothing else in
+   the book moved: the corpus lost exactly the two lines the replacement removed. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1p2","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
@@ -21345,7 +21573,11 @@ function selfTest(){
     "sceneSkeletonNow", "sceneBlocksFor", "callSceneTurn", "serveSceneTurn", "playForks",
     "interludeNow", "callInterludeTurn", "topicEvidence", "sceneConfident", "vocativeName", "topicTokens", "pickVariant",
     "housingResident", "residentNow", "holderNow", "pickTopicFresh", "askedAnswered",
-    "playSpeaker", "playText", "pickTopic", "sentenceHead"];
+    "playSpeaker", "playText", "pickTopic", "sentenceHead",
+    /* ...and the fix wave: the fork's doors, the typed door, and the row dealt from the deck */
+    "forkDoors", "forkBooking", "doorSlots", "typedIsDoor", "doorSkeletonNow", "callDoorTurn",
+    "railFor", "pinnedExit", "sameAsDoor", "normLine", "sceneRails", "doorKindFor",
+    "ambientDue", "ambientCard", "attemptClear", "attemptGraze", "attemptStall"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -22232,7 +22464,16 @@ function selfTest(){
               sc:V5SCENE, said:lastPlayerText, mud:lastTurnMud, an:attemptOn, wb:walkbackNow,
               log:chatLog, feed:feedLog, led:ledgerText, txt:beatText, seen:beatSeen,
               spent:topicSpent, cs:currentSeason, sl:slackTurns, sr:slackRoom,
-              ask:window.askAI, per:window.persistAll, dl:deathLine, tk:turnToken};
+              ask:window.askAI, per:window.persistAll, dl:deathLine, tk:turnToken,
+              /* ...and the fix wave: the fork's booking, the row's binding, the door
+                 taken, the peril latch and the wall switch over the teeth */
+              cd:chassisDoor, cp:chassisPick, rd:railDeal, pk:pickKind, lr:lastRail,
+              ps:perilSpent, tl:TEETH_LIVE, as:attemptStage, ast:attemptStalls,
+              atp:attemptTempted, bjc:beatJustCleared, ph2:phaseLeft,
+              /* ...and whether there is a RUN under the board at all. doorsLive() asks,
+                 and ?selftest loads no save, so every row that reads the rail was
+                 reading the doorless branch and reporting it as the shipped one. */
+              slug:runSlug, intro:introStage};
     }
     function barPut(k){
       beatIdx = k.bi; phase = k.ph; phaseLeft = k.pl; beatTurns = k.bt; tolls = k.to;
@@ -22244,10 +22485,20 @@ function selfTest(){
       beatSeen = k.seen; topicSpent = k.spent; currentSeason = k.cs; slackTurns = k.sl;
       slackRoom = k.sr; window.askAI = k.ask; window.persistAll = k.per;
       deathLine = k.dl; turnToken = k.tk;
+      chassisDoor = k.cd; chassisPick = k.cp; railDeal = k.rd; pickKind = k.pk;
+      lastRail = k.lr; perilSpent = k.ps; TEETH_LIVE = k.tl; attemptStage = k.as;
+      attemptStalls = k.ast; attemptTempted = k.atp; beatJustCleared = k.bjc;
+      phaseLeft = k.ph2; runSlug = k.slug; introStage = k.intro;
     }
     function barBoard(at){
       beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
       slackTurns = 0; slackRoom = ""; runOver = ""; deathLine = ""; walkbackNow = false;
+      chassisDoor = ""; chassisPick = ""; railDeal = {}; pickKind = ""; lastRail = [];
+      perilSpent = {}; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
+      beatJustCleared = null;
+      /* a board with a night on it. Without this the door is not live, and a harness
+         that cannot see the door cannot say anything about it. */
+      runSlug = runSlug || "sweep"; introStage = 0;
       foldPending = false; foldServed = false; attemptOn = false; lastTurnMud = false;
       chassisHolder = "Seven"; roster = {family:[], fallen:[]}; castSheets = {};
       runCanon = []; gateNotes = {}; foldedBeats = []; topicSpent = {};
@@ -22540,6 +22791,203 @@ function selfTest(){
            early = beatIdx > beatById(w) && beatIdx <= beatById("a2-housing") && !housingResident();
          } finally { barPut(k); }
          return !early;   /* false means the beat between the two is now empty - the catch */
+       }});
+
+
+    /* ---- F3: THE TWIN EXIT. The season's biggest branch gets a door, and the door
+       is driven rather than described: both wordings off the real row, each one
+       through the real close, and the holder read back off the board. ---- */
+    var fkBad = [], fkSaw = [];
+    (function(){
+      var k = barKeep(), at = beatById("a2-chassis");
+      try{
+        barBoard(at);
+        var b = beatNow(), row = railFor([]), slots = doorSlots();
+        if(slots[0] !== "exit" || slots[1] !== "exit"){
+          fkBad.push("the fork beat does not print two doors: " + slots.join("/"));
+        }
+        if(row[0] !== b.exits[0] || row[1] !== b.exits[1]){
+          fkBad.push("the row is not the two authored doors: " + row.slice(0, 2).join(" // "));
+        }
+        if(row.length < 3) fkBad.push("the fork beat left the player nothing but the fork");
+        /* every OTHER beat still prints exactly one */
+        SPINE.forEach(function(sb, i){
+          if(sb.id === "a2-chassis") return;
+          if(forkDoors(sb)) fkBad.push(sb.id + " grew a second door");
+        });
+        ["Seven", "Nine"].forEach(function(want, i){
+          barBoard(at);
+          chassisHolder = null;
+          /* the door, taken: the same two lines the player is looking at */
+          chassisDoor = forkBooking(beatNow(), railFor([])[i]);
+          if(chassisDoor !== want) fkBad.push("door " + i + " books " + dbgV(chassisDoor));
+          beatTurns = beatNow().budget;
+          pickKind = "exit";
+          boardTurn({});
+          if(chassisHolder !== want){
+            fkBad.push("door " + i + " closed the beat onto " + dbgV(chassisHolder));
+          } else {
+            fkSaw.push("door " + (i + 1) + " seats " + want);
+          }
+        });
+        /* ...and a door TYPED books the same thing a door clicked books */
+        barBoard(at);
+        if(forkBooking(beatNow(), "  it is hers. take the body, nine. we will carry seven between us for as long as it takes.  ") !== "") {
+          fkBad.push("a line that is not the door booked the fork anyway");
+        }
+        if(forkBooking(beatNow(), beatNow().exits[1]) !== "Nine"){
+          fkBad.push("the second door's own wording did not book Nine");
+        }
+      } finally { barPut(k); }
+    })();
+    T("the fork is a door, and both of its doors are reachable",
+      fkBad.length === 0, fkBad.length ? fkBad.join("; ")
+        : fkSaw.join(" \u00b7 ") + " \u00b7 one twin-exit beat in thirty-three, and it is the right one",
+      {label:"the fallback the fork actually shipped on: no field, no door, Seven every time",
+       was:"Seven",
+       check:function(w){
+         var k = barKeep(), got;
+         try{
+           barBoard(beatById("a2-chassis"));
+           chassisHolder = null; chassisPick = ""; chassisDoor = "";
+           /* the recorded shape: a close with nothing stated anywhere, which under
+              V5SCENE was EVERY close, because a template reply carries no fields */
+           closeBeat(false, "");
+           got = chassisHolder;
+         } finally { barPut(k); }
+         return got !== w;   /* false: the branch has one reachable side and it is Seven */
+       }});
+
+    /* ---- F7: A TYPED LINE THAT IS THE DOOR. The Architect's own sentence is the
+       fixture, verbatim, because it is verbatim one of a1-hum's authored doors. ---- */
+    var tdBad = [], tdSaw = [];
+    (function(){
+      var k = barKeep(), at = beatById("a1-hum");
+      var his = "Skin on the shard, and I say the name out loud. Nine. Let her answer that.";
+      try{
+        barBoard(at);
+        V5SCENE = true;
+        if(!typedIsDoor(his)) tdBad.push("the audit's own line is not read as the door");
+        if(doorKindFor("", his, false, false) !== "exit"){
+          tdBad.push("the line is the door and the turn did not come through it");
+        }
+        if(doorKindFor("", his, true, false) !== "") tdBad.push("a bit was promoted to the door");
+        if(doorKindFor("stall", his, false, false) !== "stall"){
+          tdBad.push("the promotion overrode a rail click's own kind");
+        }
+        /* the near misses: conversation must never end a night */
+        ["I want to hear her myself, but not out here in the road.",
+         "Sometimes I miss being boring.",
+         "Tell Pia my left boot has opinions about this weather.",
+         "Ask what they are not saying."].forEach(function(t){
+          if(typedIsDoor(t)) tdBad.push("a conversational line took the door: " + t);
+        });
+        /* and the turn it makes: the close carries it, and NO topic is spent on a
+           night that is over - which is the whole of the defect */
+        barBoard(at);
+        V5SCENE = true;
+        window.askAI = function(){ tdBad.push("the door went to the wire"); return {then:function(){ return {catch:function(){}}; }}; };
+        beatTurns = beatNow().budget;
+        lastPlayerText = his; lastRail = []; pickKind = "exit"; turnToken++;
+        if(!doorSkeletonNow()) tdBad.push("the door had no route of its own");
+        callDM();
+        if(JSON.stringify(topicSpent) !== "{}"){
+          tdBad.push("the ending spent a topic card: " + JSON.stringify(topicSpent));
+        }
+        if(phase === "live") tdBad.push("the door did not close the night: phase=" + phase);
+        else tdSaw.push("the audit's sentence closes a1-hum with no card spent and no call");
+        /* ...and below the floor the door still HOLDS, so the night keeps its scene */
+        barBoard(at); V5SCENE = true; beatTurns = 0; pickKind = "exit";
+        if(doorSkeletonNow()) tdBad.push("the door took a turn it is doctrine-bound to hold");
+      } finally { barPut(k); }
+    })();
+    T("a door the player typed is still a door", tdBad.length === 0,
+      tdBad.length ? tdBad.join("; ") : tdSaw.join(" \u00b7 "),
+      {label:"sameAsDoor's gram fallback - a fence for the DM, a trapdoor under the player",
+       was:function(t){ return sameAsDoor(beatNow(), t); },
+       check:function(w){
+         var k = barKeep(), took;
+         try{
+           barBoard(beatById("a1-hum"));
+           /* three shared three-grams and a night the player did not mean to end is
+              over. That threshold is right where it lives - dropping one of the DM's
+              choices costs a line - and it is a trapdoor here. */
+           took = w("I want to hear her myself, but not out here in the road.");
+         } finally { barPut(k); }
+         return !took;   /* false: the loose test ends the night on a conversational line */
+       }});
+
+    /* ---- F5(a): THE ROW IS DEALT FROM THE DECK. 251 authored rails shipped in wave
+       two for a reader that never read them; this is the reader. ---- */
+    var rwBad = [], rwSaw = [];
+    (function(){
+      var k = barKeep(), at = beatById("a1-hum");
+      try{
+        barBoard(at);
+        V5SCENE = true;
+        var sc = sceneNow(), list = sc.sc.topics, row = railFor([]);
+        if(row[1] !== list[0].rail || row[2] !== list[1].rail){
+          rwBad.push("the row under the door is not the deck: " + row.slice(1).join(" // "));
+        }
+        /* the binding: the line the row offered deals the card it was offered FROM */
+        lastPlayerText = row[1];
+        if(pickTopic(sc.sc, sc.key) !== list[0]) rwBad.push("clicking a rail dealt a different card");
+        /* ...and that card has now retired from the row */
+        var row2 = railFor([]);
+        if(row2.indexOf(list[0].rail) !== -1) rwBad.push("a spent card is still on the row");
+        if(row2[1] !== list[1].rail) rwBad.push("the row did not walk on: " + row2[1]);
+        rwSaw.push("the row deals " + list.length + " cards in order and each retires as it is spent");
+        /* the deck run dry: the row is the door and the house stalls, which is the
+           deck telling the player this room is finished */
+        var kk = 0;
+        while(sceneRails(2).length && kk++ < 40){
+          lastPlayerText = sceneRails(1)[0];
+          pickTopic(sc.sc, sc.key);
+        }
+        var dry = railFor([]);
+        if(dry.length !== 3) rwBad.push("a dry deck left the player " + dry.length + " thing(s) to do");
+        if(PIN_STALLS.indexOf(dry[1]) === -1) rwBad.push("a dry deck did not fall back to the stalls: " + dry[1]);
+        if(dry[0] !== pinnedExit(beatNow())) rwBad.push("a dry deck lost the door");
+        rwSaw.push("dry, it is the door and the stalls");
+        /* THE ROOM, which is where the repeat was worst: no door there at all, so the
+           whole row is the room's own cards */
+        barBoard(beatById("a1-chase"));
+        V5SCENE = true; phase = "slack";
+        var rs = sceneNow();
+        if(!rs || !rs.room) rwBad.push("the room deck did not come up in slack");
+        else {
+          var rrow = railFor([]);
+          if(rrow[0] !== rs.sc.topics[0].rail){
+            rwBad.push("the family's own time still offers house stalls: " + rrow[0]);
+          } else {
+            rwSaw.push("the room leads with its own cards, not with PIN_STALLS");
+          }
+        }
+        /* and the legacy path is untouched: with the flag down the DM writes its two */
+        barBoard(at); V5SCENE = false;
+        if(sceneRails(2).length) rwBad.push("the deck crowded out the DM on the legacy path");
+      } finally { barPut(k); }
+    })();
+    T("the row is dealt from the deck, and a spent card retires from it",
+      rwBad.length === 0, rwBad.length ? rwBad.join("; ") : rwSaw.join(" \u00b7 "),
+      {label:"the row as it shipped: the door and two house stalls, every turn of every night",
+       was:function(){
+         var out = [pinnedExit(beatNow())], i, t;
+         for(i = 0; out.length < 3; i++){
+           t = PIN_STALLS[(i + beatTurns) % PIN_STALLS.length];
+           if(out.indexOf(t) === -1) out.push(t);
+         }
+         return out;
+       },
+       check:function(w){
+         var k = barKeep(), row;
+         try{
+           barBoard(beatById("a1-hum"));
+           V5SCENE = true;
+           row = w().join(" | ");
+         } finally { barPut(k); }
+         /* false: not one of the beat's seven authored rails can reach the player */
+         return row.indexOf("Tell me who Mirren was to Vic") !== -1;
        }});
 
     T("a night plays itself, and plays the same with the endpoint dead",
@@ -23391,24 +23839,27 @@ function selfTest(){
     var teethBad = [], teethSaw = [];
     var realPersist0 = window.persistAll, realAsk = window.askAI, realCall = window.callDM;
     var wire = 0;
-    function inPeril(fn){
+    /* ...and it takes a card by name now. Nine cards were signed off in this wave and a
+       harness pinned to the prototype could only ever have proved the prototype. */
+    function inPeril(fn, at){
       var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
                canon:runCanon, ov:runOver, dl:deathLine, bt:beatTurns, to:tolls,
                sm:storyMin, dr:driftRun, pt:perilTurns, pn:perilName,
                feed:feedLog, log:chatLog, led:ledgerText, said:lastPlayerText,
                cast:castSheets, fp:foldPending, wb:walkbackNow, tl:TEETH_LIVE,
                an:attemptOn, as:attemptStage, ast:attemptStalls, at:attemptTempted,
-               jc:beatJustCleared, gn:gateNotes};
+               jc:beatJustCleared, gn:gateNotes, ps:perilSpent, pk:pickKind, lr:lastRail};
       window.persistAll = function(){};
       window.askAI = function(){ wire++; return {then:function(){ return {catch:function(){}}; }}; };
       window.callDM = function(){ wire++; };
       try{
         TEETH_LIVE = true;
-        beatIdx = beatById("a1-carried"); phase = "live"; chassisHolder = null;
+        beatIdx = beatById(at || "a1-carried"); phase = "live"; chassisHolder = null;
         roster = {family:[], fallen:[]}; runCanon = []; runOver = ""; deathLine = "";
         foldPending = false; walkbackNow = false; gateNotes = {};
         beatTurns = beatNow().budget; tolls = 0; driftRun = 0;
-        perilTurns = 0; perilName = ""; beatJustCleared = null;
+        perilTurns = 0; perilName = ""; beatJustCleared = null; perilSpent = {};
+        pickKind = ""; lastRail = [];
         attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
         wire = 0;
         return fn();
@@ -23421,7 +23872,8 @@ function selfTest(){
         ledgerText = k.led; lastPlayerText = k.said; castSheets = k.cast;
         foldPending = k.fp; walkbackNow = k.wb; TEETH_LIVE = k.tl;
         attemptOn = k.an; attemptStage = k.as; attemptStalls = k.ast; attemptTempted = k.at;
-        beatJustCleared = k.jc; gateNotes = k.gn;
+        beatJustCleared = k.jc; gateNotes = k.gn; perilSpent = k.ps; pickKind = k.pk;
+        lastRail = k.lr;
       }
     }
     function safeDoor(){
@@ -23544,6 +23996,183 @@ function selfTest(){
              return w(st.rail, r.text, topicTokens(r.text)) !== i;
            } finally { if(had === undefined) delete r.key; else r.key = had; }
          });
+       }});
+
+
+    /* ================== THE EIGHT, OUT OF THE DARK ==================
+       Signature was granted conditional on evidence, and the evidence is a drive:
+       every signed card opened on its own beat, cleared on one leg and grazed on the
+       other, the temptation asked twice on each of the three gauntlets, and the
+       ambient half of the when-clause - which had never been read by anything -
+       arming, resolving, and not arming twice.
+       This needs no model and never did: the attempt is silent on the wire from press
+       to resolution, which is Law One, so a live pass is a client-side drive by
+       construction. Nine cards, both legs each, in the sweep every load. */
+    var signBad = [], signSaw = [], GAUNTLETS = ["a2-hand", "a3-descent", "a3-seize"];
+    var AMBIENTS = ["a2-ground", "a2-seven", "a2-choir", "a3-evict", "a3-dreamers"];
+    (function(){
+      var dark = [];
+      SPINE.forEach(function(b){ if(b.teeth && b.teeth.live === false) dark.push(b.id); });
+      if(dark.length) signBad.push("still dark: " + dark.join(", "));
+      GAUNTLETS.concat(AMBIENTS).forEach(function(id){
+        /* THE CLEAR LEG: every safe door in order, out the far side alive */
+        inPeril(function(){
+          var stages = attemptCard() ? attemptCard().stages.length : 0, g = 0;
+          if(!stages){ signBad.push(id + ": no card at the beat it is authored on"); return null; }
+          if(!attemptOpen()){ signBad.push(id + ": the attempt would not open"); return null; }
+          while(attemptOn && g++ < 8){
+            var d = safeDoor();
+            if(d === -1){ signBad.push(id + ": a stage with no safe door"); break; }
+            attemptTake(d);
+          }
+          if(attemptOn) signBad.push(id + ": the clear leg never resolved");
+          if(runOver) signBad.push(id + ": the safe doors killed him");
+          if(wire !== 0) signBad.push(id + ": " + wire + " call(s) reached the wire on the clear leg");
+          var t = beatNow().teeth;
+          if(t.surviveCanon && runCanon.indexOf(t.surviveCanon) === -1){
+            signBad.push(id + ": the clear wrote no canon");
+          }
+          return null;
+        }, id);
+        /* THE GRAZE LEG: two stalls and somebody who loves him does it instead */
+        inPeril(function(){
+          if(!attemptOpen()){ signBad.push(id + ": the graze leg would not open"); return null; }
+          /* TOKENLESS ON PURPOSE. The first cut used the prototype row's two lines and
+             a3-dreamers went red: "I would like to state for the record that I hate
+             this" scores against that card's own keys and RESOLVES a stage. A stall
+             has to be a non-answer on all nine cards, so it is a noise nobody keyed. */
+          attemptTyped("hnnngh");
+          if(!attemptOn) signBad.push(id + ": one stall ended it - the patience is two");
+          attemptTyped("mmmph");
+          if(attemptOn) signBad.push(id + ": two stalls did not resolve it");
+          if(runOver) signBad.push(id + ": a stall killed him - the family moving is never a death");
+          var t = beatNow().teeth;
+          if(t.grazeCanon && runCanon.indexOf(t.grazeCanon) === -1){
+            signBad.push(id + ": the graze wrote no canon");
+          }
+          if(wire !== 0) signBad.push(id + ": " + wire + " call(s) reached the wire on the graze leg");
+          return null;
+        }, id);
+      });
+      /* THE TEMPTATION, ASKED TWICE, on each of the three signed gauntlets - and the
+         death text reachable ONLY through it: not by any sentence, ever. */
+      GAUNTLETS.forEach(function(id){
+        inPeril(function(){
+          attemptOpen();
+          var i = temptDoor(), st0 = attemptStage;
+          if(i === -1){ signBad.push(id + ": no tempting door on the first stage"); return null; }
+          attemptTake(i);
+          if(!attemptTempted) signBad.push(id + ": the tempting door did not arm");
+          if(runOver) signBad.push(id + ": the tempting door killed on one click");
+          if(attemptStage !== st0) signBad.push(id + ": the tempting door advanced on its first click");
+          /* the fatal wording, TYPED, at every stage the card has: never a death */
+          attemptTempted = false;
+          var g = 0;
+          while(attemptOn && g++ < 8){
+            var st = attemptStageNow(), j = temptDoor();
+            if(j !== -1){
+              attemptTyped(st.rail[j].text);
+              if(runOver){ signBad.push(id + ": a typed line resolved as the death"); break; }
+            }
+            if(!attemptOn) break;
+            attemptStalls = 0;
+            if(attemptLast()) break;
+            attemptTake(safeDoor());
+          }
+          if(!runOver) signSaw.push(id + " tempts");
+          return null;
+        }, id);
+        /* ...and the door itself, twice, on the last stage, does kill */
+        inPeril(function(){
+          attemptOpen();
+          var g = 0;
+          while(attemptOn && !attemptLast() && g++ < 8) attemptTake(safeDoor());
+          if(!attemptOn){ signBad.push(id + ": could not reach the last stage"); return null; }
+          var i = temptDoor();
+          if(i === -1){ signBad.push(id + ": the last stage has no tempting door"); return null; }
+          attemptTake(i);
+          if(runOver) signBad.push(id + ": the last stage killed on the first click");
+          attemptTake(i);
+          if(runOver !== "death") signBad.push(id + ": the twice-asked door on the last stage did not kill");
+          else if(String(deathLine || "").length < 8) signBad.push(id + ": it killed with no authored death text");
+          if(attemptOn) signBad.push(id + ": the attempt outlived the courier");
+          return null;
+        }, id);
+      });
+      if(!signBad.length) signSaw.push(GAUNTLETS.length + " gauntlets and " + AMBIENTS.length
+        + " ambients, clear leg and graze leg each, wire 0 throughout");
+    })();
+    /* THE AMBIENT ARM ITSELF: authored on six cards since the engine shipped and read
+       by nothing until this wave. */
+    var ambBad = [], ambSaw = [];
+    (function(){
+      var k = barKeep();
+      try{
+        barBoard(beatById("a2-ground"));
+        TEETH_LIVE = true;
+        var t = beatNow().teeth, min = parseInt(t.when.turnMin, 10);
+        beatTurns = min - 1;
+        if(ambientDue()) ambBad.push("the peril armed before its author's count");
+        beatTurns = min;
+        if(!ambientDue()) ambBad.push("the peril did not arm at turnMin " + min);
+        /* the door is not how you meet an ambient one, and a joke never arms it */
+        if(doorKindFor("exit", "x", false, true) !== "exit") ambBad.push("the door lost its own kind");
+        if(gauntletNow()) ambBad.push("an ambient card claimed the door as well");
+        /* ...and it happens ONCE. It does not close the beat, so without the latch
+           the same floor gives way every turn until the night ends. */
+        attemptOpen();
+        if(!attemptOn) ambBad.push("the ambient card would not open");
+        var doors = (attemptStageNow().rail || []).map(function(r){ return r && r.text; });
+        var g = 0;
+        while(attemptOn && g++ < 8) attemptTake(safeDoor());
+        if(phase !== "live") ambBad.push("an ambient peril closed the beat: phase=" + phase);
+        /* ...and the row it hands back is the board's, not the peril's. Found by
+           playing it the hour the arm was written: with no landing to replace them,
+           the attempt's three doors stayed on the rail as ordinary things to say. */
+        var back = railFor([]);
+        doors.forEach(function(d){
+          if(d && back.indexOf(d) !== -1) ambBad.push("the peril's own door stayed on the rail: " + d);
+        });
+        if(back.length !== 3) ambBad.push("the night came back with " + back.length + " thing(s) to do");
+        beatTurns = min + 3;
+        if(ambientDue()) ambBad.push("the same peril armed a second time on one night");
+        else ambSaw.push("a2-ground arms at turn " + min + ", resolves without closing the night, and does not come back");
+        /* the latch survives the drawer, like the arming beside it */
+        var blob = JSON.parse(saveBlob());
+        perilSpent = {};
+        attemptRestore(blob);
+        if(!perilSpent["a2-ground"]) ambBad.push("a reload handed back a peril already survived");
+      } finally { barPut(k); }
+    })();
+    T("nine signed cards, opened and survived both ways", signBad.length === 0,
+      signBad.length ? signBad.join("; ") : signSaw.join(" \u00b7 "),
+      {label:"live:false on the eight - authored, ritual-checked, and unreachable",
+       was:false,
+       check:function(w){
+         var k = barKeep(), got;
+         try{
+           barBoard(beatById("a3-descent"));
+           TEETH_LIVE = true;
+           var t = beatNow().teeth, had = t.live;
+           try{ t.live = w; got = !!attemptCard() && gauntletNow(); }
+           finally { if(had === undefined) delete t.live; else t.live = had; }
+         } finally { barPut(k); }
+         return got;   /* false: a dark card has no engine behind it, whatever else is true */
+       }});
+    T("the ambient half of the when-clause is read by something", ambBad.length === 0,
+      ambBad.length ? ambBad.join("; ") : ambSaw.join(" \u00b7 "),
+      {label:"the arm as it shipped: turnMin authored on six cards, read by nothing",
+       was:function(){ return false; },
+       check:function(w){
+         var k = barKeep(), mine, old;
+         try{
+           barBoard(beatById("a2-ground"));
+           TEETH_LIVE = true;
+           beatTurns = parseInt(beatNow().teeth.when.turnMin, 10) + 2;
+           mine = ambientDue();      /* the real arm, first, so the credit is observed */
+           old = w();
+         } finally { barPut(k); }
+         return mine && old;   /* false: five signed cards could never have happened */
        }});
 
     /* ================== THE DEGENERATE RUN ==================
