@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.56.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.57.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2050,6 +2050,33 @@ var SPINE = [
  canon:["The Choir knows the courier's face and where he sleeps.",
         "Hollows drop to idle when cut from signal - cutting the signal beats cutting the throat.",
         "The courier cannot go home. That door is shut from the outside."],
+ /* THE PROTOTYPE, and it is normative: every teeth card after this one is judged
+    against its shape and its register. It sits on a1-chase because that is where its
+    own prose already is - ninety steps of wet iron out of the Veldt, with the market
+    noise thinning above. The two stages are the ask-twice; the tempting door carries
+    no key, which is what makes a typed line unable to resolve as the death. It runs
+    ambient (turnMin) rather than onExit: no card carries onExit until the engine that
+    reads it exists. */
+ teeth:{when:{turnMin:2}, threat:"the flooded ladder shaft",
+  stages:[
+   {scene:["The ladder shaft is there, black and breathing water, and you get two rungs down before the night states its terms: the third rung is gone, the fourth is rust holding hands with memory, and the flood channel below is running full and fast enough to file a courier under lost property.",
+           ["Pia","Stop. STOP. Look at me. Two dead rungs and live water - this is not the fast way, this is the last way. Back up or I swear I will bill Vic for the paperwork."],
+           "Against your ribs the shard's hum climbs half a note - the blind, buried kind of urgency, a passenger who can feel the lift cable fraying and cannot reach the alarm."],
+    rail:[{text:"Climb back up and take the stairs like a person.", key:"up back climb stairs out person leave safe"},
+          {text:"Test the fourth rung anyway.", tempt:true},
+          {text:"Freeze and hug the ladder.", key:"freeze hug hold still wait stop stay"}]},
+   {scene:["You put weight on the fourth rung. It gives a centimetre - the polite centimetre, the one that is a question. Below, the channel has stopped sounding like water and started sounding like appetite.",
+           ["Pia","That rung is lying to you. One more step down and I cannot reach you, nobody can reach you, and the channel does not do refunds. Up. NOW. Last time I say it nicely."],
+           "The shaft walls sweat. Somewhere above, the market noise has gone thin, like the city holding its breath to watch."],
+    rail:[{text:"Take her hand and climb out.", key:"hand take climb out up pia reach grab"},
+          {text:"One rung further - the crossing pipe is right there.", tempt:true},
+          {text:"Freeze and hug the ladder.", key:"freeze hug hold still wait stop stay"}]}],
+  death:"The fourth rung gave, and the flood channel filed the courier under lost property - warned twice, named once, and one rung past the way out.",
+  deathScene:["The fourth rung finishes its sentence. It goes without drama - rust does not gloat - and the shaft hands you to the water the way the city hands anything to anything: efficiently, and without looking up from its paperwork.",
+              ["Pia","NO - grab the - "],
+              "The channel is faster than her voice. The last thing the night files is a small hand reaching down into the dark, and the hum against your ribs going with you, still trying to be brave about it."],
+  grazeCanon:"The channel kept his boot as a receipt.",
+  surviveCanon:"The courier put two rungs between himself and a flooded shaft before the family talked sense."},
  stone:"The courier lost the option of walking away.",
  scar:"He learned the door was shut by finding it shut - the Choir chose the moment, not him."},
 
@@ -5556,7 +5583,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.56.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.57.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7867,6 +7894,39 @@ var TABLE_TALK = [
  lines:["The family has a tell: when the night gets heavy, they get funnier, at a rate you could plot. All of you, balanced on the joke like it's the last rung that holds."]}
 ];
 var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
+/* ================== THE TEETH ==================
+   Authored perils. In the deterministic build there is no improvising DM, so the
+   mortality machinery - live-verified, and the best thing in the game - becomes
+   unreachable content unless the danger is written down. These cards write it down.
+
+   THE TEMPTATION RULE, which is the whole law: THE SCENE WARNS PLAINLY; THE CHOICE MAY
+   NOT. Warning is ambient and honest - the red room, the strip with the threat's own
+   NAME on it, prose that tells the truth. The fatal option is written in the courier's
+   confident voice, the way temptation actually talks. The kill must be causally the
+   named threat: water threat, water death, never an off-card gotcha. And the tempting
+   door asks TWICE - the first click escalates and re-warns, deeper in, worse odds on
+   the page; only the second kills. Symmetry with the exit and the walk: every
+   consequential door in this game asks twice.
+
+   THE RAIL IS OBJECTS, AND THE SHAPE IS THE LAW. rail:[{text, key}, {text, tempt:true},
+   {text, key}]. A door you can TYPE your way into carries its key beside its text; the
+   door that kills carries no key at all, and its keylessness IS the rule that a typed
+   line can never resolve as the death. A parallel key array was rejected on this
+   project's own case law - our recurring headline defect is the fix applied to the text
+   and not to the field beside it, and railKeys[] is that defect sold as a data
+   structure: reorder the rails once and every key hangs on the wrong door, silently,
+   for ever. Three invariants are enforced at commit time by the ritual: exactly one
+   tempt per stage, no key on it, a key on everything else.
+   (Slack cards keep flat string rails. The sealed room is click-only end to end, so
+   strings are the honest shape there. The divergence is legible: WHERE YOU SEE
+   OBJECTS, TYPING IS LIVE.)
+
+   THE RUNTIME IS NOT BUILT YET. This release lands the shape, the normative card and
+   the guard rails; TEETH_LIVE is the one switch that turns the substitution law on, and
+   it is off. Nothing reads `teeth` at runtime. See the brief for why the engine gets a
+   session of its own rather than the tail of this one. */
+var TEETH_LIVE = false;      /* the engine is not here yet; this is its only switch */
+var TEETH_PATIENCE = 2;      /* the strip's own two-turn patience, and the same number */
 /* ---- THE BIT FALLBACK ----
    Phase A's template. A bit is a RESPONSE - the player typed something daft or deep
    and the family answers it - so the fallback cannot be ambient chatter; the table-talk
@@ -8993,10 +9053,30 @@ function armBeat(){
      "open"  - nothing closed.
    Pure, so the sweep can put all four corners through the code the board books
    from rather than through a sentence about it. */
-function bookFor(said, forcing, pick){
-  if(pick === "exit" && !said) return "door";
+/* ...and the gauntlet is a SUBSTITUTION, not an eighth corner: wherever this returns
+   "door", a gauntlet beat returns "attempt". Nothing else moves. It touches TWO cells,
+   because the door branch is consulted BEFORE forcing - a last-second exit press
+   already beats the world's close, by three releases of hardening, and the attempt
+   inherits that precedence. A courier who takes the door as the world's hand comes
+   down gets the fight, not the scar. The cells that already return "world" - forced
+   close, no exit press - bypass the gauntlet and book the scar unchanged: the world
+   does not play minigames. said=true with pick "exit" stays "clean": a landed gate is
+   a beat already closing, and no attempt opens on a closing beat.
+   The flag is a PARAMETER, never live state read in here. This function is pure so
+   the sweep can drive every corner through the code the board books from, and a
+   gauntlet that reached in through a global would end that the day it was written. */
+function bookFor(said, forcing, pick, gauntlet){
+  if(pick === "exit" && !said) return gauntlet ? "attempt" : "door";
   if(!said && !forcing) return "open";
   return ((!said || forcing) && pick !== "exit") ? "world" : "clean";
+}
+/* whether THIS beat's door opens an attempt. Off at the wall until the engine that
+   reads the card exists - TEETH_LIVE is that switch, and no authored card carries
+   when.onExit either, so the substitution is provably dormant twice over. */
+function gauntletNow(){
+  if(!TEETH_LIVE || beatDone() || runOver) return false;
+  var t = beatNow().teeth;
+  return !!(t && t.when && t.when.onExit);
 }
 /* One live DM turn against the board. */
 function boardTurn(data){
@@ -9155,7 +9235,7 @@ function boardTurn(data){
      The click books nothing either way. The world's own close on a gauntlet beat
      bypasses the gauntlet entirely and records the scar as normal: the world does not
      play minigames. */
-  if(bookFor(said, forcingNow, pickKind) === "door"){
+  if(bookFor(said, forcingNow, pickKind, gauntletNow()) === "door"){
     forcingNow = false;      /* both returns below skip the reset at the foot */
     /* ...but not before the night has been lived. doorDirective orders the
        storyteller NOT to send the gate below the floor; this branch sat ABOVE the
@@ -9271,7 +9351,7 @@ function boardTurn(data){
        create: a model that REFUSED the forced gate fell to the thin-close, which
        sets hard but not forced and so pays nothing, while a model that obeyed paid
        the toll. Obedience must cost the WORLD's move, never the player's. */
-    var worldsMove = bookFor(said, forcingNow, pickKind) === "world";
+    var worldsMove = bookFor(said, forcingNow, pickKind, gauntletNow()) === "world";
     /* a force at max tolls folds the table - except the finale, which never
        folds: a forced finale lands the season exactly as it always has */
     /* THE FOLD FOLDS UNANSWERED STORY, NEVER ANSWERED STORY. This returned above
@@ -17893,6 +17973,33 @@ function applyLaunchParams(){
 function stPassages(){
   /* every authored passage in the build, with the world it claims */
   var out = [];
+  /* ...INCLUDING THE TEETH. A gauntlet stage is authored prose rendered into the feed
+     exactly like a landing, so the desk judges it exactly like a landing - at its own
+     beat, in its own fork state. It carries no place or clock of its own: an attempt
+     happens where the beat already is. */
+  SPINE.forEach(function(b, i){
+    var t = b.teeth;
+    if(!t) return;
+    function asScene(lines){
+      var sc = [];
+      (lines || []).forEach(function(l){
+        if(typeof l === "string") sc.push({speaker:"Narration", text:l});
+        else if(l && l.length >= 2) sc.push({speaker:String(l[0]), text:String(l[1])});
+      });
+      return sc;
+    }
+    (t.stages || []).forEach(function(st, si){
+      var sc = asScene(st.scene);
+      if(!sc.length) return;
+      out.push({id:b.id + "/teeth[" + si + "]", beat:i, passage:{},
+                scene:sc, canon:[], choices:(st.rail || []).map(function(r){ return r && r.text; })});
+    });
+    var dsc = asScene(t.deathScene);
+    if(dsc.length){
+      out.push({id:b.id + "/teeth[death]", beat:i, passage:{},
+                scene:dsc, canon:(t.death ? [t.death] : []), choices:[]});
+    }
+  });
   SPINE.forEach(function(b, i){
     ["opens", "lands", "landsHard"].forEach(function(k){
       (b[k] || []).forEach(function(p, j){
@@ -17980,6 +18087,25 @@ function stCorpus(){
     });
   });
   BIT_FALLBACK.forEach(function(e, i){ add("bitfall" + i, e.line); });
+  /* the teeth are authored prose and get proofread like authored prose - scenes,
+     rails, the death text and every canon line the attempt can write */
+  SPINE.forEach(function(b){
+    var t = b.teeth;
+    if(!t) return;
+    (t.stages || []).forEach(function(st, si){
+      (st.scene || []).forEach(function(l, li){
+        add(b.id + "/teeth" + si + "/s" + li, typeof l === "string" ? l : (l && l[1]));
+      });
+      (st.rail || []).forEach(function(r, ri){ add(b.id + "/teeth" + si + "/r" + ri, r && r.text); });
+    });
+    (t.deathScene || []).forEach(function(l, li){
+      add(b.id + "/teeth/d" + li, typeof l === "string" ? l : (l && l[1]));
+    });
+    add(b.id + "/teeth/death", t.death);
+    add(b.id + "/teeth/graze", t.grazeCanon);
+    add(b.id + "/teeth/survive", t.surviveCanon);
+    add(b.id + "/teeth/threat", t.threat);
+  });
   OPENING_CANON.forEach(function(l, i){ add("open/canon" + i, l); });
   (OPENING.scene || []).forEach(function(b, i){ add("open/s" + i, b && b.text); });
   (OPENING2.scene || []).forEach(function(b, i){ add("open2/s" + i, b && b.text); });
@@ -18125,7 +18251,8 @@ var VERDICT_FIXTURE = {
     "a1-pack/before", "a1-pack/opens0/l4", "a1-turn/scar", "a2-chassis/before"
   ],
   "shard:stow": [
-    "a1-chase/landsHard0/l7", "a1-hum/lands0/l1", "open/s1", "open2/s4"
+    "a1-chase/landsHard0/l7", "a1-chase/teeth0/s2", "a1-hum/lands0/l1", "open/s1",
+    "open2/s4"
   ],
   "tell": [
     "a1-carried/never2", "a2-annul/canon0", "a2-annul/goal", "a2-chassis/canonAlt1",
@@ -18147,7 +18274,15 @@ var VERDICT_FIXTURE = {
     "want24"
   ]
 };
-/* v5.2: a1-hum/t1r - rail 2 is "Ask her - properly, skin on the shard - how any of
+/* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
+   is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
+   drift row surfaced it at all is worth keeping: it sent me looking for what ELSE
+   was not reading the teeth, and the answer was the physics desk. A gauntlet stage
+   is authored prose rendered into the feed exactly like a landing, so it is judged
+   exactly like a landing now - 101 passages became 104, and the desk is quiet on the
+   new ones.
+
+   v5.2: a1-hum/t1r - rail 2 is "Ask her - properly, skin on the shard - how any of
    this reaches her", and "skin on the shard" is a hand move because that is the whole
    subject of the card. Thirty-four authored lines went in with the rail installment,
    the table-talk deck and the bit pool; one verdict moved. Declared.
@@ -18776,13 +18911,34 @@ function selfTest(){
       [false, false, "exit",  "door",  "the ordinary door"],
       [false, false, "stall", "open",  "nothing closed"]
     ];
-    var bookBad = BOOKINGS.filter(function(r){ return bookFor(r[0], r[1], r[2]) !== r[3]; });
+    /* ...and the gauntlet substitution, enumerated beside them rather than bolted on
+       as an eighth corner. TWO cells move, not one: the door branch is consulted
+       BEFORE forcing, so a last-second exit press already beats the world's close and
+       the attempt inherits that precedence. Everything else must be IDENTICAL with
+       the flag on - that is the half of this case that keeps the substitution honest,
+       because a "substitution" that quietly moved a third cell would still look green
+       if only the two were checked. */
+    var GAUNTLET = [
+      [false, false, "exit",  "attempt", "the ordinary door opens the attempt"],
+      [false, true,  "exit",  "attempt", "the door under the world's hand opens it too - the fight, not the scar"]
+    ];
+    var bookBad = BOOKINGS.filter(function(r){ return bookFor(r[0], r[1], r[2], false) !== r[3]; });
+    GAUNTLET.forEach(function(r){
+      if(bookFor(r[0], r[1], r[2], true) !== r[3]) bookBad.push(r);
+    });
+    /* every cell that is NOT a door must be untouched by the flag */
+    BOOKINGS.forEach(function(r){
+      if(r[3] === "door") return;
+      if(bookFor(r[0], r[1], r[2], true) !== r[3]) bookBad.push(r.concat(["moved under the gauntlet flag"]));
+    });
     T("a forced beat books every corner of its own matrix",
       bookBad.length === 0,
-      BOOKINGS.length + " corners"
+      (BOOKINGS.length + GAUNTLET.length + BOOKINGS.filter(function(r){ return r[3] !== "door"; }).length)
+      + " corners across both flag states"
       + (bookBad.length ? " - WRONG: " + bookBad.map(function(r){
           return r[4] + " (got " + bookFor(r[0], r[1], r[2]) + ", wanted " + r[3] + ")"; }).join("; ")
-        : " \u00b7 and the door stays free on a forcing turn by doctrine: the player did their part"),
+        : " \u00b7 the door stays free on a forcing turn by doctrine, and on a gauntlet beat it"
+          + " opens the attempt instead of closing - the click still books nothing either way"),
       {label:"the v4.51.0 routing, where a refused door on a forced turn booked clean",
        was:{said:false, forcing:true, pick:"exit"},
        check:function(w){
