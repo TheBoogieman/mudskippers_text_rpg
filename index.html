@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.5 "The Chase Chooses"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.6 "The Quiet Is Not a Question"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2058,8 +2058,15 @@ var SPINE = [
     noise thinning above. The two stages are the ask-twice; the tempting door carries
     no key, which is what makes a typed line unable to resolve as the death. It runs
     ambient (turnMin) rather than onExit: no card carries onExit until the engine that
-    reads it exists. */
- teeth:{when:{turnMin:2}, threat:"the flooded ladder shaft",
+    reads it exists.
+    THE WINDOW MATH (v4.71.6): ticking presses before the door can open run
+    beatTurns 0..floor-2, so an ambient turnMin above floor-2 is a peril the door
+    outruns - the ladder vanished from a clean minimum night the moment the held
+    door stopped burning turns toward the floor. Every ambient card's turnMin now
+    sits at floor-2 (1 on floor-3 beats, 0 on floor-2 beats), the sweep lints the
+    rule over the whole SPINE, and the peril fires on the last guaranteed press
+    before the ending is reachable - night, then teeth, then the door. */
+ teeth:{when:{turnMin:1}, threat:"the flooded ladder shaft",
   stages:[
    /* THE PERIL ARRIVES BY THE CHASE'S OWN LOGIC (v4.71.5). This scene used to open
       with the courier already two rungs down a shaft he was never shown deciding to
@@ -2605,7 +2612,7 @@ var SPINE = [
  canon:["Every kind option was tried on the hunter, honestly, and failed. The Choir hardened her against mercy.",
         "The hunt has reached the family's door. What happens next happens because nothing gentler was left."],
  scar:"The kind option died off-screen; they learned the jammer failed from the silence after it.",
- teeth:{when:{turnMin:2}, threat:"the drowned market floor",
+ teeth:{when:{turnMin:0}, threat:"the drowned market floor",
   stages:[
    {scene:["Between you and the far stair the old market floor lies flooded, black and flat, a shortcut wide as a boast. The walkway crawls the long wall - planks, rope, twenty careful minutes.",
      ["Pia","Flat water over a market floor means stalls under it. Stall frames, hooks, cellar mouths. It is not a floor, it is a lid."],
@@ -2797,7 +2804,7 @@ var SPINE = [
         "His vessel is failing and he arrived asking for nothing.",
         "The family decided to save him anyway."],
  scar:"The family decided to save Seven after the choice had nearly closed - he heard the hesitation.",
- teeth:{when:{turnMin:2}, threat:"the frame's failing cell",
+ teeth:{when:{turnMin:1}, threat:"the frame's failing cell",
   stages:[
    {scene:["The frame's power cell is dying loud now - a coolant weep down the plating, a smell like hot coins. Vic wants ten minutes to pull it cold, by the book. The cell's release is right there on the flank, one bare clip.",
      ["Vic","That weep means the jacket is live. Cold pull or no pull - ten minutes, and nobody touches plating meanwhile."],
@@ -3079,7 +3086,7 @@ var SPINE = [
         "Mirren's self - her intake scrape - has been asleep in the vaults the whole time. The family killed the puppet, not the person. The vow grows its second clause on the spot: the dead come out."],
  stone:"The family learned the Choir's three fates, and Mirren's.",
  scar:"The three fates arrived as a blow, not a briefing - Mirren's record surfaced with nobody ready for it.",
- teeth:{when:{turnMin:2}, threat:"the door the hash opened",
+ teeth:{when:{turnMin:1}, threat:"the door the hash opened",
   stages:[
    {scene:["The channel the hash opened is still open - records still coming through in slow pages, and past them, visible in the door's own light, a registry drawer standing unlocked. More files. Deeper files. Right there.",
      ["Three","The channel is read-only because I built the read. The DRAWER is theirs. Reach through an open Choir door and the door learns an arm."],
@@ -3341,7 +3348,7 @@ var SPINE = [
         "The stilled were handled kindly wherever kindness worked. The vow was visible from the pavement.",
         "Only the deep remains: the Exchange, and what lives under it."],
  scar:"The street freed itself messily; the family arrived to an aftermath wearing their name.",
- teeth:{when:{turnMin:2}, threat:"the ninth body's errand",
+ teeth:{when:{turnMin:0}, threat:"the ninth body's errand",
   stages:[
    {scene:["Eight stilled, one to go, and the ninth is wrong - drifted two doorways from where its errand parked it, stopped at an angle nothing parked ever stops at. Three's isolation kit is a street away with the van between.",
      ["Three","Eight ran the pattern I know. The ninth has drifted, which means the errand is live in some way mine are not. Nobody closes with it until the kit is on this kerb."],
@@ -3738,7 +3745,7 @@ var SPINE = [
         "The dead come out. It stopped being a vow and became a plan.",
         "Hesta's kept names were checked against the shelves. The found and the missing are both known now."],
  scar:"They passed the sleeping shelves at speed; Mirren was found by torchlight and promised too fast.",
- teeth:{when:{turnMin:2}, threat:"the vault's housekeeping",
+ teeth:{when:{turnMin:0}, threat:"the vault's housekeeping",
   stages:[
    {scene:["Aisle forty-one is right there. Shelf nine is a lamp's throw away, and on it, filed and findable, the Tuesday name - and down the aisles, on a rhythm Nine can hear through your skin, the vault's housekeeping arm goes about its patient rounds.",
      ["Nine","The arm services this aisle on a count of forty. It does not check what it finds in its lane. It FILES what it finds in its lane. We are not in the catalogue, which is worse, not better."],
@@ -7268,7 +7275,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.5";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.6";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -14289,8 +14296,23 @@ function sceneConfident(){
    lecture, which is the exact non-sequitur shape F2 exists to stop. A landing rail
    with no deck evidence is a bit: the family answers the LINE, in voice, and the
    room's own cards wait for their own rails. */
+/* is there anything left for a stall to spend? A stall's deck immunity exists
+   because stalling SPENDS authored material - so it ends when the material does. */
+function deckHasUnspent(){
+  var s = sceneNow(), list = (s && s.sc && s.sc.topics) || [], spent = (s && topicSpent[s.key]) || [], i;
+  for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return true; }
+  return false;
+}
 function deckHandled(text){
-  if(PIN_STALLS.indexOf(String(text || "")) !== -1) return true;  /* a stall spends the deck on purpose */
+  /* a stall spends the deck on purpose - WHILE THERE IS A DECK (v4.71.6). On a dry
+     deck every line reaching the scene path was served "you asked that already",
+     including a first-click house stall, which never asked anything: "Say nothing.
+     Let the quiet do the asking." answered with "same question twice is how you
+     check a liar" is the pool lying about the record. A stall with nothing left to
+     spend is conversation, and conversation is the bit path's jurisdiction; the
+     pool keeps serving lines that actually re-ask a spent question, which reach it
+     by their own evidence or by their own recorded wording. */
+  if(PIN_STALLS.indexOf(String(text || "")) !== -1) return deckHasUnspent();
   /* a door pressed below the floor HOLDS, and a held night still gets a scene - the
      door falls past doorSkeletonNow to here, and it is the beat's line, never a bit's */
   if(doorsLive() && typedIsDoor(text)) return true;
@@ -22749,7 +22771,12 @@ function selfTest(){
       var sc = sceneNow(), spent, card, ok;
       if(!sc || !sc.sc) return false;
       spent = JSON.stringify(topicSpent);
-      card = pickTopic(sc.sc, sc.key);
+      /* FRESH, not replayed (v4.71.6): a dry room is a finished room, and a player
+         who has heard every card takes the door - the driver should too. The old
+         peek used pickTopic, whose replay branch never runs dry, so the drains
+         pressed stalls into an empty deck and leaned on the pool's old habit of
+         answering them. */
+      card = pickTopicFresh(sc.sc, sc.key);
       ok = !!(card && card.plays && card.plays.length && sceneBlocksFor(card).length);
       topicSpent = JSON.parse(spent);        /* the peek costs the deck nothing */
       return ok;
@@ -23319,6 +23346,29 @@ function selfTest(){
         }
         introStage = 0;
         rwSaw.push("and the cold open keeps its one gold choice - the deck waits for the reveal");
+        /* ...AND THE POOL ANSWERS RE-ASKS, NOT STALLS (v4.71.6). On a dry deck every
+           line reaching the scene path was served "you asked that already" - a
+           first-click house stall included, which never asked anything. Dry, the
+           stall loses its deck immunity (conversation is the bit path's), while a
+           line that re-asks a spent question still reaches the pool on its own
+           evidence, and the pool's verdict string proves the route. */
+        barBoard(at); V5SCENE = true;
+        var rwSc = sceneNow(), rwAll = [], rwI;
+        for(rwI = 0; rwI < rwSc.sc.topics.length; rwI++) rwAll.push(rwI);
+        topicSpent[rwSc.key] = rwAll;                       /* the deck runs dry */
+        if(deckHasUnspent()) rwBad.push("a dried deck still reports unspent cards");
+        if(deckHandled(PIN_STALLS[0])) rwBad.push("a dry stall kept its deck immunity");
+        lastPlayerText = PIN_STALLS[0];
+        if(sceneConfident()) rwBad.push("a house stall scored deck evidence");
+        lastPlayerText = "Tell me who Mirren was to Vic, before she was a drop.";
+        if(!sceneConfident()) rwBad.push("a re-ask of a spent question lost its evidence");
+        var rwSS = window.showScene, rwPA = window.persistAll;
+        window.showScene = function(){}; window.persistAll = function(){};
+        try{ callSceneTurn(); } finally { window.showScene = rwSS; window.persistAll = rwPA; }
+        if(String(lastReplyVerdict).indexOf("asked and answered") === -1){
+          rwBad.push("a dry re-ask was not served from the pool: " + lastReplyVerdict);
+        }
+        rwSaw.push("dry, the stalls answer as conversation and the pool keeps to genuine re-asks");
       } finally { barPut(k); }
     })();
     T("the row is dealt from the deck, and a spent card retires from it",
@@ -24468,6 +24518,20 @@ function selfTest(){
         if(ambientDue()) ambBad.push("the peril armed before its author's count");
         beatTurns = min;
         if(!ambientDue()) ambBad.push("the peril did not arm at turnMin " + min);
+        /* THE WINDOW LINT (v4.71.6): an ambient peril must be meetable on the
+           shortest honest night. Ticking presses before the door can open run
+           beatTurns 0..floor-2, so a turnMin above floor-2 is a peril the door
+           outruns - which is how the ladder vanished from a clean beat-one run
+           the moment the held door stopped burning turns toward the floor. */
+        SPINE.forEach(function(sb){
+          var st = sb.teeth;
+          if(!st || !st.when || st.when.onExit) return;
+          var stm = parseInt(st.when.turnMin, 10);
+          if(isNaN(stm)) return;
+          if(stm > beatFloor(sb) - 2){
+            ambBad.push(sb.id + ": ambient turnMin " + stm + " outruns floor " + beatFloor(sb));
+          }
+        });
         /* the door is not how you meet an ambient one, and a joke never arms it */
         if(doorKindFor("exit", "x", false, true) !== "exit") ambBad.push("the door lost its own kind");
         if(gauntletNow()) ambBad.push("an ambient card claimed the door as well");
