@@ -250,6 +250,15 @@ refusing well. **1,145 blocks across 251 cards, 768 of them spoken aloud.** The 
 is not needed to write the middle of a night any more. It is needed to paint between
 the turns — which is the job it is actually good at.
 
+The engine that plays them is in as of v4.66.0, and it is **dark**. With its one switch
+up, a scene turn is served from the card the client just dealt — the authored blocks,
+the fork's own frame — and **nothing reaches the wire**: no gate field for a reply to
+set, no day to skip, no canon to write. The world never lived in the reply; it lived in
+the fences that policed the reply, and with no reply there is nothing to police. It
+stays off until it has played a full night open-to-close and closed all thirty-three
+beats with the same bookings it makes today, because a switch that flips before its own
+bar is met is just a switch.
+
 ## The physics desk — the body of the world
 
 The bible has always *told* the storyteller the physical laws, and telling is not

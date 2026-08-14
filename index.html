@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.65.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.66.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7214,7 +7214,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.65.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.66.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -9903,6 +9903,72 @@ function bitSkeleton(text){
 /* the switch, and the turns it does not cover: the fold and the walk-back are the
    world taking its own turn and they need the world. The intro bit never reaches
    here at all - dmAside answers it before takeAction gets that far. */
+/* ================== PHASE B: THE BOARD PLAYS ITSELF ==================
+   Phase A emptied the room for bits. This empties it for the turns that carry the
+   story, and the contract is the one the client has always been owed: the plot
+   pointer is the client's.
+   GATE LANDING is the client's alone - a night ends when the player takes the
+   twice-asked exit through the booking matrix, or the world closes on its own budget
+   arithmetic. A template turn passes showScene a `scene` and nothing else, so there
+   is no `gate` field for a reply to set and boardTurn reads the absence, not a fence.
+   THE CLOCK ticks by client count, in boardTurn, on player turns - bits tick nothing,
+   attempts suspend, both already shipped - and day, time and place move only through
+   the authored close stamps. A reply cannot age the night because there is nowhere in
+   the reply for age to live.
+   CANON is authored card fields booked by the client when the scene carrying them
+   plays; nothing here writes canon at runtime.
+   And the breach apparatus retires from the sincere channel exactly as it retired
+   from bits: structurally, nothing expressible. It survives as the build-time
+   proofreader it already is, and on the legacy path while the flag is down.
+   THE COST, said plainly: the model stops writing the middle of a night. What it is
+   for after this is paint - the optional fill slots the contract allows around the
+   authored blocks - and the paint is not in this release. Worst case is one call; this
+   release makes the worst case zero and says so. */
+var V5SCENE = false;         /* Phase B. One switch, and it flips when its bar is met. */
+function sceneSkeletonNow(){
+  var s = V5SCENE ? sceneNow() : null;
+  return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
+            && !attemptOn && !beatDone() && s && s.sc && (s.sc.topics || []).length);
+}
+/* WHICH SIDE OF THE FORK THIS ROOM IS ON. An untagged card has one variant and it
+   plays in both worlds; a framed one has two and the body decides. Before the fork is
+   taken there is no answer, so the first variant stands - and every framed card in the
+   book is in Book Three, a long way past the table where the choice is spoken. */
+function sceneBlocksFor(t){
+  var vs = playForks(t), pick = vs[0], out = [], i;
+  for(i = 0; i < vs.length; i++){ if(vs[i].holder && vs[i].holder === chassisHolder) pick = vs[i]; }
+  pick.blocks.forEach(function(b){
+    var sp = playSpeaker(b), tx = playText(b);
+    if(sp && tx) out.push({speaker:sp, text:tx});
+  });
+  return out;
+}
+/* Returns false when it cannot serve, so the one door in callDM can fall through to
+   the wire rather than swallow a turn. pickTopic MARKS, so it is called exactly once. */
+function callSceneTurn(){
+  if(runOver) return false;
+  var sc = sceneNow();
+  if(!sc || !sc.sc) return false;
+  var t = pickTopic(sc.sc, sc.key);
+  if(!t || !t.plays || !t.plays.length) return false;
+  var blocks = sceneBlocksFor(t);
+  if(!blocks.length) return false;
+  lastSent = {text:"[template] " + t.ask, chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
+  lastReceived = "[template] " + blocks.length + " authored block(s) from the scene book";
+  lastReplyVerdict = "template: the card played itself, zero calls";
+  serveSceneTurn(blocks);
+  return true;
+}
+/* the same shape a bit reaches the screen in, and for the same reason: scene blocks
+   and nothing else. The history still has to hear it, because the legacy path may be
+   the very next turn and a model that never heard this scene opens the next one
+   mid-conversation. */
+function serveSceneTurn(blocks){
+  chatLog.push({role:"assistant", content:JSON.stringify({scene:blocks})});
+  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  setBusy(false);
+  showScene({scene:blocks, __live:true}, true);
+}
 function bitSkeletonNow(){
   return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
@@ -12131,6 +12197,36 @@ function isCountedPhrase(hay, at){
    digits. Nobody in this fiction has ever called her "the Three", and if anybody ever
    does, this line is where it will go wrong and the row below is what will say so. */
 var COUNTED_BEHIND = /\b(?:foot|feet|inch(?:es)?|number|no\.|size|rate|floor|level|unit|track|bay|platform|channel|aisle|row|page|line|shelf|rung|all|item|through|other|the|are)\s+$/i;
+/* v5.12: THE CASE RULE, AS A PRE-FILTER. English already draws this line and the
+   fence was ignoring it: a lowercase number-word mid-sentence is a numeral, always.
+   It runs BEFORE any list is consulted, which is what makes it safe to add - it can
+   only ever pre-empt a name-fire, never create one, so no widening of it can blind
+   the summon classifier the way the last one did.
+   It rests on a style law rather than on hope: character number-names are never
+   lowercase in authored prose, asserted corpus-wide in the sweep. A violation of that
+   is a style break to fix in the prose, never a fence gap to widen around.
+   Sentence-initial falls through to the machinery that already exists, because there
+   the capital says nothing: "Three hundred metres" and "Three. Fate two." open a
+   sentence identically and only the words after them tell you which is which. */
+/* the pre-filter's own switch. It exists so the rule can be PROVED rather than
+   described: the row below turns it off and requires the line it silences to come
+   back. A mechanism nothing can turn off is a mechanism nothing can test. */
+var CASE_NUMERALS = true;
+/* a lowercase number-word doing something only a person does. The style law is that
+   this never happens in authored prose - and it is a lint on the prose, not a fence:
+   when it fires, the fix is a capital letter in the line, never a hole in the rule. */
+var NAME_AS_PERSON = new RegExp("\\b(?:three|five|seven|nine)\\s+(?:said|says|say|walks?|walked"
+  + "|steps?|stepped|nods?|nodded|answers?|answered|asks?|asked|looks?|looked|turns?|turned"
+  + "|holds?|held|takes?|took|puts?|tells?|told|shrugs?|laughs?|smiles?|sighs?)\\b", "g");
+function sentenceHead(hay, at){
+  var i = at - 1, c;
+  while(i >= 0){
+    c = String(hay).charAt(i);
+    if(c === " " || c === "\t") { i--; continue; }
+    return /[.!?\n\r:;\u2014\u2013"'\u201c\u2018(\[]/.test(c);
+  }
+  return true;                       /* nothing behind it at all */
+}
 function namedUse(sp, hay, ci){
   if(!sp) return false;
   /* the window is a LOOKAHEAD. A capture group consumes what it captures, so
@@ -12139,6 +12235,9 @@ function namedUse(sp, hay, ci){
      the name behind it, and reported that nobody was named. */
   var re = new RegExp("\\b" + sp + "\\b(?=([\\s\\S]{0,20}))", ci ? "gi" : "g"), m;
   while((m = re.exec(hay)) !== null){
+    /* the pre-filter, first and cheapest: lowercase, and not opening a sentence */
+    if(CASE_NUMERALS && NUMBER_NAMES[sp] && m[0] === String(m[0]).toLowerCase()
+       && !sentenceHead(hay, m.index)) continue;
     if(NUMBER_NAMES[sp] && (COUNTED.test(m[1] || "") || isCountedPhrase(hay, m.index)
        || COUNTED_BEHIND.test(String(hay).slice(Math.max(0, m.index - 14), m.index)))) continue;   /* a quantity, not a person */
     return true;
@@ -14978,6 +15077,11 @@ function callDM(corrected, tag){
      here first. There is no correction route back into it, because bitSkeletonNow
      is only ever true on a bit and the skeleton path never calls callDM. */
   if(bitSkeletonNow()) return callBitTurn();
+  /* PHASE B, through the same one door and for the same reason: every route to the
+     wire on a scene turn arrives here first. It answers false rather than swallowing
+     the turn when the beat has no card left to play, so a book with a hole in it costs
+     a call and never a silence. */
+  if(sceneSkeletonNow() && callSceneTurn()) return;
   /* a RETRY is the same call again, not another one - three presses through a
      flaky local model used to leave the turn with no correction budget at all */
   if(!retrying) turnCalls++;
@@ -20861,27 +20965,23 @@ function verdictMap(){
    the result in beside the code that changed it. Never regenerate to make a red row
    go green without reading the diff first: that is the one move this whole mechanism
    exists to prevent. */
-/* v5.11 / WAVE 3. Three movements, and every one of them was read before this was
-   written. (1) named:Three loses 48, named:Five 3, named:Seven 2 - the authorised
-   COUNTED widening, and all fifty-three were checked by eye against their own lines:
-   the three fates, three words, Three hundred metres, all three, Item three:, three of
-   Vic's tools, you are five, all seven digits. Not one of them is a character. The other
-   side of that trade is asserted in its own row, on two rails that address people by
-   name - and one token, "if", was measured, found to silence four of those, and taken
-   back out before this snapshot was taken.
-   (2) named:Nine gains 3 - the three Book Three rails that stopped saying "hand on the
-   shard" and started saying her name, per v5.11 section 1.
-   (3) shard:hand loses 2, and tell trades a3-founding/t1p0 for t1p2. That last one is
-   not a verdict change at all: block ids are POSITIONAL, the fork frames went in at the
-   head of four scenes, and every block behind them renumbered by two. Read the diff
-   before believing this note. */
+/* v5.12: THE CASE RULE. 23 lines stopped reading a number as a name, and there is one
+   sentence covering every one of them: they are lowercase, mid-sentence, and they are
+   counts. Pack for three. Fate three. Three jokes, three hands, three goes. Nine tenths
+   of house law, nine beds, seven digits, five beats from now. Read them; that is the
+   whole review, and the pre-filter that silenced them can only ever pre-empt a name-fire
+   and never create one - nothing GAINED here, in any predicate, which is the shape a
+   safe widening leaves behind.
+   The style law those 23 rest on is asserted in its own row over all 3,753 lines: a
+   number-name that is a person is capitalised, everywhere in the book. When that breaks,
+   the fix is a capital letter in the prose and never a hole in the rule. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
-  "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-ground/never1","a2-seven/t0p0","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/Rt6p3","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p1","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a2-turn/t0p3","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a1-turn/landsHard1/l2","a1-turn/landsHard1/l3","a1-turn/landsHard1/l5","a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/canon3","a2-choir/goal","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/t1p2","a2-choir/t3p2","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-ground/opens0/l3","a2-hand/goal","a2-hand/never2","a2-hand/opens0/l2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t1p2","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/landsHard0/l0","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/lands0/r0","a2-turn/press0","a2-turn/t0r","a2-turn/t1p0","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-principal/t3p0","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-seize/teeth1/s1","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1p2","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
@@ -21042,7 +21142,10 @@ function selfTest(){
     "attemptRestore", "teethState", "gauntletNow",
     /* ...ruling (d), the anchor ruling, and the desk's new reading of the book */
     "summonsFor", "summonShape", "clausesOf", "metNames", "bitMetNames", "bitFeedNames",
-    "insideBeat", "stPassages", "stCorpus"];
+    "insideBeat", "stPassages", "stCorpus",
+    /* ...and Phase B, which is the channel that carries the story */
+    "sceneSkeletonNow", "sceneBlocksFor", "callSceneTurn", "serveSceneTurn", "playForks",
+    "playSpeaker", "playText", "pickTopic", "sentenceHead"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -21749,8 +21852,12 @@ function selfTest(){
       ["Three", "a2-mirren/Rt1p1"], ["Three", "a2-mirren/t3p1"], ["Five", "a2-mirren/Rt0p0"],
       ["Five", "a2-seven/t0p2"], ["Five", "a2-seven/t0p0"]
     ];
-    /* the twentieth, declared rather than covered - see COUNTED's own note */
-    var TWENTY_OPEN = {"a2-seven/t0p0":"counts hours with the noun left out; its only token is \"if\", which also addresses people by name"};
+    /* ALL TWENTY NOW, and the twentieth without touching "if". v5.12 authorised the
+       case rule as a pre-filter and "five if it doesn't" is lowercase mid-sentence, so
+       it resolves on the same rule English uses. The declaration retired because this
+       row demanded it: a listed exception that goes quiet is red here, which is how a
+       ledger stops being a leak. */
+    var TWENTY_OPEN = {};
     var NAMES_MUST = [
       ["Seven", "Ask Seven if she means it. The warmth."],
       ["Three", "Ask Three what is down here. The survey."]
@@ -21793,6 +21900,138 @@ function selfTest(){
            });
          } finally { COUNTED = kc; COUNTED_BEHIND = kb; }
          return quiet;   /* true means the old list already covered them - decorative */
+       }});
+
+    /* PHASE B, DRIVEN. The claim is not that the card is nice prose - it is that a
+       scene turn under the flag reaches the screen without the wire, and that the
+       reply it hands the board has no structural field in it. Both are read off a real
+       turn through the real one door, at every beat in the book, in both phases. */
+    var pbBad = [], pbTurns = 0, pbBlocks = 0, pbWire = 0, pbDormant = 0;
+    (function(){
+      var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster, sc:V5SCENE,
+               said:lastPlayerText, mud:lastTurnMud, ov:runOver, fp:foldPending, wb:walkbackNow,
+               an:attemptOn, log:chatLog, feed:feedLog, spent:topicSpent, canon:runCanon,
+               bt:beatTurns, cast:castSheets, led:ledgerText, txt:beatText, seen:beatSeen,
+               ask:window.askAI, dm:window.callDM, show:window.showScene, per:window.persistAll};
+      var served = null;
+      try{
+        window.askAI = function(){ pbWire++; return {then:function(){ return {catch:function(){}}; }}; };
+        window.persistAll = function(){};
+        window.showScene = function(d){ served = d; };
+        lastTurnMud = false; runOver = ""; foldPending = false; walkbackNow = false;
+        attemptOn = false; chassisHolder = null; roster = {family:[], fallen:[]};
+        for(var bi = 0; bi < SPINE.length; bi++){
+          ["live", "slack"].forEach(function(ph){
+            beatIdx = bi; phase = ph; chatLog = []; feedLog = []; topicSpent = {};
+            runCanon = []; castSheets = {}; ledgerText = ""; beatText = ""; beatSeen = {};
+            lastPlayerText = "what is going on here";
+            /* ...with the flag DOWN first: the legacy path must still be the path */
+            V5SCENE = false;
+            if(sceneSkeletonNow()) pbBad.push(SPINE[bi].id + "/" + ph + ": the flag is down and the template path armed anyway");
+            else pbDormant++;
+            /* ...and with it up: one turn, through callDM, which is the only door */
+            V5SCENE = true; served = null; pbWire = 0;
+            if(!sceneSkeletonNow()){
+              pbBad.push(SPINE[bi].id + "/" + ph + ": the flag is up and the beat has no card to play");
+              return;
+            }
+            callDM();
+            pbTurns++;
+            if(pbWire !== 0) pbBad.push(SPINE[bi].id + "/" + ph + ": " + pbWire + " call(s) reached the wire on a template turn");
+            if(!served || !served.scene || !served.scene.length){
+              pbBad.push(SPINE[bi].id + "/" + ph + ": the template turn served nothing");
+              return;
+            }
+            pbBlocks += served.scene.length;
+            /* THE EMPTY ROOM, ASSERTED. Not "the fence caught it" - there is no field */
+            ["gate", "gateNote", "knock", "canon", "day", "time", "location", "place",
+             "cast", "death", "peril", "chassis", "custody", "quests", "drift"].forEach(function(f){
+              if(Object.prototype.hasOwnProperty.call(served, f)){
+                pbBad.push(SPINE[bi].id + "/" + ph + ": the reply carried a \"" + f + "\" field");
+              }
+            });
+          });
+        }
+      } finally {
+        beatIdx = k.bi; phase = k.ph; shardWhere = k.sw; chassisHolder = k.ch; roster = k.ro;
+        V5SCENE = k.sc; lastPlayerText = k.said; lastTurnMud = k.mud; runOver = k.ov;
+        foldPending = k.fp; walkbackNow = k.wb; attemptOn = k.an; chatLog = k.log;
+        feedLog = k.feed; topicSpent = k.spent; runCanon = k.canon; beatTurns = k.bt;
+        castSheets = k.cast; ledgerText = k.led; beatText = k.txt; beatSeen = k.seen;
+        window.askAI = k.ask; window.callDM = k.dm; window.showScene = k.show;
+        window.persistAll = k.per;
+      }
+    })();
+    T("a scene turn plays from the book and never reaches the wire",
+      pbBad.length === 0,
+      pbBad.length ? pbBad.slice(0, 6).join("; ")
+        : pbTurns + " turns across " + SPINE.length + " beats x 2 phases, " + pbBlocks
+          + " authored blocks served, 0 calls, and no structural field in any reply"
+          + " \u00b7 " + pbDormant + " dormancy checks with the flag down",
+      {label:"the flag down - which is the shipped path, and it goes to the wire",
+       was:false,
+       /* the broken form is not a mutant: it is THIS BUILD with the switch down, which
+          is what every player is running. If the turn is silent either way, the flag is
+          not what makes it silent and this row is decorative. */
+       check:function(w){
+         var k = {sc:V5SCENE, bi:beatIdx, ph:phase, mud:lastTurnMud, ov:runOver,
+                  fp:foldPending, wb:walkbackNow, an:attemptOn}, armed;
+         try{
+           V5SCENE = w; beatIdx = 0; phase = "live"; lastTurnMud = false; runOver = "";
+           foldPending = false; walkbackNow = false; attemptOn = false;
+           armed = sceneSkeletonNow();
+         } finally {
+           V5SCENE = k.sc; beatIdx = k.bi; phase = k.ph; lastTurnMud = k.mud;
+           runOver = k.ov; foldPending = k.fp; walkbackNow = k.wb; attemptOn = k.an;
+         }
+         /* the router, asked directly. With the flag down the template path is not
+            taken and the turn goes out to the wire like every turn this game has ever
+            played - which is the shipped behaviour, and the thing the flag changes. */
+         return armed;
+       }});
+
+    /* THE STYLE LAW THE CASE RULE RESTS ON. The pre-filter says a lowercase number-word
+       mid-sentence is a numeral. That is only safe while the prose keeps its half of
+       the bargain, so the prose is asked, every build, over every authored line: does
+       any of them have a lowercase "three" or "nine" doing something only a person
+       does - saying, walking, nodding, answering? None may. When one does, the fix is
+       a capital letter in that line and never a hole in the rule, and this row exists
+       to make that the obvious move rather than the disciplined one. */
+    /* ...AND A COUNT CAN DO A PERSON'S WORK. The first cut of this row called
+       "All three said the same three words" a style break, which it is not: three
+       sources said something. So the lint asks the count markers first, exactly as
+       namedUse does, and only calls it a break when nothing in the line marks the
+       number as a number. What is left is a lowercase name doing a person's work with
+       no count anywhere near it, which is the only shape the style law is about. */
+    var styleBad = [], styleLines = 0, styleSeen = 0;
+    stCorpus().forEach(function(row){
+      styleLines++;
+      NAME_AS_PERSON.lastIndex = 0;
+      var mm, t = String(row.t);
+      while((mm = NAME_AS_PERSON.exec(t)) !== null){
+        styleSeen++;
+        var behind = t.slice(Math.max(0, mm.index - 14), mm.index);
+        var ahead = t.slice(mm.index + mm[0].split(/\s+/)[0].length);
+        if(COUNTED_BEHIND.test(behind) || COUNTED.test(ahead) || isCountedPhrase(t, mm.index)) continue;
+        styleBad.push(row.id + ": \"" + t.slice(Math.max(0, mm.index - 10), mm.index + 34) + "\"");
+      }
+    });
+    T("a number-name that is a person is capitalised, everywhere in the book",
+      styleBad.length === 0,
+      styleBad.length ? "STYLE BREAK - fix the prose, not the rule: " + styleBad.slice(0, 6).join("; ")
+        : styleLines + " authored lines, " + styleSeen + " lowercase number-names in a person's verb - every one marked as a count by the line it lives in",
+      {label:"the fence with the case rule switched off",
+       was:false,
+       /* the pre-filter proved by absence: with it down, the twentieth line reads its
+          own number as a character again. A rule nothing can turn off is a rule nothing
+          has tested, and this whole family of fences has been decorative before. */
+       check:function(w){
+         var keep = CASE_NUMERALS, back;
+         try{
+           CASE_NUMERALS = w;
+           back = namedUse("Five", "Hours. Eight if the cell holds its curve, five if it doesn't.", true);
+         } finally { CASE_NUMERALS = keep; }
+         return !back;   /* true means the case rule was not what silenced it - decorative */
        }});
 
     /* THE ALLOWLIST DECLARES ITS OWN DEAD WOOD. isCountedPhrase is only ever consulted
