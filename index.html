@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.67.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.68.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7214,7 +7214,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.67.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.68.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7376,7 +7376,7 @@ var foldedBeats = [];        /* beat ids the world closed without the family - p
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
 var chassisPick = "";        /* the gate's stated choice, captured per reply */
 function housingResident(){
-  if(chassisHolder === "Nine")  return beatIdx > beatById("a2-chassis") ? "Seven" : "";
+  if(chassisHolder === "Nine")  return beatIdx > beatById("a2-housing") ? "Seven" : "";
   if(chassisHolder === "Seven") return beatIdx > beatById("a2-housing") ? "Nine" : "";
   return "";
 }
@@ -9976,6 +9976,41 @@ function serveSceneTurn(blocks){
   setBusy(false);
   showScene({scene:blocks, __live:true}, true);
 }
+/* F1: THE INTERLUDE, WHICH WAS NEITHER. sceneNow answers null in the aftermath - the
+   settling turns between a close and the room are the board's own prose, not a topic
+   deck - so the router had no name for them and they went out to the wire like it was
+   2024. Model off, that is a soft-locked door: the player presses the walk-on rail,
+   the turn resolves silently, the click is spent and nothing renders. Every slack room
+   in the game, forever.
+   Phase B's answer is the one the board already had: the aftermath drains client-side,
+   exactly as it drains in the degenerate run, and the player is handed the room on the
+   far side of it - which is where the authored prose lives. Nothing new is written; the
+   settling stops pretending it needs an author. */
+function interludeNow(){
+  return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
+            && !attemptOn && !beatDone() && phase === "aftermath");
+}
+function callInterludeTurn(){
+  var g = 0;
+  while(phase === "aftermath" && g++ < 8) boardTurn({});
+  lastSent = {text:"[template] the night settles", chars:0, trim:trimFlagsText(),
+              msgs:0, wire:0, bible:0};
+  lastReceived = "[template] the board drained its own aftermath";
+  lastReplyVerdict = "template: the night settled itself, zero calls";
+  setBusy(false);
+  /* the room, if there is one - its deck is authored like every other */
+  if(phase === "slack" && sceneSkeletonNow() && callSceneTurn()) return true;
+  /* ...and if there is not - the season seam, the last night - the board has already
+     put its own card on screen. The press still has to answer: give them the rail
+     back and let the banner speak, rather than spending the click on silence. */
+  chatLog.push({role:"assistant", content:JSON.stringify({scene:[]})});
+  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  applyTension();
+  showChoices(lastRail.slice());
+  scrollFeed();
+  persistAll(lastRail.slice());
+  return true;
+}
 function bitSkeletonNow(){
   return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
@@ -10144,7 +10179,19 @@ function callBitTurn(){
   lastSent = {text: sk.msgs[0].content, chars: sk.msgs[0].content.length, trim: trimFlagsText(),
               msgs: sk.msgs.length, wire: BIBLE.length + sk.msgs[0].content.length,
               bible: BIBLE.length};
-  askAI(sk.msgs).then(function(raw){
+  /* A DEAD ENDPOINT CAN THROW RATHER THAN REJECT - a bad URL, a blocked port, a
+     transport that never got as far as a promise. The catch below only ever caught a
+     rejection, so a synchronous throw walked straight out of the turn and took the
+     caller with it. The pool is standing by for exactly this. */
+  var pending;
+  try{ pending = askAI(sk.msgs); }
+  catch(err0){
+    lastReceived = "[no reply] " + ((err0 && err0.message) || err0);
+    lastReplyVerdict = "skeleton: the endpoint threw - the pool serves the turn";
+    serveBitTurn(sk.slots, null);
+    return;
+  }
+  pending.then(function(raw){
     if(epoch !== runEpoch){ setBusy(false); return; }
     lastReceived = raw;
     var fills = parseFills(raw, sk.slots.length);
@@ -12714,9 +12761,14 @@ function holderNow(data){
      && (data.chassis === "Seven" || data.chassis === "Nine")) return data.chassis;
   return null;
 }
+/* F4, RULED: SYMMETRY. Fork B seated Seven in the housing straight after a2-chassis -
+   two beats before a2-housing discovers there is a housing - while Fork A waited for
+   the discovery like it should. Whoever lacks a body is CARRIED, the way this family
+   carries shards, until the room is found. The discovery beat keeps its shock in both
+   forks and the seating follows it in both. */
 function residentNow(data){
   var h = holderNow(data);
-  if(h === "Nine")  return beatIdx > beatById("a2-chassis") ? "Seven" : "";
+  if(h === "Nine")  return beatIdx > beatById("a2-housing") ? "Seven" : "";
   if(h === "Seven") return beatIdx > beatById("a2-housing") ? "Nine" : "";
   return "";
 }
@@ -13796,6 +13848,68 @@ function scenewideTerms(list){
   var half = list.length / 2;
   for(var k in count){ if(count[k] > half && count[k] > 2) out[k] = 1; }
   return out;
+}
+/* F2: MINIMUM EVIDENCE BEFORE A LINE TAKES A CARD.
+   One weak token used to be enough, and under determinism that is not a near-miss, it
+   is a non-sequitur: "Sometimes I miss being boring" took the hearing lesson off the
+   word MISS, "Harrumph. Onward, brave puddle navy" took the fear scene off BRAVE, and
+   "Tell Pia my left boot has opinions" took the who-sent-Pia scene off her name in the
+   ADDRESSEE slot - which is routing, not subject matter. Three typed lines, three
+   authored scenes about something else, and the bit channel shadowed to nothing.
+   The rule: two hits, or one hit on a term long enough and rare enough to mean it -
+   six letters or more, and keyed by exactly one card in this deck. "frightened" earns
+   a card on its own; "brave" and "miss" do not. A name in the vocative scores nothing
+   at all: "Tell Pia..." says who is being spoken to, never what about.
+   This does not touch pickTopic, which must go on dealing a card to every STALL - the
+   deck is spent by stalling on purpose. It answers the router's question instead: is
+   this line about anything in the deck? */
+/* EIGHT, AND THE FIVE FIXTURES SET IT. At six, "Tell Pia my left boot has opinions
+   about this weather" stopped matching on her name and started matching on WEATHER -
+   a better wrong answer, but still a scene about the tarp in reply to a joke about a
+   boot. At eight, "frightened" still earns a card on its own and "weather", "brave"
+   and "miss" do not, which is the whole of what the audit measured. Words this long
+   that only one card in a deck keys are the ones a player types on purpose. */
+var TOPIC_RARE_LEN = 8;
+function vocativeName(text, nm){
+  var t = " " + String(text || "").replace(/\s+/g, " ") + " ";
+  return new RegExp("^\\s*(?:tell|ask|say to|talk to|tell me)\\s+" + nm + "\\b", "i").test(String(text || ""))
+      || new RegExp("\\b" + nm + "\\s*,", "i").test(t);
+}
+function topicEvidence(sc, text){
+  var list = (sc && sc.topics) || [], wide = scenewideTerms(list), tok = topicTokens(text);
+  var owners = {}, i, j, w, term, best = 0;
+  /* a term keyed by two cards discriminates between nothing */
+  for(i = 0; i < list.length; i++){
+    w = String(list[i].key || "").split(" ");
+    for(j = 0; j < w.length; j++){ if(w[j]) owners[w[j]] = (owners[w[j]] || 0) + 1; }
+  }
+  for(i = 0; i < list.length; i++){
+    var hits = 0, strong = 0;
+    w = String(list[i].key || "").split(" ");
+    for(j = 0; j < w.length; j++){
+      if(!w[j]) continue;
+      term = w[j].replace(/-/g, " ");
+      if(term.indexOf(" ") !== -1){
+        if((" " + String(text || "").toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ").indexOf(" " + term + " ") !== -1){
+          hits += 2; strong++;      /* a whole phrase is evidence by itself */
+        }
+        continue;
+      }
+      if(TOPIC_STOP.indexOf(" " + term + " ") !== -1 || wide[term]) continue;
+      if(tok.indexOf(" " + term + " ") === -1) continue;
+      if(SPINE_CAST.indexOf(term.charAt(0).toUpperCase() + term.slice(1)) !== -1
+         && vocativeName(text, term)) continue;      /* the addressee, not the subject */
+      hits++;
+      if(term.length >= TOPIC_RARE_LEN && owners[w[j]] === 1) strong++;
+    }
+    if(hits >= 2 || strong >= 1) best = Math.max(best, hits + strong);
+  }
+  return best;
+}
+/* is this typed line about anything the night has written down? */
+function sceneConfident(){
+  var s = sceneNow();
+  return !!(s && s.sc && topicEvidence(s.sc, lastPlayerText) > 0);
 }
 function pickTopic(sc, key){
   var list = sc.topics || [];
@@ -15088,7 +15202,16 @@ function callDM(corrected, tag){
      wire on a scene turn arrives here first. It answers false rather than swallowing
      the turn when the beat has no card left to play, so a book with a hole in it costs
      a call and never a silence. */
+  /* ...and only when the line is about something. A line that is not gets the room
+     answering IT, through Phase A, rather than an authored scene about something else.
+     It is deliberately NOT given mudskipper immunity: the player did not press the
+     button, and immunity on an undetected bit is a free clock-stop for anybody who
+     types vaguely. The composition is a bit; the cost is a turn. */
+  if(sceneSkeletonNow() && !sceneConfident()
+     && lastRail.indexOf(String(lastPlayerText || "")) === -1) return callBitTurn();
   if(sceneSkeletonNow() && callSceneTurn()) return;
+  /* ...and the turns that are neither, which is how F1 got in */
+  if(interludeNow() && callInterludeTurn()) return;
   /* a RETRY is the same call again, not another one - three presses through a
      flaky local model used to leave the turn with no correction budget at all */
   if(!retrying) turnCalls++;
@@ -21152,6 +21275,8 @@ function selfTest(){
     "insideBeat", "stPassages", "stCorpus",
     /* ...and Phase B, which is the channel that carries the story */
     "sceneSkeletonNow", "sceneBlocksFor", "callSceneTurn", "serveSceneTurn", "playForks",
+    "interludeNow", "callInterludeTurn", "topicEvidence", "sceneConfident", "vocativeName", "topicTokens", "pickVariant",
+    "housingResident", "residentNow", "holderNow",
     "playSpeaker", "playText", "pickTopic", "sentenceHead"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
@@ -21935,7 +22060,7 @@ function selfTest(){
           ["live", "slack"].forEach(function(ph){
             beatIdx = bi; phase = ph; chatLog = []; feedLog = []; topicSpent = {};
             runCanon = []; castSheets = {}; ledgerText = ""; beatText = ""; beatSeen = {};
-            lastPlayerText = "what is going on here";
+            lastPlayerText = "what is going on here"; lastRail = [lastPlayerText];
             /* ...with the flag DOWN first: the legacy path must still be the path */
             V5SCENE = false;
             if(sceneSkeletonNow()) pbBad.push(SPINE[bi].id + "/" + ph + ": the flag is down and the template path armed anyway");
@@ -22086,6 +22211,10 @@ function selfTest(){
     /* one turn, taken the way a player takes it: through callDM, the only door */
     function barTurn(i){
       lastPlayerText = "what happens now, exactly (" + i + ")";
+      /* TAKEN AS A RAIL PRESS, which is how a card is actually taken - and since F2 it
+         is the only way a line of pure stop-words takes one. The driver used to type
+         "what is going on here" and get a card, which was the defect. */
+      lastRail = [lastPlayerText];
       lastTurnMud = false;
       turnToken++;                 /* a real player action; the context latch reads it */
       callDM();
@@ -22201,6 +22330,142 @@ function selfTest(){
         }
       } finally { barPut(k); }
     })();
+
+    /* ---- F1'S OWN ROW: A NIGHT THAT CROSSES A SLACK BOUNDARY. The bar was met
+       honestly and missed this honestly - (i) and (ii) ran a1-chase's interior and
+       (iii) drove bookings, and not one of the three ever left a beat by its own door.
+       Open, close, settle, the room, the way on, and the next night's opening: the
+       whole seam, model off, wire at zero. */
+    var slkBad = [], slkSaw = [], slkWire = 0;
+    (function(){
+      var k = barKeep(), at = beatById("a1-hum"), g = 0;
+      try{
+        barBoard(at); V5SCENE = true;
+        window.askAI = function(){ slkWire++; throw new Error("the endpoint is dead"); };
+        while(barCanPlay() && barWouldServe() && beatIdx === at && g++ < 12) barTurn(g);
+        /* the world closes the night on its own budget arithmetic */
+        beatTurns = beatNow().budget + 1; boardDirective(); boardTurn({});
+        if(phase !== "aftermath") slkBad.push("the close did not settle: phase=" + phase);
+        /* ...and the settling turn, which is the one that used to go to the wire */
+        if(!interludeNow()) slkBad.push("the interlude turn had no route: phase=" + phase);
+        else { lastPlayerText = "Move. The marsh road is hours out.";
+               lastRail = [lastPlayerText]; turnToken++; callDM(); }
+        if(phase !== "slack") slkBad.push("the settling did not open the room: phase=" + phase);
+        else {
+          var roomBlocks = feedLog.length;
+          lastPlayerText = "what a Mudskipper actually is";
+          lastRail = [lastPlayerText]; turnToken++; callDM();
+          if(feedLog.length <= roomBlocks) slkBad.push("the room served nothing");
+          /* the player has had enough of each other, and the door's own guards are
+             satisfied the way a real press satisfies them: nothing is mid-landing */
+          slackDoorUp = true; busy = false; skipReveal = null;
+          var was = beatIdx;
+          slackArm();
+          if(beatIdx !== was + 1) slkBad.push("the way on did not open the next night");
+          if(phase !== "live") slkBad.push("the next night did not arm live: phase=" + phase);
+        }
+        if(slkWire !== 0) slkBad.push(slkWire + " call(s) reached the wire across the seam");
+        slkSaw.push("a1-hum open to close on authored blocks, the settling drained"
+          + " client-side, the room served its own card, the way on opened a1-chase - "
+          + g + " turns, wire 0");
+      } finally { barPut(k); }
+    })();
+    T("a night can be left the way a player leaves it, with nobody on the other end",
+      slkBad.length === 0, slkBad.length ? slkBad.join("; ") : slkSaw.join(" \u00b7 "),
+      {label:"the interlude with no route of its own - which is how it went to the wire",
+       was:false,
+       check:function(w){
+         var k = barKeep(), armed;
+         try{
+           barBoard(beatById("a1-hum")); V5SCENE = w;
+           beatTurns = beatNow().budget + 1; boardDirective(); boardTurn({});
+           armed = interludeNow();
+         } finally { barPut(k); }
+         return armed;   /* flag down: no route, and the turn goes out */
+       }});
+
+    /* ---- F2: THE EVIDENCE RULE, on the audit's own three lines and two real asks ---- */
+    var evBad = [], evSaw = [];
+    (function(){
+      var k = barKeep();
+      var bits = ["Tell Pia my left boot has opinions about this weather",
+                  "Sometimes I miss being boring",
+                  "Harrumph. Onward, brave puddle navy"];
+      var asks = ["who sent Pia and why is she here", "is she frightened"];
+      try{
+        barBoard(beatById("a1-hum")); V5SCENE = true;
+        bits.forEach(function(t){
+          lastPlayerText = t;
+          if(sceneConfident()) evBad.push("took a card off a weak line: \"" + t + "\"");
+        });
+        asks.forEach(function(t){
+          lastPlayerText = t;
+          if(!sceneConfident()) evBad.push("refused a line that plainly asks: \"" + t + "\"");
+        });
+        evSaw.push(bits.length + " conversational lines reach the room instead of a scene"
+          + " about something else, and " + asks.length + " that plainly ask still take their card");
+      } finally { barPut(k); }
+    })();
+    T("a line takes a card only when it is about something",
+      evBad.length === 0, evBad.length ? evBad.join("; ") : evSaw.join(" \u00b7 "),
+      {label:"one weak token is enough - the rule as it stood when the audit played it",
+       was:1,
+       /* the old threshold, re-run against the audit's own boot line. Under it, "Tell
+          Pia my left boot has opinions" takes the who-sent-Pia scene off her name in
+          the addressee slot, which is the defect. */
+       check:function(w){
+         var k = barKeep(), took;
+         try{
+           barBoard(beatById("a1-hum"));
+           lastPlayerText = "Tell Pia my left boot has opinions about this weather";
+           var sc = sceneNow(), list = (sc && sc.sc && sc.sc.topics) || [], tok = topicTokens(lastPlayerText);
+           took = false;
+           list.forEach(function(t){
+             var hits = 0;
+             String(t.key || "").split(" ").forEach(function(term){
+               if(!term || TOPIC_STOP.indexOf(" " + term + " ") !== -1) return;
+               if(tok.indexOf(" " + term + " ") !== -1) hits++;
+             });
+             if(hits >= w) took = true;
+           });
+         } finally { barPut(k); }
+         return !took;   /* false: the old rule DID take a card off it, which is the catch */
+       }});
+
+    /* ---- F4: SYMMETRY. Nobody is resident before the room is found, either fork ---- */
+    var symBad = [], symSaw = [];
+    (function(){
+      var k = barKeep(), hIdx = beatById("a2-housing"), cIdx = beatById("a2-chassis");
+      try{
+        ["Seven", "Nine"].forEach(function(h){
+          chassisHolder = h;
+          for(var bi = cIdx; bi <= hIdx; bi++){
+            beatIdx = bi;
+            if(housingResident()){
+              symBad.push("fork " + h + ": " + housingResident() + " is already housed at "
+                + SPINE[bi].id + ", before the room is found");
+            }
+          }
+          beatIdx = hIdx + 1;
+          if(!housingResident()) symBad.push("fork " + h + ": nobody moved in after the discovery");
+          else symSaw.push("fork " + h + " seats " + housingResident() + " the beat after a2-housing");
+        });
+      } finally { barPut(k); }
+    })();
+    T("nobody lives in the housing before the night that finds it",
+      symBad.length === 0, symBad.length ? symBad.join("; ") : symSaw.join(" \u00b7 "),
+      {label:"fork B seating at the chassis beat, two nights before the room exists",
+       was:"a2-chassis",
+       check:function(w){
+         var k = barKeep(), early = false;
+         try{
+           chassisHolder = "Nine";
+           beatIdx = beatById(w) + 1;
+           /* the old rule seated Seven here; the ruled one does not */
+           early = beatIdx > beatById(w) && beatIdx <= beatById("a2-housing") && !housingResident();
+         } finally { barPut(k); }
+         return !early;   /* false means the beat between the two is now empty - the catch */
+       }});
 
     T("a night plays itself, and plays the same with the endpoint dead",
       barBad.length === 0, barBad.length ? barBad.join("; ") : barSaw.join(" \u00b7 "),
