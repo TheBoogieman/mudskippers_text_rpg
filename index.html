@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.7 "A File of Good Nights"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.8 "Said Twice, Noticed"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7283,7 +7283,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.7";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.8";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -10188,12 +10188,8 @@ function callSceneTurn(){
      room that is how one question came back six times, verbatim. */
   var t = pickTopicFresh(sc.sc, sc.key);
   if(!t){
-    lastSent = {text:"[template] asked and answered", chars:0, trim:trimFlagsText(),
-                msgs:0, wire:0, bible:0};
-    lastReceived = "[template] the deck is spent; the family says so";
-    lastReplyVerdict = "template: asked and answered, zero calls";
-    serveSceneTurn(askedAnswered(String(lastPlayerText || "").slice(0, 24)));
-    return true;
+    /* one voice with the repeat gate - see serveAskedAnswered (v4.71.8) */
+    return serveAskedAnswered(String(lastPlayerText || "").slice(0, 24));
   }
   if(!t.plays || !t.plays.length) return false;
   var blocks = sceneBlocksFor(t);
@@ -10325,7 +10321,12 @@ function callInterludeTurn(){
     /* handled either way: the bit's own return value is not a verdict on whether
        the interlude owned the turn, and a falsy one here sent the settle out to
        the legacy wire behind the bit's back */
-    if(!sceneConfident() && !deckHandled(lastPlayerText)){ callBitTurn(); return true; }
+    if(!sceneConfident() && !deckHandled(lastPlayerText)){
+      /* the settle keeps the same ladder as callDM's gate (v4.71.8) */
+      var stN = saidCountHere(lastPlayerText);
+      if(stN) return serveAskedAnswered(String(lastPlayerText || "").slice(0, 24) + "|" + stN);
+      callBitTurn(); return true;
+    }
     if(callSceneTurn()) return true;
   }
   /* ...and if there is not - the season seam, the last night - the board has already
@@ -14311,6 +14312,34 @@ function deckHasUnspent(){
   for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return true; }
   return false;
 }
+/* THE ROOM REMEMBERS WHAT HE SAID IN IT (v4.71.8). The stall fix stopped the pool
+   lying about the record on a first click - and took the family's memory with it:
+   the same stall clicked three times ran three fresh bits and nobody said a word
+   about the repetition. The law is a ladder: first said, answered (the bit path,
+   pool or paint); said again, NOTICED (asked-and-answered, client-side, a
+   different pool voice per repeat). Keyed per scene like the deck's own memory,
+   riding the save beside it - a pre-v4.71.8 save has simply said nothing yet,
+   which is the safe direction. Only the conversational channel consults it: deck
+   lines have the binding, doors have the doorman, and the MUDSKIPPER MOMENT
+   button stays exempt - repetition there is the player's own comedy. */
+var saidRoom = {};   /* scene key -> normalized line -> times said here */
+function saidCountHere(text){
+  var s = sceneNow(); if(!s) return 0;
+  var nl = normLine(text); if(!nl) return 0;
+  var m = saidRoom[s.key] || (saidRoom[s.key] = {});
+  var n = m[nl] || 0; m[nl] = n + 1;
+  return n;                      /* 0 the first time it is said HERE */
+}
+/* one voice for "you have been told", used by the dry deck and the repeat gate -
+   same verdict strings, so the harness reads one route */
+function serveAskedAnswered(salt){
+  lastSent = {text:"[template] asked and answered", chars:0, trim:trimFlagsText(),
+              msgs:0, wire:0, bible:0};
+  lastReceived = "[template] the deck is spent; the family says so";
+  lastReplyVerdict = "template: asked and answered, zero calls";
+  serveSceneTurn(askedAnswered(salt));
+  return true;
+}
 function deckHandled(text){
   /* a stall spends the deck on purpose - WHILE THERE IS A DECK (v4.71.6). On a dry
      deck every line reaching the scene path was served "you asked that already",
@@ -15706,8 +15735,13 @@ function callDM(corrected, tag){
   /* ...and the rail exemption is by KIND, not by row membership: deck-bound lines and
      stalls go to the deck, which handles both by design; a landing's conversational
      rail line has to earn a card with evidence like any typed line - see deckHandled. */
-  if(sceneSkeletonNow() && !sceneConfident()
-     && !deckHandled(lastPlayerText)) return callBitTurn();
+  if(sceneSkeletonNow() && !sceneConfident() && !deckHandled(lastPlayerText)){
+    /* first said, answered; said again, noticed (v4.71.8) - a different pool
+       voice per repeat, so the noticing never stutters either */
+    var saidN = saidCountHere(lastPlayerText);
+    if(saidN) return serveAskedAnswered(String(lastPlayerText || "").slice(0, 24) + "|" + saidN);
+    return callBitTurn();
+  }
   if(sceneSkeletonNow() && callSceneTurn()) return;
   /* ...and the turns that are neither, which is how F1 got in */
   if(interludeNow() && callInterludeTurn()) return;
@@ -16470,7 +16504,7 @@ function saveBlob(){
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
-    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent,
+    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent, saidRoom:saidRoom,
     shardWhere:shardWhere, storyMin:storyMin, storyDayShift:storyDayShift,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
@@ -20979,7 +21013,7 @@ function newRun(confirmFirst, bare){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {}; saidRoom = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -21166,6 +21200,9 @@ function restoreFromBlob(s){
   /* a save from before the scene book has spent nothing: it starts at the top of
      every topic list, which is the right place for a run that has never had one */
   topicSpent = (s.topicSpent && typeof s.topicSpent === "object") ? s.topicSpent : {};
+  /* a save from before the said-memory has said nothing yet - the first repeat
+     after an old restore gets a fresh answer, which is the safe direction */
+  saidRoom = (s.saidRoom && typeof s.saidRoom === "object") ? s.saidRoom : {};
   /* the binding is rebuilt by the first row this run draws; it is a view of the deck,
      never a fact about it, so it does not belong in the save */
   railDeal = {};
@@ -22750,7 +22787,7 @@ function selfTest(){
     function barBoard(at){
       beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
       slackTurns = 0; slackRoom = ""; runOver = ""; deathLine = ""; walkbackNow = false;
-      chassisDoor = ""; chassisPick = ""; railDeal = {}; pickKind = ""; lastRail = [];
+      chassisDoor = ""; chassisPick = ""; railDeal = {}; pickKind = ""; lastRail = []; saidRoom = {};
       perilSpent = {}; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
       beatJustCleared = null;
       /* a board with a night on it. Without this the door is not live, and a harness
@@ -23377,6 +23414,27 @@ function selfTest(){
           rwBad.push("a dry re-ask was not served from the pool: " + lastReplyVerdict);
         }
         rwSaw.push("dry, the stalls answer as conversation and the pool keeps to genuine re-asks");
+        /* ...AND REPEATING YOURSELF IS STILL NOTICED (v4.71.8). The stall fix made
+           the first click conversation - and took the family's memory with it: the
+           same stall clicked three times ran three fresh bits and nobody said a
+           word about the record. First said, answered; said again, the family
+           notices - driven through the real gate, verdict string and all. */
+        saidRoom = {};
+        if(saidCountHere(PIN_STALLS[0]) !== 0) rwBad.push("a first saying was already on the record");
+        if(saidCountHere(PIN_STALLS[0]) !== 1) rwBad.push("a repeat went uncounted");
+        var rwSS2 = window.showScene, rwPA2 = window.persistAll, rwAK2 = window.askAI;
+        window.showScene = function(){}; window.persistAll = function(){};
+        window.askAI = function(){ return {then:function(){ return {catch:function(){}}; }}; };
+        try{
+          lastPlayerText = PIN_STALLS[0]; lastRail = [lastPlayerText]; turnToken++;
+          lastReplyVerdict = "";
+          callDM();               /* the third saying, through the real door */
+        } finally { window.showScene = rwSS2; window.persistAll = rwPA2; window.askAI = rwAK2; }
+        if(String(lastReplyVerdict).indexOf("asked and answered") === -1){
+          rwBad.push("a repeated stall was not met by the pool: " + lastReplyVerdict);
+        }
+        saidRoom = {};
+        rwSaw.push("and the room remembers: a repeated line is noticed, in a different voice each time");
       } finally { barPut(k); }
     })();
     T("the row is dealt from the deck, and a spent card retires from it",
