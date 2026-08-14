@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.54.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.55.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2102,7 +2102,7 @@ var SPINE = [
  scar:"Vic's story came out ragged and interrupted; some of it the courier still owes himself."},
 
 {id:"a1-pack", season:1, act:2, title:"the pack answers",
- goal:"The Mudskippers learn one of their own is burning. The pack has to decide what the courier is worth to it now - dead drops and shut mouths, or distance and shut doors - and the courier has to stand there while his own people take his measure. Pia is pack too, and she has already chosen.",
+ goal:"The Mudskippers learn one of their own is burning. The pack has to decide what the courier is worth to it now - dead drops and shut mouths, or distance and shut doors - and the courier has to sit on a marsh and take his own people's measure of him down a cable. NOBODY TRAVELS: the verdict reaches them as a thing, not a journey - a mark off a board, a name gone from a routing table, a silence on the wire. Pia is pack too, and she has already chosen.",
  exit:"the courier knows where he stands with the pack, and the pack's answer has been made real - a door, a drop, or a silence",
  aim:"put the pack's verdict where he can touch it - a door, a drop, a mark, a silence",
  walkLine:"Let the pack read their verdict to an empty room. Walk.",
@@ -2149,7 +2149,7 @@ var SPINE = [
  scar:"The pack decided at a distance; he heard where he stands secondhand."},
 
 {id:"a1-fare", season:1, act:2, title:"the last fare",
- goal:"Rent does not care about ghost stories. A plain paying delivery - small parcel, honest money, no mysteries - still has to happen, and the whole mess comes along: a burned name, a humming passenger, a city that has started looking at him sideways. Somewhere in the middle of it, the ordinary job stops being possible, and both the courier and the city notice.",
+ goal:"Rent does not care about ghost stories, and this one comes looking for HIM: a small honest box at double the going rate, offered to a courier whose name is supposed to be burned. It is the last honest fare and it is not honest at all - the recipient's address sits one street off the Copper Eel, and the fare is the hook the Choir put in the water. Play it straight: the ordinary job stops being possible somewhere in the middle of it, and both the courier and the city notice. THE DELIVERY IS LATE is this beat's punchline, one night early.",
  exit:"the last honest fare is finished, and it is understood - by the courier and by the fiction - that it was the last",
  aim:"run the small parcel to its recipient and let them both notice it was the last one",
  walkLine:"Take the fare money and keep walking. None of this is my job.",
@@ -2160,8 +2160,9 @@ var SPINE = [
         "Finish this parcel and never come back to that marsh.",
         "Sign the chit, take the money, and vanish into a normal week."],
  opens:[{day:"2", time:"11:30am", place:"THE PARCEL OFFICE, VELDT WEST", amb:"neon-dry",
-       now:"Day 2, late morning, at a parcel counter that has not been robbed in nine years and is smug about it.",
-       lines:["The job is a box the size of a shoe and a chit that says FRAGILE, which in this city is decorative.",
+       now:"Day 2, late morning, at a parcel counter that has not been robbed in nine years and is smug about it. The job came looking for the courier, at double the going rate.",
+       lines:["The job found you, which should have been the first thing you noticed about it.",
+              "Double rate for a box the size of a shoe, offered to a man whose name came off a routing table this morning, with a chit that says FRAGILE, which in this city is decorative. The delivery address is one street off the Copper Eel.",
               ["Other","Still with the pack? Only the rate's different if you're not."],
               "You say something with a lot of syllables in it and the clerk stamps the chit anyway.",
               ["Pia","He's freelance. Put down freelance. It sounds better than what it is."],
@@ -2268,6 +2269,7 @@ var SPINE = [
        lines:["Whatever was on the table is off it now, and everyone in the house heard which way it went.",
               "You end up on the porch, which is where people go when a room has finished with them. Tonight the marsh is loud enough to count as company.",
               ["Vic","You know I'd have driven you. Whichever way it went, I'd have driven you."],
+              ["Vic","And before you ask how a way out found a house nobody's supposed to know about — it came through my old contacts. Which means somebody I used to trust knows where I sleep. That's a knife too, son. Everything is, out here."],
               "He looks at the road instead of at you for a length of time that stops being accidental.",
               "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
        rail:["Ask him what is on the road.",
@@ -2291,9 +2293,9 @@ var SPINE = [
  scar:"The exit expired unanswered, which is an answer."},
 
 {id:"a1-carried", season:1, act:3, title:"the courier, carried",
- goal:"Nine gets them through a Choir sweep with the only thing a shard has: knowledge. She is from inside the farm - she knows the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not see. She steers the courier through it blind, whispering the Choir's own timing into his bones. No powers, no reach - just a frightened person spending everything she knows on him.",
+ goal:"THE SWEEP COMES TO THEM. The Choir cordons the causeway and closes a ring on the marsh house - nobody went looking for this - and Nine gets them through their own siege with the only thing a shard has: knowledge. She is from inside the farm: she knows the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not see. She threads the courier through the cordon blind and home, whispering the Choir's own timing into his bones. No powers, no reach - just a frightened person spending everything she knows on him. The marsh is known now, and that is the thing they carry out of tonight.",
  exit:"the courier is clear of the sweep because Nine's knowledge got him through, and both of them know it",
- aim:"walk him into the sweep and let Nine talk him through it, step by step",
+ aim:"close the ring on the marsh house and let Nine talk him home through it, step by step",
  walkLine:"Stop dead. Tell Nine to find someone else to steer.",
  exits:["Let Nine call it. Step where she says step, and get through the sweep on her word.",
         "Put myself in her hands and walk the line she reads for me.",
@@ -2301,30 +2303,31 @@ var SPINE = [
  walks:["Drop her and run. I would rather be lost than led.",
         "Put her down in the dark and take my chances alone.",
         "Stop listening to the voice in my hand and get out my own way."],
- opens:[{day:"3", time:"12:40am", place:"VELDT EAST, UNDER THE SWEEP", amb:"danger",
-       now:"Day 3, after midnight, caught on the wrong side of a Choir sweep with nowhere obvious to be. Nine is in the courier's hand.",
+ opens:[{day:"3", time:"12:40am", place:"THE CAUSEWAY, CORDONED", amb:"danger",
+       now:"Day 3, after midnight, on the causeway with a Choir cordon across it and the ring closing on the marsh house behind them. Nine is in the courier's hand.",
        lines:["A sweep sounds like nothing at all, which is the single worst thing about it.",
-              "You are two streets into the wrong district when the air changes pressure and every screen in the row goes the same shade of nothing.",
+              "You are eighty metres onto the causeway when the air changes pressure and every light on the far bank goes the same shade of nothing. Nobody came looking for this. It came out here, to the water, to the one road in.",
               ["Nine","Left. Now, not in a second. Left."],
               "She has never given you a direction before.",
               ["Pia","Do what she says. I don't know why she knows, but do what she says."]],
        rail:["Ask her how she knows.",
              "Do not ask her anything. Go left."]}],
- lands:[{day:"3", time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
-       now:"Day 3, small hours, inside the dead pumping station under Veldt East. The sweep passed over an hour ago. Nine got them through.",
+ lands:[{day:"3", time:"2:15am", place:"THE SAFEHOUSE, BACK ROOM", amb:"interior-warm",
+       now:"Day 3, small hours, in the safehouse back room with the cordon still out on the causeway. The ring passed over the house an hour ago. Nine threaded them home through it.",
        lines:["The sweep goes over you the way weather goes over a rock, and then it is somewhere else, and then it is gone.",
-              "You come up inside the pumping station, which has not pumped anything in thirty years, and sit down on the floor because your legs decide it for you.",
+              "You come in through your own back door with the ring still standing out on the water, and sit down on the floor because your legs decide it for you.",
+              "They know the marsh now. Nobody says that part out loud tonight; everybody carries it.",
               ["Nine","I knew the timings because I was on the other side of them. That is all it is. Don't make it a virtue."],
               "She is warm. Not hot — warm, the temperature a hand is, and neither of you mentions it.",
               ["Pia","She's allowed to be good at something. Tell her she's allowed."]],
        rail:["Say thank you. Out loud, properly.",
              "Ask her what the other side of the timings was like.",
              "Get up. We are not sleeping here."]}],
- landsHard:[{day:"3", time:"2:15am", place:"THE OLD PUMPING STATION", amb:"tunnel",
-       now:"Day 3, small hours, in the pumping station. The sweep passed over them more than they beat it, and Nine spent what she knew unthanked.",
+ landsHard:[{day:"3", time:"2:15am", place:"THE SAFEHOUSE, BACK ROOM", amb:"marsh-fog",
+       now:"Day 3, small hours, in the safehouse back room. The ring passed over them more than they beat it, and Nine spent what she knew unthanked.",
        lines:["You get through it on a wall, a bin, and the kind of luck that does not come round twice.",
               "Somewhere in the middle of it Nine said three things that were exactly right and nobody had time to notice.",
-              "The pumping station is thirty years dead and full of the sound of water going somewhere else. You sit down in it because standing has stopped being an option.",
+              "The back room smells of wet coats and the marsh going about its business outside. You sit down in it because standing has stopped being an option, and out on the water the ring is still standing there being patient.",
               ["Nine","Did you hear any of it? At the second corner. Did you hear me."],
               "It is not a question so much as a receipt."],
        rail:["Tell her the truth.",
@@ -2617,7 +2620,7 @@ var SPINE = [
  scar:"She went into the ground between alarms; the vow got said walking."},
 
 {id:"a2-seven", season:2, act:2, title:"the defector, dying",
- goal:"THE VOW'S FIRST TRIAL. Seven arrives in a dying Choir frame - walking, crude-voiced through a bad speaker, shedding whatever he stole to get this far, failing by the hour. A defector asking for nothing. Saving him is the beat's whole question, and saving him means one thing: his shard comes out of that frame by hand, before it quits - and after that, he is a mind with nowhere to be.",
+ goal:"THE VOW'S FIRST TRIAL. Seven COMES TO THEM - a dying Choir labor frame walking out of the city and up the causeway on its own failing legs, crude-voiced through a bad speaker, shedding whatever he stole to get this far, failing by the hour. Nobody goes anywhere to find him; he arrives, and he is sorry about the noise. A defector asking for nothing. Saving him is the beat's whole question, and saving him means one thing: his shard comes out of that frame by hand, before it quits - and after that, he is a mind with nowhere to be.",
  exit:"the group has committed to saving Seven and is acting on it",
  aim:"make his failing a clock they can hear, and get them committed to pulling his shard",
  walkLine:"He isn't mine to save. Walk before I learn his name properly.",
@@ -2627,9 +2630,10 @@ var SPINE = [
  walks:["Leave him in the rig. We cannot save everyone and I am tired.",
         "Say no to this one out loud, and go.",
         "Walk out on it. He was dying before we got here."],
- opens:[{day:"14", time:"9:30pm", place:"A DYING RIG, DOCKSIDE", amb:"dead-signal",
-       now:"Night, at a failing rig on the water. There is a defector inside it and he is going out.",
-       lines:["The rig is making a sound like a fridge with regrets and it has been making it for two days.",
+ opens:[{day:"14", time:"9:30pm", place:"THE CAUSEWAY, LAST LIGHT", amb:"dead-signal",
+       now:"Night, on the causeway. Something is coming up the marsh road on its own legs and it is going out as it walks.",
+       lines:["Something is coming up the marsh road, and it is sorry about the noise.",
+              "The frame is making a sound like a fridge with regrets and it has been making it, by the state of the legs, for two days and most of a city.",
               ["Seven","Sorry about the noise. Sorry — sorry, I've said sorry twice now, that's already too many."],
               "Whatever is inside that housing is apologising for existing in a room. That tells you a great deal very quickly.",
               ["Vic","It has a night in it. Maybe less. I'm not saying that to hurry anyone, I'm saying it because it's the number."],
@@ -3341,6 +3345,8 @@ var SPINE = [
        lines:["The stone goes on, the name gets said, and everybody gets their one line whether they wanted one or not.",
               ["Seven","I only knew him four weeks. I don't know if that's enough to get a line."],
               ["Hesta","It's enough. Say it."],
+              ["Hesta","Mine's short. He bought a wet house on a bad road because there's a hatch under the reeds behind it, and that hatch is the founders' own back door into the deep. He never said. He just kept the door, for thirty years, in case somebody one day needed it. Today we need it."],
+              "That is the whole of Vic, said at last by somebody else: he was not hiding on that marsh. He was keeping a door.",
               "It is light by the time you finish — the flat grey kind that makes everyone look as though they have been up all night. All of you have.",
               "The access hatch is forty metres away and has been the whole time, and now there is nothing left to do before it."],
        rail:["Walk over to it.",
@@ -3917,6 +3923,7 @@ var SCENEBOOK = {
   here:["Pia","Vic","Nine"],
   before:"Nine is in the courier's bare hand this morning and can hear the room. She is new to all of this and asks the questions a stranger asks.",
   never:["the pack does not arrive in person - the answer comes as a thing, not a crowd: a door, a drop, a mark on a board, a silence",
+         "nobody leaves the marsh. After the causeway the family does not go back into the city unless the city drags them - the verdict comes down the cable, and the city tonight is a voice on a wire and a name missing off a list",
          "nobody explains what the Choir is or what a Hollow is",
          "the next job's particulars are not invented here - there is a job on the board and that is all anybody knows about it"],
   topics:[
@@ -3960,7 +3967,7 @@ var SCENEBOOK = {
 },
 
 "a1-fare": {
-  where:"a parcel counter in Veldt West that has not been robbed in nine years and is smug about it, then the streets across town",
+  where:"a parcel counter in Veldt West that has not been robbed in nine years and is smug about it, then the streets across town toward an address one road off the Copper Eel - the fare came looking for him, at double rate, and nobody in the scene knows why yet",
   ends:"on the far pavement opposite the Copper Eel, the last honest fare signed for and both of them knowing it was the last",
   here:["Pia","Nine"],
   before:"Nine rides in the jacket for the walk and cannot hear the room. She only speaks when the courier has bare skin on her.",
@@ -4103,8 +4110,8 @@ var SCENEBOOK = {
 },
 
 "a1-carried": {
-  where:"Veldt East in the small hours, caught inside a Choir sweep with nowhere obvious to be - lights on a timing, patrols on a rhythm",
-  ends:"inside the dead pumping station under Veldt East, the sweep gone over an hour ago, both of them knowing who got them through",
+  where:"the causeway in the small hours with a Choir cordon across it and the ring closing on the marsh house - lights on a timing, patrols on a rhythm, and the one road in already shut",
+  ends:"in the safehouse back room, the ring gone over an hour ago, both of them knowing who got them home - and all of them knowing the marsh is known now",
   here:["Pia","Nine"],
   before:"NINE IS IN HIS BARE HAND FOR THIS AND SHE IS THE REASON IT WORKS. She has no reach, no powers, and no way to touch anything - what she has is the inside of the farm: the intake choreography, the patrol rhythm, what an idling Hollow's script does and does not look at. She spends it on him, step by step, out loud, in his ear. She speaks THIS beat. If she does not speak, the beat has not happened.",
   never:["Nine does not do anything physical - she does not reach, open, cut, block or move; she says a number and a direction and the courier's own feet do it",
@@ -4133,7 +4140,7 @@ var SCENEBOOK = {
     holds:"no reunion is arranged here"}
   ],
   room:{
-   where:"inside the dead pumping station, out of it, with an hour of quiet",
+   where:"the safehouse back room with the ring still out on the water, out of it, with an hour of quiet",
    here:["Pia","Nine"],
    never:["nothing about the housing, the founders or the plan","nobody arrives"],
    topics:[
@@ -4143,8 +4150,8 @@ var SCENEBOOK = {
     {ask:"what a sweep is actually for", key:"sweep for why choir looking what want",
      who:"Pia", gives:"what the street thinks it is for, which is not quite right and is what the street has",
      holds:"nothing about intake or fates"},
-    {ask:"the pumping station itself", key:"station place here pipes water old dead",
-     who:"Pia", gives:"a bit - a story about the station that she cannot possibly know is true",
+    {ask:"how they found the marsh", key:"found marsh here how house road water known",
+     who:"Pia", gives:"a bit - a theory about how the Choir found the water that she cannot possibly know is true",
      holds:"nothing. Free."}
    ]}
 },
@@ -4384,7 +4391,7 @@ var SCENEBOOK = {
 },
 
 "a2-seven": {
-  where:"a failing rig on the dockside at night - a crude Choir frame walking on borrowed time with a defector inside it",
+  where:"the causeway at night - a crude Choir frame that walked itself out of the city and up the marsh road on borrowed time, with a defector inside it. Nobody went to fetch him; the world came up the road",
   ends:"Vic's workbench, Seven out of the failing rig, the family committed to it",
   here:["Pia","Vic","Nine","Hesta","Seven"],
   before:"SEVEN IS IN A DYING FRAME AND THE CLOCK IS AUDIBLE. He speaks through a bad speaker, he is shedding whatever he stole to get this far, and he is failing by the hour. He asks for nothing.",
@@ -5332,10 +5339,10 @@ var TEASES = {
   "a1-chase":   "The way home is closing. Find out what's left open.",
   "a1-vic":     "Vic owes you the whole story. Get it out of him.",
   "a1-pack":    "The pack is deciding what you're worth. Be there for the verdict.",
-  "a1-fare":    "Rent is due and one honest job remains. Run it.",
+  "a1-fare":    "A fare came looking for you, at double rate. Run it.",
   "a1-late":    "You've seen who's asking. Go and hear what she wants.",
   "a1-exit":    "A way out exists. Look it in the eye before it expires.",
-  "a1-carried": "The sweep is coming and Nine knows things. Trust her through it.",
+  "a1-carried": "The ring is closing on the marsh. Nine knows things. Trust her through it.",
   "a1-turn":    "Decide what she is to you — and say it.",
   "a2-door":    "There's a door on the far side of the marsh that never shuts. Knock.",
   "a2-ground":  "The hunt has found your street. Try every kind thing you know.",
@@ -5532,7 +5539,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.54.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.55.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -9572,7 +9579,7 @@ var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
    people\b straight through the full stop - so a name could be introduced
    sentence-finally and no fence saw it. The two authored enumerations that
    prompted the widening are handled by name, above, not by opening the fence. */
-var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|districts?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|districts?\b|ways?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
 /* THE TWO AUTHORED ENUMERATIONS, BY NAME. The bare punctuation alternative that
    used to live on the end of COUNTED made ANY number-name followed by : . ) ]
    read as a count with no count-noun at all - so "Her name is Nine.", "And then
@@ -9593,6 +9600,12 @@ function isCountedPhrase(hay, at){
   return false;
 }
 /* is this name used AS a name anywhere in the text? */
+/* ...AND A COUNT CAN SIT BEHIND THE NAME. COUNTED only ever looked FORWARD, at the
+   twenty characters after the word - so "standing there at four foot nine, in a coat
+   that used to be Vic's" reported that Nine had been named, in the beat before she is
+   supposed to exist to anyone. The forward list was audited once against the corpus
+   and found complete; the backward one did not exist. It does now. */
+var COUNTED_BEHIND = /\b(?:foot|feet|inch(?:es)?|number|no\.|size|rate|floor|level|unit|track|bay|platform|channel|aisle|row|page|line|shelf|rung)\s+$/i;
 function namedUse(sp, hay, ci){
   if(!sp) return false;
   /* the window is a LOOKAHEAD. A capture group consumes what it captures, so
@@ -9601,7 +9614,8 @@ function namedUse(sp, hay, ci){
      the name behind it, and reported that nobody was named. */
   var re = new RegExp("\\b" + sp + "\\b(?=([\\s\\S]{0,20}))", ci ? "gi" : "g"), m;
   while((m = re.exec(hay)) !== null){
-    if(NUMBER_NAMES[sp] && (COUNTED.test(m[1] || "") || isCountedPhrase(hay, m.index))) continue;   /* a quantity, not a person */
+    if(NUMBER_NAMES[sp] && (COUNTED.test(m[1] || "") || isCountedPhrase(hay, m.index)
+       || COUNTED_BEHIND.test(String(hay).slice(Math.max(0, m.index - 14), m.index)))) continue;   /* a quantity, not a person */
     return true;
   }
   return false;
@@ -14429,6 +14443,7 @@ var SEASON_OPENS = {
      ["Pia","There's a place. An actual place, with chairs. I've been saving it."],
      ["Vic","You've been saving it for six days?"],
      ["Pia","I've been saving it since I was nine. You lot just weren't worth it yet."],
+     "Nobody has said out loud why the marsh is behind you. Everybody knows: the ring came out to the water and stood on the one road in, so the marsh is known, and a known house is a shut house. You hide in a crowd now. That is the whole of the plan and it is not much of one.",
      "The Open Door is a diner with a name that is either a promise or a maintenance failure. In weather like this the door is held open with a brick, which tells you everything about the person inside and none of it is bad.",
      ["Nine","Does she know what I am, or am I a coat pocket again tonight?"],
      "Inside, somebody is laying out more cutlery than there are people on this street."],
@@ -17920,7 +17935,22 @@ var ST_DETECTORS = {
     return false;
   }
 };
+/* A DETECTOR THAT READS THE WORLD IS NOT A FUNCTION OF THE LINE. breachMore calls
+   unmetCast() and residentNow(); both read the run. So the map was only reproducible
+   because of where in the sweep it happened to be taken - the degenerate run now
+   mutates the world wildly at the end, and a map taken after it would disagree with
+   the fixture over prose nobody touched. Luck, not design, and it was caught by the
+   map disagreeing with a probe run one screen later.
+   The world is PINNED for the duration: turn zero, nobody met, nobody seated. The
+   map is now a function of the corpus and the predicates and nothing else. */
 function verdictMap(){
+  var keep = {bi:beatIdx, cs:currentSeason, ro:roster, cast:castSheets, canon:runCanon,
+              ch:chassisHolder, sw:shardWhere, ph:phase, fp:foldPending, fs:foldServed,
+              ov:runOver};
+  beatIdx = 0; currentSeason = SPINE[0].season; roster = {family:[], fallen:[]};
+  castSheets = {}; runCanon = []; chassisHolder = null; shardWhere = "jacket";
+  phase = "live"; foldPending = false; foldServed = false; runOver = "";
+  try{
   var corpus = stCorpus(), out = {__lines:corpus.length};
   Object.keys(ST_DETECTORS).forEach(function(k){
     var fn = ST_DETECTORS[k], fired = [];
@@ -17933,6 +17963,11 @@ function verdictMap(){
     out[k] = fired;
   });
   return out;
+  } finally {
+    beatIdx = keep.bi; currentSeason = keep.cs; roster = keep.ro; castSheets = keep.cast;
+    runCanon = keep.canon; chassisHolder = keep.ch; shardWhere = keep.sw; phase = keep.ph;
+    foldPending = keep.fp; foldServed = keep.fs; runOver = keep.ov;
+  }
 }
 /* THE FIXTURE. Regenerate by reading window.__VERDICTS__ after ?selftest and checking
    the result in beside the code that changed it. Never regenerate to make a red row
@@ -17949,7 +17984,7 @@ var VERDICT_FIXTURE = {
     "a1-carried/opens0/now", "a1-carried/scar", "a1-carried/walk", "a1-chase/Rt7g",
     "a1-chase/lands0/r0", "a1-exit/aim", "a1-exit/before", "a1-exit/canon0",
     "a1-exit/exits0", "a1-exit/never2", "a1-exit/opens0/l4", "a1-exit/opens0/now",
-    "a1-exit/press1", "a1-fare/before", "a1-fare/opens0/l4", "a1-hum/before",
+    "a1-exit/press1", "a1-fare/before", "a1-hum/before",
     "a1-hum/canon0", "a1-hum/canon1", "a1-hum/canon2", "a1-hum/exits1", "a1-hum/goal",
     "a1-hum/lands0/now", "a1-hum/landsHard0/l4", "a1-hum/landsHard0/now",
     "a1-hum/landsHard0/r1", "a1-hum/never0", "a1-hum/never1", "a1-hum/scar",
@@ -17965,7 +18000,7 @@ var VERDICT_FIXTURE = {
     "want3", "want4"
   ],
   "named:Three": [
-    "a1-carried/never2", "a1-chase/t2g", "a1-late/t3g", "a1-turn/landsHard1/l2",
+    "a1-carried/never2", "a1-chase/t2g", "a1-turn/landsHard1/l2",
     "a1-turn/landsHard1/l3", "a1-turn/landsHard1/l5", "a2-annul/aim", "a2-annul/exits0",
     "a2-annul/goal", "a2-annul/lands0/r2", "a2-annul/landsHard0/r1", "a2-annul/never2",
     "a2-annul/opens0/l0", "a2-annul/opens0/now", "a2-annul/opens0/r1", "a2-annul/press0",
@@ -18036,7 +18071,24 @@ var VERDICT_FIXTURE = {
     "want24"
   ]
 };
-/* THE FIRST REAL USE OF THIS MECHANISM, AND IT WORKED ON ITS AUTHOR. Three
+/* v5.1: TWO MORE FALSE POSITIVES, BOTH KILLED BY THE ONCE-ONLY LIST AUDIT.
+     named:Three on a1-late/t3g - "three ways this happens next, said fast" is a
+       count. COUNTED did not know "ways". The corpus bigram sweep found it.
+     named:Nine on a1-fare/opens0/l4 - "standing there at four foot nine, in a coat
+       that used to be Vic's" is a MEASUREMENT, and it certified Nine as named in the
+       beat before she exists to anyone. COUNTED only ever looked FORWARD; the number
+       sat at the END of the phrase. COUNTED_BEHIND is the missing half.
+   Both stood in every shipped build since those lines were written, and neither was
+   reachable by looking forward from the name, which is all the first audit did.
+   ...AND THE MAP ITSELF WAS NOT REPRODUCIBLE. breachMore reads unmetCast() and
+   residentNow(), so the "breach" column was a function of whatever state the sweep
+   happened to be in when the map was taken - fine only because the degenerate run
+   comes after it. verdictMap pins the world now (turn zero, nobody met, nobody
+   seated) and the sweep proves the map is identical when re-taken after the
+   degenerate run has wrecked everything. A fixture that depends on run state is not
+   a fixture.
+
+   THE FIRST REAL USE OF THIS MECHANISM, AND IT WORKED ON ITS AUTHOR. Three
    novel-grade closes went in and the snapshot came back RED with three flips:
      named:Three on a1-turn/lands0/l14 - A GENUINE BUG IN THE NEW PROSE. "three
        districts east" read as the character Three, because COUNTED knew blocks and
@@ -18989,6 +19041,42 @@ function selfTest(){
          var oldSwallows = worldsMove;
          var nowSwallows = worldsMove && !w.said;
          return oldSwallows === nowSwallows;
+       }});
+    /* ...AND THE VERDICT MAP IS A FUNCTION OF THE CORPUS, NOT OF THE RUN. breachMore
+       reads unmetCast() and residentNow(), so before the world was pinned the "breach"
+       column meant whatever state the sweep happened to be in when the map was taken.
+       That was survivable only because this section runs AFTER the map - which is an
+       ordering, not a guarantee. Taken again HERE, on the far side of a season change,
+       an emptied roster and a dead courier, it must be identical. */
+    var remap = verdictMap(), mapMoved = [];
+    Object.keys(ST_DETECTORS).forEach(function(k){
+      if((window.__VERDICTS__[k] || []).join("|") !== (remap[k] || []).join("|")) mapMoved.push(k);
+    });
+    T("the verdict map does not depend on the run it was taken in",
+      mapMoved.length === 0,
+      "re-taken after the degenerate run moved the season, emptied the roster and killed"
+      + " the courier" + (mapMoved.length ? " - MOVED: " + mapMoved.join(", ") : " - identical"),
+      {label:"the unpinned map, which read the world through breachMore",
+       /* a line that ACTUALLY moves: "Three arrives" is a summons while Three is
+          unmet and ordinary stage direction once she is cast. Ten authored lines do
+          this; the first pick did not, because I had reworded it an hour earlier. */
+       was:{det:"breach", line:"a2-three/goal"},
+       check:function(w){
+         /* the old behaviour, re-created: ask the state-reading detector twice, in two
+            different worlds, and see whether it answers the same. If it does, pinning
+            bought nothing and this case proves nothing. */
+         var line = "", corp = stCorpus();
+         for(var i = 0; i < corp.length; i++){ if(corp[i].id === w.line){ line = corp[i].t; break; } }
+         var k2 = {bi:beatIdx, ro:roster, cast:castSheets, ch:chassisHolder};
+         try{
+           beatIdx = 0; roster = {family:[], fallen:[]}; castSheets = {}; chassisHolder = null;
+           var cold = !!(breachIn(line) || breachMore(line));
+           beatIdx = SPINE.length - 1; chassisHolder = "Seven";
+           roster = {family:["Pia","Vic","Hesta","Seven","Three","Marek","Five"], fallen:[]};
+           SPINE.forEach(function(b){ (b.anchors || []).forEach(function(nm){ castSheets[nm] = {seen:"x"}; }); });
+           var warm = !!(breachIn(line) || breachMore(line));
+           return cold === warm;
+         } finally { beatIdx = k2.bi; roster = k2.ro; castSheets = k2.cast; chassisHolder = k2.ch; }
        }});
     T("the degenerate run put the drawer back", window.persistAll === realPersist,
       wrote + " save(s) intercepted and discarded - a synthetic run never reaches a player's folder");
