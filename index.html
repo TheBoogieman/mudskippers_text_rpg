@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.0 "Said Fear Is a Map"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.1 "One Gold Choice"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7251,7 +7251,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.1";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7928,6 +7928,14 @@ var railDeal = {};   /* scene key -> offered wording -> the card it was dealt fr
 function sceneRails(n){
   var out = [], s, list, spent, i, t, ln;
   if(!V5SCENE) return out;
+  /* THE DECK DOES NOT DEAL ON THE COLD OPEN (v4.71.1). The intro's authored row is
+     one gold choice - INTO THE RAIN - and any press there serves the hardcoded
+     reveal, so a deck rail dealt onto that screen is a question the turn cannot
+     answer. Worse, it is a question the player cannot yet ASK: "Ask her - properly,
+     skin on the shard" was on the first screen of a run where nobody had told the
+     courier the shard is a her. doorsLive has excluded the intro since it was
+     written; the deck needed the same fence and never had it. */
+  if(introStage === 1) return out;
   s = sceneNow();
   list = (s && s.sc && s.sc.topics) || [];
   if(!list.length) return out;
@@ -23094,6 +23102,19 @@ function selfTest(){
         /* and the legacy path is untouched: with the flag down the DM writes its two */
         barBoard(at); V5SCENE = false;
         if(sceneRails(2).length) rwBad.push("the deck crowded out the DM on the legacy path");
+        /* ...and the cold open is not a room (v4.71.1). The intro's authored row is
+           one gold choice and any press there serves the hardcoded reveal, so a deck
+           rail dealt onto that screen is a question the turn cannot answer - the
+           shipped first screen did exactly that, with "Ask her - properly, skin on
+           the shard" offered on a run where nobody had yet said the shard is a her. */
+        barBoard(at); V5SCENE = true; introStage = 1;
+        if(sceneRails(2).length) rwBad.push("the deck dealt onto the cold open");
+        var introRow = railFor(["INTO THE RAIN"]);
+        if(introRow.length !== 1 || introRow[0] !== "INTO THE RAIN"){
+          rwBad.push("the intro row is not the one gold choice: " + introRow.join(" // "));
+        }
+        introStage = 0;
+        rwSaw.push("and the cold open keeps its one gold choice - the deck waits for the reveal");
       } finally { barPut(k); }
     })();
     T("the row is dealt from the deck, and a spent card retires from it",
