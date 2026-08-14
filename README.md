@@ -499,7 +499,7 @@ Two promises, enforced by the game rather than asked of the storyteller:
   visible, but only your hand opens it.
 - **Two channels, one bar.** Typing into the gold bar and pressing Enter is the
   courier acting — it costs a turn and the world answers. The MUDSKIPPER MOMENT
-  button (or a  in front of anything) is the other channel: the bit, the joke,
+  button (or a `!` in front of anything) is the other channel: the bit, the joke,
   the wild swing — free, safe, and sacred.
 - **Your bits cannot be spent.** A mudskipper moment lands as a bit: the family plays
   along or plays the straight man, and nobody diagnoses you. Mechanically it is
