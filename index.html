@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.57.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.58.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -2075,6 +2075,21 @@ var SPINE = [
   deathScene:["The fourth rung finishes its sentence. It goes without drama - rust does not gloat - and the shaft hands you to the water the way the city hands anything to anything: efficiently, and without looking up from its paperwork.",
               ["Pia","NO - grab the - "],
               "The channel is faster than her voice. The last thing the night files is a small hand reaching down into the dark, and the hum against your ribs going with you, still trying to be brave about it."],
+  /* BOTH SURVIVALS GET PROSE, not just canon. The card rendered DEATH in full and
+     resolved clear and graze on a canon line each - so when the engine lands, the two
+     endings a player actually reaches would have rendered as template at the exact
+     emotional peak where template is least survivable: the moment Pia hauls a courier
+     out of a shaft by the collar. Per card, not per stage: they are written to the
+     THREAT, and the door text already carried the specific action.
+     The clear bookends stage one's arming line - the hum that climbed half a note
+     settles half a note - and the graze is written to be honest in BOTH readings,
+     chosen or stall-forced, because the graze IS the family moving when you did not. */
+  clearScene:["You climb back up into the ordinary night like an apology. The stairs take four times as long and cost nothing, which is a rate you are learning to respect.",
+   ["Pia","Stairs. Revolutionary technology. You walk on them, and then you are somewhere else, and nobody files you under anything."],
+   "Against your ribs the hum settles a half-note down - a passenger unclenching - and the market noise comes back overhead like the city letting a breath go."],
+  grazeScene:["You do not decide. That is the thing the shaft will keep about you. Pia decides - both hands in your collar, one knee against the rail, and a strength that has no business living in somebody that size.",
+   ["Pia","Up. UP. You absolute - I have you. I have you. We are having a conversation about this later, and you WILL be attending."],
+   "The channel takes your boot on the way out - not from malice, just policy - and you sit on the wet iron a minute, breathing, all three of you, if the hum counts, which in this family it does."],
   grazeCanon:"The channel kept his boot as a receipt.",
   surviveCanon:"The courier put two rungs between himself and a flooded shaft before the family talked sense."},
  stone:"The courier lost the option of walking away.",
@@ -5583,7 +5598,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.57.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.58.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7920,6 +7935,20 @@ var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
    (Slack cards keep flat string rails. The sealed room is click-only end to end, so
    strings are the honest shape there. The divergence is legible: WHERE YOU SEE
    OBJECTS, TYPING IS LIVE.)
+
+   BOTH SURVIVALS RENDER. clearScene and grazeScene are per CARD, written to the threat;
+   the door text already carried the specific action. A card that resolves its two
+   reachable endings on canon lines alone would render template at the peak, which is
+   where template is least survivable. Ritual check 8 requires both, non-empty.
+   AND THE ATTEMPT IS SILENT ON THE WIRE, open to resolution, no exceptions: the exit
+   press short-circuits client-side BEFORE any request goes out - the client knows pick
+   and the flag at press time, and said collapses to false by construction because no
+   reply exists to land a gate - and a typed bit inside an attempt is answered from
+   BIT_FALLBACK, client-side. The matrix keeps its said=true/pick=exit cell as pure
+   truth; the live loop simply never reaches it from the press path. That is what makes
+   "forcing never meets an open attempt" an inspection rather than a claim.
+   The tempted-once ask-state rides in the save beside stage and stalls: refresh must
+   not un-ask the tempting door.
 
    THE RUNTIME IS NOT BUILT YET. This release lands the shape, the normative card and
    the guard rails; TEETH_LIVE is the one switch that turns the substitution law on, and
@@ -17993,11 +18022,13 @@ function stPassages(){
       out.push({id:b.id + "/teeth[" + si + "]", beat:i, passage:{},
                 scene:sc, canon:[], choices:(st.rail || []).map(function(r){ return r && r.text; })});
     });
-    var dsc = asScene(t.deathScene);
-    if(dsc.length){
-      out.push({id:b.id + "/teeth[death]", beat:i, passage:{},
-                scene:dsc, canon:(t.death ? [t.death] : []), choices:[]});
-    }
+    [["death", t.deathScene, t.death], ["clear", t.clearScene, t.surviveCanon],
+     ["graze", t.grazeScene, t.grazeCanon]].forEach(function(pair){
+      var sc = asScene(pair[1]);
+      if(!sc.length) return;
+      out.push({id:b.id + "/teeth[" + pair[0] + "]", beat:i, passage:{},
+                scene:sc, canon:(pair[2] ? [pair[2]] : []), choices:[]});
+    });
   });
   SPINE.forEach(function(b, i){
     ["opens", "lands", "landsHard"].forEach(function(k){
@@ -18097,8 +18128,10 @@ function stCorpus(){
       });
       (st.rail || []).forEach(function(r, ri){ add(b.id + "/teeth" + si + "/r" + ri, r && r.text); });
     });
-    (t.deathScene || []).forEach(function(l, li){
-      add(b.id + "/teeth/d" + li, typeof l === "string" ? l : (l && l[1]));
+    [["d", t.deathScene], ["c", t.clearScene], ["g", t.grazeScene]].forEach(function(pair){
+      (pair[1] || []).forEach(function(l, li){
+        add(b.id + "/teeth/" + pair[0] + li, typeof l === "string" ? l : (l && l[1]));
+      });
     });
     add(b.id + "/teeth/death", t.death);
     add(b.id + "/teeth/graze", t.grazeCanon);
