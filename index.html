@@ -7926,7 +7926,6 @@ var tableTalkUsed = [];      /* ids already dealt this run - saved with it */
    it is off. Nothing reads `teeth` at runtime. See the brief for why the engine gets a
    session of its own rather than the tail of this one. */
 var TEETH_LIVE = false;      /* the engine is not here yet; this is its only switch */
-var TEETH_PATIENCE = 2;      /* the strip's own two-turn patience, and the same number */
 /* ---- THE BIT FALLBACK ----
    Phase A's template. A bit is a RESPONSE - the player typed something daft or deep
    and the family answers it - so the fallback cannot be ambient chatter; the table-talk
@@ -18936,7 +18935,8 @@ function selfTest(){
       (BOOKINGS.length + GAUNTLET.length + BOOKINGS.filter(function(r){ return r[3] !== "door"; }).length)
       + " corners across both flag states"
       + (bookBad.length ? " - WRONG: " + bookBad.map(function(r){
-          return r[4] + " (got " + bookFor(r[0], r[1], r[2]) + ", wanted " + r[3] + ")"; }).join("; ")
+          return r[4] + " (off/on: " + bookFor(r[0], r[1], r[2], false) + "/"
+                 + bookFor(r[0], r[1], r[2], true) + ", wanted " + r[3] + ")"; }).join("; ")
         : " \u00b7 the door stays free on a forcing turn by doctrine, and on a gauntlet beat it"
           + " opens the attempt instead of closing - the click still books nothing either way"),
       {label:"the v4.51.0 routing, where a refused door on a forced turn booked clean",
@@ -18948,7 +18948,7 @@ function selfTest(){
            if(!said && !forcing) return "open";
            return ((!said || forcing) && pick !== "exit") ? "world" : "clean";
          }
-         return old(w.said, w.forcing, w.pick) === bookFor(w.said, w.forcing, w.pick);
+         return old(w.said, w.forcing, w.pick) === bookFor(w.said, w.forcing, w.pick, false);
        }});
 
     /* ...and the order-givers carry the state that makes the order legal.
@@ -19274,7 +19274,7 @@ function selfTest(){
             LANDED under a forcing order, at the toll ceiling. The old rule returned
             before closeBeat on any world's move; the new one only on an UNANSWERED
             night. If they agree here this case proves nothing. */
-         var worldsMove = bookFor(w.said, w.forcing, w.pick) === "world";
+         var worldsMove = bookFor(w.said, w.forcing, w.pick, false) === "world";
          var oldSwallows = worldsMove;
          var nowSwallows = worldsMove && !w.said;
          return oldSwallows === nowSwallows;
