@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.58.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.59.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5598,7 +5598,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.58.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.59.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -8067,7 +8067,7 @@ var BIT_CAP_ROOM = 160;
 var BIT_AIMS = [
  "answers what he actually said, head-on and in voice - play along, shut it down, or offer a diagnosis nobody asked for, but ENGAGE with the line he typed. Do not ignore it and do not improve it.",
  "answers the FIRST speaker, not the courier - the family talking across him is the whole reason he does bits",
- "one line: the room absorbing it and carrying on. No new fact, nobody arrives, nothing outside this room happens, and the weather is not a metaphor."
+ "one line: the room absorbing it and carrying on. No new fact, nobody arrives, nothing outside this room happens, and the weather is not a metaphor. NOBODY SPEAKS in it - the voices above are the only ones this turn has, and narrating a line for anybody else puts words in a mouth that is not open."
 ];
 function bitSlots(){
   var v = bitVoices(), out = [], i;
@@ -8083,11 +8083,28 @@ function bitNamesAllowed(slots){
   function add(x){ x = String(x || "").trim(); if(!x || seen[x]) return; seen[x] = 1; out.push(x); }
   (slots || []).forEach(function(sl){ if(sl.who !== "Narration") add(sl.who); });
   metNames().forEach(add);
+  /* he is in every one of these lines and the ask never named him, so the model
+     spelled him off its own memory of the bible: two live fills came back with
+     "theCourier", no space, which is what a model does with a name it has only
+     ever seen shouted in a heading. */
+  add("the courier");
   return out;
 }
 function bitSkeleton(text){
   var slots = bitSlots(), ex = [], m = "", i;
-  for(i = 0; i < slots.length; i++) ex.push("\"" + slots[i].who + "'s line\"");
+  /* THE WORKED EXAMPLE MUST NOT READ LIKE A LINE. It used to say "Nine's line",
+     which is a plausible sentence, and on the eleventh live bit of twelve the qwen
+     simply sent the example back - three placeholders, under three real nameplates,
+     onto a player's screen. It parsed clean and passed every check, because by
+     every property the lint measures a placeholder that reads like a line IS one.
+     Angle brackets are the marker: no line of this family's dialogue has ever
+     contained one, so the scaffolding is legible as scaffolding to the model and
+     refusable by name to the lint. The slot carries what was actually printed for
+     it, so the refusal is an identity check rather than a guess at a pattern. */
+  for(i = 0; i < slots.length; i++){
+    slots[i].eg = "<line for " + slots[i].who + ">";
+    ex.push("\"" + slots[i].eg + "\"");
+  }
   m += "A BIT. The player typed one off-script line. This turn is DIALOGUE SLOTS and nothing"
      + " else: fill them, in order, and send nothing but the fills.\n\n";
   m += "WHAT HE SAID: " + String(text || "").trim() + "\n\n";
@@ -8098,9 +8115,11 @@ function bitSkeleton(text){
   }
   m += "\nTHE ONLY NAMES: " + bitNamesAllowed(slots).join(", ")
      + ". Nobody else exists this turn, in any form.\n";
-  m += "REGISTER: this family is funny under pressure and never cruel to him. No stage"
-     + " directions, no asterisks, and no speaker labels inside the text - the slot already"
-     + " says who is talking.\n\n";
+  m += "REGISTER: this family is funny under pressure and never cruel to him. Write ONLY"
+     + " what they say. No quotation marks around it, no \"she says\", no describing their"
+     + " voice or their face, no asterisks and no name in front of the line - the slot"
+     + " already carries the name and the game prints it as speech. A fill is the words"
+     + " out of their mouth and nothing else.\n\n";
   m += "ANSWER WITH EXACTLY THIS AND NOTHING ELSE:\n{\"fills\": [" + ex.join(", ") + "]}\n\n";
   /* said out loud, because a model that has just read the scene contract in the
      BIBLE will otherwise send one. The reason matters more than the rule: there is
@@ -8208,6 +8227,7 @@ function bitBlocks(slots, fills){
   bitPoolServed = [];
   for(i = 0; i < slots.length; i++){
     fill = fills ? fills[i] : null;
+    if(typeof fill === "string") fill = bitClean(fill);
     why = (typeof fill !== "string") ? "noreply" : bitLint(slots[i], fill, allow);
     if(!why){ out.push({speaker:slots[i].who, text:fill}); continue; }
     fb = bitFallbackFor("slot" + i + "|" + why, took, slots[i].who);
@@ -8217,9 +8237,44 @@ function bitBlocks(slots, fills){
   }
   return out;
 }
+/* THE FILL IS ALREADY SPEECH. It renders under a nameplate, so a model that wraps
+   its line in quotation marks - which three of twelve live bits did, two in double
+   and one in single - puts them on screen inside a block that already implied them.
+   That is a dressing fault and not a bad line: failing it to the pool would throw
+   away good writing over punctuation. showScene strips markdown, backticks and a
+   leading stray full stop for the same reason and at the same depth. */
+function bitClean(fill){
+  var t = String(fill == null ? "" : fill).replace(/^\s+|\s+$/g, ""), m;
+  function tidy(x){ return String(x).replace(/^\s+|\s+$/g, "").replace(/,$/, "."); }
+  /* AN APOSTROPHE IS NOT A QUOTATION MARK. The first cut refused to strip any line
+     whose interior held a mark of any kind, which is most English - "Nine's not some
+     file you can back up" kept its wrapping quotes for the sake of one apostrophe.
+     The two families are separated: double marks are checked against double marks. */
+  m = /^["\u201c]([^"\u201c\u201d]+)["\u201d]$/.exec(t);
+  if(m) return tidy(m[1]);
+  /* ...and single marks only where nothing inside could BE an apostrophe, because
+     there is no way to tell the two apart and a wrong guess eats a letter */
+  m = /^['\u2018]([^'\u2018\u2019]+)['\u2019]$/.exec(t);
+  if(m) return tidy(m[1]);
+  /* THE ATTRIBUTION TAIL, which is the bigger half of this. A model handed a slot
+     that already names its speaker still writes: "...," Nine's voice carries a smile
+     but there is no mistaking her protective edge. The quote is the line; the tail is
+     the model doing the nameplate's job a second time, in prose, inside the block the
+     nameplate is already printed on. Four of twelve live fills did it in one pass.
+     Failing them to the pool would be the wrong trade - the LINE is good, and the
+     pool would throw away the model's best writing over its formatting. */
+  m = /^["\u201c]([^"\u201c\u201d]{4,})["\u201d]\s*[,.;:]?\s*\S[^"\u201c\u201d]*$/.exec(t);
+  if(m) return tidy(m[1]);
+  return t;
+}
 function bitLint(slot, fill, allowed){
   if(!slot || !bitAudible(slot.who)) return "speaker";
   if(typeof fill !== "string" || !/\w/.test(fill) || fill.length > slot.cap) return "length";
+  /* ...and the ask's own scaffolding is not an answer to the ask. Identity first,
+     shape second: the first refuses exactly what was printed, the second refuses
+     anything else wearing the marker. */
+  if(slot.eg && fill === slot.eg) return "echo";
+  if(/^<[^<>]*>$/.test(fill)) return "echo";
   var ok = {}, i;
   (allowed || []).forEach(function(x){ ok[x] = 1; });
   var hay = " " + fill.replace(/\s+/g, " ") + " ", un = unmetCast();
@@ -18751,7 +18806,8 @@ function selfTest(){
        amber - the harness would be saying "unproved" about code it simply had not
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
-    "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow"];
+    "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow",
+    "bitClean"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19503,7 +19559,13 @@ function selfTest(){
     });
     if(skH.msgs.length !== 1) skBad.push("the skeleton composed " + skH.msgs.length + " messages");
     if(skH.slots[skH.slots.length - 1].who !== "Narration") skBad.push("the room does not get the last word");
-    var skEx = (skH.msgs[0].content.match(/'s line"/g) || []).length;
+    /* counted off the slot's OWN placeholder rather than off a shape written down
+       twice - the first cut matched a literal that stopped existing the day the
+       example changed, and the row went red for the change rather than for a fault. */
+    var skEx = 0;
+    skH.slots.forEach(function(sl){
+      if(sl.eg && skH.msgs[0].content.indexOf("\"" + sl.eg + "\"") !== -1) skEx++;
+    });
     if(skEx !== skH.slots.length) skBad.push("the worked example shows " + skEx + " fills for " + skH.slots.length + " slots");
     T("a bit turn asks for dialogue and nothing else",
       skBad.length === 0 && skKeys.length === 1 && skKeys[0] === "fills",
@@ -19722,6 +19784,116 @@ function selfTest(){
            theirs = w(true, false);
          } finally { V5MODE = kv; lastTurnMud = km; }
          return mine === false && theirs === false;
+       }});
+
+    /* Rung 6. DORMANCY, ASSERTED RATHER THAN ASSUMED. TEETH_LIVE set the standard
+       two releases ago and it is the right one: a switch that is off has to be
+       PROVABLY off, or "dark" is only a variable nobody happened to read this week.
+       Two claims. The flag is down in the shipped file - which is the one thing a
+       reviewer cannot check by reading the sweep, because the sweep is what would
+       flip it. And with the flag down every predicate Phase A put its hands on
+       answers exactly what it answered before Phase A existed, across the whole
+       truth table rather than on the one row somebody thought to try. */
+    var dormBad = [];
+    if(V5MODE !== false) dormBad.push("V5MODE ships ON");
+    (function(){
+      var km = lastTurnMud;
+      try{
+        lastTurnMud = true;
+        if(atHum(function(){ return bitSkeletonNow(); })) dormBad.push("the skeleton claims a bit with the flag down");
+        [[true, true], [true, false], [false, true], [false, false]].forEach(function(c){
+          var before = !!(c[0] || !c[1]);
+          if(atHum(function(){ return breachScanned(c[0], c[1]); }) !== before){
+            dormBad.push("breachScanned(" + c[0] + ", " + c[1] + ") moved");
+          }
+        });
+      } finally { lastTurnMud = km; }
+    })();
+    /* WHAT THE LIVE PASS FOUND. Both of these are defects in the ask rather than in
+       the model, and neither was reachable from a fixture: one needs a model lazy
+       enough to copy, the other a model polite enough to punctuate. */
+    var echoBad = [], quoteBad = [];
+    atHum(function(){
+      shardWhere = "hand";
+      lastPlayerText = "Do you think the rain knows it is raining?";
+      var sk = bitSkeleton(lastPlayerText);
+      /* the exact bytes the ask printed, handed straight back */
+      var echoed = bitBlocks(sk.slots, sk.slots.map(function(sl){ return sl.eg; }));
+      if(bitPoolServed.length !== sk.slots.length){
+        echoBad.push("the ask's own example survived " + (sk.slots.length - bitPoolServed.length) + " slot(s)");
+      }
+      echoed.forEach(function(b, i){
+        if(b.text === sk.slots[i].eg) echoBad.push("slot " + i + " rendered the placeholder");
+      });
+      /* ...and one that merely wore the marker without being the printed one */
+      if(bitLint(sk.slots[0], "<something else entirely>", []) !== "echo"){
+        echoBad.push("a fill wearing the marker was taken as a line");
+      }
+      var dressed = bitBlocks(sk.slots, ["\u201cMayor of a puddle. I am filing that.\u201d",
+                                         "'And I am seconding it.'",
+                                         "The room lets it go. Pia says \u201cno\u201d twice on the way past."]);
+      if(dressed[0].text.charAt(0) === "\u201c") quoteBad.push("a double-quoted line kept its marks");
+      if(dressed[1].text.charAt(0) === "'") quoteBad.push("a single-quoted line kept its marks");
+      if(dressed[2].text.indexOf("\u201cno\u201d") === -1) quoteBad.push("a line quoting somebody else lost its marks");
+      if(bitPoolServed.length) quoteBad.push("dressing a line cost it its slot");
+      /* the two the live pass sent back, verbatim in shape */
+      var real = bitBlocks(sk.slots,
+        ["\u201cMayor of the puddle, huh? Mandatory hats sounds like the most critical policy we have got,\u201d Nine\u2019s voice carries a smile but there is no mistaking her protective edge.",
+         "\u201cThe cloud? Paris? You have been watching too many old flicks. Nine\u2019s not some file you can back up.\u201d",
+         "The room lets it go."]);
+      if(real[0].text.indexOf("voice carries a smile") !== -1) quoteBad.push("the attribution tail reached the screen");
+      if(real[0].text.charAt(0) === "\u201c") quoteBad.push("the quoted line kept its marks");
+      if(real[1].text.charAt(0) === "\u201c") quoteBad.push("one apostrophe was enough to keep the wrapping quotes");
+      if(real[1].text.indexOf("Nine\u2019s not some file") === -1) quoteBad.push("the apostrophe line lost its content");
+      if(bitPoolServed.length) quoteBad.push("a dressed line cost its slot on the live shapes");
+      return null;
+    });
+    T("the ask's own worked example is not an answer to it",
+      echoBad.length === 0,
+      echoBad.length ? echoBad.join("; ")
+        : "every printed placeholder handed back is refused by identity, and the marker by shape"
+        + " · found live: bit 11 of 12 returned the example verbatim and passed all four checks",
+      {label:"the four checks alone, against a placeholder that reads like a line",
+       was:function(slot, fill, allowed){
+         if(!slot || !bitAudible(slot.who)) return "speaker";
+         if(typeof fill !== "string" || !/\w/.test(fill) || fill.length > slot.cap) return "length";
+         var ok = {}, i;
+         (allowed || []).forEach(function(x){ ok[x] = 1; });
+         var hay = " " + fill.replace(/\s+/g, " ") + " ", un = unmetCast();
+         for(i = 0; i < un.length; i++){ if(!ok[un[i]] && namedUse(un[i], hay)) return "name"; }
+         if(revealLeak({scene:[{speaker:slot.who, text:fill}]}).length) return "era";
+         return "";
+       },
+       /* the shipped placeholder, judged by the shipped checks: audible, non-empty,
+          under the cap, nobody unmet, nothing revealed - clean, and meaningless */
+       check:function(w){
+         return atHum(function(){
+           shardWhere = "hand";
+           var sl = bitSlots();
+           return w(sl[0], "Nine's line", bitNamesAllowed(sl)) !== "";
+         });
+       }});
+    T("a line in a speech block does not also wear quotes",
+      quoteBad.length === 0,
+      quoteBad.length ? quoteBad.join("; ")
+        : "wrapping marks come off, an inner quotation keeps its own, and neither costs the slot",
+      {label:"the fill rendered as it arrived, the way the first cut did",
+       was:function(x){ return String(x); },
+       check:function(w){ return w("\u201cheard\u201d") === bitClean("\u201cheard\u201d"); }});
+
+    T("the switch is down, and with it down nothing moved",
+      dormBad.length === 0,
+      dormBad.length ? dormBad.join("; ")
+        : "V5MODE off · bitSkeletonNow false on a bit · breachScanned unchanged on all four rows",
+      {label:"the flag shipped on - which is how a switch nobody re-read before pushing gets left",
+       was:true,
+       check:function(w){
+         var kv = V5MODE, km = lastTurnMud, out;
+         try{
+           V5MODE = w; lastTurnMud = true;
+           out = atHum(function(){ return bitSkeletonNow(); });
+         } finally { V5MODE = kv; lastTurnMud = km; }
+         return out === false;
        }});
 
     /* ================== THE DEGENERATE RUN ==================

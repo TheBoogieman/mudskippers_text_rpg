@@ -307,9 +307,9 @@ with him and what is broken stays broken.
 
 Keeping twenty detectors honest needs a test bigger than reading them. There is
 one, and it is free: **the game's own authored prose is legal by definition.** Open
-**index.html?selftest** and every one of the 101 written passages is replayed past
+**index.html?selftest** and every one of the 106 written passages is replayed past
 the desk at its own beat, in the state the game would actually be in, on all three
-sides of the chassis fork — 3,287 live law evaluations. A single hit is a bug in a
+sides of the chassis fork — 3,428 live law evaluations. A single hit is a bug in a
 rule. Then the grid runs backwards: nine scenes that plainly break a law, each of
 which must be caught *by the law it was written for*. The page also declares what
 it does **not** cover — six of the twenty laws have a case that proves them, and
@@ -321,13 +321,13 @@ flattering itself. A case may declare the **broken form** it was written against
 old regex, the pre-fix rule — and the sweep re-runs the same assertion against it and
 requires it to *fail*; a case that passes against the bug it claims to catch is not a
 case, and goes red. Credit for that is *observed*, not read: the check is only counted
-as proof if it actually entered game code, which is why the header says "5 PROVED of
-22" rather than a green twenty-two. The other seventeen are amber — real assertions,
+as proof if it actually entered game code, which is why the header says "16 PROVED of
+34" rather than a green thirty-four. The other eighteen are amber — real assertions,
 no proof they would have caught their own defect — and amber is counted apart from
 pass so the headline cannot launder debt as success.
 
 And every detector declares what it must **not** change. All nine predicates are run
-over all 2,071 authored lines and the exact set of lines each one fires on is checked
+over all 2,154 authored lines and the exact set of lines each one fires on is checked
 in as a fixture; a change to any predicate shows up as a diff, and a flip on a line
 nobody listed is red. It catches the two regressions of that shape this codebase has
 actually shipped, and misses a third, and the page says which.
@@ -522,6 +522,18 @@ Two promises, enforced by the game rather than asked of the storyteller:
   immune — a gate cannot ride it, the rain neither ticks nor forgives on it, and no
   amount of goofing can be converted into the scene's sincerity. Sincerity arrives
   when you type it, and not one turn before.
+- **And under the hood, a bit is becoming a different kind of turn entirely.**
+  Everything above is currently enforced by the client stripping a world change back
+  out of the reply after the fact. There is now a second path — dark by default,
+  behind one switch — where a bit does not send the storyteller a scene brief at all.
+  It sends a **skeleton**: two or three dialogue slots, each naming its speaker, what
+  that speaker is doing with your line, and how long the line may be. The model
+  answers with strings, one per slot, and nothing else. There is no location field to
+  move the room, no day to skip, no canon to write and no gate to land — not because
+  the model is forbidden them, but because the ask has no such field in it. A fill
+  that fails its own lint costs its own slot and nothing more, answered instead from
+  nine written house lines that are presence-gated to the room. A bit has stopped
+  needing to be *caught* rewriting the world and has become unable to say one.
 
 The **LEDGER** panel and the courier's terminal both show the board: which beat you
 are on, which arc, how many turns it has left, and how far along the season you are.
