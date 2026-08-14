@@ -236,10 +236,19 @@ So the middle is written down too, and it is sent as **data rather than prose**:
 The sealed room after each beat gets its own table, on the same rules — which is the
 part of the night that is *entirely* conversation, and so was entirely drift.
 
-Written for all thirty-three nights and every room after them: **250 cards.** A
+Written for all thirty-three nights and every room after them: **251 cards.** A
 night with no entry behaves exactly as it did before — the prose block, and the
 storyteller's judgment. The Writers' Board shows both on the same page, so what has
 been written and what has not sit next to each other.
+
+And since v4.64.0 every one of those cards carries its own **rail and its own scene.**
+A card's topic was always a *subject* — "what happened to Mirren" — which is a thing
+the night is about and not a thing a courier can say, so the deterministic build had
+nothing to put on the button. Now each card holds the line in the courier's own voice,
+and behind it four to six authored blocks: narration, the family answering, somebody
+refusing well. **1,145 blocks across 251 cards, 768 of them spoken aloud.** The model
+is not needed to write the middle of a night any more. It is needed to paint between
+the turns — which is the job it is actually good at.
 
 ## The physics desk — the body of the world
 
@@ -579,6 +588,18 @@ is told to write the turn again, and if it insists, the death is dropped and you
 
 Mudskipper moments are still safe. Being wild is not fatal; knowingly walking into
 the thing that was just named as lethal is.
+
+And the worst nights no longer ask the model at all. Some perils are **authored** —
+the cordon's last gap, a flooded market floor, the last forty metres of a cable that
+goes down further than anybody has been. When one opens, the night stops being a
+conversation and becomes a short, lethal, entirely local thing: the threat named in
+its own prose, three doors, and a clock that **does not tick.** Nothing inside an
+authored peril reaches the wire, which is not a promise — it is why the beat cannot
+age while you are holding your breath. One of the three doors is always the one your
+eyes like, it never carries a keyword so no typed sentence can ever take it by
+accident, and it asks you twice, and the second ask survives a reload. Refuse to
+engage twice and the family moves you: you come out of it alive, marked, and not by
+your own hand.
 
 ### Pressure you can see
 
