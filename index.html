@@ -7977,16 +7977,22 @@ var BIT_FALLBACK = [
 ];
 /* who may answer a bit right now: in the room, not fallen, and audible. Narration is
    always available, which is what stops this ever returning nothing. */
+/* ONE DOOR, NOT TWO ROSTERS. This gate used to live inline here, and Phase A needs
+   the identical answer when it builds the slots: a lint that refuses a name the
+   pool would happily serve is two subsystems keeping two ideas of who is in the
+   room, which is this project's oldest defect shape wearing a new hat. */
+function bitAudible(nm){
+  if(nm === "Narration") return true;      /* always available; this is what stops it returning nothing */
+  if(isFallen(nm)) return false;
+  /* she is heard through skin, not through cloth - a bit reaches her or it does not */
+  if(nm === "Nine") return !(nineIsShard() && shardWhere !== "hand");
+  var s = sceneNow(), here = (s && s.sc && s.sc.here) || [];
+  return here.indexOf(nm) !== -1;
+}
 function bitFallbackFor(){
-  var s = sceneNow(), here = (s && s.sc && s.sc.here) || [], live = [];
+  var live = [];
   for(var i = 0; i < BIT_FALLBACK.length; i++){
-    var e = BIT_FALLBACK[i], nm = e.who;
-    if(nm === "Narration"){ live.push(e); continue; }
-    if(isFallen(nm)) continue;
-    /* she is heard through skin, not through cloth - a bit reaches her or it does not */
-    if(nm === "Nine"){ if(nineIsShard() && shardWhere !== "hand") continue; }
-    else if(here.indexOf(nm) === -1) continue;
-    live.push(e);
+    if(bitAudible(BIT_FALLBACK[i].who)) live.push(BIT_FALLBACK[i]);
   }
   if(!live.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
   /* keyed on the bit itself, not the clock: bits tick nothing, so beatTurns would
@@ -7994,6 +8000,96 @@ function bitFallbackFor(){
   return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id)
                      + "|" + String(lastPlayerText || "").length
                      + "|" + String(lastPlayerText || "").slice(0, 12));
+}
+
+/* ==================== PHASE A: THE SKELETON ====================
+   A bit is the one turn in this game where the world is guaranteed not to move -
+   and for five waves it was still handed the entire apparatus: the memory briefing,
+   the board directive, the scene contract, and every field the reply format allows.
+   Every one of those fields is a way to move something, and most of the fences in
+   this file exist because one of them did. The dry-path brief, the hold, the two
+   breach classifiers, the strip and the count are five layers of CATCHING a world
+   change on a turn that had no business being able to express one.
+   So it stops being caught and starts being impossible. Under V5MODE a bit composes
+   a SKELETON: dialogue slots and nothing else. Each slot names its speaker, what
+   that speaker is doing with the line, and how long the line may be. The model
+   answers {"fills":["...", ...]} - strings, one per slot, in order. There is no
+   location field to move the room, no day to skip, no canon to write, no gate to
+   land, no death to declare, because there is no field. The breach apparatus does
+   not get a better fence here; it gets nothing left to guard.
+   V5MODE is false by the TEETH_LIVE standard: built, proved, and dark. */
+var V5MODE = false;          /* the skeleton is built; this is its only switch */
+/* who answers, in order. She goes first whenever she can be heard at all: a bit
+   said with bare skin on the shard is said TO her, and answering him is the only
+   thing she can still do. Two voices and the room - three fills is a bit; six is a
+   scene, and a scene is the one thing this turn is guaranteed not to be. */
+var BIT_VOICE_CAP = 2;
+function bitVoices(){
+  var sc = sceneNow(), here = (sc && sc.sc && sc.sc.here) || [], out = [], i, nm;
+  if(bitAudible("Nine")) out.push("Nine");
+  for(i = 0; i < here.length && out.length < BIT_VOICE_CAP; i++){
+    nm = here[i];
+    if(nm === "Narration" || isCourier(nm) || out.indexOf(nm) !== -1) continue;
+    if(bitAudible(nm)) out.push(nm);
+  }
+  return out.slice(0, BIT_VOICE_CAP);
+}
+/* one spoken answer, not a paragraph; and the room gets less than the people do */
+var BIT_CAP_VOICE = 200;
+var BIT_CAP_ROOM = 160;
+var BIT_AIMS = [
+ "answers what he actually said, head-on and in voice - play along, shut it down, or offer a diagnosis nobody asked for, but ENGAGE with the line he typed. Do not ignore it and do not improve it.",
+ "answers the FIRST speaker, not the courier - the family talking across him is the whole reason he does bits",
+ "one line: the room absorbing it and carrying on. No new fact, nobody arrives, nothing outside this room happens, and the weather is not a metaphor."
+];
+function bitSlots(){
+  var v = bitVoices(), out = [], i;
+  for(i = 0; i < v.length; i++) out.push({who:v[i], aim:BIT_AIMS[i < 1 ? 0 : 1], cap:BIT_CAP_VOICE});
+  out.push({who:"Narration", aim:BIT_AIMS[2], cap:BIT_CAP_ROOM});
+  return out;
+}
+/* THE ALLOWLIST GOES OUT WITH THE ASK, not just in on the way back. A fence the
+   model never saw is a fence it can only ever be punished by - and the lint that
+   reads the fills is the exact complement of this list, so they cannot drift. */
+function bitNamesAllowed(slots){
+  var out = [], seen = {};
+  function add(x){ x = String(x || "").trim(); if(!x || seen[x]) return; seen[x] = 1; out.push(x); }
+  (slots || []).forEach(function(sl){ if(sl.who !== "Narration") add(sl.who); });
+  metNames().forEach(add);
+  return out;
+}
+function bitSkeleton(text){
+  var slots = bitSlots(), ex = [], m = "", i;
+  for(i = 0; i < slots.length; i++) ex.push("\"" + slots[i].who + "'s line\"");
+  m += "A BIT. The player typed one off-script line. This turn is DIALOGUE SLOTS and nothing"
+     + " else: fill them, in order, and send nothing but the fills.\n\n";
+  m += "WHAT HE SAID: " + String(text || "").trim() + "\n\n";
+  m += "THE SLOTS:\n";
+  for(i = 0; i < slots.length; i++){
+    m += (i + 1) + ". " + slots[i].who + " \u2014 " + slots[i].aim
+       + " (" + slots[i].cap + " characters at the very most)\n";
+  }
+  m += "\nTHE ONLY NAMES: " + bitNamesAllowed(slots).join(", ")
+     + ". Nobody else exists this turn, in any form.\n";
+  m += "REGISTER: this family is funny under pressure and never cruel to him. No stage"
+     + " directions, no asterisks, and no speaker labels inside the text - the slot already"
+     + " says who is talking.\n\n";
+  m += "ANSWER WITH EXACTLY THIS AND NOTHING ELSE:\n{\"fills\": [" + ex.join(", ") + "]}\n\n";
+  /* said out loud, because a model that has just read the scene contract in the
+     BIBLE will otherwise send one. The reason matters more than the rule: there is
+     nowhere to put it, so sending it is not disobedience, it is waste. */
+  m += "The scene format in your instructions does not apply to this turn. There is no location"
+     + " field, no day, no time, no canon, no choices, no gate, no cast and no death - not"
+     + " because you are forbidden them, but because this turn has nowhere to put them."
+     + " Nothing moves: same room, same hour, same people, same everything. He said a thing"
+     + " and they answer it.";
+  return {slots:slots, msgs:[{role:"user", content:m}]};
+}
+/* the switch, and the turns it does not cover: the fold and the walk-back are the
+   world taking its own turn and they need the world. The intro bit never reaches
+   here at all - dmAside answers it before takeAction gets that far. */
+function bitSkeletonNow(){
+  return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
 
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
@@ -18448,7 +18544,12 @@ function selfTest(){
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
     "physicsCut", "physicsLayout", "physicsBreaks", "knownOf", "unmetCast", "isCountedPhrase",
     "closeBeat", "leakingBlocks", "fencedPlace", "lockedKeys", "dayPinNow", "beatDayPin",
-    "anchorsMissing", "deathRefused", "personPlace", "shardWhereAfter"];
+    "anchorsMissing", "deathRefused", "personPlace", "shardWhereAfter",
+    /* AND THE LIST GROWS WITH THE FILE. A credit rule whose roster stops at the
+       release that wrote it quietly demotes every subsystem built afterwards to
+       amber - the harness would be saying "unproved" about code it simply had not
+       been introduced to. Phase A's six. */
+    "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19143,6 +19244,74 @@ function selfTest(){
     /* the board covers the whole spine */
     var noBook = SPINE.filter(function(b){ return !SCENEBOOK[b.id]; }).map(function(b){ return b.id; });
     T("every beat has a scene contract", noBook.length === 0, noBook.join(", "));
+
+    /* ================== PHASE A: THE SKELETON ==================
+       The composer, judged on a fixture scene. a1-hum is the right fixture and not
+       an arbitrary one: it is the only beat in the game whose entire subject is
+       whether Nine can be heard, so its room is where the speaker law is loudest. */
+    function atHum(fn){
+      var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder,
+               fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText};
+      try{
+        beatIdx = beatById("a1-hum"); phase = "live"; chassisHolder = null;
+        foldPending = false; walkbackNow = false; runOver = "";
+        return fn();
+      } finally {
+        beatIdx = k.bi; phase = k.ph; shardWhere = k.sw; chassisHolder = k.ch;
+        foldPending = k.fp; walkbackNow = k.wb; runOver = k.ov; lastPlayerText = k.said;
+      }
+    }
+    function humVoices(sw){
+      return atHum(function(){ shardWhere = sw; return bitSlots().map(function(x){ return x.who; }); });
+    }
+    var skBad = [], skKeys = [], skH = atHum(function(){
+      shardWhere = "hand";
+      lastPlayerText = "I hereby declare myself mayor of this puddle.";
+      return bitSkeleton(lastPlayerText);
+    });
+    /* THE ASK IS THE PROOF, not the promise inside it. The skeleton's prose says it
+       carries no location and no canon - so does the dry-path brief, and that brief
+       needed a client-side hold behind it because a request is a request. What makes
+       this one structural is that the CONTRACT names exactly one field. Read the
+       JSON keys the ask offers and require the list to be one word long. */
+    var kre = /"([a-z_]+)"\s*:/gi, km;
+    while((km = kre.exec(skH.msgs[0].content)) !== null){
+      if(skKeys.indexOf(km[1]) === -1) skKeys.push(km[1]);
+    }
+    skH.slots.forEach(function(sl, i){
+      if(!sl.who) skBad.push("slot " + i + " names no speaker");
+      if(!sl.aim) skBad.push("slot " + i + " carries no directive");
+      if(!(sl.cap > 0)) skBad.push("slot " + i + " carries no cap");
+    });
+    if(skH.msgs.length !== 1) skBad.push("the skeleton composed " + skH.msgs.length + " messages");
+    if(skH.slots[skH.slots.length - 1].who !== "Narration") skBad.push("the room does not get the last word");
+    var skEx = (skH.msgs[0].content.match(/'s line"/g) || []).length;
+    if(skEx !== skH.slots.length) skBad.push("the worked example shows " + skEx + " fills for " + skH.slots.length + " slots");
+    T("a bit turn asks for dialogue and nothing else",
+      skBad.length === 0 && skKeys.length === 1 && skKeys[0] === "fills",
+      skBad.length ? skBad.join("; ")
+        : skH.slots.length + " slots · " + skH.msgs[0].content.length
+          + " chars · the only field the ask names is \"" + skKeys.join("\", \"") + "\"");
+
+    var vHand = humVoices("hand"), vCloth = humVoices("jacket");
+    T("she is a slot only while she can be heard",
+      vHand.indexOf("Nine") !== -1 && vCloth.indexOf("Nine") === -1,
+      "skin: " + vHand.join(" / ") + " · cloth: " + vCloth.join(" / "),
+      {label:"the room roster alone - which is what every other presence check in this file reads",
+       was:function(nm){
+         if(nm === "Narration") return true;
+         if(isFallen(nm)) return false;
+         var sc0 = sceneNow(), h0 = (sc0 && sc0.sc && sc0.sc.here) || [];
+         return h0.indexOf(nm) !== -1;
+       },
+       /* she is in a1-hum's here[] whether or not his hand is open, so the roster
+          check hands her a slot through the cloth and the case cannot pass */
+       check:function(w){
+         var real = window.bitAudible, out;
+         try{ window.bitAudible = w; out = humVoices("jacket"); }
+         finally { window.bitAudible = real; }
+         return out.indexOf("Nine") === -1;
+       }});
 
     /* ================== THE DEGENERATE RUN ==================
        Every brief since wave three has closed on the same open item: the paths a
