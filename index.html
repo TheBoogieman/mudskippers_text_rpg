@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.64.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.65.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -6279,10 +6279,12 @@ var SCENEBOOK = {
     who:"Nine",
     gives:"the grief at the bottom of it - a child lost, and a machine built so that nobody would be lost again",
     holds:"nothing",
-    rail:"Hand on the shard: ask her to say why they made her. She has heard the whole record.",
-    plays:[["Nine","They lost a child. It is in the second entry, said once, in the Architect's voice, and never said again - and every entry after it is ABOUT it anyway. The whole machine is the sentence they could not finish."],
+    rail:"Quietly, just for her: ask her to say why they made her. She has heard the whole record.",
+    plays:[{holder:"Seven", relay:true, text:"Her voice comes from the one room only you can hear, and you say it aloud for the family, word for word, the way you both have learned - being somebody's ear runs both directions now."},
+     {holder:"Nine", text:"She answers at your shoulder, at eye height these days, in a voice the whole room gets to keep."},
+     ["Nine","They lost a child. It is in the second entry, said once, in the Architect's voice, and never said again - and every entry after it is ABOUT it anyway. The whole machine is the sentence they could not finish."],
      ["Nine","They built her so that nobody would ever be lost again. That was the entire specification. Grief, written as an engineering requirement."],
-     "The hum under your palm is very careful, a child handling another child's story.",
+     "Her voice goes very careful - a child handling another child's story.",
      ["Nine","I know what it is to be made for a purpose and then be a person anyway. Whatever she is now - she started as somebody's second chance at holding on. I wanted that said by me and not by the paperwork."]]},
    {ask:"what they told her family means",
     key:"family means told instruction definition keeping what",
@@ -6525,8 +6527,10 @@ var SCENEBOOK = {
     who:"Nine",
     gives:"the courier's ear, and the specific thing she can do from inside his skull that nobody else can",
     holds:"she does not overstate it",
-    rail:"Hand on the shard: her job. In her own words.",
-    plays:[["Nine","I am the ear. Down there everything hums to everything, and I hear it raw - doors talking to doors, the machine's traffic in the walls. From inside your hand I can tell you what the corridor is saying before it says it to us."],
+    rail:"Ask Nine for her job. In her own words.",
+    plays:[{holder:"Seven", relay:true, text:"Her voice comes from the one room only you can hear, and you say it aloud for the family, word for word, the way you both have learned - being somebody's ear runs both directions now."},
+     {holder:"Nine", text:"She answers at your shoulder, at eye height these days, in a voice the whole room gets to keep."},
+     ["Nine","I am the ear. Down there everything hums to everything, and I hear it raw - doors talking to doors, the machine's traffic in the walls. From inside your hand I can tell you what the corridor is saying before it says it to us."],
      ["Nine","The specific thing only I can do: I know the intake registers from the inside. If the building starts filing us, I will hear the file open. That is early warning nobody else can give you."],
      "She states it exactly - no more than it is, no less.",
      ["Nine","I will not overstate: I am an ear, not a shield. But I am a very good ear, and I will be listening the entire way down. Nobody walks into anything unannounced while I have skin."]]},
@@ -6642,10 +6646,12 @@ var SCENEBOOK = {
     {ask:"what Nine hears", key:"nine hear sound know this listening",
      who:"Nine", gives:"that she knows this sound, and wants that on the record before anybody asks",
      holds:"she does not say from where",
-     rail:"Hand on the shard: what does she hear down here.",
-     plays:[["Nine","I know this sound. I want that on the record now, before anyone asks me anything else: the hum in these walls is the hum I am OF. I have been trying to find a politer way to say it for an hour. There is not one."],
+     rail:"Ask Nine what she hears down here.",
+     plays:[{holder:"Seven", relay:true, text:"Her voice comes from the one room only you can hear, and you say it aloud for the family, word for word, the way you both have learned - being somebody's ear runs both directions now."},
+      {holder:"Nine", text:"She answers at your shoulder, at eye height these days, in a voice the whole room gets to keep."},
+      ["Nine","I know this sound. I want that on the record now, before anyone asks me anything else: the hum in these walls is the hum I am OF. I have been trying to find a politer way to say it for an hour. There is not one."],
       ["Nine","It is like hearing your own accent in a stranger's house. Nobody has to tell you where you were made. The walls do it."],
-      "The hum under your palm and the hum in the iron are, faintly, unmistakably, in the same key.",
+      "Her hum and the hum in the iron are, faintly, unmistakably, in the same key.",
       ["Nine","From where, exactly - not tonight. Tonight just know your ear is FROM here, and is still yours, and is still listening for you and not for it. That last part is the part to keep."]]},
     {ask:"hands, rope, the cold", key:"hands rope cold grip ache tired climb",
      who:"Pia", gives:"a bit, badly, at the exact right moment",
@@ -6733,9 +6739,11 @@ var SCENEBOOK = {
     {ask:"the dark at the end of the aisle", key:"dark end aisle lights far quiet",
      who:"Nine", gives:"something quiet about being shelved, said once and not repeated",
      holds:"she does not make it about herself",
-     rail:"Hand on the shard, at the aisle's end: say what she is thinking.",
-     plays:[["Nine","I was on a shelf once. That is the sentence I have been holding since the drawers opened, and I am saying it once, and then we are done with it."],
-      ["Nine","Somebody carried me out. By hand. One at a time works - I am the proof of concept, walking around, being somebody's ear. Every rack in this dark is just... me, before my hand arrived."],
+     rail:"At the aisle's end, quietly: ask Nine to say what she is thinking.",
+     plays:[{holder:"Seven", relay:true, text:"Her voice comes from the one room only you can hear, and you say it aloud for the family, word for word, the way you both have learned - being somebody's ear runs both directions now."},
+      {holder:"Nine", text:"She answers at your shoulder, at eye height these days, in a voice the whole room gets to keep."},
+      ["Nine","I was on a shelf once. That is the sentence I have been holding since the drawers opened, and I am saying it once, and then we are done with it."],
+      ["Nine","Somebody carried me out. By hand. One at a time works - I am the proof of concept, still here, being somebody's ear. Every rack in this dark is just... me, before my hand arrived."],
       "Once, quietly, not repeated, and not made into anything larger than itself - a lantern set down at the end of the aisle rather than a speech.",
       ["Nine","That is all. Let's go back to the ones who are awake. The dark keeps. It has been keeping all along - that is the terrible, hopeful fact about it."]]}
    ]}
@@ -7206,7 +7214,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.64.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.65.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -12062,7 +12070,25 @@ var NUMBER_NAMES = {Three:1, Seven:1, Nine:1, Five:1};
    people\b straight through the full stop - so a name could be introduced
    sentence-finally and no fence saw it. The two authored enumerations that
    prompted the widening are handled by name, above, not by opening the fence. */
-var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|districts?\b|ways?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b)/i;
+/* v5.11: WIDENED BY THE TWENTY, AND BY NOTHING ELSE. Wave 2 put 1,145 authored blocks
+   into the corpus and twenty of them said a number where this fence heard a name -
+   measured, listed and handed to the desk before anything read them, which is the only
+   reason this widening is allowed to happen at all. Each token added is one those
+   twenty lines actually use in counting position: three WORDS, three SOURCES, three
+   ADJECTIVES, three SENTENCES, three COURSES, three LOCKS, three DIFFERENT sets, three
+   WORSE ones, Three HUNDRED metres, three OF VIC'S tools. No cousins and no synonyms -
+   the last widening of this fence was done to silence two lines and blinded the whole
+   summon classifier, and its ghost is still the broken form the fixture row runs.
+   NINETEEN OF THE TWENTY ARE IN HERE. The twentieth is not, and the corpus is the
+   reason. "five if it doesn't" counts hours with the noun left out, so the only token
+   in its counting position is "if" - and "if" also sits in "Ask Seven if she means
+   it", which is a rail addressing a man by name. One token, both jobs, and no window
+   of words can tell them apart; the real discriminator is that one is lowercase
+   mid-sentence and the other is a capitalised name, which is a different mechanism
+   than this one. Measured before it came back out: "if" silenced four genuine
+   name-uses to save one count. That is the trade the last widening made and got
+   condemned for. It stays out, and the twentieth line stays a finding. */
+var COUNTED = /^\s+(?:of\s+them\b|of\s+us\b|of\s+the\b|of\s+you\b|of\s+these\b|of\s+those\b|days?\b|nights?\b|hours?\b|minutes?\b|seconds?\b|weeks?\b|months?\b|years?\b|blocks?\b|streets?\b|districts?\b|ways?\b|floors?\b|flights?\b|times?\b|more\b|others?\b|people\b|bodies\b|men\b|women\b|kids?\b|shards?\b|Hollows?\b|things?\b|chairs?\b|seats?\b|doors?\b|steps?\b|paces?\b|feet\b|metres?\b|meters?\b|in\s+the\s+(?:morning|afternoon|evening|night)\b|o.?clock\b|[ap]\.?m\.?\b|thirty\b|fifteen\b|past\b|sharp\b|hundred\b|words?\b|sources?\b|adjectives?\b|sentences?\b|courses?\b|locks?\b|different\b|worse\b|of\s+[A-Za-z]+['\u2019]s\b)/i;
 /* THE TWO AUTHORED ENUMERATIONS, BY NAME. The bare punctuation alternative that
    used to live on the end of COUNTED made ANY number-name followed by : . ) ]
    read as a count with no count-noun at all - so "Her name is Nine.", "And then
@@ -12080,6 +12106,14 @@ var COUNT_PHRASES = ["problem three:", "the three things", "three things -"];
 function isCountedPhrase(hay, at){
   var lo = Math.max(0, at - 12), win = String(hay).slice(lo, at + 18).toLowerCase();
   for(var i = 0; i < COUNT_PHRASES.length; i++){ if(win.indexOf(COUNT_PHRASES[i]) !== -1) return true; }
+  /* AN ENUMERATION IS A LIST, AND A LIST DECLARES ITSELF. Pia counts her reasons off:
+     "One: we are hunted better. Two: we move more. Three: every door we knock on..."
+     That third item is capitalised and sentence-initial, so no window of nouns around
+     it can tell you it is a count - what tells you is the two items standing in front
+     of it. This is not the phrase list growing another phrase; it is the one shape a
+     colon-numbered list has, and it is the only shape it fires on. */
+  if(/^(?:three|five|seven|nine)\s*:/i.test(String(hay).slice(at))
+     && /\b(?:one|two)\s*:/i.test(String(hay).slice(0, at))) return true;
   return false;
 }
 /* is this name used AS a name anywhere in the text? */
@@ -12088,7 +12122,15 @@ function isCountedPhrase(hay, at){
    that used to be Vic's" reported that Nine had been named, in the beat before she is
    supposed to exist to anyone. The forward list was audited once against the corpus
    and found complete; the backward one did not exist. It does now. */
-var COUNTED_BEHIND = /\b(?:foot|feet|inch(?:es)?|number|no\.|size|rate|floor|level|unit|track|bay|platform|channel|aisle|row|page|line|shelf|rung)\s+$/i;
+/* ...and the same widening from the other side. Every word added is one of the twenty's
+   own: "All three said", "Item three:", "one through three", "the other three
+   together", "Recite the three", "you are five".
+   "the" earned its place by measurement rather than by argument. Every "the <number
+   name>" in the entire authored corpus was counted before it went in - nineteen of
+   them, nineteen counts: the three fates, the three of you, the three rotate, the seven
+   digits. Nobody in this fiction has ever called her "the Three", and if anybody ever
+   does, this line is where it will go wrong and the row below is what will say so. */
+var COUNTED_BEHIND = /\b(?:foot|feet|inch(?:es)?|number|no\.|size|rate|floor|level|unit|track|bay|platform|channel|aisle|row|page|line|shelf|rung|all|item|through|other|the|are)\s+$/i;
 function namedUse(sp, hay, ci){
   if(!sp) return false;
   /* the window is a LOOKAHEAD. A capture group consumes what it captures, so
@@ -12601,6 +12643,21 @@ function sevenIsShard(data){
 var BODY_VERBS = "(?:\\w+ly\\s+|just\\s+|then\\s+)?(?:reaches|reached|walks|walked|stands|stood|holds|held|picks\\s+up|picked\\s+up|nods|nodded|shrugs|shrugged|steps|stepped|sits|sat|leans|leaned|grabs|grabbed|points|pointed|hands\\s+(?:him|her|it|over)|handed|touches|touched|breathes|breathed|blinks|blinked|smiles|smiled|frowns|frowned|shivers|shivered|flinches|flinched|winces|winced|hugs|hugged|embraces|embraced|kneels|knelt|climbs|climbed|materialises|materializes|materialised|materialized|manifests|manifested|rushes|rushed|hurries|hurried|lunges|lunged|crosses|crossed|raises|raised|pulls|pulled|pushes|pushed|wraps|wrapped|gets up|got up|rises|rose|scans|scanned|checks|checked|searches|searched|peers|peered|tilts|tilted|cocks|cocked|wakes|woke|curls|curled)";
 /* and the last ambiguity a number can still create: a count with a verb attached */
 var COUNTING = /\b(?:Hollows?|of them|bodies|minutes a body|men|women|people|shards)\b/i;
+/* ONE DOOR, NAMED - AND THE OTHER ONE WITHDRAWN, by the corpus, on sight.
+   The first cut of the jurisdiction law had a second clause: the housed mind reaching
+   for the wrist, tested by any mention of it. a3-descent's own landing has Seven, in
+   the fork where he is the one in the skull, saying "Check your wrist. Go on." A mind
+   in a skull telling the courier to LOOK at his terminal is not claiming its voice, and
+   the difference between mentioning a channel and speaking through one is not something
+   a word list can hold. It was a fence I invented rather than one the file needed, and
+   the honest move on a speculative fence that fires on the game's own prose is to take
+   it out, not to whittle it until it stops.
+   What survives is the half that is structural: the file is the wrist's voice, all
+   caps and room-audible, and it has never once been private to anybody. And the other
+   half of the ruling lives where it belongs - in earshot, which now yields to a relay,
+   because "the room hears her only when he says it aloud" is a rule about who can
+   ANSWER and earshot is the law that already keeps that. */
+var SKULL_CLAIM = /\b(?:in your head|inside your head|in your skull|only you can hear|to you alone|behind your eyes)\b/i;
 function bodyVerbs(name){ return new RegExp("\\b" + name + "\\s+" + BODY_VERBS + "\\b"); }
 function bodyBreak(name, txt){
   if(!name) return false;
@@ -12950,6 +13007,32 @@ var PHYSICS = [
      and had Hesta and Three reply to her out loud - eight beats recorded it. This
      one is structural rather than lexical: it looks at who speaks after whom, so
      there is no wording for it to fight. */
+  /* TWO JURISDICTIONS, AND THEY DO NOT OVERLAP. The skull is the courier's alone: a
+     housed mind speaks to him and to nobody else standing there, and the room hears her
+     only when he says it aloud. The wrist is the file's: ALL CAPS, room-audible, and it
+     has never once spoken inside anybody's head. The bible has said both for a long
+     time, and saying is not keeping - the fork is what made it load-bearing, because in
+     one of the two worlds Nine is housed for the whole of Book Three and every line of
+     hers has to arrive by the right door. */
+  id:"jurisdiction",
+  live:function(data){ return !!residentNow(data); },
+  hits:function(data, walk){
+    var out = [];
+    walk(function(i, spk, txt){
+      if(spk === "The File" && SKULL_CLAIM.test(eventText(txt))) out.push(i);   /* the wrist reaching into a skull */
+    });
+    return out;
+  },
+  say:function(){
+    var r = residentNow() || "She";
+    return "(WRONG DOOR. There are two voices in this courier and they do not share one."
+      + " " + r + " is in the housing: an inner voice, to him and to nobody else in the"
+      + " room, and the room only hears " + r + " when he says it out loud. THE FILE is the"
+      + " wrist: all caps, out loud, heard by everybody, and never once inside anybody's"
+      + " head. Write the turn again with each voice arriving by its own door.)";
+  }
+},
+{
   id:"earshot",
   live:function(data){ return !!residentNow(data); },
   hits:function(data){
@@ -12969,6 +13052,10 @@ var PHYSICS = [
       txt = String((blocks[i] && blocks[i].text) || "");
       if(sp === r){ heard = true; continue; }
       if(sp === "Narration" || isCourier(sp)) continue;
+      /* ...UNLESS THE COURIER SAID IT ALOUD. The relay frame is the one way a housed
+         voice reaches the room, and it is not a loophole in the law - it is the law's
+         other half, arriving with the fork. Being somebody's ear runs both directions. */
+      if(data && data.relay) continue;
       if(heard && AGREES.test(txt)){ out.push(i); heard = false; continue; }
       /* ...and her name is also a number. "Nine of them. That's - hang on." is Pia
          counting Hollows in the street, which the sweep caught on the beat where
@@ -20464,6 +20551,36 @@ function teethState(b){
    where the threat was named on screen, the player was warned, and the player
    answered with a door. Judging it as an idle turn made "Three kills the channel"
    into a murder. */
+/* A FRAME IS A BLOCK WITH A SIDE. The chassis fork is always taken and whoever
+   misses the body takes the housing, so four scenes in Book Three read differently
+   depending on which mind is where: a housed Nine reaches the room through the
+   courier's mouth, an embodied one answers at his shoulder. Those scenes carry both
+   frames and the fork picks one. Everything else in the book is untagged and plays as
+   it always has - one scene, both worlds - so this costs nothing anywhere it is not
+   needed, which is the only way a special case earns its keep. */
+function playForks(t){
+  var pl = (t && t.plays) || [], tagged = false, i;
+  for(i = 0; i < pl.length; i++){ if(pl[i] && pl[i].holder){ tagged = true; break; } }
+  if(!tagged) return [{holder:(t && t.holder) || "", relay:false, tag:"", blocks:pl}];
+  return ["Seven", "Nine"].map(function(h){
+    var keep = pl.filter(function(b){ return !b || !b.holder || b.holder === h; });
+    var rel = false;
+    keep.forEach(function(b){ if(b && b.relay) rel = true; });
+    return {holder:h, relay:rel, tag:"[" + h + "]", blocks:keep};
+  });
+}
+/* one block, three written forms: a bare string is narration, a pair is a speaker and
+   a line, and an object is a frame that also carries its side. Everything that reads
+   the book reads it through here, so a fourth form can never be half-supported. */
+function playSpeaker(b){
+  if(typeof b === "string" || (b && b.holder)) return "Narration";
+  return (b && b.length >= 2) ? String(b[0]) : "";
+}
+function playText(b){
+  if(typeof b === "string") return b;
+  if(b && b.holder) return String(b.text == null ? "" : b.text);
+  return (b && b.length >= 2) ? String(b[1]) : "";
+}
 function insideBeat(b, lines, peril){
   var st = teethState(b);
   st.lines = lines || [];
@@ -20481,11 +20598,26 @@ function insideBeat(b, lines, peril){
    The list is EXACT IN BOTH DIRECTIONS: an undeclared fire is red, and a declared one
    that stops firing is also red - so it cannot quietly become permanent, and it cannot
    quietly cover a second defect that happens to land on the same passage. */
+/* v5.11 ruled it: the fork is always taken, whoever misses the chassis takes the
+   housing, and a housed Nine reaches the room through the courier's mouth. The line
+   went fork-neutral - "still here" rather than "walking around" - and the entry was
+   expected to retire with it.
+   IT DID NOT, AND THE REASON IS WORTH THE INK: the same law has a second clause
+   underneath the one we were both looking at. "walking around" was the verb; what fires
+   now is the possessive in "before my hand arrived" - and that hand is the COURIER'S,
+   the one that carried her out, hers only in the way a rescue belongs to the rescued.
+   The ruling kept that clause by name and it was right to; a fence that reads every
+   "my hand" as an anatomy claim is reading English, not the fiction. Narrowing a
+   load-bearing body fence to accommodate exactly one line in three thousand is a worse
+   trade than recording the one line, so the entry stays and changes its reason.
+   The list is exact in both directions: an undeclared fire is red, and a declared one
+   that goes quiet is red too, so nothing takes up residence here unnoticed. */
 var DESK_DECLARED = {
-  "bodiless @ a3-dreamers/Rt2 (Seven)":
-    "Nine: \"I am the proof of concept, walking around, being somebody's ear\" - a body"
-    + " claimed in the first person, in the fork where she rides the skull. Where Nine"
-    + " lives across Book Three is a board question and not an engineer's to answer."
+  "bodiless @ a3-dreamers/Rt2[Seven] (Seven)":
+    "Nine: \"...me, before my hand arrived\" - a possessive the body fence reads as"
+    + " anatomy, on a hand that is the courier's. v5.11 ruled the phrase stays; the law"
+    + " has no way to tell a rescuer's hand from a claimed one, and one line is not"
+    + " worth widening it."
 };
 function stPassages(){
   /* every authored passage in the build, with the world it claims */
@@ -20533,15 +20665,17 @@ function stPassages(){
     if(bi == null || bi < 0 || !b) return;
     [[e.topics, "t"], [e.room && e.room.topics, "Rt"]].forEach(function(pair){
       (pair[0] || []).forEach(function(t, j){
-        var sc = [];
-        (t.plays || []).forEach(function(l){
-          if(typeof l === "string") sc.push({speaker:"Narration", text:l});
-          else if(l && l.length >= 2) sc.push({speaker:String(l[0]), text:String(l[1])});
+        playForks(t).forEach(function(v){
+          var sc = [];
+          v.blocks.forEach(function(l){
+            var sp = playSpeaker(l), tx = playText(l);
+            if(sp && tx) sc.push({speaker:sp, text:tx});
+          });
+          if(!sc.length) return;
+          out.push({id:k + "/" + pair[1] + j + v.tag, beat:bi, scene:sc,
+                    passage:insideBeat(b, v.blocks), holder:v.holder, relay:v.relay,
+                    canon:[], choices:[t.rail, t.railAlt].filter(function(x){ return !!x; })});
         });
-        if(!sc.length) return;
-        out.push({id:k + "/" + pair[1] + j, beat:bi, passage:insideBeat(b, t.plays), scene:sc,
-                  holder:t.holder || "",
-                  canon:[], choices:[t.rail, t.railAlt].filter(function(x){ return !!x; })});
       });
     });
   });
@@ -20626,7 +20760,7 @@ function stCorpus(){
            them: every predicate is swept over this prose before it ships, and the
            fixture diff is the only review a thousand new lines can actually get. */
         ((t && t.plays) || []).forEach(function(l, li){
-          add(k + "/" + q + "t" + i + "p" + li, typeof l === "string" ? l : (l && l[1]));
+          add(k + "/" + q + "t" + i + "p" + li, playText(l));
         });
       });
     });
@@ -20727,27 +20861,30 @@ function verdictMap(){
    the result in beside the code that changed it. Never regenerate to make a red row
    go green without reading the diff first: that is the one move this whole mechanism
    exists to prevent. */
-/* v5.10 / WAVE 2: the pass. 2,182 corpus lines became 3,745 - 1,145 authored blocks,
-   251 rails and 3 railAlts - so most of what follows is simply lines that did not
-   exist last build. THE DIFF WAS READ BEFORE THIS WAS WRITTEN, and it was read the
-   only way that means anything: gained ids were split against the previous build's
-   corpus, so a NEW line firing is corpus growth and an OLD line changing its verdict
-   is a predicate change. Old lines that moved: FOUR, all of them breach, all of them
-   ruling (d) - a2-seven/goal, a3-seize/goal and a3-vic/press1 stopped reading as
-   summonses (each is a board directive about the beat's own arrival, with the name in
-   one sentence and the verb in another), and a1-vic/aim briefly started, which is why
-   "get" came back out of the fetching family before this line was written. Everything
-   else here is new prose. Read the diff before believing this note. */
+/* v5.11 / WAVE 3. Three movements, and every one of them was read before this was
+   written. (1) named:Three loses 48, named:Five 3, named:Seven 2 - the authorised
+   COUNTED widening, and all fifty-three were checked by eye against their own lines:
+   the three fates, three words, Three hundred metres, all three, Item three:, three of
+   Vic's tools, you are five, all seven digits. Not one of them is a character. The other
+   side of that trade is asserted in its own row, on two rails that address people by
+   name - and one token, "if", was measured, found to silence four of those, and taken
+   back out before this snapshot was taken.
+   (2) named:Nine gains 3 - the three Book Three rails that stopped saying "hand on the
+   shard" and started saying her name, per v5.11 section 1.
+   (3) shard:hand loses 2, and tell trades a3-founding/t1p0 for t1p2. That last one is
+   not a verdict change at all: block ids are POSITIONAL, the fork frames went in at the
+   head of four scenes, and every block behind them renumbered by two. Read the diff
+   before believing this note. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
-  "named:Five":["a1-turn/opens0/l1","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-ground/never1","a2-mirren/Rt0p0","a2-seven/t0p0","a2-seven/t0p2","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/Rt6p3","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/lands0/r2","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p1","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a2-turn/t0p3","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-seize/Rt1p0","a3-seize/Rt1p2","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a1-carried/never2","a1-chase/Rt2p4","a1-chase/t2g","a1-fare/Rt0p0","a1-fare/Rt0p3","a1-fare/Rt2p1","a1-fare/t2p3","a1-hum/Rt4p0","a1-pack/Rt0p1","a1-pack/t2p4","a1-turn/landsHard1/l2","a1-turn/landsHard1/l3","a1-turn/landsHard1/l5","a1-turn/t3p0","a1-turn/t3p2","a1-turn/t3p3","a1-vic/Rt0p4","a1-vic/Rt6p4","a1-vic/t5p1","a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/Rt1g","a2-choir/Rt1r","a2-choir/Rt2p1","a2-choir/aim","a2-choir/canon3","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/lands0/now","a2-choir/landsHard0/l2","a2-choir/landsHard0/l4","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/opens0/r0","a2-choir/scar","a2-choir/t0r","a2-choir/t1g","a2-choir/t1p2","a2-choir/t1r","a2-choir/t3p2","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-choir/walk","a2-ground/never1","a2-ground/opens0/l3","a2-hand/Rt1p3","a2-hand/goal","a2-hand/never2","a2-hand/opens0/l2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t1p2","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/landsHard0/l0","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/never0","a2-manual/t1p2","a2-manual/t1r","a2-mirren/Rt1p1","a2-mirren/t3p1","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0g","a2-three/t0p0","a2-three/walk","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/lands0/r0","a2-turn/press0","a2-turn/t0r","a2-turn/t1p0","a2-turn/t1r","a3-descent/Rt0r","a3-descent/Rt2p1","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/t3p0","a3-descent/teeth/c1","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt0g","a3-evict/Rt0p0","a3-evict/Rt2p0","a3-evict/lands0/l2","a3-evict/lands1/l2","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2p1","a3-founding/t2p2","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-granny/Rt2p2","a3-granny/t0g","a3-granny/t0p2","a3-granny/t2p0","a3-granny/t2p1","a3-principal/t2r","a3-principal/t3p0","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-seize/teeth1/s1","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-vic/lands0/l3","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1p2","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-descent/Rt1p2","a3-dreamers/teeth/survive","a3-founding/t1p2","a3-seize/t2p3"],
+  "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-ground/never1","a2-seven/t0p0","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/Rt6p3","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits0","a2-chassis/exits2","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p1","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a2-turn/t0p3","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a1-turn/landsHard1/l2","a1-turn/landsHard1/l3","a1-turn/landsHard1/l5","a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/canon3","a2-choir/goal","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/t1p2","a2-choir/t3p2","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-ground/opens0/l3","a2-hand/goal","a2-hand/never2","a2-hand/opens0/l2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t1p2","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/landsHard0/l0","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/lands0/r0","a2-turn/press0","a2-turn/t0r","a2-turn/t1p0","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-principal/t3p0","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-seize/teeth1/s1","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1p2","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p0","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -20847,10 +20984,11 @@ function stPassageShard(p){
   });
   return speaks ? "hand" : "jacket";
 }
-function stRunPhysics(scene, canonArr, choicesArr){
+function stRunPhysics(scene, canonArr, choicesArr, relay){
   var data = {scene:scene.map(function(b){ return {speaker:b.speaker, text:b.text}; })};
   if(canonArr && canonArr.length) data.canon = canonArr.slice();
   if(choicesArr && choicesArr.length) data.choices = choicesArr.slice();
+  if(relay) data.relay = true;
   return physicsBreaks(data);
 }
 function selfTest(){
@@ -20986,7 +21124,7 @@ function selfTest(){
            refuses an undeclared death has nothing to refuse when one was declared */
         perilTurns = pg.passage.peril ? 2 : 0;
         shardWhere = stPassageShard(pg.passage);
-        var broke = stRunPhysics(pg.scene, pg.canon, pg.choices);
+        var broke = stRunPhysics(pg.scene, pg.canon, pg.choices, pg.relay);
         /* only laws that were actually AWAKE are a check. Counting all twenty every
            time inflated the headline by the ones switched off - clock is never live
            here because storyMin is -1, and frame needs a gate this boot has not
@@ -20995,6 +21133,7 @@ function selfTest(){
         var probe = {scene:pg.scene};
         if(pg.canon && pg.canon.length) probe.canon = pg.canon.slice();
         if(pg.choices && pg.choices.length) probe.choices = pg.choices.slice();
+        if(pg.relay) probe.relay = true;
         PHYSICS.forEach(function(r){ if(r.live(probe)) checks++; });
         broke.forEach(function(x){ hits.push(x.rule.id + " @ " + pg.id + " (" + (fk || "unset") + ")"); });
       });
@@ -21590,6 +21729,72 @@ function selfTest(){
            return moved === 0;   /* true means the snapshot did not notice - decorative */
          }});
     }
+    /* THE TWENTY, AS A REGRESSION CORPUS. Wave 2 measured exactly which authored lines
+       say a number where the name fence hears a name, and v5.11 authorised widening the
+       count list to cover them. A widening with no regression corpus is how this fence
+       got blinded the last time, so the corpus IS the row: every one of the twenty is
+       held here by id, its text read out of the live corpus, and asserted quiet.
+       AND THE OTHER SIDE, WHICH IS THE HALF THAT MATTERS. A count list can always be
+       widened until nothing is a name; what stops that is naming lines that MUST keep
+       firing and running them in the same row. Both of these are rails that address a
+       person - and the second one is not decorative: "if" was in the widening for one
+       afternoon, because one of the twenty counts hours with the noun left out, and it
+       silenced this rail and three like it. The measurement took it back out. */
+    var TWENTY = [
+      ["Three", "a1-chase/Rt2p4"], ["Three", "a1-fare/Rt0p0"], ["Three", "a1-fare/Rt0p3"],
+      ["Three", "a1-fare/Rt2p1"], ["Three", "a1-fare/t2p3"], ["Three", "a1-hum/Rt4p0"],
+      ["Three", "a1-pack/Rt0p1"], ["Three", "a1-pack/t2p4"], ["Three", "a1-turn/t3p0"],
+      ["Three", "a1-turn/t3p2"], ["Three", "a1-turn/t3p3"], ["Three", "a1-vic/Rt0p4"],
+      ["Three", "a1-vic/Rt6p4"], ["Three", "a1-vic/t5p1"], ["Three", "a2-hand/Rt1p3"],
+      ["Three", "a2-mirren/Rt1p1"], ["Three", "a2-mirren/t3p1"], ["Five", "a2-mirren/Rt0p0"],
+      ["Five", "a2-seven/t0p2"], ["Five", "a2-seven/t0p0"]
+    ];
+    /* the twentieth, declared rather than covered - see COUNTED's own note */
+    var TWENTY_OPEN = {"a2-seven/t0p0":"counts hours with the noun left out; its only token is \"if\", which also addresses people by name"};
+    var NAMES_MUST = [
+      ["Seven", "Ask Seven if she means it. The warmth."],
+      ["Three", "Ask Three what is down here. The survey."]
+    ];
+    var cnBad = [], cnQuiet = 0, cnText = {};
+    stCorpus().forEach(function(row){ cnText[row.id] = row.t; });
+    TWENTY.forEach(function(c){
+      var t = cnText[c[1]];
+      if(typeof t !== "string"){ cnBad.push("the regression corpus lost a line: " + c[1]); return; }
+      var fires = namedUse(c[0], t, true);
+      if(TWENTY_OPEN[c[1]]){
+        if(!fires) cnBad.push(c[1] + " went quiet without the widening being changed - retire its declaration");
+        return;
+      }
+      if(fires) cnBad.push(c[1] + " still reads " + c[0] + " as a name: " + String(t).slice(0, 60));
+      else cnQuiet++;
+    });
+    NAMES_MUST.forEach(function(c){
+      if(!namedUse(c[0], c[1], true)) cnBad.push("the widening ate a name: \"" + c[1] + "\"");
+    });
+    T("a number-name in counting position is a count, and a name is still a name",
+      cnBad.length === 0,
+      cnBad.length ? cnBad.join("; ")
+        : cnQuiet + " of the twenty measured lines read as counts, "
+          + Object.keys(TWENTY_OPEN).length + " declared open, and "
+          + NAMES_MUST.length + " rails that address somebody still name them",
+      {label:"the count list as it stood before the twenty were measured",
+       was:{c:/^\s+(?:of\s+them\b|of\s+us\b|days?\b|nights?\b|hours?\b|minutes?\b|years?\b|people\b|bodies\b|men\b|women\b|shards?\b|Hollows?\b|things?\b|metres?\b)/i,
+             b:/\b(?:foot|feet|inch(?:es)?|number|no\.|size|rate|floor|level|unit|track|bay|platform|channel|aisle|row|page|line|shelf|rung)\s+$/i},
+       /* the pre-widening pair, swapped into the live fence and run against the same
+          corpus. If the row is green under it too, the widening did nothing and this
+          case is decorative - which is the one thing it is not allowed to be. */
+       check:function(w){
+         var kc = COUNTED, kb = COUNTED_BEHIND, quiet = true;
+         try{
+           COUNTED = w.c; COUNTED_BEHIND = w.b;
+           TWENTY.forEach(function(c){
+             if(TWENTY_OPEN[c[1]]) return;
+             if(namedUse(c[0], cnText[c[1]] || "", true)) quiet = false;
+           });
+         } finally { COUNTED = kc; COUNTED_BEHIND = kb; }
+         return quiet;   /* true means the old list already covered them - decorative */
+       }});
+
     /* THE ALLOWLIST DECLARES ITS OWN DEAD WOOD. isCountedPhrase is only ever consulted
        for a name in NUMBER_NAMES, so an entry naming a number this fiction does not use
        as a name can never fire at all - and an entry longer than the window it is

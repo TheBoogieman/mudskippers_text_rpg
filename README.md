@@ -314,6 +314,15 @@ permanent death in it), the one chassis, the sleepers on the shelves, the six
 bio-grens, and the vessel law: when the family's only ripperdoc dies, the skill dies
 with him and what is broken stays broken.
 
+And since v4.65.0, the two jurisdictions. There is one chassis and one spare room, so
+whoever misses the body rides the courier's skull for the rest of the story — and the
+two voices in him do not share a door. The housing is his alone: she speaks to him and
+to nobody else standing there, and the room hears her only when he says it out loud.
+The wrist is the file's: all caps, out loud, heard by everybody, and never once inside
+anybody's head. Four scenes in Book Three are written twice because of it — once for
+the fork where she stands at his shoulder, once for the fork where he repeats her, word
+for word, to the family. Being somebody's ear runs both directions now.
+
 Keeping twenty detectors honest needs a test bigger than reading them. There is
 one, and it is free: **the game's own authored prose is legal by definition.** Open
 **index.html?selftest** and every one of the 106 written passages is replayed past
