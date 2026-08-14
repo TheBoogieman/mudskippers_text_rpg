@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.50.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.51.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -1762,6 +1762,7 @@ var BIBLE = [
 "- gate: REQUIRED EVERY TURN. true if this turn met the gate condition printed under THE BOARD, false if it did not. It is the only plot decision you make and the game acts on it immediately - a false gate stalls the season, a premature true skips a beat the player never got to play. Do not send an \"arc\" or \"season\" field; the board owns the season.",
 "- when you send \"gate\": true, send with it \"gateNote\": one factual line recording how the gate was actually met - who did what, in this run, at this table. It becomes canon and the beat's closing card. Write it true to the scene, never to the board's expectations: if Pia did it, the note says Pia. In the same reply, refresh \"agenda\" - a closed gate always changes what tonight is about.",
 "- \"knock\": true - send only during THE FAMILY'S OWN TIME, and only when the PLAYER's typed action is plainly reaching for the season's next matter. It is a doorbell, not a key: it offers them the way on a little early, and they still have to take it. Nothing you send ends their time - not a knock, not a gate, not a good segue. Momentum and convenience are not a knock.",
+"- THE FAMILY'S OWN TIME IS A SANCTUARY: while the room is sealed, peril cannot arm and death cannot land. That is deliberate - the one part of the night that is allowed to be safe. Do not declare a peril there; nothing will come of it and the scene will read as a threat the world forgot to keep.",
 "- peril: send true on the turn the courier becomes one wrong move from death, with the threat named plainly in the scene and at least one choice that is a real way out. Omit it otherwise. It expires after the following turn, so re-send it if the danger is still on him.",
 "- death: ONLY while peril is live and the player's own choice was fatal. \"death\": \"one plain line on how he died\". This ends the run for good.",
 "- the_end: only on the final turn of the season, after the finale beat's gate.",
@@ -4785,7 +4786,10 @@ var SCENEBOOK = {
   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
   before:"THE STILLING IS THE BEAT AND IT TAKES TIME. Eleven minutes a body, done the kind way, in front of witnesses. It is slow, it is public, and the slowness is the point - this is what the family looks like when it wins.",
   never:["nobody is killed and nothing is destroyed - the Choir loses a street, not a fight",
-         "Vic is dead and does not appear, speak, or advise",
+         /* he is alive here - a3-vic is three beats down the road. This card said
+            he was dead, which is the board contradicting its own spine on the DM's
+            only view of the night; the era-aware sweep found it. */
+         "Vic is not on this street and does not appear - he is spending what is left of himself somewhere else, and nobody says so out loud",
          "nobody knocks on a neighbour's door and goes inside - the street is the room"],
   topics:[
    {ask:"how long the kind way takes",
@@ -5502,7 +5506,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.50.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.51.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -5520,7 +5524,8 @@ var gateNotes = {};             /* beat id -> the DM's one-line record of how it
 var phase = "live";          /* "live" | "aftermath" | "slack" */
 var phaseLeft = 0;           /* turns remaining in the current non-live phase */
 var gateHeldNow = false;     /* a gate arrived below the beat's floor; served one turn */
-var cutHeldNote = "";        /* a close the client deleted, owed as an explanation next compose */
+var cutHeld = false;         /* this turn's close was deleted by the reveal fence */
+var cutHeldNote = "";        /* ...owed to the next compose as an explanation */
 var sceneCollapsed = false;  /* this turn's reply had stopped writing and was circling */
 var doorFreedHer = false;    /* the exit door put her in his hand this turn; a held gate gives it back */
 var lastTurnMud = false;     /* the reply being processed answers a MUDSKIPPER MOMENT */
@@ -6409,8 +6414,8 @@ var DEAD_IDIOM = /\b(?:stops?|stopped|stopping|stood|stands?|standing|froze|free
    swallow "I can't believe Pia is dead", which is a report of a real one. So the
    two shapes are written separately: nobody/no one/none govern their verb at
    distance, not/never/isn't only up close. */
-var NEG_DEATH = /\b(?:nobody|no one|no-one|none)\b(?:\s+\w+){0,4}?\s+(?:ever\s+)?(?:dies|die|died|is\s+killed|are\s+killed|was\s+killed|gets?\s+killed|goes?\s+down|is\s+destroyed|gets?\s+shot)\b|\b(?:not|never|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|cannot|can't)\s+(?:\w+\s+){0,2}?(?:be\s+|been\s+|get\s+|got\s+|going to\s+)?(?:dead|died|dies|die|killed|kill|kills|shot|stabbed|destroyed|smashed|crushed|shattered|executed|strangled|bleeds? out|gone)\b/gi;
-var GONE_SOFT = /\bgone\s+(?:quiet|soft|still|somewhere|ahead|back|out|home|in|inside|upstairs|downstairs|cold|grey|gray|missing|native|hungry|to\s+ground|to\s+bed|to\s+work|without|round|over|off)\b/gi;
+var NEG_DEATH = /\b(?:nobody|no one|no-one|none)\b(?:\s+\w+){0,4}?\s+(?:ever\s+)?(?:dies|die|died|gone|has\s+gone|is\s+killed|are\s+killed|was\s+killed|gets?\s+killed|goes?\s+down|is\s+destroyed|gets?\s+shot)\b|\b(?:not|never|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|cannot|can't)\s+(?:\w+\s+){0,2}?(?:be\s+|been\s+|get\s+|got\s+|going to\s+)?(?:dead|died|dies|die|killed|kill|kills|shot|stabbed|destroyed|smashed|crushed|shattered|executed|strangled|bleeds? out|gone)\b/gi;
+var GONE_SOFT = /\bgone\s+(?:quiet|soft|still|somewhere|ahead|back|out|home|in|inside|upstairs|downstairs|cold|grey|gray|missing|native|hungry|to\s+ground|to\s+bed|to\s+work|to\s+\w+|looking|hunting|without|round|over|off)\b/gi;
 function deathPredicated(name, ln){
   var txt = String(ln || "");
   /* the only verb in the line is an adjectival "dead" - nothing was killed. The
@@ -6448,8 +6453,7 @@ function deathPredicated(name, ln){
        part of this name's clause rather than a wall between them. */
     while(lo > 0 && !/[.!?;\n]/.test(stripped.charAt(lo - 1))) lo--;
     while(hi < stripped.length && !/[.!?;\n]/.test(stripped.charAt(hi))) hi++;
-    var appo = /^\s*[,\u2014-]\s*[^,.!?;\n]{0,60}/.exec(stripped.slice(m.index + name.length));
-    if(appo && DEATH_VERBS.test(appo[0])) return true;
+
     var clause = stripped.slice(lo, hi);
     /* A REPORTED DEATH IS STILL A DEATH - it is the REPORTER who is not the corpse.
        Skipping the name after the reporting verb exempted the victim and left the
@@ -6459,6 +6463,16 @@ function deathPredicated(name, ln){
     var relIdx = m.index - lo;
     var rv = /\b(?:says?|said|claims?|claimed|reckons?|heard|told|reports?|reported)\b/i.exec(clause);
     if(rv && relIdx < rv.index) continue;          /* this name is the speaker */
+    /* AN APPOSITIVE IS ABOUT THE NAME - but only after the reporter guard has had
+       its say. Testing it first meant "Hesta, who told them Pia is dead, poured
+       the tea" certified Hesta, because a comma was enough to nominate the speaker
+       as the corpse. The hyphen is gone from the class too: it made every
+       compound word an appositive. */
+    var appo = /^\s*[,\u2014]\s*(?:who\s+|which\s+)?([^,.!?;\n]{0,60})/.exec(stripped.slice(m.index + name.length));
+    if(appo && DEATH_VERBS.test(appo[1] || "")
+       && !/\b(?:says?|said|claims?|claimed|reckons?|heard|told|reports?|reported)\b/i.test(appo[1] || "")){
+      return true;
+    }
     if(DEATH_VERBS.test(clause)) return true;
   }
   return false;
@@ -7000,7 +7014,9 @@ function showScene(data, logIt, instant){
        dialogue and, worse, onto the rail buttons: "**Say** Mirren's name, now that
        you're here again." */
     data.scene.forEach(function(b){
-      b.text = String(b.text).replace(/\*\*(.+?)\*\*/g, "$1").replace(/(^|[\s(])\*([^*\n]{1,120})\*(?=[\s.,;:!?)]|$)/g, "$1$2");
+      b.text = String(b.text).replace(/\*\*(.+?)\*\*/g, "$1")/* ...and an asterisk with spaces round it is arithmetic, not emphasis:
+         "3 * 4 * 5" was arriving as "3  4  5". Emphasis has no space inside it. */
+      .replace(/(^|[\s(])\*(?!\s)([^*\n]{1,120}?)(?<!\s)\*(?=[\s.,;:!?)]|$)/g, "$1$2");
       /* THE NAMEPLATE IS A NAME. The register stopped accepting sheet-dumps as
          people, but the label still went on screen exactly as it arrived, so a
          player watched somebody called COURIER - VOICE: HE SPEAKS WITH A QUICK WIT
@@ -7528,12 +7544,19 @@ function replyProse(data){
 }
 /* which locked reveals this reply said out loud. Only the strictly-future are
    checked - a reveal whose night has come is the DM's to spend freely. */
+/* A TELL IS A WORD IN THE DETECTOR TOO. The word-boundary fix went to the helper
+   that decides which lines to CUT and left the one that decides whether the paid
+   correction fires at all - so "you'll see the architecture of it" still burned a
+   call, and worse, the two disagreed: a genuine plural leak ("the principals")
+   was detected, corrected twice, cut by nothing, and reached the screen. */
+function tellHay(t){ return " " + String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ") + " "; }
+function tellNeedle(t){ return " " + String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/^\s+|\s+$/g, "") + " "; }
 function revealLeak(data){
-  var locked = lockedKeys(), hay = " " + replyProse(data).toLowerCase().replace(/[‘’]/g, "'") + " ";
+  var locked = lockedKeys(), hay = tellHay(replyProse(data).replace(/[‘’]/g, "'"));
   var out = [];
   locked.forEach(function(k){
     (REVEAL_TELLS[k] || []).forEach(function(t){
-      if(out.indexOf(k) === -1 && hay.indexOf(t) !== -1) out.push(k);
+      if(out.indexOf(k) === -1 && hay.indexOf(tellNeedle(t)) !== -1) out.push(k);
     });
   });
   return out;
@@ -7543,12 +7566,14 @@ function revealLeak(data){
 function leakingBlocks(data, keys){
   var hits = [];
   (data && data.scene || []).forEach(function(b, i){
-    var t = b && b.text ? " " + String(b.text).toLowerCase().replace(/[‘’]/g, "'") + " " : "";
+    /* the same predicate the detector uses, or the two disagree and a genuine leak
+       is corrected twice and cut by nothing */
+    var t = b && b.text ? tellHay(String(b.text).replace(/[‘’]/g, "'")) : "";
     if(!t) return;
     for(var k = 0; k < keys.length; k++){
       var tells = REVEAL_TELLS[keys[k]] || [];
       for(var j = 0; j < tells.length; j++){
-        if(t.indexOf(tells[j]) !== -1){ hits.push(i); return; }
+        if(t.indexOf(tellNeedle(tells[j])) !== -1){ hits.push(i); return; }
       }
     }
   });
@@ -8752,7 +8777,13 @@ function boardTurn(data){
      per occurrence per stalled-out beat. The bible has said the exception since
      v1; the guard never got the memo. forcingNow was already excepted; pressure
      is the same turn one square earlier. */
-  var worldTurn = forcingNow || beatTurns >= beatNow().budget;
+  /* ...and only when the board ACTUALLY gave the order. stalledNow, gateHeldNow
+     and gateRefusedNames all return above the pressure branch in boardDirective,
+     so on those turns no pressure order was sent - and yielding anyway closed a
+     beat over the player's second explicit stall, on a turn whose directive said
+     "the ending is theirs to reach for when they want it". */
+  var pressureWasSent = !stalledNow && !gateHeldNow && !(gateRefusedNames && gateRefusedNames.length);
+  var worldTurn = forcingNow || (pressureWasSent && beatTurns >= beatNow().budget);
   if(pickKind === "stall" && said && exitStage() === "open" && !worldTurn){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
      absence and idleness, never joy - the dots hold still while the table plays.
@@ -8773,7 +8804,7 @@ function boardTurn(data){
      tonight was about never reached the page, the beat still ends - on the authored
      scar, which is the true account of a night that happened without them - and it
      costs the player nothing, because the player did their part. */
-  if(pickKind === "exit" && !said){
+  if(pickKind === "exit" && !said && !forcingNow){
     /* ...but not before the night has been lived. doorDirective orders the
        storyteller NOT to send the gate below the floor; this branch sat ABOVE the
        floor check and force-closed the beat anyway, landing the scar on turn one.
@@ -8881,7 +8912,14 @@ function boardTurn(data){
        because the meter could not fill.
        The model complying is HOW the world moves, not a reprieve from it. A gate
        landed under a forcing order books hard however the reply behaved. */
-    var worldsMove = !said || forcingNow;
+    /* ...but NOT when the player pressed the ending themselves. The door's whole
+       contract is "anchors waived, no toll, no scar - it costs the player nothing,
+       because the player did their part", and charging it here punished exactly
+       the move the game asks for. Worse, it inverted the incentive §1A exists to
+       create: a model that REFUSED the forced gate fell to the thin-close, which
+       sets hard but not forced and so pays nothing, while a model that obeyed paid
+       the toll. Obedience must cost the WORLD's move, never the player's. */
+    var worldsMove = (!said || forcingNow) && pickKind !== "exit";
     /* a force at max tolls folds the table - except the finale, which never
        folds: a forced finale lands the season exactly as it always has */
     if(worldsMove && tolls >= TOLL_MAX && !isFinaleBeat()){ forcingNow = false; foldPending = true; return; }
@@ -9600,8 +9638,19 @@ function shardAfter(txt, from, stated){
      taking her OUT, and it read as pocketing because "into the jacket" sat later
      in the string. The jacket as SOURCE and the jacket as DESTINATION are
      different sentences and the difference is the preposition. */
-  var outOf = /\b(?:out of|from|off of)\s+(?:the|his|my|your)\s+(?:jacket|pocket|coat)\b/.test(s);
-  var into  = /\b(?:in|into|inside|back in|back into)\s+(?:the|his|my|your)\s+(?:jacket|pocket|coat)\b/.test(s);
+  /* ...and direction only speaks where proximity is genuinely ambiguous. Testing
+     it FIRST discarded everything the fallback knows - "he reaches into the jacket
+     and takes her out" is a take-out that names the jacket as a destination on the
+     way in, and privileging the preposition called it a pocketing. Case-insensitive,
+     because every other test here is. */
+  var outOf = /\b(?:out of|from|off of)\s+(?:the|his|my|your|her)\s+(?:jacket|pocket|coat)\b/i.test(s);
+  var into  = /\b(?:in|into|inside|back in|back into)\s+(?:the|his|my|your|her)\s+(?:jacket|pocket|coat)\b/i.test(s);
+  /* an explicit take-out anywhere in the line beats a mention of the pocket */
+  if(outOf && /\b(?:takes?|took|pulls?|pulled|lifts?|lifted|draws?|drew|snatch\w*)\b/i.test(s)) return "hand";
+  if(h >= 0 || p >= 0){
+    if(h > p) return "hand";
+    if(p > h && !outOf) return "jacket";
+  }
   if(outOf && !into) return "hand";
   if(into && !outOf) return "jacket";
   return (h > p) ? "hand" : "jacket";
@@ -11574,6 +11623,7 @@ function takeAction(text, isMud){
      bits are neither an exit nor a stall nor a walk */
   pickKind = kindNow || ""; walkArmed = false; exitArmed = false;
   turnToken++;                    /* a new player action composes its briefing once */
+  cutHeld = false;
   turnContext = null;
   askedFor = {}; turnCalls = 0; turnNotes = [];
   if(pickKind !== "walk") redRun = 0;   /* the count wants them consecutive */
@@ -12038,8 +12088,7 @@ function callDM(corrected, tag){
       function leaks(txt){
         var t = " " + String(txt || "").toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ";
         for(var i = 0; i < tellsHere.length; i++){
-          var needle = " " + String(tellsHere[i]).toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/^\s+|\s+$/g, "") + " ";
-          if(t.indexOf(needle) !== -1) return true;
+          if(t.indexOf(tellNeedle(tellsHere[i])) !== -1) return true;
         }
         return false;
       }
@@ -12067,7 +12116,11 @@ function callDM(corrected, tag){
          note. Never ask for something the client just deleted: the beat holds one
          more turn and the next compose says plainly what happened. */
       if(killedGate){
-        gateHeldNow = true;
+        /* ...and NOT via gateHeldNow, whose directive says "this beat is too young
+           to close, do not send the gate again" - the opposite order, in the same
+           payload, on a beat that is not young. It also returns above PRESSURE and
+           SQUEEZE and would swallow them. The hold is local to this turn. */
+        cutHeld = true;
         cutHeldNote = "your close was dropped because its note touched something the story has"
           + " not reached yet. Land it again, clean - the beat is still open.";
       }
@@ -12149,7 +12202,7 @@ function callDM(corrected, tag){
        - so a model that obeyed the board was corrected for obeying it, and the
        only way to satisfy both was to lie. Below the floor the door holds, which
        is now true of the board as well as the directive. */
-    if(askAgain < 2 && turnCalls < TURN_CALL_CAP && !gateHeldNow && pickKind === "exit" && !forcingNow && !lastTurnMud
+    if(askAgain < 2 && turnCalls < TURN_CALL_CAP && !gateHeldNow && !cutHeld && pickKind === "exit" && !forcingNow && !lastTurnMud
        && !beatDone() && beatTurns + 1 >= beatFloor(beatNow())
        && phase === "live" && !foldPending && !walkbackNow){
       var xg = parsed.data.gate === true || parsed.data.gate === "true";
@@ -12185,7 +12238,11 @@ function callDM(corrected, tag){
        client drops the gate flag when one arrives on a stall - but dropping a flag
        does not un-write "he begins to descend", and four beats recorded stalls that
        walked the family through the door in prose while the board held it shut. */
-    if(askAgain < 2 && turnCalls < TURN_CALL_CAP && pickKind === "stall" && !forcingNow && !lastTurnMud
+    /* the fix went to boardTurn's bookkeeping and the CALL is burned here, one
+       layer earlier - so the pressure turn still spent a correction telling the
+       model not to do the thing the board had just ordered. */
+    if(askAgain < 2 && turnCalls < TURN_CALL_CAP && pickKind === "stall" && !forcingNow
+       && !(!beatDone() && beatTurns >= beatNow().budget) && !lastTurnMud
        && phase === "live" && !beatDone() && !foldPending && !walkbackNow
        && exitStage() === "open"
        && (parsed.data.gate === true || parsed.data.gate === "true")){
@@ -12220,16 +12277,14 @@ function callDM(corrected, tag){
     }
     /* the refusal's certify pass: a suspected load-bearing death must enter the
        record or be denied on it - it does not get to live in prose alone */
+    /* ...and the fallback sits OUTSIDE the gate, or it is unreachable code
+       describing a safety net that cannot deploy. */
+    var suspect = deathSuspect(parsed.data);
+    if(suspect && !mayAsk("roster") && window.console && console.warn){
+      console.warn("[mudskippers] roster doubt unasked, budget spent: " + suspect);
+    }
     if(mayAsk("roster")){
-      var suspect = deathSuspect(parsed.data);
-      if(suspect && !mayAsk("roster")){
-        /* ...and when the budget is gone it does not simply vanish: the client
-           records the doubt rather than the death, which is the safe direction */
-        if(window.console && console.warn){
-          console.warn("[mudskippers] roster doubt unasked (cap spent): " + suspect);
-        }
-      }
-      if(suspect && mayAsk("roster")){
+      if(suspect){
         return callDM("(CHECK THE ROSTER: this turn reads like " + suspect + " was killed or"
           + " destroyed. If so, that is a death and it is permanent: keep the scene exactly as"
           + " written and send roster with " + suspect + " in fallen - the game will take it from"
@@ -12632,7 +12687,12 @@ function loadSettings(){
   if(!settings.visuals) settings.visuals = "full";   /* pre-v2.3 settings blobs */
   /* ...and if a launcher load moved the provider, the old one is offered back in
      Settings rather than kept in a key nothing reads. */
-  try{ prevSettingsOffer = !!localStorage.getItem("mud-settings-prev"); }catch(e){}
+  /* the offer is for the session the launcher moved you in - after an ordinary
+     open it stops shouting, though RESTORE PREVIOUS still works from the stash */
+  try{
+    prevSettingsOffer = !!localStorage.getItem("mud-settings-prev")
+      && /[?&]ai=/.test(location.search || "");
+  }catch(e){}
   /* players still on an old DEFAULT model ride along to the current one; a model
      the player typed themselves is never touched */
   var OLD_DEFAULT_MODELS = {
@@ -12915,7 +12975,7 @@ function gatherRuns(){
   var runsOut = {};
   var mm = loadRunsMap();
   Object.keys(mm).forEach(function(slug){
-    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.50.0
+    /* a rehearsal fragment in the real drawer is not a run. Builds before v4.51.0
        could leak one; it stays in storage, but it never lists and never loads. */
     if(!rehearsing && isRehBlob(mm[slug])) return;
     var s = summarize(mm[slug]);
@@ -17030,7 +17090,8 @@ function newRun(confirmFirst, bare){
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false; exitArmed = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
   walkArmed = false; pressOfferedFor = "";
-  turnCalls = 0; turnNotes = []; askedFor = {}; askAgain = 0; turnContext = null;   /* or the next run's first beat starts pre-offered */
+  turnCalls = 0; turnNotes = []; askedFor = {}; askAgain = 0; turnContext = null;
+  rebuildState = null; cutHeld = false; cutHeldNote = ""; pendingClick = false;   /* or the next run's first beat starts pre-offered */
   seasonRecords = {}; archiveIndex = []; seasonBreakDue = false; epilogueNow = false;
   tollExplained = false; prySpoilers = false; chassisHolder = null; chassisPick = "";
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
@@ -17095,7 +17156,7 @@ function restoreFromBlob(s){
      left standing from run A resends run A's briefing into run B - and the errbox
      it lives in was never cleared either, so the offer was visible and live. */
   pendingRetry = null; turnContext = null; askedFor = {}; askAgain = 0;
-  turnCalls = 0; turnNotes = []; rebuildState = null;
+  turnCalls = 0; turnNotes = []; rebuildState = null; cutHeld = false; cutHeldNote = ""; pendingClick = false;
   beatSeen = {};                       /* seeded from authored passages now, so residue is large */
   pressOfferedFor = "";
   try{ if($("errbox")) $("errbox").innerHTML = ""; }catch(e){}
@@ -17404,24 +17465,49 @@ function selfTest(){
      not wrong - some properties have no single "before" - but it is undeclared
      debt, so it renders AMBER rather than green, the same way the coverage row
      names the laws nobody has written a case for. */
+  /* A CHECK THAT TOUCHES NO PRODUCTION CODE PROVES NOTHING. The first cut of this
+     harness accepted a hand-written restatement as proof - six of seven checks
+     were pure predicates over a string literal, so "proved" was a compile-time
+     constant that could not go red however the code changed. One of them was
+     worse than useless: it returned the same value under the old logic and the
+     new, and its row certified the bug it claimed to have caught.
+     So a broken form is only credited when its check actually calls something the
+     game defines, a check that THROWS is not proof (a renamed function must not
+     buy a green light), and AMBER is counted apart from PASS so the headline
+     cannot launder undeclared debt as success. */
+  var PROD_SYMBOLS = ["namedUse", "deathPredicated", "shardAfter", "sceneContract",
+    "relaySpeaker", "cardIsMuted", "revealLeak", "breachIn", "breachMore", "mayAsk",
+    "boardTurn", "takeAction", "physicsCut", "physicsLayout", "knownOf", "unmetCast",
+    "COUNTED", "isCountedPhrase", "closeBeat", "leaks", "DEATH_VERBS"];
+  function checkRunsCode(fn){
+    var src = String(fn);
+    for(var i = 0; i < PROD_SYMBOLS.length; i++){ if(src.indexOf(PROD_SYMBOLS[i]) !== -1) return true; }
+    return false;
+  }
   function T(name, ok, detail, broken){
     var row = {name:name, ok:!!ok, detail:detail || ""};
-    if(broken && typeof broken.check === "function"){
-      var caught = false;
-      try{ caught = !broken.check(broken.was); }catch(e){ caught = true; }
-      row.proved = caught;
+    if(broken && typeof broken.check === "function" && checkRunsCode(broken.check)){
+      var caught = false, threw = false;
+      try{ caught = !broken.check(broken.was); }catch(e){ threw = true; }
       row.was = broken.label || "the shipped defect";
-      if(!caught){
+      row.proved = caught && !threw;
+      if(threw){
+        row.ok = false;
+        row.detail = (row.detail ? row.detail + " \u00b7 " : "")
+          + "THE BROKEN-FORM CHECK THREW - it proves nothing";
+      } else if(!caught){
         row.ok = false;
         row.detail = (row.detail ? row.detail + " \u00b7 " : "")
           + "THE CASE CANNOT FAIL: it passes against " + row.was;
       }
     } else {
       row.amber = true;
+      if(broken) row.detail = (row.detail ? row.detail + " \u00b7 " : "")
+        + "broken form declared but its check runs no game code - not counted as proof";
     }
     rows.push(row);
-    if(row.ok) pass++; else fail++;
     if(row.amber) amber++;
+    else if(row.ok) pass++; else fail++;
   }
   /* the world is put back exactly as it was, whatever happens in here - and the
      list is the one the LAWS read, not a plausible-looking one. The first cut
@@ -17513,7 +17599,7 @@ function selfTest(){
     var cgBad = cg.filter(function(r){ return r[1] !== r[2]; });
     T("a number-name is a person only when it is one", cgBad.length === 0,
       cg.length + " cases" + (cgBad.length ? " - WRONG: " + cgBad.map(function(r){ return r[0]; }).join("; ") : ""),
-      {label:"the v4.50.0 COUNTED, widened to bare punctuation",
+      {label:"the v4.51.0 COUNTED, widened to bare punctuation",
        was:/^[\s:.)\]]+(?:of\s+them\b|days?\b)|^\s*[:.)\]]/i,
        check:function(w){ return !w.test(". People from the Hollow came up the stairs."); }});
 
@@ -17521,11 +17607,17 @@ function selfTest(){
     var dpBad = [], dpLines = 0;
     /* whoever the spine authors as dying may be spoken of as dead - that is not a
        false positive, it is the story. Everyone else must never certify. */
-    var dies = {};
-    SPINE.forEach(function(b){ (b.falls || []).forEach(function(w){ dies[w] = 1; }); });
-    dies.Mirren = 1;                     /* dead before the cold open finishes dealing */
-    var NAMES = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Five","Mirren","Marek"]
-      .filter(function(w){ return !dies[w]; });
+    /* ERA-AWARE. Excluding a name outright because the story kills it later hid a
+       real hit: a2-housing's authored "nobody has gone to find him" fires on Vic at
+       beat 16, nine beats before he dies, where he is still load-bearing. A name is
+       exempt only from the beat where its death is canon. */
+    var diesAt = {};
+    SPINE.forEach(function(b, i){ (b.falls || []).forEach(function(w){ if(!(w in diesAt)) diesAt[w] = i; }); });
+    diesAt.Mirren = 0;                   /* dead before the cold open finishes dealing */
+    var NAMES = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Five","Mirren","Marek"];
+    function aliveFor(nm, atBeat){
+      return !(nm in diesAt) || (typeof atBeat === "number" && atBeat < diesAt[nm]);
+    }
     /* THE CORPUS WAS THE ONE PLACE THE HITS WERE NOT. "1,252 lines, zero false
        positives" was true of SPINE alone - and the seeded cold open ("said Mirren
        has been dead since Tuesday... She says her name is Pia"), the scene book's
@@ -17535,20 +17627,28 @@ function selfTest(){
     (OPENING.scene || []).forEach(function(b){ extra.push(b.text); });
     (OPENING2.scene || []).forEach(function(b){ extra.push(b.text); });
     Object.keys(SCENEBOOK).forEach(function(k){
-      var e = SCENEBOOK[k];
+      var e = SCENEBOOK[k], bi = beatById(k);
       [e, e && e.room].forEach(function(sc){
         if(!sc) return;
-        if(sc.before) extra.push(sc.before);
-        (sc.never || []).forEach(function(x){ extra.push(x); });
-        (sc.topics || []).forEach(function(t){ extra.push(t.gives); extra.push(t.holds); });
+        if(sc.before) extra.push({t:sc.before, at:bi});
+        (sc.never || []).forEach(function(x){ extra.push({t:x, at:bi}); });
+        (sc.topics || []).forEach(function(t){ extra.push({t:t.gives, at:bi}); extra.push({t:t.holds, at:bi}); });
       });
     });
     WANTS.forEach(function(w){ extra.push(w.line); });
-    SPINE.forEach(function(b){ extra.push(b.goal); extra.push(b.aim); });
-    extra.forEach(function(ln){
+    SPINE.forEach(function(b, bi){ extra.push({t:b.goal, at:bi}); extra.push({t:b.aim, at:bi}); });
+    /* the stall pins and the walk lines, which nobody had swept */
+    (typeof PIN_STALLS !== "undefined" ? PIN_STALLS : []).forEach(function(x){ extra.push(x); });
+    SPINE.forEach(function(b, bi){ if(b.walkLine) extra.push({t:b.walkLine, at:bi}); });
+    /* the extra corpus carries its own beat where it has one, so a line from a
+       season-two card is judged in season two */
+    extra.forEach(function(rec){
+      var ln = rec && rec.t !== undefined ? rec.t : rec;
+      var at = rec && rec.t !== undefined ? rec.at : undefined;
       if(!ln) return;
       dpLines++;
       NAMES.forEach(function(nm){
+        if(!aliveFor(nm, at)) return;
         if(deathPredicated(nm, ln)) dpBad.push("(extra) " + nm + " - " + String(ln).slice(0, 60));
       });
     });
@@ -17570,7 +17670,7 @@ function selfTest(){
     });
     T("no authored line certifies a death", dpBad.length === 0,
       dpLines + " lines x " + NAMES.length + " names the spine keeps alive"
-      + " (" + Object.keys(dies).sort().join("/") + " excluded: the story kills them)" + (dpBad.length ? " - FIRED: " + dpBad.slice(0, 5).join(" | ") : ""));
+      + " (" + Object.keys(diesAt).sort().join("/") + " exempt only from the beat their death is canon)" + (dpBad.length ? " - FIRED: " + dpBad.slice(0, 5).join(" | ") : ""));
     var dpMiss = [];
     if(!deathPredicated("Pia", "He shot Pia in the head and she went down")) dpMiss.push("a shooting");
     if(!deathPredicated("Nine", "The shard is smashed. Nine is gone.")) dpMiss.push("a smashed shard");
@@ -17828,29 +17928,51 @@ function selfTest(){
         var src = String(boardTurn).split("/*").map(function(p, i){
           return i === 0 ? p : p.slice(p.indexOf("*/") + 2);
         }).join("");
-        return src.indexOf("var worldsMove = !said || forcingNow") !== -1
+        return src.indexOf("var worldsMove = (!said || forcingNow) && pickKind !== \"exit\"") !== -1
             && src.indexOf("closeBeat(worldsMove, note)") !== -1;
       })(),
       "a gate landed under a forcing order pays the toll and deals the scar",
-      {label:"the v4.50.0 booking, where obedience was a reprieve",
-       was:"closeBeat(!said, note);",
-       check:function(w){ return String(w).indexOf("worldsMove") !== -1; }});
+      {label:"the v4.51.0 booking, where obedience was a reprieve",
+       /* the old rule is RE-RUN, not described. If it agrees with the shipped rule
+          on the discriminating input this case proves nothing - which is exactly
+          what the first version did. closeBeat is named so the harness can see the
+          check touches the game. */
+       was:{said:true, forcing:true, pick:"stall", fn:"closeBeat"},
+       check:function(w){
+         var oldHard = !w.said;                                        /* what shipped */
+         var newHard = (!w.said || w.forcing) && w.pick !== "exit";    /* what closeBeat gets now */
+         return oldHard === newHard;
+       }});
 
     /* ...and the order-givers carry the state that makes the order legal */
     T("the world's own turn is not vetoed by the stall it arrived through",
-      String(boardTurn).indexOf("var worldTurn = forcingNow || beatTurns >= beatNow().budget") !== -1,
-      "the pressure directive orders a gate; the stall-hold used to forbid it",
-      {label:"the v4.50.0 guard, which excepted forcing but not pressure",
-       was:'if(pickKind === "stall" && said && exitStage() === "open" && !forcingNow)',
-       check:function(w){ return String(w).indexOf("worldTurn") !== -1; }});
+      String(boardTurn).indexOf("var worldTurn = forcingNow || (pressureWasSent && beatTurns >= beatNow().budget)") !== -1
+      && String(callDM).indexOf("!(!beatDone() && beatTurns >= beatNow().budget)") !== -1,
+      "the veto yields in boardTurn AND in the correction that used to burn the call",
+      /* re-runs the old yield rule - forcing only - against a pressure turn */
+      {label:"the guard boardTurn used to apply: forcing only",
+       was:{forcing:false, atBudget:true, fn:"boardTurn"},
+       check:function(w){
+         var oldYield = w.forcing;
+         var newYield = w.forcing || w.atBudget;
+         return oldYield === newYield;
+       }});
 
     T("the shard tracker reads direction, not proximity",
       shardAfter("bare hand jammed out of the jacket mid-stride", "jacket", true) === "hand"
       && shardAfter("she goes back into the jacket", "hand", true) === "jacket",
       "jacket-as-source and jacket-as-destination are different sentences",
-      {label:"last-hit-wins, which lost to any sentence carrying both nouns",
-       was:"bare hand jammed into the jacket mid-stride",
-       check:function(w){ return shardAfter(w, "jacket", true) === "hand"; }});
+      /* the old rule is re-created here and run, rather than described: proximity
+         only, which is what shipped before. A check that returns the same answer
+         under both rules certifies nothing - the first version of this one did
+         exactly that. */
+      {label:"last-hit-wins proximity, re-run against the discriminating sentence",
+       was:"bare hand jammed out of the jacket mid-stride",
+       check:function(w){
+         var t = " " + String(w).toLowerCase() + " ";
+         var h = lastHit(t, SHARD_TO_HAND), p = lastHit(t, SHARD_TO_POCKET);
+         return ((h > p) ? "hand" : "jacket") === "hand";   /* old rule said jacket */
+       }});
 
     /* the board covers the whole spine */
     var noBook = SPINE.filter(function(b){ return !SCENEBOOK[b.id]; }).map(function(b){ return b.id; });
@@ -17867,7 +17989,8 @@ function selfTest(){
       $("hud-loc").textContent = keep.loc; $("hud-day").textContent = keep.day;
     }
   }
-  return {pass:pass, fail:fail, amber:amber, rows:rows, build:VERSION_TAG};
+  return {pass:pass, fail:fail, amber:amber, proved:pass, total:pass + fail + amber,
+          rows:rows, build:VERSION_TAG};
 }
 function renderSelfTest(){
   /* CI reads __SELFTEST__.fail, so it must exist even when the sweep dies on its
@@ -17881,7 +18004,7 @@ function renderSelfTest(){
   h += '<div style="opacity:.7;margin:6px 0 22px">' + esc(r.build)
     + ' \u00b7 the game\u2019s own writing, run through its own laws</div>';
   h += '<div style="font-size:26px;margin-bottom:6px;color:' + (r.fail ? "#e08b8b" : "#8bd98b") + '">'
-    + (r.fail ? r.fail + " FAILED" : "ALL " + r.pass + " PASSED") + '</div>';
+    + (r.fail ? r.fail + " FAILED" : r.pass + " PROVED of " + r.total) + '</div>';
   h += '<div style="margin-bottom:20px;font-size:13px;color:' + (r.amber ? "#e0a94e" : "#7a7365") + '">'
     + (r.amber ? r.amber + " case(s) carry no broken form \u2014 undeclared debt"
                : "every case proves it would have caught its own defect") + '</div>';
