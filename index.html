@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.53.0 "Fifteen Laws" "The Physics Desk"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.54.0 "Fifteen Laws" "The Physics Desk"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -5532,7 +5532,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.53.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.54.0";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -18821,6 +18821,177 @@ function selfTest(){
     /* the board covers the whole spine */
     var noBook = SPINE.filter(function(b){ return !SCENEBOOK[b.id]; }).map(function(b){ return b.id; });
     T("every beat has a scene contract", noBook.length === 0, noBook.join(", "));
+
+    /* ================== THE DEGENERATE RUN ==================
+       Every brief since wave three has closed on the same open item: the paths a
+       player with intent never walks. Five waves of hardening happened against a
+       two-beat playtest surface, and the toll ceiling, the fold and the season seam
+       were dark the whole time - the fold ran for the first time in this game's
+       history in wave five, and it ran wrong in three places at once.
+       So the board plays itself, badly, on purpose. It stalls everything, pays every
+       toll, folds the table, refuses a death and then earns one, and walks the season
+       seam. No model is involved in any of it: every one of these paths is the
+       CLIENT'S own, which is exactly why nothing was testing them.
+       It runs last, because it is destructive by design, and it runs only where the
+       sweep already runs - ?selftest, which loads no save. persistAll is stubbed for
+       the duration anyway: a synthetic run must never reach the player's drawer. */
+    var dBad = [], dNote = {};
+    function D(group, ok, detail){ if(!ok) dBad.push(group + ": " + (detail || "failed")); }
+    var realPersist = window.persistAll, wrote = 0;
+    window.persistAll = function(){ wrote++; };
+    try{
+      /* a clean board, mid Book Two, nothing carried in */
+      runOver = ""; deathLine = ""; foldPending = false; foldServed = false; foldedBeats = [];
+      walkbackNow = false; driftRun = 0; tolls = 0; tollExplained = true;
+      perilTurns = 0; perilName = ""; pickKind = ""; forcingNow = false; pressureSent = false;
+      lastTurnMud = false; breachNow = ""; sceneCollapsed = false; chassisHolder = "Seven";
+      beatIdx = beatById("a2-door"); currentSeason = SPINE[beatIdx].season;
+      phase = "live"; phaseLeft = 0; beatTurns = 0; beatText = ""; beatSeen = {};
+      gateNotes = {}; runCanon = []; quests = []; feedLog = []; pendingAsides = [];
+
+      function drain(){ var g = 0; while(phase === "aftermath" && g++ < 6) boardTurn({}); }
+      function anchoredProse(){ return ((beatNow().anchors || []).join(" ") + " the night happened here"); }
+      function forceIt(){ beatTurns = beatNow().budget + 1; boardDirective(); }
+
+      /* ---- 1 · THE METER FILLS FROM THE STALLING PATH ---- */
+      var meter = [];
+      for(var di = 0; di < TOLL_MAX; di++){
+        forceIt();
+        boardTurn({});                       /* no gate: the world takes the turn */
+        meter.push(tolls);
+        drain();
+        if(phase === "slack") armBeat();
+      }
+      dNote.meter = meter.join(",");
+      D("1 the meter", meter.join(",") === "1,2,3", "three forced closes booked " + meter.join(", "));
+      D("1 the meter", tolls === TOLL_MAX, "the meter sits at " + tolls + " of " + TOLL_MAX);
+
+      /* ---- 2 · A LANDED GATE CLOSES BEFORE THE FOLD ARMS ---- */
+      forceIt();
+      beatText = anchoredProse();
+      var closing = beatNow().id;
+      boardTurn({gate:true, gateNote:"they finished it themselves, on the forced turn"});
+      dNote.answered = {phase:phase, note:!!gateNotes[closing], fold:foldPending, tolls:tolls};
+      D("2 the answered night", phase === "aftermath", "a landed gate left phase=" + phase);
+      D("2 the answered night", !!gateNotes[closing], "the close the player watched was not recorded");
+      D("2 the answered night", foldPending === true, "the fold did not arm behind the close");
+      D("2 the answered night", tolls === TOLL_MAX, "the meter went to " + tolls + " of " + TOLL_MAX);
+
+      /* ---- 3 · THE FOLD FOLDS, AND SAYS WHAT IT DID ---- */
+      var finWas = seasonFinaleIdx(), foldFrom = beatIdx;
+      foldServed = true;
+      finishFold();
+      var gold = null;
+      feedLog.forEach(function(b){ if(b && b.kind === "gold") gold = b; });
+      dNote.fold = {from:foldFrom, to:beatIdx, finale:finWas, folded:foldedBeats.length, tolls:tolls};
+      D("3 the fold", beatIdx === finWas, "landed at " + beatIdx + ", the finale is " + finWas);
+      D("3 the fold", tolls === 0, "the meter did not re-zero: " + tolls);
+      D("3 the fold", foldedBeats.length > 0, "nothing was recorded as folded");
+      D("3 the fold", !!gold && /KEPT THE STORY/.test(gold.title || ""), "no gold card in the feed");
+      D("3 the fold", foldPending === false && foldServed === false, "the fold did not disarm");
+
+      /* ---- 4 · THE FENCES STAND DOWN WHILE THE FOLD IS BEING WRITTEN ----
+         and each one is asked where it actually DISCRIMINATES, which is not the same
+         beat. Book One's remaining beats own no reveals at all, so the reveal fence
+         cannot move there; Book Two's finale shares no room-words with anything later,
+         so the place fence has nothing to refuse there. Asking both questions at one
+         beat is how a green row certifies nothing - the first cut of this did exactly
+         that and passed on a comparison of "" against "". */
+      gateNotes = {}; foldedBeats = []; runCanon = [];   /* a clean history, so "been" is the board's */
+      function fenceSnap(id){
+        beatIdx = beatById(id); currentSeason = SPINE[beatIdx].season;
+        var fb = SPINE[seasonFinaleIdx()], fp = ((fb.opens || [])[0] || {}).place || "";
+        foldPending = false; foldServed = false;
+        var was = {locked:lockedKeys().length, day:dayPinNow(), place:fencedPlace(fp)};
+        foldPending = true; foldServed = true;
+        var now = {locked:lockedKeys().length, day:dayPinNow(), place:fencedPlace(fp)};
+        foldPending = false; foldServed = false;
+        return {at:id, room:fp, before:was, during:now};
+      }
+      var f1 = fenceSnap("a1-hum"), f2 = fenceSnap("a2-three");
+      dNote.fences = {book1:f1, book2:f2};
+      D("4 the fences", !!f1.before.place && !f1.during.place,
+        "the fold's own destination at " + f1.at + ": refused before by \"" + f1.before.place
+        + "\", during by \"" + f1.during.place + "\"");
+      D("4 the fences", f1.during.day > f1.before.day,
+        "the day pin did not move at " + f1.at + ": " + f1.before.day + " -> " + f1.during.day);
+      D("4 the fences", f2.during.locked < f2.before.locked,
+        "the folded beats' reveals stayed locked at " + f2.at + ": "
+        + f2.before.locked + " -> " + f2.during.locked);
+
+      /* ---- 5 · PERIL, AND A DEATH THAT IS EARNED ---- */
+      runOver = ""; perilTurns = 0; perilName = "";
+      var unwarned = deathRefused({death:"he goes under and does not come up"});
+      var armed = perilDeclared("the flooded shaft below the ladder");
+      perilTurns = 2; perilName = perilShortName(armed);
+      var warned = deathRefused({death:"he goes under and does not come up"});
+      var strip = pressureLabel();
+      killCourier("he goes under and does not come up");
+      dNote.death = {unwarned:unwarned, warned:warned, strip:strip, over:runOver};
+      D("5 the death", unwarned === true, "a death with no peril declared was allowed to stand");
+      D("5 the death", warned === false, "a declared peril did not make the death legal");
+      D("5 the death", strip.indexOf("FLOODED SHAFT") !== -1, "the strip did not name it: " + strip);
+      D("5 the death", runOver === "death", "the run did not end: " + runOver);
+
+      /* ---- 6 · THE SEASON SEAM, WHICH NOBODY HAS EVER PLAYED ---- */
+      runOver = ""; deathLine = ""; perilTurns = 0; perilName = "";
+      foldPending = false; foldServed = false; seasonBreakDue = false; epilogueNow = false;
+      var bookWas = currentSeason;
+      beatIdx = seasonFinaleIdx(); currentSeason = SPINE[beatIdx].season;
+      phase = "live"; phaseLeft = 0; beatTurns = 0; beatText = anchoredProse();
+      forceIt();
+      boardTurn({gate:true, gateNote:"the book closed at the table"});
+      drain();
+      dNote.seam = {phase:phase, due:seasonBreakDue, epilogue:epilogueNow};
+      D("6 the seam", phase === "seasonend", "the finale settled into phase=" + phase);
+      D("6 the seam", epilogueNow === true, "the epilogue door never opened");
+      D("6 the seam", seasonBreakDue === true, "the break card was never due");
+      seasonBreakDue = false;
+      seasonBreakCard();
+      var breakCard = null;
+      feedLog.forEach(function(b){ if(b && b.kind === "beat" && /^SEASON /.test(b.title || "")) breakCard = b; });
+      D("6 the seam", !!breakCard, "no season card reached the feed");
+      if(breakCard && SEASON_CLOSE_LINE[bookWas]){
+        D("6 the seam", String(breakCard.sum || "").indexOf(SEASON_CLOSE_LINE[bookWas].slice(0, 30)) === 0,
+          "the book did not close on its own chapter-end line");
+      }
+      seasonContinue();
+      var wrap = null, prev = null;
+      feedLog.forEach(function(b){
+        if(b && b.kind === "gold" && /IN THE RECORD/.test(b.title || "")) wrap = b;
+        if(b && /PREVIOUSLY/i.test(String(b.title || ""))) prev = b;
+      });
+      dNote.premiere = {season:currentSeason, beat:beatDone() ? "(done)" : beatNow().id,
+                        record:!!seasonRecords[bookWas], wrap:!!wrap, previously:!!prev, phase:phase};
+      D("6 the seam", currentSeason === bookWas + 1, "the next book did not open: season " + currentSeason);
+      D("6 the seam", !!seasonRecords[bookWas], "the closed season left no record");
+      D("6 the seam", !!wrap, "no wrap card");
+      D("6 the seam", !beatDone() && beatNow().season === bookWas + 1,
+        "the pointer did not land in the new book");
+    } catch(de){
+      dBad.push("the degenerate run threw: " + String((de && de.message) || de));
+    } finally {
+      window.persistAll = realPersist;
+    }
+    T("the board plays itself badly and every dark path lights up",
+      dBad.length === 0,
+      "stalls to the ceiling (" + (dNote.meter || "-") + "), the fold behind an answered close, the"
+      + " fold's three fences, peril to an earned death, and the season seam - all with no model"
+      + " and no save touched" + (dBad.length ? " · FAILED: " + dBad.slice(0, 6).join(" | ") : ""),
+      {label:"the v4.51.0 fold, which returned above closeBeat and swallowed answered story",
+       was:{said:true, forcing:true, pick:"stall"},
+       check:function(w){
+         /* both rules, re-run against the corner that discriminates: a gate the model
+            LANDED under a forcing order, at the toll ceiling. The old rule returned
+            before closeBeat on any world's move; the new one only on an UNANSWERED
+            night. If they agree here this case proves nothing. */
+         var worldsMove = bookFor(w.said, w.forcing, w.pick) === "world";
+         var oldSwallows = worldsMove;
+         var nowSwallows = worldsMove && !w.said;
+         return oldSwallows === nowSwallows;
+       }});
+    T("the degenerate run put the drawer back", window.persistAll === realPersist,
+      wrote + " save(s) intercepted and discarded - a synthetic run never reaches a player's folder");
   } catch(e){
     T("the sweep itself ran", false, String((e && e.message) || e));
   } finally {
