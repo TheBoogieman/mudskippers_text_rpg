@@ -8052,12 +8052,33 @@ var V5MODE = false;          /* the skeleton is built; this is its only switch *
    scene, and a scene is the one thing this turn is guaranteed not to be. */
 var BIT_VOICE_CAP = 2;
 function bitVoices(){
-  var sc = sceneNow(), here = (sc && sc.sc && sc.sc.here) || [], out = [], i, nm;
-  if(bitAudible("Nine")) out.push("Nine");
-  for(i = 0; i < here.length && out.length < BIT_VOICE_CAP; i++){
+  var sc = sceneNow(), here = (sc && sc.sc && sc.sc.here) || [], room = [], out = [], i, nm, pick;
+  for(i = 0; i < here.length; i++){
     nm = here[i];
-    if(nm === "Narration" || isCourier(nm) || out.indexOf(nm) !== -1) continue;
-    if(bitAudible(nm)) out.push(nm);
+    if(nm === "Narration" || isCourier(nm) || nm === "Nine" || room.indexOf(nm) !== -1) continue;
+    if(bitAudible(nm)) room.push(nm);
+  }
+  if(bitAudible("Nine")) out.push("Nine");
+  /* THE ROOM TAKES TURNS, and it has to be said why. This walked here[] and took the
+     first names it found - and here[] is authored in a stable order, so every beat in
+     the game seated the same two people: Nine and Pia with skin on the shard, Pia and
+     Vic through cloth, all thirty-three nights of it. Hesta, Seven, Three and Marek
+     could not answer a bit ANYWHERE, and nothing looked broken - a room where the same
+     two people do the talking reads as writing, not as a fault, which is this project's
+     signature failure shape. The voice cards are what made it visible: the writer sent
+     seven and the composer could only ever spend three.
+     Rotated on the BIT rather than the clock, for the reason bitFallbackFor already
+     carries in its own key - bits tick nothing, so beatTurns would have handed every
+     bit in a beat the same pair. Deterministic, so a reload replays the same night.
+     She keeps slot one whenever she can be heard at all: a bit said with bare skin on
+     the shard is said TO her, and that is the design, not an accident of ordering. */
+  var salt = "bitvoice|" + (beatDone() ? "end" : beatNow().id)
+           + "|" + String(lastPlayerText || "").length
+           + "|" + String(lastPlayerText || "").slice(0, 12);
+  while(room.length && out.length < BIT_VOICE_CAP){
+    pick = pickVariant(room, salt + "|" + out.length);
+    out.push(pick);
+    room.splice(room.indexOf(pick), 1);
   }
   return out.slice(0, BIT_VOICE_CAP);
 }
@@ -8069,10 +8090,40 @@ var BIT_AIMS = [
  "answers the FIRST speaker, not the courier - the family talking across him is the whole reason he does bits",
  "one line: the room absorbing it and carrying on. No new fact, nobody arrives, nothing outside this room happens, and the weather is not a metaphor. NOBODY SPEAKS in it - the voices above are the only ones this turn has, and narrating a line for anybody else puts words in a mouth that is not open."
 ];
+/* THE ROLE SAYS AT WHOM; THE CARD SAYS AS WHOM. The three aims are POSITIONAL - answer
+   him, answer the first speaker rather than him, let the room absorb it - and the live
+   record says that structure works: the cross-talk is this family's comedy engine.
+   What they could not say is how Hesta does it differently from Vic, and a slot that
+   knows its job but not its voice is the definition of a template. Cards are
+   role-agnostic on purpose, so a speaker sounds like herself in either chair.
+   ONE AUTHORING LAW RIDES WITH THEM, and it was born of the echo: NO CARD MAY CONTAIN
+   A SENTENCE THAT COULD PASS AS A FILL. A worked example inside an instruction is an
+   answer the model may hand straight back, which is precisely how bit 11 of 12 came
+   back as three placeholders. Cards are clipped instruction fragments: flavour in
+   words, never in specimen lines. Ritual check 9 holds the shape - no quotation mark,
+   no first person, no second person, and a name at the front - because every way an
+   example line gets written violates at least one of those. */
+var BIT_VOICE_CARDS = {
+ "Pia":"Pia: fast, warm, unimpressed. Mock the idea, never him. Price things in errands and consequences. Care openly, then disguise it as logistics in the last three words. Funny because she is right; one splinter of honesty in every kindness.",
+ "Nine":"Nine: nine years old, ancient, heard through skin. Small words. Take it literally and be accidentally profound, or report what his hands are doing as if that were the sentence, or defend him badly. Never lore, never wise on purpose.",
+ "Hesta":"Hesta: weather with opinions. Short, flat, final, fond. Reduce it to a chore and assign it, or agree in a way worse than disagreeing, or say the load-bearing thing in under ten words. Food is an argument she always wins.",
+ "Seven":"Seven: courtesy doing paperwork on the apocalypse. Log the remark as if minutes were kept, cite a rule he invented and immediately waive it, or let one honest laugh crack the procedure, then straighten. Formal to catastrophe; it has never been formal back.",
+ "Three":"Three: two voices, one throat, an armistice. Split over the line and settle it by vote, report the tally deadpan, or land the stereo observation nobody wanted said. Quorum comedy; unison once at most, and only when it is worth two people.",
+ "Vic":"Vic: charm paying interest on an unnamed debt. Slide the remark into rates and customers, agree slightly too fast, or say the true thing one clause short of finished. Guilt in a good coat; the question of why this courier never survives his mouth.",
+ "Marek":"Marek: half in the doorway, loyal on a technicality. Report the room's vote wrong on purpose, treat the remark as a service complaint, or back him with the enthusiasm of a man signing for a parcel. Dry; if it is one all, he says so.",
+ "Narration":"Room flavor: objects set down harder than necessary, the marsh minding its own business, the hum against ribs adjusting by half a note. React to the mood of what was said, never the meaning of it."
+};
+/* a voice with no card gets the role alone, which is the old behaviour and is not a
+   failure - it is the sweep's job to say which seats are still uncarded rather than
+   let an engineer invent a voice the writer has not written */
+function bitAimFor(role, who){
+  var card = BIT_VOICE_CARDS[who];
+  return BIT_AIMS[role] + (card ? " " + card : "");
+}
 function bitSlots(){
   var v = bitVoices(), out = [], i;
-  for(i = 0; i < v.length; i++) out.push({who:v[i], aim:BIT_AIMS[i < 1 ? 0 : 1], cap:BIT_CAP_VOICE});
-  out.push({who:"Narration", aim:BIT_AIMS[2], cap:BIT_CAP_ROOM});
+  for(i = 0; i < v.length; i++) out.push({who:v[i], aim:bitAimFor(i < 1 ? 0 : 1, v[i]), cap:BIT_CAP_VOICE});
+  out.push({who:"Narration", aim:bitAimFor(2, "Narration"), cap:BIT_CAP_ROOM});
   return out;
 }
 /* THE ALLOWLIST GOES OUT WITH THE ASK, not just in on the way back. A fence the
@@ -18807,7 +18858,7 @@ function selfTest(){
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
     "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow",
-    "bitClean"];
+    "bitClean", "bitAimFor", "bitVoices"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19784,6 +19835,102 @@ function selfTest(){
            theirs = w(true, false);
          } finally { V5MODE = kv; lastTurnMud = km; }
          return mine === false && theirs === false;
+       }});
+
+    /* THE CARDS, AGAINST EVERY SEAT THE BOARD CAN OFFER. bitVoices takes Nine first
+       whenever skin is on the shard and then walks the room, so which names can reach
+       a slot is a property of all 33 beats x both shard states x live and slack - not
+       of the one room somebody happened to test in. An uncarded seat is not a failure:
+       it is a voice the writer has not written yet, and the row names it rather than
+       letting an engineer invent one. */
+    var seats = {}, uncarded = {}, cardBad = [];
+    (function(){
+      var k = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+               fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText};
+      try{
+        chassisHolder = null; foldPending = false; walkbackNow = false; runOver = "";
+        roster = {family:[], fallen:[]};
+        /* A NIGHT OF BITS, not one bit. The seats rotate on the player's own line, so
+           asking with a single typed string answers "who speaks THIS turn" and calls it
+           coverage - which is how the first cut of this row would have reported four
+           carded voices as unreachable while the rotation reached them all. */
+        var says = ["a", "bb", "ccc", "dddd", "eeeee", "ffffff", "ggggggg", "hhhhhhhh",
+                    "iiiiiiiii", "jjjjjjjjjj", "kkkkkkkkkkk", "llllllllllll"];
+        for(var bi = 0; bi < SPINE.length; bi++){
+          beatIdx = bi;
+          ["live", "slack"].forEach(function(ph){
+            phase = ph;
+            ["hand", "jacket"].forEach(function(sw){
+              shardWhere = sw;
+              says.forEach(function(said){
+                lastPlayerText = said;
+                bitSlots().forEach(function(sl){
+                  seats[sl.who] = (seats[sl.who] || 0) + 1;
+                  if(!BIT_VOICE_CARDS[sl.who]) uncarded[sl.who] = (uncarded[sl.who] || 0) + 1;
+                });
+              });
+            });
+          });
+        }
+      } finally {
+        beatIdx = k.bi; phase = k.ph; shardWhere = k.sw; chassisHolder = k.ch;
+        roster = k.ro; foldPending = k.fp; walkbackNow = k.wb; runOver = k.ov;
+        lastPlayerText = k.said;
+      }
+    })();
+    /* ...and the pool must never be able to answer in a voice the ask cannot brief */
+    BIT_FALLBACK.forEach(function(e){
+      if(!BIT_VOICE_CARDS[e.who]) cardBad.push("the pool speaks as " + e.who + ", who has no card");
+    });
+    Object.keys(BIT_VOICE_CARDS).forEach(function(nm){
+      if(!seats[nm]) cardBad.push(nm + " has a card and no seat the board can offer");
+    });
+    T("every voice the pool can answer in has a card, and every card can be reached",
+      cardBad.length === 0,
+      cardBad.length ? cardBad.join("; ")
+        : Object.keys(seats).length + " voices seated across 33 beats × 2 phases × 2 shard"
+          + " states × 12 bits · carded: " + Object.keys(BIT_VOICE_CARDS).length
+          + (Object.keys(uncarded).length
+             ? " · STILL UNCARDED: " + Object.keys(uncarded).join(", ")
+             : " · no uncarded seat"),
+      {label:"seating off the head of here[], which is authored in a stable order",
+       was:function(){
+         var sc0 = sceneNow(), h0 = (sc0 && sc0.sc && sc0.sc.here) || [], o = [], j, nm0;
+         if(bitAudible("Nine")) o.push("Nine");
+         for(j = 0; j < h0.length && o.length < BIT_VOICE_CAP; j++){
+           nm0 = h0[j];
+           if(nm0 === "Narration" || isCourier(nm0) || o.indexOf(nm0) !== -1) continue;
+           if(bitAudible(nm0)) o.push(nm0);
+         }
+         return o.slice(0, BIT_VOICE_CAP);
+       },
+       /* the same census against the old seating: three voices out of seven, and the
+          same three on every beat of every night */
+       check:function(w){
+         var real = window.bitVoices, hit = {};
+         var k2 = {bi:beatIdx, ph:phase, sw:shardWhere, ch:chassisHolder, ro:roster,
+                   fp:foldPending, wb:walkbackNow, ov:runOver, said:lastPlayerText};
+         try{
+           window.bitVoices = w;
+           chassisHolder = null; foldPending = false; walkbackNow = false; runOver = "";
+           roster = {family:[], fallen:[]}; phase = "live";
+           for(var b2 = 0; b2 < SPINE.length; b2++){
+             beatIdx = b2;
+             ["hand", "jacket"].forEach(function(sw2){
+               shardWhere = sw2;
+               ["a", "bb", "ccc", "dddd", "eeeee", "ffffff"].forEach(function(t2){
+                 lastPlayerText = t2;
+                 bitSlots().forEach(function(sl){ hit[sl.who] = 1; });
+               });
+             });
+           }
+         } finally {
+           window.bitVoices = real;
+           beatIdx = k2.bi; phase = k2.ph; shardWhere = k2.sw; chassisHolder = k2.ch;
+           roster = k2.ro; foldPending = k2.fp; walkbackNow = k2.wb; runOver = k2.ov;
+           lastPlayerText = k2.said;
+         }
+         return Object.keys(BIT_VOICE_CARDS).filter(function(nm2){ return !hit[nm2]; }).length === 0;
        }});
 
     /* Rung 6. DORMANCY, ASSERTED RATHER THAN ASSUMED. TEETH_LIVE set the standard
