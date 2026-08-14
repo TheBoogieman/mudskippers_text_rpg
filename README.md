@@ -316,6 +316,22 @@ it does **not** cover — six of the twenty laws have a case that proves them, a
 the other fourteen are named on screen, because a sweep that hides its own gaps is
 worse than no sweep. In CI: load the page and read window.__SELFTEST__.fail.
 
+Two more things the page does, both of which exist because the sweep was once caught
+flattering itself. A case may declare the **broken form** it was written against — the
+old regex, the pre-fix rule — and the sweep re-runs the same assertion against it and
+requires it to *fail*; a case that passes against the bug it claims to catch is not a
+case, and goes red. Credit for that is *observed*, not read: the check is only counted
+as proof if it actually entered game code, which is why the header says "5 PROVED of
+22" rather than a green twenty-two. The other seventeen are amber — real assertions,
+no proof they would have caught their own defect — and amber is counted apart from
+pass so the headline cannot launder debt as success.
+
+And every detector declares what it must **not** change. All nine predicates are run
+over all 2,071 authored lines and the exact set of lines each one fires on is checked
+in as a fixture; a change to any predicate shows up as a diff, and a flip on a line
+nobody listed is red. It catches the two regressions of that shape this codebase has
+actually shipped, and misses a third, and the page says which.
+
 That sweep has earned its keep. It found that the board's own writing broke the
 board's own law (from night two onward every authored page has Nine talking, but
 only the first declared where she was, so after the *hard* landing she was left in
