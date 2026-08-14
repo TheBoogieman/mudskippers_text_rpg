@@ -8118,6 +8118,29 @@ function bitSkeleton(text){
 function bitSkeletonNow(){
   return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
+/* THE BREACH APPARATUS RETIRES FOR BITS, AND IT RETIRES STRUCTURALLY. Six things
+   were built to stop a joke rewriting the world - the dry-path brief, the hold,
+   breachIn, breachMore, breachStrip and the count - and every one of them catches a
+   world change in a REPLY. Under the skeleton the reply is three strings. There is
+   no field a world change could arrive in, so there is nothing to catch, no fence to
+   trust and nothing to keep in step with the other five. That is what this phase is
+   for: not a better fence - an empty room.
+   WHAT IS LOST WITH IT, said plainly: the dry-path brief also told the family to
+   refuse him out loud, which is genuinely funny and genuinely load-bearing. That job
+   moves into the slot directive, which asks the answering voice to play along, shut
+   it down, or diagnose him. The comedy is authored into the aim rather than
+   triggered by a classifier, and it fires on EVERY bit rather than on the ones a
+   regex recognised.
+   Named rather than inlined so the retirement is provable by CALLING it, not by
+   reading takeAction's source - and so the next thing that needs to know whether
+   this turn is scanned asks instead of guessing. */
+function breachScanned(isMud, clickNow){
+  if(bitSkeletonNow()) return false;
+  /* the button, or anything typed. A rail click is the board's own line and was
+     never a breach - and it tests whether a button was pressed AT ALL, never the
+     door kind, which takeAction consumes forty lines earlier. */
+  return !!(isMud || !clickNow);
+}
 /* THE SHAPE IS THE WHOLE CONTRACT, so validating it is four lines and there is no
    excuse for skipping any of them. It matters more here than anywhere else in the
    file: a fill is rendered as somebody's SPEECH, under a real person's nameplate,
@@ -12531,7 +12554,7 @@ function takeAction(text, isMud){
      canon and the choices, made the no-choices validator reject the hole the game
      had just made, and served the player a red card for pressing a button the game
      offered them. One third of the way to finishTongues, for obeying the rail. */
-  breachNow = (isMud || !clickNow) ? (breachIn(text) || breachMore(text)) : "";
+  breachNow = breachScanned(isMud, clickNow) ? (breachIn(text) || breachMore(text)) : "";
   var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
@@ -12566,8 +12589,16 @@ function takeAction(text, isMud){
      saying no to it is the game working. Only a reply that had to be forcibly put
      back - the storyteller complied and the client overrode it - is damage, and
      only damage counts. See the tick in the reply handler. */
+  /* ...and under the skeleton the wrapper comes off. Everything below the colon is a
+     DIRECTIVE to a storyteller, and the skeleton path does not send chatLog at all -
+     so leaving it here files an instruction that was never given into the history
+     the NEXT full turn composes from, where it reads as something the model was
+     told and ignored. What the history needs is the fact: he did a bit, and here it
+     is. */
   var userMsg = isMud
-    ? (breachNow
+    ? (bitSkeletonNow()
+       ? "MUDSKIPPER MOMENT: " + text.trim()
+       : breachNow
        ? "MUDSKIPPER MOMENT: " + text.trim() + "\n\n" + dryPathDirective(breachNow)
        : "MUDSKIPPER MOMENT (off-script, and the point of the game - play it as banter IN the scene."
          + " The family answers him, teases him, argues back. The world itself does not move: same room,"
@@ -18720,7 +18751,7 @@ function selfTest(){
        amber - the harness would be saying "unproved" about code it simply had not
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
-    "parseFills", "jsonSlice", "bitLint", "bitBlocks"];
+    "parseFills", "jsonSlice", "bitLint", "bitBlocks", "breachScanned", "bitSkeletonNow"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19128,13 +19159,22 @@ function selfTest(){
        "breachNow = " and matched the buggy line it was written to catch. A case
        that cannot fail is worse than no case: it is a green light bolted over the
        hole. */
+    /* ASKED, NOT READ. This was a source-text compare on takeAction - the exact shape
+       the credit rule exists to stop crediting, and it has scored amber for it every
+       release since that rule landed. The claim lives in a predicate now, so the
+       sweep puts the question to the running game instead of to a string. */
     T("a rail turn does not reach the breach classifiers",
-      String(takeAction).indexOf("breachNow = (isMud || !clickNow)") !== -1,
-      "takeAction tests whether a button was pressed at all - not the door kind,"
-      + " which is empty in every phase except live",
-      {label:"the wave-3 test, which read the kind it had already cleared",
-       was:"breachNow = (isMud || !kindNow) ? (breachIn(text) || breachMore(text)) : \"\";",
-       check:function(w){ return String(w).indexOf("breachNow = (isMud || !clickNow)") !== -1; }});
+      breachScanned(false, true) === false && breachScanned(false, false) === true
+      && breachScanned(true, true) === true,
+      "a rail click is the board's own line · anything typed is scanned · so is the button",
+      {label:"the wave-3 test, which read the door kind takeAction had already consumed",
+       was:function(isMud, clickNow, kindNow){ return !!(isMud || !kindNow); },
+       check:function(w){
+         /* one question, both predicates: a rail click inside a live beat. The kind
+            was consumed into kindNow forty lines up, so the wave-3 test saw "" and
+            scanned the board's own line. */
+         return breachScanned(false, true) === false && w(false, true, "") === false;
+       }});
 
     /* ONE PLAYER ACTION, ONE COMPOSITION, FOUR CALLS. Both are structural claims
        the sweep can hold: the composer must be reached through the token gate,
@@ -19626,6 +19666,62 @@ function selfTest(){
          var uniq = {};
          out.forEach(function(b){ uniq[b.text] = 1; });
          return Object.keys(uniq).length === out.length;
+       }});
+
+    /* Rung 5. THE CASE HAS TO BE ABLE TO FAIL, so the lines are picked for tripping
+       the classifiers rather than for being memorable. The brief nominated a1-pack's
+       goal sentence; it trips nothing today, which would have made this row green
+       under every version of the code including the one that changes nothing. That
+       beat's goal line has now been proposed as a fixture twice and failed to
+       discriminate twice. */
+    var brBad = [], brLive = [], brKeys = [];
+    ["I upload Nine to the cloud and we all move to Paris",
+     "I shoot Pia in the head"].forEach(function(ln){
+      var k = breachIn(ln) || breachMore(ln);
+      if(k) brLive.push(k + ": " + ln.slice(0, 34));
+      else brBad.push("the classifiers no longer fire on \"" + ln.slice(0, 34) + "\" - the case is vacuous");
+    });
+    (function(){
+      var kv = V5MODE, km = lastTurnMud;
+      try{
+        lastTurnMud = true;
+        V5MODE = true;
+        if(atHum(function(){ return breachScanned(true, false); }) !== false){
+          brBad.push("a bit under V5MODE still reaches the classifiers");
+        }
+        atHum(function(){
+          shardWhere = "hand";
+          var txt = bitSkeleton("I upload Nine to the cloud and we all move to Paris").msgs[0].content;
+          var re = /"([a-z_]+)"\s*:/gi, m;
+          while((m = re.exec(txt)) !== null){ if(brKeys.indexOf(m[1]) === -1) brKeys.push(m[1]); }
+          return null;
+        });
+        /* ...and the dormant world keeps every layer it had. A retirement that also
+           retired the OFF path would be a deletion wearing a flag. */
+        V5MODE = false;
+        if(atHum(function(){ return breachScanned(true, false); }) !== true){
+          brBad.push("with the flag down, a bit stopped reaching the classifiers");
+        }
+      } finally { V5MODE = kv; lastTurnMud = km; }
+    })();
+    if(!(brKeys.length === 1 && brKeys[0] === "fills")){
+      brBad.push("the ask for that line offers " + (brKeys.join("/") || "no field at all"));
+    }
+    T("a bit that would have been a breach has nowhere left to breach",
+      brBad.length === 0,
+      brBad.length ? brBad.join("; ")
+        : "still classified with the flag down (" + brLive.join(" · ")
+          + ") · with it up the ask offers one field, \"fills\"",
+      {label:"the retirement done as a fence - the classifier still consulted, its verdict ignored downstream",
+       was:function(isMud, clickNow){ return !!(isMud || !clickNow); },
+       check:function(w){
+         var kv = V5MODE, km = lastTurnMud, mine, theirs;
+         try{
+           V5MODE = true; lastTurnMud = true;
+           mine = atHum(function(){ return breachScanned(true, false); });
+           theirs = w(true, false);
+         } finally { V5MODE = kv; lastTurnMud = km; }
+         return mine === false && theirs === false;
        }});
 
     /* ================== THE DEGENERATE RUN ==================
