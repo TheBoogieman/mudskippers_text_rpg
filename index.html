@@ -7989,17 +7989,44 @@ function bitAudible(nm){
   var s = sceneNow(), here = (s && s.sc && s.sc.here) || [];
   return here.indexOf(nm) !== -1;
 }
-function bitFallbackFor(){
+function bitFallbackFor(salt, taken, who){
   var live = [];
   for(var i = 0; i < BIT_FALLBACK.length; i++){
     if(bitAudible(BIT_FALLBACK[i].who)) live.push(BIT_FALLBACK[i]);
   }
-  if(!live.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
+  /* AND THE SLOT KEEPS THE VOICE THE ROOM WAS PROMISED where the pool has one.
+     Without this, a covered slot is re-attributed to whoever the hash lands on -
+     so Pia's slot came back in Nine's voice, two Nine blocks running, and the
+     player reads a room that is not the room. The pool was always presence-gated;
+     it was never slot-matched, because until today nothing called it per slot. */
+  var pool = live;
+  if(who){
+    var mine = live.filter(function(e){ return e.who === who; });
+    if(mine.length) pool = mine;
+  }
+  /* ...AND NOT ONE THIS TURN HAS ALREADY SPENT. The key below is deterministic on
+     the player's own line, which is right - and it means two slots falling to the
+     pool in the SAME turn drew the identical answer twice, under two different
+     nameplates. It would not even have looked like a bug: showScene's stutter
+     filter deletes the repeat, so the turn comes back one block short and reads as
+     writing. Salting alone makes the collision unlikely rather than impossible, and
+     unlikely-and-silent is the worst pair of properties a defect can have - so the
+     spent lines are excluded outright. This is v4.53.0's defect one layer down:
+     there, two bits in a row drew one line because the key was the clock. */
+  /* the voice first, then what is left of it; and if this speaker has nothing
+     unspent, the room answers rather than repeating itself */
+  if(taken && taken.length){
+    var fresh = pool.filter(function(e){ return taken.indexOf(e.line) === -1; });
+    if(!fresh.length) fresh = live.filter(function(e){ return taken.indexOf(e.line) === -1; });
+    if(fresh.length) pool = fresh;
+  }
+  if(!pool.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
   /* keyed on the bit itself, not the clock: bits tick nothing, so beatTurns would
      have handed two bits in a row the same answer. */
-  return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id)
+  return pickVariant(pool, "bitfall|" + (beatDone() ? "end" : beatNow().id)
                      + "|" + String(lastPlayerText || "").length
-                     + "|" + String(lastPlayerText || "").slice(0, 12));
+                     + "|" + String(lastPlayerText || "").slice(0, 12)
+                     + "|" + (salt || ""));
 }
 
 /* ==================== PHASE A: THE SKELETON ====================
@@ -8142,6 +8169,31 @@ function parseFills(raw, want){
      4. NO REVEAL THE PLAYER HAS NOT REACHED. revealLeak, the same predicate the
         full path uses, reading the same tells. A bit is immune to being spent; it
         was never a licence to say the thing the story has not earned. */
+/* what the pool covered this turn, for the archive and for anybody reading the
+   debug report while the model misbehaves */
+var bitPoolServed = [];
+/* THE TURN, ASSEMBLED - and the floor is not a degraded mode. Every slot is either
+   the model's line or the pool's, the player cannot tell which, and both are this
+   family answering him, which is the only thing a bit ever asked for. That is why a
+   failed slot costs its slot and not the turn: three fills where one was over the
+   cap comes back as two written lines and one house line, not as a template.
+   A missing reply is the same class of event as a bad one. There is no third
+   outcome here and no error card: the worst a model can do to a bit is make the
+   turn fully authored. */
+function bitBlocks(slots, fills){
+  var out = [], allow = bitNamesAllowed(slots), took = [], i, fill, why, fb;
+  bitPoolServed = [];
+  for(i = 0; i < slots.length; i++){
+    fill = fills ? fills[i] : null;
+    why = (typeof fill !== "string") ? "noreply" : bitLint(slots[i], fill, allow);
+    if(!why){ out.push({speaker:slots[i].who, text:fill}); continue; }
+    fb = bitFallbackFor("slot" + i + "|" + why, took, slots[i].who);
+    took.push(fb.line);
+    bitPoolServed.push(slots[i].who + " \u2192 " + fb.who + " (" + why + ")");
+    out.push({speaker:fb.who, text:fb.line});
+  }
+  return out;
+}
 function bitLint(slot, fill, allowed){
   if(!slot || !bitAudible(slot.who)) return "speaker";
   if(typeof fill !== "string" || !/\w/.test(fill) || fill.length > slot.cap) return "length";
@@ -8151,6 +8203,54 @@ function bitLint(slot, fill, allowed){
   for(i = 0; i < un.length; i++){ if(!ok[un[i]] && namedUse(un[i], hay)) return "name"; }
   if(revealLeak({scene:[{speaker:slot.who, text:fill}]}).length) return "era";
   return "";
+}
+
+/* the turn goes out and comes back. The shape of callDM, minus every validator in
+   it: the chair, the cast gate, the place fence, the roster check, the empty-turn
+   ask and the correction budget all exist to police fields this ask does not have,
+   and a correction round-trip on a joke is a minute of somebody's evening.
+   THE CATCH SERVES THE POOL RATHER THAN THE ERROR CARD, and that is the one real
+   divergence from callDM. A dead model on a real turn has to be visible - the turn
+   did not happen and the player must be able to RETRY it. A dead model on a BIT
+   has nothing to report: the room was always going to answer him, the pool is the
+   room, and the honest thing is for the joke to land and the game to say nothing. */
+function callBitTurn(){
+  if(runOver) return;
+  var epoch = runEpoch;
+  if(!retrying) turnCalls++;
+  setBusy(true);
+  var sk = bitSkeleton(lastPlayerText);
+  pendingRetry = function(){ retrying = true; try{ callBitTurn(); } finally { retrying = false; } };
+  lastSent = {text: sk.msgs[0].content, chars: sk.msgs[0].content.length, trim: trimFlagsText(),
+              msgs: sk.msgs.length, wire: BIBLE.length + sk.msgs[0].content.length,
+              bible: BIBLE.length};
+  askAI(sk.msgs).then(function(raw){
+    if(epoch !== runEpoch){ setBusy(false); return; }
+    lastReceived = raw;
+    var fills = parseFills(raw, sk.slots.length);
+    lastReplyVerdict = fills ? ("skeleton: " + fills.length + " fill(s)")
+                             : "skeleton: not the shape - the pool serves the turn";
+    serveBitTurn(sk.slots, fills);
+  }).catch(function(err){
+    if(epoch !== runEpoch){ setBusy(false); return; }
+    lastReceived = "[no reply] " + ((err && err.message) || err);
+    lastReplyVerdict = "skeleton: no reply - the pool serves the turn";
+    serveBitTurn(sk.slots, null);
+  });
+}
+/* the shape that reaches the screen is the shape a bit has always reached it in -
+   scene blocks and nothing else. The difference is that the old path GOT there by
+   subtraction, with holdTheDryPath deleting nine fields off a full reply; this one
+   was never able to carry them. */
+function serveBitTurn(slots, fills){
+  var blocks = bitBlocks(slots, fills);
+  /* the history still has to hear the joke. The skeleton did not READ chatLog -
+     that is the saving - but the next full turn composes from it, and a model that
+     never heard the bit opens the next scene mid-conversation. */
+  chatLog.push({role:"assistant", content:JSON.stringify({scene:blocks})});
+  if($("errbox").firstChild) $("errbox").innerHTML = "";
+  setBusy(false);
+  showScene({scene:blocks, __live:true}, true);
 }
 
 /* the deck is OUT, not merely unmatched: pickTopic's own last branch says a deck
@@ -12628,6 +12728,11 @@ function contextForThisTurn(){
 }
 function callDM(corrected, tag){
   if(runOver) return;
+  /* PHASE A. One door in, so nothing has to remember to check the flag: every
+     route to the wire on a bit turn - the button, the bang, a retry - arrives
+     here first. There is no correction route back into it, because bitSkeletonNow
+     is only ever true on a bit and the skeleton path never calls callDM. */
+  if(bitSkeletonNow()) return callBitTurn();
   /* a RETRY is the same call again, not another one - three presses through a
      flaky local model used to leave the turn with no correction budget at all */
   if(!retrying) turnCalls++;
@@ -14216,6 +14321,10 @@ function dbgReport(){
   R(s, "folded beats", foldedBeats);
   R(s, "peril turns left", perilTurns, perilTurns ? "warn" : "");
   R(s, "last turn was a bit", lastTurnMud);
+  R(s, "skeleton mode", V5MODE ? "V5MODE on - bits are dialogue slots" : "off",
+    V5MODE ? "warn" : "");
+  R(s, "pool served last bit", bitPoolServed.length ? bitPoolServed.join(" · ") : "—",
+    bitPoolServed.length ? "warn" : "");
   R(s, "chair lines cut", chairCuts + " (courier speech the player never typed)",
     chairCuts ? "warn" : "ok");
   R(s, "arc checkpoint due", actCheckpointDue);
@@ -18611,7 +18720,7 @@ function selfTest(){
        amber - the harness would be saying "unproved" about code it simply had not
        been introduced to. Phase A's six. */
     "bitAudible", "bitVoices", "bitSlots", "bitNamesAllowed", "bitSkeleton", "bitFallbackFor",
-    "parseFills", "jsonSlice", "bitLint"];
+    "parseFills", "jsonSlice", "bitLint", "bitBlocks"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19452,6 +19561,71 @@ function selfTest(){
            var sl = bitSlots();
            return w(sl[0], sl[1].who + ", tell him.") === "";
          });
+       }});
+
+    /* Rung 4. Both failure classes, and the pool's own gating under them. */
+    var wireBad = [], wireNote = "";
+    atHum(function(){
+      shardWhere = "hand";
+      lastPlayerText = "I have decided the rain owes me money.";
+      var sl = bitSlots(), lines = {};
+      BIT_FALLBACK.forEach(function(e){ lines[e.line] = e.who; });
+      /* the parse class: nothing came back at all */
+      var none = bitBlocks(sl, null), seen = {};
+      if(none.length !== sl.length) wireBad.push("a dead model cost the turn " + (sl.length - none.length) + " block(s)");
+      none.forEach(function(b, i){
+        if(!lines[b.text]) wireBad.push("block " + i + " is not a pool line");
+        if(seen[b.text]) wireBad.push("the pool served the same line twice");
+        seen[b.text] = 1;
+        if(!bitAudible(b.speaker)) wireBad.push(b.speaker + " answered from outside the room");
+      });
+      if(bitPoolServed.length !== sl.length) wireBad.push("the pool served " + bitPoolServed.length + " of " + sl.length + " and said so about " + bitPoolServed.length);
+      /* the lint class: three fills, the middle one a scene */
+      var mixed = bitBlocks(sl, ["Mayor of a puddle. I am filing that.",
+                                 new Array(60).join("rain "),
+                                 "The room lets it go, the way it lets most things go."]);
+      if(mixed[0].text !== "Mayor of a puddle. I am filing that.") wireBad.push("a clean fill did not survive");
+      if(mixed[2].text.indexOf("lets it go") === -1) wireBad.push("a clean fill after a bad one did not survive");
+      if(!lines[mixed[1].text]) wireBad.push("the over-cap slot was not covered by the pool");
+      if(bitPoolServed.length !== 1) wireBad.push("one bad fill cost " + bitPoolServed.length + " slots");
+      if(mixed[1].speaker !== sl[1].who) wireBad.push("the covered slot came back in " + mixed[1].speaker + "'s voice, not " + sl[1].who + "'s");
+      /* and the pool obeys the same door the slots do */
+      shardWhere = "jacket";
+      var cloth = bitBlocks(bitSlots(), null);
+      cloth.forEach(function(b){ if(b.speaker === "Nine") wireBad.push("the pool answered in her voice through the cloth"); });
+      wireNote = "no reply → " + none.map(function(b){ return b.speaker; }).join(" / ")
+               + " · one bad fill → " + mixed.map(function(b){ return b.speaker; }).join(" / ")
+               + " · through cloth → " + cloth.map(function(b){ return b.speaker; }).join(" / ");
+      return null;
+    });
+    T("a slot the model lost is a slot the pool covers",
+      wireBad.length === 0, wireBad.length ? wireBad.join("; ") : wireNote,
+      {label:"the pool keyed on the player's line alone - one turn, one answer, however many slots need one",
+       was:function(){
+         var live = [];
+         for(var i = 0; i < BIT_FALLBACK.length; i++){
+           if(bitAudible(BIT_FALLBACK[i].who)) live.push(BIT_FALLBACK[i]);
+         }
+         if(!live.length) return BIT_FALLBACK[BIT_FALLBACK.length - 1];
+         return pickVariant(live, "bitfall|" + (beatDone() ? "end" : beatNow().id)
+                            + "|" + String(lastPlayerText || "").length
+                            + "|" + String(lastPlayerText || "").slice(0, 12));
+       },
+       /* three slots, three identical lines - and the stutter filter would have
+          eaten two of them on the way to the screen, silently */
+       check:function(w){
+         var real = window.bitFallbackFor, out;
+         try{
+           window.bitFallbackFor = w;
+           out = atHum(function(){
+             shardWhere = "hand";
+             lastPlayerText = "I have decided the rain owes me money.";
+             return bitBlocks(bitSlots(), null);
+           });
+         } finally { window.bitFallbackFor = real; }
+         var uniq = {};
+         out.forEach(function(b){ uniq[b.text] = 1; });
+         return Object.keys(uniq).length === out.length;
        }});
 
     /* ================== THE DEGENERATE RUN ==================
