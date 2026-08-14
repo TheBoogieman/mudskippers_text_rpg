@@ -1636,7 +1636,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.1 "One Gold Choice"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.2 "Stopping Is a Choice"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7251,7 +7251,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.2";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -16763,7 +16763,22 @@ function renderRuns(){
           done = dirHandle.removeEntry(r.file).catch(function(){});
         }
         done.then(function(){
-          if(slug===runSlug){ $("runmodal").classList.remove("open"); newRun(false); }
+          if(slug===runSlug){
+            /* RETIRING THE RUN YOU ARE STANDING IN LANDS ON THE MENU (v4.71.2). It
+               used to start a fresh Day 1 on the spot - expedient, because live
+               state pointing at a deleted save is how CONTINUE once fell through
+               to a silent new run - but a player who retires a run chose to STOP,
+               and the game answered by starting one. The teardown is endRehearsal's,
+               which exists for this exact shape: no run, clean logs, the epoch
+               bumped so any reply in flight dies on arrival, and persistAll's own
+               null-slug guard keeping the drawer clean. The title screen takes it
+               from there - NEW GAME, the remaining saves, or the door. */
+            runEpoch++;
+            runSlug = null; feedLog = []; chatLog = [];
+            $("feedinner").innerHTML = ""; $("errbox").innerHTML = ""; $("choices").innerHTML = "";
+            $("runmodal").classList.remove("open");
+            openTitle();
+          }
           else renderRuns();
         });
       };
