@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.77.0 "Say Anything, Say the Shopping List"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.78.0 "The Man in the Doorway"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -3524,9 +3524,9 @@ var SPINE = [
               {holder:"Nine", relay:true, text:"Seven says she sounded like she meant it, and that he of all of them would know. You give the room the first half and not the second, because the second half is his and you are not sure it is yours to hand out."},
               ["Three","She did mean it. That is not the argument. The argument is what she was told meaning it required."],
               "Vic has been standing in the doorway for most of it and is the only one who has not said a word."],
-       rail:["Ask him why he is so quiet.",
-             "Ask the room what we do with a kind one.",
-             "Let him be. He will come to it."]}],
+       rail:["Ask Vic why he has been so quiet in that doorway.",
+             "Ask Seven where he has heard that voice before.",
+             "Turn it off. We have heard enough for one night."]}],
  landsHard:[{day:"32", time:"1:10pm", place:"THE LISTENING POST", amb:"neon-dry",
        now:"Afternoon at the listening post. Her kindness reached them secondhand, quoted, already argued about.",
        lines:["You do not hear it. You hear about it — from somebody who heard it from somebody, with the good part quoted and the rest summarised.",
@@ -3536,8 +3536,8 @@ var SPINE = [
               ["Three","There is nothing to listen to. That is what I have been saying for an hour."],
               "Vic has been in the doorway for most of it and is the only one who has not said a word."],
        rail:["Go and find the recording.",
-             "Ask him why he is so quiet.",
-             "Ask the room what we do with a kind one."]}],
+             "Ask Vic why he has been so quiet in that doorway.",
+             "Ask Seven where he has heard that voice before."]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The voice notices it is being listened to, and instead of alarm, offers to help the listeners too.",
         "Someone in the family wants to hate her, needs to, and the voice makes it impossible mid-sentence."],
@@ -6482,7 +6482,10 @@ var SCENEBOOK = {
   ],
   room:{
    where:"the listening post with the channel still open and nobody turning it off",
-   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   /* Vic added v4.78.0: both landings already say he has been in the doorway for most
+      of it, so the room's cast list was the one place in this beat that did not know
+      he was standing there. */
+   here:["Pia","Nine","Hesta","Seven","Three","Marek","Vic"],
    never:["she does not address them","nobody plans the descent"],
    topics:[
     {ask:"whether to turn it off", key:"off turn stop switch listen enough",
@@ -6509,7 +6512,23 @@ var SCENEBOOK = {
      plays:[["Hesta","I think two crates and a wet plank is not a post, it is a dare to your spine. I have brought chairs. Actual ones. The revolution can have lumbar support."],
       ["Hesta","And nobody does surveillance on an empty stomach in my district - hungry listeners hear what they fear instead of what is said. That is forty years of counter wisdom and also just true."],
       "The hamper opens. The post acquires chairs, a cloth, and a chain of command re: the good cups.",
-      ["Hesta","Listen well. Sit properly. History does not excuse posture."]]}
+      ["Hesta","Listen well. Sit properly. History does not excuse posture."]]},
+    /* v4.78.0: THE CARD THE RAIL HAS BEEN ASKING FOR. Both landings of this beat end on
+       "Vic ... is the only one who has not said a word", and both offer "Ask him why he
+       is so quiet" - and no card in either deck answered it, so the most loaded line in
+       the scene dealt Pia on whether to switch the feed off. The plant was written, the
+       question was offered, and the answer was never written. */
+    {ask:"why Vic has not said anything", key:"quiet vic doorway silent nothing-said still-standing",
+     who:"Vic", gives:"the question he thinks the room should have been arguing, and one true thing said sideways",
+     holds:"what he did. He does not go near it tonight and nobody hears the shape of it",
+     rail:"Ask Vic why he has been so quiet in that doorway.",
+     plays:["He has not come off the door frame since the feed started, which from Vic is a position.",
+      ["Vic","Because you've been arguing the wrong question for an hour and I didn't fancy being right out loud."],
+      ["Vic","It isn't whether she meant it. People mean it. I've known a lot of men who meant it."],
+      ["Vic","It's whether she'd have done it anyway if she hadn't meant it. That's the only question that tells you anything about anybody."],
+      "Nobody has an answer to that, and the quiet afterwards is the first one the room has managed all evening.",
+      ["Vic","Right. I'll be in the yard a bit. Somebody put the kettle on for whoever wants one."],
+      "He goes. The kettle does not go on. Everybody looks at the doorway he was standing in, and then at each other, and decides - separately, and wrongly - that it was nothing."]}
    ]}
 },
 
@@ -7477,7 +7496,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.77.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.78.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -23107,12 +23126,25 @@ function verdictMap(){
    THE OTHER THREE REWORDED RAILS MOVED NOTHING, which is worth writing down: a rail is
    prose the player clicks, and rewording one only reaches this map when it starts or
    stops naming somebody. Corpus 3,811 -> 3,825. Fires 424 -> 425. */
+/* v4.78.0, THE CARD THE RAIL WAS ASKING FOR: TWO ENTRIES GAINED, NOTHING LOST, and the
+   ten new lines that fire NOTHING are the interesting half. a3-voice's landings both end
+   on "Vic ... is the only one who has not said a word" and both offered "Ask him why he
+   is so quiet" - and no card in either deck answered it, so the most loaded line in the
+   scene dealt Pia on whether to switch the feed off. The answer was written this wave as
+   room card 3, and Vic went on the room's cast list, where the prose had always put him.
+   named:Seven gains a3-voice/lands0/r1 and landsHard0/r2 - the same reworded rail in two
+   rows ("Ask Seven where he has heard that voice before"), replacing a line that dealt
+   Hesta on chairs. THE NEW CARD ITSELF MOVES NOTHING: seven blocks of Vic declining to
+   answer the question the room is actually asking, and not one of them books a name, a
+   death, a breach, a tell or a shard move - which is right, because the card's whole
+   contract is that he does not go near what he did. Corpus 3,825 -> 3,835. Fires 425 ->
+   427. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/landsHard0/l3","a3-voice/t1r","want14","want15","want16"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
@@ -23278,6 +23310,10 @@ function selfTest(){
     /* ...and Phase B, which is the channel that carries the story */
     "sceneSkeletonNow", "sceneBlocksFor", "callSceneTurn", "serveSceneTurn", "playForks",
     "interludeNow", "callInterludeTurn", "topicEvidence", "sceneConfident", "vocativeName", "topicTokens", "pickVariant",
+    /* ...and the deck, the fork and the block reader - the three this wave leaned on.
+       pickTopic in particular was doing the work behind two rows that scored amber for
+       not naming anything the list had heard of. */
+    "pickTopic", "pickTopicFresh", "holderPool", "playText", "playSpeaker", "voiceReach",
     "housingResident", "residentNow", "holderNow", "pickTopicFresh", "askedAnswered",
     "playSpeaker", "playText", "pickTopic", "sentenceHead",
     /* ...and the fix wave: the fork's doors, the typed door, and the row dealt from the deck */
@@ -23419,7 +23455,14 @@ function selfTest(){
       passages.length + " passages x 3 fork states, " + checks + " live law evaluations, "
       + Object.keys(DESK_DECLARED).length + " declared and awaiting a ruling"
       + (deskNew.length ? " - FIRED UNDECLARED: " + deskNew.slice(0, 8).join("; ") : "")
-      + (deskGone.length ? " - DECLARED BUT SILENT (delete the entry): " + deskGone.join("; ") : ""));
+      + (deskGone.length ? " - DECLARED BUT SILENT (delete the entry): " + deskGone.join("; ") : ""),
+      {exempt:"THE PAIR IS THE PROOF, again: the row below is \"the desk still catches what"
+       + " it is for\", and a desk that had gone silent would sail through this one and"
+       + " fail that one immediately. What this row asserts is a standing property of the"
+       + " BOOK against today's correction rules, and there is no old version of it to"
+       + " run - when the rules changed it was the corpus that was re-swept, never the"
+       + " other way round. It also refuses in both directions, which is the part worth"
+       + " keeping: a declared exception that has stopped firing is named for deletion."});
 
     /* ...and the desk is awake */
     chassisHolder = null; beatIdx = 0; phase = "live"; shardWhere = "jacket"; perilTurns = 0;
@@ -23445,7 +23488,12 @@ function selfTest(){
     beatSeen = {}; chassisHolder = null; beatIdx = 0; shardWhere = "jacket";
     T("the desk still catches what it is for", missedNeg.length === 0,
       ST_NEGATIVE.length + " known breaks, each by the named law"
-      + (missedNeg.length ? " - MISSED: " + missedNeg.join("; ") : ""));
+      + (missedNeg.length ? " - MISSED: " + missedNeg.join("; ") : ""),
+      {exempt:"The positive half of the desk control, and ST_NEGATIVE is already a corpus"
+       + " of hand-written breaks that each name the law meant to catch them - which is"
+       + " the same shape a broken form has, held permanently rather than once. Its own"
+       + " before would be a desk with the rules torn out, watched going red, and that"
+       + " proves the harness runs rather than that a rule was ever wrong."});
 
     /* ...and the sweep says out loud what it does NOT cover. Seventeen of twenty
        laws could be deleted with the grid still green, which is worth knowing
@@ -23559,11 +23607,23 @@ function selfTest(){
     });
     T("no authored line certifies a death", dpBad.length === 0,
       dpLines + " lines x " + NAMES.length + " names the spine keeps alive"
-      + " (" + Object.keys(diesAt).sort().join("/") + " exempt only from the beat their death is canon)" + (dpBad.length ? " - FIRED: " + dpBad.slice(0, 5).join(" | ") : ""));
+      + " (" + Object.keys(diesAt).sort().join("/") + " exempt only from the beat their death is canon)" + (dpBad.length ? " - FIRED: " + dpBad.slice(0, 5).join(" | ") : ""),
+      {exempt:"THE PAIR IS THE PROOF. This is the negative half of a two-row control and"
+       + " the row directly below it is the positive half: together they say the death"
+       + " detector fires on a real death and on nothing the book has written. A broken"
+       + " form for either half alone would have to be a stubbed detector, which is the"
+       + " synthetic this mechanism exists to refuse - a stub proves the row can read a"
+       + " return value, not that the detector was ever wrong. The partner is what a"
+       + " before would have bought, and it runs every load."});
     var dpMiss = [];
     if(!deathPredicated("Pia", "He shot Pia in the head and she went down")) dpMiss.push("a shooting");
     if(!deathPredicated("Nine", "The shard is smashed. Nine is gone.")) dpMiss.push("a smashed shard");
-    T("...but a real death still certifies", dpMiss.length === 0, dpMiss.join("; "));
+    T("...but a real death still certifies", dpMiss.length === 0, dpMiss.join("; "),
+      {exempt:"The positive half of the control above, and the reason that row is allowed"
+       + " to be quiet: a detector that certifies nothing at all would satisfy the"
+       + " negative half perfectly and fail this one on the first line. Its own before"
+       + " could only be a detector deliberately broken to watch it go red, which proves"
+       + " the assertion runs rather than that anything was ever fixed here."});
 
     /* every anchor still findable in its own beat's authored prose */
     var anchLost = [];
@@ -23579,7 +23639,13 @@ function selfTest(){
         if(new RegExp("\\b" + a + "\\b", "i").test(txt) && !namedUse(a, txt, true)) anchLost.push(b.id + "/" + a);
       });
     });
-    T("the counting guard costs no anchor", anchLost.length === 0, anchLost.join("; "));
+    T("the counting guard costs no anchor", anchLost.length === 0, anchLost.join("; "),
+      {exempt:"The v5.12 counting guard was a WIDENING that lost nothing - the ledger"
+       + " beside the fixture records that no predicate gained a single line and none was"
+       + " taken away, which is the shape a safe widening leaves behind. So the before"
+       + " here is a guard that ate an anchor, and no such guard was ever shipped: it is"
+       + " the accident this row exists to notice if anybody ever widens it again, not a"
+       + " defect it once caught."});
 
     /* the topic deck deals every card before it repeats one */
     var deckBad = [], keptSpent = topicSpent, keptText = lastPlayerText;
@@ -23597,7 +23663,30 @@ function selfTest(){
         if(dupes) deckBad.push(k + " re-dealt " + dupes);
       });
     } finally { topicSpent = keptSpent; lastPlayerText = keptText; }
-    T("no card is dealt twice while the deck has cards", deckBad.length === 0, deckBad.slice(0, 5).join("; "));
+    T("no card is dealt twice while the deck has cards", deckBad.length === 0, deckBad.slice(0, 5).join("; "),
+      {label:"the picker before F5, which kept no ledger of what it had already dealt",
+       was:true,
+       check:function(){
+         /* THE SHIPPED PICKER, RUN WITHOUT ITS MEMORY. pickTopic reads topicSpent and
+            appends to it; the version before F5 had no such ledger, and in the room
+            that is how one question came back six times, verbatim. Clearing the ledger
+            between draws reproduces exactly that behaviour through the real function,
+            so this enters production code rather than restating the rule at it. */
+         var ks = topicSpent, kt = lastPlayerText, dupes = 0;
+         try{
+           var e = SCENEBOOK["a1-hum"];
+           if(!e || !e.topics || e.topics.length < 2) return true;
+           var seen = {};
+           for(var i = 0; i < e.topics.length; i++){
+             topicSpent = {};                       /* the old picker: no memory at all */
+             lastPlayerText = "the shard";
+             var idx = e.topics.indexOf(pickTopic(e, "BROKEN|a1-hum"));
+             if(seen[idx]) dupes++;
+             seen[idx] = 1;
+           }
+         } finally { topicSpent = ks; lastPlayerText = kt; }
+         return dupes === 0;              /* the row's claim, asked of the memoryless one */
+       }});
 
     /* every scene contract names people the scene book has actually cast */
     /* PRESENCE IS NOT SPEAKABILITY. The old predicate asked only whether the
@@ -23738,7 +23827,14 @@ function selfTest(){
     beatIdx = keepRB;
     T("the board's own rail never reads as a breach", railBreach.length === 0,
       "every authored exit, walk and rail line past the dry classifiers"
-      + (railBreach.length ? " - CLASSIFIES: " + railBreach.slice(0, 6).join(" | ") : ""));
+      + (railBreach.length ? " - CLASSIFIES: " + railBreach.slice(0, 6).join(" | ") : ""),
+      {exempt:"This is the CORPUS half of a claim whose code half is proved two rows down:"
+       + " \"a rail turn does not reach the breach classifiers\" carries a real before and"
+       + " puts the question to the running game. What this row adds is that the authored"
+       + " lines themselves would come back clean even if they did reach - a standing"
+       + " property of the writing against today's detectors, which has no old version of"
+       + " itself to run, because when the detectors changed it was the writing that was"
+       + " re-checked and never the other way round."});
 
     /* ...and the code path. kindNow is consumed at the top of takeAction, so a
        test written against pendingKind is unconditionally true. */
@@ -25732,15 +25828,47 @@ function selfTest(){
           if(!everNamed) unreachable.push(b.id + " [" + b.anchors.join("+") + "]");
         }
       } finally { barPut(kk); }
+      /* ...and it ASSERTS, like the allowlist row did not. This was hardcoded green and
+         merely printed the unreachable beats beside a PASS, so the book could rot back
+         to the v4.71 state - eighteen of twenty-three anchored beats unearnable - and
+         the page would still have said everything was fine. Third row this wave found
+         wearing that shape. */
       T("every beat's anchors can be earned by some way of playing it",
-        true,
+        unreachable.length === 0,
         unreachable.length
           ? "AUTHORING, not engine — " + unreachable.length + " of " + checked
             + " anchored beats name people their own cards never say, so no play pattern"
             + " witnesses for them: " + unreachable.join(", ")
             + ". The door no longer charges the player for it (v4.72.2); the writing is"
             + " the Architect's call. a1-hum's case is special: its anchor IS its reveal."
-          : "all " + checked + " anchored beats can witness for their own anchors by some route");
+          : "all " + checked + " anchored beats can witness for their own anchors by some route",
+        {label:"one play pattern instead of four - the v4.71 reading, where ordinary typed play was the whole test",
+         was:true,
+         check:function(){
+           /* THE SEARCH IS THE CLAIM. This row says the anchors are earnable by SOME way
+              of playing the beat, and it walks four. The documented before is what
+              happens when only one is walked: under ordinary typed play alone, most
+              anchored beats never witness for themselves - which is exactly how the
+              thin-close regression reached the Architect. So: the same beats, the same
+              production path, one pattern, and the row's claim must NOT hold. */
+           var kk = barKeep(), miss = 0;
+           try{
+             for(var i = 0; i < SPINE.length && miss === 0; i++){
+               var b = SPINE[i];
+               if(!(b.anchors || []).length) continue;
+               barBoard(i); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+               for(var t = 0; t < beatFloor(b); t++){
+                 var row = railFor([]);
+                 lastRail = row; turnToken++;
+                 lastPlayerText = "I keep walking and say nothing."; pickKind = "";
+                 callDM();
+                 if(typeof skipReveal === "function") skipReveal();
+               }
+               if(anchorsMissing(b).length) miss++;
+             }
+           } finally { barPut(kk); }
+           return miss === 0;        /* the row's claim, asked of a one-pattern search */
+         }});
     })();
 
     /* ---- (7) THE STABLE: the request knobs, read off the body that would be sent,
