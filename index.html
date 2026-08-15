@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.97.0 "It Is Not Mine"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.98.0 "He Sent Word Ahead"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2663,8 +2663,10 @@ var SPINE = [
         "Take my coat off the hook and go, mid-sentence."],
  opens:[{day:"9", time:"9:15pm", place:"THE OPEN DOOR, OUTSIDE", amb:"rain-neon",
        now:"Evening, outside a diner with its lights on and its door held open by a brick.",
-       lines:["The Open Door is a diner with a name that is either a promise or a maintenance failure.",
+       lines:["Six days since the cold plate and the handshake over it, and this is the first thing Vic has asked of anybody since: an address, an hour, and everyone at it.",
+              "The Open Door is a diner with a name that is either a promise or a maintenance failure.",
               "The door is held open with a brick in weather like this. It tells you everything about the person inside and none of it is bad.",
+              ["Vic","I sent word ahead. That is the entire extent of what I did. What that woman does with word is her own business and it is usually enormous."],
               ["Pia","She's already setting a table. Look. She's counting us through the window."],
               ["Nine","Does she know what I am, or am I a coat pocket again tonight?"],
               "Inside, somebody is laying out more cutlery than there are people on this street."],
@@ -2696,6 +2698,7 @@ var SPINE = [
         "Someone knocks who should not know this address."],
  canon:["Hesta keeps The Open Door, feeds strays, and is armed while being kind.",
         "The Open Door is the family's table and its first safe place.",
+        "Vic gathered them here - he sent word ahead, and he will not say why this courier.",
         "There is something under its floor Hesta has not mentioned."],
  scar:"They reached Hesta's table late and ate standing; the room offered more than they took."},
 
@@ -6353,6 +6356,7 @@ var SCENEBOOK = {
   where:"The Open Door at night - a diner with its lights on, its door held open by a brick, and a shotgun under the counter nobody mentions",
   ends:"the back booth, plates going back empty, Hesta pretending not to watch them eat",
   here:["Pia","Vic","Nine","Hesta"],
+  before:"VIC CALLED THIS, AND IT IS A GATHERING RATHER THAN A RETREAT. Six days after the courier said out loud that he was keeping Nine, Vic sent word to the one roof in the city he trusts and asked everybody to be under it - which is his whole want this season: everyone he owes gathered at Hesta's, and the courier ready. He will not answer why this courier, and nobody gets that out of him tonight. Hesta was told they were coming and told nothing else, which is why she is laying out more cutlery than there are people on the street: she does not need a reason, she needs a number, and she has rounded it up. THE MARSH HOUSE IS NOT BURNED and nobody is fleeing anywhere - the family sleeps there again later in the season. Anybody writing this scene as a flight from somewhere is writing the wrong scene.",
   never:["the meal is the beat - it gets cooked and eaten on screen, not promised and not skipped to",
          "nobody knocks at this door in a stall; that is the world's move and it belongs to the pressure",
          "what is under Hesta's floor is never explained or described. She gives at most that a cold place exists, that things keep in it, and - once a year, asked properly - that it is not hers. Never one word past that, and never what is in it"],
@@ -8905,7 +8909,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.97.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.98.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25032,11 +25036,36 @@ function verdictMap(){
    against every rule Vic has about moving people, because the body was never going to
    come out to him. A relocation is not a find-and-replace; it is a hunt for every
    sentence that quietly knew where it was. */
+/* v4.98.0, WHY THEY GO TO HESTA'S AT ALL: ONE NEW ENTRY, NOTHING LOST, NOTHING MOVED.
+   The Architect asked the question the book could not answer. Book One closes on day
+   3 in the safehouse kitchen; The Open Door opens on day 9 outside a diner with the
+   family already at the door - and in between there was no bridging line anywhere,
+   and a2-door was one of the few beats in the game carrying NO `before` field at all.
+   Nothing said whose idea it was.
+   The answer was already in the file, one field away from the scene and never once
+   said out loud in it: "VIC WANTS: everyone he owes gathered under Hesta's roof, and
+   the courier ready." A want is not a scene. It sat in his sheet for the whole of a
+   season while the beat it explains played without it.
+   named:Nine GAINS a2-door/before - and NOT the line I expected. I wrote this paragraph
+   predicting the fire would land on Vic's new spoken line and it did not, because that
+   line does not name her; the entry is on the `before` note, which says the courier had
+   said out loud that he was keeping Nine. Correct, and the only entry the pass produced.
+   Recording the miss rather than quietly correcting it: a delta is worth taking precisely
+   because it disagrees with what you assumed, and a ledger written before the run is a
+   prediction, not a report. Take the map first. Then write the paragraph.
+   AND A WRONG ANSWER KILLED IN WRITING, which is the more useful half. The obvious
+   reading is that the marsh house was burned and they fled it. It was not: the sweep
+   in a1-carried passed over them, and the family sleeps at the safehouse again three
+   times before the season is out. That reading is now refused in the beat's own
+   `before` in capitals, because the wild table reads `before` and would have invented
+   it - the same way a human picking this up in six months would have. A gap does not
+   stay empty. Something always fills it, and if the book does not say what, the
+   filling is whatever sounded plausible to whoever got there first. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],

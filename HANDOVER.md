@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.97.0. Book One is finished. `a2-door` is finished — 15 cards, the
+**Last updated: v4.98.0. Book One is finished. `a2-door` is finished — 15 cards, the
 deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
 Hesta's floor. Next is writing `a2-chassis`.**
 
@@ -109,6 +109,20 @@ in the water, with a hunter between them and that street; they learn WHAT it is 
 | `a2-door` | the back booth, the first meal | The Open Door | **DONE — 15 cards** |
 | `a2-chassis` | "the cook" — a new body, floorboards up | **The Open Door** | 3 cards, untouched |
 | `a2-law` | "the same pan" — bacon first, bread after | safehouse | 3 cards, untouched |
+
+**Why they go to Hesta's at all (ruled 2026-08-15, shipped v4.98.0).** Vic called it. Six
+days after the courier says out loud that he is keeping Nine, Vic sends word to the one
+roof in the city he trusts and asks everybody to be under it — which is his whole want this
+season, and it had been sitting in his character sheet unsaid for the entire beat it
+explains. He will not answer *why this courier*. Hesta was told they were coming and told
+nothing else, which is why she is laying out more cutlery than there are people on the
+street: she does not need a reason, she needs a number, and she rounds up.
+
+**The marsh house is NOT burned and this is not a flight.** The sweep in `a1-carried`
+passed over them and the family sleeps at the safehouse again three times before the season
+ends. That wrong reading is refused in capitals inside `a2-door`'s `before`, because the
+wild table reads `before` and would otherwise have invented it — and so would a human
+picking this up cold. A gap does not stay empty; whatever sounds plausible fills it.
 
 **The Book Two timeline, so nobody has to re-derive it.** Days and places are authored on
 the beats; this is just them written out.
