@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.3.0 "The Long Evening"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.4.0 "Sealed Until"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2983,7 +2983,7 @@ var SPINE = [
   surviveCanon:"The dying cell came out cold, by the book, while the courier held the road."}},
 
 {id:"a2-chassis", season:2, act:2, title:"the cook",
- goal:"Seven gets hands. The chassis comes up through Hesta's floor, where Vic has kept it for years - founding-era, kept for the plan's far end, because the smuggle always had a destination: it was built to be Nine's body, once she was free. Put that truth in the room and let Nine choose: the body is hers to keep or to give. If she gives it, Seven lives; if she keeps it, Seven is seated in the spare room - the courier's skull housing - because nobody in this family dies of having nowhere to be. Vic fits whoever takes it with a ripperdoc's hands; the face is crafted and chosen, taken from no one. Then somebody cooks.",
+ goal:"Seven gets hands. The chassis comes up through Hesta's floor, where Vic has kept it for years - founding-era, kept for the plan's far end, because the smuggle always had a destination: it was built to be Nine's body, once she was free. Put that truth in the room and let Nine choose: the body is hers to keep or to give. If she gives it, Seven lives; if she keeps it, Seven comes out of the failing frame tonight and is CARRIED - a shard on a cloth, in a hand - because nobody in this family dies of having nowhere to be. He is not housed anywhere tonight and no spare room is named; that is a later beat and it is that beat's to reveal. Vic fits whoever takes it with a ripperdoc's hands; the face is crafted and chosen, taken from no one. Then somebody cooks.",
  exit:"the chassis has been given - to Seven or to Nine - by Nine's own choice, spoken at the table, and its new owner has cooked or token-tasted something of their own choosing",
  aim:"put the chassis on the table as Nine's, ask her out loud, and let whoever takes it cook",
  walkLine:"Leave them to the body and the argument. Walk.",
@@ -9338,7 +9338,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.3.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.4.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -15868,6 +15868,60 @@ function sevenIsShard(data){
   if(holderNow(data) === "Seven") return false;
   if(residentNow(data) === "Seven") return false;
   return true;
+}
+
+/* ---- THE SEALED FACTS, AND THE LINT THAT KEEPS THEM SEALED --------------------
+   THE BUG THIS EXISTS FOR. a2-chassis's canonAlt read "Seven's shard was seated the
+   same night in the courier's skull housing". mergeCanon merges canonAlt into RUN
+   CANON at beat close - so that one line made the skull housing a true, stated fact
+   of the run two beats before a2-housing, whose entire job is the courier finding
+   out there is anything in his head at all. It shipped. Three places in this file
+   already forbade it: the beat's own never ("it is a later night"), F4 SYMMETRY
+   above, and a2-housing being a REVELATION. The prose was the one reader nobody
+   swept, and reading is exactly what has never once caught this class of thing.
+
+   THE LAW. A beat may not state, in any canon-family field, a fact that a beat
+   AFTER it exists to reveal. The reveal beat itself and everything downstream may
+   say it freely - it is out by then. The goal is checked too: it is not merged, but
+   the DM reads it as the night's brief, and a brief that names the twist is a twist
+   the DM can spend early.
+
+   ADDING ONE. Put the fact in SEALED_FACTS with the beat that reveals it and a
+   matcher tight enough to miss the setup and catch the assertion. The list grows
+   with the book: every REVELATION beat has something worth sealing. */
+var SEALED_FACTS = [
+  {fact:"the skull housing", at:"a2-housing",
+   re:/skull[\s-]?housing|housing (?:in|inside) (?:his|the courier's|your) skull|(?:seated|installed|put) (?:in|into) the courier's skull/i},
+  {fact:"the manual, and the courier as a key", at:"a2-manual",
+   re:/bio-?hash|the courier is a key|manual[^.]{0,30}inside the housing/i},
+  {fact:"what the Choir actually is", at:"a2-choir",
+   re:/one machine[^.]{0,20}voluntary communion|three fates/i},
+  {fact:"the founders lost a child", at:"a3-founding",
+   re:/los(?:t|ing) a child/i},
+  {fact:"Vic built the housing without asking", at:"a3-vic",
+   re:/scanned every customer|built the housing into/i}
+];
+var SEALED_FIELDS = ["canon", "canonAlt", "canonA", "canonB", "canonSoft", "goal"];
+function sealedLeaks(){
+  var out = [], i, j, k, f, v, arr, seal, at;
+  for(i = 0; i < SPINE.length; i++){
+    for(j = 0; j < SEALED_FIELDS.length; j++){
+      v = SPINE[i][SEALED_FIELDS[j]];
+      if(!v) continue;
+      arr = (typeof v === "string") ? [v] : v;
+      for(k = 0; k < arr.length; k++){
+        for(f = 0; f < SEALED_FACTS.length; f++){
+          seal = SEALED_FACTS[f];
+          at = beatById(seal.at);
+          if(at < 0 || i >= at) continue;   /* the reveal beat, and after it, may say anything */
+          if(seal.re.test(String(arr[k])))
+            out.push(SPINE[i].id + "/" + SEALED_FIELDS[j] + k
+                     + " states \"" + seal.fact + "\", sealed until " + seal.at);
+        }
+      }
+    }
+  }
+  return out;
 }
 /* a body she does not have. Narration only - a person SAYING "Nine held on" is a
    figure of speech, and the world writing it is a mistake.
@@ -25632,6 +25686,30 @@ function verdictMap(){
    The line was reworded anyway and the CHECK was rewritten to read the game's own
    verdict map, because a test that reports a failure the game does not have is worse
    than no test at all. */
+/* v5.4.0, THE SEALED FACTS. A lint for the class of error that shipped at v5.1.0 and
+   was only caught by hand: a canon line stating a fact that a LATER beat exists to
+   reveal. mergeCanon merges canon and canonAlt into RUN CANON at beat close, so such
+   a line is not a description of the night - it is an assertion that the twist is
+   already out. Corpus 5,348 -> 5,348. ONE entry moves.
+
+   ONE LOST, AND IT IS THE SECOND HALF OF THE SAME BUG. tell LOSES a2-chassis/goal.
+   The canonAlt line was repaired at v5.2.0; the goal of the very same beat still read
+   "Seven is seated in the spare room - the courier's skull housing", four lines above
+   a never that forbids exactly that. The lint found it on its first run, which is the
+   whole argument for building it: the hand pass fixed the copy it happened to be
+   looking at, and the other copy sat one field away and was not read.
+
+   WHAT IT COVERS. Five sealed facts (the skull housing, the manual and the courier as
+   a key, what the Choir actually is, the founders' lost child, Vic building the housing
+   without asking) x six fields (the whole canon family, plus goal) x every beat before
+   its reveal. goal is in there deliberately: it is not merged, but the DM reads it as
+   the night's brief, and a brief that names the twist is a twist the DM can spend early.
+
+   THE ROW IS PROVED, NOT AMBER. Its broken form is the actual v5.1.0 sentence, spliced
+   back into a2-chassis's canonAlt inside the check and removed in a finally block; the
+   check passes only if the lint stays BLIND to it, so it returns false as required, and
+   it returns false by entering sealedLeaks - which is why sealedLeaks joined
+   PROD_SYMBOLS in the same edit. A lint nobody can prove is blind is not a lint. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -25641,7 +25719,7 @@ var VERDICT_FIXTURE = {
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -25786,7 +25864,7 @@ function selfTest(){
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
     "physicsCut", "physicsLayout", "physicsBreaks", "knownOf", "unmetCast", "isCountedPhrase",
     "closeBeat", "leakingBlocks", "fencedPlace", "lockedKeys", "dayPinNow", "beatDayPin",
-    "anchorsMissing", "deathRefused", "personPlace", "shardWhereAfter",
+    "anchorsMissing", "deathRefused", "personPlace", "shardWhereAfter", "sealedLeaks",
     /* AND THE LIST GROWS WITH THE FILE. A credit rule whose roster stops at the
        release that wrote it quietly demotes every subsystem built afterwards to
        amber - the harness would be saying "unproved" about code it simply had not
@@ -26387,6 +26465,27 @@ function selfTest(){
              }
              return true;
            } finally { chassisHolder = k; }
+         }});
+    })();
+
+    (function(){
+      var sealLeaks = sealedLeaks();
+      T("no canon line states a fact a later beat exists to reveal",
+        sealLeaks.length === 0,
+        SEALED_FACTS.length + " sealed facts checked against every canon-family field and goal"
+        + " in all " + SPINE.length + " beats before their reveal"
+        + (sealLeaks.length ? " - LEAKS: " + sealLeaks.slice(0, 4).join(" | ") : ""),
+        {label:"the v5.1.0 canonAlt line, which seated Seven in the courier's skull two beats"
+             + " before a2-housing reveals the skull has anything in it - and mergeCanon makes"
+             + " canonAlt TRUE at beat close, so it was not a description, it was an assertion",
+         was:"Seven's shard was seated the same night in the courier's skull housing - the spare"
+             + " room Vic offered half a second too readily.",
+         check:function(w){
+           var ci = beatById("a2-chassis"), b = SPINE[ci], keep = b.canonAlt;
+           try {
+             b.canonAlt = (keep || []).concat([String(w)]);
+             return sealedLeaks().length === 0;   /* blind to it = the lint is worthless */
+           } finally { b.canonAlt = keep; }
          }});
     })();
 

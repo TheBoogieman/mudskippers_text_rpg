@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.3.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
+**Last updated: v5.4.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
 room in the game, both roads of the fork written, the high cluster the biggest part of it.
 What it still needs is second layers and both landings wired. One ruled subject was refused
 and is waiting on the Architect: see "what he was on the lists" below.**
@@ -367,6 +367,31 @@ deepest room in the book.
 
 So the loop at the top of this file is the loop. It was never suspended — it was relaxed
 for exactly two rooms whose subjects were already staged and already good.
+
+## The sealed-fact lint — shipped v5.4.0
+
+**A canon line may not state a fact that a LATER beat exists to reveal.** `mergeCanon`
+merges `canon`/`canonAlt` into run canon at beat close, so such a line is not describing
+the night — it is asserting the twist is already out.
+
+It exists because that exact bug shipped at v5.1.0 and was found by hand. And on its first
+run it found the **second half of the same bug**: the hand pass had repaired `a2-chassis`'s
+`canonAlt` and left the identical claim sitting in the same beat's `goal`, four lines above
+a `never` that forbids it. One field away, and nobody read it.
+
+Five sealed facts × six fields (the whole canon family, plus `goal`) × every beat before its
+reveal: the skull housing (`a2-housing`) · the manual and the courier as a key (`a2-manual`)
+· what the Choir actually is (`a2-choir`) · the founders' lost child (`a3-founding`) · Vic
+building the housing without asking (`a3-vic`).
+
+**Adding one:** put it in `SEALED_FACTS` with the beat that reveals it and a matcher tight
+enough to miss the setup and catch the assertion. `goal` is checked on purpose — it is not
+merged, but the DM reads it as the night's brief, and a brief that names the twist is a
+twist the DM can spend early.
+
+**The lesson, and it is the one that keeps recurring:** an engine ruling is not finished
+until the prose that disagrees with it has been hunted. Reading has never once caught this
+class of thing. Build the mechanism.
 
 ## Run this at the start of every wave
 
