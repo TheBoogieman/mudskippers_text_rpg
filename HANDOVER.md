@@ -42,6 +42,49 @@ loop up from this file alone.*
 
 **Next: `a1-turn`** (the last room in Book One). Then Books Two and Three (24 rooms).
 
+## `a1-turn` — ALREADY RULED, WRITE IT
+
+The Architect picked these on 2026-08-15, before the context boundary. **Do not ask him
+again.** Eight new cards on top of the three already there (`what happens tomorrow` /
+the gutter, `what Nine makes of having been asked`, `the food, the kitchen, the noise`),
+which need ids and second takes like every other room.
+
+The beat is the season finale: the courier chooses Nine, *not as cargo but as a person
+he is now responsible for*. The room is Vic's kitchen after, plates not cleared, the
+thing said and sitting there. Room `never`: **it is not re-litigated**, **nobody
+arrives**. Present: Pia, Vic, Nine.
+
+1. **What he actually chose** — Nine on the difference between being *kept* and being
+   *chosen*. She has been kept before and can tell the two apart by feel. The beat's
+   whole subject, said once, quietly, at a table. Note the hard-landing scar: on a red
+   close he kept her *unspoken* and **she felt the difference** — so this card must read
+   differently in the two rooms only insofar as the prose allows; do not contradict it.
+2. **The delivery nobody's delivering** — there is still a client, a fee, and somebody
+   expecting a package. Pia on what happens to a courier who simply does not turn up.
+   The practical cost of the choice he just made.
+3. **Vic on responsibility** — he took Pia in years ago and has never once called it a
+   decision. Asked straight, he gives the least romantic answer available and it is the
+   useful one.
+4. **What Pia thinks she is now** — circling what this arrangement is, refusing to name
+   it, visibly furious that she wants it named.
+5. **Nine can't eat** — the whole table is eating and she is *on* the table. Nobody has
+   thought about it until now. Something gets improvised, badly and warmly, so that she
+   is at dinner rather than beside it.
+6. **What to call her** — "Nine" is what the farm called her. Pia thinks she should pick
+   something else. Her answer is not the sentimental one and is better than it.
+7. **The house rules** — Vic recites them badly, Pia amends each one in real time. The
+   fifth rule from the laundry (`a1-late`, "decide before you are tired what you will not
+   do") gets tested against an actual household.
+8. **The shard-shaped hole** — if somebody comes looking, what is the story? The family
+   inventing a cover for her at a kitchen table and enjoying it far too much.
+
+Landing rows to wire — `lands`: "Ask what happens to the delivery now that nobody is
+delivering it." / "Tell Nine the record is not a wall and not a kid. It is me." / "Eat.
+The plate that matters is the cold one, and you cannot fix that tonight."
+`landsHard`: "Ask her how it feels, being the only one nobody asked." / "Ask her who
+taught her that sentence." / "Let it go tonight. Pick it up in the morning, if morning
+bothers."
+
 ## The four traps that catch me EVERY room
 
 Written into the fixture ledger as well. All four are invisible when reading; only the
