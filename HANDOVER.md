@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.98.0. Book One is finished. `a2-door` is finished — 15 cards, the
+**Last updated: v4.99.0. Book One is finished. `a2-door` is finished — 15 cards, the
 deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
 Hesta's floor. Next is writing `a2-chassis`.**
 
@@ -90,11 +90,38 @@ drowned and some are not.** `a2-ground` is the flooded half; `a2-hand` opens at 
 *keep* in it, and why Vic can stand in the flooded part and say something under this street
 goes with it. He is nearly pointing at it.
 
+**AND THERE ARE ONLY TWO PLACES IN THE WHOLE STORY, not three.** The city — the Veldt, the
+row, The Open Door, the drowned market under it. And **Vic's place on the marsh**, which is
+ONE property: the safehouse is *"a farmhouse that lost an argument with the marsh and
+stayed"*, and the cable shack is *"behind the safehouse"* — the house and his workshop out
+the back, same address. Mirren's cairn is on the marsh edge nearby. The causeway is the road
+between the two. "The shack" and "the safehouse" are not two locations and never were.
+
+**SEASON TWO LIVES AT THE OPEN DOOR (ruled 2026-08-15, shipped v4.99.0).** Book One ends at
+the marsh, and Book Two had inherited it as home base without one line of prose ever
+choosing it — seven of its thirteen nights, including the finale, were in a shack because
+that is where the previous book stopped. Now `a2-seven`, `a2-three`, `a2-housing`,
+`a2-manual`, `a2-choir`, `a2-law` and `a2-turn` are all at Hesta's. **The long room became
+the long table** — what she does when a family outgrows a booth.
+
+**What is still on the marsh is there for a REASON, and the reason is written into the
+beat.** `a2-mirren` is the cairn, because you bury people on the marsh. `a2-annul` is Vic's
+shack, because you do not bring a Choir officer taken alive into the row where your family
+eats and a twelve-year-old sleeps upstairs. Nothing is ever a retreat and **Hesta's is never
+compromised** — the hunt visits that street and is finished the next night.
+
 Room by room: `a2-door` is the back booth. `a2-ground` is the flooded undercroft below the
 old exchange house, on the same row. `a2-chassis` moved into Hesta's back room at v4.97.0.
 `a2-law` is still the safehouse kitchen out on the marsh. The warmth is not tied to a
 building — it is tied to Hesta being in the room and a pan being on, and she is in all of
 them.
+
+**WHY VIC PICKS THAT ROOF, and he never says it.** Plan A for getting Nine out of the city
+was **Mirren** — Vic's friend, the receiver, the delivery's destination. The Choir spent
+her, and the thing hunting the family in `a2-ground` is wearing her. **Plan B is the
+chassis.** So when Vic gathers everyone at The Open Door on day 9 he is walking them to the
+body without telling them it is there. The player learns something is down there at
+`a2-ground` and what it is at `a2-chassis`. Vic gives up neither early.
 
 **THE CHASSIS LIVES UNDER HESTA'S FLOOR (ruled 2026-08-15, shipped v4.97.0).** Vic built it
 and has kept it in the cold dry space under The Open Door for years. She was never told
@@ -133,8 +160,11 @@ the beats; this is just them written out.
 | 10–11 | `a2-ground` | the flooded undercroft | Vic says something of his is under the street |
 | 11 | `a2-hand` | dry end → the marsh | |
 | 11 | `a2-mirren` | the cairn | |
-| 14 | `a2-seven` | causeway → the shack | **Seven arrives**, dying inside a crude frame |
+| 14 | `a2-seven` | the row → Hesta's back room | **Seven arrives** on her step. He came because he heard there is a door here held open with a brick that feeds anybody needing out of Choir business |
 | 15 | `a2-chassis` | Hesta's back room, boards up | **Seven gets hands. Smoke session two** |
+| 16–19 | three / housing / manual / choir | Hesta's — the long table, the back room | |
+| 20 | `a2-annul` | Vic's shack, on purpose | you do not bring a captive into the row |
+| 22–23 | `a2-law`, `a2-turn` | Hesta's kitchen, the long table | **the season ends at the warm table** |
 
 **Seven cannot be at the first session** — it is day 9 and the family has not met him, and
 that night's job is the core four forming. He gets the second one instead, five days later,

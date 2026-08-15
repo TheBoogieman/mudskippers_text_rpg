@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.98.0 "He Sent Word Ahead"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.99.0 "The Long Table"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2909,7 +2909,7 @@ var SPINE = [
  scar:"She went into the ground between alarms; the vow got said walking."},
 
 {id:"a2-seven", season:2, act:2, title:"the defector, dying",
- goal:"THE VOW'S FIRST TRIAL. Seven COMES TO THEM - a dying Choir labor frame walking out of the city and up the causeway on its own failing legs, crude-voiced through a bad speaker, shedding whatever he stole to get this far, failing by the hour. Nobody goes anywhere to find him; he arrives, and he is sorry about the noise. A defector asking for nothing. Saving him is the beat's whole question, and saving him means one thing: his shard comes out of that frame by hand, before it quits - and after that, he is a mind with nowhere to be.",
+ goal:"THE VOW'S FIRST TRIAL. Seven COMES TO THEM - a dying Choir labor frame walking across the city and up this row on its own failing legs, because somebody told it there is a door here that is held open with a brick and asks nothing, crude-voiced through a bad speaker, shedding whatever he stole to get this far, failing by the hour. Nobody goes anywhere to find him; he arrives, and he is sorry about the noise. A defector asking for nothing. Saving him is the beat's whole question, and saving him means one thing: his shard comes out of that frame by hand, before it quits - and after that, he is a mind with nowhere to be.",
  exit:"the group has committed to saving Seven and is acting on it",
  aim:"make his failing a clock they can hear, and get them committed to pulling his shard",
  walkLine:"He isn't mine to save. Walk before I learn his name properly.",
@@ -2919,9 +2919,9 @@ var SPINE = [
  walks:["Leave him in the rig. We cannot save everyone and I am tired.",
         "Say no to this one out loud, and go.",
         "Walk out on it. He was dying before we got here."],
- opens:[{day:"14", time:"9:30pm", place:"THE CAUSEWAY, LAST LIGHT", amb:"dead-signal",
-       now:"Night, on the causeway. Something is coming up the marsh road on its own legs and it is going out as it walks.",
-       lines:["Something is coming up the marsh road, and it is sorry about the noise.",
+ opens:[{day:"14", time:"9:30pm", place:"THE ROW, LAST LIGHT", amb:"dead-signal",
+       now:"Night, on the row. Something is coming up the street on its own legs and it is going out as it walks.",
+       lines:["Something is coming up the row, and it is sorry about the noise.",
               "The frame is making a sound like a fridge with regrets and it has been making it, by the state of the legs, for two days and most of a city.",
               ["Seven","Sorry about the noise. Sorry — sorry, I've said sorry twice now, that's already too many."],
               "Whatever is inside that housing is apologising for existing in a room. That tells you a great deal very quickly.",
@@ -2929,8 +2929,8 @@ var SPINE = [
               "He says it kindly, which does not help, and he knows it before he has finished saying it."],
        rail:["Ask Seven what he wants.",
              "Ask Three exactly how long a night means."]}],
- lands:[{day:"14", time:"11:50pm", place:"THE SHACK, WORKBENCH", amb:"dead-signal",
-       now:"Late, at the workbench in Vic's shack. Seven is out of the failing rig and the family is committed.",
+ lands:[{day:"14", time:"11:50pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
+       now:"Late, in Hesta's back room. Seven is out of the failing rig and the family is committed.",
        lines:["Whatever he was in is off him now, and what is left of him fits in one hand and will not stop thanking people.",
               ["Seven","I know I keep saying it. I'm aware. It's just that nobody has ever — anyway. Thank you."],
               "Vic has given up pretending to tidy the bench. That is how you know how serious this is.",
@@ -2939,8 +2939,8 @@ var SPINE = [
        rail:["Pull the sheet off. Let us all look at it properly.",
              "Ask Vic where a chassis like that even comes from.",
              "Tell Seven he is allowed to keep saying it."]}],
- landsHard:[{day:"14", time:"11:50pm", place:"THE SHACK, WORKBENCH", amb:"dead-signal",
-       now:"Late, at the workbench. The family committed after the choice had nearly closed, and Seven heard the hesitation.",
+ landsHard:[{day:"14", time:"11:50pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
+       now:"Late, in the back room. The family committed after the choice had nearly closed, and Seven heard the hesitation.",
        lines:["He comes out. It takes longer to decide than it takes to do, and everyone in the room can do that arithmetic.",
               ["Seven","It's fine. It is — I'd have hesitated. I'd have hesitated longer, probably, that's not modesty, that's just true."],
               "Vic works the bench with the specific silence of a man doing sums he does not want the answer to.",
@@ -2963,15 +2963,15 @@ var SPINE = [
      ["Seven","I concur with the doctor, with feeling. This chassis has opinions about being handled and they are all electrical."]],
     rail:[{text:"Give Vic his ten minutes. Watch the road for him.", key:"wait ten minutes vic watch road guard help cold"},
       {text:"Just unclip it now - one clip, it is right there.", tempt:true},
-      {text:"Rig the tarp and drag the whole frame off the causeway first.", key:"tarp drag frame move off causeway rig rope shift"}]}],
+      {text:"Rig the tarp and drag the whole frame off the road first.", key:"tarp drag frame move off causeway rig rope shift"}]}],
   death:"He took the live clip the book said to leave, and the dying cell spent its last charge on him - warned by the weep, warned by the doctor, one bare hand on Choir plating.",
   deathScene:["The clip gives easily. That is the awful part - it gives like a gift, and the jacket's stored charge follows it out through the nearest willing path, which is you.",
    ["Seven","MEDIC - Vic - he took the - oh, you foolish, HELPFUL - "],
-   "The causeway files the flash without comment. The cell, spent at last, dies with you - a coincidence the night declines to dignify."],
+   "The row files the flash without comment. The cell, spent at last, dies with you - a coincidence the night declines to dignify."],
   clearScene:["Ten minutes of watching the road while Vic works cold and slow, and the cell comes out grey and harmless as a brick.",
    ["Vic","There. Boring, by the book, and everybody keeps their pulse. My favourite kind of procedure."],
    "Seven's frame settles, quieter for it, and the road you watched stays empty - two jobs done properly at once."],
-  grazeScene:["The tarp drag beats the clock by a margin nobody brags about - the cell lets go its charge into the causeway mud two feet from your boots, a crack like the sky changing its mind.",
+  grazeScene:["The tarp drag beats the clock by a margin nobody brags about - the cell lets go its charge into the wet of the gutter two feet from your boots, a crack like the sky changing its mind.",
    ["Seven","Report: everyone upright. The mud has been promoted to hero. My apologies to the mud."],
    "Your sleeve is scorched through at the cuff, a receipt for exactly how close, and Vic looks at it and says nothing at a volume everyone hears."],
   grazeCanon:"The cell's last charge went into the mud a boot-length short of the courier.",
@@ -3051,16 +3051,16 @@ var SPINE = [
  walks:["Show Three the door and take it myself on the way past.",
         "This house has too many people in it. I will be one fewer.",
         "Go before another stranger sits down at that table."],
- opens:[{day:"16", time:"7:45am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
-       now:"Morning. Three is in the long room, has been for some time, and nobody invited her.",
-       lines:["Three is in the long room at seven in the morning and nobody heard the door. She does not consider that worth mentioning.",
+ opens:[{day:"16", time:"7:45am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
+       now:"Morning. Three is in the long table, has been for some time, and nobody invited her.",
+       lines:["Three is in the long table at seven in the morning and nobody heard the door. She does not consider that worth mentioning.",
               "She has taken the chair by the window. Pia has been campaigning for that chair since the day she got here.",
               ["Three","Good morning."],
               "It comes out in two voices at slightly different pitches, and the room decides all at once not to react.",
               ["Pia","...Morning. That's my chair, by the way. Not a problem. Just information."]],
        rail:["React anyway. Ask about the voices.",
              "Ask her what she wants, before Pia gets to the chair."]}],
- lands:[{day:"16", time:"9:05am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
+ lands:[{day:"16", time:"9:05am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
        now:"Morning. Three has said what she wants and has been given a reason to stay.",
        lines:["She stays, which is the answer, and nobody makes her say it a second way.",
               "The morning gets on with itself around her — kettle, shutters, an escalating negotiation about the chair — and she takes it in with both voices quiet at once.",
@@ -3070,7 +3070,7 @@ var SPINE = [
        rail:["Ask her what she just saw.",
              "Ask for the speech.",
              "Stop touching it and get on with the morning."]}],
- landsHard:[{day:"16", time:"9:05am", place:"THE SAFEHOUSE, LONG ROOM", amb:"marsh-fog",
+ landsHard:[{day:"16", time:"9:05am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
        now:"Morning. Three stayed without being given a reason, and she keeps the ledger of that.",
        lines:["She stays. Nobody gives her a reason, and she does not ask for one twice, and the difference between those two things goes into a ledger only she keeps.",
               ["Three","I will be here. That is not the same as being asked, and I am saying so once, now, so it never has to be said again."],
@@ -3099,7 +3099,7 @@ var SPINE = [
  walks:["Leave it in my head and leave this house. I do not want it named.",
         "Walk out. Whatever is in my skull can stay my problem alone.",
         "Take the thing in my head somewhere it cannot cost anybody else."],
- opens:[{day:"17", time:"4:10pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
+ opens:[{day:"17", time:"4:10pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
        now:"Afternoon. The courier's head has started doing something it should not, in front of witnesses.",
        lines:["It happens at the worst possible moment, which is to say in the middle of somebody else's sentence.",
               "The lamp over the bench flickers in time with it. Twice.",
@@ -3108,8 +3108,8 @@ var SPINE = [
               "Three is looking at your head with both voices completely silent. She has not done that for anything else all week."],
        rail:["Ask Three what she is looking at.",
              "Sit down under the lamp and let them look properly."]}],
- lands:[{day:"17", time:"6:40pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
-       now:"Evening, under the shack's work lamp. The housing in the courier's skull is out in the open and named.",
+ lands:[{day:"17", time:"6:40pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
+       now:"Evening, under the work lamp in the back room. The housing in the courier's skull is out in the open and named.",
        lines:["It has a name now, and a shape, and a date, and none of that makes it easier to sit under a lamp with.",
               ["Three","Installed. Not grown, not an accident. Installed, by somebody with the tools and the time."],
               "Vic has gone somewhere else in the house and is being extremely busy there, and everyone has noticed that nobody has gone to find him.",
@@ -3118,7 +3118,7 @@ var SPINE = [
        rail:["Read it.",
              "Ask Three whether it is addressed to anyone.",
              "Go and find Vic yourself."]}],
- landsHard:[{day:"17", time:"6:40pm", place:"THE SHACK, UNDER THE LAMP", amb:"dead-signal",
+ landsHard:[{day:"17", time:"6:40pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
        now:"Evening, under the lamp. The housing announced itself before anyone could tell him gently; he learned it the worst way.",
        lines:["Nobody gets to choose the words. The thing in your skull introduces itself, at volume, in a room with four people in it and no warning at all.",
               ["Three","I was going to tell you sitting down. I had it worked out. I want you to know there was a version where you were sitting down."],
@@ -3152,7 +3152,7 @@ var SPINE = [
  walks:["Burn the manual and go. Nobody should be able to open those doors.",
         "Leave. What I open is not a reason to keep me.",
         "Put it down and walk. I am a key, and keys get used up."],
- opens:[{day:"18", time:"8:50pm", place:"THE LONG ROOM", amb:"interior-warm",
+ opens:[{day:"18", time:"8:50pm", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
        now:"Evening. A manual that came out of the courier's head is on the table and nobody has read it aloud.",
        lines:["The document has been on the table for a day and a half and has developed a ring from somebody's mug.",
               "It is written in the voice of a person explaining something to someone they love, which is the most frightening thing about it by a distance.",
@@ -3161,7 +3161,7 @@ var SPINE = [
               ["Vic","Read it."]],
        rail:["Ask Vic whether he has read it before.",
              "Start reading from the top."]}],
- lands:[{day:"18", time:"11:30pm", place:"THE LONG ROOM", amb:"interior-warm",
+ lands:[{day:"18", time:"11:30pm", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
        now:"Late, with the manual open on the table. The family knows what the courier can open, and what it costs.",
        lines:["It works. That is the worst available outcome, and the whole table understands it at the same moment.",
               ["Seven","So he's a key. Sorry. I know that's the blunt way to say it. He's a key."],
@@ -3171,8 +3171,8 @@ var SPINE = [
        rail:["Say it out loud: we can get into their files.",
              "Ask what happens to me the first time I use it.",
              "Sleep on it. Nothing in there is going anywhere."]}],
- landsHard:[{day:"18", time:"11:30pm", place:"THE LONG ROOM", amb:"interior-warm",
-       now:"Late, in the long room. The manual was half-read when events outran the reading; the family acts on a key it barely understands.",
+ landsHard:[{day:"18", time:"11:30pm", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
+       now:"Late, in the long table. The manual was half-read when events outran the reading; the family acts on a key it barely understands.",
        lines:["You get about two thirds of the way through it before the night stops waiting, and the last third stays on the table with a mug on it.",
               ["Three","We do not know what page four says. I want that on the record before anybody uses him for anything."],
               ["Pia","Noted. Loudly noted. Everyone hear that?"],
@@ -3201,7 +3201,7 @@ var SPINE = [
  walks:["Shut the file and leave. Some of this should stay buried.",
         "Walk out of the reading. I do not want to know the rest.",
         "Close it, and close the door behind me on the way out."],
- opens:[{day:"19", time:"1:15am", place:"THE LONG ROOM", amb:"dead-signal",
+ opens:[{day:"19", time:"1:15am", place:"THE OPEN DOOR, AFTER HOURS", amb:"dead-signal",
        now:"Small hours. A Choir door is open and their filing is on the other side of it.",
        lines:["The door opens. It does not do anything dramatic; it stops being shut, which is somehow worse.",
               "What is behind it is filing. Rows and rows of the most ordinary filing in the world, done to a standard that suggests somebody was proud of it.",
@@ -3210,7 +3210,7 @@ var SPINE = [
               "Nobody asks her to elaborate, and she does not offer."],
        rail:["Ask Three to elaborate.",
              "Start at the index and work in."]}],
- lands:[{day:"19", time:"3:45am", place:"THE LONG ROOM", amb:"dead-signal",
+ lands:[{day:"19", time:"3:45am", place:"THE OPEN DOOR, AFTER HOURS", amb:"dead-signal",
        now:"The small hours. The three fates are understood, and so is what was done to Mirren.",
        lines:["You get to the end of it and nobody moves to shut anything down.",
               "The room has the particular quiet of a room where everyone has learned the same thing and is waiting to see who will be first to say what it means.",
@@ -3220,7 +3220,7 @@ var SPINE = [
        rail:["Ask her who that is.",
              "Say the obvious thing: whoever it is, they are on those lists too.",
              "Let her get to it in her own time."]}],
- landsHard:[{day:"19", time:"3:45am", place:"THE LONG ROOM", amb:"dead-signal",
+ landsHard:[{day:"19", time:"3:45am", place:"THE OPEN DOOR, AFTER HOURS", amb:"dead-signal",
        now:"The small hours. The three fates arrived as a blow, not a briefing — Mirren's record surfaced with nobody ready for it.",
        lines:["It does not arrive in order. Her record comes up third, out of a list, in the middle of a sentence somebody was reading aloud for a different reason.",
               ["Hesta","Stop. Stop reading. Go back — no. No, don't go back."],
@@ -3322,7 +3322,7 @@ var SPINE = [
  walks:["Refuse the law and leave the table.",
         "This is not my family and I am not signing their wall.",
         "Take my plate outside and keep walking with it."],
- opens:[{day:"22", time:"7:10pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+ opens:[{day:"22", time:"7:10pm", place:"THE OPEN DOOR, KITCHEN", amb:"interior-warm",
        now:"Evening. There is a pan, too many people, and a disagreement that has been building for a week.",
        lines:["The argument starts, as all of this family's arguments start, over who is allowed to touch the pan.",
               "Within four minutes it is not about the pan. Within six, three people are standing.",
@@ -3331,7 +3331,7 @@ var SPINE = [
               "She has climbed onto a chair, which she has learned makes people stop talking."],
        rail:["Ask her who put her in charge.",
              "Get something to write on."]}],
- lands:[{day:"22", time:"10:15pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+ lands:[{day:"22", time:"10:15pm", place:"THE OPEN DOOR, KITCHEN", amb:"interior-warm",
        now:"Evening, in the kitchen, with a law on the wall that was not there this morning.",
        lines:["The rule gets said, and then written, and then stuck to the wall, where it manages to look both ridiculous and permanent.",
               ["Hesta","It's crooked."],
@@ -3342,7 +3342,7 @@ var SPINE = [
        rail:["Ask her what she heard.",
              "Say the law out loud one more time, for the room.",
              "Everyone away from the windows. Now."]}],
- landsHard:[{day:"22", time:"10:15pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
+ landsHard:[{day:"22", time:"10:15pm", place:"THE OPEN DOOR, KITCHEN", amb:"interior-warm",
        now:"Evening. The law got written between interruptions, and the meal that was the point went half-eaten.",
        lines:["It gets written in three goes, on the back of something, while two other things are happening in the next room.",
               "The wall gets it eventually. The meal does not get eaten. That was supposed to be the entire point of the exercise.",
@@ -3371,7 +3371,7 @@ var SPINE = [
  walks:["Refuse the Exchange. Let the machine keep whatever it has.",
         "Say the price is too high, and go, and mean it.",
         "Walk out on all of them rather than pay that."],
- opens:[{day:"23", time:"11:40pm", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
+ opens:[{day:"23", time:"11:40pm", place:"THE OPEN DOOR, AFTER HOURS", amb:"danger",
        now:"Night. There is a name on Choir paper and the family is in one room deciding what it is worth.",
        lines:["The paper is on the table and everybody has read it and nobody has picked it up again.",
               "It is a very good piece of paper. Watermarked. Somebody chose that watermark in a meeting.",
@@ -3380,8 +3380,8 @@ var SPINE = [
               ["Pia","I'm the calm one."]],
        rail:["Tell Pia to stop being the calm one.",
              "Ask what the Exchange actually is, out loud, for the room."]}],
- lands:[{day:"24", time:"1:30am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
-       now:"Small hours in the long room. The family has said the word Exchange out loud and nobody has taken it back.",
+ lands:[{day:"24", time:"1:30am", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
+       now:"Small hours in the long table. The family has said the word Exchange out loud and nobody has taken it back.",
        lines:["You say the word Exchange, and the room does not argue - which is how you find out it was decided some time ago and everyone was waiting to be told.",
               ["Three","Then I will say the part nobody wants to. Some of us do not come back from that. I am not being dramatic. I am being accurate, and I would like us accurate before we are brave."],
               ["Hesta","Noted. Sit down. Eat something on your way to being accurate."],
@@ -3393,8 +3393,8 @@ var SPINE = [
        rail:["Ask Three to say the accurate part in full.",
              "Take the paper off the table and give it to Pia to keep.",
              "Let the room stay up. Nobody is sleeping through this one."]},
-      {day:"24", time:"1:10am", place:"THE SAFEHOUSE, LONG ROOM", amb:"interior-warm",
-       now:"Small hours in the long room. The family has run out of other sentences and turned itself toward the Exchange.",
+      {day:"24", time:"1:10am", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
+       now:"Small hours in the long table. The family has run out of other sentences and turned itself toward the Exchange.",
        lines:["It turns out you do not decide to go to the Exchange. You simply run out of other sentences.",
               ["Seven","I've made a list. It's not a good list. It's mostly things we don't have."],
               ["Vic","Read it anyway."],
@@ -3407,8 +3407,8 @@ var SPINE = [
        rail:["Ask Nine for the opinions now, while there is still a room to have them in.",
              "Ask Seven what is at the top of the list.",
              "Call it a night. We start on the list at first light."]}],
- landsHard:[{day:"24", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
-       now:"Small hours in the long room. The trade executed itself while the family argued; the choosing was done for them.",
+ landsHard:[{day:"24", time:"1:55am", place:"THE OPEN DOOR, AFTER HOURS", amb:"danger",
+       now:"Small hours in the long table. The trade executed itself while the family argued; the choosing was done for them.",
        lines:["The argument is still going when it stops being relevant. Arguments do that, and nobody warns you.",
               "It is done. Somewhere else, by other people, on the timetable in the watermark, while this room was still working out what it believed.",
               ["Hesta","Everybody stop talking."],
@@ -3420,8 +3420,8 @@ var SPINE = [
        rail:["Ask Hesta to read it out. All of it.",
              "Minute it. Say out loud what we would have chosen.",
              "Everyone off the walls. We move tonight."]},
-      {day:"24", time:"1:55am", place:"THE SAFEHOUSE, LONG ROOM", amb:"danger",
-       now:"Small hours in the long room. The world answered the paper before the family did, and the family is looking at the answer.",
+      {day:"24", time:"1:55am", place:"THE OPEN DOOR, AFTER HOURS", amb:"danger",
+       now:"Small hours in the long table. The world answered the paper before the family did, and the family is looking at the answer.",
        lines:["You lose an hour to being right at each other, and at the end of the hour the world hands you its own answer with the ink already dry.",
               ["Seven","I want to apologise for the last thing I said. Not because it was wrong. Because of when."],
               ["Vic","Sit down, son."],
@@ -6356,7 +6356,7 @@ var SCENEBOOK = {
   where:"The Open Door at night - a diner with its lights on, its door held open by a brick, and a shotgun under the counter nobody mentions",
   ends:"the back booth, plates going back empty, Hesta pretending not to watch them eat",
   here:["Pia","Vic","Nine","Hesta"],
-  before:"VIC CALLED THIS, AND IT IS A GATHERING RATHER THAN A RETREAT. Six days after the courier said out loud that he was keeping Nine, Vic sent word to the one roof in the city he trusts and asked everybody to be under it - which is his whole want this season: everyone he owes gathered at Hesta's, and the courier ready. He will not answer why this courier, and nobody gets that out of him tonight. Hesta was told they were coming and told nothing else, which is why she is laying out more cutlery than there are people on the street: she does not need a reason, she needs a number, and she has rounded it up. THE MARSH HOUSE IS NOT BURNED and nobody is fleeing anywhere - the family sleeps there again later in the season. Anybody writing this scene as a flight from somewhere is writing the wrong scene.",
+  before:"VIC CALLED THIS, AND IT IS A GATHERING RATHER THAN A RETREAT. Six days after the courier said out loud that he was keeping Nine, Vic sent word to the one roof in the city he trusts and asked everybody to be under it - which is his whole want this season: everyone he owes gathered at Hesta's, and the courier ready. He will not answer why this courier, and nobody gets that out of him tonight. Hesta was told they were coming and told nothing else, which is why she is laying out more cutlery than there are people on the street: she does not need a reason, she needs a number, and she has rounded it up. AND THE REASON HE PICKED THIS ROOF IS UNDER IT, WHICH HE DOES NOT SAY. Plan A was Mirren - the receiver, the way Nine was going to be got out of the city - and the Choir has spent her. Plan B is the founding-era chassis Vic has kept in Hesta's cellar for years. He is walking the family to the body without telling them it is there. The player learns something is down there at a2-ground and what it is at a2-chassis, and Vic gives up neither early. THE MARSH HOUSE IS NOT BURNED and nobody is fleeing anywhere - the family simply lives at The Open Door from tonight. Anybody writing this scene as a flight from somewhere is writing the wrong scene.",
   never:["the meal is the beat - it gets cooked and eaten on screen, not promised and not skipped to",
          "nobody knocks at this door in a stall; that is the world's move and it belongs to the pressure",
          "what is under Hesta's floor is never explained or described. She gives at most that a cold place exists, that things keep in it, and - once a year, asked properly - that it is not hers. Never one word past that, and never what is in it"],
@@ -6991,8 +6991,8 @@ var SCENEBOOK = {
 },
 
 "a2-seven": {
-  where:"the causeway at night - a crude Choir frame that walked itself out of the city and up the marsh road on borrowed time, with a defector inside it. Nobody went to fetch him; the world came up the road",
-  ends:"Vic's workbench, Seven out of the failing rig, the family committed to it",
+  where:"the row at last light - a crude Choir frame walking itself up the street on borrowed time, with a defector inside it. Nobody went to fetch him. He heard there was a door in this city that is held open with a brick and feeds anybody who needs to be out of the Choir's business, and he spent what he had left getting to it",
+  ends:"Hesta's back room with the boards down over the cellar, Seven out of the failing rig, the family committed to it",
   here:["Pia","Vic","Nine","Hesta","Seven"],
   before:"SEVEN IS IN A DYING FRAME AND THE CLOCK IS AUDIBLE. He speaks through a bad speaker, he is shedding whatever he stole to get this far, and he is failing by the hour. He asks for nothing.",
   never:["Three is not here and her two voices are not mentioned - she arrives two beats from now and that is her scene",
@@ -7016,7 +7016,7 @@ var SCENEBOOK = {
     holds:"he does not ask to be saved",
     rail:"Ask him what he wants from us.",
     plays:[["Seven","Nothing. I want to be clear about that, because people in my condition are assumed to be requisitioning. I came to be somewhere that was not there."],
-     ["Seven","I have been an instrument of a place for a long time. I wanted to stop being one somewhere with weather. This causeway has excellent weather. That is the whole errand."],
+     ["Seven","I have been an instrument of a place for a long time. I wanted to stop being one somewhere with weather. This street has excellent weather. That is the whole errand."],
      "He asks for nothing. The frame ticks as it cools, shedding borrowed time.",
      ["Seven","If it is all the same, I will watch the water while it discusses me. It is a very good water."]]},
    {ask:"what can actually be done",
@@ -7041,7 +7041,7 @@ var SCENEBOOK = {
      ["Hesta","It costs. Vows do. That is how you can tell them from decorating."]]}
   ],
   room:{
-   where:"the workbench afterwards, a shard on a cloth, a dead frame in the corner",
+   where:"the back room afterwards, a shard on a cloth, a dead frame in the corner and nobody willing to be the one who moves it",
    here:["Pia","Vic","Nine","Hesta","Seven"],
    never:["the chassis is not mentioned","nobody arrives"],
    topics:[
@@ -7170,7 +7170,7 @@ var SCENEBOOK = {
 },
 
 "a2-three": {
-  where:"the safehouse long room in the morning - a stranger already in it, who has been for some time, and nobody invited her",
+  where:"the long table at The Open Door in the morning, chairs still up on half of it - a stranger already in it, who has been for some time, and nobody invited her",
   ends:"the same long room with what she wants said out loud, and a reason to stay that is not sentiment",
   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
   before:"THREE SPEAKS IN TWO VOICE FREQUENCIES, SLIGHTLY OUT OF SYNC, AND THE ROOM NOTICES IT TONIGHT FOR THE FIRST TIME. She is terse, hard to like, and correct. She is a fate-two survivor: a second mind was laid over her and then annulled, and the one they took out did not survive it.",
@@ -7205,7 +7205,7 @@ var SCENEBOOK = {
     holds:"she does not offer a solution unless somebody asks for one",
     rail:"Ask her what we are doing wrong. She has clearly made a list.",
     plays:[["Three","You move on schedules a season stale. You count exits by doors, not by sightlines. You let the child do the watching because she volunteers, which means your watch rota is one twelve-year-old's stamina."],
-     ["Three","And you talk in the open with your backs to the water. I could hear you from the reeds. I DID hear you from the reeds. For two days."],
+     ["Three","And you talk in a room whose door is propped open with a brick. I could hear you from the pavement. I DID hear you from the pavement. For two days."],
      "Every item lands square. Being right without being liked is a trade she made a long time ago, and she has stopped noticing the price.",
      ["Three","A solution exists for each of these. Ask, and it is yours. I do not hand out unrequested help; it is a form of keeping."]]},
    {ask:"why she should stay",
@@ -7220,7 +7220,7 @@ var SCENEBOOK = {
      "No feelings were exchanged in the making of this arrangement, and both parties look genuinely relieved about it."]}
   ],
   room:{
-   where:"the long room later, Three still there, everyone adjusting to it",
+   where:"the long table later, Three still there, everyone adjusting to it",
    here:["Pia","Vic","Nine","Hesta","Seven","Three"],
    never:["she does not become friendly","nobody arrives"],
    topics:[
@@ -7245,14 +7245,14 @@ var SCENEBOOK = {
      holds:"she does not exempt anybody",
      rail:"Ask her what she makes of the two shards in this family.",
      plays:[["Three","You carry two people who cannot leave the hands that hold them. You call it family. From the inside of my file, it has another name, and I promised the room honesty."],
-      ["Three","- And. It is said kindly, this once: I have watched two days from the reeds. The child chose her seat. The clerk chose his causeway. Choosing changes the name of the thing. It does not change what the thing can become, if the hands forget to keep asking."],
+      ["Three","- And. It is said kindly, this once: I have watched two days from the far side of this row. The child chose her seat. The clerk chose his causeway. Choosing changes the name of the thing. It does not change what the thing can become, if the hands forget to keep asking."],
       "The uncomfortable version of the family's own arrangement, laid on the table gently, like a blade presented handle-first.",
       ["Three","Keep asking them. That is the whole inspection finding. It is the only one I will ever repeat."]]}
    ]}
 },
 
 "a2-housing": {
-  where:"under the work lamp in Vic's shack, afternoon, the courier's head doing something it should not in front of witnesses",
+  where:"under the work lamp Vic left in Hesta's back room after the fitting, afternoon, the courier's head doing something it should not in front of witnesses",
   ends:"the same lamp in the evening, the housing named out loud and everybody in the room having heard it",
   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
   before:"THE REACTION LANDS IN THIS SAME TURN. The shock, then the joke, then the real thing under the joke - not one turn each.",
@@ -7267,9 +7267,9 @@ var SCENEBOOK = {
     holds:"who put it there",
     rail:"Ask Three what it is. The flat name.",
     plays:[["Three","A housing. Founding-pattern, full spec. A vessel built into a skull to host a mind - the seat, the spine taps, the whole architecture. Dormant, and not improvised: fitted, by a professional, with time and intent."],
-     "The work lamp hums. The word vessel does a slow lap of the shack.",
+     "The work lamp hums. The word vessel does a slow lap of the back room.",
      ["Three","For the avoidance of poetry: a second person could live in this man's head. That is what it is for. There is no other thing it is for."],
-     "Who fitted it, she does not say, because she does not know. Somebody in the shack does. The lamp is not bright enough to show which face knows it."]},
+     "Who fitted it, she does not say, because she does not know. Somebody in this room does. The lamp is not bright enough to show which face knows it."]},
    {ask:"who did this",
     key:"who did put built installed when someone how-long",
     who:"Vic",
@@ -7305,7 +7305,7 @@ var SCENEBOOK = {
      ["Pia","For the record, from over here: it is your head. Whatever is built in it, the tenant I know is you. That is my full report."]]}
   ],
   room:{
-   where:"the shack afterwards, lamp still on, nobody having gone to bed",
+   where:"the back room afterwards, lamp still on, nobody having gone to bed",
    here:["Pia","Vic","Nine","Hesta","Seven","Three"],
    never:["Vic still does not confess","nothing about the manual"],
    topics:[
@@ -7337,7 +7337,7 @@ var SCENEBOOK = {
 },
 
 "a2-manual": {
-  where:"the long room in the evening, a manual that came out of the courier's own head lying on the table, unread aloud",
+  where:"the long table in the evening, a manual that came out of the courier's own head lying on the table, unread aloud",
   ends:"the same table late, the family knowing what he can open and roughly what it costs",
   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
   before:"THE HOUSED MIND DECODES IT. That is the beat: a mind he trusts reads what he cannot. If nobody is seated in the housing yet, then the one he carries reads it aloud through his hand - but the reading is hers, not his.",
@@ -7388,7 +7388,7 @@ var SCENEBOOK = {
      "It is nearly an admission - the shape of one, with the name still withheld - and the room, looking at his hands, extends him the credit. Once more."]}
   ],
   room:{
-   where:"the long room late, the manual still open, a mug holding down a page",
+   where:"the long table late, the manual still open, a mug holding down a page",
    here:["Pia","Vic","Nine","Hesta","Seven","Three"],
    never:["the deep half is not read","Vic does not confess"],
    topics:[
@@ -7420,7 +7420,7 @@ var SCENEBOOK = {
 },
 
 "a2-choir": {
-  where:"the long room in the small hours, with a Choir door open somewhere and its filing coming through it onto this table",
+  where:"the long table in the small hours, with a Choir door open somewhere and its filing coming through it onto this table",
   ends:"the same table, the three fates understood and what was done to Mirren understood with them",
   here:["Pia","Vic","Nine","Hesta","Seven","Three"],
   before:"THE FILING COMES TO THE TABLE. Nobody walks into a Choir building tonight. The hash opened a door and the records came through it - the family is at home, reading paper.",
@@ -7473,7 +7473,7 @@ var SCENEBOOK = {
      ["Three","Nobody at this table knows. Tonight that is the truest thing I can say, and I hate it as much as you do."]]}
   ],
   room:{
-   where:"the long room with the paper spread out and nobody sleeping",
+   where:"the long table with the paper spread out and nobody sleeping",
    here:["Pia","Vic","Nine","Hesta","Seven","Three"],
    never:["nobody goes to a Choir building","the vaults are not mentioned"],
    topics:[
@@ -7508,7 +7508,7 @@ var SCENEBOOK = {
   where:"the shack in deep night - Five taken alive, Three's tools laid out, and one chair",
   ends:"the shack step toward dawn, Five annulled, Marek alive, and both of them having spoken in their own turn",
   here:["Pia","Vic","Nine","Hesta","Seven","Three","Five","Marek"],
-  before:"FIVE AND MAREK ARE ONE BODY. Marek is underneath Five the way a drowned man is underneath water, not the way a man is underneath a chair. One set of hands, one mouth, one chair. Nobody stands beside, above or behind the other one, and when Five speaks it uses Marek's mouth and gets the vowels very slightly wrong. The argument is happening INSIDE a body.",
+  before:"FIVE AND MAREK ARE ONE BODY. Marek is underneath Five the way a drowned man is underneath water, not the way a man is underneath a chair. One set of hands, one mouth, one chair. Nobody stands beside, above or behind the other one, and when Five speaks it uses Marek's mouth and gets the vowels very slightly wrong. The argument is happening INSIDE a body. - AND WHY THIS ONE NIGHT IS NOT AT THE OPEN DOOR: from a2-door onward the family lives at Hesta's, eats there, sleeps there and ends the season there. This is the exception, and the exception has a reason. You do not bring a fate-two convoy commander, taken alive, into the row where your family eats and where a twelve-year-old sleeps upstairs. They go out to Vic's shack on the marsh because it is far from everybody and it is his, and they come back in the morning. Nobody is fleeing and Hesta's is not compromised.",
   never:["nobody is killed, and Five is not destroyed - annulment takes the second voice out and leaves a scar",
          "nothing about the Exchange, the machine, or the founders",
          "Three does not enjoy this, and nobody thanks her"],
@@ -7590,7 +7590,7 @@ var SCENEBOOK = {
 },
 
 "a2-law": {
-  where:"the safehouse kitchen in the evening - a pan, too many people, and a week-old disagreement about to become a rule",
+  where:"Hesta's kitchen in the evening - a pan, too many people, and a week-old disagreement about to become a rule",
   ends:"the same kitchen with a law spoken aloud and a meal eaten together for the first time",
   here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
   before:"THE LAW IS WHATEVER THIS TABLE SAYS IT IS, AND IT IS PERMANENT. It gets quoted back in Book Three. Let the argument harden into one sentence somebody says out loud, and write it down as canon in the courier's own run - do not supply it ready-made.",
@@ -7650,7 +7650,7 @@ var SCENEBOOK = {
      holds:"nothing. Free.",
      rail:"Ask where a family law even gets written.",
      plays:[["Pia","The doorframe. Laws live on doorframes - you touch them on the way out, which is when laws matter."],
-      ["Vic","There is a plank in the shack, offcut oak - it would take proper letters, and I have the good marker - "],
+      ["Vic","There is a plank out the back, offcut oak - it would take proper letters, and I have the good marker - "],
       ["Pia","You label KETTLES with the good marker. This needs the child. My handwriting has JOINED-UP letters, Vic, it looks official."],
       ["Hesta","The child writes it. The man seals it. The frame carries it. Motion carried by the only person here who has fed a parliament."],
       "The pen goes to Pia with full honors. The kitchen, briefly, has a civil service."]},
@@ -7674,7 +7674,7 @@ var SCENEBOOK = {
 },
 
 "a2-turn": {
-  where:"the safehouse long room at night - a name on Choir paper, and the whole family in one room deciding what it is worth",
+  where:"the long table at night, the shutters down and the sign turned - a name on Choir paper, and the whole family in one room deciding what it is worth",
   ends:"the same room, somebody lost or risked, and the family turned toward the Exchange",
   here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
   before:"THE NAME ON THE PAPER IS PIA'S, AND THE CHOIR PUT IT THERE. She is cyberware-incompatible, which to the Choir is not immunity - it is a salvage listing, fate three waiting for paperwork. Make the family read it. Make the cost real. Nobody in this room volunteers her, and she does not go quietly.",
@@ -7724,7 +7724,7 @@ var SCENEBOOK = {
      ["Hesta","Eat well this week. Down is not a holiday."]]}
   ],
   room:{
-   where:"the long room after, the paper still on the table, nobody sitting down",
+   where:"the long table after, the paper still on the table, nobody sitting down",
    here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
    never:["the trade is not re-opened","nobody arrives"],
    topics:[
@@ -8909,7 +8909,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.98.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.99.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25061,6 +25061,34 @@ function verdictMap(){
    it - the same way a human picking this up in six months would have. A gap does not
    stay empty. Something always fills it, and if the book does not say what, the
    filling is whatever sounded plausible to whoever got there first. */
+/* v4.99.0, SEASON TWO MOVES INTO THE OPEN DOOR: ONE ENTRY GAINED, NOTHING LOST,
+   NOTHING MOVED, across seven relocated beats and twelve repaired sentences.
+   The Architect asked why the family keeps going back to the marsh. The honest answer
+   was that nobody had ever decided to: Book One ends at Vic's safehouse, and Book Two
+   inherited it as home base without a line of prose anywhere choosing it. Seven of its
+   thirteen nights - including the season finale - happened in a shack on a marsh
+   because that is where the previous book stopped.
+   So the season now lives at Hesta's. a2-seven, a2-three, a2-housing, a2-manual,
+   a2-choir, a2-law and a2-turn move into her building; the long room becomes the long
+   table, which is what she does when a family outgrows a booth. What stays on the marsh
+   stays for a REASON now rather than by inheritance: Mirren is buried at the cairn
+   because you bury people on the marsh, and a2-annul happens at Vic's shack because you
+   do not bring a Choir officer, taken alive, into the row where your family eats and a
+   twelve-year-old sleeps upstairs. Both reasons are written into the beats.
+   tell GAINS a2-annul/before, and it is honest: the note added to that beat names a
+   fate-two commander, which is the same fact its own goal states two lines above and
+   already fires on. Recorded rather than dodged - the note is worth its precision.
+   TWELVE SENTENCES QUIETLY KNEW WHERE THEY WERE, and not one would have been found by
+   reading. The corpus walker found all of them: a frame coming up the marsh road, a
+   defector praising the causeway's weather, a word doing a slow lap of the shack, a
+   plank of offcut oak in a building the family no longer visits, a discharge into
+   causeway mud, and - the one that would have survived three more waves - Three saying
+   she heard them from the reeds, which is a marsh word in a scene that is now indoors on
+   a city row. She now says she heard them from the pavement, which is better, because
+   the door she heard them through is held open with a brick.
+   A RELOCATION IS NOT A FIND-AND-REPLACE. It is a hunt for every sentence that assumed
+   an address, and the only instrument that can perform it is the walker that reads all
+   4,970 lines without getting bored on line nine hundred. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -25070,7 +25098,7 @@ var VERDICT_FIXTURE = {
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
