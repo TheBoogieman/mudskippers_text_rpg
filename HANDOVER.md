@@ -151,6 +151,22 @@ ends. That wrong reading is refused in capitals inside `a2-door`'s `before`, bec
 wild table reads `before` and would otherwise have invented it — and so would a human
 picking this up cold. A gap does not stay empty; whatever sounds plausible fills it.
 
+**TWO SMOKE SCENES, AND THE SECOND MUST NOT REPEAT THE FIRST.** The Architect spotted this
+before it was written: `a2-door` already spends four of its fifteen cards on the tin and the
+drink, and `a2-chassis` is going to have its own session. Same failure mode as the name
+conversation across `a1-chase` and `a1-turn` — read that ruling too. The division:
+
+| | night 9 — `a2-door` OWNS | night 15 — `a2-chassis` OWNS |
+|---|---|---|
+| the tin | asking properly; the whole name said out loud; where it lives; "the GOOD kind" | the tin is furniture by now — **no ceremony, no re-explaining** |
+| the rules | the etiquette: passed not taken, say what it is for, nobody alone in this building | **Seven breaks the etiquette instantly**, because he has never had a body and does not know there are rules |
+| the drink | Pia's thimble, the shed, "you do this ON PURPOSE?" | Pia has a NEW joke, and it is about him |
+| the body | Nine cannot join, and the table describes the food to her instead | **Nine watches somebody else be delighted in the body she gave away** |
+| the comic engine | four adults getting silly in front of a scathing twelve-year-old | **a mind two hours old in a body whose senses take a taste, not a lungful** |
+
+**Short on ceremony, long on Seven.** If a line in `a2-chassis` could have been said on night
+nine, it belongs on night nine.
+
 **Four things the book could not explain, now authored (ruled 2026-08-15, shipped v5.0.0).**
 
 1. **How Seven got out.** He seated himself in a Choir labour frame he had no right to —
