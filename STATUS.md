@@ -1,115 +1,90 @@
 # Where the game stands, in plain English
 
-*One page. What's wrong, what I'd do about it, and what I need you to decide.*
+*Updated after v4.72.6. What got fixed, and the one thing I stopped before building.*
 
 ---
 
-## First, the good news
+## Done — four of the five problems
 
-The game works. Both ways of playing it work. Nothing here is broken for a player —
-these are things that would make a careful reader wince, not things that crash or block
-anyone.
+### 1. The game answering a question you didn't ask ✅
 
----
+**Fixed, and it was smaller than I thought.** Eleven clickable lines trigger a
+pre-written reply. I read all eleven properly instead of trusting the word-matching
+measure, and **five of the ones I'd flagged turned out to be the opposite of a
+problem** — they're the player *defying* the scene, which is the best thing one of those
+lines can be. The clearest example: a line offering *"Shut the door behind me"* under a
+scene where the character pointedly does **not** shut the door.
 
-## Problem 1 — Sometimes the game answers a question you didn't ask
+Four were genuinely wrong and are reworded. One chapter was also offering the **same
+question in two of its three slots** — two-thirds of your choices were the same thing in
+different words. That one's now caught automatically if it ever happens again.
 
-**What a player sees.** After a chapter ends, the game offers you two or three things you
-could say next. You click one. The game then plays a short pre-written scene as the
-reply.
+### 2. Chapters that could never be recorded as "finished well" ✅
 
-On a few of those, the reply doesn't match. The clearest example: you click **"Say what
-it is we are going to get back"** — and the game answers with a scene about *who's coming
-along on the trip*. You asked what. It told you who.
+**Fixed — but one of them I nearly damaged, and stopping to read saved it.**
 
-**Why it happens.** The game matches your clicked line to a pre-written scene by looking
-for shared words. That line contains "going" and "all", which are also the words attached
-to the "who's coming" scene. So it matches the wrong one.
+For the chapter with the big branching choice, a name genuinely was missing. One line
+added, in the right character's mouth, and that chapter can now be recorded properly.
+That matters because everything later in the story reads that decision.
 
-**How big.** One chapter has three lines doing this. Across the whole game, five more
-clickable lines have a related problem: they offer to do something the scene you just
-watched *already did*. You see a character say a thing out loud, and then the game offers
-you the button "say it out loud".
+For the other two I was about to add a name — and then read the scenes. **Both are
+*about* the name not being said.** One is a funeral. The other literally says, twice, in
+its own closing text: *"Nobody has said her name yet."* The character starts to say it
+and stops, on purpose, twice. Adding the name would have contradicted the scene the game
+plays thirty seconds later.
 
-**What I'd do.** Reword the offending lines so they stop colliding — same meaning,
-different words. About a dozen small rewrites. I've already drafted them.
+So for those two I removed the *requirement* instead and left every word alone.
 
----
+### 3. The first chapter asking you to know a name before it tells you ✅
 
-## Problem 2 — Three chapters can never be marked "properly finished"
+**Fixed.** Requirement removed. And it turned out to be load-bearing in a way I didn't
+expect: the game had been treating that name as "already known to the player" from turn
+one *because* of that requirement. Removing it means the game now correctly thinks you've
+met the kid from the opening scene and have **not** yet been told the shard's name —
+which is simply the truth. The safety net caught the change and I checked it was right
+rather than papering over it.
 
-**What a player sees.** Almost nothing, honestly. But the game keeps a private record of
-each chapter, and three chapters can only ever be recorded as *"this went badly"* — even
-when it went fine.
+### 4. The character labelled "Other" ✅
 
-**Why it happens.** Each chapter has a short list of names that need to come up in the
-scenes you actually see before the game counts it as a clean finish. On three chapters,
-none of the scenes ever say those names. So the requirement can't be met, by anyone,
-ever.
-
-**Which chapters.** A funeral, a confrontation about someone's fate, and — the important
-one — **the chapter where the story's biggest branching choice happens.** That's the one
-that decides which of two characters ends up in a new body, and everything later reads
-that decision. It currently gets filed as a chapter that went wrong, always.
-
-**What I'd do.** Add the missing name to one scene in each chapter — one line of
-dialogue, in a character's voice, saying a name that everyone in the room is already
-thinking about. I've drafted two of the three.
-
-**The third one is a judgement call I can't make.** It's the funeral, and the name that's
-missing is the dead man's. Nobody in any of the scenes says it. That might be sloppy — or
-it might be the whole point of the scene, that nobody can bring themselves to say it. I
-don't know which, and guessing wrong would wreck something good.
+**Fixed.** She's **THE CLERK** now. "Other" stays in the code because it's what the game
+falls back to when an AI invents someone who shouldn't exist yet — but it's no longer
+anyone's name on screen.
 
 ---
 
-## Problem 3 — The first chapter asks you to know a name before it tells you
+## Not done — and I recommend we don't
 
-**What a player sees.** Nothing wrong. But the requirement makes no sense.
+### 5. The AI cost saving ❌ — the idea doesn't work
 
-The first chapter's whole job is revealing that the thing in your pocket is a person
-called Nine. And that chapter's "properly finished" requirement is... that someone says
-the name Nine. It's asking the chapter to have already done the thing it exists to do.
+You approved this and I started on it. **Before writing any code I measured whether the
+saving is actually there, and it isn't.**
 
-**What I'd do.** Remove the requirement from that one chapter. Everything else about it
-already guarantees the ending happens properly — this check adds nothing.
+**Why the idea seemed good.** AI providers charge about a tenth of the normal price for
+any part of your message they've seen before *and that hasn't moved*. The game sends the
+changeable part first, so nothing behind it can be reused. Swapping the order looked like
+it would make most of the message reusable.
 
----
+**Why it fails.** The "story so far" that the game sends is a **sliding window** — the
+last twelve messages, always. Every turn adds two, so the window starts sliding after
+about **six turns**, and from then on it's different at the front *every single turn*.
+Providers only reuse a message from the beginning up to the first thing that changed —
+so once the window slides, the reuse stops dead no matter what order things are in.
 
-## Problem 4 — One character is called "Other"
+**What the swap would actually buy:** a discount for roughly the first six turns of a
+run, and nothing for the rest of it. Against four rounds of careful tuning of what the AI
+reads and in what order. That's a bad trade and I'd rather not make it.
 
-A shopkeeper in one scene appears on screen labelled **"Other"** instead of a name. It's
-deliberate — she's meant to be anonymous — but "Other" reads like a placeholder somebody
-forgot to fill in. Something like **"THE CLERK"** would do the same job without looking
-like a bug.
+**What would actually work** is a different, larger change: stop sliding the window every
+turn, and instead keep the story-so-far block fixed for stretches — re-cutting it every
+eight turns or so instead of every turn. Then the reuse holds between re-cuts. That's a
+real saving, but it changes what the AI remembers turn to turn, so it's its own piece of
+work with its own testing.
 
----
-
-## Problem 5 — The AI mode costs more than it needs to
-
-**What this affects.** Only the mode where an AI writes the story. The offline mode
-doesn't touch this at all.
-
-**What's happening.** Every turn, the game sends the AI a large block of text: the
-rulebook, the story so far, and this turn's instructions. AI providers will charge you
-about a tenth of the normal price for any part of that block they've seen before and
-haven't had to re-read.
-
-Right now the game sends the changeable part *first* and the unchanging part *behind* it.
-That ordering means the provider can only reuse the rulebook and has to re-charge for
-everything else, every single turn.
-
-**What I'd do.** Swap the order — unchanging stuff first, this turn's instructions last.
-Rough saving: **most of each turn's cost.**
-
-**The risk, honestly.** Four rounds of work went into tuning what the AI reads and in
-what order. Moving things around could change how well it behaves. So I'd build it with a
-test that plays the same chapter both ways and compares the results — and if anything at
-all differs, I don't ship it.
+**One honest caveat:** I can't measure the actual money either way without a paid AI key,
+so the figures above are about *when reuse breaks*, not about pounds saved.
 
 ---
 
 ## What I need from you
 
-Five decisions, below. In each case I do the work, test it, and report back — you're
-deciding whether it happens, not how.
+One decision, below.
