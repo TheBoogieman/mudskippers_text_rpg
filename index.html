@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.73.0 "What the Provider Already Read"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.74.0 "Somebody Has to Hold Her"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7411,7 +7411,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.73.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.74.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -10080,7 +10080,9 @@ function bitAudible(nm){
   if(nm === "Narration") return true;      /* always available; this is what stops it returning nothing */
   if(isFallen(nm)) return false;
   /* she is heard through skin, not through cloth - a bit reaches her or it does not */
-  if(nm === "Nine") return !(nineIsShard() && shardWhere !== "hand");
+  /* a bit reaches her, or it does not - and "reaches" now means the holder can hear
+     it at all, whether or not the room can (v4.74.0) */
+  if(nm === "Nine" || nm === "Seven") return voiceReach(nm) !== "silent";
   var s = sceneNow(), here = (s && s.sc && s.sc.here) || [];
   return here.indexOf(nm) !== -1;
 }
@@ -15083,8 +15085,44 @@ function contractDoor(){
 /* who cannot be heard this turn. Only Nine is state-gated, and only while she is
    the shard - a seated resident is inaudible to the ROOM but not to the courier,
    which the lodger block already says. */
+/* ==================== WHO THE ROOM CAN HEAR (v4.74.0) ====================
+   The author's law, stated in his own emphasis and now the engine's:
+
+     SHE NEVER HAS CONVERSATIONS WITH OTHER CHARACTERS IN SHARD FORM. SOMEONE
+     NEEDS TO HOLD HER AND RELAY FOR HER; THAT IS THE WHOLE POINT OF A CHASSIS.
+
+   Three reaches, and every voice in this game is in exactly one of them:
+
+     "room"    heard by everybody. A chassis of one's own - or a housing with
+               SPEAKERS, which is how the loser of the season's fork earns a voice
+               back rather than simply having one.
+     "relay"   heard by the holder ALONE, who repeats it for the room in their own
+               words, badly, and gets corrected. Bare skin on the shard; and the
+               mind seated in the courier's skull, which has contact but no
+               speakers - "whoever slots into the courier's head keeps the same
+               physics as the shard."
+     "silent"  weather. The shard through cloth: a hum with a shape and no way
+               through to it.
+
+   THE BLIND SPOT THIS CLOSES. nineIsShard() answers "has no chassis", and the
+   moment a mind was seated in the skull it went false and every voice law with it -
+   so from a2-housing to the last beat the lodger simply talked, out loud, to the
+   room, for the rest of the game. The physics desk already had a `bodiless` law
+   stopping that lodger ACTING; nothing stopped it being HEARD. This is the other
+   half, and it is the half the story is built on. */
+var speakerRig = false;      /* the housed mind has been given speakers. Persisted. */
+function voiceReach(nm){
+  nm = String(nm || "").trim();
+  if(nm !== "Nine" && nm !== "Seven") return "room";
+  if(holderNow() === nm) return "room";                    /* a body of one's own */
+  if(housingResident() === nm) return speakerRig ? "room" : "relay";
+  if(nm === "Nine" && nineIsShard()) return (shardWhere === "hand") ? "relay" : "silent";
+  return "room";
+}
+/* the card's answerer cannot be heard BY THE ROOM - so the contract hands the
+   subject to somebody who can, whether that is a guess (silent) or a repeat (relay) */
 function cardIsMuted(who){
-  return String(who || "") === "Nine" && nineIsShard() && shardWhere !== "hand";
+  return voiceReach(who) !== "room";
 }
 /* the mouth the card is handed to: somebody the scene book has actually put in the
    room, preferring the one the story would reach for */
@@ -17463,7 +17501,7 @@ function saveBlob(){
        allowed to change hands mid-run, or one night's landing is authored and the
        next is composed. No stamp means the client keeps the seams, which is what
        every run before v4.72.2 was played with. */
-    seams:seamsDM,
+    seams:seamsDM, speakers:speakerRig,
     /* a rehearsal fragment that ever reaches the real drawer can be recognised
        and refused there, whatever went wrong upstream of it */
     reh:!!rehearsing,
@@ -22164,6 +22202,7 @@ function newRun(confirmFirst, bare, mode){
   runMode = (mode === "wild") ? "wild" : "novel";
   /* READ ONCE, HERE, AND NEVER AGAIN. The checkbox is live; the run fact is not. */
   seamsDM = (runMode === "wild") && !!settings.seams;
+  speakerRig = false;                  /* nobody starts with speakers; it is earned */
   seamPending = null; seamServing = null;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
@@ -22282,6 +22321,7 @@ function restoreFromBlob(s){
      applyModeUI both consult it, and so does the first rail this restore draws. */
   runMode = modeFromBlob(s.mode);
   seamsDM = (s.seams === true);      /* absent, false, or anything else: the client's */
+  speakerRig = (s.speakers === true);   /* a run from before the rig has none, which is right */
   seamPending = null; seamServing = null;
   chatLog = s.history||s.chatLog||[];
   ledgerText = s.ledgerText||"";
@@ -23099,7 +23139,7 @@ function selfTest(){
     /* ...and the stable (brief v6.1): the request knobs and the reasoning lane */
     "barTyping", "openBar", "setBusy", "inviteLine", "lureBar",
     /* ...and the seams (v4.72.2) */
-    "renderCanonList", "enterArchive", "maybeRehydrate",
+    "renderCanonList", "enterArchive", "maybeRehydrate", "voiceReach", "cardIsMuted", "bitAudible", "housingResident", "holderNow",
     "seamsWild", "seamStamp", "seamBrief", "seamAsk", "seamFire", "playLanding",
     "buildContext", "contextForThisTurn", "historyWindow", "briefingOf", "memoryBriefing",
     "playOpening", "playAuthored", "dealTableTalk", "playPremiere", "dealTease",
@@ -25096,6 +25136,80 @@ function selfTest(){
          } finally {
            beatIdx = k.bi; beatText = k.txt; runMode = k.m; runSlug = k.s;
          }
+       }});
+
+    /* ---- (6h) WHO THE ROOM CAN HEAR (v4.74.0) ----
+       The author's law: she never converses with the room in shard form, somebody
+       holds her and relays, and that is what a chassis is FOR. The engine believed
+       half of it - the shard half - and dropped the rest the moment a mind was
+       seated in the courier's skull, because nineIsShard() answers "has no chassis"
+       and a lodger has none of one either. From a2-housing to the last beat the
+       loser of the fork simply talked to the room. This row walks the whole matrix. */
+    var earBad = [], earSaw = [];
+    (function(){
+      var k = {ch:chassisHolder, bi:beatIdx, sw:shardWhere, rig:speakerRig};
+      function at(holder, beat, where, rig){
+        chassisHolder = holder; beatIdx = beatById(beat); shardWhere = where; speakerRig = !!rig;
+      }
+      function want(label, nm, expect){
+        var got = voiceReach(nm);
+        if(got !== expect) earBad.push(label + ": " + nm + " is \"" + got + "\", should be \"" + expect + "\"");
+      }
+      try{
+        /* before the fork: the shard, and nothing else to be */
+        at(null, "a1-hum", "jacket", false);
+        want("shard through cloth", "Nine", "silent");
+        at(null, "a1-hum", "hand", false);
+        want("shard on bare skin", "Nine", "relay");
+        /* after the fork, both ways round, with and without the rig */
+        at("Nine", "a3-vic", "jacket", false);
+        want("Nine has the chassis", "Nine", "room");
+        want("Seven in the skull, no speakers", "Seven", "relay");
+        at("Nine", "a3-vic", "jacket", true);
+        want("Seven in the skull, speakers fitted", "Seven", "room");
+        at("Seven", "a3-vic", "jacket", false);
+        want("Seven has the chassis", "Seven", "room");
+        want("Nine in the skull, no speakers", "Nine", "relay");
+        at("Seven", "a3-vic", "jacket", true);
+        want("Nine in the skull, speakers fitted", "Nine", "room");
+        /* everybody with a body of their own is simply audible */
+        at(null, "a1-hum", "hand", false);
+        want("a person in the room", "Pia", "room");
+        /* and the two consumers agree with it */
+        at(null, "a1-hum", "jacket", false);
+        if(!cardIsMuted("Nine")) earBad.push("a silent shard was not muted for the contract");
+        if(bitAudible("Nine")) earBad.push("a bit reached a shard through cloth");
+        at(null, "a1-hum", "hand", false);
+        if(!cardIsMuted("Nine")) earBad.push("a relayed voice was treated as audible to the room");
+        if(!bitAudible("Nine")) earBad.push("a bit could not reach a shard in his bare hand");
+        at("Seven", "a3-vic", "jacket", false);
+        if(!cardIsMuted("Nine")) earBad.push("the lodger in the skull was audible to the room");
+        if(!bitAudible("Nine")) earBad.push("a bit could not reach the lodger the courier is carrying");
+        earSaw.push("the whole matrix: cloth is silent, bare skin relays, a chassis is heard,"
+          + " and the mind seated in the courier's skull relays until it is given speakers -"
+          + " both ways round the fork, with the contract and the bit channel agreeing");
+      } finally {
+        chassisHolder = k.ch; beatIdx = k.bi; shardWhere = k.sw; speakerRig = k.rig;
+      }
+    })();
+    T("nobody in this game is heard by the room without a body or a speaker",
+      earBad.length === 0, earBad.length ? earBad.slice(0, 6).join("; ") : earSaw.join(" · "),
+      {label:"the rule as it shipped - a mind seated in the skull was simply audible",
+       was:true,
+       check:function(){
+         /* the shipped test, run through the shipped function: nineIsShard() answers
+            "has no chassis", so the lodger reads as not-a-shard and every voice law
+            fell away with it. If it still says she is audible, the law never landed. */
+         var k = {ch:chassisHolder, bi:beatIdx, sw:shardWhere};
+         try{
+           chassisHolder = "Seven"; beatIdx = beatById("a3-vic"); shardWhere = "jacket";
+           /* the old predicate, unchanged, asked of the lodger. nineIsShard() answers
+              "has no chassis", and a mind in the skull has none - so it went FALSE and
+              the whole test collapsed to "audible". */
+           var oldSaysAudible = !(nineIsShard() && shardWhere !== "hand");
+           /* the row's claim is that she is NOT audible there. Does the old rule agree? */
+           return !oldSaysAudible;
+         } finally { chassisHolder = k.ch; beatIdx = k.bi; shardWhere = k.sw; }
        }});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
