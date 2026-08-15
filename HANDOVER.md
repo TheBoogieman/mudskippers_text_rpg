@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.0.0. Book One is finished. `a2-door` is finished — 15 cards, the
+**Last updated: v5.1.0. Book One is finished. `a2-door` is finished — 15 cards, the
 deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
 Hesta's floor. Next is writing `a2-chassis`.**
 
@@ -134,7 +134,7 @@ in the water, with a hunter between them and that street; they learn WHAT it is 
 | room | what it is | where | state |
 |---|---|---|---|
 | `a2-door` | the back booth, the first meal | The Open Door | **DONE — 15 cards** |
-| `a2-chassis` | "the cook" — a new body, floorboards up | **The Open Door** | 3 cards, untouched |
+| `a2-chassis` | "the cook" — a new body, floorboards up | **The Open Door** | **7 cards** — recital cluster in, 9 ruled subjects still to write |
 | `a2-law` | "the same pan" — bacon first, bread after | safehouse | 3 cards, untouched |
 
 **Why they go to Hesta's at all (ruled 2026-08-15, shipped v4.98.0).** Vic called it. Six
@@ -150,6 +150,31 @@ passed over them and the family sleeps at the safehouse again three times before
 ends. That wrong reading is refused in capitals inside `a2-door`'s `before`, because the
 wild table reads `before` and would otherwise have invented it — and so would a human
 picking this up cold. A gap does not stay empty; whatever sounds plausible fills it.
+
+### `a2-chassis` — WHERE IT IS AND WHAT IS NEXT
+
+Shipped at v5.1.0: the recital cluster, **the first forked cards in the game**. The room now
+reads **7 cards on Seven's branch and 3 on Nine's** — `seven-asks`, `the-recital`,
+`why-it-hits-him`, `morning-after` all carry `fork:"Seven"`. That asymmetry is honest and
+visible in the room count; it is not a bug, it is unwritten work.
+
+**Next wave, in order:**
+
+1. **The nine remaining subjects the Architect ruled** (2026-08-15), none written yet:
+   the face he chose · the frame in the corner · what eating is actually like · the tracker
+   scar · Nine watching him in it · Pia's assessment of the new housemate · Vic after the
+   surgery · Hesta feeding somebody who cannot eat · whether he owes them now · whether Nine
+   regrets it · what he was on the lists · the boards still up. That takes the room to
+   15–16 cards, which is what he asked for.
+2. **The Nine-branch mirrors** of the four forked cards — she keeps the body, gets senses
+   for the first time, and Seven is a voice in the courier's skull who cannot join in.
+3. **Second layers on all of them, and both landings wired.**
+
+**His standing note on the recital:** *"the story's peak moment and it should have the best
+writing."* The version that shipped is the whole family — Pia under the table making a noise
+like a kettle, Vic agreeing with him and furious about it, Hesta putting the cloth down and
+not laughing, Nine unable to laugh and saying so, and Seven arriving somewhere sincere at
+the end and stopping. If it is ever revised, that shape is the brief.
 
 **TWO SMOKE SCENES, AND THE SECOND MUST NOT REPEAT THE FIRST.** The Architect spotted this
 before it was written: `a2-door` already spends four of its fifteen cards on the tin and the

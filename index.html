@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.0.0 "A Filing Error"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.1.0 "O Modest Cloth"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7164,7 +7164,7 @@ var SCENEBOOK = {
    here:["Pia","Vic","Nine","Hesta","Seven"],
    never:["the choice is not re-opened","nobody arrives"],
    topics:[
-    {ask:"what having hands is like", key:"hands feel body new touch what-is-it-like",
+    {id:"having-hands", ask:"what having hands is like", key:"hands feel body new touch what-is-it-like",
      who:"Seven", gives:"something specific and small - a texture, a temperature - reported like a finding",
      holds:"nothing",
      rail:"Ask Seven what having hands is like. He has been on both sides.",
@@ -7172,7 +7172,7 @@ var SCENEBOOK = {
       ["Seven","Everything else about hands is logistics - doors, tools, pointing during arguments. The mug is the part I filed under irreplaceable, and I did not file it until it was gone."],
       "A texture and a temperature, reported like evidence, laid on the table next to the body it is evidence about.",
       ["Seven","Whoever takes the seat: someone hand them a warm mug in the first hour. It completes the installation."]]},
-    {ask:"the cooking", key:"cook food pan eat taste burn dinner",
+    {id:"the-cooking", ask:"the cooking", key:"cook food pan eat taste burn dinner",
      who:"Hesta", gives:"a bit - instruction shouted from a chair, cheerfully ignored",
      holds:"nothing. Free.",
      rail:"Ask what is happening at the stove, because something is.",
@@ -7180,14 +7180,95 @@ var SCENEBOOK = {
       ["Pia","I am stirring a pot at a body's funeral-slash-christening while being coached. This family's kitchen has range."],
       ["Hesta","The middle, child. Now the salt - no. NO. That is not a pinch, that is a verdict."],
       "The pot survives. The instruction continues from the chair, cheerful and absolute, and the kitchen smells like the future is still planning to arrive on schedule."]},
-    {ask:"how the other one is taking it", key:"other how-are-you fine ok jealous glad",
+    {id:"how-the-other-one", ask:"how the other one is taking it", key:"other how-are-you fine ok jealous glad",
      who:"Nine", gives:"an honest answer with more than one thing in it",
      holds:"she does not ask for anything",
      rail:"Quietly, skin on the shard: how is Seven taking all this.",
      plays:[["Nine","Three ways at once. Gratefully - he knows what I gave. Angrily - at himself, for being the reason a child gave it. He thinks I cannot hear the anger. The speaker is bad; the anger is not."],
       ["Nine","And thirdly: he is making an inventory of everything he will do with hands, and it is the shortest list I have ever heard, and most of it is mugs."],
       "An honest answer with more than one thing in it, delivered by somebody learning that honesty about others is also a way of caring for them.",
-      ["Nine","Ask me the fourth way another night. The fourth way is about me, and tonight is full."]]}
+      ["Nine","Ask me the fourth way another night. The fourth way is about me, and tonight is full."]]},
+    {id:"seven-asks", ask:"whether Seven should be anywhere near that tin", key:"tin smoke seven try offer pass green lettuce",
+     who:"Hesta", fork:"Seven",
+     gives:"the tin reaching a man who has had hands for two hours, and the etiquette going out of the window",
+     holds:"nothing. Free.",
+     rail:"Ask whether Seven should be allowed anywhere near that tin.",
+     plays:["The tin comes out at some point after the plates, the way it does, and goes round the long way. It gets as far as the man who has owned a pair of hands for two hours.",
+      ["Seven","Oh. Is this the - yes. Thank you."],
+      "He takes it. Nobody passed it to him. There is a small, precise silence.",
+      ["Hesta","...He took it."],
+      ["Pia","He TOOK it. Off the table. With his HAND."],
+      ["Seven","Was that - I have done a thing. I can see that I have done a thing."],
+      ["Hesta","There is an order. It is passed, never taken, and whoever opens it says what it is for. You have skipped a step, and I am letting it go exactly once, and only because you have owned that hand for less time than the potatoes took."],
+      ["Seven","What it is for. Nobody has ever asked me what a thing is for. I have been a thing that was for something for a very long time and it never once went the other way."],
+      "That lands considerably harder than it was thrown, which is a habit he is going to have to be spoken to about.",
+      ["Vic","Say the first thing in your head, lad. It is not an exam."],
+      ["Seven","...Then it is for the fact that I did not think I would get to be at a table."],
+      ["Hesta","That will do. That will more than do. Go on, then."]]},
+    {id:"the-recital", ask:"letting him talk", key:"poem poetry recital verse talk speech shakespeare going-on",
+     who:"Seven", fork:"Seven",
+     gives:"everything. The best evening this family has had and the one they will all describe differently forever",
+     holds:"nothing. Nothing at all.",
+     rail:"Let him talk. Just let him talk.",
+     plays:["It does not arrive all at once. That is the part nobody is ready for. It arrives the way weather does.",
+      ["Seven","...The bread is very good."],
+      ["Hesta","Thank you."],
+      ["Seven","No, I want to be exact, because I have never once been able to be exact about a thing like this. The bread is very good AND I am getting about a hundredth of it, and the hundredth is enormous."],
+      "He goes quiet a while. The tin moves on. Somebody laughs at something else entirely. The evening carries on around him without checking on him, which is its own kind of hospitality.",
+      ["Seven","May I say a thing about the tea towel."],
+      ["Pia","...The WHAT?"],
+      ["Seven","When I came in. Before this. Somebody put a tea towel over my face, out of politeness, and I was told that nobody would admit to it."],
+      "Vic becomes extremely interested in the middle distance.",
+      ["Seven","I should like to say a thing about that tea towel."],
+      ["Pia","Oh my GOD. Let him."],
+      ["Seven","O modest cloth. O borrowed decency. Laid on a face that was not yet a face, by a hand that would not sign its work - "],
+      ["Pia","HE'S DOING IT IN A VOICE. HE HAS GOT A VOICE FOR IT."],
+      ["Seven"," - thou didst not know me, and thou coveredst me, and in the covering thou didst the whole of the thing that every philosophy has been walking around for nine hundred years, WHICH IS TO PUT A CLOTH ON A STRANGER."],
+      "Pia is under the table. She got there at speed and she is making a noise like a kettle coming up.",
+      ["Vic","That is - no. No, hang on, that is actually - "],
+      ["Hesta","Do not encourage him."],
+      ["Vic","I am not encouraging him, I am agreeing with him, there is a DIFFERENCE - "],
+      ["Seven","AND LO, THE STOVE. Which is older than the walls they put around it. Which beareth upon its back the name of a town that is not there. Which has outlived its own COUNTY and says nothing about it, and asks only to be wiped - "],
+      "Hesta puts the cloth down. She does not laugh. She has told the story of that stove exactly once, on the first night, to people she had known for an hour, and a stranger has just made an ode of it in her own back room.",
+      ["Hesta","...Go on, then."],
+      "It goes on for some time. He does all the parts. At one point he does a part that is unmistakably Pia, and Pia has to be helped up off the floor and then immediately goes back down.",
+      ["Nine","I want it on the record that this is the finest thing I have ever been in a room for, that I cannot laugh, and that I am not sad about the second one just now."],
+      "The hum against your fingers climbs half a step and stays there, which is as far as it goes, and it is far enough that you can feel it in your teeth.",
+      "And then he stops. Not because he has run out. Because he has arrived somewhere.",
+      ["Seven","...I have a mouth to say all of that with. Somebody who had never met me gave me the mouth. I am aware that I am going to be embarrassed about tonight for the rest of my life, and I would like very much to be embarrassed about it for a long one."],
+      "Nobody has anything for a moment. Then Pia, from under the table, in a very small voice, asks him to do the tea towel one again."]},
+    {id:"why-it-hits-him", ask:"why it has hit him quite that hard", key:"why hard token taste sense hit affect chassis dose",
+     who:"Vic", fork:"Seven",
+     gives:"the design answer - a chassis is built to take a sample, and nobody who built it imagined a lungful",
+     holds:"nothing. Free.",
+     rail:"Ask Vic why it has hit him quite that hard.",
+     plays:[["Pia","Is he all right? Is that normal? That is not normal."],
+      ["Vic","That is not normal, no. That is a design meeting nobody ever had."],
+      ["Vic","A chassis tastes in tokens. That is the whole philosophy of the thing - one bite for the experience, and the meal goes to the table. You get a crumb of the world rendered in appalling detail, and then it stops."],
+      ["Vic","And the sensing is the finest work in the whole body, because it has to be. A crumb is all it was ever going to get. Nobody who built that ever sat down and thought: what if somebody hands it a lungful."],
+      ["Hesta","So he has a crumb's worth of equipment and an entire evening arriving through it."],
+      ["Vic","He has an orchestra with one seat in it and somebody has put a parade through the door."],
+      "Across the room the orchestra is explaining something to a tea towel.",
+      ["Vic","He will be fine. He will be mortified. Those are the two things I can promise about anybody in that state and I have been promising them for thirty years."]]},
+    {id:"morning-after", ask:"what he remembers in the morning", key:"morning after remember sorry apology embarrassed next-day",
+     who:"Seven", fork:"Seven",
+     gives:"a written apology, refused; and the one line of it that gets through anyway",
+     holds:"nothing. Free.",
+     rail:"Ask him, in the morning, what he remembers.",
+     plays:["He is at the table before anybody else, sitting very upright, with a piece of paper in front of him that he has plainly been working on for some hours.",
+      ["Seven","I have written an apology. It is quite long. I would like to read it out and I would like nobody to stop me."],
+      ["Pia","Absolutely. Read it."],
+      ["Seven","'To the household. Concerning last night.' - "],
+      ["Hesta","No."],
+      ["Seven","I have not begun."],
+      ["Hesta","You have begun and the answer is no. Sit down, have your token, and stop it."],
+      ["Seven","I called your stove a widow."],
+      ["Hesta","You did."],
+      ["Seven","In verse."],
+      ["Hesta","At considerable length. And it was the kindest thing anybody has said about that stove since my grandmother, who bought it, so put the paper down and eat your crumb."],
+      "He puts the paper down. He does not look at anybody. Somewhere behind him a twelve-year-old is reading, very quietly, from a notebook of her own.",
+      ["Pia","'O modest cloth, O borrowed - '"],
+      ["Seven","I will pay you. I have nothing whatsoever. I will find something, and I will pay you."]]}
    ]}
 },
 
@@ -8956,7 +9037,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.0.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.1.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25171,12 +25252,34 @@ function verdictMap(){
    revealed. So she gestures instead - "nobody is dragged in, I will say no more than that
    tonight and you should not push" - and the revelation keeps its night. A character who
    knows the answer is not a licence to print it early. */
+/* v5.1.0, THE RECITAL: ONE ENTRY GAINED, NOTHING LOST, NOTHING MOVED - and one line
+   caught by a fence nobody was thinking about. Corpus 5,008 -> 5,081. Seventy-three new
+   lines, the first forked cards in the game, and the scene the Architect named as the
+   story's peak.
+   named:Seven GAINS a2-chassis/Rt3r, which is a rail line with his name in it. Honest,
+   dull, and the only thing the pass produced.
+   THE ONE THAT WAS NOT DULL: breach fired "kin" on the morning-after card, and it took a
+   second look to understand why. The label is the category, not a substring - BREACH_KIN
+   watches for a character claiming a relative, and Hesta had just said "the kindest thing
+   anybody said about that stove since MY MOTHER". The fence is built to stop a
+   storyteller inventing family. What it actually caught here was an authoring slip: this
+   book already says whose the market was, in Hesta's own mouth two beats earlier -
+   "a market floor, when my GRANDMOTHER ran the row". The stove is the grandmother's. The
+   line now says so, and the fire is gone, and nothing was widened to make it go.
+   A DETECTOR BUILT TO POLICE THE MODEL CAUGHT THE AUTHOR INSTEAD, and it was right both
+   times: it is the same rule either way. Nobody in this family acquires a relative
+   between beats.
+   AND THE FIRST FORKED CARDS SHIP. All four carry fork:"Seven", so the deck serves seven
+   cards on the canon branch and three on the other, and the engine from v4.96.0 does that
+   without being asked twice. The Nine-branch mirrors are the next wave; until they exist
+   that room is honestly thin on the branch that has none, and the room count says so
+   rather than pretending. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
