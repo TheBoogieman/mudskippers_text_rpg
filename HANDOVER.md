@@ -3,9 +3,10 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.1.0. Book One is finished. `a2-door` is finished — 15 cards, the
-deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
-Hesta's floor. Next is writing `a2-chassis`.**
+**Last updated: v5.3.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
+room in the game, both roads of the fork written, the high cluster the biggest part of it.
+What it still needs is second layers and both landings wired. One ruled subject was refused
+and is waiting on the Architect: see "what he was on the lists" below.**
 
 ---
 
@@ -176,9 +177,39 @@ engine, and `a2-housing`, which is the beat that *reveals* the housing exists. O
 close — so it set the housing two beats before the courier learns he has one. Repaired at
 v5.2.0. **If you are ever about to write this branch: he is carried.**
 
+**Shipped at v5.3.0 — the room is now 24 cards: 19 live on Seven's road, 16 on Nine's,
+11 shared.** The high cluster is the biggest part of it, as ruled 2026-08-15: *"a full
+family gathering... everybody laughing and on the floor except Seven."*
+
+- **The high cluster** (`pia-cross-examines`, `vic-joins-in`, `nine-heckles`, plus the two
+  unforked ones): Pia conducts a formal PROCEEDING with a notebook and a sealed verdict ·
+  Vic has had a couple and is now WORSE than the robot, with his hand on a cabbage · Nine
+  keeps the score from the pocket (*"He has said the word THRESHOLD twenty-two times"*) and
+  will not adjudicate quotations · **`the-stupid-argument`**, which is the emotional load
+  of the whole night: they row about a saucepan lid, and it is the first argument this
+  family has had that was not about whether somebody would be alive on Tuesday. Nobody says
+  that out loud, because it would spoil it · **`hesta-sits-down`**, the host off duty for
+  the first time, eleven years of laying out too much cutlery on the off chance.
+- **The ruled subjects**: `the-face` · `the-frame-in-the-corner` (the thumb-width hole in
+  the back of a neck, seen once and then covered) · `vic-after` · `the-empty-plate` ·
+  `does-anybody-owe` (*"a debt is a leash with a nicer name"*) · `the-boards-still-up` ·
+  `nine-watching` (fourteen times, and what came a second and a half after each).
+
+**WRITE THE ONE WITH THE HANDS, NOT THE NAME.** Eight of those twelve carry **no fork**,
+because they were written body-neutral - "whoever took it", "the one who cannot eat" - so a
+single card serves both roads. Only fork a card when it genuinely cannot exist on the other
+road. This is the pattern to copy for every remaining room.
+
+**ONE RULED SUBJECT WAS REFUSED, AND IT NEEDS HIS RULING.** *"What he was on the lists"* is
+still forbidden: `a2-seven`'s never seals **the work he did for the Choir** - names, columns,
+what a clerk of theirs actually does. v5.0.0 narrowed that never to unlock *how he got out*
+and left the work sealed on purpose. A ruled subject does not outrank a never; it goes back
+to the Architect. **Open question for him: unseal the work, or leave it sealed for good?**
+
 **Next wave, in order:**
 
-1. **The remaining subjects the Architect ruled** (2026-08-15), none written yet:
+1. **Second layers on all 24 cards, and both landings wired** - what makes it FINISHED.
+2. Remaining ruled subjects not yet written:
    the face he chose · the frame in the corner · what eating is actually like · the tracker
    scar · Nine watching him in it · Pia's assessment of the new housemate · Vic after the
    surgery · Hesta feeding somebody who cannot eat · whether he owes them now · whether Nine
