@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.82.0 "The Room Is Not a Corridor"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.83.0 "Ask Me Again"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -4277,7 +4277,18 @@ var SCENEBOOK = {
       ["Pia","A rescue is when they carry you out. I walked, he held the door, and then there were rules and breakfast. Door-holding is not rescue, it is manners."],
       "The distinction clearly matters to her the way load-bearing walls matter, so nobody leans on it.",
       ["Pia","Twelve is young for the work. I know it is young. But the work found me younger, and Vic's version of it came with rules and breakfast, and the other versions on offer came with neither. You price things off the menu that exists."],
-      "She takes the next corner with the economy of somebody who has been pricing menus a long time, and the subject, having been handled correctly, folds itself away."]},
+      "She takes the next corner with the economy of somebody who has been pricing menus a long time, and the subject, having been handled correctly, folds itself away."],
+     /* THE SECOND TAKE (v4.83.0). What she tells somebody who asked again. It goes
+        further and it still keeps the card's hold: why Vic came looking is the one
+        part she cannot supply, because she was not the one who decided it. */
+     takes:[[
+      ["Pia","...You asked me that already. I gave you the good version."],
+      ["Pia","Here is the other one. I was on the Veldt steps eleven days. On day nine somebody offered me indoor work and I nearly took it, and I want you to hear that I nearly took it, because people say 'I would never' and none of them have been on day nine."],
+      "She says it flat, walking, not looking over. It is not a confession. It is a correction she is making to a record she wrote herself.",
+      ["Pia","Vic turned up on day eleven. He did not carry me out. He asked what I could do, and then he wrote it down. That is the most anybody had done about me that year, by a distance."],
+      ["Pia","I still do not know why he came looking. I have asked him twice. He does the thing with the fork."],
+      "And that is where it stops, tonight and every night: the one part of her own story she cannot supply, because she was not the one who decided it."
+     ]]},
     {id:"nine-misses", ask:"what Nine misses", key:"miss missing home before quiet want",
      who:"Nine", gives:"a room with a fixed temperature and the sound of somebody else working nearby - she misses the noise, not the place",
      holds:"she does not name the place or the people in it",
@@ -7504,7 +7515,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.82.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.83.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -8284,6 +8295,28 @@ var railDeal = {};   /* scene key -> offered wording -> the card it was dealt fr
    and the room ran its full seven whatever the player clicked. A choice may now carry
    knock:true and ring the same bell. It opens the way out; it does not walk through it. */
 var railKnock = {};  /* scene key -> offered wording -> this line reaches for the way out */
+/* ================== THE SECOND TAKE (v4.83.0) ==================
+   The family's own time is the game, so its deck must never run out into filler. When
+   every card in a ROOM has been spent the deck goes round again - and a card asked a
+   second time does not repeat itself, it goes FURTHER. The first take is what these
+   people will tell anybody; the second is what they will tell somebody who asked again.
+   That is what makes sitting at the table worth doing rather than merely pleasant.
+   A card's `plays` is take one. `takes` holds the ones after it. A deck with no second
+   take simply replays its first, which is what every card in the book does today, so
+   nothing changed the day this landed. The beat's own deck does NOT lap: it has a
+   budget and an ending, and looping it would be the pressure block pretending to be
+   the room. */
+var topicLap = {};   /* scene key -> how many times this deck has been round */
+function deckLap(key){ return topicLap[key] || 0; }
+function takesOf(t){
+  var base = (t && t.plays) || [];
+  var more = (t && Object.prototype.toString.call(t.takes) === "[object Array]") ? t.takes : [];
+  return [base].concat(more);
+}
+function takeForLap(t, key){
+  var takes = takesOf(t), n = deckLap(key);
+  return takes[n < takes.length ? n : takes.length - 1] || takes[0] || [];
+}
 var knockPending = false;   /* a knock clicked in the aftermath, spent when the room opens */
 function choiceKnocks(text){
   if(runOver || beatDone() || !beatNow()) return false;
@@ -10605,8 +10638,10 @@ function sceneSkeletonNow(){
    through exactly that gap. Unreachable by the road is now unreachable by the code:
    serving nothing sends the turn out to the wire, which is the safe direction, and the
    sweep asserts the refusal rather than trusting the road. */
-function sceneBlocksFor(t){
-  var vs = playForks(t), pick = null, out = [], i;
+function sceneBlocksFor(t, key){
+  /* the lap decides which take; the fork decides which side. Both go through the one
+     block reader, because a form with more than one reader is a form half-supported. */
+  var vs = playForks({plays:takeForLap(t, key), holder:(t && t.holder) || ""}), pick = null, out = [], i;
   for(i = 0; i < vs.length; i++){ if(!vs[i].holder) pick = vs[i]; }        /* untagged: both worlds */
   for(i = 0; i < vs.length; i++){ if(vs[i].holder && vs[i].holder === chassisHolder) pick = vs[i]; }
   if(!pick) return [];                     /* framed, and nobody is in the body yet */
@@ -10630,7 +10665,7 @@ function callSceneTurn(){
     return serveAskedAnswered(String(lastPlayerText || "").slice(0, 24));
   }
   if(!t.plays || !t.plays.length) return false;
-  var blocks = sceneBlocksFor(t);
+  var blocks = sceneBlocksFor(t, sc.key);
   if(!blocks.length) return false;
   lastSent = {text:"[template] " + t.ask, chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
   lastReceived = "[template] " + blocks.length + " authored block(s) from the scene book";
@@ -15188,6 +15223,16 @@ function pickTopicFresh(sc, key){
   var list = (sc && sc.topics) || [], spent = topicSpent[key] || [], i;
   if(!list.length) return null;
   for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return pickTopic(sc, key); }
+  /* THE ROOM GOES ROUND AGAIN. A dry room used to answer "you asked that already" and
+     then fall to two house stalls that asked nothing - the dead stretch the Architect
+     named. The family's own time now starts a new lap instead, and the lap advances
+     every card to its next take. Only the room laps; the beat keeps its dry answer,
+     because the beat has a budget and an ending and is not the part you live in. */
+  if(String(key).indexOf("|room") !== -1){
+    topicLap[key] = deckLap(key) + 1;
+    topicSpent[key] = [];
+    return pickTopic(sc, key);
+  }
   return null;                      /* the deck is dry: nothing here is new to him */
 }
 /* who says it: the voice the room can actually hear, preferring one who has already
@@ -17723,7 +17768,7 @@ function saveBlob(){
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
-    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent, saidRoom:saidRoom,
+    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent, topicLap:topicLap, saidRoom:saidRoom,
     shardWhere:shardWhere, storyMin:storyMin, storyDayShift:storyDayShift,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
@@ -22441,7 +22486,7 @@ function newRun(confirmFirst, bare, mode){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {}; railKnock = {}; knockPending = false; saidRoom = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {}; knockPending = false; saidRoom = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -22613,6 +22658,7 @@ function restoreFromBlob(s){
   /* the room, restored. A save from before the room existed comes back with a
      fresh conversation rather than a door it never earned - the counter is the
      only thing that opens it, and it costs the player nothing to talk more. */
+  topicLap = (s.topicLap && typeof s.topicLap === "object") ? s.topicLap : {};
   slackTurns = (typeof s.slackTurns === "number" && s.slackTurns > 0) ? s.slackTurns : 0;
   slackRoom = (phase === "slack")
     ? (typeof s.slackRoom === "string" && s.slackRoom ? s.slackRoom : ($("hud-loc").textContent || ""))
@@ -22923,16 +22969,22 @@ function stPassages(){
     if(bi == null || bi < 0 || !b) return;
     [[e.topics, "t"], [e.room && e.room.topics, "Rt"]].forEach(function(pair){
       (pair[0] || []).forEach(function(t, j){
-        playForks(t).forEach(function(v){
+        /* EVERY TAKE, not only the first. A second take is authored prose that the
+           player will read, so every law that judges the book has to judge it too -
+           and the drift net below has to see it, or an edit to a second take would
+           report green. Same lesson as the holder frames in v4.76.0. */
+        takesOf(t).forEach(function(blocks, ti){
+        playForks({plays:blocks, holder:(t && t.holder) || ""}).forEach(function(v){
           var sc = [];
           v.blocks.forEach(function(l){
             var sp = playSpeaker(l), tx = playText(l);
             if(sp && tx) sc.push({speaker:sp, text:tx});
           });
           if(!sc.length) return;
-          out.push({id:k + "/" + pair[1] + j + v.tag, beat:bi, scene:sc,
+          out.push({id:k + "/" + pair[1] + j + (ti ? "T" + ti : "") + v.tag, beat:bi, scene:sc,
                     passage:insideBeat(b, v.blocks), holder:v.holder, relay:v.relay,
                     canon:[], choices:[t.rail, t.railAlt].filter(function(x){ return !!x; })});
+        });
         });
       });
     });
@@ -23030,8 +23082,10 @@ function stCorpus(){
         /* ...and the blocks the rail leads into. Corpus from the commit that writes
            them: every predicate is swept over this prose before it ships, and the
            fixture diff is the only review a thousand new lines can actually get. */
-        ((t && t.plays) || []).forEach(function(l, li){
-          add(k + "/" + q + "t" + i + "p" + li, playText(l));
+        takesOf(t).forEach(function(blocks, ti){
+          (blocks || []).forEach(function(l, li){
+            add(k + "/" + q + "t" + i + (ti ? "T" + ti : "") + "p" + li, playText(l));
+          });
         });
       });
     });
@@ -23251,6 +23305,18 @@ function verdictMap(){
    death, a breach, a tell or a shard move - which is right, because the card's whole
    contract is that he does not go near what he did. Corpus 3,825 -> 3,835. Fires 425 ->
    427. */
+/* v4.83.0, THE SECOND TAKE: NOTHING GAINED AND NOTHING LOST, and the corpus grew by six.
+   The family's own time now laps: when every card in a room is spent the deck goes round
+   again and each card plays its NEXT take - what these people tell somebody who asked a
+   second time. a1-hum's "how Pia ended up doing this at twelve" is the first card in the
+   book to carry one, six blocks of it, and not one of them books a name, a death, a
+   breach, a tell or a shard move. That is right: it is Pia correcting a record she wrote
+   herself, and the one thing it withholds is the thing that card always withheld.
+   THE READERS WERE TAUGHT FIRST THIS TIME. Both corpus walkers iterate takesOf() before
+   they iterate blocks, so a second take is judged by every law and watched by this map
+   from the commit that writes it - the count moving 3,835 -> 3,841 with a clean diff is
+   that working, rather than a reader going quietly blind for three waves. Corpus
+   3,835 -> 3,841. Fires 427, unchanged. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
