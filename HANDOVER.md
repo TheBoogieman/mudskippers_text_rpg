@@ -69,6 +69,21 @@ dies of this / the buns, the coat, the boots / what Nine would like to be called
    death, in a book whose `death` detector reads the register directly. Write the fear,
    not the stillness, and count nothing.
 
+## Books Two and Three — RULED: pick-list every room
+
+The Architect ruled on 2026-08-15, asked directly: the depth-only shortcut was for the
+last two rooms of Book One and **does not carry forward**. All 24 remaining rooms get the
+full Book One treatment — audit the room, bring a **pick-list** of candidate subjects, he
+rules them, then write ids, second takes and both landings.
+
+He was told plainly that this is roughly two sessions per room instead of one, and chose
+it anyway. Do not offer the shortcut again; it has been declined on the record. The
+reason it is worth the time is `a1-fare`: it went to eleven cards that way and is the
+deepest room in the book.
+
+So the loop at the top of this file is the loop. It was never suspended — it was relaxed
+for exactly two rooms whose subjects were already staged and already good.
+
 ## Run this at the start of every wave
 
 This file once said `a1-turn` was "the last room in Book One". It was wrong, and it was
