@@ -3,8 +3,8 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.94.0. Book One is finished. Book Two has started at The Open Door,
-and `a2-door` is HALF BUILT — read "Where a2-door actually is" below before touching it.**
+**Last updated: v4.95.0. Book One is finished. `a2-door` is finished — 15 cards, the
+deepest room in the game. Next is `a2-chassis`, and it needs an ENGINE change first.**
 
 ---
 
@@ -44,6 +44,7 @@ and `a2-door` is HALF BUILT — read "Where a2-door actually is" below before to
 | `a1-hum` | 9 | Under the overpass. Drown last, the reserve bun, the second and a half |
 | `a1-vic` | 8 | The 3am kitchen. The invoice never paid off, the pan, going a day early |
 | `a1-chase` | 8 | The causeway. The labels, the tobacco tin, the night that turns convenient |
+| `a2-door` | 15 | The Open Door. Deepest room in the game. The tin, the thimble, one true sentence a year |
 
 ## Book One is CLOSED
 
@@ -59,35 +60,33 @@ gave it four seconds" / "six, tell her six, I counted"). The kitchen owns *takin
 off them* and *the name in three different mouths*; the causeway does not touch either.
 If either room is ever edited, read the other one first.
 
-## Where `a2-door` actually is — HALF BUILT, and that is deliberate
+## `a2-door` is DONE, and it is the room to copy
 
-`a2-door` is The Open Door: Hesta's diner, the family's first table, the room the whole of
-Book Two hangs off. At v4.94.0 it has **15 cards with first layers and ids — and no second
-layers, and neither landing wired.** The room-count reads `[15,15,0]`.
+Fifteen cards, fifteen second layers, both landings dealing. Built across two releases
+(v4.94.0 first layers, v4.95.0 second layers and wiring) because 12 new cards + 15 second
+takes + 2 landings is about three times any Book One room, and the standing law is **never
+start a room you cannot finish**. Splitting at "all first layers ship green" is the pattern
+to reuse for every 10–15 card room from here.
 
-It was split on purpose. Twelve new cards plus fifteen second layers plus two landings is
-roughly three times any room in Book One, and the standing law is **never start a room you
-cannot finish**. First layers ship green and the room is playable and warm today; the
-second layers and the wiring are the next release. **Nothing is half-spliced.**
+### The warm-room programme — his brief, 2026-08-15
 
-**Next action on this room:** fifteen second takes (all fifteen cards, including the three
-originals — `hesta-reads-us`, `the-street`, `the-shotgun`) and both landing rails wired.
-No new subjects; the Architect ruled all twelve on 2026-08-15.
+He wants the family's table **as warm as possible**: lots of food and cooking, a smoke
+session (cannabis, called *pre-collapse devil's lettuce, the good kind*, and the courier
+has to ask for it), some drinking, peak banter, and **this is where the family really
+forms**. **10–15 cards for every one of these rooms.**
 
-### The Open Door programme — his brief, 2026-08-15
+**Correction, recorded because it was got wrong once:** only `a2-door` and `a2-ground` are
+at The Open Door. `a2-chassis` and `a2-law` are the **safehouse kitchen** on the marsh.
+The warmth is not tied to Hesta's building — it is tied to Hesta being in the room and a
+pan being on, and she is in every one of them.
 
-He wants Hesta's place **as warm as possible**: lots of food and cooking, a smoke session
-(cannabis, called *pre-collapse devil's lettuce, the good kind*, and the courier has to
-ask for it), some drinking, peak banter, and **this is where the family really forms**.
-**10–15 cards for every room at that address.** Three rooms are there:
+| room | what it is | where | state |
+|---|---|---|---|
+| `a2-door` | the back booth, the first meal | The Open Door | **DONE — 15 cards** |
+| `a2-chassis` | "the cook" — a new body in a kitchen | safehouse | 3 cards, untouched |
+| `a2-law` | "the same pan" — bacon first, bread after | safehouse | 3 cards, untouched |
 
-| room | what it is | state |
-|---|---|---|
-| `a2-door` | the back booth, the first meal | 15 cards, first layers only |
-| `a2-chassis` | "the cook" — the kitchen in the small hours | 3 cards, untouched |
-| `a2-law` | "the same pan" — bacon first, bread after | 3 cards, untouched |
-
-**Two castings he ruled that bind all three rooms:**
+**Three castings he ruled that bind all of them:**
 
 1. **Pia is twelve** and says so in her own mouth on the causeway. She gets a thimble,
    hates it, and cannot understand why adults do this to themselves on purpose. She does
@@ -95,7 +94,35 @@ ask for it), some drinking, peak banter, and **this is where the family really f
    having a silly time inside something serious, and **the contrast is the point**.
 2. **Seven does most of the cooking and recites poems** — some land, some do not, and
    there is laughter throughout. **Seven is not in `a2-door`**; he arrives at `a2-seven`
-   and gets hands at `a2-chassis`. The poems belong in `a2-chassis` and `a2-law`.
+   and gets hands at `a2-chassis`.
+3. **The robot smokes.** Ruled 2026-08-15: Seven tries it and goes full Shakespeare, and
+   it is a **full scene**, not a line. The canon mechanic is already on the beat and it is
+   the reason it works — *"a chassis tastes in tokens"*. Token-grade chemical sensing,
+   brand new, no tolerance and no baseline, taking an input nobody specified for it.
+
+### `a2-chassis` forks, and BOTH BRANCHES GET WRITTEN — ruled 2026-08-15
+
+This is **the one twin-exit beat in the game**. The chassis is Nine's; she can give it to
+Seven or keep it. If she keeps it, Seven is seated in the courier's skull housing and has
+**no body at all** — so he cannot smoke, and the scene as briefed does not exist on that
+path.
+
+Asked directly, the Architect ruled **both branches fully written**: Seven's recital on
+one path, and on the other, Nine's — the shard who spent the whole of `a2-door` being told
+what food tasted like, finally getting senses, all of them, at once. The two paths are a
+main road and a main road, not a road and a footnote.
+
+**This needs an engine change before it can be written, and the change is the dangerous
+kind.** Room topics do **not** branch today: only `canonAlt` reads `chassisHolder`
+(index.html:13370, 23394). Serving a branch-specific card means adding a new shape to the
+scene book — and the standing lesson is that **adding a shape means hunting every reader
+first**: the picker, `wireRail`, `takeForLap`, `stCorpus`, the workbench renderer, the
+wild-table briefing, and the save/load path. The drift net went blind three waves running
+the last time a shape went in without that hunt.
+
+**Known pre-existing hole, not introduced by this:** `a2-chassis`'s card *"how the other
+one is taking it"* already reads as though Seven took the body (*"he knows what I gave"*).
+On the Nine branch it is wrong today. The branch gate fixes it as a side effect.
 
 ## Next: Books Two and Three — RULED: pick-list every room
 
@@ -201,8 +228,14 @@ in Book One and the desk correctly called it summoning an off-stage person.
   remaining room programme.
 - **32 transition scenes** for `TAKE THE NIGHT ON` — short, 3-4 lines, the family pushes
   and the courier stands up. Not started.
-- **~240 staged choices still unwired** outside the finished rooms. 55 rows wired so far,
+- **~230 staged choices still unwired** outside the finished rooms. 61 rows wired so far,
   six per finished room plus one in `a3-seize`.
+- **One never-line was deliberately relaxed at v4.95.0** — `a2-door`'s guard on what is
+  under Hesta's floor. The Architect ruled a card that trades one true sentence a year
+  about it, so the guard was narrowed to exactly the ground that card stands on rather
+  than left as a law the authored text already broke. If a card ever needs more of that
+  floor, narrow the guard again in the same commit; never leave the two disagreeing,
+  because the wild table reads the guard and the novel reads the card.
 - **6 amber sweep rows**, all AI-side.
 - **The AI side**: the DM respecting family time, and the drift nudge ("the rain is
   watching") pointing at `TAKE THE NIGHT ON`. Deferred by the Architect until the written
