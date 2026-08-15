@@ -1638,7 +1638,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.9 "Faster Than the Ceremony"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.71.10 "The Surface Holds"
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -4941,7 +4941,9 @@ var SCENEBOOK = {
   ],
   room:{
    where:"the safehouse back room with the ring still out on the water, out of it, with an hour of quiet",
-   here:["Pia","Nine"],
+   /* Vic was speaking in this room's cards - it is HIS back room - and the roster
+      had forgotten him; the surface lint (v4.71.10) is what noticed. */
+   here:["Pia","Nine","Vic"],
    never:["nothing about the housing, the founders or the plan","nobody arrives"],
    topics:[
     {ask:"what that cost her", key:"cost you nine hard alright after ok spent",
@@ -6617,7 +6619,10 @@ var SCENEBOOK = {
   ],
   room:{
    where:"the hatch head with the plan made and nobody going down yet",
-   here:["Pia","Nine","Hesta","Seven","Three","Marek"],
+   /* Five rides where Marek rides - one body, split by watch, both signatures on
+      the sentence - and the roster listed the body without the passenger; the
+      surface lint (v4.71.10) is what noticed. */
+   here:["Pia","Nine","Hesta","Seven","Three","Marek","Five"],
    never:["nobody descends","the plan is not changed"],
    topics:[
     {ask:"whether Pia is alright with her part", key:"pia ok fine part scared willing",
@@ -7283,7 +7288,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.9";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.71.10";   /* the board prints the build it was read from */
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -23445,6 +23450,59 @@ function selfTest(){
         }
         saidRoom = {};
         rwSaw.push("and the room remembers: a repeated line is noticed, in a different voice each time");
+        /* ---- THE AUTHORED SURFACE HOLDS (v4.71.10). The classes the playtest found
+           one at a time - a rail that is the door in disguise, a rail that collides
+           with a house stall, a speaker in a room that does not hold them - swept as
+           a class over every beat and every deck, so the next one cannot ship. The
+           poisoned-page assert is the case that can fail: lobotomize the lint and
+           this row goes red. Presence whitelist: Narration (always), Other (the
+           fare counter's deliberate anonymous clerk). */
+        var surfaceLint = function(spine, book){
+          var bad = [];
+          spine.forEach(function(sb){
+            ["opens","lands","landsHard"].forEach(function(kind){
+              (sb[kind]||[]).forEach(function(p, pi){
+                (p.rail||[]).forEach(function(r, ri){
+                  if(typeof r !== "string" || !r) return;
+                  var rn = normLine(r);
+                  (sb.exits||[]).forEach(function(x){
+                    var ex = normLine(x);
+                    if(!ex || !rn) return;
+                    if(rn===ex || (rn.length>24 && (ex.indexOf(rn)!==-1 || rn.indexOf(ex)!==-1))){
+                      bad.push(sb.id+"/"+kind+pi+"/r"+ri+": a landing rail is the door in disguise");
+                    }
+                  });
+                  if(PIN_STALLS.indexOf(r)!==-1) bad.push(sb.id+"/"+kind+pi+"/r"+ri+": a landing rail is a house stall");
+                });
+              });
+            });
+          });
+          Object.keys(book).forEach(function(bk){
+            var be = book[bk];
+            [[be,(be.here||[])],[be.room,((be.room&&be.room.here)||be.here||[])]].forEach(function(pair){
+              var psc = pair[0], ph = pair[1];
+              if(!psc || !psc.topics) return;
+              psc.topics.forEach(function(pt, pti){
+                (pt.plays||[]).forEach(function(pb, pli){
+                  if(pb && pb.length===2 && typeof pb[0]==="string" && typeof pb[1]==="string"){
+                    if(ph.indexOf(pb[0])===-1 && pb[0]!=="Narration" && pb[0]!=="Other"){
+                      bad.push(bk+" t"+pti+"p"+pli+": “"+pb[0]+"” speaks in a room that does not hold them");
+                    }
+                  }
+                });
+              });
+            });
+          });
+          return bad;
+        };
+        var sfBad = surfaceLint(SPINE, SCENEBOOK);
+        if(sfBad.length) rwBad.push("the authored surface leaks: " + sfBad.slice(0,4).join("; "));
+        var sfPoison = surfaceLint(
+          [{id:"poison", exits:["Walk out into the rain and end tonight for good."],
+            lands:[{rail:["Walk out into the rain and end tonight for good.", PIN_STALLS[0]]}]}],
+          {poison:{here:["Pia"], topics:[{plays:[["Ghost","boo"]]}]}});
+        if(sfPoison.length < 3) rwBad.push("the surface lint went blind on a poisoned page: caught " + sfPoison.length + " of 3");
+        rwSaw.push("the authored surface holds: no disguised doors, no stall collisions, nobody out of the room, and the lint bites a poisoned page");
       } finally { barPut(k); }
     })();
     T("the row is dealt from the deck, and a spent card retires from it",
