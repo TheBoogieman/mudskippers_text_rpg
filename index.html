@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.79.0 "A Choice Names Its Cards"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.80.0 "Reaching for the Road"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2084,7 +2084,7 @@ var SPINE = [
               cards:["nine-wants", "nine-misses", "nine-sleeps"]},
              {line:"Ask Pia what she is looking at.",
               cards:["mud-what", "pia-twelve", "wire-calls"]},
-             "Move. The marsh road is hours out and the rain is winning."]}],
+             {line:"Move. The marsh road is hours out and the rain is winning.", knock:true}]}],
  landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"jacket",
        now:"Day 1, past midnight, under the overpass. Nine is in the courier's jacket. The conversation happened at a jog, half-heard, and she has gone quiet.",
        lines:["It gets said in the end, most of it, at a jog, into a jacket — which is not how anybody would have chosen to meet a person.",
@@ -2096,7 +2096,7 @@ var SPINE = [
               cards:["nine-afraid", "nine-wants", "nine-misses"]},
              {line:"Ask Pia what she thinks Nine heard.",
               cards:["pia-twelve", "mud-what", "me-outside"]},
-             "Move. We can be sorry on the marsh road."]}],
+             {line:"Move. We can be sorry on the marsh road.", knock:true}]}],
  /* NO ANCHOR HERE, AND THE REASON IS THE BEAT ITSELF (v4.72.6). An anchor is a name
     that must reach the played prose before the door gives a clean close. This beat's
     anchor was "Nine" - on the one night whose entire job is REVEALING that the thing
@@ -7504,7 +7504,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.79.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.80.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -8276,6 +8276,20 @@ function sameAsDoor(b, t){
    Legacy-path silence is deliberate. With the flag down the DM writes its own two
    lines, that is the whole contract of that path, and this must not crowd them out. */
 var railDeal = {};   /* scene key -> offered wording -> the card it was dealt from */
+/* ...and which of them are REACHING FOR THE WAY OUT (v4.80.0). "Move. The marsh road is
+   hours out" is not a question and never was: it is the courier saying the evening is
+   over. The engine already knew how to hear that - the DM may send "knock": true during
+   the family's own time and the room's door opens early instead of at the seventh turn -
+   but a knock could only ever come off the wire, so in a written night it did not exist
+   and the room ran its full seven whatever the player clicked. A choice may now carry
+   knock:true and ring the same bell. It opens the way out; it does not walk through it. */
+var railKnock = {};  /* scene key -> offered wording -> this line reaches for the way out */
+var knockPending = false;   /* a knock clicked in the aftermath, spent when the room opens */
+function choiceKnocks(text){
+  if(runOver || beatDone() || !beatNow()) return false;
+  var nl = normLine(text), id = beatNow().id;
+  return !!((railKnock[id] && railKnock[id][nl]) || (railKnock[id + "|room"] && railKnock[id + "|room"][nl]));
+}
 /* ================== THE WIRING (v4.79.0) ==================
    A card's own rail has been bound by identity since F5(a): click it, get that card,
    no words consulted. A STAGED scene's rail - the row after an opening or a landing -
@@ -8318,10 +8332,12 @@ function wireRail(rails, sc, key){
      like spending one. Wiring a choice observes the spent list; it never touches it. */
   var spent = topicSpent[key] || [];
   if(!railDeal[key]) railDeal[key] = {};
+  if(!railKnock[key]) railKnock[key] = {};
   var out = [], i, j;
   for(i = 0; i < rails.length; i++){
     var line = choiceLine(rails[i]), ids = choiceCards(rails[i]), pick = -1;
     if(!line) continue;
+    if(rails[i] && rails[i].knock === true) railKnock[key][normLine(line)] = true;
     if(!ids.length){ out.push(line); continue; }   /* unwired: the scorer, exactly as before */
     for(j = 0; j < ids.length && pick < 0; j++){
       var idx = cardIndexById(sc, ids[j]);
@@ -12491,7 +12507,10 @@ function boardTurn(data){
   if(beatDone() || runOver || foldPending) return;
   var said = data && (data.gate === true || data.gate === "true");
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
-  var knock = data && (data.knock === true || data.knock === "true");
+  /* the DM's knock, and now the player's own: a choice authored knock:true says the
+     courier is reaching for the road, which is the same bell rung by a different hand */
+  var knock = (data && (data.knock === true || data.knock === "true")) || choiceKnocks(lastPlayerText);
+  if(knock && phase === "aftermath") knockPending = true;
   /* THE WORLD'S OWN CLOSE, DECLARED RATHER THAN COMPUTED (v4.72.0). In a novel run
      a hard close is arithmetic: the budget ran out and the world took the night. At
      the wild table there is no arithmetic left to run, so the storyteller says it -
@@ -12559,6 +12578,10 @@ function boardTurn(data){
         slackTurns = 0; slackDoorUp = false;
         slackRoom = $("hud-loc").textContent || "";
         slackMovedTo = ""; slackWalkedIn = [];
+        /* ...unless the line that brought them here was already reaching for the road.
+           The aftermath row is where the way-forward lines live, so a knock is clicked
+           one turn BEFORE the room exists: it is held and spent on arrival. */
+        if(knockPending || knock){ knockPending = false; openSlackDoor(); }
       }
     }
     return;
@@ -19386,11 +19409,26 @@ function isFallen(nm){
   var up = String(nm).toUpperCase();
   return roster.fallen.some(function(f){ return String(f).toUpperCase() === up; });
 }
+/* THE DOTS COUNT THE THING THAT ACTUALLY BITES. They were drawn against `budget`, and
+   in a written night budget is a number nothing reads: no pressure fires at it, nothing
+   forces at it - measured by driving a beat five turns past its budget with forcingNow
+   never once going true. So the pips filled, then turned RED, on a beat behaving exactly
+   as designed, and the board was promising a deadline the novel does not keep.
+   What bites in a written night is the FLOOR: the turns before the door stops being
+   held. That is what the row draws now, and it stops when it is full, because after the
+   floor there is nothing left to count. The wild table keeps the budget - there the
+   number is real, and going over it is what forcing means. */
 function turnDots(b){
-  var dots = "", shown = Math.max(b.budget, beatTurns + 1), i;
-  for(i = 0; i < shown; i++){
-    dots += '<i class="' + (i < beatTurns ? (i >= b.budget ? "over" : "spent") : "") + '"></i>';
+  var dots = "", i;
+  if(wildRun()){
+    var shown = Math.max(b.budget, beatTurns + 1);
+    for(i = 0; i < shown; i++){
+      dots += '<i class="' + (i < beatTurns ? (i >= b.budget ? "over" : "spent") : "") + '"></i>';
+    }
+    return dots;
   }
+  var floor = beatFloor(b);
+  for(i = 0; i < floor; i++) dots += '<i class="' + (i < beatTurns ? "spent" : "") + '"></i>';
   return dots;
 }
 
@@ -22402,7 +22440,7 @@ function newRun(confirmFirst, bare, mode){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {}; saidRoom = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; railDeal = {}; railKnock = {}; knockPending = false; saidRoom = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -22604,7 +22642,7 @@ function restoreFromBlob(s){
   saidRoom = (s.saidRoom && typeof s.saidRoom === "object") ? s.saidRoom : {};
   /* the binding is rebuilt by the first row this run draws; it is a view of the deck,
      never a fact about it, so it does not belong in the save */
-  railDeal = {};
+  railDeal = {}; railKnock = {}; knockPending = false;
   /* a save from before the physics desk: she goes back in the jacket, which is
      the safe end of the guess - it costs a re-roll if she was in his hand, and
      nothing at all if she was not */
@@ -24432,7 +24470,7 @@ function selfTest(){
     function barBoard(at){
       beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
       slackTurns = 0; slackRoom = ""; runOver = ""; deathLine = ""; walkbackNow = false;
-      chassisDoor = ""; chassisPick = ""; railDeal = {}; pickKind = ""; lastRail = []; saidRoom = {};
+      chassisDoor = ""; chassisPick = ""; railDeal = {}; railKnock = {}; knockPending = false; pickKind = ""; lastRail = []; saidRoom = {};
       perilSpent = {}; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
       beatJustCleared = null;
       /* a board with a night on it. Without this the door is not live, and a harness
@@ -25727,6 +25765,74 @@ function selfTest(){
            });
          } finally { railDeal = kd; topicSpent = kt; lastPlayerText = kp; }
          return wrong === 0;              /* the row's claim, asked of the scorer */
+       }});
+
+    /* ---- (6f4) A LINE THAT REACHES FOR THE ROAD OPENS THE ROOM (v4.80.0) ----
+       The family's own time runs SLACK_ARM turns before its way out appears, and until
+       now nothing a player could click shortened that: the knock came only off the wire,
+       so a written night sat through all seven however plainly the courier had said he
+       wanted to go. Thirty of the thirty-three rooms hold fewer than seven cards, so
+       most of that stretch was the two house stalls.
+       The row drives the whole beat both ways and compares: the way-forward line must
+       open the room on its first turn, and a question from the same row must not. Two
+       numbers, and the row is only worth having because they differ. */
+    var knBad = [], knSaw = [], knWith = -1, knOut = -1;
+    (function(){
+      var kk = barKeep();
+      try{
+        var run = function(takeMove){
+          barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+          railKnock = {}; knockPending = false; slackTurns = 0; slackDoorUp = false;
+          for(var t = 0; t < 16; t++){
+            var row = (phase === "aftermath" && lastRail && lastRail.length) ? lastRail : railFor([]);
+            lastRail = row; turnToken++;
+            if(phase === "aftermath"){
+              var mv = row.filter(function(l){ return /^Move\./.test(String(l)); })[0];
+              var q  = row.filter(function(l){ return !/^Move\./.test(String(l)); })[0];
+              lastPlayerText = (takeMove ? mv : q) || row[0];
+            } else lastPlayerText = row[1] || row[0] || "Say nothing.";
+            pickKind = "stall";
+            callDM();
+            if(typeof skipReveal === "function") skipReveal();
+            if(phase === "slack" && slackDoorUp) return slackTurns;
+          }
+          return -1;
+        };
+        knWith = run(true);
+        knOut  = run(false);
+        if(knWith !== 1) knBad.push("the way-forward line did not open the room on arrival (got " + knWith + ")");
+        if(knOut !== SLACK_ARM) knBad.push("a question opened the room at " + knOut + ", not at the full " + SLACK_ARM);
+        if(knWith === knOut) knBad.push("both paths behave the same - the knock changes nothing");
+        knSaw.push("the way out opens on slack turn " + knWith + " when the courier reaches for the road,"
+          + " and on turn " + knOut + " when he asks another question - same beat, same deck, one line apart");
+      } finally { barPut(kk); railKnock = {}; knockPending = false; }
+    })();
+    T("a line that reaches for the road opens the room, and a question does not",
+      knBad.length === 0, knBad.length ? knBad.join("; ") : knSaw.join(" · "),
+      {label:"the knock as it shipped - off the wire only, so a written night could not ring it",
+       was:true,
+       check:function(){
+         /* the same walk with the player's bell taken away: railKnock stays empty, which
+            is exactly the state every novel run was in before this wave. If the room
+            still opens early, the knock was not what opened it. */
+         var kk = barKeep(), at = -1;
+         try{
+           barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+           slackTurns = 0; slackDoorUp = false; knockPending = false;
+           for(var t = 0; t < 16; t++){
+             var row = (phase === "aftermath" && lastRail && lastRail.length) ? lastRail : railFor([]);
+             lastRail = row; turnToken++;
+             if(phase === "aftermath")
+               lastPlayerText = row.filter(function(l){ return /^Move\./.test(String(l)); })[0] || row[0];
+             else lastPlayerText = row[1] || row[0] || "Say nothing.";
+             pickKind = "stall";
+             railKnock = {};                 /* the old world: no line can ring the bell */
+             callDM();
+             if(typeof skipReveal === "function") skipReveal();
+             if(phase === "slack" && slackDoorUp){ at = slackTurns; break; }
+           }
+         } finally { barPut(kk); railKnock = {}; knockPending = false; }
+         return at === 1;               /* the row's claim, asked of the wire-only knock */
        }});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
