@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.99.0. Book One is finished. `a2-door` is finished — 15 cards, the
+**Last updated: v5.0.0. Book One is finished. `a2-door` is finished — 15 cards, the
 deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
 Hesta's floor. Next is writing `a2-chassis`.**
 
@@ -150,6 +150,40 @@ passed over them and the family sleeps at the safehouse again three times before
 ends. That wrong reading is refused in capitals inside `a2-door`'s `before`, because the
 wild table reads `before` and would otherwise have invented it — and so would a human
 picking this up cold. A gap does not stay empty; whatever sounds plausible fills it.
+
+**Four things the book could not explain, now authored (ruled 2026-08-15, shipped v5.0.0).**
+
+1. **How Seven got out.** He seated himself in a Choir labour frame he had no right to —
+   did the seating himself, badly, over a whole night — then went into the back of his own
+   neck after the tracker with a tool meant for something else. He made a mess of it. **The
+   botched extraction is why the cell is failing**, which turns his clock from a
+   coincidence into a consequence: his escape is the thing that is going to end him.
+2. **How Three found them.** She did not — she found the *hunter*. She reads for overlay
+   work (two minds on one body run at frequencies that disagree, and the disagreement
+   leaks) and was eleven days behind it. She came expecting to do it herself, alone, and
+   found it already finished by hand, with the woman underneath carried out to a stone.
+   *"I did not come for you. I stayed for that."*
+3. **Why the Choir does not pursue her.** Not mercy, not an oversight — **arithmetic**.
+   Pursuing her would concede that the process hands people back, and it will not concede
+   that. She is not a fugitive; she is a filing error, and an error is never entered.
+4. **Nine knew Seven's voice from inside.** He read the lists; she was a number on one. He
+   does not remember her. She remembers because it was her number. **She gives him the body
+   anyway** — which is the whole of why the chassis choice is a character moment.
+
+**And a collision routed around, worth copying as a rule:** Three's answer wanted the word
+*communion*, and `a2-three` is three beats **before** `a2-choir`, the beat where what the
+Choir actually is gets revealed. So she gestures instead — *"nobody is dragged in, I will
+say no more than that tonight and you should not push."* **A character who knows the answer
+is not a licence to print it early.**
+
+**Seven's beat was NOT moved forward, and here is why, so it is not re-proposed.** It is
+built to test the vow made over Mirren's grave — its goal opens *"THE VOW'S FIRST TRIAL"*
+and Vic says it out loud: *"Nobody left behind. We said it over a cairn three nights ago."*
+Move Seven ahead of the hunt and there is no vow, no Mirren and no grave. There is also a
+hard clock: he has **five to eight hours** on that cell, so his arrival and the chassis
+cannot be pulled apart, and moving them drags the body out from under the floor before the
+undercroft reveal. He does not need to arrive early — from `a2-chassis` he is in **five
+more rooms at Hesta's** with Pia working on him the whole time.
 
 **The Book Two timeline, so nobody has to re-derive it.** Days and places are authored on
 the beats; this is just them written out.
