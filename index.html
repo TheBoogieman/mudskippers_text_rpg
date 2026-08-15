@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.72.4 "Deleted Before It Is Judged"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.72.5 "Two Words, and a Lint for the Rest"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -6201,7 +6201,7 @@ var SCENEBOOK = {
      "Not the frightened position anyone braced for: a position with case law behind it and both feet planted.",
      ["Pia","And if any one of you EVER thinks about it late at night - the maths, the one-for-six of it - you come and say it to my face, where the maths falls over. That is my whole statement. Somebody put the kettle on."]]},
    {ask:"what they do instead",
-    key:"instead do refuse fight go exchange plan next",
+    key:"instead do refuse fight go plan next",
     who:"Hesta",
     gives:"that defending has stopped working, and the only place left to go is down",
     holds:"no route is planned tonight",
@@ -6921,7 +6921,7 @@ var SCENEBOOK = {
          "nothing about the Heart Room, the child, or what happens next"],
   topics:[
    {ask:"who she is",
-    key:"who you are principal name what-are old landlord",
+    key:"who you are principal name what-are old",
     who:"Principal",
     gives:"what she is - mark one, and what that means - offered as a correction to whatever they assumed",
     holds:"the founding, the child, and her partner",
@@ -7376,7 +7376,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.72.4";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.72.5";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -24965,6 +24965,77 @@ function selfTest(){
            beatIdx = k.bi; beatText = k.txt; runMode = k.m; runSlug = k.s;
          }
        }});
+
+    /* ---- (6e) NO TOKEN WINS TWO CARDS IN ONE DECK (v4.72.5) ----
+       AUTHORING.md law 4: a distinctive token used by two cards in one deck stops
+       meaning either - a typed line using it scores both equally and authored order
+       breaks the tie. RAIL-AUDIT.md listed 17 of these off a static read of the key
+       lists; run through the game's OWN scorer, 47 of the 49 shared tokens turn out to
+       be handled already (stop-words score nothing, scenewideTerms suppresses anything
+       in more than half a deck, and a short word needs two hits, at which point the
+       rest of the line discriminates). Only an 8+ letter token wins a card alone.
+       Two did, and both are trimmed. This row is the lint that keeps it at zero: it
+       asks the real question - does a bare line of this one word tie two cards - and
+       it is cheap, because only the tokens actually shared are ever scored. */
+    (function(){
+      var tied = [], shared = 0, deckN = 0, cardN = 0;
+      SPINE.forEach(function(b){
+        var e = SCENEBOOK[b.id];
+        if(!e) return;
+        [{k:"walk", sc:e}, {k:"room", sc:e.room}].forEach(function(D){
+          var list = (D.sc && D.sc.topics) || [];
+          if(!list.length) return;
+          deckN++; cardN += list.length;
+          var own = {};
+          list.forEach(function(t, i){
+            var seen = {};
+            String(t.key || "").split(/\s+/).forEach(function(w){
+              w = w.replace(/-/g, " ").toLowerCase();
+              if(!w || w.indexOf(" ") !== -1 || seen[w]) return;
+              seen[w] = 1;
+              (own[w] = own[w] || []).push(i);
+            });
+          });
+          Object.keys(own).forEach(function(w){
+            if(own[w].length < 2) return;
+            shared++;
+            /* the real question, through the real scorer */
+            var best = -1, winners = [];
+            list.forEach(function(t, i){
+              var s = topicEvidence({topics:[t]}, w);
+              if(s > best){ best = s; winners = [i]; }
+              else if(s === best && s > 0) winners.push(i);
+            });
+            if(best > 0 && winners.length > 1){
+              tied.push(b.id + " " + D.k + " · \"" + w + "\" → "
+                + winners.map(function(i){ return "\"" + list[i].ask + "\""; }).join(" = "));
+            }
+          });
+        });
+      });
+      T("no single word wins two cards in the same deck",
+        tied.length === 0,
+        tied.length ? tied.slice(0, 6).join(" | ")
+          : shared + " shared tokens across " + deckN + " decks and " + cardN
+            + " cards, and not one of them ties two cards in the scorer - the rest are"
+            + " below the rarity threshold, where the rest of the typed line decides",
+        {label:"the two that did tie, before v4.72.5 trimmed them",
+         was:true,
+         check:function(){
+           /* the shipped key lists carried "exchange" on two a2-turn cards and
+              "landlord" on two a3-principal cards. Re-add one and ask the scorer. */
+           var e = SCENEBOOK["a2-turn"], c = e.topics[3], k = c.key;
+           try{
+             c.key = k + " exchange";
+             var best = -1, win = [];
+             e.topics.forEach(function(t, i){
+               var s = topicEvidence({topics:[t]}, "exchange");
+               if(s > best){ best = s; win = [i]; } else if(s === best && s > 0) win.push(i);
+             });
+             return !(best > 0 && win.length > 1);      /* false: it ties */
+           } finally { c.key = k; }
+         }});
+    })();
 
     /* ---- (6d) THE UNREACHABLE ANCHORS — an AMBER row on purpose (v4.72.3) ----
        Thread 9 stopped the player paying for this; it did not fix the authoring under
