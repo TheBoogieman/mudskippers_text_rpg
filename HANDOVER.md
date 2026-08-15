@@ -3,8 +3,8 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.95.0. Book One is finished. `a2-door` is finished — 15 cards, the
-deepest room in the game. Next is `a2-chassis`, and it needs an ENGINE change first.**
+**Last updated: v4.96.0. Book One is finished. `a2-door` is finished — 15 cards, the
+deepest room in the game. The chassis fork engine is BUILT. Next is writing `a2-chassis`.**
 
 ---
 
@@ -112,17 +112,36 @@ one path, and on the other, Nine's — the shard who spent the whole of `a2-door
 what food tasted like, finally getting senses, all of them, at once. The two paths are a
 main road and a main road, not a road and a footnote.
 
-**This needs an engine change before it can be written, and the change is the dangerous
-kind.** Room topics do **not** branch today: only `canonAlt` reads `chassisHolder`
-(index.html:13370, 23394). Serving a branch-specific card means adding a new shape to the
-scene book — and the standing lesson is that **adding a shape means hunting every reader
-first**: the picker, `wireRail`, `takeForLap`, `stCorpus`, the workbench renderer, the
-wild-table briefing, and the save/load path. The drift net went blind three waves running
-the last time a shape went in without that hunt.
+**The engine for this SHIPPED at v4.96.0.** Write forked cards like this:
 
-**Known pre-existing hole, not introduced by this:** `a2-chassis`'s card *"how the other
-one is taking it"* already reads as though Seven took the body (*"he knows what I gave"*).
-On the Nine branch it is wrong today. The branch gate fixes it as a side effect.
+```js
+{id:"the-recital", ask:"...", key:"...", who:"Seven", fork:"Seven", plays:[ ... ]}
+```
+
+`fork:"Seven"` or `fork:"Nine"`. Omit it and the card plays on both, which is what most
+cards should do — write *the one with the hands* rather than the name and a card needs no
+fork at all. Only the recital cluster genuinely forks.
+
+**Two laws it rests on, both now sweep rows that drive the shipped code:**
+
+1. **An off-branch card is never removed from the list.** `topicSpent`, `railDeal` and
+   every counter store **positions**, and those positions are inside the save files of
+   people who are part-way through a run. Filtering renumbers everything behind the gap
+   and deals strangers to anybody who loads. Off-branch cards stay where they are and are
+   treated as permanently spent. **Append new cards; never reorder or delete.**
+2. **Every deck total asks `branchLive()`, never `topics.length`.** The room laps when
+   every card is spent; a half-forked deck can never reach its own raw total, so the naive
+   version stops lapping and every second take becomes permanently unreachable **with no
+   error anywhere**. Four counters were hunted for this reason, not one.
+
+Nine readers were changed: `pickTopic`, `pickTopicFresh`, `deckHasUnspent`, `roomDeckDry`,
+`wireRail`, `scenewideTerms`, `topicEvidence`, the wild-table briefing, and the workbench.
+`stCorpus` was deliberately left alone — the drift net must keep walking **both** branches,
+because both are real writing.
+
+**Known pre-existing hole, still open:** `a2-chassis`'s card *"how the other one is taking
+it"* reads as though Seven took the body (*"he knows what I gave"*). On the Nine branch it
+is wrong today. Fix it with a `fork:` pair when the room is written.
 
 ## Next: Books Two and Three — RULED: pick-list every room
 

@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.95.0 "One True Sentence A Year"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.96.0 "Two Doors, One Deck"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -8897,7 +8897,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.95.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.96.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -9135,6 +9135,38 @@ var foldedBeats = [];        /* beat ids the world closed without the family - p
 /* the spare room: the chassis is Nine's to keep or to give, chosen at the
    a2-chassis gate. Whoever lacks a body afterwards lives in the housing. */
 var chassisHolder = null;    /* null | "Seven" | "Nine" - persisted */
+/* ========= A CARD CAN BELONG TO ONE SIDE OF THE FORK (v4.96.0) =========
+   a2-chassis is the one beat in the game with two doors, and the family is a
+   different shape afterwards depending on which way it went: on the canon branch
+   Seven has the chassis and Nine is still the shard, and on the other Nine took
+   it and Seven is a lodger in the courier's skull. A room card ABOUT having hands
+   cannot be written once for both.
+
+   THE INDEX IS THE IDENTITY. topicSpent, railDeal and every deck counter store
+   POSITIONS in room.topics, and those positions are inside save files belonging to
+   people who are part-way through a run right now. So an off-branch card is never
+   filtered OUT of the list - filtering renumbers everything behind it, and a save
+   loaded against the renumbered deck deals strangers. It stays exactly where it is
+   and is treated as permanently spent.
+
+   THE BUG THIS SHAPE INVITES, WRITTEN DOWN SO THE NEXT CUT DOES NOT REDISCOVER IT
+   THE EXPENSIVE WAY: the room laps when every card is spent, and "every" used to be
+   `spent.length >= topics.length`. Leave four cards unspendable and that sum never
+   lands - the room stops going round, every second take becomes permanently
+   unreachable, and NOTHING ANYWHERE REPORTS A FAULT. It is not a crash; it is the
+   room quietly getting shallower. Every counter below asks branchLive for its total
+   instead, and the sweep drives a half-forked deck to the end and round again. */
+function cardOnBranch(t){
+  if(!t || !t.fork) return true;
+  return t.fork === chassisHolder;
+}
+/* INDICES, never a filtered array. Handing a caller a filtered array is exactly how
+   one of them ends up indexing into it and writing that index into topicSpent. */
+function branchLive(list){
+  var out = [], i;
+  for(i = 0; i < (list || []).length; i++){ if(cardOnBranch(list[i])) out.push(i); }
+  return out;
+}
 var chassisPick = "";        /* the gate's stated choice, captured per reply */
 var chassisDoor = "";        /* ...and the client's own, captured off the door taken */
 function housingResident(){
@@ -9756,7 +9788,7 @@ function wireRail(rails, sc, key){
     if(!ids.length){ out.push(line); continue; }   /* unwired: the scorer, exactly as before */
     for(j = 0; j < ids.length && pick < 0; j++){
       var idx = cardIndexById(sc, ids[j]);
-      if(idx >= 0 && spent.indexOf(idx) === -1) pick = idx;
+      if(idx >= 0 && cardOnBranch(sc.topics[idx]) && spent.indexOf(idx) === -1) pick = idx;
     }
     if(pick < 0) continue;                         /* every card it leads to is spent: drop it */
     railDeal[key][normLine(line)] = pick;
@@ -12470,8 +12502,15 @@ function roomDeckDry(){
   if(beatDone()) return false;
   var e = SCENEBOOK[beatNow().id], room = e && e.room;
   if(!room || !room.topics || !room.topics.length) return true;
-  var spent = topicSpent[beatNow().id + "|room"] || [];
-  return spent.length >= room.topics.length;
+  /* THE TOTAL IS THE BRANCH'S, NOT THE DECK'S (v4.96.0). Comparing against
+     room.topics.length is the silent bug named at cardOnBranch: a deck with any
+     off-branch card in it can never reach its own total, so the room never goes
+     dry, never laps, and never serves a second take again. */
+  var live = branchLive(room.topics);
+  if(!live.length) return true;
+  var spent = topicSpent[beatNow().id + "|room"] || [], had = 0, i;
+  for(i = 0; i < live.length; i++){ if(spent.indexOf(live[i]) !== -1) had++; }
+  return had >= live.length;
 }
 function tableTalkOK(c){
   var e = c.era || {}, s = sceneNow(), here = (s && s.sc && s.sc.here) || [];
@@ -16426,6 +16465,9 @@ function topicTokens(txt){
 function scenewideTerms(list){
   var count = {}, out = {}, i, j, w, term;
   for(i = 0; i < list.length; i++){
+    /* an off-branch card's keywords must not count toward "this term is too common
+       in this deck" - it would blind the live cards against a term only IT shares. */
+    if(!cardOnBranch(list[i])) continue;
     w = String(list[i].key || "").split(" ");
     var seenHere = {};
     for(j = 0; j < w.length; j++){
@@ -16481,10 +16523,12 @@ function topicEvidence(sc, text){
   var owners = {}, i, j, w, term, best = 0;
   /* a term keyed by two cards discriminates between nothing */
   for(i = 0; i < list.length; i++){
+    if(!cardOnBranch(list[i])) continue;
     w = String(list[i].key || "").split(" ");
     for(j = 0; j < w.length; j++){ if(w[j]) owners[w[j]] = (owners[w[j]] || 0) + 1; }
   }
   for(i = 0; i < list.length; i++){
+    if(!cardOnBranch(list[i])) continue;
     var hits = 0, strong = 0;
     w = String(list[i].key || "").split(" ");
     for(j = 0; j < w.length; j++){
@@ -16527,7 +16571,7 @@ function sceneConfident(){
    because stalling SPENDS authored material - so it ends when the material does. */
 function deckHasUnspent(){
   var s = sceneNow(), list = (s && s.sc && s.sc.topics) || [], spent = (s && topicSpent[s.key]) || [], i;
-  for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return true; }
+  for(i = 0; i < list.length; i++){ if(cardOnBranch(list[i]) && spent.indexOf(i) === -1) return true; }
   return false;
 }
 /* THE ROOM REMEMBERS WHAT HE SAID IN IT (v4.71.8). The stall fix stopped the pool
@@ -16603,8 +16647,10 @@ var ASKED_ANSWERED = [
    commits, unlike pickTopic, which marks as it goes. */
 function pickTopicFresh(sc, key){
   var list = (sc && sc.topics) || [], spent = topicSpent[key] || [], i;
-  if(!list.length) return null;
-  for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1) return pickTopic(sc, key); }
+  /* a branch with no cards of its own must never reach the lap below: clearing the
+     spent list and re-picking on an empty branch is an unbounded loop, not a lap. */
+  if(!list.length || !branchLive(list).length) return null;
+  for(i = 0; i < list.length; i++){ if(cardOnBranch(list[i]) && spent.indexOf(i) === -1) return pickTopic(sc, key); }
   /* THE ROOM GOES ROUND AGAIN. A dry room used to answer "you asked that already" and
      then fall to two house stalls that asked nothing - the dead stretch the Architect
      named. The family's own time now starts a new lap instead, and the lap advances
@@ -16631,6 +16677,8 @@ function askedAnswered(salt){
 function pickTopic(sc, key){
   var list = sc.topics || [];
   if(!list.length) return null;
+  var live = branchLive(list);
+  if(!live.length) return null;
   var spent = topicSpent[key] || (topicSpent[key] = []);
   /* F5(a): THE ROW IS BOUND TO ITS OWN CARDS. Scoring a rail's own words against its
      own key works nearly always, and "nearly" is how a player clicks a question and
@@ -16638,7 +16686,7 @@ function pickTopic(sc, key){
      this row offered deals the card this row offered it FROM, and nothing else in
      here gets a vote. Typed lines are unaffected: they were never dealt. */
   var bound = railDeal[key] && railDeal[key][normLine(lastPlayerText)];
-  if(typeof bound === "number" && list[bound] && spent.indexOf(bound) === -1){
+  if(typeof bound === "number" && list[bound] && cardOnBranch(list[bound]) && spent.indexOf(bound) === -1){
     spent.push(bound);
     return list[bound];
   }
@@ -16672,16 +16720,19 @@ function pickTopic(sc, key){
      in the common case; it is true now until the deck is genuinely empty. */
   var best = -1, bestHits = 0;
   for(i = 0; i < list.length; i++){
-    if(spent.indexOf(i) !== -1) continue;
+    if(!cardOnBranch(list[i]) || spent.indexOf(i) !== -1) continue;
     if(score[i] > bestHits){ bestHits = score[i]; best = i; }
   }
   if(best < 0){                       /* nothing unspent matched: authored order */
-    for(i = 0; i < list.length; i++){ if(spent.indexOf(i) === -1){ best = i; break; } }
+    for(i = 0; i < list.length; i++){ if(cardOnBranch(list[i]) && spent.indexOf(i) === -1){ best = i; break; } }
   }
   if(best < 0){                       /* every card is spent - the score decides which to replay */
     bestHits = -1;
-    for(i = 0; i < list.length; i++){ if(score[i] > bestHits){ bestHits = score[i]; best = i; } }
-    if(best < 0) best = spent.length % list.length;
+    for(i = 0; i < live.length; i++){ if(score[live[i]] > bestHits){ bestHits = score[live[i]]; best = live[i]; } }
+    /* the last resort walks the BRANCH, never the deck: `spent.length % list.length`
+       lands on an off-branch card as soon as one exists, and that card is prose the
+       run cannot make sense of. */
+    if(best < 0) best = live[spent.length % live.length];
   }
   if(spent.indexOf(best) === -1) spent.push(best);
   return list[best];
@@ -16819,7 +16870,9 @@ function wildContract(s){
   o.what_this_room_knows = [];
   for(i = 0; i < (sc.topics || []).length; i++){
     t = sc.topics[i];
-    if(!t || !t.ask) continue;
+    /* the wild table is never told about cards from the branch this run did not
+       take - it would offer the family a scene that cannot exist for them. */
+    if(!t || !t.ask || !cardOnBranch(t)) continue;
     o.what_this_room_knows.push({
       subject: t.ask, who_would_know: t.who,
       the_true_thing: t.gives || "",
@@ -21961,6 +22014,12 @@ function wbDrawBeat(){
     if(SB.room){
       h += '<div class="wb-sh">The room afterwards — written</div>';
       h += '<p class="wb-p">Same cards, same rule, in the sealed room at ' + esc(SB.room.where) + ".</p>";
+      var forked = (SB.room.topics || []).filter(function(t){ return t && t.fork; });
+      if(forked.length){
+        h += '<div class="wb-rl" style="color:var(--wb-slate)">This room forks. '
+           + forked.length + ' of its ' + SB.room.topics.length + ' cards belong to one side of the chassis choice and are never dealt on the other: '
+           + esc(forked.map(function(t){ return t.fork + " - " + t.ask; }).join("; ")) + ".</div>";
+      }
       (SB.room.topics || []).forEach(function(t){ h += wbTopic(t); });
     }
   }
@@ -24916,6 +24975,28 @@ function verdictMap(){
    a cold place exists, things keep in it, once a year it is not hers, and never what is
    in it. A relaxed guard that matches the prose is a guard. A guard the authored text
    already breaks is a lie the whole AI side is reading. */
+/* v4.96.0, THE CHASSIS FORK: NOT ONE LINE MOVED, AND THAT IS THE ROW. An engine wave
+   with no prose in it at all - the deck picker, the rail binder, four counters, the
+   typed-line matcher and the model's own briefing all learned that a room card can
+   belong to one side of a2-chassis and not the other. Corpus 4,958 -> 4,958, fires
+   unchanged, every predicate byte-identical.
+   That is worth a paragraph precisely because it is nothing. This wave rewrote the
+   function that decides which authored passage a player is handed. If the map had
+   moved by a single entry it would have meant the picker had started serving
+   different prose, and the drift net is the only instrument in the building that
+   would have said so. Taking it after an engine change costs one minute and is the
+   difference between "I believe the refactor was safe" and "the corpus is provably
+   the same corpus".
+   THE NEAR MISS, RECORDED BECAUSE IT WAS SILENT. The obvious implementation filters
+   off-branch cards out of the deck. That renumbers every card behind them, and
+   topicSpent is a list of POSITIONS living inside save files belonging to people who
+   are part-way through a run - so the filter deals strangers to anybody who loads.
+   The second obvious implementation leaves them in and skips them at pick time, and
+   that one breaks the LAP: the room goes round when spent.length reaches
+   topics.length, a sum a half-forked deck can never make, so the room quietly stops
+   serving second takes forever with no error anywhere. Both are now rows that drive
+   the shipped code rather than restating it, and the second one is the reason four
+   counters were hunted rather than one. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -25096,6 +25177,10 @@ function selfTest(){
     /* ...and the fix wave: the fork's doors, the typed door, and the row dealt from the deck */
     "forkDoors", "forkBooking", "doorSlots", "typedIsDoor", "doorSkeletonNow", "callDoorTurn",
     "railFor", "pinnedExit", "sameAsDoor", "normLine", "sceneRails", "doorKindFor",
+    /* ...and the chassis fork (v4.96.0): the branch test, the live set, and the two
+       readers whose counters the fork could most easily have broken in silence. */
+    "cardOnBranch", "branchLive", "cardIndexById", "wireRail", "roomDeckDry", "deckHasUnspent",
+    "scenewideTerms",
     "ambientDue", "ambientCard", "attemptClear", "attemptGraze", "attemptStall",
     /* ...and the two tables (v4.72.0). Every router the mode is consulted at, plus
        the stamp's own readers - a credit rule whose roster stops at the release that
@@ -25557,6 +25642,119 @@ function selfTest(){
       });
     } finally { shardWhere = kR.sw; beatIdx = kR.bi; pickKind = kR.pk; phase = kR.ph;
                 chassisHolder = kR.ch; }
+
+    /* ============ THE CHASSIS FORK, DRIVEN (v4.96.0) ============
+       a2-chassis is the one beat with two doors, and from v4.96.0 a room card may
+       declare `fork:"Seven"` or `fork:"Nine"` and belong to only one of them. Four
+       rows, and every one of them DRIVES the shipped picker against a half-forked
+       deck rather than restating the rule. The fixture is synthetic on purpose: the
+       laws must hold before the first forked card is authored, not after. */
+    (function(){
+      var kF = {ch:chassisHolder, sp:topicSpent, lp:topicLap, rd:railDeal, rk:railKnock, tx:lastPlayerText};
+      var FX = {topics:[
+        {id:"fx-neutral-a", ask:"a", key:"alpha kettle", who:"Hesta", plays:["A"]},
+        {id:"fx-seven",     ask:"b", key:"beta recital", who:"Hesta", plays:["B"], fork:"Seven"},
+        {id:"fx-neutral-b", ask:"c", key:"gamma bread",  who:"Hesta", plays:["C"]},
+        {id:"fx-nine",      ask:"d", key:"delta senses", who:"Hesta", plays:["D"], fork:"Nine"}
+      ]};
+      var KEY = "st-fork|room", seen = [], lapAt = -1, railOut = [], railBound = [], idxMoved = [];
+      try{
+        /* (i) ask for the SEVEN card by its own keywords, on the NINE branch, until
+               the deck has been round twice. It must never once be dealt. */
+        chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {};
+        lastPlayerText = "recital beta";
+        for(var n = 0; n < 12 && (topicLap[KEY] || 0) < 2; n++){
+          var c = pickTopicFresh(FX, KEY);
+          if(!c) break;
+          seen.push(c.id);
+        }
+        /* (ii) the silent one: spend every card THIS BRANCH has and the room must
+                still know it is out, and still go round. */
+        topicSpent = {}; topicLap = {}; topicSpent[KEY] = branchLive(FX.topics).slice();
+        pickTopicFresh(FX, KEY);
+        lapAt = topicLap[KEY] || 0;
+        /* (iii) a row naming only the other branch's card must drop; a row that
+                 PREFERS it must fall through to something this branch can answer. */
+        topicSpent = {}; railDeal = {}; railKnock = {};
+        railOut = wireRail([{line:"fx the recital", cards:["fx-seven"]},
+                            {line:"fx her senses",  cards:["fx-nine"]},
+                            {line:"fx falls through", cards:["fx-seven","fx-neutral-b"]}], FX, KEY);
+        var d = railDeal[KEY] || {};
+        for(var q in d){ if(Object.prototype.hasOwnProperty.call(d, q)) railBound.push(d[q]); }
+        /* (iv) the save invariant, over the REAL book: a card's position is its
+                identity and the branch must not be able to move one. */
+        ["Seven", "Nine", null].forEach(function(h){
+          chassisHolder = h;
+          for(var k in SCENEBOOK){
+            if(!Object.prototype.hasOwnProperty.call(SCENEBOOK, k)) continue;
+            var rm = SCENEBOOK[k].room;
+            if(!rm || !rm.topics) continue;
+            for(var i = 0; i < rm.topics.length; i++){
+              if(!rm.topics[i].id) continue;
+              if(cardIndexById(rm, rm.topics[i].id) !== i) idxMoved.push(k + "/" + rm.topics[i].id + "@" + h);
+            }
+          }
+        });
+      } finally {
+        chassisHolder = kF.ch; topicSpent = kF.sp; topicLap = kF.lp;
+        railDeal = kF.rd; railKnock = kF.rk; lastPlayerText = kF.tx;
+      }
+
+      T("a card from the other branch is never dealt, however hard the player asks for it",
+        seen.length > 0 && seen.indexOf("fx-seven") === -1 && seen.indexOf("fx-nine") !== -1,
+        "asked for the Seven-only card by its own keywords " + seen.length + " times on the Nine branch: "
+        + seen.join(", "),
+        {label:"the picker before the fork existed - every card in the deck was dealable to everybody",
+         was:{id:"fx-seven", fork:"Seven"},
+         check:function(w){ var k = chassisHolder; try { chassisHolder = "Nine"; return cardOnBranch(w); }
+                            finally { chassisHolder = k; } }});
+
+      T("a forked room still runs out, and still goes round again",
+        lapAt === 1,
+        "every card this branch owns spent, and the deck lapped to " + lapAt
+        + " - the old total would have been " + FX.topics.length + " and never reached",
+        {label:'the old total, `spent.length >= topics.length`, which a half-forked deck can never reach'
+             + ' - the room stops lapping, every second take goes unreachable, and nothing reports a fault',
+         was:FX.topics.length,
+         check:function(w){ var k = chassisHolder; try { chassisHolder = "Nine";
+                            return w === branchLive(FX.topics).length; } finally { chassisHolder = k; } }});
+
+      T("a landing never deals a card from the other branch",
+        railOut.length === 2 && railOut.indexOf("fx the recital") === -1
+          && railOut.indexOf("fx falls through") !== -1 && railBound.indexOf(1) === -1,
+        "on the Nine branch: the Seven-only row dropped, the row that merely PREFERS it fell through - "
+        + JSON.stringify(railOut),
+        {label:"the rail before the fork existed, which bound the first unspent card its row named",
+         was:{line:"fx the recital", cards:["fx-seven"]},
+         check:function(w){
+           /* the shipped wireRail, run again, here, on the branch that must refuse it */
+           var k = chassisHolder, sp = topicSpent, rd = railDeal, rk = railKnock;
+           try {
+             chassisHolder = "Nine"; topicSpent = {}; railDeal = {}; railKnock = {};
+             return wireRail([w], FX, "st-fork-check|room").length > 0;
+           } finally { chassisHolder = k; topicSpent = sp; railDeal = rd; railKnock = rk; }
+         }});
+
+      T("the fork never renumbers a deck, so a live save still deals what it dealt",
+        idxMoved.length === 0,
+        "every card in every room holds its authored position under both branches and under neither"
+        + (idxMoved.length ? " - MOVED: " + idxMoved.slice(0, 4).join(" | ") : ""),
+        {label:"the obvious implementation - filter the off-branch cards out of the list - which renumbers"
+             + " every card behind them, and topicSpent is a list of POSITIONS inside live save files",
+         was:[0, 1, 2, 3],
+         check:function(w){
+           var k = chassisHolder;
+           try {
+             chassisHolder = "Nine";
+             var filtered = FX.topics.filter(cardOnBranch);   /* the wrong way, on purpose */
+             for(var i = 0; i < w.length; i++){
+               if(!filtered[i] || filtered[i] !== FX.topics[w[i]]) return false;
+             }
+             return true;
+           } finally { chassisHolder = k; }
+         }});
+    })();
+
     T("the relay never speaks the answer it is withholding", relayBad.length === 0,
       relayN + " muted cards across beat and room decks"
       + (relayBad.length ? " - " + relayBad.slice(0, 4).join(" | ") : ""),
