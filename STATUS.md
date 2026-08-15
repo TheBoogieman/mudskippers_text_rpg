@@ -1,90 +1,95 @@
 # Where the game stands, in plain English
 
-*Updated after v4.72.6. What got fixed, and the one thing I stopped before building.*
+*Updated after v4.73.0. All five problems are done.*
 
 ---
 
-## Done — four of the five problems
+## 1. The game answering a question you didn't ask ✅
 
-### 1. The game answering a question you didn't ask ✅
+Eleven clickable lines trigger a pre-written reply. Reading all eleven properly instead
+of trusting the automatic check, **five of the ones I'd flagged turned out to be the
+opposite of a problem** — they're the player *defying* the scene, which is the best thing
+one of those lines can be. Four were genuinely wrong and are reworded. One chapter was
+also offering the same question in two of its three slots, which is now caught
+automatically.
 
-**Fixed, and it was smaller than I thought.** Eleven clickable lines trigger a
-pre-written reply. I read all eleven properly instead of trusting the word-matching
-measure, and **five of the ones I'd flagged turned out to be the opposite of a
-problem** — they're the player *defying* the scene, which is the best thing one of those
-lines can be. The clearest example: a line offering *"Shut the door behind me"* under a
-scene where the character pointedly does **not** shut the door.
+## 2. Chapters that could never be recorded as "finished well" ✅
 
-Four were genuinely wrong and are reworded. One chapter was also offering the **same
-question in two of its three slots** — two-thirds of your choices were the same thing in
-different words. That one's now caught automatically if it ever happens again.
+The chapter with the big branching choice was genuinely missing a name. One line added,
+in the right character's mouth.
 
-### 2. Chapters that could never be recorded as "finished well" ✅
+**The other two I nearly damaged.** I was about to add a name to each, then read them:
+both are *about* the name not being said. One is a funeral. The other says twice, in its
+own closing text, *"Nobody has said her name yet"* — the character starts to say it and
+stops, deliberately, twice. Adding it would have contradicted the scene the game plays
+thirty seconds later. Those two had the *requirement* removed instead, and not a word
+changed.
 
-**Fixed — but one of them I nearly damaged, and stopping to read saved it.**
+## 3. The first chapter asking you to know a name before it tells you ✅
 
-For the chapter with the big branching choice, a name genuinely was missing. One line
-added, in the right character's mouth, and that chapter can now be recorded properly.
-That matters because everything later in the story reads that decision.
+Removed. It also turned out the game had been treating that name as "already known to the
+player" *because* of that requirement — so now it correctly thinks you've met the kid from
+the opening and have **not** yet been told the shard's name. Which is just the truth.
 
-For the other two I was about to add a name — and then read the scenes. **Both are
-*about* the name not being said.** One is a funeral. The other literally says, twice, in
-its own closing text: *"Nobody has said her name yet."* The character starts to say it
-and stops, on purpose, twice. Adding the name would have contradicted the scene the game
-plays thirty seconds later.
+## 4. The character labelled "Other" ✅
 
-So for those two I removed the *requirement* instead and left every word alone.
-
-### 3. The first chapter asking you to know a name before it tells you ✅
-
-**Fixed.** Requirement removed. And it turned out to be load-bearing in a way I didn't
-expect: the game had been treating that name as "already known to the player" from turn
-one *because* of that requirement. Removing it means the game now correctly thinks you've
-met the kid from the opening scene and have **not** yet been told the shard's name —
-which is simply the truth. The safety net caught the change and I checked it was right
-rather than papering over it.
-
-### 4. The character labelled "Other" ✅
-
-**Fixed.** She's **THE CLERK** now. "Other" stays in the code because it's what the game
-falls back to when an AI invents someone who shouldn't exist yet — but it's no longer
-anyone's name on screen.
+She's **THE CLERK** now.
 
 ---
 
-## Not done — and I recommend we don't
+## 5. The AI cost saving ✅ — and this one took three attempts
 
-### 5. The AI cost saving ❌ — the idea doesn't work
+Only affects the mode where an AI writes the story. Worth reading because two of the three
+attempts failed and the failures were the useful part.
 
-You approved this and I started on it. **Before writing any code I measured whether the
-saving is actually there, and it isn't.**
+**The idea.** Providers charge about a tenth of the price for any part of your message
+they've already seen and that hasn't moved. The game was only ever getting that discount
+on its rulebook.
 
-**Why the idea seemed good.** AI providers charge about a tenth of the normal price for
-any part of your message they've seen before *and that hasn't moved*. The game sends the
-changeable part first, so nothing behind it can be reused. Swapping the order looked like
-it would make most of the message reusable.
+**Attempt one — reorder the message. Failed before I wrote it.** I measured first: the
+"story so far" the game sends is a *sliding window* of the last twelve messages, and every
+turn adds two. From about turn six the front of it changes every single turn, so there's
+no stable part to reuse whatever order things are in. I refused to build it and told you
+why.
 
-**Why it fails.** The "story so far" that the game sends is a **sliding window** — the
-last twelve messages, always. Every turn adds two, so the window starts sliding after
-about **six turns**, and from then on it's different at the front *every single turn*.
-Providers only reuse a message from the beginning up to the first thing that changed —
-so once the window slides, the reuse stops dead no matter what order things are in.
+**Attempt two — stop the window sliding. Built, and still bought nothing.** The window now
+only re-cuts every eight messages, so it does hold still between cuts. Twelve live turns
+on your key said: **cached 14,805 tokens. Flat. Identical to before.** Not one token moved.
 
-**What the swap would actually buy:** a discount for roughly the first six turns of a
-run, and nothing for the rest of it. Against four rounds of careful tuning of what the AI
-reads and in what order. That's a bad trade and I'd rather not make it.
+**Attempt three — the actual cause.** Anthropic only reuses your message *up to a marker
+you place*, and the only marker was on the rulebook. A perfectly stable story-so-far
+sitting behind an unmarked boundary gets re-read at full price forever. The window carries
+its own marker now.
 
-**What would actually work** is a different, larger change: stop sliding the window every
-turn, and instead keep the story-so-far block fixed for stretches — re-cutting it every
-eight turns or so instead of every turn. Then the reuse holds between re-cuts. That's a
-real saving, but it changes what the AI remembers turn to turn, so it's its own piece of
-work with its own testing.
+### What it actually saves — measured, same chapter, same twelve moves, both ways
 
-**One honest caveat:** I can't measure the actual money either way without a paid AI key,
-so the figures above are about *when reuse breaks*, not about pounds saved.
+| | before | after |
+|---|---|---|
+| full-price tokens per turn | 10,050 | **7,395** — a quarter fewer |
+| cost per turn | $0.0282 | **$0.0265** |
+| discounted tokens | 14,805, flat all run | **14,805 → 21,152, climbing** |
+
+**The last number is the important one.** Before, the discount was the same on turn one and
+turn twelve. Now it grows as the night goes on, so **the longer you play, the better it
+does** — which is the opposite of how it behaved.
+
+**Honest about the size:** roughly **6% off a turn**, not the "most of it" I guessed at in
+the first version of this document. Most of what's sent is the rulebook (already
+discounted) and this turn's fresh instructions (can never be). Total spend to find all
+this out: about **£0.70**.
+
+**And the story held.** The twelve-turn run produced a proper closing note, thirty-seven
+lines of story record, no corrections needed for the AI speaking out of turn, and the
+characters stayed in voice.
 
 ---
 
-## What I need from you
+## Nothing is outstanding on my side
 
-One decision, below.
+Everything left is writing, and it's yours: the twenty "echo" lines that repeat the scene
+above them (sorted with a first opinion in `HAND-PASS-DRAFTS.md`), and a few clickable
+lines that are judgement calls rather than faults.
+
+**One housekeeping note:** your OpenRouter key is still saved in the test browser at
+`localhost:8124`. It's only in that browser's local storage, but if you'd rather clear it,
+open Settings there and empty the API KEY field.
