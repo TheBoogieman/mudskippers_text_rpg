@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.5.0 "The Proceeding"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.6.0 "Asked Again"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7171,7 +7171,18 @@ var SCENEBOOK = {
      plays:[["Seven","Warm mugs. That is my finding, and I submit it to the committee: the specific weight of a warm mug handed to you by somebody who did not have to."],
       ["Seven","Everything else about hands is logistics - doors, tools, pointing during arguments. The mug is the part I filed under irreplaceable, and I did not file it until it was gone."],
       "A texture and a temperature, reported like evidence, laid on the table next to the body it is evidence about.",
-      ["Seven","Whoever takes the seat: someone hand them a warm mug in the first hour. It completes the installation."]]},
+      ["Seven","Whoever takes the seat: someone hand them a warm mug in the first hour. It completes the installation."]],
+     /* THE SECOND TAKE. The mug is the answer he has ready. Asked again he gives the
+        large one, and it is branch-neutral on purpose: whoever has hands tonight, this
+        is true of them, and the card never says which of them it is. */
+     takes:[[
+      ["Seven","Asked again. Good. The mug answer is the one I keep ready, and I would like you to know it is also the SMALL one."],
+      ["Seven","Here is the large one. Hands are how a person finds out what they think. You reach for the thing before you have decided to want it. The hand goes first, and the wanting turns up about a quarter of a second later wearing a coat, pretending it was there the whole time."],
+      ["Seven","So a person with hands is being told, four hundred times a day, what they actually want. A person without them has to work it out by reasoning, which is a catastrophic method, and I have been at it a while."],
+      "Somebody at this table has hands they did not have this morning. Nobody looks over. It would be unbearable to look over.",
+      ["Seven","That is the finding, and it is not about mugs. It is that I have not been surprised by myself in a very long time, and it turns out that was never a personality. It was a hardware condition."],
+      ["Seven","I should like to be surprised by myself again. Put that on the list under the mug. Above it, in fact. Amend the list."]
+     ]]},
     {id:"the-cooking", ask:"the cooking", key:"cook food pan eat taste burn dinner",
      who:"Hesta", gives:"a bit - instruction shouted from a chair, cheerfully ignored",
      holds:"nothing. Free.",
@@ -7179,15 +7190,39 @@ var SCENEBOOK = {
      plays:[["Hesta","Stir it FROM THE EDGE, Pia. The edge is where it thickens. The middle is a decorative region."],
       ["Pia","I am stirring a pot at a body's funeral-slash-christening while being coached. This family's kitchen has range."],
       ["Hesta","The middle, child. Now the salt - no. NO. That is not a pinch, that is a verdict."],
-      "The pot survives. The instruction continues from the chair, cheerful and absolute, and the kitchen smells like the future is still planning to arrive on schedule."]},
+      "The pot survives. The instruction continues from the chair, cheerful and absolute, and the kitchen smells like the future is still planning to arrive on schedule."],
+     /* THE SECOND TAKE. The bit goes further by changing who is holding the spoon. */
+     takes:[[
+      ["Hesta","Again? You want the stove again. Then you are getting the real one. Pia, off. Somebody who has never cooked anything, on."],
+      "There is a general looking-at-the-floor. The one who has never cooked anything is put forward by committee, without a vote.",
+      ["Hesta","Hand. In the drawer. No - the wooden one. The metal one is for people I do not like."],
+      ["Pia","She has a metal-spoon list. I have SEEN the metal-spoon list."],
+      ["Hesta","Now: you are not stirring it, you are listening to it. When the edge goes quiet it has caught. And when it has caught you have about eight seconds, and after that you have a story instead of a dinner."],
+      "The edge goes quiet. Everybody says something at once. The pan comes off, the heat dies, and the dinner survives by a margin that will be disputed in this room for years.",
+      ["Hesta","There. Now you have cooked. Everything after tonight is only doing it more times."]
+     ]]},
+    /* FORKED v5.6.0. This card was unforked and it lied on one branch: Nine says "he
+       knows what I gave", which is only true when she is the one who gave. On Nine's
+       branch she took it, and she sat here thanking herself. The mirror for that branch
+       is how-the-other-one-nine, appended at the end of this deck. */
     {id:"how-the-other-one", ask:"how the other one is taking it", key:"other how-are-you fine ok jealous glad",
-     who:"Nine", gives:"an honest answer with more than one thing in it",
+     who:"Nine", fork:"Seven", gives:"an honest answer with more than one thing in it",
      holds:"she does not ask for anything",
      rail:"Quietly, skin on the shard: how is Seven taking all this.",
      plays:[["Nine","Three ways at once. Gratefully - he knows what I gave. Angrily - at himself, for being the reason a child gave it. He thinks I cannot hear the anger. The speaker is bad; the anger is not."],
       ["Nine","And thirdly: he is making an inventory of everything he will do with hands, and it is the shortest list I have ever heard, and most of it is mugs."],
       "An honest answer with more than one thing in it, delivered by somebody learning that honesty about others is also a way of caring for them.",
-      ["Nine","Ask me the fourth way another night. The fourth way is about me, and tonight is full."]]},
+      ["Nine","Ask me the fourth way another night. The fourth way is about me, and tonight is full."]],
+     /* THE SECOND TAKE. She set up a fourth way and did not spend it. This is it, and
+        the hold survives: she still does not ask for anything for herself. */
+     takes:[[
+      ["Nine","You came back. Then you get the fourth way, and I would like it noted that I said another night and you have given me about forty minutes."],
+      ["Nine","The fourth way is that I am relieved. Not glad - I have done glad, glad is upstairs with the other three. Relieved."],
+      ["Nine","Because if it had gone round the other way I would be the one out there finding out about mugs, and he would be in here being extremely gracious about it, and I would have had to watch that. Daily. Being thanked by a man in a corner."],
+      "The hum against your fingers does not change at all, which with her is the tell, because it changes for everything else.",
+      ["Nine","And I am not certain I would have been good. That is the whole of the fourth way. I do not know that I would have been good about it, and now I will never have to find out, and the not-finding-out is the part I am relieved by."],
+      ["Nine","Do not tell him. Not because it would hurt him. Because he would find a way to be sorry about it, and he has enough."]
+     ]]},
     {id:"seven-asks", ask:"whether Seven should be anywhere near that tin", key:"tin smoke seven try offer pass green lettuce",
      who:"Hesta", fork:"Seven",
      gives:"the tin reaching a man who has had hands for two hours, and the etiquette going out of the window",
@@ -7471,7 +7506,23 @@ var SCENEBOOK = {
       "And it arrives quietly, in the middle of the noise, while nobody is looking for it: this is the first argument this family has had that was not about whether somebody was going to be alive on Tuesday.",
       "Nobody says that out loud. It would spoil it.",
       ["Vic","...The lid goes on. Under protest. Minuted."],
-      ["Hesta","Minuted."]]},
+      ["Hesta","Minuted."]],
+     /* THE SECOND TAKE. The card's hold is that nobody says what the argument means.
+        It survives by being broken in a different place: the second unsaid thing is
+        the question Pia actually asked, which was whether there would be a next time. */
+     takes:[[
+      ["Vic","No, because I have thought about it, and I would like to revisit the lid."],
+      ["Pia","It is TWENTY PAST FOUR IN THE MORNING."],
+      ["Vic","The lid was decided under duress."],
+      ["Hesta","The lid was decided by me, in my kitchen, and minuted."],
+      "It goes again. It goes for a long time. It is worse than the first one and considerably better organised.",
+      ["Pia","Are we doing this every time? Is this a thing we do now?"],
+      ["Hesta","...Yes."],
+      ["Pia","Oh thank God."],
+      "And that is the second thing nobody says out loud tonight: that she asked whether there would be a next time, and got told yes, and neither of them had to go anywhere near what the question was for.",
+      ["Vic","Under protest."],
+      ["Hesta","Minuted."]
+     ]]},
     {id:"hesta-sits-down", ask:"Hesta finally sitting down", key:"hesta sits sitting rest story row market cutlery eleven years",
      who:"Hesta",
      gives:"the host off duty for the first time, and the one thing she is willing to say about eleven years of laying for more people than came",
@@ -7488,7 +7539,22 @@ var SCENEBOOK = {
       ["Hesta","And I kept the door on the brick, because that is what my grandmother did the first time it went bad, and for a long while the only thing that ever came through it was weather."],
       ["Hesta","So you will have to forgive me for laying out too much cutlery. I have been doing that for eleven years on the off chance."],
       "Nobody has anything to say to that. Pia gets up, walks round the table, and sits on the arm of her chair, which is the entire answer.",
-      ["Hesta","Right. That was my one. Somebody make a noise, this is unbearable."]]},
+      ["Hesta","Right. That was my one. Somebody make a noise, this is unbearable."]],
+     /* THE SECOND TAKE. She said one thing and stopped. Asked again she does not give a
+        second thing - she gives a CORRECTION to the first, which is the only way this
+        woman goes further, and the hold stands: nobody pushes her, and she still stops. */
+     takes:[[
+      ["Hesta","You are back. I said one thing, and I have had a whole night to regret the shape of it, so you are getting a correction and then I am finished properly."],
+      ["Hesta","I said I laid out too much cutlery on the off chance. That is not true. That is the tidy version, and I am too tired to be tidy."],
+      ["Hesta","I laid it out because stopping would have been me agreeing. And I was not going to be the one who agreed. Somebody in a row has to be the last one still setting a table, and I looked round, and it was going to be me or nobody."],
+      "She turns her cup a quarter-turn on the wood, which is the most she intends to do about any of this.",
+      ["Hesta","So it was not hope. Everybody wants it to have been hope. It was stubbornness with a cloth over it."],
+      ["Pia","...That is hope, though."],
+      ["Hesta","Do not."],
+      ["Pia","That is just hope in a coat - "],
+      ["Hesta","Child, I will put you outside."],
+      "Nobody pushes her, because nobody has to. She stays in the chair another hour. She does not say anything else, and she does not get up either."
+     ]]},
     {id:"the-face", ask:"where the face came from", key:"face whose made drawn chosen taken dead nobody features",
      who:"Vic",
      gives:"it was drawn, argued over and drawn again - taken from nobody, and the arguing is the point",
@@ -7503,7 +7569,21 @@ var SCENEBOOK = {
       ["Vic","By the one who is going to wear it, obviously. Took four goes. Wanted the mouth wrong on purpose - wanted a mouth that had already been through something, on the grounds that a face which arrives brand new is a face nobody trusts."],
       ["Hesta","Four goes."],
       ["Vic","Four. I would have done forty. It is the one part of the whole business that is nobody's business but theirs."],
-      "The face across the table was argued into existence by the person now behind it, which is more than anybody else in this room was ever asked about their own."]},
+      "The face across the table was argued into existence by the person now behind it, which is more than anybody else in this room was ever asked about their own."],
+     /* THE SECOND TAKE. Four goes, and what was wrong with the first three - which is
+        not what anybody guesses, and never names who is wearing it. */
+     takes:[[
+      ["Vic","Asked twice. All right. The four goes - do you want to know what was wrong with the first three? Because it is not what people guess."],
+      ["Pia","Obviously I want to know."],
+      ["Vic","Nothing was wrong with them. They were good faces. That was the problem."],
+      ["Vic","I did the first one handsome, because I am vain on other people's behalf. Rejected. Did the second plain, thinking that was the note. Rejected, and I got told off, and I deserved it."],
+      ["Pia","So what was the note?"],
+      ["Vic","The note was: give me a face that has been somewhere. I had been drawing a face for a person to START in. What was wanted was a face for a person to have already BEEN in."],
+      ["Hesta","...That is a very old thing to want."],
+      ["Vic","It is. And I sat there at four in the morning with the third one crossed out, understanding that I had been asked for a past. I cannot draw one of those. So I drew the mouth wrong instead and hoped it would do."],
+      "It did. It has been doing all evening, on a face that has been at this table about six hours and looks like it has been coming here for years.",
+      ["Vic","And that is the whole trick, and it is not a trick. You do not build somebody a history. You build them somewhere one could plausibly have happened, and then you get out of the way and let them have it."]
+     ]]},
     {id:"the-frame-in-the-corner", ask:"the thing in the corner under the sheet", key:"frame corner sheet dead rig neck tracker hole scar shed",
      who:"Hesta",
      gives:"what he did to the back of his own neck, seen once - and what happens to the frame in the morning",
@@ -7518,7 +7598,22 @@ var SCENEBOOK = {
       ["Pia","...He did that to himself."],
       ["Vic","He did that to himself, and then he walked, and every hour since then that frame has been paying for it."],
       "He puts the sheet back down carefully, the way you cover a thing that did its job.",
-      ["Hesta","It stays in that corner tonight. It goes out in the morning, and it goes out properly, and I will not have it in a skip."]]},
+      ["Hesta","It stays in that corner tonight. It goes out in the morning, and it goes out properly, and I will not have it in a skip."]],
+     /* THE SECOND TAKE. This card's hold is that it is NOT discussed twice - so the
+        second take is the refusal, and the room gives something else instead. Caving
+        here would spend the one thing anybody in this building was firm about. */
+     takes:[[
+      ["Pia","Can we look at it again? I want to look at it again."],
+      ["Hesta","No."],
+      ["Pia","Just for - "],
+      ["Hesta","No, love. We said once. Once was for knowing. Twice is for something else, and I am not having something else in my back room tonight."],
+      "The sheet stays where it is. Nobody goes near it. It is the only thing in this building anybody has been firm about all night.",
+      ["Vic","She is right. I will give you the part you actually want instead, and then we are finished with it."],
+      ["Vic","It held. That is the part. Whatever it was built for, it was asked to do about a year past what it had in it, and it did the year, and it got here, and it put its passenger down in a warm room."],
+      ["Vic","Machines are not owed anything. I know that. I have said it in front of apprentices. And I am going out to that corner in the morning to be quite formal about it, on my own, and none of you are invited."],
+      ["Hesta","Take the good cloth."],
+      ["Vic","...I will take the good cloth."]
+     ]]},
     {id:"vic-after", ask:"how Vic is, now it is over", key:"vic after surgery hands standing washed drink eleven years alone",
      who:"Vic",
      gives:"he has not sat down in two hours, and the reason: there is no second chassis and one day the hands go",
@@ -7534,7 +7629,22 @@ var SCENEBOOK = {
       ["Vic","They did not. They will one day. That is the arithmetic of a pair of hands, and I am the only pair this family has got."],
       "He finally sits. It takes visible effort, which is how you know it is the first time in hours he has believed it is over.",
       ["Vic","Do not tell them I said any of that."],
-      ["Hesta","I will tell them all of it. At your funeral. At length."]]},
+      ["Hesta","I will tell them all of it. At your funeral. At length."]],
+     /* THE SECOND TAKE. Take one is the arithmetic of one pair of hands. Asked again he
+        has got somewhere with it, and the answer is the only one there is: teach it out.
+        The hold stands - he asks for it not to be repeated, and does not mean it. */
+     takes:[[
+      ["Vic","You are still on this. Sit down, then, because I have been thinking about it since and I have got somewhere, and I do not much like where."],
+      ["Vic","The hands go. That is settled. It is not a fear, it is a date I have not been given yet. And I have spent eleven years being careful about it, and careful turns out to be the wrong shape entirely."],
+      ["Hesta","Go on."],
+      ["Vic","Careful means I do it alone, so that when I am wrong it is only me who is wrong. Which is decent. It also means that the day the hands go, everything in them goes too, and this family is left holding a drawer of very good tools and nobody who knows what they are for."],
+      "He looks at his own hands on the table a while, the way you look at a colleague who has just handed in notice.",
+      ["Vic","So I shall have to teach somebody. And I am going to be appalling at it, because I have never once said a thing out loud while doing it, and it will take years off me."],
+      ["Hesta","She will be insufferable."],
+      ["Vic","She will be insufferable. She will also be about forty by the time I am done, and then there are two pairs, and then it stops being arithmetic. Then it is only a workshop."],
+      ["Vic","...Do not tell her I said any of that either."],
+      ["Hesta","I am keeping a list, Vic. It is getting long, and it is all coming out on one day."]
+     ]]},
     {id:"the-empty-plate", ask:"why there is a plate at the empty setting", key:"plate empty setting laid cannot eat waste feed place five",
      who:"Hesta",
      gives:"she laid for the one who cannot eat, and she will hear no argument about it",
@@ -7547,7 +7657,24 @@ var SCENEBOOK = {
       ["Hesta","I am well aware of what one of them can do. There are still five of you, and there is still a plate. And if anybody at this table would like to explain to me why a person who cannot eat should also not be laid for, they may do it now, and they may do it standing up."],
       "Nobody explains anything to her.",
       ["Hesta","It gets eaten at the end. Somebody has it. It is not waste and it was never once about waste."],
-      "Later somebody does have it, without being asked and without making a thing of it, and the plate goes back to the kitchen empty like everybody else's."]},
+      "Later somebody does have it, without being asked and without making a thing of it, and the plate goes back to the kitchen empty like everybody else's."],
+     /* THE SECOND TAKE. Her hold is that she does not explain herself twice and does not
+        want thanking. Both survive: she refuses, and the answer arrives sideways from
+        the wrong person, which is how the true things in this building generally come. */
+     takes:[[
+      ["Pia","Hesta - the plate. I want to ask about the plate again."],
+      ["Hesta","I explained the plate."],
+      ["Pia","You explained it AT me. That is different."],
+      ["Hesta","It is not different, and I am not doing it twice. Ask somebody else. They have all got opinions, they have been having them at me all evening."],
+      "So it comes out sideways, from the wrong person, the way the true things in this building generally do.",
+      ["Vic","She laid one for me for two years before I ever came in."],
+      ["Pia","...What?"],
+      ["Vic","I used to walk past. Every night, on my way to the other place. And there was a table laid by the window with more settings on it than there were people, and I thought: that woman is either mad, or she is expecting somebody."],
+      ["Vic","Took me two years to work out those are the same thing. Then I came in."],
+      ["Hesta","Vic."],
+      ["Vic","I am not thanking you. I am aware of the rules. I am supplying context to a minor."],
+      ["Hesta","...Eat your dinner."]
+     ]]},
     {id:"does-anybody-owe", ask:"whether a debt has just been made", key:"owe debt owes repay pay back bill favour interest given",
      who:"Vic",
      gives:"the ruling, said once and loudly: a debt is a leash with a nicer name, and there is no bill in this building",
@@ -7561,7 +7688,21 @@ var SCENEBOOK = {
       ["Hesta","There is no bill in this building. There has never been a bill in this building."],
       ["Vic","It was given. That is the whole transaction and the transaction is finished. If they want to be useful they will be useful because they live here, which is a different thing, and it does not carry interest."],
       ["Pia","...What if they want to pay us back anyway?"],
-      ["Vic","Then they will. In about four hundred small ways, over about thirty years, and not one of us will notice it happening. That is how it is done properly."]]},
+      ["Vic","Then they will. In about four hundred small ways, over about thirty years, and not one of us will notice it happening. That is how it is done properly."]],
+     /* THE SECOND TAKE. Take one settles whether they owe us. The harder question is the
+        other way round, and Vic has not got as tidy an answer for it. */
+     takes:[[
+      ["Pia","Then can I ask it the other way round? Do WE owe them?"],
+      ["Vic","...That is a better question than the first one, and I have not got as tidy an answer."],
+      ["Vic","Because we do. Not a debt - I have just spent ten minutes on debts. But we asked somebody in a room, out loud, whether they wanted a thing, and they said yes, and that changes what we are to them permanently and in one direction only."],
+      ["Hesta","Say the plain version."],
+      ["Vic","The plain version is that you cannot give somebody a body and then be casual about them afterwards. It is not a bill. It is worse than a bill. You have to keep turning up."],
+      ["Vic","Bills end. That is what people like about bills."],
+      "Somewhere behind him the evening carries on being extremely loud about a lid.",
+      ["Vic","So: nobody owes this family anything, and this family owes them about thirty years of turning up, and none of it is going to be written down anywhere. If I am honest that is the only part of tonight that frightens me."],
+      ["Hesta","We have done it before."],
+      ["Vic","We have done it before, and it went well. Which is not the same as it being easy, and you know it is not."]
+     ]]},
     {id:"the-boards-still-up", ask:"whether the floor is going back down", key:"boards floor up open hole cellar ladder cold put back",
      who:"Hesta",
      gives:"why the floor stays open one more night, and what she found out was down there",
@@ -7577,7 +7718,21 @@ var SCENEBOOK = {
       "She looks at the gap a moment. Cold air, a ladder, and nothing down there any more.",
       ["Hesta","So it can stay open one night. Then it goes back down and it is a floor again, and we will all be extremely normal about it."],
       ["Vic","...Hesta."],
-      ["Hesta","Do not. I will go off, and I have laid out far too much cutlery to go off now."]]},
+      ["Hesta","Do not. I will go off, and I have laid out far too much cutlery to go off now."]],
+     /* THE SECOND TAKE. She gets considerably further before she stops herself, and the
+        hold is honoured exactly: she stops, and she says that she is stopping. */
+     takes:[[
+      ["Hesta","It is still open, yes. I am aware it is still open. I have walked round it nine times since you last asked me."],
+      ["Pia","You said morning."],
+      ["Hesta","I said morning, and I have been standing at the edge of it for an hour, so evidently morning is doing a great deal of work in that sentence."],
+      "There is a rectangle of cold coming out of the floor, and a ladder going down into a hole with nothing left in it at all.",
+      ["Hesta","Here is what I keep doing. I go to the edge, and I look down, and I think: eleven years. Eleven years of standing on that. Serving on it. Arguing on it. And the whole time, under my feet - "],
+      "She stops. She puts a hand flat on the table and waits, and the room lets her.",
+      ["Hesta","...And there it is. That is me going off, and I said I would not, so I am putting it down."],
+      ["Vic","You are allowed to go off, Hesta."],
+      ["Hesta","I am allowed. I am not going to. There is a difference between not allowed and not tonight, and I have had eleven years of practice at the second one and none whatsoever at the first."],
+      ["Hesta","Put the floor down in the morning, Vic. Early. Before I am up."]
+     ]]},
     {id:"nine-watching", ask:"whether Nine regrets it", key:"nine regret watching gave away wish back both glad sorry",
      who:"Nine", fork:"Seven",
      gives:"the accurate answer rather than the kind one - fourteen times, and what came a second and a half after each",
@@ -7591,7 +7746,29 @@ var SCENEBOOK = {
       ["Nine","I did not know a person could hold two of those at once. Nobody tells you. It is apparently just how it is and all of you have been walking about knowing it."],
       ["Nine","So: no, and yes, and no. In that order. And the last one is the one that counts, because it is the one I keep choosing."],
       "Across the table somebody is explaining a tea towel to a room that has stopped being able to breathe.",
-      ["Nine","...Look at him. I did that. I am going to be insufferable about this for years."]]}
+      ["Nine","...Look at him. I did that. I am going to be insufferable about this for years."]]},
+    /* APPENDED v5.6.0 - the mirror of how-the-other-one for Nine's branch. It goes on the
+       END of this deck and nothing above it moves: topicSpent and railDeal store POSITIONS
+       and those positions are sitting in save files on real runs. */
+    {id:"how-the-other-one-nine", ask:"how the other one is taking it", key:"other how-are-you fine ok jealous glad taking him seven",
+     who:"Seven", fork:"Nine",
+     gives:"an honest answer with more than one thing in it, from the one who is not at the table",
+     holds:"he does not ask for anything",
+     rail:"Quietly, hand on the cloth: how is Nine taking all this.",
+     plays:[["Seven","Three ways at once, and I have had the entire evening to sort them, which is the one advantage of my position."],
+      ["Seven","Delightedly - look at her. Look at her doing your face. Anxiously - she has not stopped once, nobody has told her that stopping is a thing you have to start, and she is going to walk into a wall about Thursday."],
+      ["Seven","And thirdly she is checking. Every few minutes. She looks over at this cloth to see whether I am all right and then looks away at speed so as not to be caught at it, and I catch her every time."],
+      "An honest answer with more than one thing in it, delivered by somebody learning that honesty about others is also a way of caring for them.",
+      ["Seven","Ask me the fourth way another night. The fourth way is about me, and tonight is hers."]],
+     takes:[[
+      ["Seven","You have come back for the fourth way. I did say another night. It is a quarter past three, which I suppose is technically compliance."],
+      ["Seven","The fourth way is that I am relieved, and I have spent all night looking for a less appalling word, and there is not one."],
+      ["Seven","Because I have been a body before. I know precisely what she is finding out tonight, and I know what it costs to lose it. If it had gone the other way round she would still be in a pocket, knowing none of it."],
+      ["Seven","And I would have been sitting at this table with hands, being watched by somebody who had never once had a go. Daily. I have done a great many difficult things and I do not believe I would have done that one well."],
+      "The cloth under your hand is warm, and stays warm, which is the whole of what he has left to say it with.",
+      ["Seven","So: relieved. Not noble, not gracious. And if anybody in this room says the word BRAVE at me I shall recite at them until they leave."],
+      ["Seven","Do not tell her. Not because it would hurt her. Because she would find a way to be sorry about it, and she has enough."]
+     ]]}
    ]}
 },
 
@@ -9360,7 +9537,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.5.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.6.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25753,11 +25930,53 @@ function verdictMap(){
    because a2-seven's never seals the work he did for the Choir. Taken back to the
    Architect; he ruled LEAVE IT SEALED. The hole in him is the character. Recorded in
    HANDOVER so no later wave re-opens it by accident. */
+/* v5.6.0, ASKED AGAIN. Every card in a2-chassis that plays on BOTH roads now has a
+   second take: asked twice, the family goes further instead of repeating itself. The
+   room laps at 19 cards on Seven's road and 16 on Nine's, and from v5.6.0 the lap is
+   worth taking. Corpus 5,370 -> 5,487, one hundred and seventeen new lines.
+
+   THE BRANCH LIE, FOUND BY DRIVING. how-the-other-one was UNFORKED, so it dealt on
+   both roads - and in it Nine says "he knows what I gave". That is true only when she
+   is the one who gave. On Nine's road she took the body, and she has been sitting at
+   that table thanking herself for a gift she received. Forked to Seven, and mirrored:
+   how-the-other-one-nine is APPENDED at the end of the deck (positions live in save
+   files; nothing above it moved), and in it Seven answers the same question from the
+   cloth. Both of them set up a "fourth way" they would not spend on the night, and
+   both second takes are that fourth way, and both turn out to be the same word:
+   relieved. Neither of them will let the other be told.
+
+   TWO HOLDS THAT REFUSED A SECOND TAKE, AND WERE ALLOWED TO. the-frame-in-the-corner
+   holds "it is not discussed twice" and the-empty-plate holds "she does not explain
+   herself twice". Writing a deeper version of either would have spent the one thing
+   the room was firm about. So the second take of the frame is Hesta refusing, and Vic
+   giving a different thing instead; the second take of the plate is Hesta refusing,
+   and the answer arriving sideways from Vic, who walked past a table laid for more
+   people than were there, every night, for two years, before he ever came in.
+
+   THE DRIFT: ONE ENTRY, AND IT IS THE MIRROR. named:Nine gains a2-chassis/Rt24r, the
+   new card's rail - the exact twin of named:Seven's a2-chassis/Rt2r, which has been in
+   this fixture since the card it belongs to shipped. Nothing else moved on any of the
+   nine keys across 117 new lines.
+
+   TWO THE NET CAUGHT BEFORE THE FIXTURE DID, both mine, both fixed in the PROSE:
+   named:Three fired on Pia shouting "It is TWENTY PAST THREE" - the lowercase
+   pre-filter lets "a quarter past three" through as a quantity, but shouted in capitals
+   it reads as the character. breach/place fired on "a ladder going down into a space",
+   because `space` is a world-place token; the card's own word is hole, and it is now
+   the word used. Neither detector was touched.
+
+   AND THE HARNESS WAS BLIND. drive_room.js walked t.plays only, so the speaker fence
+   and the bodiless fence read take one and reported on the whole card - twelve new
+   takes, 109 blocks, checked by nothing. It now walks every layer. Separately, the lap
+   driver was calling pickTopic, which never laps: it replays one card for ever. Only
+   pickTopicFresh rolls the room over. A driver that clears topicSpent by hand proves
+   the deck deals distinctly and NOTHING WHATSOEVER about takes. Driven properly, both
+   roads lap and all 11 second takes hand over. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],

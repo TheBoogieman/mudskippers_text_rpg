@@ -3,10 +3,10 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.5.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
+**Last updated: v5.6.0. Book One is finished. `a2-chassis` now has 25 cards — the deepest
 room in the game, both roads of the fork written, the high cluster the biggest part of it.
-What it still needs is second layers and both landings wired. One ruled subject was refused
-and is waiting on the Architect: see "what he was on the lists" below.**
+Every card that plays on BOTH roads now has a second take, so the room is worth lapping.
+What it still needs is second takes on the 13 FORKED cards, and both landings wired.**
 
 ---
 
@@ -224,7 +224,12 @@ to the Architect. **Open question for him: unseal the work, or leave it sealed f
 
 **Next wave, in order:**
 
-1. **Second layers on all 24 cards, and both landings wired** - what makes it FINISHED.
+1. **DONE at v5.6.0 — second takes on all 12 cards that play on both roads.** What is left
+   to make the room FINISHED: **second takes on the 13 forked cards** (`seven-asks`,
+   `the-recital`, `why-it-hits-him`, `morning-after`, `pia-cross-examines`, `vic-joins-in`,
+   `nine-heckles`, `nine-watching` on Seven's road; `nine-asks`, `nine-first-hour`,
+   `why-it-hits-her`, `seven-on-the-cloth`, `nine-morning-after` on Nine's) and **both
+   landings wired** (`rail:[{line, cards:[...]}]` on `lands` and `landsHard`).
 2. Remaining ruled subjects not yet written:
    the face he chose · the frame in the corner · what eating is actually like · the tracker
    scar · Nine watching him in it · Pia's assessment of the new housemate · Vic after the
@@ -232,7 +237,23 @@ to the Architect. **Open question for him: unseal the work, or leave it sealed f
    regrets it · what he was on the lists · the boards still up. Most of these need **no
    fork at all** — write *the one with the hands*, not the name, and one card serves both
    roads. That takes the room to the 15–16 he asked for.
-2. **Second layers on all twelve cards, and both landings wired.**
+**A HOLD CAN REFUSE A SECOND TAKE, AND THAT IS THE BETTER CARD.** Two of them did.
+`the-frame-in-the-corner` holds *"it is not discussed twice"*; `the-empty-plate` holds
+*"she does not explain herself twice"*. Writing a deeper version of either would have spent
+the one thing the room was firm about. Both second takes are therefore the REFUSAL, with
+something else given instead — Vic on what the frame did, and the plate answer arriving
+sideways from the wrong person. Reuse this whenever a card's hold and its second take
+disagree: the hold wins, and the refusal is the scene.
+
+**THE BRANCH LIE, AND HOW TO FIND THE NEXT ONE.** `how-the-other-one` was UNFORKED, so it
+dealt on both roads — and Nine says *"he knows what I gave"* in it, which is only true when
+she is the one who gave. On Nine's road she took the body and sat there thanking herself.
+Now `fork:"Seven"`, mirrored by `how-the-other-one-nine` **appended at the end of the deck**
+(positions live in save files — never insert, never reorder). The check that found it is
+`scratchpad/branchlie.js`: walk every card live on a branch and test who the SPEAKER is
+against what they claim. **Run it on every room that has a fork.** An unforked card is a
+promise that nothing in it depends on which road the run took, and that promise is easy to
+break by accident and invisible to read.
 
 **His standing note on the recital:** *"the story's peak moment and it should have the best
 writing."* The version that shipped is the whole family — Pia under the table making a noise
@@ -424,6 +445,19 @@ Three numbers per room: cards, cards with ids, cards with second takes. A finish
 reads `[name, n, n, n]` with n at least 7. Anything else is unfinished, however green the
 sweep is — **the sweep does not check for a room being thin**, and that is exactly how a
 whole book came to be called done.
+
+**TWO WAYS A HARNESS GOES BLIND ON SECOND TAKES — both were live at v5.6.0.**
+
+1. **A walker that reads `t.plays` only.** `drive_room.js` checked speakers, empty text and
+   the bodiless fence on take one and reported on the whole card: twelve new takes and 109
+   blocks were checked by nothing, and it printed ALL CLEAN. It now walks
+   `[t.plays].concat(t.takes || [])`. Any new check must do the same.
+2. **`pickTopic` does not lap.** When every card is spent it replays one card for ever.
+   Only **`pickTopicFresh`** rolls the room over, and only for a key containing `"|room"`.
+   A driver that clears `topicSpent` by hand proves the deck deals distinctly and **nothing
+   whatsoever** about takes. `scratchpad/drive_lap.js` does it properly: deal the whole
+   deck, ask once more, assert `topicLap` went to 1, then assert the text CHANGED for every
+   card carrying a take and did NOT change for every card without one.
 
 ## The five traps that catch me EVERY room
 
