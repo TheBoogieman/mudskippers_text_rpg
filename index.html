@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.8.0 "The Door Was Always Open"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.9.0 "Only Three Rows Exist"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -3017,18 +3017,18 @@ var SPINE = [
               ["Seven","It's terrible. It's genuinely terrible. Can we do it again next week."],
               "The pan goes in the sink and the window goes grey at the edges and the argument everybody expected does not happen tonight.",
               "Out past the shutters something crosses the end of the street without lights on, slowly, the way you drive when you already know the way."],
-       /* WIRED v5.7.0. Two question rows carrying room cards in preference order, and the
-          ways forward as knock:true rows with NO cards - a knock row is never dropped, so
-          the exit survives a fully spent deck. Every primary id is an unforked card, live
-          on both roads; the alternates cover the fork. */
+       /* WIRED v5.7.0, CUT TO THREE v5.9.0. playAuthored does rail.slice(0, 3) before
+          wireRail is ever called, so a fourth and fifth row are not "spare" - they do not
+          exist. v5.7.0 put the two knock rows at 4 and 5 and they never reached a player;
+          the landing still emptied on a spent deck, which is what they were added to stop.
+          THE SHAPE IS TWO CARDED ROWS AND ONE KNOCK, which is what a1-hum has always had
+          and why a1-hum was the only finished room that kept a row when its deck ran out.
+          Primary ids are unforked cards, live on both roads; alternates cover the fork. */
        rail:[{line:"Ask what having hands is actually like. Somebody at this table would know.",
               cards:["having-hands","the-recital","nine-first-hour"]},
              {line:"Ask Hesta why there is a plate at the setting where nobody is sitting.",
-              cards:["the-empty-plate","hesta-sits-down","the-cooking"]},
-             {line:"Ask out loud whether anybody owes anybody anything after tonight.",
-              cards:["does-anybody-owe","the-face","vic-after"]},
-             {line:"Get to a window. Something went past that knew the way.", knock:true},
-             {line:"Shutters first. Then look.", knock:true}]}],
+              cards:["the-empty-plate","hesta-sits-down","does-anybody-owe"]},
+             {line:"Get to a window. Something went past that knew the way.", knock:true}]}],
  landsHard:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
        now:"The small hours, in Hesta's back room with the floorboards still up. The chassis went in rushed; something about Seven came back different and nobody had time to ask.",
        lines:["It gets done fast, because fast was what there was, and the part where somebody asks how it feels gets postponed to a later that has not arrived.",
@@ -3036,16 +3036,13 @@ var SPINE = [
               "He says it a half-beat late, the way you do when you have looked the word up first.",
               ["Three","Ask him again tomorrow. Not tonight. Tomorrow, and properly."],
               "There is a knock at the outer door at half past two in the morning, and the entire point of this building is that nobody knocks."],
-       /* WIRED v5.7.0. Same shape. "Ask him now anyway" keeps its text - it is the line
+       /* Same shape, same reason. "Ask him now anyway" keeps its text - it is the line
           Three just told you not to use, and the room answers it either way. */
        rail:[{line:"Ask him now anyway. Do not wait for tomorrow.",
               cards:["how-the-other-one","how-the-other-one-nine","having-hands"]},
              {line:"Ask about the thing in the corner, under the sheet.",
-              cards:["the-frame-in-the-corner","the-boards-still-up","the-face"]},
-             {line:"Ask Vic how he is. He has not sat down once.",
-              cards:["vic-after","the-stupid-argument","the-empty-plate"]},
-             {line:"Answer the door.", knock:true},
-             {line:"Shutters first. Then answer it.", knock:true}]}],
+              cards:["the-frame-in-the-corner","the-boards-still-up","vic-after"]},
+             {line:"Answer the door.", knock:true}]}],
  budget:4, reveals:[], anchors:["Seven","Nine"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
@@ -9936,7 +9933,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.8.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.9.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.

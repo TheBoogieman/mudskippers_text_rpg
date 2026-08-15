@@ -466,15 +466,25 @@ here?" is usually no. `hesta-sits-down` is the test case: she has given her one 
 her correction to it, so her third take is her sitting there NOT saying anything while the
 room is good at that. A third speech would have made her somebody else.
 
-**WIRING A LANDING: THE KNOCK ROW IS THE EXIT.** `wireRail` DROPS a carded row once every
-card it points at is spent. A landing built only of carded rows therefore strands the
-player in a spent room with no way out. A `{line:"...", knock:true}` row with NO cards
-takes the `!ids.length` branch and is pushed unconditionally, so it always survives. Every
-landing needs at least one. Pattern used in `a2-chassis`: three carded rows whose PRIMARY
-id is an unforked card (live on both roads) with forked alternates behind it, then the
-ways forward as knock rows. Drive it at both spend extremes on both roads —
-`scratchpad/drive_lap3.js` does exactly this and asserts no surviving row ever deals an
-off-branch or already-spent card.
+**WIRING A LANDING: ONLY THREE ROWS EXIST — CORRECTED v5.9.0.** `playAuthored` returns
+`V.rail.slice(0, 3)` and `playLanding` hands THAT to `wireRail`. **A fourth row is not
+spare; it does not exist.** v5.7.0 shipped five-row landings on `a2-chassis` with the two
+`knock:true` rows at positions 4 and 5, so they never reached a player at all. The shape
+is **two carded rows and one knock row**, which is what `a1-hum` has always had.
+
+And the thing I got wrong twice: **a landing always wires against a FRESH deck.**
+`playLanding` is called once per beat, guarded by `beatJustCleared`, at the moment the
+beat clears — which is *before* the family room is played. So "the landing empties on a
+spent deck" cannot happen, and the nine rooms I reported as stranding players were not.
+The knock row is belt-and-braces, not a fix for a live bug. `scratchpad/landing_audit.js`
+tests the invariants that do hold, across every beat: at most 3 rows authored, at least
+one row surviving on a fresh deck, and no row dealing an off-branch card.
+
+**THREE HARNESSES LIED THIS SESSION, ALL THE SAME WAY: they exercised a path the game does
+not take.** `drive_room.js` walked `t.plays` and skipped `takes`. `drive_lap.js` called
+`pickTopic`, which never laps, instead of `pickTopicFresh`. `drive_lap3.js` called
+`wireRail` on a raw rail array instead of `rail.slice(0, 3)`. Each printed ALL CLEAN.
+**Before trusting a new check, find the real caller and copy what it passes in.**
 
 **THE PRESSURE BLOCK: BUDGET + 2 CARDS — RULED 2026-08-16.** The beat's own deck is not
 the family room and does not lap: it has a budget and an ending. The forced close lands on
