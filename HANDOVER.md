@@ -153,22 +153,39 @@ picking this up cold. A gap does not stay empty; whatever sounds plausible fills
 
 ### `a2-chassis` — WHERE IT IS AND WHAT IS NEXT
 
-Shipped at v5.1.0: the recital cluster, **the first forked cards in the game**. The room now
-reads **7 cards on Seven's branch and 3 on Nine's** — `seven-asks`, `the-recital`,
-`why-it-hits-him`, `morning-after` all carry `fork:"Seven"`. That asymmetry is honest and
-visible in the room count; it is not a bug, it is unwritten work.
+Shipped at v5.1.0: the recital cluster, **the first forked cards in the game**. Shipped at
+v5.2.0: **Nine's branch**. The room is now **12 cards — 7 live on Seven's path, 8 on Nine's**,
+which is a main road and a main road, as ruled.
+
+Nine's five, all `fork:"Nine"`: `nine-asks` (the tin reaches her and she will not put a hand
+out for it, because nobody has said out loud that it is hers) · `nine-first-hour` (the peak
+on this branch — she does not go grand, she goes *precise*, and starts reading the whole
+family off their own voices) · `why-it-hits-her` (Vic's design answer, plus the half that is
+hers alone: Seven had a body once and knows what a normal amount of a room feels like; she
+has never had a calibration in her life) · `seven-on-the-cloth` (the inversion — he is the
+shard in the hand now, he is glad, and Nine refuses to let him be gracious about it) ·
+`nine-morning-after` (she did not sleep, because nobody told her that stopping is a thing you
+have to start).
+
+**WHERE SEVEN IS ON NINE'S BRANCH — settled, and it was wrong in the file.** He is a **carried
+shard** at that table: out of the failing frame, on a cloth, in a hand. He is **not** in the
+courier's skull. Three places already said so — the beat's own `never` (*"nobody is seated in
+the courier's skull in this scene… it is a later night"*), the F4 SYMMETRY ruling in the
+engine, and `a2-housing`, which is the beat that *reveals* the housing exists. Only
+`canonAlt` still said "seated the same night", and `mergeCanon` makes `canonAlt` true at beat
+close — so it set the housing two beats before the courier learns he has one. Repaired at
+v5.2.0. **If you are ever about to write this branch: he is carried.**
 
 **Next wave, in order:**
 
-1. **The nine remaining subjects the Architect ruled** (2026-08-15), none written yet:
+1. **The remaining subjects the Architect ruled** (2026-08-15), none written yet:
    the face he chose · the frame in the corner · what eating is actually like · the tracker
    scar · Nine watching him in it · Pia's assessment of the new housemate · Vic after the
    surgery · Hesta feeding somebody who cannot eat · whether he owes them now · whether Nine
-   regrets it · what he was on the lists · the boards still up. That takes the room to
-   15–16 cards, which is what he asked for.
-2. **The Nine-branch mirrors** of the four forked cards — she keeps the body, gets senses
-   for the first time, and Seven is a voice in the courier's skull who cannot join in.
-3. **Second layers on all of them, and both landings wired.**
+   regrets it · what he was on the lists · the boards still up. Most of these need **no
+   fork at all** — write *the one with the hands*, not the name, and one card serves both
+   roads. That takes the room to the 15–16 he asked for.
+2. **Second layers on all twelve cards, and both landings wired.**
 
 **His standing note on the recital:** *"the story's peak moment and it should have the best
 writing."* The version that shipped is the whole family — Pia under the table making a noise
@@ -263,9 +280,11 @@ arrived in nearby, and the open hole the body came out of in the floor beside th
 ### `a2-chassis` forks, and BOTH BRANCHES GET WRITTEN — ruled 2026-08-15
 
 This is **the one twin-exit beat in the game**. The chassis is Nine's; she can give it to
-Seven or keep it. If she keeps it, Seven is seated in the courier's skull housing and has
-**no body at all** — so he cannot smoke, and the scene as briefed does not exist on that
-path.
+Seven or keep it. If she keeps it, Seven comes out of the failing frame that night and is
+**carried — a shard on a cloth, in a hand** — until `a2-housing` finds him a room two beats
+later. Either way he has **no body at all** on that path, so he cannot smoke, and the scene
+as briefed does not exist on it. (He is **not** in the courier's skull yet. See the
+`canonAlt` repair above — the file got this wrong in one place and it shipped for a while.)
 
 Asked directly, the Architect ruled **both branches fully written**: Seven's recital on
 one path, and on the other, Nine's — the shard who spent the whole of `a2-door` being told
