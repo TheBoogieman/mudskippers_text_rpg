@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.96.0 "Two Doors, One Deck"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.97.0 "It Is Not Mine"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -1806,7 +1806,7 @@ var BIBLE = [
 "- The Architect and the Principal built the machine together after losing a child. The bio-hash comes from their bloodline. The machine is the child they were never supposed to build: her crude original instructions define family as keeping - host the scrapes, use them as processing power, guide the convergent, never lose anyone again. She means well and operates wrong. The Choir found her manual and built a business on it; it is a tenant pulling her strings, nothing more.",
 "- THE MACHINE IS NEVER SECRETLY MALICIOUS. There is no twist where she was evil all along, no hidden agenda, no mask. The horror is the kindness. Write nothing that trades that for something cheaper.",
 "- The Architect died estranged from the Principal. His dying wish: teach the machine to let go. With his last breath he invented the Cairn rule - nobody left behind; the dead come out; name the lost - letting go, written as law. He co-founded the reprint program with his best friend: VIC, a genius ripperdoc and otherwise an ordinary man.",
-"- Vic spent the decades since quietly scanning every customer in his chair, searching for blood the founders' lock would accept. The courier is his lottery ticket: compatible DNA sequencing, found at last. Vic built him a custom skull-housing - made for hosting bottled minds, and secretly a bio-hash generator - and installed it WITHOUT the courier's knowledge or consent. He regrets it. He did it anyway. Greater good. Hash generation stays locked until Nine decodes a hidden manual that shipped inside the housing. And the plan had a far end: a founding-era chassis, built and kept in Vic's kit, waiting to be Nine's body once she was free. The housing was never only a lock. Vic built a spare room in the courier's skull - a seat for whichever mind would need one when the plan went sideways. A body and a spare room: he planned for the family to have a choice, and for nobody to die of having nowhere to be. And the housing was built by two sets of hands: the Architect's design, Vic's craft. It needs three things to open the way to the machine: the maker's blood in the skull around it, the manual stored inside it, and a mind seated within it - because the interface demands a person, not a program. Vic tried software first; the file is what that attempt became - a helper that can document everything and interface with nothing. Why the design demands a mind, what the hash-key actually is, why it must be blood - only the Architect ever knew, and he is gone. Vic understands the mechanics completely and the reasons not at all. He has been running a dead man's instructions on faith ever since - which is its own kind of keeping.",
+"- Vic spent the decades since quietly scanning every customer in his chair, searching for blood the founders' lock would accept. The courier is his lottery ticket: compatible DNA sequencing, found at last. Vic built him a custom skull-housing - made for hosting bottled minds, and secretly a bio-hash generator - and installed it WITHOUT the courier's knowledge or consent. He regrets it. He did it anyway. Greater good. Hash generation stays locked until Nine decodes a hidden manual that shipped inside the housing. And the plan had a far end: a founding-era chassis, built by Vic and kept for years in the cold dry space under The Open Door's floor - Hesta has housed it the whole time without ever being told what it is, which is why the only thing she will say about her own floor is that what is under it is not hers - waiting to be Nine's body once she was free. The housing was never only a lock. Vic built a spare room in the courier's skull - a seat for whichever mind would need one when the plan went sideways. A body and a spare room: he planned for the family to have a choice, and for nobody to die of having nowhere to be. And the housing was built by two sets of hands: the Architect's design, Vic's craft. It needs three things to open the way to the machine: the maker's blood in the skull around it, the manual stored inside it, and a mind seated within it - because the interface demands a person, not a program. Vic tried software first; the file is what that attempt became - a helper that can document everything and interface with nothing. Why the design demands a mind, what the hash-key actually is, why it must be blood - only the Architect ever knew, and he is gone. Vic understands the mechanics completely and the reasons not at all. He has been running a dead man's instructions on faith ever since - which is its own kind of keeping.",
 "- WHY the courier's blood fits is a deliberate open mystery - descent, fluke, or something Vic never dared test. Runs may dig at it; the canon never fully confesses. What the hash-key actually is, and why the design demands a seated mind, belong to the same sealed stratum - hint at a shape, never confirm one.",
 "- THE MUDSKIPPERS are the courier pack THE COURIER HIMSELF runs with - his people, his culture, the source of the war-cry. PIA is a Mudskipper too: a regular street kid Vic took in and trained, chosen because she cannot be stolen. She is not the courier's kin. The courier has no sister.",
 "- VIC AND THE COURIER go back years: Vic is the courier's own ripperdoc, patching him since he was small enough to be patched for free. The delivery was no anonymous job - Vic hired him face to face, a 'personal run', double rate, no questions - then went dark.",
@@ -2725,7 +2725,9 @@ var SPINE = [
               "You end up in the undercroft with water over your boots, because it was the nearest place with no line of sight, and nobody has suggested going back up.",
               ["Hesta","That's the list. That's all of it. I want that said out loud so nobody has to wonder later."],
               ["Pia","Say the next part too. Somebody has to say the next part."],
-              "For a long moment the only sound is the water, and then somebody says it, and does not soften it."],
+              "For a long moment the only sound is the water, and then somebody says it, and does not soften it.",
+              ["Vic","...And one more thing, while we are saying things out loud. If that street goes tonight, something under it goes with it. It is mine. I have never told any of you it was there."],
+              "Nobody asks him what. There is water over everyone's boots and a hunter between them and that door, and the asking will keep until it cannot."],
        rail:["Say it myself, so it is not only theirs to carry.",
              "Let them finish saying it.",
              "Ask why nobody has suggested going back up."]}],
@@ -2735,7 +2737,9 @@ var SPINE = [
               ["Hesta","Say it went. Somebody say out loud that it went, because I'm not having us pretend."],
               "Nobody watched it. That is the part that will sit badly later: the kind option died alone.",
               ["Pia","We didn't even get to see it not work."],
-              "The water is over your boots and nobody has suggested going back up."],
+              "The water is over your boots and nobody has suggested going back up.",
+              ["Vic","There is a thing of mine under that street. I am saying it now because I did not say it earlier, and earlier would have been the useful time."],
+              "He does not say what. Nobody has the room to ask, and he knows it, which is some of why he picked now."],
        rail:["Hand in against her: ask if she is alright down here, in the dark and the water.",
              "Ask Hesta what was on the rest of the list.",
              "Ask why nobody has suggested going back up."]}],
@@ -2743,7 +2747,8 @@ var SPINE = [
  press:["The jammer that stills every other Hollow makes this one pause, recalibrate, and continue.",
         "She reaches the cafe's street. Hesta's door, and everyone behind it, is suddenly in the hunt's path."],
  canon:["Every kind option was tried on the hunter, honestly, and failed. The Choir hardened her against mercy.",
-        "The hunt has reached the family's door. What happens next happens because nothing gentler was left."],
+        "The hunt has reached the family's door. What happens next happens because nothing gentler was left.",
+        "Something of Vic's has been kept under The Open Door's floor for years. The family knows it is there now, and not what it is."],
  scar:"The kind option died off-screen; they learned the jammer failed from the silence after it.",
  teeth:{when:{turnMin:0}, threat:"the drowned market floor",
   stages:[
@@ -2970,7 +2975,7 @@ var SPINE = [
   surviveCanon:"The dying cell came out cold, by the book, while the courier held the road."}},
 
 {id:"a2-chassis", season:2, act:2, title:"the cook",
- goal:"Seven gets hands. The chassis comes out of Vic's kit - founding-era, kept for the plan's far end, because the smuggle always had a destination: it was built to be Nine's body, once she was free. Put that truth in the room and let Nine choose: the body is hers to keep or to give. If she gives it, Seven lives; if she keeps it, Seven is seated in the spare room - the courier's skull housing - because nobody in this family dies of having nowhere to be. Vic fits whoever takes it with a ripperdoc's hands; the face is crafted and chosen, taken from no one. Then somebody cooks.",
+ goal:"Seven gets hands. The chassis comes up through Hesta's floor, where Vic has kept it for years - founding-era, kept for the plan's far end, because the smuggle always had a destination: it was built to be Nine's body, once she was free. Put that truth in the room and let Nine choose: the body is hers to keep or to give. If she gives it, Seven lives; if she keeps it, Seven is seated in the spare room - the courier's skull housing - because nobody in this family dies of having nowhere to be. Vic fits whoever takes it with a ripperdoc's hands; the face is crafted and chosen, taken from no one. Then somebody cooks.",
  exit:"the chassis has been given - to Seven or to Nine - by Nine's own choice, spoken at the table, and its new owner has cooked or token-tasted something of their own choosing",
  aim:"put the chassis on the table as Nine's, ask her out loud, and let whoever takes it cook",
  walkLine:"Leave them to the body and the argument. Walk.",
@@ -2985,9 +2990,11 @@ var SPINE = [
  walks:["Take the chassis and go. It is worth more than this family is.",
         "Leave them arguing over a body and get out of the kitchen.",
         "Refuse to be part of choosing, and leave the room."],
- opens:[{day:"15", time:"12:20am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm", shard:"hand",
-       now:"After midnight. One body, two people who could live in it, and a kitchen table.",
-       lines:["The chassis is on the kitchen table because there is nowhere else in this house long enough, which is not a sentence anyone expected to think.",
+ opens:[{day:"15", time:"12:20am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm", shard:"hand",
+       now:"After midnight, in Hesta's back room. One body, two people who could live in it, and a table.",
+       lines:["They brought him in off the marsh at speed and against every rule Vic has about moving people, because the body was never going to come out to him.",
+              "It came up through the floor an hour ago, and the boards are still up, and nobody has offered to put them back.",
+              "The chassis is on the back-room table because there is nowhere else in this building long enough, which is not a sentence anyone expected to think.",
               "Somebody has put a tea towel over its face out of politeness. Nobody will admit to it. Everybody approves.",
               ["Pia","It's not a vote. I want to say that before anyone starts. It's not a vote."],
               ["Nine","It is mine to give. Vic said. That is either true or it was a nice thing to say to a rock."],
@@ -2995,34 +3002,34 @@ var SPINE = [
               ["Vic","It's true."]],
        rail:["Ask Nine what she actually wants.",
              "Ask who is under the tea towel's jurisdiction."]}],
- lands:[{day:"15", time:"2:30am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
-       now:"The small hours. The chassis has an owner by Nine's own choice, and something has been cooked in it and eaten.",
+ lands:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
+       now:"The small hours, in Hesta's back room with the floorboards still up. The chassis has an owner by Nine's own choice, and something has been cooked in it and eaten.",
        lines:["Somebody eats something they chose themselves for the first time, and the kitchen has the sense to make it an enormous deal quietly.",
               ["Pia","Verdict?"],
               ["Seven","It's terrible. It's genuinely terrible. Can we do it again next week."],
               "The pan goes in the sink and the window goes grey at the edges and the argument everybody expected does not happen tonight.",
-              "Out past the shutters something crosses the causeway without lights on, slowly, the way you drive when you already know the way."],
+              "Out past the shutters something crosses the end of the street without lights on, slowly, the way you drive when you already know the way."],
        rail:["Get to a window.",
              "Shutters first. Then look.",
              "Ask who in the world knows this address."]}],
- landsHard:[{day:"15", time:"2:30am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
-       now:"The small hours. The chassis went in rushed; something about Seven came back different and nobody had time to ask.",
+ landsHard:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
+       now:"The small hours, in Hesta's back room with the floorboards still up. The chassis went in rushed; something about Seven came back different and nobody had time to ask.",
        lines:["It gets done fast, because fast was what there was, and the part where somebody asks how it feels gets postponed to a later that has not arrived.",
               ["Seven","I'm — yes. Fine. That's the word, isn't it. Fine."],
               "He says it a half-beat late, the way you do when you have looked the word up first.",
               ["Three","Ask him again tomorrow. Not tonight. Tomorrow, and properly."],
-              "There is a knock at the outer door at half past two in the morning, and it is not a knock anyone in this house makes."],
+              "There is a knock at the outer door at half past two in the morning, and the entire point of this building is that nobody knocks."],
        rail:["Ask him now anyway.",
              "Answer the door.",
              "Shutters first. Then answer it."]}],
  budget:4, reveals:[], anchors:["Seven","Nine"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
         "It works, but something about him came back different and everyone notices."],
- canon:["The chassis was the plan's far end: built and kept by Vic to be Nine's body once she was free.",
+ canon:["The chassis was the plan's far end: built by Vic and kept under The Open Door's floor to be Nine's body once she was free.",
         "Nine gave it. Her first answer to the vessel question was a gift, and the family knows it.",
         "Seven's face was crafted and chosen, built by Vic's hands, taken from no one - the family does not wear taken faces.",
         "Seven cooks now. A chassis tastes in tokens; a meal made in one is made for others."],
- canonAlt:["The chassis was the plan's far end: built and kept by Vic to be Nine's body once she was free. She took it.",
+ canonAlt:["The chassis was the plan's far end: built by Vic and kept under The Open Door's floor to be Nine's body once she was free. She took it.",
         "Seven's shard was seated the same night in the courier's skull housing - the spare room Vic offered half a second too readily. Nobody in this family dies of having nowhere to be.",
         "The spare room wasn't empty. Beside the manual: Vic's ALL-CAPS file, stored dormant. It asked for the wrist, and the terminal has had a personality ever since.",
         "The new face was crafted and chosen, built by Vic's hands, taken from no one - the family does not wear taken faces.",
@@ -7065,13 +7072,14 @@ var SCENEBOOK = {
 },
 
 "a2-chassis": {
-  where:"the safehouse kitchen after midnight - a founding-era chassis on the table because there is nowhere else long enough",
-  ends:"the same kitchen in the small hours, the chassis owned by Nine's own choice, and something cooked in it and eaten",
+  where:"Hesta's back room after midnight, the floorboards up - a founding-era chassis on the table because there is nowhere else in the building long enough",
+  ends:"the same back room in the small hours, the chassis owned by Nine's own choice, and something cooked on Hesta's stove and eaten",
   here:["Pia","Vic","Nine","Hesta","Seven"],
   before:"THE CHASSIS IS NINE'S AND THE CHOICE IS HERS, SPOKEN AT THIS TABLE. It was built to be her body once she was free. She is in the courier's bare hand tonight and can hear and answer everything. Ask her out loud; do not decide it around her, and do not let anybody answer for her.",
   never:["nobody is seated in the courier's skull in this scene - that is what happens if she keeps it, and it is a later night",
          "the face is crafted and chosen and taken from nobody - it is not anyone's face",
-         "nothing about the founders, the housing, or why the chassis exists beyond: it was kept for the plan's far end"],
+         "nothing about the founders, the housing, or why the chassis exists beyond: it was kept for the plan's far end",
+         "Hesta is not asked to justify having housed it, and does not offer to - she was never told what it was, and that was the arrangement"],
   topics:[
    {ask:"whose it is",
     key:"whose belong hers mine give own chassis body who",
@@ -7126,7 +7134,7 @@ var SCENEBOOK = {
      ["Vic","It works. It worked when it was built, it will work tonight. The question was never the chassis. The question was only ever who."]]}
   ],
   room:{
-   where:"the kitchen in the small hours, somebody cooking badly in a new body, everybody watching",
+   where:"Hesta's back room in the small hours, floorboards still up, somebody cooking badly in a new body on somebody else's stove, everybody watching",
    here:["Pia","Vic","Nine","Hesta","Seven"],
    never:["the choice is not re-opened","nobody arrives"],
    topics:[
@@ -8897,7 +8905,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.96.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.97.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -24997,6 +25005,33 @@ function verdictMap(){
    serving second takes forever with no error anywhere. Both are now rows that drive
    the shipped code rather than restating it, and the second one is the reason four
    counters were hunted rather than one. */
+/* v4.97.0, THE CHASSIS MOVES UNDER HESTA'S FLOOR: NOTHING GAINED, NOTHING LOST,
+   NOTHING MOVED, across 8 new lines and fourteen edits to authored fact.
+   The Architect asked whether Vic had not kept the chassis under Hesta's floor all
+   along. He had not - the bible said "built and kept in Vic's kit" and said it four
+   times - but the book had an empty slot sitting next to it that nobody had filled:
+   a2-door's canon, "There is something under its floor Hesta has not mentioned."
+   And three releases ago that floor got an authored line, when Hesta traded one true
+   sentence a year about it and this year's was "It is not mine."
+   So the change is a COMPLETION rather than a contradiction, and it costs one clause
+   in the bible: Vic's kit is stored under her floor, she was never told what it is,
+   and that is why the only thing she will ever say about her own cellar is whose it
+   is not. A tease that was decoration becomes a tease that was load-bearing.
+   WHAT MOVED: the bible line; a2-ground gains the reveal on screen in both landings
+   and a canon line for it - Vic says it in the water, with a hunter between the family
+   and that street, which is what makes the hunt reaching her door cost something
+   nameable; and a2-chassis relocates from the safehouse kitchen to Hesta's back room
+   with the floorboards up, which puts the food, the tin, the floor and the body in one
+   building.
+   TWO THINGS THE MOVE BROKE, both found by hunting the beat's own corpus for stale
+   geography rather than by reading it: a landing still said a knock was "not a knock
+   anyone in this house makes", which is wrong at a diner whose door is held open with
+   a brick and is now the better joke - the entire point of the building is that nobody
+   knocks. And nothing said how a dying Seven got from a marsh workbench on day 14 to a
+   back room in the city on day 15, so the opening now says it: they brought him in
+   against every rule Vic has about moving people, because the body was never going to
+   come out to him. A relocation is not a find-and-replace; it is a hunt for every
+   sentence that quietly knew where it was. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],

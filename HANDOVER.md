@@ -3,8 +3,9 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.96.0. Book One is finished. `a2-door` is finished — 15 cards, the
-deepest room in the game. The chassis fork engine is BUILT. Next is writing `a2-chassis`.**
+**Last updated: v4.97.0. Book One is finished. `a2-door` is finished — 15 cards, the
+deepest room in the game. The chassis fork engine is BUILT and the chassis now lives under
+Hesta's floor. Next is writing `a2-chassis`.**
 
 ---
 
@@ -75,15 +76,25 @@ session (cannabis, called *pre-collapse devil's lettuce, the good kind*, and the
 has to ask for it), some drinking, peak banter, and **this is where the family really
 forms**. **10–15 cards for every one of these rooms.**
 
-**Correction, recorded because it was got wrong once:** only `a2-door` and `a2-ground` are
-at The Open Door. `a2-chassis` and `a2-law` are the **safehouse kitchen** on the marsh.
-The warmth is not tied to Hesta's building — it is tied to Hesta being in the room and a
+**Geography, twice corrected — read this before moving anything else.** `a2-door` is The
+Open Door. `a2-ground` is the flooded undercroft **below the old exchange house**, which is
+NOT Hesta's cellar — two different underneath-places, and only hers is dry. `a2-chassis`
+moved into Hesta's back room at v4.97.0. `a2-law` is still the safehouse kitchen on the
+marsh. The warmth is not tied to a building — it is tied to Hesta being in the room and a
 pan being on, and she is in every one of them.
+
+**THE CHASSIS LIVES UNDER HESTA'S FLOOR (ruled 2026-08-15, shipped v4.97.0).** Vic built it
+and has kept it in the cold dry space under The Open Door for years. She was never told
+what it is, which is exactly why the only thing she will say about her own cellar is that
+what is under it is not hers — the `under-the-floor` card in `a2-door` is now load-bearing
+rather than decoration. The family learns something is down there in `a2-ground`, from Vic,
+in the water, with a hunter between them and that street; they learn WHAT it is at
+`a2-chassis`. Do not let anything explain the floor earlier than that.
 
 | room | what it is | where | state |
 |---|---|---|---|
 | `a2-door` | the back booth, the first meal | The Open Door | **DONE — 15 cards** |
-| `a2-chassis` | "the cook" — a new body in a kitchen | safehouse | 3 cards, untouched |
+| `a2-chassis` | "the cook" — a new body, floorboards up | **The Open Door** | 3 cards, untouched |
 | `a2-law` | "the same pan" — bacon first, bread after | safehouse | 3 cards, untouched |
 
 **Three castings he ruled that bind all of them:**
