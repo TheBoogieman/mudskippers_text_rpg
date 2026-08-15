@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.89.0.**
+**Last updated: v4.90.0.**
 
 ---
 
@@ -39,51 +39,41 @@ loop up from this file alone.*
 | `a1-late` | 9 | The shut laundry. Pia frightened, the fifth rule, "somebody deciding" |
 | `a1-exit` | 10 | The porch. Lights on the far bank, the lay-by, the third Vic death plant |
 | `a1-carried` | 11 | The back room after the sweep. The pipe, the second lamp, the bag by the door |
+| `a1-turn` | 11 | The kitchen after. Kept vs chosen, the cover story, the pan moved up the table |
 
-**Next: `a1-turn`** (the last room in Book One). Then Books Two and Three (24 rooms).
+## CORRECTION: Book One is NOT finished
 
-## `a1-turn` — ALREADY RULED, WRITE IT
+This file said `a1-turn` was "the last room in Book One". **That was wrong**, and it was
+wrong because nobody had counted. Driven at v4.90.0, the three remaining Book One rooms
+are:
 
-The Architect picked these on 2026-08-15, before the context boundary. **Do not ask him
-again.** Eight new cards on top of the three already there (`what happens tomorrow` /
-the gutter, `what Nine makes of having been asked`, `the food, the kitchen, the noise`),
-which need ids and second takes like every other room.
+| room | cards | ids | second takes | wired |
+|---|---|---|---|---|
+| `a1-hum` | 9 | all 9 | **1 of 9** | yes (6 rows) |
+| `a1-chase` | 8 | none | none | no |
+| `a1-vic` | 8 | none | none | no |
 
-The beat is the season finale: the courier chooses Nine, *not as cargo but as a person
-he is now responsible for*. The room is Vic's kitchen after, plates not cleared, the
-thing said and sitting there. Room `never`: **it is not re-litigated**, **nobody
-arrives**. Present: Pia, Vic, Nine.
+`a1-hum` is the cheapest of the three and the odd one out: it was the pilot, so it was
+given ids and wiring first and only ever got one second take. It needs **eight second
+takes and nothing else** — no new subjects to rule, no wiring to do. That makes it the
+right next room, and it is a smaller job than any room since `a1-pack`.
 
-1. **What he actually chose** — Nine on the difference between being *kept* and being
-   *chosen*. She has been kept before and can tell the two apart by feel. The beat's
-   whole subject, said once, quietly, at a table. Note the hard-landing scar: on a red
-   close he kept her *unspoken* and **she felt the difference** — so this card must read
-   differently in the two rooms only insofar as the prose allows; do not contradict it.
-2. **The delivery nobody's delivering** — there is still a client, a fee, and somebody
-   expecting a package. Pia on what happens to a courier who simply does not turn up.
-   The practical cost of the choice he just made.
-3. **Vic on responsibility** — he took Pia in years ago and has never once called it a
-   decision. Asked straight, he gives the least romantic answer available and it is the
-   useful one.
-4. **What Pia thinks she is now** — circling what this arrangement is, refusing to name
-   it, visibly furious that she wants it named.
-5. **Nine can't eat** — the whole table is eating and she is *on* the table. Nobody has
-   thought about it until now. Something gets improvised, badly and warmly, so that she
-   is at dinner rather than beside it.
-6. **What to call her** — "Nine" is what the farm called her. Pia thinks she should pick
-   something else. Her answer is not the sentimental one and is better than it.
-7. **The house rules** — Vic recites them badly, Pia amends each one in real time. The
-   fifth rule from the laundry (`a1-late`, "decide before you are tired what you will not
-   do") gets tested against an actual household.
-8. **The shard-shaped hole** — if somebody comes looking, what is the story? The family
-   inventing a cover for her at a kitchen table and enjoying it far too much.
+`a1-chase` and `a1-vic` are full rooms from scratch: subjects to rule, ids, second takes,
+both landings. Ask for subjects as a pick-list before writing either.
 
-Landing rows to wire — `lands`: "Ask what happens to the delivery now that nobody is
-delivering it." / "Tell Nine the record is not a wall and not a kid. It is me." / "Eat.
-The plate that matters is the cold one, and you cannot fix that tonight."
-`landsHard`: "Ask her how it feels, being the only one nobody asked." / "Ask her who
-taught her that sentence." / "Let it go tonight. Pick it up in the morning, if morning
-bothers."
+The check that would have caught this, and which should be run at the start of every
+wave from now on — it is three lines in the console on `?selftest`:
+
+```
+Object.keys(SCENEBOOK).map(k => { var r = SCENEBOOK[k].room; return r && r.topics
+  ? [k, r.topics.length, r.topics.filter(t=>t.id).length, r.topics.filter(t=>t.takes&&t.takes.length).length]
+  : [k,0,0,0]; })
+```
+
+Three numbers per room: cards, cards with ids, cards with second takes. A finished room
+reads `[name, n, n, n]` with n at least 7. Anything else is unfinished, however green the
+sweep is — **the sweep does not check for a room being thin**, and that is exactly how a
+whole book came to be called done.
 
 ## The four traps that catch me EVERY room
 
@@ -115,9 +105,11 @@ in Book One and the desk correctly called it summoning an off-stage person.
   **asserts the anchor appears exactly once** and refuses otherwise. Heredocs choke on
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
-- Expect **one or two** fixture drifts per room, and expect them to be `shard:hand` on
-  whichever cards put a hand in against Nine. Any OTHER predicate drifting is a false
-  positive in the new prose until proven otherwise — read the line, do not regenerate.
+- Expect **zero to two** fixture drifts per room. `a1-turn` came back with one, honest,
+  and no false positive at all — the first clean room in five, because the four traps
+  below were read BEFORE the prose was written rather than after. Any predicate drifting
+  is a false positive in the new prose until proven otherwise — read the line, do not
+  regenerate.
 - Take the fixture **by delta**, and write a ledger paragraph above `VERDICT_FIXTURE`.
 - Release ritual: banner, `VERSION_TAG`, `sw.js` CACHE slug, encoding check, id/div check,
   0 FAILED, then commit and push.
@@ -136,9 +128,12 @@ in Book One and the desk correctly called it summoning an off-stage person.
 
 ## Still open beyond the rooms
 
+- **Three Book One rooms** — `a1-hum` (eight second takes, nothing else), then `a1-chase`
+  and `a1-vic` from scratch. Then Books Two and Three (24 rooms).
 - **32 transition scenes** for `TAKE THE NIGHT ON` — short, 3-4 lines, the family pushes
   and the courier stands up. Not started.
-- **~240 staged choices still unwired** outside the finished rooms.
+- **~240 staged choices still unwired** outside the finished rooms. 43 rows wired so far,
+  six per finished room plus one in `a3-seize`.
 - **6 amber sweep rows**, all AI-side.
 - **The AI side**: the DM respecting family time, and the drift nudge ("the rain is
   watching") pointing at `TAKE THE NIGHT ON`. Deferred by the Architect until the written
