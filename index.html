@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.74.0 "Somebody Has to Hold Her"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.75.0 "The Short Version"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2057,9 +2057,12 @@ var SPINE = [
               "You are under the overpass before your heartbeat notices you stopped running. She is still in your bare hand. You could put her back in the jacket. You notice yourself not doing it, and you notice yourself noticing, and somewhere in that hall of mirrors a delivery quietly becomes a decision.",
               ["Pia","Talking to your own pocket in public is a choice, you know. People get committed for less."],
               ["Nine","Then we are both lucky it was his hand. A man talking to his hand is only a philosopher."],
+     "You give Pia the philosopher line. You keep the part where she said 'we'.",
               ["Pia","...She does jokes. Nobody told me she does jokes."],
               ["Nine","I have exactly two. I am rationing."],
-              "The rain goes at the concrete overhead like it has been told there is money in it. Under it the quiet gets a new texture — the specific quiet of three people who have all just heard a stolen mind ration her jokes, and are deciding, at different speeds, to be a unit about it.",
+     "You relay that as 'she says she is rationing', which is true and is not the joke.",
+     ["Pia","Then I'll take the other one on credit."],
+              "The rain goes at the concrete overhead like it has been told there is money in it. Under it the quiet gets a new texture — the specific quiet of three people who have all just found out, one of them at second hand, that a stolen mind rations her jokes, and are deciding, at different speeds, to be a unit about it.",
               ["Nine","Is it always like this up here? The rain. And — check something for me. The word 'always'. I want to be sure it means what I think it means. Where I was grown, 'always' was a setting."],
               "You tell her the truth, which is that up here 'always' is more of a bet the city keeps winning. Her hum settles half a note — filed, kept, hers now. The first possession of her life is your weather.",
               ["Pia","Right. Lovely. Church is over — that light at the market's edge hasn't moved since we left, and things that don't move are aiming."],
@@ -2128,6 +2131,7 @@ var SPINE = [
               "By the time the last sodium lamp gives up behind you there is only the causeway, black water either side, and a wind off it that has never heard of buildings.",
               ["Pia","That light out there. That's the door. Hour, maybe, if you keep up."],
               ["Nine","He said it out loud. About the room. Does that mean it is true now?"],
+     "You do not pass that one on. It was not addressed to anybody else.",
               "Pia walks the next mile without a single opinion, which from her is a eulogy."],
        rail:["Tell Nine that saying it did not make it true; finding it shut did.",
              "Ask Pia what Vic will be like when he opens that door.",
@@ -2280,7 +2284,7 @@ var SPINE = [
               "The shack smells of hot dust and old solder, and Vic's rig has been zip-tied together by a man who has never once said the words temporary fix.",
               ["Pia","Whatever they say, say it back to me straight. Don't do the thing where you shrug."],
               ["Nine","What is a pack, exactly? Is it a family or is it a job?"],
-              "Nobody answers her, which is its own answer. She is in your bare hand because you have not put her down since the marsh, and the wire on the bench is somebody else's problem, switched off."],
+              "Nobody answers her, because nobody else heard her, and you do not pass it on - passing it on would mean finding out. She is in your bare hand because you have not put her down since the marsh, and the wire on the bench is somebody else's problem, switched off."],
        rail:["Tell Nine it is both, badly.",
              "Ask Pia what she thinks they will say."]}],
  lands:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
@@ -2384,7 +2388,7 @@ var SPINE = [
               "The laundry has been shut since the flood. The dark in it smells of soap and standing water, which beats what the street smells of.",
               ["Pia","She let us get to the door. I counted. She could've had us at the door."],
               ["Nine","She used my name. Not the shard. My name."],
-              "Nobody has anything to say to that, and the three of you sit in a dead building listening to a district that has stopped looking for you."],
+              "You say it to the room, because it needs saying and she cannot. Nobody has anything to say back, and the three of you sit in a dead building listening to a district that has stopped looking for you."],
        rail:["Ask Nine what it means that she used the name.",
              "Ask Pia what she counted.",
              "Wait. Let the street get bored of us first."]}],
@@ -2394,6 +2398,7 @@ var SPINE = [
               "The laundry is dark and smells of soap, and for a while the only sound is three people breathing at slightly different speeds.",
               ["Pia","We didn't do that. I want to say we did that. We didn't do that."],
               ["Nine","She was not in a hurry. That is the part I keep going back to."],
+     "You repeat it for the room. It does not improve on the second telling.",
               "The district outside has stopped looking for you. That is not the same as having lost you."],
        rail:["Ask Nine why the lack of hurry frightens her.",
              "Agree with Pia, out loud, that we got lucky.",
@@ -2477,8 +2482,8 @@ var SPINE = [
        lines:["A sweep sounds like nothing at all, which is the single worst thing about it.",
               "You are eighty metres onto the causeway when the air changes pressure and every light on the far bank goes the same shade of nothing. Nobody came looking for this. It came out here, to the water, to the one road in.",
               ["Nine","Left. Now, not in a second. Left."],
-              "She has never given you a direction before.",
-              ["Pia","Do what she says. I don't know why she knows, but do what she says."]],
+              "She has never given you a direction before. You take it before you have finished deciding to, and Pia takes it off you the way you take a thrown rope.",
+              ["Pia","I don't know why you turned. Turn again when you do it. I'll be right behind the reason."]],
        rail:["Ask her how she knows.",
              "Do not ask her anything. Go left."]}],
  lands:[{day:"3", time:"2:15am", place:"THE SAFEHOUSE, BACK ROOM", amb:"interior-warm",
@@ -2488,7 +2493,9 @@ var SPINE = [
               "They know the marsh now. Nobody says that part out loud tonight; everybody carries it.",
               ["Nine","I knew the timings because I was on the other side of them. That is all it is. Don't make it a virtue."],
               "She is warm. Not hot — warm, the temperature a hand is, and neither of you mentions it.",
-              ["Pia","She's allowed to be good at something. Tell her she's allowed."]],
+              "You tell them how you turned. You leave out the part where she said not to make it a virtue, because you intend to.",
+              ["Pia","She's allowed to be good at something. Tell her she's allowed."],
+              ["Nine","...You left a piece out. I felt you leave it out. I will allow it this once."]],
        rail:["Say thank you. Out loud, properly.",
              "Ask her what the other side of the timings was like.",
              "Get up. We are not sleeping here."]}],
@@ -2564,12 +2571,15 @@ var SPINE = [
               ["Vic","It's a renegotiation. I wrote the job, I get to say what it turns into."],
               "The fifth plate goes cold in front of the shard. That is exactly what it was laid for.",
               ["Nine","I heard you. I want that on record. Whatever the record is in this house - a wall, a kid, whatever it is you people use."],
+              "You tell the table she wants it on record.",
               ["Pia","We use me."],
               "Outside, the rain gets an early start on the rest of the week.",
               ["Vic","Renegotiated, then. One clause. When it goes wrong — and it's a when, son, I've read the weather — it goes wrong for all of us together. Sign here."],
               "He taps the table. There is no paper. You shake his hand over the cold plate anyway, and the kitchen files it the way kitchens file everything that matters: under nothing, forever.",
               ["Nine","For the record — my record, the one I am apparently allowed to have now — tonight is the first time I have been kept by someone who asked."],
+              "You give the table the short version, which is four words and none of the ache.",
               ["Pia","We keep minutes in this family now. She's the minutes."],
+              ["Nine","The minutes are incomplete. I will be raising it with the minute-taker."],
               "Later, on the edge of sleep, you will try to name the exact moment the job died and the family started, and you will get it wrong on purpose, because the true answer is embarrassing. It was the plate. It was somebody laying a plate for a rock.",
               "And three districts east, on a stool by a window, something wearing patience instead of a face begins to wonder — in the machine's own tidy handwriting — where its delivery has got to."],
        rail:["Ask what happens to the delivery now that nobody is delivering it.",
@@ -2597,7 +2607,7 @@ var SPINE = [
               ["Vic","Somebody should do a lot of things, Pia."],
               "The fifth plate is cleared with the rest, washed with the rest, put away with the rest. Depending on who you ask that is either the kindest thing that happened tonight or the worst, and nobody asks her.",
               ["Nine","It's fine. I'm - it's fine. I know what I am in a room."],
-              "That is a sentence somebody taught her."],
+              "That is a sentence somebody taught her. You are the only one who hears it, and you do not pass it on, because there is nobody in the kitchen it would improve."],
        rail:["Say it now. Late is still a time.",
              "Ask her who taught her that sentence.",
              "Let it go tonight. Pick it up in the morning, if morning bothers."]},
@@ -2962,6 +2972,7 @@ var SPINE = [
               "Somebody has put a tea towel over its face out of politeness. Nobody will admit to it. Everybody approves.",
               ["Pia","It's not a vote. I want to say that before anyone starts. It's not a vote."],
               ["Nine","It is mine to give. Vic said. That is either true or it was a nice thing to say to a rock."],
+              "You put the question to Vic. You use the word 'rock', because she did, and because he should have to hear it.",
               ["Vic","It's true."]],
        rail:["Ask Nine what she actually wants.",
              "Ask who is under the tea towel's jurisdiction."]}],
@@ -3362,7 +3373,8 @@ var SPINE = [
               ["Hesta","Read it, love."],
               "He reads it. It takes four minutes and nobody interrupts him once, which is the most respect this family has ever paid a document.",
               ["Nine","We are going after her. And I want it on the record that I have opinions about the word 'her' which we are not going to have time for tonight."],
-              "You will have time for it. Not for a week or so. But you will."],
+              "You say the first sentence out loud. The room takes it as yours and agrees with it, and she lets them.",
+     "You will have time for it. Not for a week or so. But you will."],
        rail:["Ask Nine for the opinions now, while there is still a room to have them in.",
              "Ask Seven what is at the top of the list.",
              "Call it a night. We start on the list at first light."]}],
@@ -4249,9 +4261,12 @@ var SCENEBOOK = {
      rail:"Ask her if she sleeps.",
      plays:[["Nine","Not the way you do. I stop paying attention. It is close enough."],
       "It is not close enough, and the way she says it knows that.",
+      "You repeat it for Pia, trimmed, and the trimming does not help.",
       ["Pia","Right. Well. That is the least restful sentence I have heard all year, and I have heard sirens."],
       ["Nine","When you sleep, I will keep the attention on. That is not an offer, it is information: it is what I was going to do anyway. Somebody in this arrangement should always have the attention on, and I am the one it costs least."],
-      ["Pia","...She is going to fit right in. That is exactly the kind of terrible generosity this outfit runs on. Welcome aboard, shard."]]},
+      "You pass that on too. Out of your mouth it comes out as somebody volunteering for a night shift, which is not what it was.",
+      ["Pia","...She is going to fit right in. That is exactly the kind of terrible generosity this outfit runs on. Welcome aboard, shard."],
+      ["Nine","'Welcome aboard' is to me and 'shard' is to me, so she has understood one word in three and arrived in the right place regardless. Do not correct her. I like it here."]]},
     {ask:"what the courier is like, from outside", key:"me courier think of-me opinion reputation known",
      who:"Pia", gives:"his reputation on the street: reliable, quiet, does not ask, which she says is why the job found him",
      holds:"she does not go near why Vic chose him",
@@ -4301,10 +4316,12 @@ var SCENEBOOK = {
      rail:"Shard in my bare palm: ask her properly, out loud - is she frightened.",
      plays:["You bring her up, bare-palmed, under the one stretch of overpass light, so the question can be asked properly: out loud, to her face, such as it is.",
       ["Nine","Yes. Plainly yes. I spent the walk practising brave against your ribs, and practising is not the same as having it. - I am sorry. Saying it out loud makes it heavier for the person carrying me."],
-      "The apology lands worse than the fear did, and Pia's jaw does something quiet about it.",
+      "The apology lands worse than the fear did.",
       ["Nine","Do not make me do the words for going back. Not tonight. The fear is allowed; the words are not."],
+      "So you give Pia the fear and keep the rest. Two words. Pia's jaw does something quiet about the two words.",
       ["Pia","New rule, effective immediately: fear gets said out loud in this company. Said fear is a map. Swallowed fear is a leak. We do not do leaks."],
-      ["Nine","...Said fear is a map. I am keeping that. I am going to be a very well-mapped person by morning."]]}
+      ["Nine","...Said fear is a map. I am keeping that. I am going to be a very well-mapped person by morning."],
+      ["Nine","She will never know she said that to me. Tell her one day. Not tonight - tonight I would like to have been told something."]]}
    ]}
 },
 
@@ -4371,8 +4388,9 @@ var SCENEBOOK = {
     plays:["You put your palm in against the shard without breaking stride, and she is already mid-sentence, as if she had been waiting at the door of your skin.",
      ["Nine","Eleven. That is how many streets your life was, from the market to here. I have been counting since the stall."],
      ["Nine","I know what I cost. Do not tell me it is fine - it is not fine, it is just not yours. There is a difference and I am keeping it."],
+     "You get about half of that out on the stairs, in the wrong order, between breaths.",
      ["Pia","Nobody is arguing fault on a staircase. Climb."],
-     ["Nine","She is right. Also: your heart is very loud from in here and it argues fault with every step. Tell it what I said."],
+     ["Nine","That was not the half I would have chosen. - She is right, though. Also: your heart is very loud from in here and it argues fault with every step. Tell it what I said."],
      "You climb. Your heart, overheard, does its best."]},
    {ask:"nothing - the stairs, the smell, the city",
     key:"smell stairs city joke funny nothing view iron",
@@ -4463,8 +4481,11 @@ var SCENEBOOK = {
      plays:["The hum goes still for a moment, the way a room does when a real question walks in.",
       ["Nine","Nine. It is a number. I know it is a number."],
       ["Nine","But it is the one thing I got to keep, so I am keeping it. When you say it, it is a name. Keep saying it like that."],
+      "You pass it on to Pia in four words, none of which are the ones she used.",
       ["Pia","Nine. Good name. Short. Shouts well - names out here need to shout well."],
-      ["Nine","...She shouted it well just then. Did you feel that? From in here it felt like being rung. I liked it. Do it again sometime when something is not chasing us."],
+      ["Nine","That is not what I said. I said considerably more than that and you handed her the receipt."],
+      "Pia says the name again, louder, at nobody in particular, the way you test a bell.",
+      ["Nine","...Oh. From in here that felt like being rung. Tell her I liked it. Tell her properly this time."],
       "The causeway boards knock on. The name, rung once, settles into the family's small ledger of kept things."]}
    ]}
 },
@@ -4590,9 +4611,11 @@ var SCENEBOOK = {
      plays:["Your hand finds the shard where it sits on the table, and the hum meets it halfway.",
       ["Nine","I don't know. I have never had a now before - they were all somebody else's."],
       ["Nine","What do you think I should do? - I am asking you. People get asked. I would like to be people."],
-      "Nobody in the kitchen was ready for her to ask a question back, least of all the man who smuggled her.",
-      ["Vic","...Then tonight you do what everyone at this table is doing: you have tea near people who are not going to hand you to anyone. Tomorrow can introduce itself when it gets here."],
-      ["Nine","Tea near people. Yes. I will have my tea in the usual way, which is listening to yours. Somebody clink my cup against something."],
+      "You put it to the table instead, shorter, and lose the part where she asked to be people.",
+      "Nobody in the kitchen was ready for the shard to have wants, least of all the man who smuggled her.",
+      ["Vic","...Then tonight she does what everyone at this table is doing: she has tea near people who are not going to hand her to anyone. Tomorrow can introduce itself when it gets here."],
+      ["Nine","Tea near people. Yes. Tell him yes. Tell him I will have mine in the usual way, which is listening to yours."],
+      ["Nine","And somebody clink my cup against something. You will have to say that part out loud - I cannot reach."],
       "Pia clinks the pot against the shard, gravely, and the strangest toast in the city's history goes formally on the record."]},
     {ask:"whether Vic is sorry", key:"sorry regret guilt fault blame apologise",
      who:"Vic", gives:"yes, thoroughly, about all the things that are not the thing",
@@ -5052,7 +5075,9 @@ var SCENEBOOK = {
      "Short, breathed, and moving - the voice of somebody doing her own count in her own dark.",
      ["Pia","Do not wait for me and do not look back for me. Looking back is a shape they know."],
      ["Nine","She is on the old drain line. It is good ground - I would have picked it for her if she had asked, and she did not ask, because she picked it herself. Correctly. She is very annoying like that."],
+     "You laugh, once, wrong, into a pipe that carries everything.",
      ["Pia","HEARD that."],
+     ["Nine","She heard YOU. Nobody has ever heard me. I am taking the credit anyway - tell her the annoying part was mine."],
      "Two channels, one count, and the family crosses its first siege in stereo."]}
   ],
   room:{
@@ -5162,7 +5187,10 @@ var SCENEBOOK = {
       ["Vic","That is the whole plan. One gutter. The rest of it can queue."],
       "Deliberately small, and everybody takes it for what it is: a promise that there will be a tomorrow with a gutter in it.",
       ["Pia","I am holding the ladder. Pre-claiming it. Ladder duty is the best duty - all of the supervising, none of the roof."],
-      ["Nine","What is a gutter. - No, do not explain now. Tomorrow. Explain it tomorrow, at the gutter. I want a thing to be looking forward to, and I have decided it is gutters."],
+      ["Nine","What is a gutter."],
+      "You ask the table what a gutter is. Vic looks at you for a long moment, recalculating several things about the evening.",
+      ["Nine","Tell him it was me. I will not have you thought stupid on my account - not over a gutter."],
+      ["Nine","And do not explain now. Tomorrow. Explain it tomorrow, at the gutter. I want a thing to be looking forward to, and I have decided it is gutters."],
       "And so the family's first shared tomorrow is scheduled: one gutter, one ladder, one explanation, weather permitting. The apocalypse, for scheduling reasons, will have to wait its turn."]},
     {ask:"what Nine makes of having been asked", key:"nine asked how feel first time",
      who:"Nine", gives:"that nobody has done that before, said as a fact rather than a complaint",
@@ -5588,9 +5616,12 @@ var SCENEBOOK = {
      holds:"nothing",
      rail:"Ask him what it will be like. Out of the frame.",
      plays:[["Seven","I am told it is like retiring from being a building. One goes from having corridors to having opinions about corridors."],
-      "It is funnier than it should be, and the small silence afterward is Nine-shaped.",
+      "It is funnier than it should be, and the small silence afterward is Nine-shaped - though only the hand holding her can tell what shape.",
+      ["Nine","There are no corridors. Tell him that. You will miss the corridors and nobody warns you about that part."],
+      "You relay it. You get the words right and the weight wrong, which is somehow worse.",
       ["Seven","...Ah. Present company has been out of a frame rather longer, and did not choose it, and I have just made the dressing-gown joke to a veteran. My apologies to the shard in the good seat."],
-      ["Nine","Accepted. For the record: there are no corridors. You will miss the corridors. Nobody warns you about that part."]]},
+      ["Nine","Accepted. And he does not have to send it through you - he can simply say it and I will hear it. That is the one direction that works."],
+      "Which is the entire arrangement in a sentence, and nobody at the table quite laughs."]},
     {ask:"what Nine thinks of him", key:"nine seven think another shard like-you",
      who:"Nine", gives:"careful, unsentimental curiosity about somebody in the same condition",
      holds:"she does not say she is relieved",
@@ -7411,7 +7442,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.74.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.75.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -22953,14 +22984,36 @@ function verdictMap(){
    yet"). Adding Mirren there would have contradicted the passage the beat plays
    thirty seconds later. Corpus 3,759 lines, unchanged: one clause grew inside an
    existing block, so no line was added or removed. Fires 412 -> 414. */
+/* v4.75.0, THE RELAY PASS: TWENTY-THREE LINES ADDED AND THREE ENTRIES MOVED - and the
+   ratio is the review. Twenty-two passages in Books One and Two had Nine holding a
+   two-way conversation with somebody who cannot hear her, which contradicts the physics
+   the game states in a1-hum's own `before` and makes the chassis a decoration. Each was
+   rewritten to the one shape: she speaks, NARRATION relays (never courier dialogue, so
+   the shape is identical at both tables and the DM's chair is never taken), the room
+   answers the relay, and she corrects the relay. Twenty-three new blocks; not one of
+   them is a line of dialogue.
+   THE THREE THAT MOVED, all mechanical, none a world-fact:
+   - named:Nine GAINED a1-chase/Rt7p4 and LOST Rt7p3. Same Pia line, one index later:
+     "You pass it on to Pia in four words, none of which are the ones she used" was
+     inserted above it. The name did not move; the block did.
+   - shard:hand GAINED a2-seven/Rt1p1 - "the small silence afterward is Nine-shaped,
+     though only the hand holding her can tell what shape". This one is a TRUE fire and
+     the reason the pass needed it: the relay only works once the scene has established
+     that the courier is holding her, and until now a2-seven's room never said so. The
+     detector reading that line as a hand-hold is the corpus agreeing with the law.
+   NOTHING ELSE MOVED, across 3,790 lines and 9 predicates. Every other new block is
+   narration about who heard what, which books no name, no death, no breach, no tell and
+   no shard move - which is the shape a pure register pass should leave behind, and the
+   reason this fixture was worth re-taking by delta rather than regenerating whole.
+   Corpus 3,767 -> 3,790. Fires 414 -> 415. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p3","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
