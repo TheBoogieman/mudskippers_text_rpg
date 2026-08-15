@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.91.0.**
+**Last updated: v4.92.0.**
 
 ---
 
@@ -41,39 +41,38 @@ loop up from this file alone.*
 | `a1-carried` | 11 | The back room after the sweep. The pipe, the second lamp, the bag by the door |
 | `a1-turn` | 11 | The kitchen after. Kept vs chosen, the cover story, the pan moved up the table |
 | `a1-hum` | 9 | Under the overpass. Drown last, the reserve bun, the second and a half |
+| `a1-vic` | 8 | The 3am kitchen. The invoice never paid off, the pan, going a day early |
 
-## Book One: TWO ROOMS LEFT
+## Book One: ONE ROOM LEFT — `a1-chase`
 
-This file once said `a1-turn` was "the last room in Book One". That was wrong, and it was
-wrong because nobody had counted. The count now, driven at v4.91.0:
+The causeway out to the marsh: black water either side, wind off it, one light ahead that
+has not moved. Present: **Pia and Nine only** — Vic is ahead of them, not with them.
 
-| room | cards | ids | second takes | wired |
-|---|---|---|---|---|
-| `a1-chase` | 8 | none | none | no |
-| `a1-vic` | 8 | none | none | no |
+Eight cards already written and good, with **no ids, no second takes, and neither landing
+wired**. The Architect ruled on 2026-08-15 that these rooms get **depth, not width** — do
+not bring a pick-list of new subjects, take the eight as they stand:
 
-Both are full rooms from scratch: subjects to rule, ids, second takes, both landings.
-**Bring a pick-list before writing either.** Their staged subjects, as they stand:
+what Vic is like / what she thinks he will do when the door opens / whether Pia is scared
+/ what Nine makes of the marsh / what the courier does now, as a person / whether anyone
+dies of this / the buns, the coat, the boots / what Nine would like to be called.
 
-- **`a1-chase`** — the causeway out to the marsh, black water either side, one light
-  ahead that has not moved. Present: Pia, Nine. Staged: what Vic is like / what she
-  thinks he will do when the door opens / whether Pia is scared / what Nine makes of the
-  marsh / what the courier does now, as a person / whether anyone dies of this / the
-  buns, the coat, the boots / what Nine would like to be called.
-- **`a1-vic`** — the safehouse kitchen at three in the morning, shutters down, kettle on.
-  Present: Pia, Nine, **Vic** — the only Book One room he is actually in. Staged: how Vic
-  and the courier go back / how Vic and Pia go back / what Vic did before all this / what
-  Nine is going to do now / whether Vic is sorry / what the family eats at three in the
-  morning / whether Pia is staying / what happens if they are found here.
+**Two rulings that bind this room:**
 
-**A ruling already on record (2026-08-15):** the name conversation happens TWICE, on
-purpose. `a1-chase`'s causeway version is the first — a stranger rings her name like a
-bell. `a1-turn`'s kitchen version has been rewritten to read as the return. When
-`a1-chase` is written, keep the causeway card as the first time and do not let its second
-take reach for material the kitchen already has.
+1. **The name conversation happens TWICE, on purpose.** The causeway version is the
+   FIRST — a stranger rings her name like a bell and Nine says keep saying it like that.
+   `a1-turn`'s kitchen version has already been rewritten to read as the return, and it
+   quotes this one ("on the causeway you asked her… I gave it four seconds" / "six, tell
+   her six, I counted"). So: keep the causeway card as the first time, and do not let its
+   second take reach for material the kitchen already spends — the kitchen owns *taking
+   the word off them* and *the name in three different mouths*.
+2. **"whether anyone dies of this" is a trap-1 and trap-4 minefield.** It is a card about
+   death, in a book whose `death` detector reads the register directly. Write the fear,
+   not the stillness, and count nothing.
 
-The check that would have caught this, and which should be run at the start of every
-wave from now on — it is three lines in the console on `?selftest`:
+## Run this at the start of every wave
+
+This file once said `a1-turn` was "the last room in Book One". It was wrong, and it was
+wrong because nobody had counted. Three lines in the console on `?selftest` settle it: 
 
 ```
 Object.keys(SCENEBOOK).map(k => { var r = SCENEBOOK[k].room; return r && r.topics
@@ -127,12 +126,13 @@ in Book One and the desk correctly called it summoning an off-stage person.
   **asserts the anchor appears exactly once** and refuses otherwise. Heredocs choke on
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
-- Expect **zero to two** fixture drifts per room. `a1-turn` came back with one, honest,
-  and no false positive at all — the first clean room in five, because the trap list was
-  read BEFORE the prose was written rather than after. `a1-hum`, written the same day,
-  came back with two false positives, because it was not. Any predicate drifting is a
-  false positive in the new prose until proven otherwise — read the line, do not
-  regenerate.
+- Expect **zero to two** fixture drifts per room, and expect **zero** if you do the one
+  thing that works. `a1-turn` came back with one honest fire and no false positive;
+  `a1-vic` came back byte-identical. `a1-hum`, written the same day between them, came
+  back with two false positives — including trap 1, in prose written the same hour as a
+  ledger paragraph about trap 1. The difference is one habit and no talent: **re-read the
+  five shapes immediately before writing, not after.** Any predicate drifting is a false
+  positive in the new prose until proven otherwise — read the line, do not regenerate.
 - Take the fixture **by delta**, and write a ledger paragraph above `VERDICT_FIXTURE`.
 - Release ritual: banner, `VERSION_TAG`, `sw.js` CACHE slug, encoding check, id/div check,
   0 FAILED, then commit and push.
@@ -151,8 +151,7 @@ in Book One and the desk correctly called it summoning an off-stage person.
 
 ## Still open beyond the rooms
 
-- **Two Book One rooms** — `a1-chase` and `a1-vic`, both from scratch. Then Books Two and
-  Three (24 rooms).
+- **One Book One room** — `a1-chase`, depth only. Then Books Two and Three (24 rooms).
 - **32 transition scenes** for `TAKE THE NIGHT ON` — short, 3-4 lines, the family pushes
   and the courier stands up. Not started.
 - **~240 staged choices still unwired** outside the finished rooms. 43 rows wired so far,
