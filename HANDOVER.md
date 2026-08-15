@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.88.0.**
+**Last updated: v4.89.0.**
 
 ---
 
@@ -38,13 +38,14 @@ loop up from this file alone.*
 | `a1-fare` | 11 | The doorway. Deepest room in the book; eight of eleven are Pia |
 | `a1-late` | 9 | The shut laundry. Pia frightened, the fifth rule, "somebody deciding" |
 | `a1-exit` | 10 | The porch. Lights on the far bank, the lay-by, the third Vic death plant |
+| `a1-carried` | 11 | The back room after the sweep. The pipe, the second lamp, the bag by the door |
 
-**Next: `a1-carried`**, then `a1-turn`. Then Books Two and Three (24 rooms).
+**Next: `a1-turn`** (the last room in Book One). Then Books Two and Three (24 rooms).
 
-## The three traps that catch me EVERY room
+## The four traps that catch me EVERY room
 
-Written into the fixture ledger as well. Both are invisible when reading; only the sweep
-finds them:
+Written into the fixture ledger as well. All four are invisible when reading; only the
+sweep finds them:
 
 1. **Counting prose.** A bare number in dialogue reads as a character name — Three, Five,
    Seven, Nine are all people. *"Three places, two noes and a yes"*, *"Five: decide
@@ -57,6 +58,10 @@ finds them:
    clearing a throat"*. The hedge does not save it — she has **no throat, no breath, no
    shoulders to shrug, no eyes to close**. Describe the hum instead: it steadies, it
    flattens, it goes down and comes back up.
+4. **Stillness written of the living.** `death` fired on *"Pia has gone very still"*. The
+   book reserves that register for the dead — **gone still, stopped moving, went quiet
+   and stayed quiet** — and a living character borrowing it reads as a death every time.
+   Give them something to do instead ("became extremely interested in the far wall").
 
 Also: **do not name a character before the player has met them.** Pia said "Hesta's lot"
 in Book One and the desk correctly called it summoning an off-stage person.
@@ -67,8 +72,9 @@ in Book One and the desk correctly called it summoning an off-stage person.
   **asserts the anchor appears exactly once** and refuses otherwise. Heredocs choke on
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
-- Expect exactly **one** fixture drift per room: `shard:hand` on whichever card puts a
-  hand in against Nine. Anything else is a fault — read it, do not regenerate.
+- Expect **one or two** fixture drifts per room, and expect them to be `shard:hand` on
+  whichever cards put a hand in against Nine. Any OTHER predicate drifting is a false
+  positive in the new prose until proven otherwise — read the line, do not regenerate.
 - Take the fixture **by delta**, and write a ledger paragraph above `VERDICT_FIXTURE`.
 - Release ritual: banner, `VERSION_TAG`, `sw.js` CACHE slug, encoding check, id/div check,
   0 FAILED, then commit and push.
