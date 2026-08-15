@@ -111,6 +111,13 @@
   }
   .modedoor i{display:block;font-size:14px;line-height:1.62;opacity:.82}
   .modedoor.primary{border-color:var(--gold);box-shadow:0 0 18px rgba(242,193,78,.10)}
+  .modeopt{
+    display:flex;gap:10px;align-items:flex-start;margin:-4px 0 14px;padding:0 4px 0 18px;
+    cursor:pointer;color:var(--ink-dim);font-family:Georgia,serif;font-size:13px;line-height:1.55;
+  }
+  .modeopt input{margin-top:3px;accent-color:var(--gold);flex:none}
+  .modeopt b{color:var(--gold);font-weight:normal}
+  .modeopt.off{opacity:.4;pointer-events:none}
   .modedoor .needs{
     display:block;margin-top:9px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
     letter-spacing:.12em;color:#d99a5e;font-style:normal;
@@ -1331,6 +1338,10 @@
       <i>Bring a model and hand it the keys: the beats, the perils, the closes — all of it, decided at the table, no two nights alike. Requires a connected AI. Unhinged is a feature, not a defect.</i>
       <span class="needs" id="mode-wild-needs" style="display:none">NO MODEL CONNECTED — THIS DOOR OPENS SETTINGS FIRST</span>
     </button>
+    <label class="modeopt" id="mode-seams-row">
+      <input type="checkbox" id="mode-seams">
+      <span><b>…and let it write the seams too.</b> Off by default. Every night opens with an authored establishing scene and closes with an authored landing; tick this and the storyteller writes those as well, from the board's own notes. Decided once, here — it stays decided for that run's life.</span>
+    </label>
     <div class="btnrow" style="justify-content:center">
       <button class="btn ghost" id="mode-close">NEVER MIND</button>
     </div>
@@ -1658,13 +1669,12 @@
       <input id="s-model" type="text" spellcheck="false">
     </div>
     <div class="fld">
-      <label>HOW MUCH OF THE NIGHT IS THE DM'S — TEMPERATURE</label>
+      <label>HOW STRANGE DO YOU WANT IT — TEMPERATURE</label>
       <input id="s-temp" type="text" spellcheck="false" placeholder="0.9">
       <div class="hint">
         <b>THE WILD TABLE ONLY.</b> THE NOVEL never calls a model, so this does nothing there.<br>
-        Blank means the house setting, <b>0.9</b>. Lower is steadier and duller; higher is stranger and less reliable.<br>
-        <b>Above 1.0 the storyteller also writes the seams</b> — the scene that opens each night and the passage that lands it, which the game otherwise plays from its own book. That is decided once, when you start a run, and it stays decided for the life of that run; moving this dial afterwards changes the writing, not who writes the seams.<br>
-        <span style="opacity:.75">Claude models cap out at 1.0 — the game sends 1.0 and keeps your number for the seam decision. Range 0 to 2.</span>
+        Blank means the house setting, <b>0.9</b>, because unhinged is the point. Lower is steadier and duller; higher is stranger and less reliable — small local models start returning broken turns somewhere above 1.2.<br>
+        <span style="opacity:.75">Claude models cap out at 1.0, and the game sends 1.0 for them whatever you type here. Range 0 to 2. (Who writes each night's opening and landing is a separate choice, made on the WILD TABLE door when you start a run.)</span>
       </div>
     </div>
     <div class="fld" id="fld-key">
@@ -1707,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.72.2 "Both Ends of the Night"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.72.3 "The Seams Get Their Own Switch"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7366,7 +7376,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.72.2";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.72.3";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -11308,18 +11318,21 @@ function slackArm(){
    the two places the board arms a beat without a DM reply behind it - the player's
    door out of the room, and the season premiere - where leaving it queued means
    the card announcing tonight arrives after tonight has been played into. */
+/* THE CARD STAYS; ITS WORDS CHANGE HANDS (v4.72.3). The first cut dropped the TONIGHT
+   card entirely above the line, on the reasoning that the DM's opening names the night
+   itself - and it was wrong twice. It was the player's only in-feed line saying what
+   tonight is FOR, and it was inconsistent: the drop only happened on the slack-door
+   road, so a tease queued by any other road still rendered through the generic aside
+   branch. The card is board furniture, like the beat card, and board furniture stays.
+   Above the line the DM supplies the words with a "tonight" field on its opening reply,
+   and the authored TEASES line is the floor when it does not. */
+var seamTonight = "";        /* the DM's own name for tonight, from an opening seam */
 function dealTease(){
-  /* above the line the night names itself in the DM's own opening, so the authored
-     TONIGHT card is dropped rather than stacked in front of it */
-  if(seamsWild()){
-    for(var g = 0; g < pendingAsides.length; g++){
-      if(pendingAsides[g].tone === "green"){ pendingAsides.splice(g, 1); return false; }
-    }
-    return false;
-  }
   for(var i = 0; i < pendingAsides.length; i++){
     if(pendingAsides[i].tone !== "green") continue;
     var t = pendingAsides.splice(i, 1)[0];
+    /* the DM's own words when it sent them, the authored line when it did not */
+    if(seamTonight){ t = {kind:"aside", tone:"green", text:seamTonight}; seamTonight = ""; }
     renderBlock(t); feedLog.push(t);
     ledgerText += "\n\n_" + t.text + "_";
     return true;
@@ -12865,6 +12878,11 @@ function seamBrief(s){
     + (o.must_be_in_it ? "3. must_be_in_it names the people this night was about. They belong"
         + " in the prose by name.\n" : "3. Keep it to the people who are actually here.\n")
     + "4. choices: two or three things the courier could do next, in his own words.\n"
+    + (s.kind === "landing" ? ""
+       : "5. ALSO SEND \"tonight\": one short line - a dozen words - naming what tonight is"
+         + " about, in your voice. It is printed on a card of its own as the night's title,"
+         + " so it announces rather than describes: no scene, no dialogue, no full stop"
+         + " needed.\n")
     + JSON.stringify(o, null, 1);
 }
 /* the seam is asked for AFTER the turn that caused it has finished landing - never
@@ -15289,7 +15307,12 @@ function jsonModeOK(){
 var WILD_REPLY_TOKENS = 1600;
 function replyCap(){ return wildRun() ? WILD_REPLY_TOKENS : REPLY_TOKENS; }
 /* UNHINGED IS A FEATURE, so the wild table runs hot by default - and the player can
-   move it, because "how strange do you want tonight" is a taste knob and not a law. */
+   move it, because "how strange do you want tonight" is a taste knob and not a law.
+   AND IT IS ONLY THAT (v4.72.3). For one release this dial also decided whether the DM
+   wrote the seams, which tied the biggest structural choice in the game to the setting
+   that makes a small model fall apart: the threshold was >1, and a 32B at 1.4 returned
+   malformed JSON that leaked fragments into rendered prose. Two jobs, one control, and
+   the cheap end of the stable paid for it. The seams have their own switch now. */
 function replyTemp(){
   var t = parseFloat(settings.temp);
   if(!isNaN(t) && t >= 0 && t <= 2) return t;
@@ -17054,6 +17077,34 @@ function callDM(corrected, tag){
     var eb = $("errbox");
   if(eb && eb.firstChild) eb.innerHTML = "";
     setBusy(false);
+    /* ==== THE SEAM TURN'S OWN TWO RULES (v4.72.3) ====
+       THE BOARD ONLY DEFENDS A FACT IT JUST ASSERTED. seamStamp set the day, the hour
+       and the room moments before this ask went out, and the brief told the DM those
+       were facts already on the player's screen. A reply that sends them back changed
+       is not the family moving - nobody has acted - it is the model retyping a field,
+       and a 32B duly returned VELT for VELDT and moved them into a room one letter off
+       their own. Refused here rather than anywhere broader: an ordinary wild turn moves
+       the family wherever the storyteller likes, because THAT is the storyteller's, and
+       a blanket location fence would be the structure class the wild table stands down.
+       AND THE NIGHT'S NAME, when it sent one - the TONIGHT card's words. */
+    if(seamServing && parsed.data){
+      var moved = [];
+      ["location", "day", "time"].forEach(function(f){
+        if(typeof parsed.data[f] === "undefined") return;
+        var mine = (f === "location") ? $("hud-loc").textContent
+                 : (f === "day") ? $("hud-day").textContent : nowTime;
+        if(String(parsed.data[f]).trim().toUpperCase() !== String(mine).trim().toUpperCase()){
+          moved.push(f + ": \"" + parsed.data[f] + "\" over \"" + mine + "\"");
+        }
+        delete parsed.data[f];
+      });
+      if(moved.length && window.console && console.warn){
+        console.warn("[mudskippers] a seam reply tried to restamp the board - refused: " + moved.join("; "));
+      }
+      if(typeof parsed.data.tonight === "string" && parsed.data.tonight.trim()){
+        seamTonight = parsed.data.tonight.trim().slice(0, 160);
+      }
+    }
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
     showScene(parsed.data, true);
   }).catch(function(e){
@@ -17900,10 +17951,20 @@ function wildDoorNeeds(){
 function openModeCard(confirmFirst){
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   wildDoorNeeds();
+  /* the seam box belongs to the wild door, so it greys with it - and it shows the
+     player's last answer rather than resetting, because somebody who plays wild with
+     the seams on plays their next wild run the same way */
+  $("mode-seams").checked = !!settings.seams;
   $("modemodal").classList.add("open");
 }
 function closeModeCard(){ modeCardArmed = false; $("modemodal").classList.remove("open"); }
 $("mode-close").onclick = closeModeCard;
+/* the box is the wild door's; the novel never calls a model, so it has no seams to
+   hand anywhere. Saved on change so the choice survives to the next run's card. */
+$("mode-seams").onchange = function(){
+  settings.seams = !!$("mode-seams").checked;
+  try{ saveSettings(); }catch(e){}
+};
 $("mode-novel").onclick = function(){ closeModeCard(); newRun(false, false, "novel"); };
 $("mode-wild").onclick = function(){
   if(!providerReady()){
@@ -21976,8 +22037,8 @@ function newRun(confirmFirst, bare, mode){
   runEpoch++;
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   runMode = (mode === "wild") ? "wild" : "novel";
-  /* READ ONCE, HERE, AND NEVER AGAIN. The dial is live; the run fact is not. */
-  seamsDM = (runMode === "wild") && replyTemp() > 1;
+  /* READ ONCE, HERE, AND NEVER AGAIN. The checkbox is live; the run fact is not. */
+  seamsDM = (runMode === "wild") && !!settings.seams;
   seamPending = null; seamServing = null;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
@@ -23808,7 +23869,7 @@ function selfTest(){
                  and does not put it back has handed the next row a different game -
                  and settings.key rides here too, because the zero-wire row's whole
                  point is proving the claim with a working key in place. */
-              mode:runMode, key:settings.key, prov:settings.provider,
+              mode:runMode, key:settings.key, prov:settings.provider, seamOpt:settings.seams,
               /* ...and the rest of the settings the stable row's bodyFor moves
                  (v4.72.1): model, base, style and temp were mutated and never put
                  back, so a ?selftest load left the page's live settings pointing at
@@ -23832,7 +23893,7 @@ function selfTest(){
       lastRail = k.lr; perilSpent = k.ps; TEETH_LIVE = k.tl; attemptStage = k.as;
       attemptStalls = k.ast; attemptTempted = k.atp; beatJustCleared = k.bjc;
       phaseLeft = k.ph2; runSlug = k.slug; introStage = k.intro;
-      runMode = k.mode; settings.key = k.key; settings.provider = k.prov;
+      runMode = k.mode; settings.key = k.key; settings.provider = k.prov; settings.seams = k.seamOpt;
       settings.model = k.smodel; settings.base = k.sbase; settings.style = k.sstyle;
       settings.temp = k.stemp;
     }
@@ -24637,20 +24698,24 @@ function selfTest(){
     (function(){
       var k = barKeep(), kSeam = seamsDM, kPend = seamPending, at = beatById("a1-chase");
       try{
-        /* (a) THE STAMP IS A RUN FACT, read once and never again */
-        barBoard(0); runMode = "wild"; settings.temp = 1.4;
+        /* (a) THE STAMP IS A RUN FACT, read once and never again - and it is the
+           CHECKBOX's now, not the temperature dial's (v4.72.3) */
+        barBoard(0); runMode = "wild"; settings.seams = true; settings.temp = 1.4;
         /* the same expression newRun evaluates, at the same instant it evaluates it */
-        seamsDM = (runMode === "wild") && replyTemp() > 1;
-        if(!seamsDM) seamBad.push("temp 1.4 on a wild run did not hand the DM the seams");
-        settings.temp = 0.9;                          /* the dial moves mid-run... */
-        if(!seamsWild()) seamBad.push("moving the dial mid-run took the seams back - the stamp is not a stamp");
+        seamsDM = (runMode === "wild") && !!settings.seams;
+        if(!seamsDM) seamBad.push("the seam box on a wild run did not hand the DM the seams");
+        settings.temp = 0.4;                          /* the DIAL no longer decides... */
+        if(!seamsWild()) seamBad.push("the temperature dial still moves the seams");
+        settings.seams = false;                       /* ...and the box moves mid-run */
+        if(!seamsWild()) seamBad.push("un-ticking the box mid-run took the seams back - the stamp is not a stamp");
+        settings.seams = true;
         var blob = JSON.parse(saveBlob());
         if(blob.seams !== true) seamBad.push("the stamp did not reach the save blob");
         seamsDM = false;
         seamsDM = (blob.seams === true);
         if(!seamsDM) seamBad.push("the stamp did not survive the round trip");
-        settings.temp = 1.4; runMode = "novel";
-        if(seamsWild()) seamBad.push("a NOVEL run took the seams off the temperature dial");
+        runMode = "novel";
+        if(seamsWild()) seamBad.push("a NOVEL run took the seams from the box");
         runMode = "wild";
         /* an old save, and a hand-edited one - the same read restoreFromBlob makes */
         seamsDM = (undefined === true);
@@ -24724,6 +24789,51 @@ function selfTest(){
         if(runCanon.length <= canonWas) seamBad.push("above the line the authored canon stopped merging");
         if(phase !== "aftermath") seamBad.push("above the line the close stopped settling");
 
+        /* (d.5) THE BOARD DEFENDS THE FACT IT JUST ASSERTED, and nothing wider. A seam
+           reply that restamps the room is refused; an ordinary wild turn still moves
+           the family wherever the storyteller says. And the TONIGHT card's words come
+           off the reply when it sends them. */
+        (function(){
+          var kServ = seamServing;
+          try{
+            barBoard(at); V5SCENE = true; runMode = "wild"; seamsDM = true;
+            $("hud-loc").textContent = "VELDT UNDERPASS"; $("hud-day").textContent = "1"; nowTime = "12:26am";
+            seamServing = {kind:"opening", id:"a1-chase", forced:false};
+            var d = {location:"VELT UNDERPASS", day:"4", time:"9:00am",
+                     tonight:"The stairwell, and who is already on it",
+                     scene:[{speaker:"Narration", text:"Rain, and the smell of wet stone."}], choices:["Go."]};
+            /* the same block the reply handler runs, driven directly */
+            var moved = [];
+            ["location","day","time"].forEach(function(f){
+              if(typeof d[f] === "undefined") return;
+              var mine = (f==="location") ? $("hud-loc").textContent
+                       : (f==="day") ? $("hud-day").textContent : nowTime;
+              if(String(d[f]).trim().toUpperCase() !== String(mine).trim().toUpperCase()) moved.push(f);
+              delete d[f];
+            });
+            if(moved.length !== 3) seamBad.push("the seam fence let a restamp through: caught " + moved.join(","));
+            if(typeof d.location !== "undefined") seamBad.push("the refused location survived on the reply");
+            if(typeof d.tonight === "string" && d.tonight) seamTonight = d.tonight;
+            if(!seamTonight) seamBad.push("the DM's TONIGHT line was not harvested");
+            /* ...and the card renders it instead of the authored one */
+            pendingAsides = [{kind:"aside", tone:"green", text:TEASES["a1-chase"] || "authored"}];
+            var feedWas = feedLog.length;
+            dealTease();
+            var card = feedLog[feedLog.length - 1];
+            if(feedLog.length <= feedWas) seamBad.push("the TONIGHT card did not render above the line");
+            else if(!card || card.text !== "The stairwell, and who is already on it"){
+              seamBad.push("the TONIGHT card did not carry the DM's words: " + (card && card.text));
+            }
+            /* and below the line it is the authored line, untouched */
+            seamsDM = false; seamTonight = "";
+            pendingAsides = [{kind:"aside", tone:"green", text:TEASES["a1-chase"] || "authored"}];
+            dealTease();
+            var card2 = feedLog[feedLog.length - 1];
+            if(!card2 || card2.text !== (TEASES["a1-chase"] || "authored")){
+              seamBad.push("below the line the authored TONIGHT line was replaced");
+            }
+          } finally { seamServing = kServ; seamTonight = ""; }
+        })();
         /* (e) the room's authored banter stands down above the line and not below */
         barBoard(at); runMode = "wild"; phase = "slack"; seamsDM = true;
         var ttUsed = tableTalkUsed.length;
@@ -24829,6 +24939,53 @@ function selfTest(){
            beatIdx = k.bi; beatText = k.txt; runMode = k.m; runSlug = k.s;
          }
        }});
+
+    /* ---- (6d) THE UNREACHABLE ANCHORS — an AMBER row on purpose (v4.72.3) ----
+       Thread 9 stopped the player paying for this; it did not fix the authoring under
+       it. Some beats name anchors their own cards never say, so no play pattern can
+       witness for them. That is judgement for the hand pass, not a defect the engine
+       can fix - so it rides here, permanently visible, rather than in a document that
+       goes stale. The row is amber BY DESIGN: it carries no broken form because there
+       is nothing to break. It goes green when the writing changes. */
+    (function(){
+      var kk = barKeep(), unreachable = [], checked = 0,
+          CH = ["My boots have opinions about this weather.", "Sometimes I miss being boring.",
+                "Harrumph. Onward, brave puddle navy.", "I would like it noted that I am damp."];
+      try{
+        for(var i = 0; i < SPINE.length; i++){
+          var b = SPINE[i];
+          if(!(b.anchors || []).length) continue;
+          checked++;
+          var everNamed = false;
+          ["s1", "s2", "alt", "typed"].forEach(function(mode){
+            if(everNamed) return;
+            barBoard(i); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+            for(var t = 0; t < beatFloor(b); t++){
+              var row = railFor([]);
+              lastRail = row; turnToken++;
+              if(mode === "typed"){ lastPlayerText = CH[t % CH.length]; pickKind = ""; }
+              else {
+                var slot = (mode === "s1") ? 1 : (mode === "s2") ? 2 : (t % 2) + 1;
+                lastPlayerText = row[slot] || row[1] || CH[0]; pickKind = "stall";
+              }
+              callDM();
+              if(typeof skipReveal === "function") skipReveal();
+            }
+            if(!anchorsMissing(b).length) everNamed = true;
+          });
+          if(!everNamed) unreachable.push(b.id + " [" + b.anchors.join("+") + "]");
+        }
+      } finally { barPut(kk); }
+      T("every beat's anchors can be earned by some way of playing it",
+        true,
+        unreachable.length
+          ? "AUTHORING, not engine — " + unreachable.length + " of " + checked
+            + " anchored beats name people their own cards never say, so no play pattern"
+            + " witnesses for them: " + unreachable.join(", ")
+            + ". The door no longer charges the player for it (v4.72.2); the writing is"
+            + " the Architect's call. a1-hum's case is special: its anchor IS its reveal."
+          : "all " + checked + " anchored beats can witness for their own anchors by some route");
+    })();
 
     /* ---- (7) THE STABLE: the request knobs, read off the body that would be sent,
        and the reasoning tolerance that has to hold whatever a free-text slug reaches.

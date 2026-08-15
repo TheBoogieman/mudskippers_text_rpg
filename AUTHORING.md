@@ -20,16 +20,19 @@ both tables, and enforced at only one.** Write `gives` and `holds` as facts abou
 world rather than as instructions to a renderer, and both tables get what they need.
 `rail`/`railAlt` and `key` are novel-only — the wild table builds its own rail.
 
-**And since v4.72.2 the SPINE's seams can change hands too.** In a wild run started
-above a temperature of 1, the DM writes each beat's **opening scene and its landing
+**And since v4.72.2 the SPINE's seams can change hands too.** In a wild run started with
+**"…and let it write the seams too"** ticked on the WILD TABLE door (off by default), the
+DM writes each beat's **opening scene and its landing
 passage** instead of the client playing your `opens`/`lands`/`landsHard`. Your prose
 is not discarded: the board still reads the variant's `day`, `time`, `place`, `amb`,
 `shard` and `now` and stamps them *before* the ask, so the model writes into the room
 you put them in — and `anchors` rides the ask as the names that must be in it. What
 that means for you: **keep writing the stamp fields as carefully as the prose**, because
-above the line they are the only part of the passage that survives. `press`, `canon`,
-`canonAlt`, `canonSoft` and `scar` are unaffected at either table — the client keeps
-the books in both.
+above the line they are the only part of the passage that survives — and a seam reply
+that tries to send those fields back *changed* is refused, so what you stamp is what the
+player reads. `TEASES` still prints its card either way; above the line the DM may supply
+its words instead, and your line is the fallback. `press`, `canon`, `canonAlt`,
+`canonSoft` and `scar` are unaffected at either table — the client keeps the books in both.
 
 ## The two tables (of the SCENEBOOK, not of the game)
 
@@ -98,7 +101,7 @@ Search a beat by `id:"a1-vic"`. The authored fields:
 ## The ritual after every edit
 
 1. **Syntax**: the game not booting is the first test. (If you edit outside the browser, any JS checker on the `<script>` body works.)
-2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 64 rows as of v4.72.2.
+2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 65 rows as of v4.72.3 (one is amber by design — the unreachable-anchor audit).
 3. **The fixture**: if the drift row goes red, it names exactly which lines started or stopped firing which predicate (names, deaths, shard moves, tells). If the diff is exactly your edit and reads as intended, update `var VERDICT_FIXTURE` from the live map (`window.__VERDICTS__` after a selftest run) and add a line to the annotated ledger above it saying what moved and why. **Never regenerate to silence a row you have not read** — that is the one move the mechanism exists to prevent.
 4. **Play it**: the **REHEARSAL ROOM** (menu) runs one beat in isolation, over and over — built for exactly this. For full context, a fresh run reaches any Book One beat in minutes.
 
