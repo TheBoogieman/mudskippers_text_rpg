@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.92.0.**
+**Last updated: v4.93.0. Book One is finished — all nine rooms are to standard.**
 
 ---
 
@@ -42,34 +42,23 @@ loop up from this file alone.*
 | `a1-turn` | 11 | The kitchen after. Kept vs chosen, the cover story, the pan moved up the table |
 | `a1-hum` | 9 | Under the overpass. Drown last, the reserve bun, the second and a half |
 | `a1-vic` | 8 | The 3am kitchen. The invoice never paid off, the pan, going a day early |
+| `a1-chase` | 8 | The causeway. The labels, the tobacco tin, the night that turns convenient |
 
-## Book One: ONE ROOM LEFT — `a1-chase`
+## Book One is CLOSED
 
-The causeway out to the marsh: black water either side, wind off it, one light ahead that
-has not moved. Present: **Pia and Nine only** — Vic is ahead of them, not with them.
+Nine rooms, 84 cards, every one with an id and a second take, every landing in the book
+dealing from its deck. Finished at v4.93.0 on 2026-08-15.
 
-Eight cards already written and good, with **no ids, no second takes, and neither landing
-wired**. The Architect ruled on 2026-08-15 that these rooms get **depth, not width** — do
-not bring a pick-list of new subjects, take the eight as they stand:
+**The name conversation now stands in both its rooms, which was the one cross-room
+dependency in the book.** `a1-chase` on the causeway is the FIRST time — a stranger rings
+her name like a bell and Nine says keep saying it like that; asked again, she has tried
+other names privately and every one was wrong, because a chosen name is another thing done
+to her. `a1-turn` in the kitchen is the RETURN, and it quotes the causeway out loud ("I
+gave it four seconds" / "six, tell her six, I counted"). The kitchen owns *taking the word
+off them* and *the name in three different mouths*; the causeway does not touch either.
+If either room is ever edited, read the other one first.
 
-what Vic is like / what she thinks he will do when the door opens / whether Pia is scared
-/ what Nine makes of the marsh / what the courier does now, as a person / whether anyone
-dies of this / the buns, the coat, the boots / what Nine would like to be called.
-
-**Two rulings that bind this room:**
-
-1. **The name conversation happens TWICE, on purpose.** The causeway version is the
-   FIRST — a stranger rings her name like a bell and Nine says keep saying it like that.
-   `a1-turn`'s kitchen version has already been rewritten to read as the return, and it
-   quotes this one ("on the causeway you asked her… I gave it four seconds" / "six, tell
-   her six, I counted"). So: keep the causeway card as the first time, and do not let its
-   second take reach for material the kitchen already spends — the kitchen owns *taking
-   the word off them* and *the name in three different mouths*.
-2. **"whether anyone dies of this" is a trap-1 and trap-4 minefield.** It is a card about
-   death, in a book whose `death` detector reads the register directly. Write the fear,
-   not the stillness, and count nothing.
-
-## Books Two and Three — RULED: pick-list every room
+## Next: Books Two and Three — RULED: pick-list every room
 
 The Architect ruled on 2026-08-15, asked directly: the depth-only shortcut was for the
 last two rooms of Book One and **does not carry forward**. All 24 remaining rooms get the
@@ -143,11 +132,14 @@ in Book One and the desk correctly called it summoning an off-stage person.
 - After splicing: `node --check` the script body, then `?selftest`.
 - Expect **zero to two** fixture drifts per room, and expect **zero** if you do the one
   thing that works. `a1-turn` came back with one honest fire and no false positive;
-  `a1-vic` came back byte-identical. `a1-hum`, written the same day between them, came
-  back with two false positives — including trap 1, in prose written the same hour as a
-  ledger paragraph about trap 1. The difference is one habit and no talent: **re-read the
-  five shapes immediately before writing, not after.** Any predicate drifting is a false
-  positive in the new prose until proven otherwise — read the line, do not regenerate.
+  `a1-vic` and `a1-chase` came back byte-identical. `a1-hum` came back with two false
+  positives — including trap 1, in prose written the same hour as a ledger paragraph
+  about trap 1. The difference is one habit and no talent: **re-read the five shapes
+  immediately before writing, not after.** Any predicate drifting is a false positive in
+  the new prose until proven otherwise — read the line, do not regenerate.
+  `a1-chase` is the proof it scales: its cards include one literally called *whether
+  anyone dies of this* and one that is an inventory of coat pockets, which are traps 4
+  and 5 by name, and both came back clean because the list was read first.
 - Take the fixture **by delta**, and write a ledger paragraph above `VERDICT_FIXTURE`.
 - Release ritual: banner, `VERSION_TAG`, `sw.js` CACHE slug, encoding check, id/div check,
   0 FAILED, then commit and push.
@@ -166,10 +158,11 @@ in Book One and the desk correctly called it summoning an off-stage person.
 
 ## Still open beyond the rooms
 
-- **One Book One room** — `a1-chase`, depth only. Then Books Two and Three (24 rooms).
+- **Books Two and Three — 24 rooms**, full pick-list each. This is the whole of the
+  remaining room programme.
 - **32 transition scenes** for `TAKE THE NIGHT ON` — short, 3-4 lines, the family pushes
   and the courier stands up. Not started.
-- **~240 staged choices still unwired** outside the finished rooms. 43 rows wired so far,
+- **~240 staged choices still unwired** outside the finished rooms. 55 rows wired so far,
   six per finished room plus one in `a3-seize`.
 - **6 amber sweep rows**, all AI-side.
 - **The AI side**: the DM respecting family time, and the drift nudge ("the rain is

@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.92.0 "Three In The Morning"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.93.0 "The Last Mile Of Book One"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2141,9 +2141,10 @@ var SPINE = [
               ["Nine","He said it out loud. About the room. Does that mean it is true now?"],
      "You do not pass that one on. It was not addressed to anybody else.",
               "Pia walks the next mile without a single opinion, which from her is a eulogy."],
-       rail:["Tell Nine that saying it did not make it true; finding it shut did.",
-             "Ask Pia what Vic will be like when he opens that door.",
-             "Walk. Save every question for the man himself."]}],
+       /* wired v4.93.0 */
+       rail:[{line:"Tell Nine that saying it did not make it true; finding it shut did.", cards:["the-name","nine-outside","what-i-am-now"]},
+             {line:"Ask Pia what Vic will be like when he opens that door.", cards:["door-face","vic-the-man","pia-scared"]},
+             {line:"Walk. Save every question for the man himself.", cards:["the-coat","nine-outside","who-dies"]}]}],
  landsHard:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
        now:"Day 1, deep night, on the causeway. Nobody said it out loud; the courier found the door shut and the Choir chose the moment.",
        /* NOVEL GRADE, HARD. A failure close is colder in the same voice, never a
@@ -2159,9 +2160,9 @@ var SPINE = [
               ["Pia","My da used to say you're not homeless if somebody's holding your dinner. He was wrong about nearly everything else."],
               "Against your ribs the shard hums small — a passenger's hum, a sorry-about-your-room hum — and you catch yourself patting the jacket the way you'd pat a shoulder, and you decide not to examine that either.",
               "Out on the marsh there is one light that has not moved, and for once that is the good kind of stillness. You aim yourselves at it. Behind you, the city keeps filing."],
-       rail:["Ask where she even keeps buns.",
-             "Say it now. Late is not the same as never.",
-             "Walk. The light is not getting closer on its own."]}],
+       rail:[{line:"Ask where she even keeps buns.", cards:["the-coat","vic-the-man","pia-scared"]},
+             {line:"Say it now. Late is not the same as never.", cards:["what-i-am-now","who-dies","door-face"]},
+             {line:"Walk. The light is not getting closer on its own.", cards:["nine-outside","the-name","the-coat"]}]}],
  budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
@@ -4528,7 +4529,7 @@ var SCENEBOOK = {
    never:["nobody arrives on the causeway; there is nothing out here to arrive",
           "Vic is not previewed, promised or described as a plan - he can be talked about as a man"],
    topics:[
-    {ask:"what Vic is like", key:"vic like man who ripperdoc friend trust",
+    {id:"vic-the-man", ask:"what Vic is like", key:"vic like man who ripperdoc friend trust",
      who:"Pia", gives:"the man, not the plan: labels everything, talks to his tools, has been patching the pair of them for years",
      holds:"she does not say what he wants or what he will say at the door",
      rail:"Ask her what Vic is actually like.",
@@ -4537,16 +4538,32 @@ var SCENEBOOK = {
       ["Pia","Talks to his tools like they did the surgery. Thanks the needle. THANKS it. He has been patching the two of us since before either of us would admit we needed it."],
       "Out on the black water the wind moves like it is checking the labels too.",
       ["Pia","He is the kind of man who apologises to furniture and then hides you from a city without blinking. The order of those two facts is the whole of him, and do not let the first one fool you about the second."],
-      "The marsh light ahead holds steady - one lit window doing the work of a lighthouse, if lighthouses worried."]},
-    {ask:"what she thinks he will do when the door opens", key:"door open expect face say greet",
+      "The marsh light ahead holds steady - one lit window doing the work of a lighthouse, if lighthouses worried."],
+     takes:[[
+      ["Pia","Again? Fine. You want the part I left out, and I left it out because it is not funny."],
+      ["Pia","The labels. Everybody thinks the labels are a joke he does. They are not a joke."],
+      ["Pia","A man who has had to leave somewhere in a hurry packs the rest of his life so that a stranger could find the bandages at speed, in the dark, without him there to point. That is what a labelled kettle is. It is a note to whoever comes next."],
+      "The wind puts its shoulder into the reeds and the reeds let it through, being reeds about it.",
+      ["Pia","I worked that out about a year in. I have never said it to him and I am not going to, so neither are you."],
+      ["Pia","He is a man who decided a long time ago to be survivable. Take that in with you and be entirely normal about the kettle."]
+     ]]},
+    {id:"door-face", ask:"what she thinks he will do when the door opens", key:"door open expect face say greet",
      who:"Pia", gives:"a guess, offered as a guess, about which face he will pick",
      holds:"she does not predict the story he tells - that is his to tell",
      rail:"Ask her what he does when he opens that door.",
      plays:[["Pia","He will have heard us at the causeway. So he is in there right now, choosing a face."],
       ["Pia","My guess - and it is a guess - is the one that says nothing is wrong. He does it badly. It is the only thing I have ever seen him do badly. Watch the hands, not the face - the face lies out of kindness and the hands never learned how."],
       "The wind comes off the water and has a look at everyone's coats.",
-      ["Pia","And there will be tea before there are answers. That part is not a guess. That part is legislation."]]},
-    {ask:"whether Pia is scared", key:"scared afraid fear you-ok worried",
+      ["Pia","And there will be tea before there are answers. That part is not a guess. That part is legislation."]],
+     takes:[[
+      ["Pia","You are asking again, which means you are not asking about him."],
+      ["Pia","All right. Here is what I do at a door, since that is the actual question. I go loud. I make it a story before anybody has time to make it a report - the fare, the stairs, the treaty at step sixty. Fast and funny and none of it a lie. Just none of it the size it actually was."],
+      ["Pia","And he lets me. Every time. He stands there letting me be hilarious in a doorway at the wrong end of a night, and somewhere around the second cup he asks one quiet question and the whole thing comes out anyway."],
+      "She says it the way you admit a habit rather than the way you describe one.",
+      ["Pia","So when I start, do not help me. And when he gets to his question, do not answer it on my behalf and do not let me answer it on yours."],
+      ["Pia","That is the only thing I want off you tonight. The rest of it you can leave to the kettle."]
+     ]]},
+    {id:"pia-scared", ask:"whether Pia is scared", key:"scared afraid fear you-ok worried",
      who:"Pia", gives:"she is, and she deals with it by naming distances and times out loud",
      holds:"she will not be handled about it, and being asked twice makes it worse",
      rail:"Ask her if she is scared.",
@@ -4554,8 +4571,17 @@ var SCENEBOOK = {
       "That is how she does it - numbers where the fear would sit, so there is no room at the table.",
       ["Pia","Everybody sensible is scared tonight. The trick is to give it a job. Mine counts distances. Yours can carry the box."],
       ["Pia","Do not ask me twice. Twice makes it real."],
-      "Three hundred and eighty metres to the turn now. The fear, employed, keeps excellent books."]},
-    {ask:"what Nine makes of the marsh", key:"marsh water outside cold dark quiet out-here",
+      "Three hundred and eighty metres to the turn now. The fear, employed, keeps excellent books."],
+     takes:[[
+      ["Pia","I told you not to."],
+      "She does not break stride and she does not reach for a distance, and the missing distance is the loudest thing on the causeway.",
+      ["Pia","Fine. Twice, so it is real. Here it is, and then we go back to metres and neither of us mentions it at the door."],
+      ["Pia","I am not frightened of what is behind us. Behind us is a problem with a shape. I have had a hundred of those, I am extremely good at them, and I would honestly rather be doing one right now than doing this."],
+      ["Pia","I am frightened of that light. Because if that light is wrong - if we walk four hundred metres and it is a lamp somebody left on - then I have taken us to the end of my list. And I have never once in my life been at the end of my list."],
+      "The light out on the marsh does not move, and does not reassure, and is under no obligation to do either.",
+      ["Pia","Two hundred and ten to the turn. Do not touch me and do not be kind about it, I would not survive being handled just now."]
+     ]]},
+    {id:"nine-outside", ask:"what Nine makes of the marsh", key:"marsh water outside cold dark quiet out-here",
      who:"Nine", gives:"she has never been outside anything before - the size of it is the part she cannot get over",
      holds:"she does not say what inside was",
      rail:"Hand on the shard. Ask her what she makes of all this out here.",
@@ -4564,8 +4590,17 @@ var SCENEBOOK = {
       ["Nine","I have never been outside anything before. Is it always this big, and does anyone get used to it, and can you keep your hand there a while."],
       "The marsh spreads out either side of the causeway, doing its enormous quiet arithmetic of water and reeds.",
       ["Nine","The wind touches everything and does not keep any of it. I am thinking about that. I am going to be thinking about that for a long time, I can tell."],
-      "You keep your hand there a while."]},
-    {ask:"what the courier does now, as a person", key:"me what-now who-am-i job work future courier still",
+      "You keep your hand there a while."],
+     takes:[[
+      ["Nine","You asked me this before and I told you it was big. That was not an answer, that was me stalling, and I have had four hundred metres to do better."],
+      ["Nine","It is not the size. It is that none of it is FOR anything. The water is not a corridor. The reeds are not holding anything up. There is a bird out there doing something with no purpose I can find, and nobody has come to stop it."],
+      "The hum goes low and broad and settles in there, working at something.",
+      ["Nine","Where I was, everything was for something. I was for something. I am not going to say more about that tonight, so do not fall silent and wait me out - it will not work, I invented waiting."],
+      ["Nine","I would like to be for nothing. For about an hour. Is that allowed, is there a way of asking for it out here, or do you simply do it and not mention it."],
+      "You tell her that mostly you simply do it, and that it is called a night off, and that people ruin them by explaining them.",
+      ["Nine","...Then this is one. Do not explain it. Keep walking and let the bird get on."]
+     ]]},
+    {id:"what-i-am-now", ask:"what the courier does now, as a person", key:"me what-now who-am-i job work future courier still",
      who:"Pia", gives:"she is blunt: he is what he was this morning minus an address, and that is more than most people lose in one night",
      holds:"no comfort, no plan",
      rail:"Ask her what I am now, if not a courier.",
@@ -4573,8 +4608,16 @@ var SCENEBOOK = {
       ["Pia","But the thing that got up this morning is still walking next to me, and I have seen nights take a lot more than a door."],
       "The causeway boards knock under your boots, counting you both toward the light.",
       ["Pia","Ask me again in a week and there will be a better answer. Tonight's answer is: you are the man carrying the warm thing carefully. As jobs go, I have seen the city hand out much worse."],
-      "Against your ribs, the warm thing hums - very softly, as if trying not to influence the conversation."]},
-    {ask:"whether anyone dies of this", key:"die death killed dangerous kill safe survive",
+      "Against your ribs, the warm thing hums - very softly, as if trying not to influence the conversation."],
+     takes:[[
+      ["Pia","That was about six minutes, not a week. Noted. Persistence is a courier trait, which is a clue, if you want one."],
+      ["Pia","Here is the better answer and it is not a kind one, it is only true. You were never the deliveries. Anybody can carry a box. The city is full of legs."],
+      ["Pia","What you are is somebody people hand things to. That is a whole job and it is on no board anywhere. Look at what happened to you. Out of an entire market of people, somebody in the worst hour of their life picked you, and did not stop to check first, because you have got a face that people give things to."],
+      "The boards knock underfoot. Ahead, the light does its one job with no flair whatsoever.",
+      ["Pia","That is the trade. It never was the route. And I will give you the unkind half now, while it is dark and neither of us has to look at it: it means you get handed the next one as well. And the one after. And not one of them will ask whether you had room."],
+      ["Pia","You will want to learn the word no. I have been meaning to learn it for years. We can be bad at it together."]
+     ]]},
+    {id:"who-dies", ask:"whether anyone dies of this", key:"die death killed dangerous kill safe survive",
      who:"Pia", gives:"the honest street answer - people do, regularly, and she has a rule about not counting",
      holds:"she does not name anyone who has",
      rail:"Ask her if people die of this.",
@@ -4582,8 +4625,17 @@ var SCENEBOOK = {
       "She hands it over the way you hand somebody a fact with the edges filed down: still heavy, just not sharp.",
       ["Pia","The ones who die are mostly the ones who stop moving or start trusting the wrong quiet. We are doing neither. Note our excellent moving."],
       ["Pia","Walk faster. Statistics hate a moving target."],
-      "You walk faster. Somewhere behind, the city keeps its unkept score."]},
-    {ask:"the buns, the coat, the boots", key:"bun food coat boots joke funny nothing eat",
+      "You walk faster. Somewhere behind, the city keeps its unkept score."],
+     takes:[[
+      ["Pia","You asked me that already and I gave you the street answer. You are asking a different question this time, so I will stop being clever at you."],
+      ["Pia","You want to know whether it is going to be you. I cannot tell you that. Nobody can, and anybody who says they can is selling something and the price is you."],
+      ["Pia","What I can give you is the tell, and the tell is not the one you are expecting. It is not a bad feeling. Bad feelings are cheap out here. I have one most Tuesdays and I am still here."],
+      ["Pia","It is when the night turns convenient. The door open that ought to be locked. The road clear that never is. Somebody being kind to you at precisely the moment you needed somebody to be. That is the shape of it. It arrives as a favour, and it is very good at arriving."],
+      "The wind comes off the black water, being convenient about nothing at all, and the causeway goes on being exactly as unpleasant as advertised.",
+      ["Pia","So: suspect luck, never the weather. That is the whole religion and it fits in a sentence, which is the only reason I have kept it."],
+      ["Pia","And I do one other thing, which is not a rule, it is a superstition and I know it is. I say where I am going, out loud, to somebody, every single time. - I am going out to the marsh, to the light, with the two of you. There. It has been heard now."]
+     ]]},
+    {id:"the-coat", ask:"the buns, the coat, the boots", key:"bun food coat boots joke funny nothing eat",
      who:"Pia", gives:"a bit: the contents of her coat, defended item by item",
      holds:"nothing. Free.",
      rail:"Ask what else is living in that coat.",
@@ -4591,8 +4643,17 @@ var SCENEBOOK = {
       ["Pia","Chalk. A whistle that means one thing to four people. A spoon with a history I will tell you when you are older, and I am twelve, so gauge from that how bad the story is."],
       ["Pia","The boots were a gift from a man who owed me a boat. Long story. The coat is the boat."],
       "Somewhere in the lining something clinks against something else, and she pats it like a dog.",
-      "It is possible the coat is carrying her. On the balance of evidence, it is mutual."]},
-    {ask:"what Nine would like to be called", key:"name nine called call number",
+      "It is possible the coat is carrying her. On the balance of evidence, it is mutual."],
+     takes:[[
+      ["Pia","You have asked twice about a coat. All right, you get it properly, and properly means backwards. The interesting list is what is not in here."],
+      ["Pia","No blade. Everybody expects a blade. A blade is a promise you have to keep and I do not make those to strangers. No papers, because papers are somebody else's opinion of you written down in ink. No money worth the name, and before you say anything, that is a lifestyle and not an accident."],
+      ["Pia","No key. That one is on purpose. I have not carried a key in six years and I would like it on the record that I do not miss it, and that the record is welcome to go on doubting me."],
+      "She goes down the lining as she talks, tapping each one in turn like a roll call, and every one of them answers.",
+      ["Pia","This one I do not go into. Left side, low, sewn shut at the top by somebody who could not sew. My da's tobacco tin is in there and there is nothing in the tin. I have checked. I keep checking."],
+      "The tapping stops there, and starts again past it, and the walk goes on, and nobody says anything for about a hundred metres of black water.",
+      ["Pia","Two buns, though. Still non-negotiable. I want that established before we arrive somewhere with opinions about food."]
+     ]]},
+    {id:"the-name", ask:"what Nine would like to be called", key:"name nine called call number",
      who:"Nine", gives:"Nine, and the fact that it is a number and she has decided to keep it anyway",
      holds:"she does not say who numbered her",
      rail:"Ask her, palm on the shard, what she would like to be called.",
@@ -4604,7 +4665,16 @@ var SCENEBOOK = {
       ["Nine","That is not what I said. I said considerably more than that and you handed her the receipt."],
       "Pia says the name again, louder, at nobody in particular, the way you test a bell.",
       ["Nine","...Oh. From in here that felt like being rung. Tell her I liked it. Tell her properly this time."],
-      "The causeway boards knock on. The name, rung once, settles into the family's small ledger of kept things."]}
+      "The causeway boards knock on. The name, rung once, settles into the family's small ledger of kept things."],
+     takes:[[
+      ["Nine","You are asking again. Nobody asks again. Ask again."],
+      "The hum lifts a fraction and holds there, the way a question does when it has decided not to repeat itself.",
+      ["Nine","I have thought about it since the last time you asked, which was recently, so understand that I have thought about it hard rather than long."],
+      ["Nine","I tried some. Privately. In here, where it costs nothing and nobody has to be polite about it. And every one of them was wrong, and it took me ages to work out why, and the reason is this: a chosen one is a thing you do to yourself. I have had a great deal done to me. I am not going to start doing more of it on my own account."],
+      ["Nine","The number came out of in there as well, and I know that. But it is the only piece of that place I would carry out on purpose. Everything else I would leave standing in the weather with the door open."],
+      "Ahead, the light on the marsh keeps not moving. You have passed none of this on and you are not going to, because it was not sent to anybody else.",
+      ["Nine","So: the number, same as before, and do not make a ceremony of it. Do the thing you already do, which is say it as though it were a name. I will manage the rest from in here."]
+     ]]}
    ]}
 },
 
@@ -8523,7 +8593,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.92.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.93.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -24452,6 +24522,32 @@ function verdictMap(){
    A clean map is not proof that the prose is good. It is proof that the prose did not
    accidentally tell the desk somebody died. Those are different claims and only the
    second one is testable, which is why this ledger exists. */
+/* v4.93.0, a1-chase: NOTHING GAINED, NOTHING LOST, NOTHING MOVED - and Book One closes.
+   The causeway out to the marsh, eight cards that had plays and nothing else, now with
+   ids, a second take each, and both landing rows wired. Corpus 4,644 -> 4,697. That is
+   53 new lines of dialogue and the map came back byte-identical: the third clean room
+   in four, and the room where the list had the most to catch.
+   WHERE IT SHOWS, and all three are load-bearing:
+   - The card is called "whether anyone dies of this". Its second take does not contain
+     one word from the death register - no die, no dead, no stopped, no gone, and no
+     number anywhere in it. It answers the question by describing the TELL instead: the
+     night turning convenient, the door open that ought to be locked, somebody kind at
+     exactly the wrong moment. The fear is on the page and the register never is, which
+     is what trap four asks for and the only way this card could have been written twice.
+   - The coat card is an inventory, recited backwards, in a book whose shard lives in a
+     coat. That is trap five's home ground. Every pocket in it gets tapped, named or
+     refused, and not one object in it is put back, slipped in or stowed - the tin stays
+     where it is and the sentence goes round it.
+   - Pia keeps counting, because counting is how she holds fear, and the one number word
+     in this room that is also a person never opens a sentence. It is "Two hundred and
+     ten to the turn", and the first take's "Three hundred and eighty" survives only
+     because "hundred" is on the counted list behind it. Do not lean on that twice.
+   Nine has two cards on the causeway and no body in either: the hum goes low and broad
+   and settles, and lifts a fraction and holds, and that is the whole of her physics.
+   ONE MORE THING THIS ROOM PROVES, which had never been tested: wiring a landing rewrites
+   its rail from a list of strings into a list of objects, and named:Nine's entry at
+   a1-chase/lands0/r0 did not budge. Rail addresses are positional, so the shape of a row
+   can change under them and the map still knows where it is. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
