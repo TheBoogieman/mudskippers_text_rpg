@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.72.3 "The Seams Get Their Own Switch"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.72.4 "Deleted Before It Is Judged"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7376,7 +7376,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.72.3";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.72.4";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -16594,6 +16594,46 @@ function callDM(corrected, tag){
       delete parsed.data.the_end;
       if(window.console && console.warn) console.warn("[mudskippers] refused the_end: the board still has beats left");
     }
+    /* ==== THE SEAM TURN'S OWN TWO RULES (v4.72.3) ====
+       THE BOARD ONLY DEFENDS A FACT IT JUST ASSERTED. seamStamp set the day, the hour
+       and the room moments before this ask went out, and the brief told the DM those
+       were facts already on the player's screen. A reply that sends them back changed
+       is not the family moving - nobody has acted - it is the model retyping a field,
+       and a 32B duly returned VELT for VELDT and moved them into a room one letter off
+       their own. Refused here rather than anywhere broader: an ordinary wild turn moves
+       the family wherever the storyteller likes, because THAT is the storyteller's, and
+       a blanket location fence would be the structure class the wild table stands down.
+       AND THE NIGHT'S NAME, when it sent one - the TONIGHT card's words.
+
+       ...AND IT RUNS HERE, ABOVE EVERY VALIDATOR, WHICH IS THE HALF v4.72.3 GOT WRONG.
+       The first cut sat at the foot of the handler, one line above showScene - so the
+       physics desk and the empty-turn ask judged fields the fence was about to delete,
+       and the first live seam turn spent TWO paid corrections on them: "you sent no
+       choices", and the clock law telling the model its 12:05am was earlier than the
+       12:26am the board had just stamped. A lying correction and a wasted call, on a
+       turn the client had already decided to overrule. This is the same defect the
+       v4.72.1 audit found in the bit channel (its finding B, holdTheDryPath's own
+       deletion billed to the model); the rule it earned is general and is written here
+       so the next one lands right: WHAT THE CLIENT INTENDS TO DELETE, IT DELETES BEFORE
+       ANYTHING IS ALLOWED TO JUDGE IT. */
+    if(seamServing && parsed.data){
+      var moved = [];
+      ["location", "day", "time"].forEach(function(f){
+        if(typeof parsed.data[f] === "undefined") return;
+        var mine = (f === "location") ? $("hud-loc").textContent
+                 : (f === "day") ? $("hud-day").textContent : nowTime;
+        if(String(parsed.data[f]).trim().toUpperCase() !== String(mine).trim().toUpperCase()){
+          moved.push(f + ": \"" + parsed.data[f] + "\" over \"" + mine + "\"");
+        }
+        delete parsed.data[f];
+      });
+      if(moved.length && window.console && console.warn){
+        console.warn("[mudskippers] a seam reply tried to restamp the board - refused: " + moved.join("; "));
+      }
+      if(typeof parsed.data.tonight === "string" && parsed.data.tonight.trim()){
+        seamTonight = parsed.data.tonight.trim().slice(0, 160);
+      }
+    }
     if(lastTurnMud || breachNow){
       /* a bit can never kill him; a sincere breach still cannot kill him THROUGH
          the breach, because the reply is about to be stripped back to the refusal */
@@ -17077,34 +17117,6 @@ function callDM(corrected, tag){
     var eb = $("errbox");
   if(eb && eb.firstChild) eb.innerHTML = "";
     setBusy(false);
-    /* ==== THE SEAM TURN'S OWN TWO RULES (v4.72.3) ====
-       THE BOARD ONLY DEFENDS A FACT IT JUST ASSERTED. seamStamp set the day, the hour
-       and the room moments before this ask went out, and the brief told the DM those
-       were facts already on the player's screen. A reply that sends them back changed
-       is not the family moving - nobody has acted - it is the model retyping a field,
-       and a 32B duly returned VELT for VELDT and moved them into a room one letter off
-       their own. Refused here rather than anywhere broader: an ordinary wild turn moves
-       the family wherever the storyteller likes, because THAT is the storyteller's, and
-       a blanket location fence would be the structure class the wild table stands down.
-       AND THE NIGHT'S NAME, when it sent one - the TONIGHT card's words. */
-    if(seamServing && parsed.data){
-      var moved = [];
-      ["location", "day", "time"].forEach(function(f){
-        if(typeof parsed.data[f] === "undefined") return;
-        var mine = (f === "location") ? $("hud-loc").textContent
-                 : (f === "day") ? $("hud-day").textContent : nowTime;
-        if(String(parsed.data[f]).trim().toUpperCase() !== String(mine).trim().toUpperCase()){
-          moved.push(f + ": \"" + parsed.data[f] + "\" over \"" + mine + "\"");
-        }
-        delete parsed.data[f];
-      });
-      if(moved.length && window.console && console.warn){
-        console.warn("[mudskippers] a seam reply tried to restamp the board - refused: " + moved.join("; "));
-      }
-      if(typeof parsed.data.tonight === "string" && parsed.data.tonight.trim()){
-        seamTonight = parsed.data.tonight.trim().slice(0, 160);
-      }
-    }
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
     showScene(parsed.data, true);
   }).catch(function(e){
@@ -24815,6 +24827,20 @@ function selfTest(){
             if(typeof d.location !== "undefined") seamBad.push("the refused location survived on the reply");
             if(typeof d.tonight === "string" && d.tonight) seamTonight = d.tonight;
             if(!seamTonight) seamBad.push("the DM's TONIGHT line was not harvested");
+            /* ...AND THE FENCE RUNS ABOVE THE VALIDATORS. Found live: with the fence at
+               the foot of the handler, the physics desk and the empty-turn ask judged
+               fields it was about to delete and the first real seam turn spent two paid
+               corrections on them. Positional, so the row asserts POSITION - the fence's
+               own source must come before the validator that bit. */
+            var src = String(window.callDM);
+            var iFence = src.indexOf("a seam reply tried to restamp the board");
+            var iClock = src.indexOf("physicsBreaks");
+            var iChoices = src.indexOf("YOU SENT NO CHOICES");
+            if(iFence < 0) seamBad.push("the seam fence is not in callDM at all");
+            else {
+              if(iClock >= 0 && iFence > iClock) seamBad.push("the seam fence runs AFTER the physics desk");
+              if(iChoices >= 0 && iFence > iChoices) seamBad.push("the seam fence runs AFTER the no-choices ask");
+            }
             /* ...and the card renders it instead of the authored one */
             pendingAsides = [{kind:"aside", tone:"green", text:TEASES["a1-chase"] || "authored"}];
             var feedWas = feedLog.length;
