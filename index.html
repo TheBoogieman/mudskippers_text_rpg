@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.86.0 "Warm Needs Somebody to Have Decided Where You Sit"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.87.0 "Somebody Deciding"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2352,9 +2352,10 @@ var SPINE = [
               ["Pia","That's it, then. That was the last one that was just a box."],
               "The route home goes past the Copper Eel, the way it always has.",
               "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
-       rail:["Keep walking. Do not look twice.",
-             "Ask Pia if she is seeing what I am seeing.",
-             "Off the street. Anywhere with a door."]}],
+       /* wired v4.87.0 */
+       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks","work-was","double-rate"]},
+             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address","why-here","from-down-here"]},
+             {line:"Off the street. Anywhere with a door.", cards:["properly-warm","fare-rain","coat-sound"]}]}],
  landsHard:[{day:"2", time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
        now:"Day 2, late afternoon, opposite the Eel. The fare finished itself without him and the tip was pity.",
        lines:["The box gets where it was going without you having much to do with it, which after everything is almost funny, and nobody laughs.",
@@ -2362,9 +2363,10 @@ var SPINE = [
               ["Pia","Don't do the face. It's money. Money doesn't know why it came."],
               "The route home goes past the Copper Eel, the way it always has.",
               "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
-       rail:["Keep walking. Do not look twice.",
-             "Ask Pia if she is seeing what I am seeing.",
-             "Off the street. Anywhere with a door."]}],
+       /* wired v4.87.0 */
+       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks","work-was","double-rate"]},
+             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address","why-here","from-down-here"]},
+             {line:"Off the street. Anywhere with a door.", cards:["properly-warm","fare-rain","coat-sound"]}]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The recipient recognizes his face from somewhere they will not name, and the handoff curdles.",
         "Mid-route, a checkpoint that was never there before. His old shortcuts belong to someone else now."],
@@ -2399,9 +2401,10 @@ var SPINE = [
               ["Pia","She let us get to the door. I counted. She could've had us at the door."],
               ["Nine","She used my name. Not the shard. My name."],
               "You say it to the room, because it needs saying and she cannot. Nobody has anything to say back, and the three of you sit in a dead building listening to a district that has stopped looking for you."],
-       rail:["Ask Nine what it means that she used the name.",
-             "Ask Pia what she counted.",
-             "Wait. Let the street get bored of us first."]}],
+       /* wired v4.87.0 */
+       rail:[{line:"Ask Nine what it means that she used the name.", cards:["nine-heard","worth-it","nine-ran"]},
+             {line:"Ask Pia what she counted.", cards:["what-she-wants","job-wrong","what-that-was"]},
+             {line:"Wait. Let the street get bored of us first.", cards:["how-long","go-home","pia-afraid"]}]}],
  landsHard:[{day:"2", time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
        now:"Day 2, evening, in a shut laundry. The hunter chose the meeting and the family got out on luck they did not earn.",
        lines:["You get out. The honest version is that she let go of the thread and you fell over backwards, and everyone in this room watched it happen.",
@@ -2410,9 +2413,9 @@ var SPINE = [
               ["Nine","She was not in a hurry. That is the part I keep going back to."],
      "You repeat it for the room. It does not improve on the second telling.",
               "The district outside has stopped looking for you. That is not the same as having lost you."],
-       rail:["Ask Nine why the lack of hurry frightens her.",
-             "Agree with Pia, out loud, that we got lucky.",
-             "Wait. Let the street get bored of us first."]}],
+       rail:[{line:"Ask Nine why the lack of hurry frightens her.", cards:["nine-ran","nine-heard","worth-it"]},
+             {line:"Agree with Pia, out loud, that we got lucky.", cards:["pia-afraid","what-she-wants","go-home"]},
+             {line:"Wait. Let the street get bored of us first.", cards:["how-long","job-wrong","what-that-was"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["She does not chase. She is simply at the next corner too, asking again.",
         "Cutting her signal does nothing. Someone kind tries it, and the family watches the kind option fail."],
@@ -5194,7 +5197,7 @@ var SCENEBOOK = {
    here:["Pia","Nine"],
    never:["Mirren does not appear here","nobody explains what she is"],
    topics:[
-    {ask:"what that was", key:"what was that her thing person woman explain",
+    {id:"what-that-was", ask:"what that was", key:"what was that her thing person woman explain",
      who:"Pia", gives:"the word Choir, and nothing past it, because past it is not hers to hand over",
      holds:"what a Hollow is, and what is done to the people who cannot take the graft",
      rail:"Ask her what that was. The word for it.",
@@ -5202,8 +5205,15 @@ var SCENEBOOK = {
       "She hands it over like a coin she has been keeping in a shoe - past it, nothing: not what they do, not how, not to whom.",
       ["Pia","Everything after that word is other people's to tell, and most of them do not tell it twice."],
       "The laundry's shutters hold the street out. The word sits between you on a folding table, small, heavy, and now yours too.",
-      ["Pia","You will hear more of it. I would rather you heard it from somebody who loves the teller. Tonight you get the word and the warning, and the warning is: stop collecting it. Words like that collect YOU."]]},
-    {ask:"whether Nine heard any of it", key:"nine hear ok you what-did afraid",
+      ["Pia","You will hear more of it. I would rather you heard it from somebody who loves the teller. Tonight you get the word and the warning, and the warning is: stop collecting it. Words like that collect YOU."]],
+     takes:[[
+      ["Pia","The word again. No. I said what I am saying about it."],
+      ["Pia","...I will give you one more thing and it is not the thing you want. It is not a gang and it is not a company and the reason nobody can tell you what it is, is that everybody who could is being extremely careful."],
+      ["Pia","When a whole district is careful about a word in the same way, that is not a rumour. That is a rota."],
+      "She lets that sit in a building with the shutters down and no lights on.",
+      ["Pia","Ask Vic. He will not tell you either, but you will learn something from watching him not tell you."]
+     ]]},
+    {id:"nine-heard", ask:"whether Nine heard any of it", key:"nine hear ok you what-did afraid",
      who:"Nine", gives:"the service voice, which she recognised before anybody said anything",
      holds:"she does not say where she heard it before",
      rail:"Bare hand on the shard: did she hear any of that.",
@@ -5211,8 +5221,15 @@ var SCENEBOOK = {
       "The hum is very small against your palm, a held thing making itself smaller.",
       ["Nine","It is the service voice. Everyone who works the desks uses it. It is trained. It is very good. It is what warm sounds like when nobody is home."],
       ["Nine","- Ask me where I heard it another night. Not tonight. Please."],
-      "You keep your hand where it is. The hum stays small for a long while, and you both listen to the laundry's pipes instead, which have never worked a desk in their lives."]},
-    {ask:"how long they can stay here", key:"stay here long safe time wait rest",
+      "You keep your hand where it is. The hum stays small for a long while, and you both listen to the laundry's pipes instead, which have never worked a desk in their lives."],
+     takes:[[
+      ["Nine","You are asking whether I heard it again. I heard it the first time and I have been hearing it since."],
+      ["Nine","It is a service voice. I want to be precise, because precise is the only thing I have got: it is not that she sounded like a colleague. It is that she sounded like the ROOM."],
+      ["Nine","Rooms like that have one voice and it belongs to whoever is running the shift. I do not know if she is a person doing an impression of the room, or the room wearing a person."],
+      "The pipes tick. Her hum has gone down to almost nothing, which is not calm.",
+      ["Nine","And I would like to say the frightening part out loud once, in here, where it is dark and nobody has to look at anybody: I know that voice the way you know a hand on your shoulder."]
+     ]]},
+    {id:"how-long", ask:"how long they can stay here", key:"stay here long safe time wait rest",
      who:"Pia", gives:"an hour, and the reason it is an hour",
      holds:"no plan for after it is made here",
      rail:"Ask her how long we can stay in here.",
@@ -5220,7 +5237,114 @@ var SCENEBOOK = {
       ["Pia","So: fifty minutes of sitting still, ten of leaving properly. Breathe on the schedule."],
       "The shutters hold the street noise out and the hour in.",
       ["Pia","Sitting still is a skill, by the way. Everyone thinks running is the skill. Running is the exam; sitting still is the coursework. Do the coursework."],
-      "You do the coursework. Somewhere three districts back, a woman who is not a woman checks a list, and the hour, spent properly, buys exactly what it was priced at."]}
+      "You do the coursework. Somewhere three districts back, a woman who is not a woman checks a list, and the hour, spent properly, buys exactly what it was priced at."],
+     takes:[[
+      ["Pia","The hour. We have got less of it than we had when you last asked, which is how hours work."],
+      ["Pia","And I will tell you where the number comes from, since we are sitting here. It is not clever. It is the longest I have ever known a district to stay bored."],
+      ["Pia","Forty minutes is the average. An hour is the record. I am spending the record because I would rather be wrong in this direction."],
+      "She checks the shutter she has already checked, and sits back down in the same place.",
+      ["Pia","When it is gone we walk. Not run - walk. Running is for when somebody can see you, and if somebody can see you the hour was already over."]
+     ]]},
+    /* ---- v4.87.0: six more, and a second take on every card in the room ---- */
+    {id:"pia-afraid", ask:"whether Pia is frightened", key:"you afraid scared frightened ok alright shaking",
+     who:"Pia", gives:"a deflection, and the deflection is the answer",
+     holds:"she does not say yes",
+     rail:"Ask Pia, straight, whether she is frightened.",
+     plays:[["Pia","I am twelve. I am contractually frightened of about nine things at all times and that is before anybody chases us."],
+      "It is a good line. She gets it out fast, the way you get a thing out before your voice can do anything about it.",
+      ["Pia","...I am fine. I am doing the thing where you keep moving and it works, and I would like to keep doing it, and you asking is making it harder."],
+      ["Pia","So. Ask me tomorrow. I will have a better answer tomorrow because tomorrow I will be somewhere with a door that shuts."],
+      "In the dark of the shut laundry her hands are busy with a strap that does not need her, and neither of you mentions that either."],
+     takes:[[
+      ["Pia","You asked me that already and I gave you the twelve joke."],
+      ["Pia","Yes. Obviously yes. I want to be clear it is not the running - the running is fine, the running is Tuesday. It is that she let us get to the door."],
+      ["Pia","Somebody who could have had us and did not is somebody who wanted something more than having us, and I do not know what that is, and not knowing what somebody wants is the whole of being frightened."],
+      "She says it flat and quiet, and then, because she is who she is:",
+      ["Pia","Do not be nice about it. If you are nice about it I will have to be a person about it, and I am at capacity."]
+     ]]},
+    {id:"job-wrong", ask:"what she does when a job goes wrong", key:"wrong bad go-wrong procedure what-now steps plan",
+     who:"Pia", gives:"the checklist, which she is running right now while she recites it",
+     holds:"nothing. It is the most generous thing she does all night",
+     rail:"Ask Pia what you actually do when a job goes wrong.",
+     plays:[["Pia","Four things, in order, and the order is the whole point because the order is what you have instead of a head."],
+      ["Pia","One: get behind something that shuts. Two: work out what they know, not what they want - what they KNOW. Three: tell one person who is not here."],
+      ["Pia","Four is the one everybody skips. Four is: eat something."],
+      "You realise, about a sentence late, that she has done one, two and four already and is currently doing three by telling you.",
+      ["Pia","I am not reciting. I am narrating. There is a difference and you are inside it."]],
+     takes:[[
+      ["Pia","The four things. Right. There is a fifth and I do not say it out loud because saying it out loud is how it gets skipped."],
+      ["Pia","The fifth is: decide, before you are tired, what you will not do. Write it on the inside of your head. Because at four in the morning somebody will offer you a fast way out and you will have no arguments left, only the rule."],
+      "The laundry ticks. Water moves in a pipe that has not carried anything hot in years.",
+      ["Pia","Mine is: I do not give anybody an address. Not a good one, not a bad one, not mine, not yours. I made that rule when I was ten and I have never had to think about it since, which is the entire benefit."],
+      ["Pia","Make yours tonight. Not tomorrow. Tonight, while you are still frightened enough to mean it."]
+     ]]},
+    {id:"go-home", ask:"whether they can go home", key:"home back flat marsh return go-back safe-house",
+     who:"Pia", gives:"the night's real cost, priced out loud, place by place",
+     holds:"she does not say what it means for her",
+     rail:"Ask Pia whether we can go home.",
+     plays:[["Pia","Define home and I will price it. That is not me being clever, that is the actual method."],
+      ["Pia","Your flat: no. Not tonight, not next week. A room somebody has walked to once is a room with a path worn to it."],
+      ["Pia","The boards: no, for a while. Not because they are watched. Because I would be putting your name on a wall in a district where somebody is reading walls."],
+      ["Pia","The marsh: yes. That is the answer. The marsh is yes, and the marsh is hours away, and we are going to sit in a laundry for one of them first."],
+      "Two noes and a yes, and the yes is the one that is not your own front door."],
+     takes:[[
+      ["Pia","Home again. You want the rest of the list."],
+      ["Pia","There is no rest of the list. That is the thing I did not say. I priced the places that are yours, and one of them works, and I did not include anywhere of mine because I do not have anywhere of mine."],
+      "She says it as a correction to an error in the accounts, not as a complaint, which is worse.",
+      ["Pia","I have a mattress in a laundry - a different laundry, before you get ideas about this one - and a crate at Vic's that he calls a room. Those are both places somebody else decided I could be."],
+      ["Pia","So when I say the marsh is yes, I am saying the same thing you are: somebody has decided we can be there. That is all home has ever been. Somebody deciding."]
+     ]]},
+    {id:"nine-ran", ask:"what Nine did while they ran", key:"nine doing during ran chase pocket while what-were",
+     who:"Nine", gives:"what she was doing with all that attention, which is not what you would guess",
+     holds:"she does not say she was frightened",
+     rail:"Hand in against her: ask what she was doing while we ran.",
+     plays:["You get a hand in, in the dark, and she comes up to meet it faster than usual.",
+      ["Nine","Counting. Obviously counting. But not the streets, and not the two of you, though I did those as well."],
+      ["Nine","Her steps. Eleven per turn, then eleven, then eleven, all the way from the market. She was not running. She was WALKING at a speed that arrives."],
+      "You pass on the number, and it lands in the room like a dropped tool.",
+      ["Pia","...Eleven a turn. That is a person out for a walk. That is somebody doing a district on a Tuesday."],
+      ["Nine","Yes. Tell her yes. And tell her the other part, which is that the count never changed once, not going up a stair, not on the causeway. I have not been able to put it down."]],
+     takes:[[
+      ["Nine","You want to know what else I was doing. I would rather you had not worked out that there was an else."],
+      ["Nine","I was deciding what I would say if she caught us. I did the whole thing. Six versions, all of them addressed to somebody who cannot hear me, which is the part that I keep returning to."],
+      "Against your palm the hum flattens out into something that is not quite a note.",
+      ["Nine","Every one of them ended with me asking her to take me and leave the two of you. I did not choose that ending. It was simply where all six arrived."],
+      ["Nine","Do not relay this one. I am telling you because you have your hand in. That is not the same as telling the room."]
+     ]]},
+    {id:"worth-it", ask:"whether Nine is worth it", key:"worth it cost me trouble why-bother deserve",
+     who:"Nine", gives:"the question asked by the thing being carried, flat, with the arithmetic already done",
+     holds:"she does not accept an answer tonight",
+     rail:"Hand in: let her say the thing she has been holding since the stall.",
+     plays:["The hum has been doing something particular for about a mile, and when your hand goes in it does not wait to be asked.",
+      ["Nine","Two people nearly died on a staircase today for a thing that fits in a pocket. I would like to raise that. I have been waiting for a doorway to raise it in."],
+      ["Nine","I am not fishing. I am asking the actual question: is this a good trade. Somebody in this arrangement should be doing the sums and it plainly is not either of you."],
+      "You do not pass it on. It is not that you decide not to - you simply find you have not.",
+      ["Nine","You have not said it out loud. I noticed. That is an answer, and it is not the one I asked for."],
+      "Outside, three districts of a city that has stopped looking for you carry on not looking, and the question sits in the dark with the three of you, unhandled."],
+     takes:[[
+      ["Nine","I am going to ask it again, and this time I would like you to say it to them and not to me."],
+      "You do. You say it out loud in a shut laundry, in her words, and you get all the way to the end of it.",
+      ["Pia","...Right. No. We are not doing this one tonight."],
+      ["Pia","Tell her: nobody at that table did sums. There were no sums. Vic laid a plate for a rock before he knew what she was, and I ran eleven streets before anybody asked me to, and if there had been sums we would have got different answers and I would like it noted that we did not do them."],
+      ["Nine","...That is not an answer to the question I asked."],
+      ["Nine","Tell her I know it is not an answer. Tell her I am keeping it anyway."]
+     ]]},
+    {id:"what-she-wants", ask:"what Pia thinks the woman wants", key:"woman her want after wants why hunting looking",
+     who:"Pia", gives:"a cold read of the hunter from very little, confident and wrong in one place",
+     holds:"she does not say what frightens her about the answer",
+     rail:"Ask Pia what she reckons that woman actually wants.",
+     plays:[["Pia","Retrieval. She wants the thing back in the box it came out of, and she wants it undamaged, and everything she did today is consistent with that."],
+      ["Pia","She did not shout. She did not send anybody up the stairs. People who want a thing intact do not smash the room it is in."],
+      "It is a good read. It is the read of somebody who has watched a lot of people want a lot of things.",
+      ["Pia","Which is the good news, in a horrible way. Somebody who wants it intact is not going to take a building apart to reach it. We are, technically, safe because we are useful packaging."],
+      ["Pia","I hate that sentence. I stand by it."]],
+     takes:[[
+      ["Pia","Retrieval. Yes. I have been sitting here going over it and I want to change one word."],
+      ["Pia","Not retrieval. RECOVERY. Retrieval is a job. Recovery is a thing you do about something of yours."],
+      "She has not moved for a while, which for Pia is the same as pacing.",
+      ["Pia","She used the name. Not the shard - the NAME. You do not use a name for stock. You use a name for somebody you have decided about."],
+      ["Pia","And I do not know what she has decided, and I would very much like to be wrong about all of this, and I have not been wrong about a person yet this year."]
+     ]]}
    ]}
 },
 
@@ -7762,7 +7886,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.86.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.87.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -23589,6 +23713,20 @@ function verdictMap(){
    NOTHING ELSE MOVED across 120 new lines, which is the shape a room of pure conversation
    should leave behind: nobody dies in a doorway, nobody is miscounted, and the one thing
    the room does to the world is put a hand in a pocket. */
+/* v4.87.0, a1-late: ONE ENTRY GAINED, AND FOUR FALSE POSITIVES CAUGHT AND WRITTEN OUT.
+   Nine cards where there were three, second takes throughout, both landing rows wired.
+   Corpus 4,036 -> 4,132. shard:hand GAINED a1-late/Rt6T1p2 - "Against your palm the hum
+   flattens out into something that is not quite a note" - true, the card is a hand in the
+   dark, and the third room running to gain exactly that one entry and nothing else.
+   THE FOUR THE DESK CAUGHT, all in brand-new prose and none of them visible by reading:
+   named:Three twice on Pia counting places ("Three places, two noes and a yes"),
+   named:Five on a numbered list item ("Five: decide, before you are tired"), and breachIn
+   returning "arson" on "will not burn a laundry down to get it" - a sentence whose whole
+   job is to say that nobody is burning anything. Numbers reworded away, and the arson
+   line rewritten to "is not going to take a building apart to reach it".
+   THE PATTERN IS NOW THREE ROOMS OLD AND WORTH NAMING: prose about counting and prose
+   about violence-not-happening are the two shapes that trip these laws, and they trip
+   them in the writer's blind spot every time. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -23596,7 +23734,7 @@ var VERDICT_FIXTURE = {
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
