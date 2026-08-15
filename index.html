@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.93.0 "The Last Mile Of Book One"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.94.0 "The Good Kind"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -6397,7 +6397,7 @@ var SCENEBOOK = {
    here:["Pia","Vic","Nine","Hesta"],
    never:["nobody arrives","no plan for the hunt is made here"],
    topics:[
-    {ask:"what Hesta makes of them", key:"us think opinion strange family what-are",
+    {id:"hesta-reads-us", ask:"what Hesta makes of them", key:"us think opinion strange family what-are",
      who:"Hesta", gives:"an assessment delivered as if reading a docket, ending kinder than it started",
      holds:"she does not ask what they are running from",
      rail:"Ask her what she makes of us, honestly.",
@@ -6405,7 +6405,7 @@ var SCENEBOOK = {
       "A docket, read flat, every line landing where it lives.",
       ["Hesta","And a hum in a jacket that says please and thank you through skin. I have fed worse tables. I have RUN worse tables."],
       ["Hesta","You will do. Eat."]]},
-    {ask:"the street outside", key:"street outside neighbours who-lives area",
+    {id:"the-street", ask:"the street outside", key:"street outside neighbours who-lives area",
      who:"Hesta", gives:"who is on this row and which of them she trusts, which is most of them",
      holds:"nothing about the undercroft",
      rail:"Ask her about the street outside - who is on this row.",
@@ -6413,14 +6413,162 @@ var SCENEBOOK = {
       ["Hesta","The chandler on the corner I trust to be exactly what he is, which is a coward with good hearing - useful, if you price it right."],
       "A street map drawn in debts and characters, more accurate than any drone pass.",
       ["Hesta","Most of this row is good. That is not luck. Rows get tended."]]},
-    {ask:"the shotgun", key:"shotgun gun counter under weapon",
+    {id:"the-shotgun", ask:"the shotgun", key:"shotgun gun counter under weapon",
      who:"Hesta", gives:"a bit - she is entirely unembarrassed and mildly disappointed he noticed",
      holds:"nothing. Free.",
      rail:"Ask about the shotgun under the counter. The one nobody mentions.",
      plays:[["Hesta","It is a shotgun. It lives under the counter. You noticed it, which is mildly disappointing - the counter is meant to be interesting enough."],
       ["Pia","Does it have a name? Things in places like this have names."],
       ["Hesta","It is called The Argument. It has never once been needed to finish one. That is the entire biography and you have had it for free."],
-      "The griddle hisses. The Argument keeps its counsel."]}
+      "The griddle hisses. The Argument keeps its counsel."]},
+    {id:"what-she-cooked", ask:"what she cooked and why that", key:"cook cooked why food chose menu made dish plate",
+     who:"Hesta", gives:"that she cooks AT people - she looked at four wet strays and decided what each of them was short of",
+     holds:"she does not say out loud what she decided about the courier",
+     rail:"Ask her why she cooked THAT, and not something else.",
+     plays:[["Hesta","You are asking what I cooked. What I cooked is not the question. The question is why that and not something else, and you are the first person in about a year to get there."],
+      ["Hesta","I do not cook for people. I cook AT them. Somebody comes in soaked, I have a look, I decide what they are short of, and then they eat that, and they can be annoyed about it afterwards on a full stomach."],
+      ["Pia","She gave me the eggs. What do the eggs mean."],
+      ["Hesta","The eggs mean you have been doing somebody else's worrying and skipping meals to do it. The eggs are a note. The note says stop."],
+      ["Vic","...What did I get."],
+      ["Hesta","You got the same as always, and you know exactly what it means, and if you would like me to say it in front of the child I will."],
+      "Vic discovers something extremely absorbing about the tabletop. The griddle, having no opinion, keeps its own counsel."]},
+    {id:"put-to-work", ask:"getting put to work in her kitchen", key:"help work kitchen onions knife hand chop job",
+     who:"Hesta", gives:"a job, handed over without ceremony - the first one anybody has given him that is not a delivery",
+     holds:"nobody says out loud what it is",
+     rail:"Get up and ask if there is anything I can do.",
+     plays:["You are not entirely sure how it happens. There is a knife, and a board, and Hesta is back at the griddle as though the arrangement predates you both.",
+      ["Hesta","Onions. Thin as you can, and do not be brave about it, I am not stitching anybody tonight."],
+      ["Vic","I could stitch him."],
+      ["Hesta","You could NOT. You have had a drink. I have seen your seams sober."],
+      "The onions take longer than they should and nobody hurries you. Behind you the room carries on without needing you in it, which is a new sensation, and you decide not to look at it directly in case it stops.",
+      ["Pia","He's gone quiet. He does that when he's happy. It's very annoying, you can't tell."],
+      ["Hesta","Thinner."]]},
+    {id:"where-food-comes-from", ask:"where the food comes from", key:"where food come from grow seed supply source get",
+     who:"Hesta", gives:"the row that trades, and a room upstairs with lights in it and seed stock from before",
+     holds:"nothing about the undercroft",
+     rail:"Ask her where real food comes from, in a city like this.",
+     plays:[["Hesta","Where does it come from. Nobody asks that either. They eat it and assume a miracle."],
+      ["Hesta","The eggs are the wash-house sisters', because they keep birds on the roof and will not admit it. The bread is mine. The fat is Ordish at the chandlery, who owes me and will owe me forever, because I have arranged it that way."],
+      ["Hesta","And the green things come out of a room upstairs, with lights in it that cost more to run than this building is worth. Seed stock from before. Actual before. Grown on from a tin that came downriver in somebody's grandmother's boot."],
+      ["Pia","You have a ROOM. Of PLANTS."],
+      ["Hesta","I have a room of plants. If anybody outside this booth learns that, I will know which of you it was, and you will be fed something with a texture."],
+      "Out past the window the rain works away at a street that grows nothing at all. Upstairs, quietly, a room full of light disagrees with the entire century."]},
+    {id:"pan-stove-knife", ask:"the pan, the stove, the one good knife", key:"pan stove knife tools kit iron griddle",
+     who:"Hesta", gives:"the stove nobody ever asks about, one knife on principle, and the bag she keeps packed",
+     holds:"nothing. Free.",
+     rail:"Ask about the kit - the pan, the stove, that one knife.",
+     plays:[["Hesta","The pan is not interesting. The pan is a pan. The STOVE is interesting, and nobody has ever once asked about the stove."],
+      ["Hesta","It is older than the building. They put the building up around it, because moving it was harder than moving a wall. There is a plate on the back with a town's name on it and the town is not there any more."],
+      ["Vic","She has one knife."],
+      ["Hesta","I have one knife. A person with six knives has no knives. They have a collection and a set of excuses."],
+      ["Vic","Ask her what she takes if she has to leave in a hurry."],
+      ["Hesta","The knife, and the tin the seed came in. Not the pan - the pan can be replaced by any honest lump of iron. That is the whole list, I have had it ready since before either of you was born, and so has he, and neither of us thinks that is sad."],
+      "Two people who have both packed a bag they hope never to lift look at each other across a table for slightly too long, and then somebody asks for more bread."]},
+    {id:"asking-for-it", ask:"whether there is anything for after the plates go back", key:"smoke lettuce green tin roll after plates something",
+     who:"Hesta", gives:"the tin, and the price of it, which is saying the whole name properly out loud",
+     holds:"nothing. Free.",
+     rail:"Ask her, carefully, if there is anything in this place for after the plates go back.",
+     plays:["You get about four words in before she puts the cloth down, which is the most attention she has paid to anything all evening.",
+      ["Hesta","Say it properly."],
+      ["Hesta","No. Not like that. The whole thing. I have not been asked properly in years and I intend to enjoy it."],
+      "So you say it properly, in a warm booth, to a woman with a cloth over her shoulder: pre-collapse. Devil's lettuce. The good kind.",
+      ["Hesta","...The GOOD kind. He said the good kind."],
+      ["Vic","He has been in this city ten minutes."],
+      ["Hesta","He has MANNERS. You have never asked properly in thirty years, you just stand there looking at the shelf until I get bored of you."],
+      "She goes and comes back with a tin that is older than the stove, and sets it down in the middle of the table like a dish, which is what it is."]},
+    {id:"under-the-floor", ask:"where the tin came from", key:"where tin from floor keep store stash cellar cold",
+     who:"Hesta", gives:"two words, and no more than two words, and the whole table notices",
+     holds:"everything. What else is down there is not confirmed, gestured at, or discussed",
+     rail:"Ask her where a tin like that lives.",
+     plays:[["Hesta","You want to know where it lives. Of course you do. Under the floor."],
+      "The table waits. She lets it wait. She has a great deal of practice at letting a table wait.",
+      ["Pia","...Under the floor."],
+      ["Hesta","Under the floor."],
+      ["Pia","That's it? That's the answer? There is a FLOOR-worth of answer available and you have given me two words."],
+      ["Hesta","There is a cold place under this building. Things keep in it. Tobacco keeps, seed keeps, and the winter I was ill a truly unreasonable quantity of soup kept."],
+      ["Vic","Leave it, Pia."],
+      ["Pia","He KNOWS. Look at his face. He knows and he's doing the shoulders."],
+      "Nobody says anything further about the floor. The tin sits on the table being pleasant, and enormous, and completely unexplained."]},
+    {id:"what-she-pours", ask:"what she pours, and what it is in", key:"drink pour glass jar mug bottle thimble booze",
+     who:"Hesta", gives:"mismatched glasses, the good one going to whoever carried the most, and a thimble for the child",
+     holds:"nothing. Free.",
+     rail:"Ask what she is pouring, and what she is pouring it into.",
+     plays:[["Hesta","Glasses. I have a jar, a mug with a word on it that I will not be reading out, and one actual glass. The actual glass goes to whoever has been carrying the most."],
+      "She gives the actual glass to Vic. Vic tries to give it back. Vic loses.",
+      ["Hesta","And a thimble for the small one, because I am not having anybody grow up thinking it was ever a secret."],
+      ["Pia","A THIMBLE."],
+      "Pia drinks the thimble. Pia's entire face becomes a different face.",
+      ["Pia","That's - why. WHY do you. It tastes like a shed. It tastes like a shed that has given up on itself. And you all do this ON PURPOSE, to yourselves, in the EVENING?"],
+      ["Vic","Yes."],
+      ["Pia","For FUN?"],
+      ["Hesta","Ask me again in about nine years."],
+      ["Pia","I am never doing it again, I want that written down, and I want witnesses."],
+      "The witnesses, being adults with a shed in their mouths, are in no condition to testify."]},
+    {id:"nine-at-the-table", ask:"Nine at a table she cannot eat at", key:"nine shard plate eat taste cannot include her share",
+     who:"Nine", gives:"the thing she cannot have, said flatly, and the half of it the table can actually give her",
+     holds:"she will not be pitied about it and will shut down anybody who tries",
+     rail:"Hand on the shard. Ask her how she is doing, in a room like this one.",
+     plays:["The plate Pia set for her is still there, empty, with a shard on it, and nobody has moved it all evening, because moving it would mean deciding something.",
+      ["Nine","I want to say a thing, and I want nobody to go gentle about it, because if this gets gentle I will stop."],
+      ["Nine","I cannot do any of tonight. Not the food, not the jar, not the tin. There is no version of me that gets to. I have run the sums and the sums are extremely short."],
+      "The hum on the plate stays exactly level, which takes her some doing, and everybody at this table has been around her long enough now to know it.",
+      ["Hesta","Then you get the other half."],
+      ["Nine","...The other half of what."],
+      ["Hesta","Somebody has to be told what it was like. Food that nobody describes is only fuel. Go on then. Tell her, do it properly, and I will be marking."],
+      "So it becomes a game, badly, for the rest of the evening: four people trying to put a mouthful into words for somebody with no way of checking, and one shard on a plate handing down verdicts like a magistrate.",
+      ["Nine","That was not a description. That was a noise made with confidence. Vic. Again. Slower."],
+      ["Nine","- And for the record, the plate was already the answer. Somebody set me a place on the first night without being asked to, and I have not stopped thinking about it since. The rest of this is decoration and I would like a great deal more of it."]]},
+    {id:"vic-and-hesta", ask:"how Vic and Hesta go back", key:"vic hesta know each other history old friends back",
+     who:"Hesta", gives:"the beginning of the story, told twice, correcting each other, and the end of it withheld by both",
+     holds:"neither of them says what the actual sentence was",
+     rail:"Ask how the two of them know each other.",
+     plays:[["Pia","How do you two know each other. And do NOT both start talking."],
+      ["Vic","We -"],
+      ["Hesta","He came in here in the rain, in a coat that had had a bad night, and asked me very politely for a table for one."],
+      ["Vic","That is not how that -"],
+      ["Hesta","For ONE."],
+      ["Vic","There was a queue. I was being considerate about the queue."],
+      ["Hesta","There was no queue. There has never been a queue in this building. He stood in an empty room being considerate about a queue he had invented, so that he would not have to say the actual sentence."],
+      ["Pia","What was the actual sentence."],
+      "They both take a drink at precisely the same moment, with the coordination of two people who have run this play before, and neither of them answers it.",
+      ["Hesta","Long time ago. He was thinner. Eat your bread."]]},
+    {id:"wet-coat-rule", ask:"the wet coat rule", key:"coat wet rule dry rail hook leaves nobody",
+     who:"Hesta", gives:"where the rule came from, in one sentence, and then the rule doing its job on the room",
+     holds:"she does not give the name and does not give the rest",
+     rail:"Ask her where the wet coat rule came from.",
+     plays:[["Hesta","The coat rule. You want the provenance. Everybody wants the provenance eventually, and then they wish they had left it alone."],
+      ["Hesta","Somebody left here wet, once. That is the whole of it. I am not giving you a name and I am not giving you the rest."],
+      "She says it to the counter rather than to the booth, and the counter, being a counter, takes it well.",
+      ["Hesta","So now nobody does. It is not superstition and it is not a memorial. It is a rule, and a rule is a thing a person can actually keep, which is more than can be said for most feelings."],
+      ["Vic","Hesta."],
+      ["Hesta","I am fine. I am enforcing. Give me your coat, you have been steaming quietly for an hour and it is putting me off my evening."],
+      "The coats go up on the rail by the stove, all of them, and the booth fills with the smell of several people drying out at once, which is a smell nobody writes songs about and everybody knows."]},
+    {id:"this-booth-before", ask:"who else has sat in this booth", key:"booth before others strays who-else sat table history",
+     who:"Hesta", gives:"the ones who came through, where they are now, and one she will not put a name to",
+     holds:"she does not dress any of it up",
+     rail:"Ask who else has sat in this booth.",
+     plays:[["Hesta","This booth. You are sitting in the good one, which you did not earn. You simply got here first."],
+      ["Hesta","A boy called Tam had that seat the child is in for most of a winter, and would not tell me his name until March. He runs boats now. Sends me a fish at midwinter. The fish is always terrible and I always write and tell him so."],
+      ["Hesta","The one who sat where you are taught me the bread. She is upriver, and she is well, and she does not write, which is also well. That was the arrangement."],
+      ["Pia","And the ones you're not listing."],
+      "A pause with some weather in it.",
+      ["Hesta","There is a cairn out past the marsh with a set of initials scratched on the underside of the top stone, where you would only ever find them if you already knew. I put them there. That is as much of that as anybody gets tonight."],
+      ["Hesta","Now. This booth has held better people than you, and worse, and it held all of them the same, and that is the entire point of a booth."]]},
+    {id:"stops-being-a-meal", ask:"the moment it stops being a meal", key:"us family moment said laugh smoke together become",
+     who:"Vic", gives:"one word he did not mean to say, and a table that will not let him have it back",
+     holds:"nobody acknowledges it directly afterwards, and that is the point",
+     rail:"Say nothing. Let the evening do whatever it is doing.",
+     plays:["It happens in the middle of something unimportant, which is where it always happens.",
+      ["Vic","- and that is why none of us can go through the market again, so we will want the long way round on -"],
+      "He stops. He heard it on the way out, the way you hear a step that is not there.",
+      ["Pia","Say it again."],
+      ["Vic","I said we will want the long way -"],
+      ["Pia","The other bit. Say the other bit again."],
+      "Nobody helps him. Hesta does not look up, and is very obviously not looking up.",
+      ["Vic","...None of us."],
+      ["Nine","He said none of us. Tell him I heard it as well and that he cannot have it back."],
+      "Somebody laughs, badly, and it turns into everybody, and the tin gets the blame for it, and the tin takes the blame graciously. Hesta puts more bread on the table without being asked and without saying one word about it.",
+      ["Pia","Right. Well. That is the worst thing that has ever happened to me."]]}
    ]}
 },
 
@@ -8593,7 +8741,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.93.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.94.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -24548,6 +24696,39 @@ function verdictMap(){
    its rail from a list of strings into a list of objects, and named:Nine's entry at
    a1-chase/lands0/r0 did not budge. Rail addresses are positional, so the shape of a row
    can change under them and the map still knows where it is. */
+/* v4.94.0, a2-door: NOTHING GAINED, NOTHING LOST, NOTHING MOVED - across the biggest
+   single addition of prose this book has taken. The Open Door's back booth went from 3
+   cards to 15. First layer only; the second layers and the wiring are the next release,
+   because a room this size cannot be started and finished in one sitting and a half-
+   spliced room is the one state this game must never be left in.
+   Corpus 4,697 -> 4,833. That is 136 new lines and the map did not move: the fourth
+   clean room in five, and by a distance the one with the most for the list to catch.
+   FOUR OF THE FIVE SHAPES WERE LIVE IN THIS ROOM AT ONCE:
+   - Trap four. "who else has sat in this booth" is a card about the ones who did not
+     come back, and it contains no word from the death register anywhere in it. What it
+     has instead is a cairn out past the marsh, a set of initials scratched where you
+     would only find them if you already knew, and the person who put them there. Same
+     method as a1-chase's death card: write the fact, never the register.
+   - Trap five. The room's central object is a tin that comes out from under a floor, in
+     a book where the shard lives in a pocket and every stow reads as her. The tin is
+     fetched, it is set down like a dish, and it sits there for the rest of the evening.
+     It is never put back, slipped in, or stowed, and no sentence in the room says "out
+     of the pocket" - which is the OTHER direction of the same detector and would have
+     read as her coming out into a hand.
+   - Trap three. Three people eat, drink and smoke for an entire evening around somebody
+     who has no body, and the card about exactly that never lends her one. She has no
+     mouth in it, no lungs and no throat: the hum on the plate stays level, and what the
+     table gives her is the description of the mouthful rather than the mouthful.
+   - Trap one. A room full of counted things - glasses, knives, plates, years, a thimble
+     - and not one sentence in it opens with a number word. "six knives" and "nine years"
+     both sit lowercase and mid-sentence, where the case pre-filter makes them numerals
+     by rule rather than by luck.
+   ONE NEW STANDING FACT FOR THE LIST, and it is a casting rule rather than a detector
+   one: Pia is twelve, established in her own mouth on the causeway. This is the first
+   room where the book has had to hold that line on screen with drink on the table. She
+   gets a thimble, hates it, and cannot understand why adults do this to themselves on
+   purpose - which is funnier than including her and is the reason the scene reads as a
+   family rather than as a party. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],

@@ -3,7 +3,8 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.93.0. Book One is finished — all nine rooms are to standard.**
+**Last updated: v4.94.0. Book One is finished. Book Two has started at The Open Door,
+and `a2-door` is HALF BUILT — read "Where a2-door actually is" below before touching it.**
 
 ---
 
@@ -57,6 +58,44 @@ to her. `a1-turn` in the kitchen is the RETURN, and it quotes the causeway out l
 gave it four seconds" / "six, tell her six, I counted"). The kitchen owns *taking the word
 off them* and *the name in three different mouths*; the causeway does not touch either.
 If either room is ever edited, read the other one first.
+
+## Where `a2-door` actually is — HALF BUILT, and that is deliberate
+
+`a2-door` is The Open Door: Hesta's diner, the family's first table, the room the whole of
+Book Two hangs off. At v4.94.0 it has **15 cards with first layers and ids — and no second
+layers, and neither landing wired.** The room-count reads `[15,15,0]`.
+
+It was split on purpose. Twelve new cards plus fifteen second layers plus two landings is
+roughly three times any room in Book One, and the standing law is **never start a room you
+cannot finish**. First layers ship green and the room is playable and warm today; the
+second layers and the wiring are the next release. **Nothing is half-spliced.**
+
+**Next action on this room:** fifteen second takes (all fifteen cards, including the three
+originals — `hesta-reads-us`, `the-street`, `the-shotgun`) and both landing rails wired.
+No new subjects; the Architect ruled all twelve on 2026-08-15.
+
+### The Open Door programme — his brief, 2026-08-15
+
+He wants Hesta's place **as warm as possible**: lots of food and cooking, a smoke session
+(cannabis, called *pre-collapse devil's lettuce, the good kind*, and the courier has to
+ask for it), some drinking, peak banter, and **this is where the family really forms**.
+**10–15 cards for every room at that address.** Three rooms are there:
+
+| room | what it is | state |
+|---|---|---|
+| `a2-door` | the back booth, the first meal | 15 cards, first layers only |
+| `a2-chassis` | "the cook" — the kitchen in the small hours | 3 cards, untouched |
+| `a2-law` | "the same pan" — bacon first, bread after | 3 cards, untouched |
+
+**Two castings he ruled that bind all three rooms:**
+
+1. **Pia is twelve** and says so in her own mouth on the causeway. She gets a thimble,
+   hates it, and cannot understand why adults do this to themselves on purpose. She does
+   not smoke. She roasts everybody all evening and that is the joke — a found family
+   having a silly time inside something serious, and **the contrast is the point**.
+2. **Seven does most of the cooking and recites poems** — some land, some do not, and
+   there is laughter throughout. **Seven is not in `a2-door`**; he arrives at `a2-seven`
+   and gets hands at `a2-chassis`. The poems belong in `a2-chassis` and `a2-law`.
 
 ## Next: Books Two and Three — RULED: pick-list every room
 
