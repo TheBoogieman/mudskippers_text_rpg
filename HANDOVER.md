@@ -76,12 +76,25 @@ session (cannabis, called *pre-collapse devil's lettuce, the good kind*, and the
 has to ask for it), some drinking, peak banter, and **this is where the family really
 forms**. **10–15 cards for every one of these rooms.**
 
-**Geography, twice corrected — read this before moving anything else.** `a2-door` is The
-Open Door. `a2-ground` is the flooded undercroft **below the old exchange house**, which is
-NOT Hesta's cellar — two different underneath-places, and only hers is dry. `a2-chassis`
-moved into Hesta's back room at v4.97.0. `a2-law` is still the safehouse kitchen on the
-marsh. The warmth is not tied to a building — it is tied to Hesta being in the room and a
-pan being on, and she is in every one of them.
+**Geography — got wrong twice in conversation, so here it is from the text itself.**
+
+The whole row sits on **one drowned basement**, and it is not two places. Hesta's own card
+in `a2-ground` says it: *"A market floor, when my grandmother ran the row. Then the water
+table had opinions, and the city agreed to lose."* The teeth of that beat say what is under
+the water: *"Flat water over a market floor means stalls under it. Stall frames, hooks,
+cellar mouths. It is not a floor, it is a lid."*
+
+So: **the old market is the lid, the stalls' cellars are the rooms off it, and some are
+drowned and some are not.** `a2-ground` is the flooded half; `a2-hand` opens at the dry end.
+**Hesta's cold dry cellar under The Open Door is one of those rooms** — which is why things
+*keep* in it, and why Vic can stand in the flooded part and say something under this street
+goes with it. He is nearly pointing at it.
+
+Room by room: `a2-door` is the back booth. `a2-ground` is the flooded undercroft below the
+old exchange house, on the same row. `a2-chassis` moved into Hesta's back room at v4.97.0.
+`a2-law` is still the safehouse kitchen out on the marsh. The warmth is not tied to a
+building — it is tied to Hesta being in the room and a pan being on, and she is in all of
+them.
 
 **THE CHASSIS LIVES UNDER HESTA'S FLOOR (ruled 2026-08-15, shipped v4.97.0).** Vic built it
 and has kept it in the cold dry space under The Open Door for years. She was never told
@@ -96,6 +109,23 @@ in the water, with a hunter between them and that street; they learn WHAT it is 
 | `a2-door` | the back booth, the first meal | The Open Door | **DONE — 15 cards** |
 | `a2-chassis` | "the cook" — a new body, floorboards up | **The Open Door** | 3 cards, untouched |
 | `a2-law` | "the same pan" — bacon first, bread after | safehouse | 3 cards, untouched |
+
+**The Book Two timeline, so nobody has to re-derive it.** Days and places are authored on
+the beats; this is just them written out.
+
+| day | beat | where | note |
+|---|---|---|---|
+| 9 | `a2-door` | the back booth | **smoke session one.** Pia, Vic, Nine, Hesta |
+| 10–11 | `a2-ground` | the flooded undercroft | Vic says something of his is under the street |
+| 11 | `a2-hand` | dry end → the marsh | |
+| 11 | `a2-mirren` | the cairn | |
+| 14 | `a2-seven` | causeway → the shack | **Seven arrives**, dying inside a crude frame |
+| 15 | `a2-chassis` | Hesta's back room, boards up | **Seven gets hands. Smoke session two** |
+
+**Seven cannot be at the first session** — it is day 9 and the family has not met him, and
+that night's job is the core four forming. He gets the second one instead, five days later,
+in the same building with the same tin: a body about two hours old, the dying frame he
+arrived in nearby, and the open hole the body came out of in the floor beside the table.
 
 **Three castings he ruled that bind all of them:**
 
