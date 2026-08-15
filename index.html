@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.87.0 "Somebody Deciding"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.88.0 "A Morning With Nothing In It"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2452,9 +2452,10 @@ var SPINE = [
               ["Vic","And before you ask how a way out found a house nobody's supposed to know about — it came through my old contacts. Which means somebody I used to trust knows where I sleep. That's a knife too, son. Everything is, out here."],
               "He looks at the road instead of at you for a length of time that stops being accidental.",
               "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
-       rail:["Ask him what is on the road.",
-             "Ask him why he keeps looking at it.",
-             "Go in and check the shutters."]}],
+       /* wired v4.88.0 */
+       rail:[{line:"Ask him what is on the road.", cards:["road-lights","why-looking","would-have-driven"]},
+             {line:"Ask him why he keeps looking at it.", cards:["why-looking","road-lights","papers-now"]},
+             {line:"Go in and check the shutters.", cards:["shutters","nine-alright","marsh-noise"]}]}],
  landsHard:[{day:"2", time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
        now:"Day 2, late, on the porch. The offer expired unanswered. That is an answer, and the house is being very normal about it.",
        lines:["Nobody answers it. At some point it stops being an offer and becomes a thing that happened, and the papers go back in the envelope without ceremony.",
@@ -2462,9 +2463,9 @@ var SPINE = [
               ["Pia","For the record, not answering is answering. I read that somewhere."],
               ["Vic","She reads too much."],
               "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
-       rail:["Ask what is on the road.",
-             "Say the thing nobody said in there.",
-             "Go in and check the shutters."]}],
+       rail:[{line:"Ask what is on the road.", cards:["road-lights","why-looking","shutters"]},
+             {line:"Ask her the thing nobody answered in there.", cards:["missing-noun","clean-life","nine-alright"]},
+             {line:"Go in and check the shutters.", cards:["shutters","papers-now","marsh-noise"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Nine"],
  press:["The offer improves. Whoever is making it wants him gone more than they want her found, and that fact means something.",
         "Nine hears all of it through his ribs, and says nothing, which is worse."],
@@ -5410,7 +5411,7 @@ var SCENEBOOK = {
    here:["Pia","Vic","Nine"],
    never:["the offer is not re-opened","nobody arrives"],
    topics:[
-    {ask:"what happens to the papers now", key:"papers burn keep drawer what-now offer gone",
+    {id:"papers-now", ask:"what happens to the papers now", key:"papers burn keep drawer what-now offer gone",
      who:"Vic", gives:"where they go, and that he is not throwing them away yet",
      holds:"he does not say why he is keeping them",
      rail:"Ask him what happens to the papers now.",
@@ -5419,8 +5420,15 @@ var SCENEBOOK = {
       "Why a man keeps a door he watched somebody walk past - the kitchen does not ask, and neither do you, tonight.",
       ["Pia","Third drawer. Noted. I am not saying I will ever check it is still there. I am saying I know where it lives."],
       ["Vic","Everything in this house lives somewhere. That is the whole filing system: things live where they live, and the drawer is where second chances sleep."],
-      "The drawer closes with the small wooden authority of a decision postponed properly."]},
-    {ask:"whether Nine is alright", key:"nine ok alright you heard fine",
+      "The drawer closes with the small wooden authority of a decision postponed properly."],
+     takes:[[
+      ["Vic","The drawer. Still the drawer. It has not developed opinions overnight."],
+      ["Vic","You want to know why they are not ash. Fair. I have been asking myself the same thing and I have an answer I do not much rate."],
+      "He is not looking at the drawer. He is looking at the road, which is where he has been looking all night.",
+      ["Vic","A thing you get rid of in a hurry is a thing that frightened you. A thing you file is a thing you have measured. I would rather be a man who measured it."],
+      ["Vic","That is the answer I am giving. It is not the whole answer. I am aware of that, and so, apparently, are you."]
+     ]]},
+    {id:"nine-alright", ask:"whether Nine is alright", key:"nine ok alright you heard fine",
      who:"Nine", gives:"that being discussed is not new to her, said as if it is a small thing",
      holds:"she does not say what is",
      rail:"Palm on the shard, quietly: is she alright.",
@@ -5428,8 +5436,15 @@ var SCENEBOOK = {
       "She says it the way you report a small fact about the weather somewhere else.",
       ["Nine","What is new is that this time somebody's hand was on me the whole way through it. I am keeping that part."],
       ["Nine","The rest of it - the door, the noun, the drawer - I have filed under nights that ended at home. It is a new file. I opened it this week. It is doing well."],
-      "The hum settles under your palm, a small engine idling in harbour, and the porch holds the two of you and the marsh's enormous dark in roughly equal measure."]},
-    {ask:"the marsh, the noise, the cold", key:"marsh water noise cold night weather quiet",
+      "The hum settles under your palm, a small engine idling in harbour, and the porch holds the two of you and the marsh's enormous dark in roughly equal measure."],
+     takes:[[
+      ["Nine","You are asking again. I gave you the furniture answer. It was true, and it was also a way of getting past you."],
+      ["Nine","Here is the actual mechanism, since we are on a cold porch and nobody is watching. When people talk about a thing in front of the thing, they leave gaps. Small ones. Half a second before a word, where they choose a kinder one."],
+      ["Nine","I hear the gaps. I have always heard the gaps. I could tell you every place in that room tonight where somebody swapped a word out for my sake, and there were more of them than you would think, and every one of them was kind."],
+      "The hum goes down to almost nothing, and then comes back up a little steadier than it went.",
+      ["Nine","The kindness is not the problem. The problem is that I have a file of them going back a great deal further than you have been alive, and tonight is the first night the file has had anybody in it who was holding me while they did it."]
+     ]]},
+    {id:"marsh-noise", ask:"the marsh, the noise, the cold", key:"marsh water noise cold night weather quiet",
      who:"Pia", gives:"a bit - she has a theory about the marsh and it is wrong",
      holds:"nothing. Free.",
      rail:"Ask her what that noise out there even is.",
@@ -5438,7 +5453,134 @@ var SCENEBOOK = {
       ["Pia","It is a lung condition, Vic. Respect the diagnosis."],
       ["Vic","You cannot diagnose a wetland."],
       ["Pia","I can and I have and it is CHRONIC. It wheezes all night and refuses treatment. Classic marsh."],
-      "The marsh, wheezing, declines to comment - and the porch, for one clean minute at the end of a heavy night, is just three people and a hum listening to bad weather be bad weather."]}
+      "The marsh, wheezing, declines to comment - and the porch, for one clean minute at the end of a heavy night, is just three people and a hum listening to bad weather be bad weather."],
+     takes:[[
+      ["Pia","Still wheezing. Still chronic. Nothing has changed clinically."],
+      ["Vic","It is the reed channels. There is a tide table on the back of the door. It is a piece of paper with the actual times printed on it."],
+      ["Pia","A tide table is what a marsh WANTS you to have. Have you considered that."],
+      ["Vic","...No."],
+      ["Pia","Well then."],
+      "Vic looks at you with the face of a man who has been losing this argument since before you turned up and has made his peace with the score.",
+      "Somewhere under all of it the water goes in and out of the reeds the way it has since long before anybody built a porch to sit on and be wrong about it."
+     ]]},
+    /* ---- v4.88.0: seven more on the porch, and a second take on every card ---- */
+    {id:"road-lights", ask:"what those lights on the far bank are", key:"lights road bank far water out-there order what-are moving",
+     who:"Vic", gives:"a careful man's observation, and the one word he will not put to it",
+     holds:"he does not say what has a list",
+     rail:"Ask him what those lights on the far bank are.",
+     plays:[["Vic","Channel lights. A boat wants the channel, it puts a light on, and the next one down answers it. That is how it has worked out here since before you were carried anywhere."],
+      ["Vic","Those are not answering anything. Nobody has asked them for anything. They are simply coming on, in order, at the same distance apart, all the way down the bank."],
+      "He has been watching them long enough for his tea to have gone the colour of the weather.",
+      ["Vic","A light that comes on because a boat asked is a light with a person behind it. A light that comes on in order is a light with a LIST behind it."],
+      "He does not put a name to what has a list. Neither do you. Out on the water the next one comes on, exactly where the one before it said it would."],
+     takes:[[
+      ["Vic","Still out there. I have been timing the gap, which is a thing to do with your hands."],
+      ["Vic","A tide moves a light at a tide's speed and it is never the same twice, because water is not organised. That gap has not changed once all night."],
+      "He says the next part to the porch rail rather than to you.",
+      ["Vic","An even gap means feet. Somebody is walking that bank and putting them on as they go, and they are in no rush whatsoever, and I have met exactly one thing in my life that was in no rush."],
+      ["Vic","And I am not going to say what, because Pia is the other side of that window pretending to be asleep and she has had a night."]
+     ]]},
+    {id:"why-looking", ask:"why he keeps looking at the road", key:"looking road watching why keep eyes door worried staring",
+     who:"Vic", gives:"the sum he has been doing about his own front door",
+     holds:"he does not say he has decided anything",
+     rail:"Ask him why he keeps looking at the road.",
+     plays:[["Vic","Because a way out found a house that nobody is supposed to be able to find."],
+      ["Vic","There is a short list of people who could have walked a set of papers onto this porch. I could write it on a beer mat. And every single name on it is a name I would have handed the key to."],
+      "He says that evenly, the way you read out a number you have already checked twice.",
+      ["Vic","So I am sat here doing the only sum available. Which of them, and how long ago, and whether they knew what they were passing on when they passed it."],
+      ["Vic","And I keep looking at the road because the road is where an answer to a question like that turns up. It does not write ahead."]],
+     takes:[[
+      ["Vic","The road again. Sit down, then, if you are going to be young at me."],
+      "He does the thing with his hands that means he has been composing something and has decided to simply say it.",
+      ["Vic","The board under the third post lifts. There is a bag under it with the boat keys, and money that is not clever money, and a route on paper, because paper has never once needed charging."],
+      ["Vic","If a night comes where I tell you to go, you go. Not after me. Not round the back for me. You take the girl and the rock and you go, and you do not make it a discussion, because I will not have the time to win it."],
+      "It is delivered exactly like the warranty for the kettle. Same voice, same drawer, same man.",
+      ["Vic","Do not put a face on. I am an old man who lives on a marsh. Knowing where the bag is, is housekeeping."],
+      "He goes back to the road. You do the arithmetic he has not asked you to do: he has known where that bag was for a great deal longer than tonight, and tonight is the night he told you."
+     ]]},
+    {id:"shutters", ask:"the shutters, and the order he does them in", key:"shutters shut windows close house order ritual lock night check",
+     who:"Vic", gives:"the order, and the reason for the order, freely",
+     holds:"nothing. He likes being asked",
+     rail:"Go in and do the shutters with him.",
+     plays:["You do them together, which turns out to be a two-person job that he has been doing alone for years.",
+      ["Vic","Seaward one first. Always. You do the one you cannot see from inside before the ones you can, because the ones you can will nag you and the one you cannot will not."],
+      ["Vic","Then the road side, both of them. Then the kitchen, last, because the kitchen is where a man ends up and you should finish where you are going to be standing."],
+      "He runs a thumb along a catch that does not need it.",
+      ["Vic","That is not superstition, before you start. That is the order that stops you standing in a dark kitchen at midnight wondering about a window."],
+      "Then he does the seaward one again. He does not mention it, so neither do you."],
+     takes:[[
+      ["Vic","We did these. I am aware we did these. Humour me."],
+      "Doing a job twice with somebody is a different thing from doing it once, and quieter.",
+      ["Vic","A shutter has never stopped anybody who wanted in. That is not the point of a shutter. The point of a shutter is that the house is closed now, and if the house is closed then the day is over, and if the day is over then a person is allowed to sit down."],
+      ["Pia","He does them wrong. Kitchen first. Kitchen is the one with the gap."],
+      ["Vic","There is no gap."],
+      ["Pia","There is a gap and I have had a folded receipt in it since Tuesday and neither of you has noticed, and I would like that on the record."],
+      "There is, when you go and look, a folded receipt in it."
+     ]]},
+    {id:"missing-noun", ask:"about the noun nobody said", key:"noun where whose hands set-down question answer nobody said",
+     who:"Nine", gives:"what the silence after her question told her",
+     holds:"she does not say that it frightened her",
+     rail:"Hand on the shard: ask her about the noun nobody said.",
+     plays:["Your palm goes flat against her and the hum comes up at once, which means she has been waiting.",
+      ["Nine","I asked where, and into whose hands, and I would like to be clear that nobody in that room was being cruel. They did not answer because they did not know."],
+      ["Nine","Which is the whole of it. Somebody wrote an offer with a destination inside it, did not put the destination in the offer, and sent it to a house where three people were going to read it out loud."],
+      "The marsh gets on with being the marsh. Under your hand she is doing something that is not quite a note.",
+      ["Nine","A person who leaves the destination out is a person for whom the destination is the point. That is not a suspicion. That is grammar."]],
+     takes:[[
+      ["Nine","The noun. Yes. I have a guess and I am not going to give it to you, because a guess in a house this tired is a fact by morning."],
+      ["Nine","I will give you the shape of it instead. It is not a person's hands. It is a place's hands - somewhere with a shelf, and a list of what is on the shelf, and somebody whose entire job is the list."],
+      "You do not pass any of that on. Pia is asleep against the doorframe and Vic is looking at the water, and you simply hold it, on a porch, in the dark.",
+      ["Nine","You are not relaying that one. I can feel you not relaying it."],
+      ["Nine","Good. Keep it. There is a version of tonight where somebody says that sentence out loud in front of a twelve year old, and I would rather live in this one."]
+     ]]},
+    {id:"would-have-driven", ask:"whether he would really have driven you", key:"drive driven really would car route take-me go coast far",
+     who:"Vic", gives:"the actual drive, planned to the turn, with the food stop in it",
+     holds:"he does not say when he planned it",
+     rail:"Ask Vic if he would really have driven you.",
+     plays:[["Vic","Out before light. Not the causeway - the long way round the top of the water, because the causeway is one road and one road is a place to be waited on."],
+      ["Vic","Food at the pumps past the reed cut. They do an egg thing at that hour which is a crime and exactly what you want."],
+      "He is not inventing this. You can hear the difference between a man making something up and a man reading it off the inside of his own head.",
+      ["Vic","Then up through the cut and out, and I would have had you at the coast by the middle of the afternoon, and been home by dark, and Pia would have been furious about both of those separately."],
+      ["Vic","So yes. I would have driven you. I have never once said a thing like that and not meant it, and I am not going to start on a porch."]],
+     takes:[[
+      ["Vic","The drive. Right. There is a bit of it I left out and you have come back for it, which serves me."],
+      ["Vic","There is a lay-by after the cut where the road turns and you get water on both sides of you. It is the last place a person can still change their mind. After that it is one direction until the coast."],
+      ["Vic","I would have stopped there. Said nothing. Given you a minute with the engine off, and then driven whichever way your face went, and never mentioned it again as long as I lived."],
+      "The marsh does what the marsh does. He has said all of that as though it were a route, which is how he says everything that costs him.",
+      ["Vic","And before you ask when I worked it out - the night the papers came. Not tonight. I have had that lay-by in my head for two days like a stone in a boot."]
+     ]]},
+    {id:"pia-would", ask:"what she would have done with the papers", key:"pia you would-have taken done papers what-if choice her",
+     who:"Pia", gives:"an instant answer, and then a long careful taking of it back",
+     holds:"she will not tell him what to do",
+     rail:"Ask Pia what she would have done with those papers.",
+     plays:[["Pia","Taken it."],
+      "No pause at all. It is out before the question has finished, which is its own piece of information.",
+      ["Pia","...And now I am going to unsay that, because I have had a think and it was a rubbish answer."],
+      ["Pia","Nobody has ever put papers in front of me. So I have an opinion about a door that has never once been opened for me, and an opinion like that is worth what it cost, which was nothing."],
+      ["Pia","Strike it. I am not telling you what to do with your door. I have never had one and I would be guessing loudly."]],
+     takes:[[
+      ["Pia","You are still on the papers. Fine. I have a better answer than the rubbish one."],
+      ["Pia","The question is not whether I would take it. The question is whether I could put a thing down. And I know the answer to that one, because I did it once, on purpose, and I am not saying what it was."],
+      "She has her arms round her knees on a cold porch and is being, for about a sentence, exactly twelve.",
+      ["Pia","It was the right call. Everybody agreed it was the right call. I still think about it more than I think about anything else that has ever happened to me."],
+      ["Pia","That is not advice. Do not take it as advice. That is the receipt, and I am showing you the receipt because somebody handed you one tonight and you ought to know what they weigh after."]
+     ]]},
+    {id:"clean-life", ask:"what she heard while he was thinking about it", key:"heard thinking picture imagine coast life clean morning you-thought",
+     who:"Nine", gives:"what came through his hand while the room talked about a coast",
+     holds:"she does not say whether she wanted him to take it",
+     rail:"Hand in: let her say what she heard while you were thinking about it.",
+     plays:["The hum has been doing something small and steady for a while, and when your hand goes in it does not change, which is how you know she meant you to find it like that.",
+      ["Nine","Your hand was on me the whole time they were talking about the coast. I would like to tell you what came through, and then I would like to stop talking about it."],
+      ["Nine","It was not a coast. You did not picture a coast even once. You pictured a morning with nothing in it. No route, no weight in the pocket, nobody owed anything, and a window that somebody else was in charge of."],
+      "You had not known that was what you were doing. It is a strange business, being told the inside of your own head by something you are holding.",
+      ["Nine","It was a good picture. That is the part I want said out loud. It was a GOOD picture, and I could not argue with it, and I did not try."]],
+     takes:[[
+      ["Nine","The morning with nothing in it. I have thought about it since and I have a request, and you are not going to like the shape of it."],
+      ["Nine","Picture it again. Deliberately. Not tonight - some ordinary week when nothing is chasing anybody, and then again after that."],
+      ["Nine","Because a man who can still picture it is a man who is choosing. A man who has been worn down until he cannot picture it any more is not choosing. He is what is left. I have been carried by what is left before."],
+      "Out past the causeway the lights carry on doing whatever it is they are doing. Her hum is very level, the way a voice is level on purpose.",
+      ["Nine","So keep the morning. Take it out sometimes. I would rather be carried by somebody who has somewhere else to be."]
+     ]]}
    ]}
 },
 
@@ -7886,7 +8028,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.87.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.88.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -23727,6 +23869,23 @@ function verdictMap(){
    THE PATTERN IS NOW THREE ROOMS OLD AND WORTH NAMING: prose about counting and prose
    about violence-not-happening are the two shapes that trip these laws, and they trip
    them in the writer's blind spot every time. */
+/* v4.88.0, a1-exit: ONE ENTRY GAINED, ONE FALSE POSITIVE CAUGHT, AND THE FOURTH ROOM
+   RUNNING TO LEAVE EXACTLY THAT SHAPE BEHIND. Ten cards on the porch where there were
+   three, a second take on every one, both landing rows wired. Corpus 4,132 -> 4,245.
+   shard:hand GAINED a1-exit/Rt6p0 - "Your palm goes flat against her and the hum comes
+   up at once, which means she has been waiting" - the missing-noun card opens with a
+   hand in, so the detector is agreeing with the scene rather than arguing with it.
+   THE ONE THE DESK CAUGHT: breach fired on "which is her equivalent of clearing a
+   throat", written of Nine's hum. The hedge does not save it. The physics desk will not
+   give the rock a throat and it is right to refuse, in this beat above all others - the
+   whole night is about her being discussed as a thing in her own hearing, and a narrator
+   who quietly lends her an anatomy is doing the opposite of the work. Rewritten to
+   "comes back up a little steadier than it went", which says the same and owes nobody
+   a body.
+   A THIRD SHAPE FOR THE LIST, then, beside counting and violence-not-happening: BODIES
+   LENT TO NINE BY FIGURE OF SPEECH. She has no throat, no breath, no shoulders to
+   shrug. Every one of those reads as a breach, and every one of them arrives inside a
+   sentence that felt harmless while it was being written. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
@@ -23734,7 +23893,7 @@ var VERDICT_FIXTURE = {
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
+  "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };

@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.87.0 (`287d189`).**
+**Last updated: v4.88.0.**
 
 ---
 
@@ -37,10 +37,11 @@ loop up from this file alone.*
 | `a1-pack` | 7 | Vic's shack. Hands, the causeway walk, the open favour |
 | `a1-fare` | 11 | The doorway. Deepest room in the book; eight of eleven are Pia |
 | `a1-late` | 9 | The shut laundry. Pia frightened, the fifth rule, "somebody deciding" |
+| `a1-exit` | 10 | The porch. Lights on the far bank, the lay-by, the third Vic death plant |
 
-**Next: `a1-exit`**, then `a1-carried`, `a1-turn`. Then Books Two and Three (24 rooms).
+**Next: `a1-carried`**, then `a1-turn`. Then Books Two and Three (24 rooms).
 
-## The two traps that catch me EVERY room
+## The three traps that catch me EVERY room
 
 Written into the fixture ledger as well. Both are invisible when reading; only the sweep
 finds them:
@@ -52,6 +53,10 @@ finds them:
 2. **Violence that is NOT happening.** `breachIn` matched "arson" on *"will not burn a
    laundry down"* — a sentence denying it. **Avoid the verb entirely**; rewrite to "take a
    building apart".
+3. **Bodies lent to Nine by figure of speech.** `breach` fired on *"her equivalent of
+   clearing a throat"*. The hedge does not save it — she has **no throat, no breath, no
+   shoulders to shrug, no eyes to close**. Describe the hum instead: it steadies, it
+   flattens, it goes down and comes back up.
 
 Also: **do not name a character before the player has met them.** Pia said "Hesta's lot"
 in Book One and the desk correctly called it summoning an off-stage person.
