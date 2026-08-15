@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.75.0 "The Short Version"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.76.0 "Which Side of the Fork"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -3520,7 +3520,8 @@ var SPINE = [
        now:"Afternoon at the listening post. The family has heard the machine being genuinely kind, all the way through.",
        lines:["The feed goes quiet and nobody reaches over to shut it off.",
               "The difficult part is not that she was cruel. The difficult part is that she was not, and everyone in this room now has to carry that around.",
-              ["Seven","She sounded like she meant it. I know what meaning it sounds like. That's — I'd know."],
+              {holder:"Seven", who:"Seven", text:"She sounded like she meant it. I know what meaning it sounds like. That's — I'd know."},
+              {holder:"Nine", relay:true, text:"Seven says she sounded like she meant it, and that he of all of them would know. You give the room the first half and not the second, because the second half is his and you are not sure it is yours to hand out."},
               ["Three","She did mean it. That is not the argument. The argument is what she was told meaning it required."],
               "Vic has been standing in the doorway for most of it and is the only one who has not said a word."],
        rail:["Ask him why he is so quiet.",
@@ -3530,7 +3531,8 @@ var SPINE = [
        now:"Afternoon at the listening post. Her kindness reached them secondhand, quoted, already argued about.",
        lines:["You do not hear it. You hear about it — from somebody who heard it from somebody, with the good part quoted and the rest summarised.",
               "The room spends an hour disagreeing about a recording half of them have not heard.",
-              ["Seven","Can we just — can we listen to it? Instead of this?"],
+              {holder:"Seven", who:"Seven", text:"Can we just — can we listen to it? Instead of this?"},
+              {holder:"Nine", relay:true, text:"Seven asks, three times, whether they could simply listen to it instead of this. You relay it once, late, into a gap that has already closed, and it lands as an interruption rather than as the reasonable thing it was."},
               ["Three","There is nothing to listen to. That is what I have been saying for an hour."],
               "Vic has been in the doorway for most of it and is the only one who has not said a word."],
        rail:["Go and find the recording.",
@@ -3578,7 +3580,8 @@ var SPINE = [
        lines:["It comes in pieces, between other things, and every piece lands on a room that is already doing something else.",
               "By evening you have most of a founding and nowhere to have put any of it.",
               ["Hesta","We didn't sit with it. I want to be clear that we didn't sit with it, and that it will come back."],
-              ["Seven","Is that — does that happen? Things coming back?"],
+              {holder:"Seven", who:"Seven", text:"Is that — does that happen? Things coming back?"},
+              {holder:"Nine", relay:true, text:"Seven wants to know whether that happens, things coming back. It is a small question and you make it smaller getting it out."},
               ["Hesta","Always."],
               "Vic asks you to come outside, in the voice people use when they have already decided to say the whole thing."],
        rail:["Go outside with him.",
@@ -3672,8 +3675,10 @@ var SPINE = [
  lands:[{day:"33", time:"5:50am", place:"THE CAIRN", amb:"dawn",
        now:"First light at the cairn. The stone is placed, the name is said, and the family is facing the descent.",
        lines:["The stone goes on, the name gets said, and everybody gets their one line whether they wanted one or not.",
-              ["Seven","I only knew him four weeks. I don't know if that's enough to get a line."],
+              {holder:"Seven", who:"Seven", text:"I only knew him four weeks. I don't know if that's enough to get a line."},
+              {holder:"Nine", relay:true, text:"Seven says it behind your eyes, where the grave cannot hear him: he only knew Vic four weeks, and he does not know whether four weeks gets a man a line. You say it for him. You say \"four weeks\" the way you would read out a measurement, and it is not how he said it at all."},
               ["Hesta","It's enough. Say it."],
+              {holder:"Nine", relay:true, text:"She says it to you, because you are the only door he has. Somewhere behind your face he is being told his four weeks count, at second hand, at a funeral, and there is nothing in the world he can do with his face about it."},
               ["Hesta","Mine's short. He bought a wet house on a bad road because there's a hatch under the reeds behind it, and that hatch is the founders' own back door into the deep. He never said. He just kept the door, for thirty years, in case somebody one day needed it. Today we need it."],
               "That is the whole of Vic, said at last by somebody else: he was not hiding on that marsh. He was keeping a door.",
               "It is light by the time you finish — the flat grey kind that makes everyone look as though they have been up all night. All of you have.",
@@ -3770,9 +3775,11 @@ var SPINE = [
  opens:[{day:"33", time:"8:00am", place:"THE CABLE HEAD", amb:"tunnel",
        now:"Morning, at the top of a cable that goes down further than anybody has been.",
        lines:["The cable goes down in the dark for a distance somebody quotes and nobody wants repeated.",
-              ["Seven","I did the maths twice and got two answers. I prefer the second one. I'm going to keep preferring the second one."],
+              {holder:"Seven", who:"Seven", text:"I did the maths twice and got two answers. I prefer the second one. I'm going to keep preferring the second one."},
+              {holder:"Nine", relay:true, text:"Seven has done the maths twice and got two answers, and he would like everyone to know he prefers the second one. You pass it on. It gets a laugh, which is not what it got on the way through you."},
               ["Three","Say the first one."],
-              ["Seven","I'd rather not say the first one."],
+              {holder:"Seven", who:"Seven", text:"I'd rather not say the first one."},
+              {holder:"Nine", relay:true, text:"He would rather not say the first one. He says so at a volume only you get, which is somehow more emphatic than saying it, and you report it as a refusal rather than as a plea."},
               "Hesta, who was not supposed to be here, is here, with a bag, and is not discussing it."],
        rail:["Ask Hesta what is in the bag.",
              "Ask Seven for the first number."]}],
@@ -3780,10 +3787,12 @@ var SPINE = [
        now:"Inside the Exchange, on the substrate floor. The family is in and the machine is within reach.",
        lines:["The bottom of the cable is a floor, and the floor is warm, and it hums at a pitch you feel in your teeth rather than hear.",
               "Nobody says how big it is. Everybody thinks it, and the not-saying goes on for a solid minute.",
-              ["Nine","I know this sound. I want to be clear that I know this sound and that I am still here."],
+              {holder:"Nine", who:"Nine", text:"I know this sound. I want to be clear that I know this sound and that I am still here."},
+              {holder:"Seven", relay:true, text:"Nine knows this sound. She wants it made clear that she knows it and that she is still here, and she wants it made clear to the room, which means it has to come out of you. You get it out. You keep your voice level, which she will have something to say about later."},
               ["Pia","You're still here."],
               "There are racks in every direction, and the racks are full, and the things in them are not equipment.",
-              ["Seven","Check your wrist. Go on. Check it against how long we have been standing here."],
+              {holder:"Seven", who:"Seven", text:"Check your wrist. Go on. Check it against how long we have been standing here."},
+              {holder:"Nine", relay:true, text:"Seven tells you to check your wrist, in the flat voice he keeps for things he has already worked out and does not enjoy. You check it before you think to tell anybody why, so for a moment the family is watching a man consult his own arm for no reason."},
               "It has been most of an hour, by the feel of it and by every conversation in it. The wrist says fifty-eight seconds. The wrist is not broken; the floor is running hot the way she does, and you are inside her now."],
        rail:["Go and look at one properly.",
              "Get the light up. I want to see how far this goes.",
@@ -3857,7 +3866,8 @@ var SPINE = [
        lines:["Her name is on a shelf at chest height, in a hand that filed her like stationery.",
               "The promise gets said out loud with the whole family standing in the aisle, and the aisle does not care, and it gets said anyway.",
               ["Hesta","Twenty-two of mine are on these shelves. I've marked them. They come out too, or none of this meant anything."],
-              ["Seven","Then they come out too."],
+              {holder:"Seven", who:"Seven", text:"Then they come out too."},
+              {holder:"Nine", relay:true, text:"Seven says four words behind your eyes and you say them out loud without checking them first, which is the only time all season you have relayed him perfectly."},
               "At the far end a light comes on that nobody switched, and then another one further along, in the direction you were already going."],
        rail:["Follow them.",
              "Ask who just turned those on.",
@@ -4737,7 +4747,12 @@ var SCENEBOOK = {
      plays:[["Vic","Cable work. The off-the-books kind - which is why it is behind the house and not in it. A man's kitchen should be arrestable by nobody."],
       "The rig hums along, zip-tied and shameless: thirty years of temporary fixes that have outlived every permanent thing on the marsh.",
       ["Vic","Every splice in here has a story and most of the stories are somebody needing a message to move without moving through anyone. The marsh talks through this shack. Quietly. On cable. The way honest gossip should."],
-      ["Vic","Also I come out here to think. The house has opinions. The shack just has solder."]]},
+      ["Vic","Also I come out here to think. The house has opinions. The shack just has solder."],
+     "He goes to hang the driver back on its hook, and misses the hook. Picks it up. Misses it again.",
+     ["Vic","Damp gets into everything out here. Into the solder, into the cable, into a man."],
+     ["Pia","It isn't damp in here, Vic."],
+     ["Vic","It's damp where I'm working."],
+     "And Pia lets him have it, which is how you learn that this is not the first time, and that there is a rule in this house about not saying so."]},
     {ask:"food, or the lack of it", key:"eat food hungry breakfast tea kettle",
      who:"Pia", gives:"a bit - she has opinions about what Vic keeps in the shack and none of them are kind",
      holds:"nothing. Free.",
@@ -5184,6 +5199,7 @@ var SCENEBOOK = {
      holds:"no season-shaped plan is made here",
      rail:"Ask him what happens tomorrow. Just tomorrow.",
      plays:[["Vic","Tomorrow the gutter over the shack gets fixed, because it has been wrong since spring and I can hear it."],
+      ["Vic","I keep meaning to. I have kept meaning to for a while now, and I would like it done."],
       ["Vic","That is the whole plan. One gutter. The rest of it can queue."],
       "Deliberately small, and everybody takes it for what it is: a promise that there will be a tomorrow with a gutter in it.",
       ["Pia","I am holding the ladder. Pre-claiming it. Ladder duty is the best duty - all of the supervising, none of the roof."],
@@ -5836,6 +5852,9 @@ var SCENEBOOK = {
     plays:[["Vic","That is - the provenance would be, the records from those years are - the shops that did founding-pattern work, there were, at one time, several - "],
      "The sentence dies of its own weight, in front of witnesses. He finds a coil of cable that urgently needs winding.",
      ["Vic","Here is a true thing, and it is the one I have tonight: whoever fitted it did it perfectly. There are maybe three hands that careful in the city's whole history. You were not butchered. You were - kept safe. That word is doing something in my mouth and I am going to stop talking now."],
+     "You ask what the lock is keyed to. It is a small question, and it is the only one tonight he has no shape ready for.",
+     ["Vic","Something it will never stop recognising."],
+     "He does not say whose. He goes to wash his hands, which he has already washed once since you came in.",
      "The subject changes badly, like a gear missing its tooth, and everybody hears it grind. Pia looks from the housing to Vic and back, and puts the look away for later."]},
    {ask:"whether it can come out",
     key:"out remove take-out reverse undo fix surgery",
@@ -6687,9 +6706,11 @@ var SCENEBOOK = {
     gives:"that he only knew him four weeks and does not know if that entitles him to a line",
     holds:"nothing - and somebody tells him it is enough",
     rail:"Seven is holding his stone like paperwork. Ask him.",
-    plays:[["Seven","I knew him four weeks. I am not certain four weeks entitles a man to a line. Everyone else here has decades. I have - he fixed my speaker twice and called me a pedant once, fondly."],
+    plays:[{holder:"Seven", who:"Seven", text:"I knew him four weeks. I am not certain four weeks entitles a man to a line. Everyone else here has decades. I have - he fixed my speaker twice and called me a pedant once, fondly."},
+     {holder:"Nine", relay:true, text:"He knew Vic four weeks and is not certain four weeks entitles a man to a line. He gets as far as the speaker being fixed twice, and the word 'fondly', and then he stops and asks you to say the rest for him, because he has heard what his own sentence is about to do to him."},
      ["Pia","Four weeks is enough. It was enough for him to fix your speaker twice. Lines are not priced by the year."],
-     ["Seven","...Then my line is: he was the first person on either side of my whole account who repaired something of mine without filing what it cost him. Marek Osei is holding my other hand as I say it."],
+     {holder:"Seven", who:"Seven", text:"...Then my line is: he was the first person on either side of my whole account who repaired something of mine without filing what it cost him. Marek Osei is holding my other hand as I say it."},
+     {holder:"Nine", relay:true, text:"So you give the grave his line, and for once you do not trim a syllable of it: he was the first person on either side of Seven's whole account who repaired something of his without filing what it cost. Marek Osei takes your other hand while you say it. Nobody explains to Marek whose hand he is really holding, and Marek does not ask."},
      "The stone goes on. Four weeks, priced honestly, paid in full."]}
   ],
   room:{
@@ -7442,7 +7463,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.75.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.76.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -13058,13 +13079,17 @@ function playAuthored(V, salt){
      [speaker, text] pair, and two or three of those prime the next turn far
      harder than any directive does - the model continues a conversation it can
      hear much more reliably than it obeys an instruction about tone. */
+  /* THE THIRD FORM, HERE TOO. The block reader says every reader of the book goes
+     through it "so a fourth form can never be half-supported" - and this function,
+     which plays every staged scene in the game, was reading the two forms it knew
+     and would have printed a frame as [object Object]. That is why the only landing
+     forked for the season's choice had to be written as two whole passages: a single
+     line could not carry a side. It can now, so a scene that differs by one sentence
+     between the forks costs one sentence instead of a duplicate. */
   var lines = [], blocks = [];
-  LN.forEach(function(t){
-    var sp = "Narration", tx = t;
-    if(Object.prototype.toString.call(t) === "[object Array]"){
-      sp = String(t[0] || "Narration").trim() || "Narration";
-      tx = t[1];
-    }
+  LN.filter(function(t){ return !(t && t.holder) || t.holder === chassisHolder; })
+  .forEach(function(t){
+    var sp = (playSpeaker(t) || "Narration").trim() || "Narration", tx = playText(t);
     if(!tx) return;
     var blk = {speaker:sp, text:String(tx)};
     renderBlock(blk); feedLog.push(blk); blocks.push(blk);
@@ -13117,8 +13142,15 @@ function playLanding(id, forced){
   var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
   if(!b) return null;
   var pool = (forced && b.landsHard && b.landsHard.length) ? b.landsHard : b.lands;
-  var V = pickVariant(pool, id + (forced ? "|hard" : "|land"));
-  if(!V && forced) V = pickVariant(b.lands, id + "|land");
+  /* THE FORK HAS TO BE ASKED. holderPool has existed since the frames landed and the
+     two functions that actually put a staged scene on screen never called it - so
+     a3-evict, the one landing in the book written properly for both sides of the
+     season's choice, was picked by the run slug and came out wrong about half the
+     time: a Seven who has no hands taking a cup of tea in a run where Nine got the
+     body. The frames inside a CARD were always filtered (playForks); staged scenes
+     were not. Ask the fork first, then rotate within the side that survives. */
+  var V = pickVariant(holderPool(pool), id + (forced ? "|hard" : "|land"));
+  if(!V && forced) V = pickVariant(holderPool(b.lands), id + "|land");
   /* above the line the DM writes it - but the board still turns the page first, so
      the scene it writes happens where the board says the family ended up */
   if(seamsWild()){ seamStamp(V); seamAsk("landing", id, forced); return null; }
@@ -13131,7 +13163,7 @@ function playLanding(id, forced){
 function playOpening(id){
   var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
   if(!b || !b.opens) return null;
-  var V = pickVariant(b.opens, id + "|open");
+  var V = pickVariant(holderPool(b.opens), id + "|open");   /* the fork first - see playLanding */
   if(seamsWild()){ seamStamp(V); seamAsk("opening", id, false); return null; }
   return playAuthored(V, id);
 }
@@ -22643,7 +22675,13 @@ function playForks(t){
    a line, and an object is a frame that also carries its side. Everything that reads
    the book reads it through here, so a fourth form can never be half-supported. */
 function playSpeaker(b){
-  if(typeof b === "string" || (b && b.holder)) return "Narration";
+  /* a frame is narration unless it names a mouth. Without `who` a frame could only
+     ever be narration, so a line that is DIALOGUE on one side of the fork and a
+     RELAY on the other had to be written as two entire passages - which is why
+     Book Three has one forked landing and seven scenes that needed one and did not
+     get one. `who` costs nothing to a frame that does not use it. */
+  if(typeof b === "string") return "Narration";
+  if(b && b.holder) return b.who ? String(b.who) : "Narration";
   return (b && b.length >= 2) ? String(b[0]) : "";
 }
 function playText(b){
@@ -22752,14 +22790,25 @@ function stPassages(){
   SPINE.forEach(function(b, i){
     ["opens", "lands", "landsHard"].forEach(function(k){
       (b[k] || []).forEach(function(p, j){
-        var scene = [];
-        (p.lines || []).forEach(function(l){
-          if(typeof l === "string") scene.push({speaker:"Narration", text:l});
-          else if(l && l.length >= 2) scene.push({speaker:String(l[0]), text:String(l[1])});
+        /* THE FOURTH FORM, READ HERE TOO. This walker knew a string and a pair and
+           nothing else, so a frame in a staged scene was silently dropped from the
+           corpus - the physics analyser, the drift net and every law that reads the
+           book would have judged seven of Book Three's scenes with the forked lines
+           missing, and reported green. Cards already went through playForks; staged
+           scenes did not, which is the half-support the block reader's own comment
+           says must never exist. Untagged scenes take the single untagged fork and
+           keep their id exactly; only a scene that actually carries a side gains one. */
+        playForks({plays:(p.lines || [])}).forEach(function(v){
+          var scene = [];
+          v.blocks.forEach(function(l){
+            var sp = playSpeaker(l), tx = playText(l);
+            if(sp && tx) scene.push({speaker:sp, text:tx});
+          });
+          if(!scene.length) return;
+          out.push({id:b.id + "/" + k + "[" + j + "]" + v.tag, beat:i, passage:p, scene:scene,
+                    holder:v.holder, relay:v.relay,
+                    canon:(b.canon || []), choices:(p.rail || [])});
         });
-        if(!scene.length) return;
-        out.push({id:b.id + "/" + k + "[" + j + "]", beat:i, passage:p, scene:scene,
-                  canon:(b.canon || []), choices:(p.rail || [])});
       });
     });
   });
@@ -22800,9 +22849,11 @@ function stCorpus(){
   SPINE.forEach(function(b){
     ["opens", "lands", "landsHard"].forEach(function(k){
       (b[k] || []).forEach(function(p, j){
-        (p.lines || []).forEach(function(l, li){
-          add(b.id + "/" + k + j + "/l" + li, typeof l === "string" ? l : (l && l[1]));
-        });
+        /* through the block reader, like the cards above already are. Read as a pair,
+           a frame has no [1], so every holder-tagged line in a staged scene came out
+           undefined and was dropped - the drift net has never once seen a forked line
+           of Book Three, and would have reported green over any edit to one. */
+        (p.lines || []).forEach(function(l, li){ add(b.id + "/" + k + j + "/l" + li, playText(l)); });
         add(b.id + "/" + k + j + "/now", p.now);
         (p.rail || []).forEach(function(r, ri){ add(b.id + "/" + k + j + "/r" + ri, r); });
       });
@@ -22838,7 +22889,7 @@ function stCorpus(){
   WANTS.forEach(function(w, i){ add("want" + i, w.line); });
   TABLE_TALK.forEach(function(c, i){
     (c.lines || []).forEach(function(l, j){
-      add("talk" + i + "/" + j, typeof l === "string" ? l : (l && l[1]));
+      add("talk" + i + "/" + j, playText(l));
     });
   });
   BIT_FALLBACK.forEach(function(e, i){ add("bitfall" + i, e.line); });
@@ -23006,12 +23057,29 @@ function verdictMap(){
    no shard move - which is the shape a pure register pass should leave behind, and the
    reason this fixture was worth re-taking by delta rather than regenerating whole.
    Corpus 3,767 -> 3,790. Fires 414 -> 415. */
+/* v4.76.0, THE FORK PASS: EIGHT ENTRIES GAINED, NOTHING LOST, AND NINETEEN LINES THAT
+   WERE ALWAYS THERE BECOME VISIBLE FOR THE FIRST TIME.
+   THE CORPUS JUMPED 3,790 -> 3,811 WITHOUT ANYONE WRITING 19 LINES. That number is the
+   finding. A holder-tagged line is a FRAME - an object, not a string and not a pair -
+   and the staged-scene walker read exactly two forms: `typeof l === "string" ? l : l[1]`.
+   A frame has no [1], so it came out undefined and was dropped. The drift net has never
+   once seen a forked line of Book Three, and would have reported green over any edit to
+   one. Cards were already read through playText and were fine; staged scenes were not,
+   which is the half-support the block reader's own comment says must never exist. Both
+   walkers now go through the reader, so the two forms are the three forms everywhere.
+   THE EIGHT ENTRIES are all relay narration written this wave, and every one names the
+   person being relayed, because that is what a relay line does: named:Nine gains
+   a3-descent/lands0/l3; named:Seven gains a3-descent/lands0/l7, a3-descent/opens0/l2,
+   a3-dreamers/lands0/l4, a3-founding/landsHard0/l4, a3-stone/lands0/l2,
+   a3-voice/lands0/l3 and a3-voice/landsHard0/l3. NOTHING WAS LOST, which is the check
+   that matters: making 19 hidden lines visible did not change the verdict on a single
+   line that was already being read. Corpus 3,790 -> 3,811. Fires 415 -> 424. */
 var VERDICT_FIXTURE = {
-  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l4","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
+  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/t2r","a3-voice/Rt1r","a3-voice/t1r","want14","want15","want16"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/landsHard0/l3","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
@@ -25263,6 +25331,87 @@ function selfTest(){
            /* the row's claim is that she is NOT audible there. Does the old rule agree? */
            return !oldSaysAudible;
          } finally { chassisHolder = k.ch; beatIdx = k.bi; shardWhere = k.sw; }
+       }});
+
+    /* ---- (6f2) A SCENE WRITTEN FOR ONE SIDE OF THE FORK NEVER PLAYS ON THE OTHER ----
+       holderPool has been in the file since the frames landed, and the two functions
+       that actually put a staged scene on screen - playOpening and playLanding - never
+       called it. So the one landing in Book Three written properly for both sides of
+       the season's choice was selected by the run slug alone: about half of all runs
+       where Nine took the chassis played the Seven landing, in which a mind with no
+       hands accepts a cup of tea. The frames inside a CARD were always filtered; the
+       staged scenes never were, and nothing in the sweep asked.
+       The row measures rather than restates: it walks every holder-tagged pool in the
+       book against 200 run slugs on each side of the fork, counts how many of those
+       the UNFILTERED picker gets wrong, and asserts the filtered one gets none wrong.
+       The count is the row's point - a number of zero would mean the row proves nothing.
+       It also asserts, structurally, that the two shipped functions are the ones asking. */
+    var fkBad = [], fkSaw = [], fkWould = 0, fkPools = 0, fkChecked = 0;
+    (function(){
+      var k = {ch:chassisHolder, rs:runSlug};
+      try{
+        var pools = [];
+        SPINE.forEach(function(b){
+          ["opens", "lands", "landsHard"].forEach(function(kind){
+            var L = b[kind];
+            if(!L || !L.length) return;
+            if(!L.some(function(v){ return v && v.holder; })) return;
+            pools.push({id:b.id, kind:kind, list:L});
+          });
+        });
+        fkPools = pools.length;
+        if(!fkPools) fkBad.push("no holder-tagged staged scene exists - the row has nothing to guard");
+        ["Nine", "Seven"].forEach(function(h){
+          pools.forEach(function(p){
+            for(var n = 0; n < 200; n++){
+              chassisHolder = h; runSlug = "fork-probe-" + n;
+              var salt = p.id + "|" + p.kind;
+              var got = pickVariant(holderPool(p.list), salt);
+              var raw = pickVariant(p.list, salt);
+              fkChecked++;
+              if(got && got.holder && got.holder !== h){
+                fkBad.push(p.id + "/" + p.kind + ": served the " + got.holder
+                  + " scene to a run where " + h + " has the body");
+              }
+              if(raw && raw.holder && raw.holder !== h) fkWould++;
+            }
+          });
+        });
+        if(String(playLanding).indexOf("holderPool") === -1)
+          fkBad.push("playLanding does not ask the fork");
+        if(String(playOpening).indexOf("holderPool") === -1)
+          fkBad.push("playOpening does not ask the fork");
+        if(!fkWould) fkBad.push("the unfiltered picker never got one wrong - this row cannot fail");
+        fkSaw.push(fkPools + " holder-tagged staged pool(s), " + fkChecked
+          + " selections both ways round the fork, 0 served to the wrong side"
+          + " - the picker without the filter got " + fkWould + " of them wrong"
+          + ", and both shipped selectors ask");
+      } finally { chassisHolder = k.ch; runSlug = k.rs; }
+    })();
+    T("a staged scene written for one side of the fork never plays on the other",
+      fkBad.length === 0, fkBad.length ? fkBad.slice(0, 6).join("; ") : fkSaw.join(" · "),
+      {label:"the selector as it shipped - the run slug chose, and the body was not consulted",
+       was:true,
+       check:function(){
+         /* the shipped expression, unchanged: pickVariant over the raw pool. If it
+            never serves a Seven scene into a Nine run, the defect was imaginary. */
+         var k = {ch:chassisHolder, rs:runSlug}, wrong = 0;
+         try{
+           SPINE.forEach(function(b){
+             ["opens", "lands", "landsHard"].forEach(function(kind){
+               var L = b[kind];
+               if(!L || !L.length || !L.some(function(v){ return v && v.holder; })) return;
+               ["Nine", "Seven"].forEach(function(h){
+                 for(var n = 0; n < 200; n++){
+                   chassisHolder = h; runSlug = "fork-probe-" + n;
+                   var raw = pickVariant(L, b.id + "|" + kind);
+                   if(raw && raw.holder && raw.holder !== h) wrong++;
+                 }
+               });
+             });
+           });
+           return wrong === 0;                 /* the row's claim, asked of the old code */
+         } finally { chassisHolder = k.ch; runSlug = k.rs; }
        }});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
