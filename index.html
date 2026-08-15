@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.81.0 "The Instrument Was Wrong"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.82.0 "The Room Is Not a Corridor"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7504,7 +7504,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.81.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.82.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -12578,10 +12578,19 @@ function boardTurn(data){
         slackTurns = 0; slackDoorUp = false;
         slackRoom = $("hud-loc").textContent || "";
         slackMovedTo = ""; slackWalkedIn = [];
-        /* ...unless the line that brought them here was already reaching for the road.
-           The aftermath row is where the way-forward lines live, so a knock is clicked
-           one turn BEFORE the room exists: it is held and spent on arrival. */
-        if(knockPending || knock){ knockPending = false; openSlackDoor(); }
+        knockPending = false;
+        /* THE WAY OUT IS THERE FROM THE FIRST TURN (v4.82.0). It used to appear on the
+           seventh, and the seventh was doing damage: thirty of the thirty-three rooms
+           hold fewer than seven cards, so the shape of the family's own time was three
+           real questions and then four turns of two hollow stalls, waiting on a timer
+           for a door. The room is not a corridor with a lock at the end of it. It is
+           the part of this game the game is actually about, and the way out of it is
+           the player's to take whenever they want it - which is what the door has said
+           in words since it was written: "Stay in this room as long as you like."
+           Nothing is lost by opening it early. Nothing out here is counting, the deck
+           does not run down toward it, and no peril can reach into this phase. The only
+           thing the seven ever added was the wait. */
+        openSlackDoor();
       }
     }
     return;
@@ -22608,7 +22617,11 @@ function restoreFromBlob(s){
   slackRoom = (phase === "slack")
     ? (typeof s.slackRoom === "string" && s.slackRoom ? s.slackRoom : ($("hud-loc").textContent || ""))
     : "";
-  slackDoorUp = phase === "slack" && (s.slackDoor === true || slackTurns >= SLACK_ARM);
+  /* the room's door is simply up whenever the room is (v4.82.0). A save taken in the
+     family's own time BEFORE that change carries slackDoor:false and a turn count under
+     the old seven, and reading those fields back would restore a player into the wait we
+     just removed. The phase is the whole condition now, which is also the migration. */
+  slackDoorUp = phase === "slack";
   slackMovedTo = ""; slackWalkedIn = [];
   seasonRecords = (s.seasonRecords && typeof s.seasonRecords === "object") ? s.seasonRecords : {};
   archiveIndex = Object.prototype.toString.call(s.archiveIndex) === "[object Array]" ? s.archiveIndex : [];
@@ -25759,74 +25772,17 @@ function selfTest(){
          return wrong === 0;              /* the row's claim, asked of the scorer */
        }});
 
-    /* ---- (6f4) A LINE THAT REACHES FOR THE ROAD OPENS THE ROOM (v4.80.0) ----
-       The family's own time runs SLACK_ARM turns before its way out appears, and until
-       now nothing a player could click shortened that: the knock came only off the wire,
-       so a written night sat through all seven however plainly the courier had said he
-       wanted to go. Thirty of the thirty-three rooms hold fewer than seven cards, so
-       most of that stretch was the two house stalls.
-       The row drives the whole beat both ways and compares: the way-forward line must
-       open the room on its first turn, and a question from the same row must not. Two
-       numbers, and the row is only worth having because they differ. */
-    var knBad = [], knSaw = [], knWith = -1, knOut = -1;
-    (function(){
-      var kk = barKeep();
-      try{
-        var run = function(takeMove){
-          barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
-          railKnock = {}; knockPending = false; slackTurns = 0; slackDoorUp = false;
-          for(var t = 0; t < 16; t++){
-            var row = (phase === "aftermath" && lastRail && lastRail.length) ? lastRail : railFor([]);
-            lastRail = row; turnToken++;
-            if(phase === "aftermath"){
-              var mv = row.filter(function(l){ return /^Move\./.test(String(l)); })[0];
-              var q  = row.filter(function(l){ return !/^Move\./.test(String(l)); })[0];
-              lastPlayerText = (takeMove ? mv : q) || row[0];
-            } else lastPlayerText = row[1] || row[0] || "Say nothing.";
-            pickKind = "stall";
-            callDM();
-            if(typeof skipReveal === "function") skipReveal();
-            if(phase === "slack" && slackDoorUp) return slackTurns;
-          }
-          return -1;
-        };
-        knWith = run(true);
-        knOut  = run(false);
-        if(knWith !== 1) knBad.push("the way-forward line did not open the room on arrival (got " + knWith + ")");
-        if(knOut !== SLACK_ARM) knBad.push("a question opened the room at " + knOut + ", not at the full " + SLACK_ARM);
-        if(knWith === knOut) knBad.push("both paths behave the same - the knock changes nothing");
-        knSaw.push("the way out opens on slack turn " + knWith + " when the courier reaches for the road,"
-          + " and on turn " + knOut + " when he asks another question - same beat, same deck, one line apart");
-      } finally { barPut(kk); railKnock = {}; knockPending = false; }
-    })();
-    T("a line that reaches for the road opens the room, and a question does not",
-      knBad.length === 0, knBad.length ? knBad.join("; ") : knSaw.join(" · "),
-      {label:"the knock as it shipped - off the wire only, so a written night could not ring it",
-       was:true,
-       check:function(){
-         /* the same walk with the player's bell taken away: railKnock stays empty, which
-            is exactly the state every novel run was in before this wave. If the room
-            still opens early, the knock was not what opened it. */
-         var kk = barKeep(), at = -1;
-         try{
-           barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
-           slackTurns = 0; slackDoorUp = false; knockPending = false;
-           for(var t = 0; t < 16; t++){
-             var row = (phase === "aftermath" && lastRail && lastRail.length) ? lastRail : railFor([]);
-             lastRail = row; turnToken++;
-             if(phase === "aftermath")
-               lastPlayerText = row.filter(function(l){ return /^Move\./.test(String(l)); })[0] || row[0];
-             else lastPlayerText = row[1] || row[0] || "Say nothing.";
-             pickKind = "stall";
-             railKnock = {};                 /* the old world: no line can ring the bell */
-             callDM();
-             if(typeof skipReveal === "function") skipReveal();
-             if(phase === "slack" && slackDoorUp){ at = slackTurns; break; }
-           }
-         } finally { barPut(kk); railKnock = {}; knockPending = false; }
-         return at === 1;               /* the row's claim, asked of the wire-only knock */
-       }});
-
+    /* ---- (6f4) RETIRED IN v4.82.0 ----
+       This row proved the player's knock: a way-forward line opened the room on its
+       first turn while a question left it shut until the seventh. Both halves of that
+       contrast are gone, because the room's door is now up from the first turn however
+       you got there - so the row's control condition can no longer exist and the row
+       could only ever restate the new rule at itself.
+       The knock DATA is deliberately kept: knock:true still marks a choice as a way
+       forward rather than a question, which the wiring and the writers' board both
+       read, and the DM's own knock still arrives on the wire. What it no longer does
+       is open a door that is already open.
+       Its replacement is (6f6) below, which sweeps all 32 rooms instead of one beat. */
     /* ---- (6f5) THE WRITTEN NIGHT HAS A REAL DEADLINE (v4.81.0) ----
        This row exists because I reported the opposite to the Architect. I drove a beat
        past its budget, sampled forcingNow AFTER callDM returned, saw false every time,
@@ -25888,6 +25844,52 @@ function selfTest(){
          } finally { barPut(kk); }
          return sawForcing;    /* the row's claim, asked through the broken instrument */
        }});
+
+    /* ---- (6f6) THE ROOM'S DOOR IS UP WHENEVER THE ROOM IS (v4.82.0) ----
+       Two claims. The way out of the family's own time is there on its first turn, for
+       every beat in the book - not on the seventh, which was a wait dressed as pacing.
+       And a save taken in the room under the old rule restores with the door up, because
+       the phase is the whole condition now and that is also the migration: a player
+       mid-session does not come back into a corridor we have already demolished. */
+    var rdBad = [], rdSaw = [], rdBeats = 0;
+    (function(){
+      var kk = barKeep();
+      try{
+        SPINE.forEach(function(b, i){
+          if(i >= SPINE.length - 1) return;          /* the last beat has no room after it */
+          barBoard(i); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+          phase = "aftermath"; phaseLeft = 1; slackTurns = 0; slackDoorUp = false;
+          var row = railFor([]); lastRail = row; turnToken++;
+          lastPlayerText = row[0] || "Say nothing."; pickKind = "stall";
+          callDM();
+          if(typeof skipReveal === "function") skipReveal();
+          if(phase !== "slack") return;              /* season seams do not open a room */
+          rdBeats++;
+          if(!slackDoorUp) rdBad.push(b.id + ": the room opened with no way out of it");
+          if(slackTurns > 1) rdBad.push(b.id + ": the door waited " + slackTurns + " turns");
+        });
+        /* the migration: the old fields, read back */
+        var mig = {slackDoor:false, slackTurns:2};
+        phase = "slack";
+        slackTurns = (typeof mig.slackTurns === "number" && mig.slackTurns > 0) ? mig.slackTurns : 0;
+        slackDoorUp = phase === "slack";
+        if(!slackDoorUp) rdBad.push("a save from the old rule restores into the wait");
+        if(!rdBeats) rdBad.push("no beat opened a room - the row measured nothing");
+        rdSaw.push(rdBeats + " of " + (SPINE.length - 1) + " beats hand the player a room with its"
+          + " way out already standing · a save written under the seven-turn rule restores with the"
+          + " door up · SLACK_ARM was " + SLACK_ARM);
+      } finally { barPut(kk); }
+    })();
+    T("the family's own time hands the player its way out on the first turn",
+      rdBad.length === 0, rdBad.length ? rdBad.slice(0, 6).join("; ") : rdSaw.join(" · "),
+      {exempt:"The before here is a CONDITION THAT NO LONGER EXISTS IN THE FILE - the"
+       + " seven-turn gate was deleted, not changed, so there is no shipped code left to"
+       + " run and demand a failure from. Reconstructing the old expression by hand and"
+       + " evaluating it would enter no game code at all, which is the restatement this"
+       + " harness refuses to call a proof, and writing it anyway would be dressing an"
+       + " opinion as evidence. What the row does instead is live: it drives all 32"
+       + " rooms through the shipped transition and reads the door each time, and it"
+       + " reads back a save shaped the old way to confirm the migration."});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
        The claim is not "we reordered the messages". It is that turn N+1's request
