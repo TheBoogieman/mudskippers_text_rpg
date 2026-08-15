@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.78.0 "The Man in the Doorway"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.79.0 "A Choice Names Its Cards"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2076,8 +2076,14 @@ var SPINE = [
           replacement leans at the same thread - her file of kept things - without
           spending anything, and carries no room-deck evidence, so it settles as a
           bit: the family's voices, or the model's warmer paint. */
-       rail:["Tell her the rain is usually worse than this. Start her file of good nights.",
-             "Ask Pia what she is looking at.",
+       /* WIRED (v4.79.0) - the worked example. Each line names the cards it may reach,
+          in the order it should prefer them, and the row binds it to the first this run
+          has not spent. "Move." carries no cards: it is a WAY FORWARD rather than a
+          question, and until those get their own handling it keeps the old behaviour. */
+       rail:[{line:"Tell her the rain is usually worse than this. Start her file of good nights.",
+              cards:["nine-wants", "nine-misses", "nine-sleeps"]},
+             {line:"Ask Pia what she is looking at.",
+              cards:["mud-what", "pia-twelve", "wire-calls"]},
              "Move. The marsh road is hours out and the rain is winning."]}],
  landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"jacket",
        now:"Day 1, past midnight, under the overpass. Nine is in the courier's jacket. The conversation happened at a jog, half-heard, and she has gone quiet.",
@@ -2086,8 +2092,10 @@ var SPINE = [
               ["Pia","She heard all that, right? The running and the — all of it."],
               "Pia does not make the joke about the pocket. That is how you know it went badly.",
               "Whatever Nine noticed about being carried a little longer, she keeps to herself, and the rain fills in the gap."],
-       rail:["Take her out properly and start again.",
-             "Ask Pia what she thinks Nine heard.",
+       rail:[{line:"Take her out properly and start again.",
+              cards:["nine-afraid", "nine-wants", "nine-misses"]},
+             {line:"Ask Pia what she thinks Nine heard.",
+              cards:["pia-twelve", "mud-what", "me-outside"]},
              "Move. We can be sorry on the marsh road."]}],
  /* NO ANCHOR HERE, AND THE REASON IS THE BEAT ITSELF (v4.72.6). An anchor is a name
     that must reach the played prose before the door gives a clean close. This beat's
@@ -4252,7 +4260,7 @@ var SCENEBOOK = {
    never:["nobody arrives, nobody leaves, nobody new exists",
           "no plan for the marsh road is made here - it can be mentioned, never prepared"],
    topics:[
-    {ask:"what a Mudskipper actually is", key:"mudskipper pack gang crew courier runner us",
+    {id:"mud-what", ask:"what a Mudskipper actually is", key:"mudskipper pack gang crew courier runner us",
      who:"Pia", gives:"the war-cry, what it is for, and the fact that she says it wrong on purpose",
      holds:"she does not talk about the pack deciding anything about him",
      rail:"Ask her what a Mudskipper actually is.",
@@ -4261,7 +4269,7 @@ var SCENEBOOK = {
       "Somewhere under the tarp a stallholder answers the cry out of habit, and the market briefly has one spine.",
       ["Pia","It is couriers, fixers, lookouts, a boards wall, and an argument that has been running since before me. It is not a gang. Gangs have bosses. We have a QUEUE."],
       ["Pia","And tonight it is also me, standing next to you, which - I will be honest - is the constitution getting field-tested. Drown last. Both of us. That is the plan and the whole of the plan."]]},
-    {ask:"how Pia ended up doing this at twelve", key:"twelve age young kid child how-old school parents",
+    {id:"pia-twelve", ask:"how Pia ended up doing this at twelve", key:"twelve age young kid child how-old school parents",
      who:"Pia", gives:"Vic took her off the street and trained her, and she has opinions about the word rescued",
      holds:"she will not say why Vic chose her specifically",
      rail:"Ask her how she ended up doing this at twelve.",
@@ -4270,7 +4278,7 @@ var SCENEBOOK = {
       "The distinction clearly matters to her the way load-bearing walls matter, so nobody leans on it.",
       ["Pia","Twelve is young for the work. I know it is young. But the work found me younger, and Vic's version of it came with rules and breakfast, and the other versions on offer came with neither. You price things off the menu that exists."],
       "She takes the next corner with the economy of somebody who has been pricing menus a long time, and the subject, having been handled correctly, folds itself away."]},
-    {ask:"what Nine misses", key:"miss missing home before quiet want",
+    {id:"nine-misses", ask:"what Nine misses", key:"miss missing home before quiet want",
      who:"Nine", gives:"a room with a fixed temperature and the sound of somebody else working nearby - she misses the noise, not the place",
      holds:"she does not name the place or the people in it",
      rail:"Hand on the shard: ask her what she misses.",
@@ -4279,7 +4287,7 @@ var SCENEBOOK = {
       ["Nine","You work quietly, by the way. I have been meaning to complain."],
       ["Nine","Hum sometimes. Or talk to the rain like Pia does, or argue with your shoes. Anything. The jacket is a very quiet address and I grew up somewhere with sound in the walls, and a person can miss a terrible place's one good feature. That is allowed, I have decided."],
       "You clear your throat, experimentally, like a man about to take up humming. Against your ribs, something small settles in to listen."]},
-    {ask:"whether Nine sleeps", key:"sleep dream tired night rest awake",
+    {id:"nine-sleeps", ask:"whether Nine sleeps", key:"sleep dream tired night rest awake",
      who:"Nine", gives:"not the way he does - she stops paying attention, which she says is close enough and is clearly not",
      holds:"nothing here; let it be strange and let Pia be unsettled by it",
      rail:"Ask her if she sleeps.",
@@ -4291,7 +4299,7 @@ var SCENEBOOK = {
       "You pass that on too. Out of your mouth it comes out as somebody volunteering for a night shift, which is not what it was.",
       ["Pia","...She is going to fit right in. That is exactly the kind of terrible generosity this outfit runs on. Welcome aboard, shard."],
       ["Nine","'Welcome aboard' is to me and 'shard' is to me, so she has understood one word in three and arrived in the right place regardless. Do not correct her. I like it here."]]},
-    {ask:"what the courier is like, from outside", key:"me courier think of-me opinion reputation known",
+    {id:"me-outside", ask:"what the courier is like, from outside", key:"me courier think of-me opinion reputation known",
      who:"Pia", gives:"his reputation on the street: reliable, quiet, does not ask, which she says is why the job found him",
      holds:"she does not go near why Vic chose him",
      rail:"Ask her what I look like from outside.",
@@ -4300,7 +4308,7 @@ var SCENEBOOK = {
       "She leaves why-Vic-picked-you alone, the way you leave a wire you have not traced.",
       ["Pia","From outside, tonight, you look like a man carrying something carefully in weather. Which is what you are. The city reads carefulness, you know. It cannot read WHAT you carry, but it reads THAT you carry. Walk like it is soup."],
       "You adjust, minutely, toward soup. Against your chest the cargo hums, unaware it has been demoted to broth."]},
-    {ask:"the wire, the pack, whether anyone has called", key:"wire call phone message pack contact reach",
+    {id:"wire-calls", ask:"the wire, the pack, whether anyone has called", key:"wire call phone message pack contact reach",
      who:"Pia", gives:"nothing has come in all night, and she notices that out loud before he does",
      holds:"she does not speculate about what the silence means",
      rail:"Check the wire. Has anyone called for me tonight.",
@@ -4309,7 +4317,7 @@ var SCENEBOOK = {
       ["Pia","I am not going to guess what the quiet means. Guessing at quiet is how you drown early."],
       ["Pia","What I will do is note the shape of it: your regulars, your counter man, the two who always ping after a job. All quiet, all at once, all tonight. That is not an accident of weather. That is a street holding its breath, and streets hold their breath when somebody has told them to."],
       "The wire stays dark in your pocket, eloquent, and the two of you walk a little faster through a city that has been told something about you that you have not."]},
-    {ask:"food", key:"eat food hungry bun noodle drink",
+    {id:"food", ask:"food", key:"eat food hungry bun noodle drink",
      who:"Pia", gives:"a bit: she produces something wet out of her coat and defends it",
      holds:"nothing. Free.",
      rail:"Ask if there is anything to eat in that coat.",
@@ -4318,7 +4326,7 @@ var SCENEBOOK = {
       "You eat it. It is terrible, and warm, and the first thing tonight that has asked nothing of you.",
       ["Pia","There is a second one. I am mentioning it not as an offer but as a fact about the future: it exists, and later, when tonight gets worse - it will - the second bun happens. That is Mudskipper economics. You keep one warm thing in reserve at all times."],
       "The second bun rides on in the lining, a small doughy insurance policy, and the night, knowing it is out there, behaves marginally better."]},
-    {ask:"what Nine wants out of tonight", key:"want plan next hope after what-now",
+    {id:"nine-wants", ask:"what Nine wants out of tonight", key:"want plan next hope after what-now",
      who:"Nine", gives:"to stop being carried in a pocket, said carefully so it is not a demand",
      holds:"she will not ask to be put anywhere in particular, because she has learned not to ask",
      rail:"Palm on the shard: ask her what she wants out of tonight.",
@@ -4334,7 +4342,7 @@ var SCENEBOOK = {
        Appended LAST deliberately: the deck deals in authored order, so the room can end
        on the family writing its first rule. (Append-only, so an in-flight save's spent
        indexes for this room keep their meaning across the release.) */
-    {ask:"whether she is frightened, now that she can say it", key:"scared afraid frightened fear brave okay alright feel feeling honest",
+    {id:"nine-afraid", ask:"whether she is frightened, now that she can say it", key:"scared afraid frightened fear brave okay alright feel feeling honest",
      who:"Nine", gives:"yes, plainly, and then an apology for saying it out loud, which is worse than the fear - and Pia's new rule about said fear",
      holds:"what going back would mean - she would rather not do the words for it tonight, and in this company nobody makes her",
      rail:"Shard in my bare palm: ask her properly, out loud - is she frightened.",
@@ -7496,7 +7504,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.78.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.79.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -8268,6 +8276,63 @@ function sameAsDoor(b, t){
    Legacy-path silence is deliberate. With the flag down the DM writes its own two
    lines, that is the whole contract of that path, and this must not crowd them out. */
 var railDeal = {};   /* scene key -> offered wording -> the card it was dealt from */
+/* ================== THE WIRING (v4.79.0) ==================
+   A card's own rail has been bound by identity since F5(a): click it, get that card,
+   no words consulted. A STAGED scene's rail - the row after an opening or a landing -
+   was a bare string, and the only road from the string to a card was the keyword
+   scorer. Measured across the whole book that road is not nearly right, it is mostly
+   wrong: in 78 of 101 staged rows, two or more of the three lines offered score onto
+   the SAME card, so the player is shown three questions and gets one answer twice.
+   Novel runs have no typing box at all, so on this side of the file every player act
+   is a click - which means the scorer was never needed here, only inherited.
+   So a choice may now be written as data:
+       {line:"Ask Vic why he has been so quiet.", cards:["vic-quiet", "vic-deflects"]}
+   ONE-TO-MANY, because a question can have more than one answer left in the deck: the
+   row binds the line to the FIRST card in that list this run has not spent. A choice
+   whose cards are ALL spent is dropped from the row, which is the slack repeating
+   itself, fixed at the only place it can be fixed.
+   Strings still work exactly as before, so nothing already written changed behaviour
+   the day this landed - and the wire lives in the SAME table the card rails use, so
+   nothing downstream of here learns a new shape. That is deliberate: the last time a
+   new form entered the book, three separate readers half-supported it. */
+function choiceLine(c){
+  if(c && typeof c === "object" && Object.prototype.toString.call(c) !== "[object Array]")
+    return String(c.line == null ? "" : c.line);
+  return String(c == null ? "" : c);
+}
+function choiceCards(c){
+  return (c && typeof c === "object" && Object.prototype.toString.call(c.cards) === "[object Array]")
+    ? c.cards : [];
+}
+function cardIndexById(sc, id){
+  var list = (sc && sc.topics) || [], i;
+  for(i = 0; i < list.length; i++){ if(list[i] && list[i].id === id) return i; }
+  return -1;
+}
+function wireRail(rails, sc, key){
+  if(!rails || !rails.length) return [];
+  if(!sc || !sc.topics) return rails.map(choiceLine).filter(function(x){ return !!x; });
+  /* READ ONLY. The first cut wrote `topicSpent[key] || (topicSpent[key] = [])`, which
+     creates an empty ledger for a deck nobody has spent from - and the row that proves
+     the door never costs a card reads exactly that ledger, so building a row LOOKED
+     like spending one. Wiring a choice observes the spent list; it never touches it. */
+  var spent = topicSpent[key] || [];
+  if(!railDeal[key]) railDeal[key] = {};
+  var out = [], i, j;
+  for(i = 0; i < rails.length; i++){
+    var line = choiceLine(rails[i]), ids = choiceCards(rails[i]), pick = -1;
+    if(!line) continue;
+    if(!ids.length){ out.push(line); continue; }   /* unwired: the scorer, exactly as before */
+    for(j = 0; j < ids.length && pick < 0; j++){
+      var idx = cardIndexById(sc, ids[j]);
+      if(idx >= 0 && spent.indexOf(idx) === -1) pick = idx;
+    }
+    if(pick < 0) continue;                         /* every card it leads to is spent: drop it */
+    railDeal[key][normLine(line)] = pick;
+    out.push(line);
+  }
+  return out;
+}
 function sceneRails(n){
   var out = [], s, list, spent, i, t, ln;
   if(!V5SCENE) return out;
@@ -13165,7 +13230,7 @@ function playAuthored(V, salt){
       + " the player types it. Everyone else in the room is yours; his mouth is not.)"});
     chatLog.push({role:"assistant", content:JSON.stringify({
       day:$("hud-day").textContent, time:nowTime, location:$("hud-loc").textContent,
-      now:nowText, scene:blocks, choices:(V.rail || [])
+      now:nowText, scene:blocks, choices:(V.rail || []).map(choiceLine)
     })});
   }
   renderNow();
@@ -13192,7 +13257,10 @@ function playLanding(id, forced){
   /* above the line the DM writes it - but the board still turns the page first, so
      the scene it writes happens where the board says the family ended up */
   if(seamsWild()){ seamStamp(V); seamAsk("landing", id, forced); return null; }
-  return playAuthored(V, id);
+  /* a landing's row leads into the FAMILY'S OWN TIME, so it wires against the room
+     deck and the room's spent list - the same key sceneNow hands pickTopic in slack */
+  var e = SCENEBOOK[id];
+  return wireRail(playAuthored(V, id), e && e.room, id + "|room");
 }
 /* THE OPENING. armBeat used to move a pointer and hope: the next DM turn had to
    invent how tonight started, and a small model opens every night the same way -
@@ -13202,8 +13270,9 @@ function playOpening(id){
   var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
   if(!b || !b.opens) return null;
   var V = pickVariant(holderPool(b.opens), id + "|open");   /* the fork first - see playLanding */
+  var openDeck = SCENEBOOK[id];                             /* an opening leads into the walk */
   if(seamsWild()){ seamStamp(V); seamAsk("opening", id, false); return null; }
-  return playAuthored(V, id);
+  return wireRail(playAuthored(V, id), openDeck, id);
 }
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.world, arcturn:!!info.arcturn,
@@ -20253,7 +20322,7 @@ function wbPassage(V){
   h += "</div>";
   (V.rail || []).forEach(function(r, i){
     if(!i) h += '<div class="wb-lb">What it offers next</div>';
-    h += '<div class="wb-rl">' + esc(r) + "</div>";
+    h += '<div class="wb-rl">' + esc(choiceLine(r)) + "</div>";
   });
   return h;
 }
@@ -22845,7 +22914,7 @@ function stPassages(){
           if(!scene.length) return;
           out.push({id:b.id + "/" + k + "[" + j + "]" + v.tag, beat:i, passage:p, scene:scene,
                     holder:v.holder, relay:v.relay,
-                    canon:(b.canon || []), choices:(p.rail || [])});
+                    canon:(b.canon || []), choices:(p.rail || []).map(choiceLine)});
         });
       });
     });
@@ -22893,7 +22962,7 @@ function stCorpus(){
            of Book Three, and would have reported green over any edit to one. */
         (p.lines || []).forEach(function(l, li){ add(b.id + "/" + k + j + "/l" + li, playText(l)); });
         add(b.id + "/" + k + j + "/now", p.now);
-        (p.rail || []).forEach(function(r, ri){ add(b.id + "/" + k + j + "/r" + ri, r); });
+        (p.rail || []).forEach(function(r, ri){ add(b.id + "/" + k + j + "/r" + ri, choiceLine(r)); });
       });
     });
     (b.canon || []).forEach(function(c, i){ add(b.id + "/canon" + i, c); });
@@ -23591,7 +23660,7 @@ function selfTest(){
       ["opens","lands","landsHard"].forEach(function(k){ (b[k] || []).forEach(function(p){
         (p.lines || []).forEach(function(l){ prose.push(typeof l === "string" ? l : (l[1] || "")); });
         if(p.now) prose.push(p.now);
-        (p.rail || []).forEach(function(r){ prose.push(r); });
+        (p.rail || []).forEach(function(r){ prose.push(choiceLine(r)); });
       }); });
       (b.canon || []).forEach(function(c){ prose.push(c); });
       (b.press || []).forEach(function(c){ prose.push(c); });
@@ -23817,7 +23886,8 @@ function selfTest(){
       });
       ["opens", "lands", "landsHard"].forEach(function(k){
         (b[k] || []).forEach(function(p){
-          (p.rail || []).forEach(function(line){
+          (p.rail || []).forEach(function(rl){
+            var line = choiceLine(rl);
             var kind = breachIn(line) || breachMore(line);
             if(kind) railBreach.push(b.id + "/" + k + ".rail: " + kind + " - " + String(line).slice(0, 54));
           });
@@ -25571,6 +25641,94 @@ function selfTest(){
          } finally { chassisHolder = k.ch; runSlug = k.rs; }
        }});
 
+    /* ---- (6f3) A WIRED CHOICE DEALS ONLY WHAT IT NAMES (v4.79.0) ----
+       The claim has three parts and the row asserts all three: a wired line binds to a
+       card it actually names; two wired lines in one row never bind to the SAME card
+       while either has an unspent alternative; and a line whose cards are all spent is
+       not offered at all - which is the slack repeating itself, fixed at its source.
+       The broken form is the keyword scorer this replaces, run on the same lines: if it
+       agrees with the wiring everywhere, the wiring bought nothing and the row says so. */
+    var wcBad = [], wcSaw = [], wcWired = 0, wcRows = 0, wcDrop = 0, wcScorerWrong = 0;
+    (function(){
+      var kd = railDeal, kt = topicSpent, kp = lastPlayerText;
+      try{
+        SPINE.forEach(function(b){
+          var e = SCENEBOOK[b.id];
+          if(!e) return;
+          ["opens", "lands", "landsHard"].forEach(function(kind){
+            (b[kind] || []).forEach(function(p){
+              var wired = (p.rail || []).filter(function(r){ return choiceCards(r).length; });
+              if(!wired.length) return;
+              wcRows++;
+              var deck = (kind === "opens") ? e : e.room;
+              var key = (kind === "opens") ? b.id : b.id + "|room";
+              if(!deck || !deck.topics){ wcBad.push(b.id + "/" + kind + ": wired against a deck that is not there"); return; }
+              /* (i) every wired line binds to a card it names, and no two collide */
+              railDeal = {}; topicSpent = {};
+              var row = wireRail(p.rail, deck, key), seen = {};
+              /* snapshot the fresh row's bindings: the checks below re-run wireRail with
+                 other spent states, and each of those wipes the table this reads from */
+              var bind = {}, bk;
+              for(bk in railDeal[key]) if(Object.prototype.hasOwnProperty.call(railDeal[key], bk)) bind[bk] = railDeal[key][bk];
+              wired.forEach(function(r){
+                wcWired++;
+                var line = choiceLine(r), idx = bind[normLine(line)];
+                if(row.indexOf(line) === -1){ wcBad.push(b.id + "/" + kind + ": \"" + line.slice(0, 30) + "\" dropped from a fresh row"); return; }
+                var names = choiceCards(r).map(function(id){ return cardIndexById(deck, id); });
+                if(names.indexOf(-1) !== -1) wcBad.push(b.id + "/" + kind + ": names a card id no deck card carries");
+                if(names.indexOf(idx) === -1) wcBad.push(b.id + "/" + kind + ": bound to " + idx + ", which it does not name");
+                if(seen[idx]) wcBad.push(b.id + "/" + kind + ": two lines both bound to card " + idx);
+                seen[idx] = 1;
+                /* (iii) spend everything this line can reach: it must leave the row */
+                railDeal = {}; topicSpent = {}; topicSpent[key] = names.slice();
+                if(wireRail(p.rail, deck, key).indexOf(line) !== -1)
+                  wcBad.push(b.id + "/" + kind + ": \"" + line.slice(0, 30) + "\" still offered with every card it names spent");
+                else wcDrop++;
+                /* the scorer, on the same line, from the same fresh state */
+                railDeal = {}; topicSpent = {}; lastPlayerText = line;
+                var got = pickTopic(deck, "wc|" + b.id + kind);
+                if(names.indexOf((deck.topics || []).indexOf(got)) === -1) wcScorerWrong++;
+              });
+            });
+          });
+        });
+        if(!wcWired) wcBad.push("no choice in the book is wired - the row guards nothing");
+        else if(!wcScorerWrong) wcBad.push("the scorer agreed with the wiring on every line - this row cannot fail");
+        wcSaw.push(wcWired + " wired choice(s) across " + wcRows + " row(s) - each binds to a card it names,"
+          + " none collides, and all " + wcDrop + " leave the row when their cards are spent"
+          + " · the scorer they replace lands outside the named set on " + wcScorerWrong + " of them");
+      } finally { railDeal = kd; topicSpent = kt; lastPlayerText = kp; }
+    })();
+    T("a wired choice deals only the cards it names, and leaves when they are spent",
+      wcBad.length === 0, wcBad.length ? wcBad.slice(0, 6).join("; ") : wcSaw.join(" · "),
+      {label:"the keyword scorer, which is what a staged rail used before it could name anything",
+       was:true,
+       check:function(){
+         /* the shipped scorer, asked the row's own question. If it never lands outside
+            the set a line names, the wiring is decoration and this row is a formality. */
+         var kd = railDeal, kt = topicSpent, kp = lastPlayerText, wrong = 0;
+         try{
+           SPINE.forEach(function(b){
+             var e = SCENEBOOK[b.id];
+             if(!e) return;
+             ["opens", "lands", "landsHard"].forEach(function(kind){
+               (b[kind] || []).forEach(function(p){
+                 var deck = (kind === "opens") ? e : e.room;
+                 if(!deck || !deck.topics) return;
+                 (p.rail || []).forEach(function(r){
+                   var names = choiceCards(r);
+                   if(!names.length) return;
+                   railDeal = {}; topicSpent = {}; lastPlayerText = choiceLine(r);
+                   var idx = (deck.topics || []).indexOf(pickTopic(deck, "wcb|" + b.id + kind));
+                   if(names.map(function(id){ return cardIndexById(deck, id); }).indexOf(idx) === -1) wrong++;
+                 });
+               });
+             });
+           });
+         } finally { railDeal = kd; topicSpent = kt; lastPlayerText = kp; }
+         return wrong === 0;              /* the row's claim, asked of the scorer */
+       }});
+
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
        The claim is not "we reordered the messages". It is that turn N+1's request
        BEGINS with turn N's request, byte for byte, for CONTEXT_STEP-1 turns out of
@@ -25679,7 +25837,7 @@ function selfTest(){
       SPINE.forEach(function(b){
         ["opens", "lands", "landsHard"].forEach(function(k){
           (b[k] || []).forEach(function(p, pi){
-            var rail = p.rail || [];
+            var rail = (p.rail || []).map(choiceLine);
             if(rail.length < 2) return;
             rows++;
             for(var i = 0; i < rail.length; i++){
@@ -26504,8 +26662,9 @@ function selfTest(){
           spine.forEach(function(sb){
             ["opens","lands","landsHard"].forEach(function(kind){
               (sb[kind]||[]).forEach(function(p, pi){
-                (p.rail||[]).forEach(function(r, ri){
-                  if(typeof r !== "string" || !r) return;
+                (p.rail||[]).forEach(function(rr, ri){
+                  var r = choiceLine(rr);
+                  if(!r) return;
                   var rn = normLine(r);
                   (sb.exits||[]).forEach(function(x){
                     var ex = normLine(x);
