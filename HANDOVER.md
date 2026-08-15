@@ -3,10 +3,10 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.6.0. Book One is finished. `a2-chassis` now has 25 cards — the deepest
-room in the game, both roads of the fork written, the high cluster the biggest part of it.
-Every card that plays on BOTH roads now has a second take, so the room is worth lapping.
-What it still needs is second takes on the 13 FORKED cards, and both landings wired.**
+**Last updated: v5.7.0. Book One is finished and `a2-chassis` is FINISHED — 25 cards, an
+id on every one, a second take on every card live on either road, seven cards carrying a
+THIRD take, and both landings wired. It is the deepest room in the game by a distance.
+The next wave is a new room: `a2-law` ("the same pan"), which has 3 cards and no takes.**
 
 ---
 
@@ -46,7 +46,8 @@ What it still needs is second takes on the 13 FORKED cards, and both landings wi
 | `a1-hum` | 9 | Under the overpass. Drown last, the reserve bun, the second and a half |
 | `a1-vic` | 8 | The 3am kitchen. The invoice never paid off, the pan, going a day early |
 | `a1-chase` | 8 | The causeway. The labels, the tobacco tin, the night that turns convenient |
-| `a2-door` | 15 | The Open Door. Deepest room in the game. The tin, the thimble, one true sentence a year |
+| `a2-door` | 15 | The Open Door. The tin, the thimble, one true sentence a year |
+| `a2-chassis` | 25 | **Deepest room in the game.** The fork, the high cluster, the recital, the proceeding. 7 cards go three layers deep |
 
 ## Book One is CLOSED
 
@@ -224,12 +225,9 @@ to the Architect. **Open question for him: unseal the work, or leave it sealed f
 
 **Next wave, in order:**
 
-1. **DONE at v5.6.0 — second takes on all 12 cards that play on both roads.** What is left
-   to make the room FINISHED: **second takes on the 13 forked cards** (`seven-asks`,
-   `the-recital`, `why-it-hits-him`, `morning-after`, `pia-cross-examines`, `vic-joins-in`,
-   `nine-heckles`, `nine-watching` on Seven's road; `nine-asks`, `nine-first-hour`,
-   `why-it-hits-her`, `seven-on-the-cloth`, `nine-morning-after` on Nine's) and **both
-   landings wired** (`rail:[{line, cards:[...]}]` on `lands` and `landsHard`).
+1. **DONE at v5.7.0. THE ROOM IS FINISHED.** Second takes on all 25 cards (v5.6.0 did the
+   12 that play on both roads, v5.7.0 the 13 forked), third takes on seven, both landings
+   wired. Nothing is outstanding in `a2-chassis`. Next room is `a2-law`.
 2. Remaining ruled subjects not yet written:
    the face he chose · the frame in the corner · what eating is actually like · the tracker
    scar · Nine watching him in it · Pia's assessment of the new housemate · Vic after the
@@ -458,6 +456,25 @@ whole book came to be called done.
    whatsoever** about takes. `scratchpad/drive_lap.js` does it properly: deal the whole
    deck, ask once more, assert `topicLap` went to 1, then assert the text CHANGED for every
    card carrying a take and did NOT change for every card without one.
+
+**A THIRD TAKE IS NOT MORE OF THE SECOND — RULED 2026-08-15.** The Architect ruled that
+the best cards go three layers deep. Seven cards in `a2-chassis` do; eighteen do not, and
+that is the point. Write a third only where there is a third THING, not a longer version
+of the second. `takeForLap` clamps at a card's last layer, so a two-layer card holds at its
+second for ever and nothing breaks — which means the honest answer to "is there a third
+here?" is usually no. `hesta-sits-down` is the test case: she has given her one thing and
+her correction to it, so her third take is her sitting there NOT saying anything while the
+room is good at that. A third speech would have made her somebody else.
+
+**WIRING A LANDING: THE KNOCK ROW IS THE EXIT.** `wireRail` DROPS a carded row once every
+card it points at is spent. A landing built only of carded rows therefore strands the
+player in a spent room with no way out. A `{line:"...", knock:true}` row with NO cards
+takes the `!ids.length` branch and is pushed unconditionally, so it always survives. Every
+landing needs at least one. Pattern used in `a2-chassis`: three carded rows whose PRIMARY
+id is an unforked card (live on both roads) with forked alternates behind it, then the
+ways forward as knock rows. Drive it at both spend extremes on both roads —
+`scratchpad/drive_lap3.js` does exactly this and asserts no surviving row ever deals an
+off-branch or already-spent card.
 
 ## The five traps that catch me EVERY room
 
