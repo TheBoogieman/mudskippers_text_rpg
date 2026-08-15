@@ -115,6 +115,10 @@ two least likely to be the ones a player reaches first. Everything else about th
 already guarantees the ending: the door is pinned, the physics law governs how she
 answers, and the reveal fence protects the name until it is earned.
 
+**Ruled 2026-08-15: NOT applied — it comes to the hand pass with the other three**, so
+the whole class is decided at once rather than piecemeal. Nothing in this document has
+been implemented.
+
 ---
 
 ## Summary
@@ -129,3 +133,15 @@ answers, and the reveal fence protects the name until it is earned.
 
 Any prose change here **moves the verdict fixture** — it is corpus. Re-take it by delta
 with a ledger line saying what moved and why; never regenerate.
+
+---
+
+## Status, 2026-08-15
+
+**All four are yours, and none is applied.** Ruled: the whole class waits for the hand
+pass, including `a1-hum`'s engine-side one-liner, so it is decided together. The engine
+side of this is finished — since v4.72.2 none of these costs the player anything, and the
+sweep's amber row names the three unreachable beats every run until the writing changes.
+
+The **wire order** (the last engine item on the board) is also waiting on this pass, so
+the composition change lands against a settled book.
