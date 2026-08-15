@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.7.0 "The Room Is Finished"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.8.0 "The Door Was Always Open"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -9936,7 +9936,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.7.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.8.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -10050,7 +10050,11 @@ var lastPlayerText = "";     /* what the player actually typed, for the chair li
    scene with no gate and no clock will walk everybody somewhere new and introduce
    a fixer, because that is what "nothing is happening" looks like to a model
    trained on plot. Nothing is happening is the feature. */
-var SLACK_ARM = 7;           /* turns of conversation before the door appears */
+/* NOT A GATE ANY MORE (v4.82.0), and not a countdown (v5.8.0). The door opens the moment
+   the room does. This survives as two things only: the belt in boardTurn that would
+   re-open a door found somehow down, and the estimate of how long a room runs when the
+   how-long-is-it page adds up a playthrough. Nothing waits on it. */
+var SLACK_ARM = 7;
 var slackTurns = 0;          /* turns spent in the room, this slack */
 var slackRoom = "";          /* the room slack opened in; the strip does not leave it */
 var slackDoorUp = false;     /* the way on is showing, and it is the player's */
@@ -10770,7 +10774,12 @@ function takeForLap(t, key){
   var takes = takesOf(t), n = deckLap(key);
   return takes[n < takes.length ? n : takes.length - 1] || takes[0] || [];
 }
-var knockPending = false;   /* a knock clicked in the aftermath, spent when the room opens */
+/* knockPending lived here until v5.8.0. It banked a knock rung during the aftermath so
+   that the room would open its door early - and v4.82.0 made the door open on entry
+   unconditionally, which left the flag assigned in five places and READ IN NONE. It was
+   never in the save payload, so nothing has to be migrated. The knock itself survives
+   where it still means something: choiceKnocks feeds the slack-phase belt below, and the
+   railKnock ledger is what keeps a knock:true landing row from ever being dropped. */
 function choiceKnocks(text){
   if(runOver || beatDone() || !beatNow()) return false;
   var nl = normLine(text), id = beatNow().id;
@@ -15005,7 +15014,6 @@ function boardTurn(data){
   /* the DM's knock, and now the player's own: a choice authored knock:true says the
      courier is reaching for the road, which is the same bell rung by a different hand */
   var knock = (data && (data.knock === true || data.knock === "true")) || choiceKnocks(lastPlayerText);
-  if(knock && phase === "aftermath") knockPending = true;
   /* THE WORLD'S OWN CLOSE, DECLARED RATHER THAN COMPUTED (v4.72.0). In a novel run
      a hard close is arithmetic: the budget ran out and the world took the night. At
      the wild table there is no arithmetic left to run, so the storyteller says it -
@@ -15073,7 +15081,6 @@ function boardTurn(data){
         slackTurns = 0; slackDoorUp = false;
         slackRoom = $("hud-loc").textContent || "";
         slackMovedTo = ""; slackWalkedIn = [];
-        knockPending = false;
         /* THE WAY OUT IS THERE FROM THE FIRST TURN (v4.82.0). It used to appear on the
            seventh, and the seventh was doing damage: thirty of the thirty-three rooms
            hold fewer than seven cards, so the shape of the family's own time was three
@@ -21335,10 +21342,14 @@ function dbgReport(){
     chairCuts ? "warn" : "ok");
   R(s, "arc checkpoint due", actCheckpointDue);
   R(s, "maintenance index", maintIndex);
+  /* NOT "n of 7" ANY MORE. The door has opened on entry since v4.82.0, so a countdown
+     here read as a timer the player was waiting out - the exact thing that release
+     removed. It reports the turns spent and the door's actual state, nothing else. */
   R(s, "slack room", phase === "slack"
-    ? (slackTurns + " turn" + (slackTurns === 1 ? "" : "s") + " of " + SLACK_ARM
-       + " · door " + (slackDoorUp ? "UP" : "not yet") + " · sealed to " + (slackRoom || "?"))
-    : "—  (arms at " + SLACK_ARM + " turns)", (phase === "slack" && slackDoorUp) ? "warn" : "");
+    ? (slackTurns + " turn" + (slackTurns === 1 ? "" : "s") + " in"
+       + " · door " + (slackDoorUp ? "UP" : "DOWN - and it should not be")
+       + " · sealed to " + (slackRoom || "?"))
+    : "—  (the door stands from the first turn)", (phase === "slack" && !slackDoorUp) ? "warn" : "");
   R(s, "interlude riding", interludeServedId);
   R(s, "interludes used", interludesUsed.length);
   R(s, "asides queued", pendingAsides.length);
@@ -23130,8 +23141,8 @@ function wbDrawBeat(){
   rg.forEach(function(g){ if(wbDone(g.id)) rd++; });
   h += '<div class="wb-sh">The room afterwards — ' + rd + " of 10 written</div>";
   h += '<p class="wb-p">When this beat closes the family gets its own time in one sealed room: same place, same hour,'
-    + " nobody new at the door. It runs as long as the player wants and the way out only appears after <b>"
-    + (typeof SLACK_ARM === "number" ? SLACK_ARM : 7) + " turns</b>.</p>";
+    + " nobody new at the door. It runs as long as the player wants, and <b>the way out is standing from the very"
+    + " first turn</b> - nothing out there counts down toward it.</p>";
   rg.forEach(function(g){ h += wbSlot(g); });
   $("wbv-beat").innerHTML = h;
 }
@@ -23272,7 +23283,7 @@ var WB_MECH = [
  ["Pressure","Each beat has a number of turns. Run out and the world answers the question for you."],
  ["The toll","The fee for a question the night answered without you. Three are survivable and the count resets each book. A fourth folds the table."],
  ["The scar","What a beat leaves behind when the world closed it instead of the player. Every beat has one written."],
- ["The room","The family’s own time after a beat lands. Sealed: same place, same hour, nobody new. The way out appears after seven turns."],
+ ["The room","The family’s own time after a beat lands. Sealed: same place, same hour, nobody new. The way out is up from the first turn and never goes away - it is yours whenever you have had enough."],
  ["Wants and will-nots","One standing desire and one thing each person will not say. Gravity, not dialogue."],
  ["The fence","Secrets belonging to a night that has not happened yet. Saying one early spends that night, and the board checks every reply for them."],
  ["Peril","The storyteller declaring the courier is one wrong move from dying. It must be declared, with a way out on the rail, before a wrong answer can be fatal."],
@@ -25020,7 +25031,7 @@ function newRun(confirmFirst, bare, mode){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {}; knockPending = false; saidRoom = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {}; saidRoom = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -25227,7 +25238,7 @@ function restoreFromBlob(s){
   saidRoom = (s.saidRoom && typeof s.saidRoom === "object") ? s.saidRoom : {};
   /* the binding is rebuilt by the first row this run draws; it is a view of the deck,
      never a fact about it, so it does not belong in the save */
-  railDeal = {}; railKnock = {}; knockPending = false;
+  railDeal = {}; railKnock = {};
   /* a save from before the physics desk: she goes back in the jacket, which is
      the safe end of the guess - it costs a re-roll if she was in his hand, and
      nothing at all if she was not */
@@ -27780,7 +27791,7 @@ function selfTest(){
     function barBoard(at){
       beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
       slackTurns = 0; slackRoom = ""; runOver = ""; deathLine = ""; walkbackNow = false;
-      chassisDoor = ""; chassisPick = ""; railDeal = {}; railKnock = {}; knockPending = false; pickKind = ""; lastRail = []; saidRoom = {};
+      chassisDoor = ""; chassisPick = ""; railDeal = {}; railKnock = {}; pickKind = ""; lastRail = []; saidRoom = {};
       perilSpent = {}; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
       beatJustCleared = null;
       /* a board with a night on it. Without this the door is not live, and a harness

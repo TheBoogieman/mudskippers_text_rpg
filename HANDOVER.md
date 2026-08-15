@@ -476,6 +476,29 @@ ways forward as knock rows. Drive it at both spend extremes on both roads —
 `scratchpad/drive_lap3.js` does exactly this and asserts no surviving row ever deals an
 off-branch or already-spent card.
 
+**THE PRESSURE BLOCK: BUDGET + 2 CARDS — RULED 2026-08-16.** The beat's own deck is not
+the family room and does not lap: it has a budget and an ending. The forced close lands on
+`budget + 1`, so a player who stalls every turn needs `budget + 1` cards to reach the red
+without a repeat, and the Architect ruled **budget + 2** — one spare. For the usual
+`budget:4` beat that is **6 cards** where nearly all of them have 4. Keep them SMALL:
+these are working rooms, lingering has a cost, and the point is only that a stalling
+player always has something fresh to spend so the night closes on a red naturally rather
+than on house filler.
+
+Measured at v5.7.0: **26 of the 33 beats have fewer beat cards than the forced-close turn
+count.** Typical shape is budget 4 / force 5 / 4 cards. Already long enough: `a1-hum` (7),
+`a1-chase` (6), `a1-vic` (6), `a2-three` (6), `a2-seven` (5). Worst, 2 short each:
+`a1-turn`, `a2-hand`, `a2-turn`, `a3-granny`. Re-measure with the audit in this file
+rather than trusting the numbers above.
+
+**THE WAY OUT OF FAMILY TIME IS A BUTTON, NOT A CARD.** TAKE THE NIGHT ON is rendered into
+`boardbox` by `renderSlackDoor`, outside the choice list, and `openSlackDoor()` is called
+unconditionally the moment the room opens. It does not depend on any card being wired or
+any deck having cards left — which is why the nine rooms whose landing rows all drop on a
+spent deck are not stranding anybody. Do not re-introduce a countdown: v4.82.0 removed it
+because thirty of thirty-three rooms held fewer than seven cards, so the shape was three
+real questions and then four turns of hollow stalls waiting on a timer.
+
 ## The five traps that catch me EVERY room
 
 Written into the fixture ledger as well. All five are invisible when reading; only the
