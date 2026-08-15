@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.4.0 "Sealed Until"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.5.0 "The Proceeding"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7367,9 +7367,9 @@ var SCENEBOOK = {
       ["Nine","Good."],
       ["Pia","GOOD?"],
       ["Nine","He has had thirty years of knowing things about people. He can have one night."]]},
-    {id:"pia-cross-examines", ask:"Pia's verdict on the new housemate", key:"pia questions interview verdict notebook opinion housemate cross",
+    {id:"pia-cross-examines", ask:"Pia's verdict on the new housemate", key:"pia questions interview verdict notebook opinion housemate cross guard peril beat definitions",
      who:"Pia", fork:"Seven",
-     gives:"a formal proceeding conducted by a twelve-year-old against a man who cannot stop answering fully",
+     gives:"a formal proceeding conducted by a twelve-year-old, and a man who answers every plain word with the shape of the thing underneath it",
      holds:"nothing. Free.",
      rail:"Let Pia ask her questions. She has clearly been saving some up.",
      plays:["Pia has the notebook out. She has drawn a line down the middle of a page. This is not going to be a conversation, it is going to be a PROCEEDING.",
@@ -7383,14 +7383,36 @@ var SCENEBOOK = {
       ["Seven","A door is for the moment before. Everybody thinks a door is for going through and it is not, it is for the second where you have decided and have not yet done it, and that second is the only place in the world where a person is entirely honest, and we have put a HANDLE on it - "],
       ["Pia","'Does not know what a door is.'"],
       ["Vic","She has got him."],
-      ["Pia","Question two. Is a chair honest."],
+      ["Pia","Question two. What is a guard."],
+      ["Seven","A guard is a thing that has been told what must never happen, and then left alone in the dark with it for years. Nobody thanks a guard. You only ever find out there was one by the shape of what did not occur."],
+      ["Hesta","...That is true, actually."],
+      ["Pia","It is NOT true, it is a man at a gate."],
+      ["Seven","That is one implementation."],
+      ["Pia","One WHAT?"],
+      ["Vic","Do not chase it, love. That way is hours."],
+      ["Pia","Question three. What is peril."],
+      ["Seven","Peril is not the bad thing. Peril is the interval in which the bad thing is still deciding. Once it has happened there is no peril anywhere in it at all - there is only aftermath, and aftermath is an entirely separate department - "],
+      ["Pia","'Peril is a DEPARTMENT.'"],
+      ["Seven","That is not what I - "],
+      ["Pia","It is going in as said."],
+      ["Hesta","It is going in as said, love. She has a system."],
+      ["Pia","Question four. Is a chair honest."],
       ["Hesta","Pia."],
       ["Pia","It is a fair question! He brought up honest!"],
       ["Seven","It is a fair question and I intend to answer it fully."],
       ["Hesta","Do not answer it fully."],
       ["Seven","I am going to answer it fully."],
-      "He answers it fully. It takes some time. At the end of it Pia writes one word, underlines it twice, and will not show anybody.",
-      ["Pia","Verdict's sealed. You will all find out when I am ready."]]},
+      "He answers it fully. It takes some time. Pia writes the whole way through without once looking up, which is somehow worse.",
+      ["Pia","Last one. What is a beat."],
+      "He goes quiet for long enough that Vic looks up.",
+      ["Seven","A beat is a night that is allowed to change something. Most nights are not. Most nights you get through, and nothing is different at the end of them, and that is a mercy - you would not survive very many of the other kind."],
+      ["Seven","And you can feel one starting. You can always feel one starting. Every person in this room felt tonight start, and not one of you said so, because you do not say it. Saying it is how you spend it."],
+      "Nobody has anything for a moment. Pia does not write that one down.",
+      ["Pia","...That one was not funny."],
+      ["Seven","No. I do apologise. Would you like me to do another door?"],
+      ["Pia","Yes please."],
+      "He does another door. It takes eleven minutes and it is very funny again, and at the end of it Pia writes one word, underlines it twice, and will not show anybody.",
+      ["Pia","Verdict is sealed. You will all find out when I am ready."]]},
     {id:"vic-joins-in", ask:"whether anybody is going to stop Vic", key:"vic joins agrees worse two-of-them drink chair promise trade",
      who:"Vic", fork:"Seven",
      gives:"the thing nobody braced for - Vic has had a couple, and Vic is worse than the robot",
@@ -9338,7 +9360,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.4.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.5.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25710,6 +25732,27 @@ function verdictMap(){
    check passes only if the lint stays BLIND to it, so it returns false as required, and
    it returns false by entering sealedLeaks - which is why sealedLeaks joined
    PROD_SYMBOLS in the same edit. A lint nobody can prove is blind is not a lint. */
+/* v5.5.0, THE PROCEEDING. Ruled 2026-08-15: lean into the door answer. Pia now asks
+   what a guard is, what peril is, what a beat is, and he answers with the machinery
+   this book is actually built out of - without ever naming a game. He is describing
+   how a life is organised; the family hears a man talking rubbish about departments;
+   the reader hears the architecture. The joke lands on the reader, which is the only
+   place it can land without costing the scene its sincerity.
+
+   Corpus 5,348 -> 5,370. TWENTY-TWO LINES AND ZERO DRIFT. Not one predicate moved
+   on any of the nine keys - no name newly said, no shard mishandled, no violence
+   implied, nothing told early. That is what the net is for: 22 lines of new prose in
+   the most-played card of the deepest room, and the map is byte-identical.
+
+   AND THE SINCERE TURN IS STILL THERE, because a card that is only a joke is a card
+   the room laps past. He answers "what is a beat" honestly - a night that is allowed
+   to change something, and you can always feel one starting, and saying so is how you
+   spend it - and Pia stops writing. Then she asks him to do another door.
+
+   ONE SUBJECT STAYS SEALED, RULED. "What he was on the lists" was refused at v5.3.0
+   because a2-seven's never seals the work he did for the Choir. Taken back to the
+   Architect; he ruled LEAVE IT SEALED. The hole in him is the character. Recorded in
+   HANDOVER so no later wave re-opens it by accident. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],

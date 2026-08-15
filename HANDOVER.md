@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.4.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
+**Last updated: v5.5.0. Book One is finished. `a2-chassis` now has 24 cards — the deepest
 room in the game, both roads of the fork written, the high cluster the biggest part of it.
 What it still needs is second layers and both landings wired. One ruled subject was refused
 and is waiting on the Architect: see "what he was on the lists" below.**
@@ -182,7 +182,16 @@ v5.2.0. **If you are ever about to write this branch: he is carried.**
 family gathering... everybody laughing and on the floor except Seven."*
 
 - **The high cluster** (`pia-cross-examines`, `vic-joins-in`, `nine-heckles`, plus the two
-  unforked ones): Pia conducts a formal PROCEEDING with a notebook and a sealed verdict ·
+  unforked ones): Pia conducts a formal PROCEEDING with a notebook and a sealed verdict.
+  **Deepened at v5.5.0, ruled: lean into it.** She asks what a guard is, what peril is,
+  what a beat is, and he answers with **the machinery this book is built out of — without
+  ever naming a game.** A guard is a thing told what must never happen and left alone in
+  the dark with it for years. Peril is the interval in which the bad thing is still
+  deciding. A beat is a night that is allowed to change something. The family hears a man
+  talking rubbish about departments; the reader hears the architecture. **Keep it inside
+  the fiction if this is ever revised** — the moment he says "game" the scene loses its
+  sincerity, and the sincere turn at the end ("you can always feel one starting… saying it
+  is how you spend it") is what stops it being only a joke ·
   Vic has had a couple and is now WORSE than the robot, with his hand on a cabbage · Nine
   keeps the score from the pocket (*"He has said the word THRESHOLD twenty-two times"*) and
   will not adjudicate quotations · **`the-stupid-argument`**, which is the emotional load
@@ -199,6 +208,13 @@ family gathering... everybody laughing and on the floor except Seven."*
 because they were written body-neutral - "whoever took it", "the one who cannot eat" - so a
 single card serves both roads. Only fork a card when it genuinely cannot exist on the other
 road. This is the pattern to copy for every remaining room.
+
+**"WHAT HE WAS ON THE LISTS" STAYS SEALED — RULED 2026-08-15, FINAL.** It was refused at
+v5.3.0, taken back to the Architect, and he ruled: **leave it sealed.** `a2-seven`'s never
+still holds — the work he did for the Choir is never detailed, no names, no columns, no
+cases. *How he got out* is his to tell and he tells it; *what he did* is the hole in him
+that the family steps around, and it is stronger unspoken. **Do not re-open this in a later
+wave.** The original refusal, for the record:
 
 **ONE RULED SUBJECT WAS REFUSED, AND IT NEEDS HIS RULING.** *"What he was on the lists"* is
 still forbidden: `a2-seven`'s never seals **the work he did for the Choir** - names, columns,
