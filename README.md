@@ -20,6 +20,44 @@ and it works offline. Updates arrive automatically.
 
 First visit? A three-step **GUIDE** walks you through everything.
 
+## Two ways to play
+
+NEW GAME asks one question before anything else — **WHO RUNS TONIGHT?** — and the run
+remembers your answer for as long as it lives. The two are genuinely different games
+sharing one file, and a save from one never opens as the other.
+
+| | **THE NOVEL** | **THE WILD TABLE** |
+|---|---|---|
+| Who writes the night | The book. Every beat, card, door, landing and peril is authored and dealt by the game itself. | Your model. The middles, the perils, the closes, the opens and the season turns are all its call. |
+| Needs an AI? | **No.** No key, no model, no setup, no internet. A novel run makes **zero** network requests from the cold open to the epilogue — even with a working key sitting in Settings. | **Yes.** The run will not start without a connected model, and it says so at the door. |
+| The clock | Real. Each night has a budget; run out and the world takes the night and charges a toll. The pressure strip shows it. | Yours and the DM's. No floor, no forced close, no toll from arithmetic — so the strip is hidden, because a gauge wired to nothing is scenery. |
+| The rail | Dealt from the beat's own deck of authored cards. | The DM's own choices, every turn. |
+| MUDSKIPPER MOMENT | No button — every line you type is the courier doing a thing, and the room answers out of its own writing. | The button is back, and the model is unchained behind it. |
+| Best for | Your first run, a plane, a laptop with no key, or reading the story as written. | A second run, a stranger night, and finding out what your model does with the keys. |
+
+Whichever you pick, the same things are never negotiable: **the dead stay dead**, the
+voice physics hold, the courier's chair is yours alone, no death arrives without a
+warning you could have answered, and every ending the game can reach it can still
+reach. The wild table stands down the fences that protected *structure*; it never
+touches the ones that protect *integrity*.
+
+The **REHEARSAL ROOM** always runs as THE NOVEL — it is an authoring tool for the
+authored game.
+
+### The stable — DMs we recommend for the wild table
+
+The wild table's Settings offer a short, curated menu (plus a free-text box, because
+recommendations are not a cage). Start with **`anthropic/claude-sonnet-5`** — it holds
+the lane, keeps the register, and knows when a night is over. If you want whole
+campaigns for pocket change, **`deepseek/deepseek-v4-flash-0731`** is obedient and
+workmanlike; **`deepseek/deepseek-v4-pro`** is the first knob to turn if the cheap
+one's banter runs flat. **`anthropic/claude-opus-5`** is for players who want the night
+*judged* rather than merely written, and **`google/gemini-3.1-pro`** is worth a night
+for the taste of it. Reasoning-first models are deliberately not on the list: latency
+and analytical prose are the wrong shape for a table DM. On Claude models the game
+marks its own rulebook as a cache breakpoint, so most of each turn's input bills at a
+fraction of the first one.
+
 ## The title screen
 
 A proper main menu: **CONTINUE** (picks up your last run), **NEW GAME** (Day 1, the

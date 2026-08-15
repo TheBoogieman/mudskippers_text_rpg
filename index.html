@@ -91,6 +91,30 @@
     letter-spacing:.18em;cursor:pointer;border-radius:3px;font-weight:700;white-space:nowrap;
   }
   #mudbtn:hover{background:#4a3818;box-shadow:0 0 16px rgba(242,193,78,.25)}
+  /* the drawer's mode badge: two games in one list, said before either is loaded */
+  .modetag{
+    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;
+    letter-spacing:.16em;padding:1px 6px;border-radius:2px;margin-right:8px;
+    border:1px solid #4a4335;color:#a49b86;vertical-align:1px;
+  }
+  .modetag.wild{border-color:#7a4a2a;color:#d99a5e;background:rgba(122,74,42,.14)}
+  /* the two-door card: one row per table, novel first and lit */
+  .modedoor{
+    display:block;width:100%;text-align:left;margin:0 0 12px;padding:16px 18px;
+    background:var(--panel-2);border:1px solid #3a3428;border-radius:4px;cursor:pointer;
+    color:var(--ink);font-family:Georgia,serif;transition:border-color .15s,transform .15s;
+  }
+  .modedoor:hover{border-color:var(--sodium);transform:translateX(3px)}
+  .modedoor b{
+    display:block;font-family:ui-monospace,Menlo,monospace;font-size:13px;
+    letter-spacing:.18em;color:var(--gold);margin-bottom:7px;
+  }
+  .modedoor i{display:block;font-size:14px;line-height:1.62;opacity:.82}
+  .modedoor.primary{border-color:var(--gold);box-shadow:0 0 18px rgba(242,193,78,.10)}
+  .modedoor .needs{
+    display:block;margin-top:9px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
+    letter-spacing:.12em;color:#d99a5e;font-style:normal;
+  }
   .err{
     color:#e08b8b;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;
     border:1px solid #5a3030;background:#241313;padding:10px 14px;border-radius:3px;
@@ -1165,7 +1189,7 @@
   <div id="choices"></div>
   <div class="mudrow">
     <input id="mudinput" type="text" maxlength="400"
-      placeholder="…or say what the courier does. Enter to do it, the button for a bit." />
+      placeholder="…or say what the courier does. Enter to do it." />
     <button id="mudbtn">MUDSKIPPER MOMENT</button>
   </div>
 </div></div>
@@ -1184,7 +1208,7 @@
     <button class="menu-btn" id="t-settings">SETTINGS</button>
     <button class="menu-btn" id="t-guide">GUIDE</button>
     <button class="menu-btn" id="t-board">THE WRITERS&rsquo; BOARD<small>Every night, every written page, and what is still improvised.</small></button>
-    <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it.</small></button>
+    <button class="menu-btn" id="t-reh">REHEARSAL ROOM<small>Author's tool. Run one beat over and over, then extract it. Always THE NOVEL.</small></button>
     <button class="menu-btn gold" id="t-install" style="display:none">INSTALL AS APP<small>Desktop icon. Its own window. Works offline.</small></button>
   </div>
   <div class="t-foot" id="t-foot">· THREE BOOKS · ONE FAMILY · SAME PAN</div>
@@ -1197,6 +1221,13 @@
     <div class="cardhead">WELCOME TO THE RAIN</div>
     <div class="cardsub">A story game where an AI plays the world and you play the courier. Three steps and you're in.</div>
     <div class="ep">
+      <h3>WHO RUNS TONIGHT?</h3>
+      <p>Two ways to play this game. You pick once, at NEW GAME, and the run remembers which one it is.</p>
+      <p><b>THE NOVEL</b> — <i>The story as written. Every night authored start to finish; complete offline; no key, no model, no setup. The recommended first run.</i></p>
+      <p><b>THE WILD TABLE</b> — <i>Bring a model and hand it the keys: the beats, the perils, the closes — all of it, decided at the table, no two nights alike. Requires a connected AI. Unhinged is a feature, not a defect.</i></p>
+      <p style="opacity:.7">Steps 1 and 2 below are for the wild table, and optional for the novel. If you only want THE NOVEL, skip straight to step 3 — there is nothing to set up.</p>
+    </div>
+    <div class="ep">
       <h3>STEP 1 — CONNECT AN AI (the storyteller)</h3>
       <p>Fastest: one click with OpenRouter — no key-pasting, you approve on their site and you're connected. Free and private: install <b>Ollama</b> from ollama.com and the game runs entirely on your own computer. Or paste an Anthropic/OpenAI key if you have one.</p>
       <div class="btnrow"><button class="btn" id="wel-settings">OPEN SETTINGS</button></div>
@@ -1208,7 +1239,7 @@
     </div>
     <div class="ep">
       <h3>STEP 3 — PLAY</h3>
-      <p>Pick a numbered choice each turn — or say what the courier does in the gold bar and press Enter. The MUDSKIPPER MOMENT button is for the other kind of line: the wild one, the joke, the thing that gets you thrown out of better establishments. Those are free — they never cost you a turn. (A <b>!</b> in front of anything does the same from the keyboard.)</p>
+      <p>Pick a numbered choice each turn — or say what the courier does in the gold bar and press Enter. At <b>the wild table</b> there is a second button beside the bar: MUDSKIPPER MOMENT, for the other kind of line — the wild one, the joke, the thing that gets you thrown out of better establishments. Those are free; they never cost you a turn. (A <b>!</b> in front of anything does the same from the keyboard.) <b>The novel</b> has no such button, on purpose: every line you type there is the courier doing a thing, and the room answers it out of its own writing.</p>
       <p><b>Three sentences and you know this game.</b> One question is live at a time. The first choice on the rail ends it; the others dig. The red one is the game's own, and it always asks twice.</p>
       <p style="opacity:.7">Everything else explains itself as it happens. The story bends around you; that's the whole game.</p>
     </div>
@@ -1283,6 +1314,28 @@
   </div>
 </div>
 
+<!-- THE TWO DOORS — every NEW GAME comes through here, and the mode is decided
+     nowhere else. Novel is the lit door: a Pages visitor with nothing configured
+     must reach play in one click. -->
+<div class="modal" id="modemodal">
+  <div class="card">
+    <div class="cardhead">WHO RUNS TONIGHT?</div>
+    <div class="cardsub">Two ways to play this game. You pick once, at the start of a run, and the run remembers.</div>
+    <button class="modedoor primary" id="mode-novel">
+      <b>THE NOVEL</b>
+      <i>The story as written. Every night authored start to finish; complete offline; no key, no model, no setup. The recommended first run.</i>
+    </button>
+    <button class="modedoor" id="mode-wild">
+      <b>THE WILD TABLE</b>
+      <i>Bring a model and hand it the keys: the beats, the perils, the closes — all of it, decided at the table, no two nights alike. Requires a connected AI. Unhinged is a feature, not a defect.</i>
+      <span class="needs" id="mode-wild-needs" style="display:none">NO MODEL CONNECTED — THIS DOOR OPENS SETTINGS FIRST</span>
+    </button>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn ghost" id="mode-close">NEVER MIND</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="runmodal">
   <div class="card">
     <div class="cardhead">YOUR RUNS</div>
@@ -1299,7 +1352,7 @@
 <div class="modal" id="rehmodal">
   <div class="card">
     <div class="cardhead">THE REHEARSAL ROOM</div>
-    <div class="cardsub">Play one question in isolation, as many times as you like. The record before it is seeded from the board, so the beat opens where the story would actually be. Rehearsal runs are kept apart from your real saves and never touch them.</div>
+    <div class="cardsub">Play one question in isolation, as many times as you like. The record before it is seeded from the board, so the beat opens where the story would actually be. Rehearsal runs are kept apart from your real saves and never touch them. <b>Takes always run as THE NOVEL</b> — the deck, the door and the floor doing what they do on the page — whatever table your last run was at.</div>
     <div class="fld"><label>THE QUESTION</label><select id="reh-beat"></select></div>
     <div class="fld"><label>THIS TAKE'S APPROACH — OPTIONAL, IT RIDES THE EXTRACTION</label>
       <input id="reh-label" placeholder="stall-heavy / hostile / comic / straight at it / silent"></div>
@@ -1594,9 +1647,19 @@
       <input id="s-base" type="text" spellcheck="false">
       <div class="hint" id="hint-base"></div>
     </div>
+    <div class="fld" id="fld-stable" style="display:none">
+      <label>THE STABLE — DMs WE RECOMMEND FOR THE WILD TABLE</label>
+      <select id="s-stable"></select>
+      <div class="hint" id="hint-stable">Recommendations, not a cage — pick one and it fills the model field below, or ignore this and type any slug you like.</div>
+    </div>
     <div class="fld">
       <label>MODEL</label>
       <input id="s-model" type="text" spellcheck="false">
+    </div>
+    <div class="fld">
+      <label>HOW STRANGE DO YOU WANT IT — TEMPERATURE</label>
+      <input id="s-temp" type="text" spellcheck="false" placeholder="0.9">
+      <div class="hint">Leave it blank for the house setting: 0.9 at the wild table, because unhinged is the point. Lower is steadier and duller; higher is stranger and less reliable. 0 to 2.</div>
     </div>
     <div class="fld" id="fld-key">
       <label>API KEY</label>
@@ -1638,7 +1701,10 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.71.10 "The Surface Holds"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.72.0 "Who Runs Tonight"
+   two tables, one file, a hard wall between them · the mode is a run fact, stamped
+   THE NOVEL: every night authored, dealt and enforced · zero calls, key or no key
+   THE WILD TABLE: the model drives · the SPINE is its map · integrity, never structure
    the courier can die · no death without a warning the player could answer
    the season is a flowchart · the client walks it · gates, pressure, forced beats
    twelve skies · pressure you can see · the world's own turn lands as a hit
@@ -7288,7 +7354,69 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.71.10";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.72.0";   /* the board prints the build it was read from */
+
+/* ==================== THE TWO TABLES (v4.72.0) ====================
+   One game, two masters, and a hard wall between them.
+
+   THE NOVEL is everything the determinism project built: every night authored,
+   dealt and enforced, complete with no model and no key - and purer than it was,
+   because the mudskipper bit channel leaves the wire entirely. A novel run makes
+   ZERO requests from cold open to epilogue, with a working key configured, and the
+   sweep counts invocations rather than completions to say so.
+
+   THE WILD TABLE is the road not taken, resurrected on purpose: the model drives
+   the middles, the perils, the closes, the opens and the season turns, with the
+   SPINE as its map and its material. The client keeps the lane that protects
+   INTEGRITY - reply shape, the dead staying dead, voice physics, the endings we
+   coded, save integrity - and stands down every fence that protected STRUCTURE:
+   the beat floor, the budget guillotine, the anchor check, the deck and the row,
+   the teeth runtime, the client-side transitions.
+
+   THE MODE IS A RUN FACT. It is decided at run creation, stamped into every save
+   blob, and immutable for the life of the run. The build-time flags do NOT move:
+   V5MODE, V5SCENE and TEETH_LIVE are the deterministic engine's own switches and
+   the sweep's subjects. Mode is consulted at the routers, exactly the way every
+   other run fact is - a flag that changes per run is two rosters waiting to drift.
+
+   THE ROUTER, PRECISELY. wildRun() is a function of the run stamp, false when
+   there is no run, and it is consulted at exactly these places:
+     - takeAction's provider gate      (novel skips it; wild enforces it)
+     - applyModeUI / the MUD button    (absent in novel; present in wild)
+     - bitSkeletonNow                  (wild: the bit is the old full apparatus)
+     - breachScanned                   (wild: unhinged is the point)
+     - callDM's one door, via sceneSkeletonNow / doorSkeletonNow / doorHoldNow /
+       interludeNow                    (wild: composed, before any skeleton check)
+     - sceneRails, the row builder     (wild: the rail is the DM's choices)
+     - doorMeetsFloor / beatMetFloor   (wild: no floor holds a close)
+     - anchorsMissing                  (wild: gateNote is the record)
+     - gauntletNow / ambientDue        (wild: the teeth ride the briefing as material)
+     - boardDirective                  (novel: enforcement; wild: prompt ladder)
+     - boardTension / the pressure strip (wild: hidden - a gauge wired to nothing)
+     - sceneContract                   (wild: the room's cards as material, never dealt)
+   Every one of these is a place the sweep can put a hand, and it does. */
+var runMode = "novel";       /* "novel" | "wild" - decided at run creation, stamped, immutable */
+function wildRun(){ return !!runSlug && runMode === "wild"; }
+/* A SAVE WITH NO STAMP IS A NOVEL SAVE, and that is where the tolerant default
+   lives: every run that existed before this build was played deterministic, so
+   novel is the safe direction. An unknown string is somebody's hand-edit of a
+   file in their own folder - it restores as novel with a note, never a crash. */
+function modeFromBlob(m, quiet){
+  if(m === "wild" || m === "novel") return m;
+  if(m === undefined || m === null || m === "") return "novel";
+  if(!quiet && window.console && console.warn){
+    console.warn("[mudskippers] unknown run mode \"" + String(m) + "\" in this save - running it as THE NOVEL");
+  }
+  return "novel";
+}
+/* WILD REQUIRES A MODEL, and this is the same standard takeAction's gate has always
+   used: a provider whose preset needs a key, with no key, is not a provider. A local
+   endpoint needs nothing and is ready by definition - whether it ANSWERS is a wire
+   question, and a wire failure mid-run holds the turn and offers the retry. */
+function providerReady(){
+  var p = PRESETS[settings.provider];
+  return !(p && p.needsKey && !settings.key);
+}
 var prySpoilers = false;     /* the pry gate: once a run pries, it stays pried. Persisted. */
 /* gates are self-certified, so the client keeps a witness: the beat's own prose,
    checked against the beat's named parts before a gate is allowed to count */
@@ -7965,6 +8093,14 @@ var railDeal = {};   /* scene key -> offered wording -> the card it was dealt fr
 function sceneRails(n){
   var out = [], s, list, spent, i, t, ln;
   if(!V5SCENE) return out;
+  /* THE ROW IS THE DM'S AT THE WILD TABLE. topicSpent, railDeal and the
+     stalls-when-dry logic are novel-mode machinery; returning empty here hands
+     railFor straight back to the legacy shape it was written in - our door, then
+     the DM's own choices through the doorman, then the house lines. The deck is
+     not withheld from the wild run: it rides the BRIEFING as material (see
+     wildContract), which is the whole difference between offering a model the
+     room's cards and dealing them for it. */
+  if(wildRun()) return out;
   /* THE DECK DOES NOT DEAL ON THE COLD OPEN (v4.71.1). The intro's authored row is
      one gold choice - INTO THE RAIN - and any press there serves the hardcoded
      reveal, so a deck rail dealt onto that screen is a question the turn cannot
@@ -8119,6 +8255,7 @@ function showChoices(choices){
          it greys, its hint says held instead of open, and a press answers with
          the yellow box and nothing spent. The hint said "Open." from turn one
          even when the door was not - a door that lies teaches the rail lies. */
+      /* ...and never at the wild table, where doorMeetsFloor is true by construction */
       var heldDoor = V5SCENE && !doorMeetsFloor();
       var armedHere = !heldDoor && exitArmed && exitArmedAt === i;
       if(armedHere) btn.classList.add("armed");
@@ -8936,7 +9073,28 @@ function showScene(data, logIt, instant){
        of anything, so matching on equality alone leaves the loop half standing.
        A line that CONTAINS a line already said in the same breath is the same line
        with more weather on it. */
-    var saidHere = [], dropped = 0;
+    /* THE PROMPT, READ BACK. Found by playing the wild table, not by reading it: on
+       eight of fifteen player turns the 32b opened its reply with a Courier block
+       whose text was the player's own typed line, verbatim - so the screen printed
+       the same sentence twice in a row, once as the player and once as the game
+       repeating it at them. The chair guard cannot see this by design (it hunts words
+       the player did NOT type) and the stutter law cannot either (it compares blocks
+       to each other, and there is only one of them). It is the same fault as both:
+       a block that is the prompt is not a line, and no correction round-trip is
+       needed to know so. Never fires in a novel run - the blocks there are authored -
+       and never on a block that merely quotes the player inside a longer sentence,
+       because a character repeating him back is a real thing people do. */
+    var saidHere = [], dropped = 0, echoed = 0;
+    var typedNow = stutterKey(lastPlayerText);
+    if(typedNow){
+      data.scene = data.scene.filter(function(b){
+        if(stutterKey(b.text) !== typedNow) return true;
+        echoed++; return false;
+      });
+    }
+    if(echoed && window.console && console.info){
+      console.info("[mudskippers] dropped " + echoed + " block(s) that were the player's own line read back");
+    }
     data.scene = data.scene.filter(function(b){
       var k = stutterKey(b.text);
       if(!k) return true;
@@ -9308,7 +9466,9 @@ function setBusy(v){
   if(v){ var pool=(LOADPOOLS[currentAmbience]||[]).concat(LOADPOOLS.generic); $("loading").textContent = pool[Math.floor(Math.random()*pool.length)]; }
   var els = document.querySelectorAll(".choice");
   for(var i=0;i<els.length;i++) els[i].disabled = v;
-  $("mudbtn").disabled = v || !!runOver; $("mudinput").disabled = v || !!runOver;
+  /* null-safe: in a novel run the button is not in the DOM at all (applyModeUI) */
+  var mbB = $("mudbtn"); if(mbB) mbB.disabled = v || !!runOver;
+  $("mudinput").disabled = v || !!runOver;
   if(v) scrollFeed();
 }
 
@@ -10159,6 +10319,7 @@ var V5SCENE = true;          /* Phase B is live. Its bar was met first - see the
    ships after this is content and polish under the same laws - and the laws hold
    whether anybody is watching, which was the point of writing them down. */
 function sceneSkeletonNow(){
+  if(wildRun()) return false;
   var s = V5SCENE ? sceneNow() : null;
   return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
             && !attemptOn && !beatDone() && s && s.sc && (s.sc.topics || []).length);
@@ -10218,10 +10379,22 @@ function callSceneTurn(){
    question at the same instant - would the press that happens NOW meet the
    floor - so they ask it through one function. Two of these computed separately
    is the drift law's opening move. */
+/* THE FLOOR IS A NOVEL-MODE FACT (v4.72.0). The door still asks twice in both
+   modes - that is the PLAYER's guard and it is not going anywhere - but no floor
+   holds a close the DM or the player wants at the wild table. Answering true here
+   is what stands the floor down, in one function, for all four of its readers: the
+   router, the renderer that greys the door, the held-door serve, and the exit's
+   own correction. */
 function doorMeetsFloor(){
-  return beatDone() || (beatTurns + 1) >= beatFloor(beatNow());
+  return wildRun() || beatDone() || (beatTurns + 1) >= beatFloor(beatNow());
+}
+/* the same floor asked one instant later - boardTurn runs downstream of beatTurns++,
+   so the two readings differ by exactly the tick between them */
+function beatMetFloor(){
+  return wildRun() || beatDone() || beatTurns >= beatFloor(beatNow());
 }
 function doorSkeletonNow(){
+  if(wildRun()) return false;
   if(!V5SCENE || lastTurnMud || runOver || foldPending || walkbackNow) return false;
   if(attemptOn || beatDone() || phase !== "live") return false;
   if(pickKind !== "exit") return false;
@@ -10242,6 +10415,8 @@ function doorSkeletonNow(){
 var DOOR_HELD_ASIDE = "He reached for the ending and the night would not take it yet —"
   + " too much is still standing. The door stays open; play it out and take it again.";
 function doorHoldNow(){
+  if(wildRun()) return false;          /* doorMeetsFloor is true at the wild table anyway;
+                                          this says so at the router as well as the arithmetic */
   if(!V5SCENE || lastTurnMud || runOver || foldPending || walkbackNow) return false;
   if(attemptOn || beatDone() || phase !== "live") return false;
   if(pickKind !== "exit") return false;
@@ -10304,6 +10479,10 @@ function serveSceneTurn(blocks){
    far side of it - which is where the authored prose lives. Nothing new is written; the
    settling stops pretending it needs an author. */
 function interludeNow(){
+  /* the aftermath is a TRANSITION, and transitions are the DM's at the wild table:
+     the settling turns compose like any other, so what lands between a close and
+     the room is written rather than drained */
+  if(wildRun()) return false;
   return !!(V5SCENE && !lastTurnMud && !runOver && !foldPending && !walkbackNow
             && !attemptOn && !beatDone() && phase === "aftermath");
 }
@@ -10352,6 +10531,10 @@ function callInterludeTurn(){
   return true;
 }
 function bitSkeletonNow(){
+  /* A WILD BIT IS THE OLD FULL APPARATUS: chaotic banter, the model unchained,
+     immunity intact as coded. The skeleton is the NOVEL's bit - and in a novel run
+     it does not reach the wire either (see callBitTurn). */
+  if(wildRun()) return false;
   return !!(V5MODE && lastTurnMud && !runOver && !foldPending && !walkbackNow);
 }
 /* THE BREACH APPARATUS RETIRES FOR BITS, AND IT RETIRES STRUCTURALLY. Six things
@@ -10371,6 +10554,13 @@ function bitSkeletonNow(){
    reading takeAction's source - and so the next thing that needs to know whether
    this turn is scanned asks instead of guessing. */
 function breachScanned(isMud, clickNow){
+  /* PLAYER WILDNESS, AT THE WILD TABLE. The BIBLE's own line - "honor whatever the
+     player types as a custom action, however wild" - finally runs unchaperoned: the
+     dry-path hold, the strip and the count all stand down, and the run may cheerfully
+     contradict the deterministic canon. Unhinged is a feature, not a defect. The
+     things that still hold there are integrity, not decorum: the dead stay dead, the
+     voice physics stand, and a bit still cannot be spent. */
+  if(wildRun()) return false;
   if(bitSkeletonNow()) return false;
   /* the button, or anything typed. A rail click is the board's own line and was
      never a breach - and it tests whether a button was pressed AT ALL, never the
@@ -10512,9 +10702,32 @@ function bitLint(slot, fill, allowed){
 function callBitTurn(){
   if(runOver) return;
   var epoch = runEpoch;
+  var sk = bitSkeleton(lastPlayerText);
+  /* ==== THE NOVEL SERVES THIS FROM THE POOL, AND NEVER ASKS (v4.72.0) ====
+     This is the last thing in the deterministic game that touched the wire, and it
+     is the reason the zero-call claim used to carry an asterisk. The pool was always
+     the floor here - "the worst a model can do to a bit is make the turn fully
+     authored" - so a novel run simply starts at the floor and calls it the room. Not
+     a fetch that fails over: NO FETCH. askAI is not invoked, so a detector counting
+     invocations rather than completions reads zero, which is the claim the bar makes.
+     SAID PLAINLY, because it is a finding and not a secret: the apparatus below is
+     unreached in shipped play after this release. The novel serves from the pool and
+     a wild bit is the old full-apparatus bit, which goes down the legacy composed
+     road - bitSkeletonNow is false at the wild table - so nothing routes here with
+     wildRun() true. It is kept rather than deleted: the fills path is proved by four
+     sweep rows, it is one router away from being useful again if the paint slots ever
+     ship, and deleting a proved subsystem to tidy up is how a feature comes back
+     unproved. The sweep drives it directly so it cannot rot unnoticed. */
+  if(!wildRun()){
+    lastSent = {text:"[pool] the room answers him: " + String(lastPlayerText || "").slice(0, 48),
+                chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
+    lastReceived = "[pool] " + sk.slots.length + " house line(s) - the novel never asks";
+    lastReplyVerdict = "pool: the room answered, zero calls";
+    serveBitTurn(sk.slots, null);
+    return;
+  }
   if(!retrying) turnCalls++;
   setBusy(true);
-  var sk = bitSkeleton(lastPlayerText);
   pendingRetry = function(){ retrying = true; try{ callBitTurn(); } finally { retrying = false; } };
   lastSent = {text: sk.msgs[0].content, chars: sk.msgs[0].content.length, trim: trimFlagsText(),
               msgs: sk.msgs.length, wire: BIBLE.length + sk.msgs[0].content.length,
@@ -11339,6 +11552,49 @@ function boardBlock(){
 }
 /* Rides the outgoing message. Note the side effect on forcingNow: the client only
    forces a gate it has already ordered landed, so the prose and the pointer agree. */
+/* ---- THE NUDGE LADDER: the wild table's standing orders ----
+   The client's job here is to say what tonight is and then get out of the way. The
+   old boardDirective language comes back as the beat's turn count grows - the
+   premise, the squeeze, the world's own move - but every rung of it is a SUGGESTION
+   in the composed context, and nothing under it fires. Close on turn one or turn
+   thirty; both are legal, and the SPINE's only remaining authority is the ORDER of
+   the questions, never their timing. */
+function wildNudge(){
+  var b = beatNow(), n = beatTurns, out = [];
+  out.push("YOU OWN THE CLOCK TONIGHT. Nothing in this game closes a night but you and the player."
+    + " When this one has said what it came to say, close it: send \"gate\": true with a true"
+    + " \"gateNote\" saying what actually happened, and write the landing yourself - where it leaves"
+    + " them, what it cost, and the quiet after it. Do not wait to be told.");
+  out.push("TONIGHT IS: " + b.title + " — " + b.goal + " It ends when: " + b.exit);
+  /* the world's own close, declared rather than imposed. There is no arithmetic left
+     to set it, so the storyteller says so: "world": true beside the gate means the
+     night ended because the world took it, and the board files the scar. */
+  out.push("If the night ends because the WORLD took it rather than because they reached the ending -"
+    + " they ran out of time, somebody else decided, it went wrong - send \"world\": true beside the"
+    + " gate and the board files that honestly."
+    + (b.scar ? " Here that costs: " + b.scar : ""));
+  if(n >= 1 && (b.press || [])[0]){
+    out.push("THE NIGHT HAS ITS OWN PRESSURE AND IT IS AVAILABLE: " + b.press[0]
+      + " An offer, not an order - play it if the scene wants it.");
+  }
+  if(n >= b.budget - 1 && (b.press || [])[1]){
+    out.push("A SECOND ONE, if this is running long: " + ((b.press || [])[1] || ""));
+  }
+  if(n >= b.budget + 1){
+    out.push("THIS NIGHT IS ON TURN " + (n + 1) + " AND ITS BUSINESS IS STILL OPEN. Nothing will close"
+      + " it but you. If the scene has more in it, keep going and say so; if it is circling, land it"
+      + " this turn - cut to the consequence, jump the clock, and gate it.");
+  }
+  if(n >= b.budget * 2 + 2){
+    out.push("SAID PLAINLY: " + (n + 1) + " turns is a long night by any measure. The player can always"
+      + " walk out and can always reach for the ending themselves, but they should not have to. Close it.");
+  }
+  if(seasonAhead() && beatIdx >= seasonFinaleIdx()){
+    out.push("AND THIS IS THE SEASON'S LAST QUESTION. When it gates, the season turns - so land it"
+      + " like a finale rather than like a Tuesday.");
+  }
+  return "(" + out.join(" ") + ")";
+}
 function boardDirective(){
   forcingNow = false;
   pressureSent = false;
@@ -11375,6 +11631,15 @@ function boardDirective(){
     }
     return fix.length ? "(" + fix.join(" ") + ")" : "";
   }
+  /* ==== THE WILD TABLE OWNS ITS OWN CLOCK ====
+     Everything below this line is the deterministic world's budget arithmetic: the
+     forced close, the toll, the scar, the pressure ladder that arms them. A wild run
+     gets the same language as escalating SUGGESTIONS and no enforcement at all -
+     forcingNow and pressureSent stay down, so nothing the board wants can close a
+     night the DM has not closed. The aftermath and slack directives above are shared
+     because they are the LIFECYCLE, not the budget: they describe what a settling
+     turn is, and that is as true at one table as the other. */
+  if(wildRun()) return wildNudge();
   var b = beatNow();
   if(beatTurns >= b.budget + 1){
     forcingNow = true;
@@ -11458,6 +11723,11 @@ function boardDirective(){
    allows a gate, so anchors are chosen distinctive and common words never qualify. */
 function anchorsMissing(b){
   var out = [];
+  /* THE DM WRITES THE CLOSE IT WANTS. The anchor check and the thin close it feeds
+     are structure fences: they exist because the deterministic world guarantees a
+     close and needs the close to be honest about who was in it. At the wild table
+     gateNote is the record, and a gate is a gate. */
+  if(wildRun()) return out;
   (b.anchors || []).forEach(function(nm){
     /* the inverse of the fence's problem, from the same missing guard: "nine of
        them" and "seven in the morning" satisfied the witness for gates the scene
@@ -11678,6 +11948,11 @@ function bookFor(said, forcing, pick, gauntlet){
    and the prototype - so the substitution is no longer dormant and this comment no
    longer says it is. */
 function gauntletNow(){
+  /* NO TEETH RUNTIME AT THE WILD TABLE - no attempt UI, no client stages. The teeth
+     cards travel in the briefing as authored peril MATERIAL ("use these when the
+     night earns them, or invent worse") and the peril/death reply fields do what
+     they always did, so the game can still kill exactly as we already coded it. */
+  if(wildRun()) return false;
   if(!TEETH_LIVE || beatDone() || runOver) return false;
   var t = beatNow().teeth;
   return !!(t && t.when && t.when.onExit && t.live !== false);
@@ -11753,6 +12028,7 @@ function ambientCard(){
   return isNaN(parseInt(t.when.turnMin, 10)) ? null : t;
 }
 function ambientDue(){
+  if(wildRun()) return false;          /* the other teeth arming site - see gauntletNow */
   if(!TEETH_LIVE || attemptOn || runOver || beatDone() || foldPending || walkbackNow) return false;
   if(phase !== "live") return false;
   var t = ambientCard();
@@ -11935,6 +12211,13 @@ function boardTurn(data){
   var said = data && (data.gate === true || data.gate === "true");
   var note = (data && typeof data.gateNote === "string" && data.gateNote.trim()) ? data.gateNote.trim() : "";
   var knock = data && (data.knock === true || data.knock === "true");
+  /* THE WORLD'S OWN CLOSE, DECLARED RATHER THAN COMPUTED (v4.72.0). In a novel run
+     a hard close is arithmetic: the budget ran out and the world took the night. At
+     the wild table there is no arithmetic left to run, so the storyteller says it -
+     "world": true beside the gate, ordered in the nudge ladder - and the board files
+     the scar and the toll exactly as it always has. THE WORLD MOVED ON therefore
+     renders in a wild run only when the DM's own reply asked for it. */
+  var worldSaid = wildRun() && !!(data && (data.world === true || data.world === "true"));
   /* the chassis choice rides the gate; closeBeat consumes it */
   /* F3: and failing that, the door the player took. A reply that states the fork
      still wins - the wire path is unchanged - but under V5SCENE there is no reply
@@ -12047,7 +12330,18 @@ function boardTurn(data){
      for when they want it". The first cut of this asked those three flags directly
      and every one of them had already been consumed at compose; it reads the latch. */
   var worldTurn = forcingNow || pressureSent;
-  if(pickKind === "stall" && said && exitStage() === "open" && !worldTurn){ said = false; stalledNow = true; }
+  /* ...AND THE STALL LABEL IS NOVEL-MODE MACHINERY (v4.72.0, found by playing).
+     doorSlots() calls the rail's second and third lines "stalls" because in a novel
+     run they ARE: dead ends dealt from the beat's own deck, written to hold the night
+     open. At the wild table those two lines are the DM's own choices, and the label
+     is an artifact of where they happen to sit in the row - so refusing a gate
+     because the player pressed slot two is the client overruling the storyteller
+     about a line the storyteller wrote, which is precisely the structure fence §3
+     stands down. The pinned exit in slot one is real in both modes and keeps its
+     meaning; these two do not. (Sonnet-5 hit this on its fourth turn of the first
+     live wild run: it decided the night was over on "Take me to Vic", and the board
+     told it no.) */
+  if(!wildRun() && pickKind === "stall" && said && exitStage() === "open" && !worldTurn){ said = false; stalledNow = true; }
   /* the clock amendment: bits tick nothing. Budget, floor and the ladder meter
      absence and idleness, never joy - the dots hold still while the table plays.
      A bit is a stall with a joke in it: it holds the gate AND costs no road. */
@@ -12098,7 +12392,7 @@ function boardTurn(data){
        held. Compliance was punished both ways. Below the floor the door now HOLDS
        - the same held gate the floor already serves, with no toll, no scar and no
        anchor check - and the player keeps the night they reached the end of. */
-    if(beatTurns < beatFloor(beatNow())){
+    if(!beatMetFloor()){
       gateHeldNow = true;
       /* ...and the door gives back what it took. takeAction puts skin on the shard
          the moment an ending-in-her-voice door is clicked; if the beat then holds,
@@ -12125,7 +12419,7 @@ function boardTurn(data){
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
      so anchors are not consulted and the rain does not move either way */
   var held = false;
-  if(said && beatTurns < beatFloor(beatNow())){
+  if(said && !beatMetFloor()){
     said = false; held = true; gateHeldNow = true;
     /* ...and it gives back what the door took, exactly as the !said branch does.
        Two branches held the same beat and disagreed about the world: taking the
@@ -12180,7 +12474,9 @@ function boardTurn(data){
   }
   /* the visible ladder: the player reads the road shortening in their own cards,
      one turn behind the directives the DM is writing under */
-  if(!said && !forcingNow){
+  /* ...and the ladder is silent at the wild table, for the same reason the strip
+     hides: "one more turn and it moves on" is a promise the world no longer keeps */
+  if(!said && !forcingNow && !wildRun()){
     if(beatTurns === beatNow().budget){
       queueAside("yellow", "Tonight's business is running out of road.");
     } else if(beatTurns === beatNow().budget + 1){
@@ -12205,7 +12501,7 @@ function boardTurn(data){
        create: a model that REFUSED the forced gate fell to the thin-close, which
        sets hard but not forced and so pays nothing, while a model that obeyed paid
        the toll. Obedience must cost the WORLD's move, never the player's. */
-    var worldsMove = bookFor(said, forcingNow, pickKind, gauntletNow()) === "world";
+    var worldsMove = bookFor(said, forcingNow, pickKind, gauntletNow()) === "world" || worldSaid;
     /* a force at max tolls folds the table - except the finale, which never
        folds: a forced finale lands the season exactly as it always has */
     /* THE FOLD FOLDS UNANSWERED STORY, NEVER ANSWERED STORY. This returned above
@@ -12215,7 +12511,13 @@ function boardTurn(data){
        the world catches the story up WITHOUT you; there is nothing to catch up on a
        beat the player watched close. A landed gate closes hard first, and the fold
        arms for the NEXT board step if there is still season left to fold. */
-    var foldDue = worldsMove && tolls >= TOLL_MAX && !isFinaleBeat();
+    /* ...AND THE TABLE DOES NOT FOLD ITSELF AT THE WILD TABLE. The fold is the
+       client rewriting the plot pointer across eight beats of somebody's season -
+       the largest structural transition in the file - and transitions are the DM's
+       here. The toll still lands and the scar is still recorded, because those are
+       the RECORD of a night the world took; what does not happen is the board
+       skipping ahead on the player's behalf. */
+    var foldDue = !wildRun() && worldsMove && tolls >= TOLL_MAX && !isFinaleBeat();
     if(foldDue && !said){ forcingNow = false; foldPending = true; return; }
     closeBeat(worldsMove, note);
     if(foldDue && !runOver && beatIdx < seasonFinaleIdx()) foldPending = true;
@@ -12280,6 +12582,11 @@ function boardTension(){
   if(perilTurns > 0) return 3;        /* mortal danger reads as maximum pressure */
   if(beatDone()) return 0;
   if(phase !== "live") return 0;      /* aftermath and slack: the room is dark and easy */
+  /* AT THE WILD TABLE THE BUDGET IS NOT A CLOCK, so the room does not tighten off
+     one. Peril still reads as peril (the DM declares it and it is real), and drift
+     still cools the room, because the DM declares that too. What is gone is the
+     arithmetic, because the arithmetic no longer does anything. */
+  if(wildRun()) return (driftRun >= DRIFT_YELLOW) ? 1 : 0;
   var b = beatNow(), t = 0;
   if(beatTurns >= b.budget + 1) t = 3;
   else if(beatTurns === b.budget) t = 2;
@@ -12319,7 +12626,10 @@ function applyTension(quiet){
   if(p){
     /* the one gauge on the play screen: the odometer itself, lit dot per turn
        spent, visible through the whole live beat - never a tier disguised as time */
-    var live = runSlug && !beatDone() && phase === "live" && introStage !== 1;
+    /* THE STRIP HIDES AT THE WILD TABLE. It is a gauge wired to enforcement that no
+       longer exists - no forced closes, no tolls, no scars imposed by arithmetic -
+       and a threat the world never keeps is scenery. We do not ship scenery. */
+    var live = runSlug && !wildRun() && !beatDone() && phase === "live" && introStage !== 1;
     if(!live){ p.className = ""; p.innerHTML = ""; }
     else {
       var b2 = beatNow(), shown = Math.max(b2.budget, beatTurns), i, ticks = "";
@@ -14537,9 +14847,75 @@ function relayCard(t, relay){
                + " to field it for her: the narration carries the subject, and the answer is"
                + " visibly out of reach tonight."};
 }
+/* ---- WHAT THIS ROOM KNOWS: the SCENEBOOK, offered rather than dealt ----
+   The novel's contract picks ONE card and orders it played. The wild table gets the
+   whole deck as material - every card's subject, its answerer, the true thing it
+   yields and the thing it withholds - plus the beat's own physics, its never list
+   and its teeth, and then it is told to use whatever the night earns and invent the
+   rest. Nothing here MARKS: pickTopic spends a card and this must not, or a night
+   the model never used would come back dry. The row is the DM's too (see
+   sceneRails), so there is no binding to keep in step with. */
+function wildContract(s){
+  var sc = s.sc, b = beatNow(), o = {}, i, t;
+  o.where = sc.where;
+  o.in_the_room = sc.here;
+  if(sc.before) o.before_anyone_speaks = sc.before;
+  if(s.room){
+    o.this_turn = "THE ROOM - the family's own time. No gate, no clock, nothing owed.";
+  } else {
+    o.this_turn = b.title + " - turn " + (beatTurns + 1) + ", and there is no turn limit";
+    o.tonight_is_for = b.goal;
+    o.it_ends_when = b.exit;
+    o.the_landing_it_walks_toward = sc.ends;
+    o.the_door_they_took = contractDoor();
+  }
+  o.what_this_room_knows = [];
+  for(i = 0; i < (sc.topics || []).length; i++){
+    t = sc.topics[i];
+    if(!t || !t.ask) continue;
+    o.what_this_room_knows.push({
+      subject: t.ask, who_would_know: t.who,
+      the_true_thing: t.gives || "",
+      what_they_hold_back: t.holds || ""
+    });
+  }
+  o.never = sc.never;
+  var nope = lockedReveals();
+  if(nope.length) o.not_yet = nope;
+  /* the teeth as MATERIAL: the card's own threat and its stages, with the death it
+     was written to be able to deal. No runtime, no stages on screen - the reply's
+     own peril/death fields are the road, and they are the road we already coded. */
+  var th = (!s.room && b.teeth && b.teeth.live !== false) ? b.teeth : null;
+  if(th){
+    o.what_could_go_wrong_tonight = {
+      threat: th.threat || "",
+      how_it_kills: th.death || "",
+      use_it: "when the night earns it, or invent something worse. Declare it with \"peril\" first"
+        + " and give them a real way out; kill with \"death\" only after they have been warned."
+    };
+  }
+  var phys = physicsNow();
+  for(var pk in phys){ if(Object.prototype.hasOwnProperty.call(phys, pk)) o[pk] = phys[pk]; }
+  o.choices = s.room
+    ? "three things to say or do IN THIS ROOM, to the people already in it. Never offer moving on"
+      + " or heading out - the way out of this room is a button the player already has."
+    : "two of your own, under the board's line, both leaning at: " + b.aim;
+  return "WHAT THIS ROOM KNOWS - the night's material, as data. It is yours to use, not a script.\n"
+    + "1. what_this_room_knows is a DECK, not an order. Play whatever this turn earns - one card,"
+    + " three, none - and invent freely around them. the_true_thing is true when it is said;"
+    + " what_they_hold_back is what that person is not saying tonight, and the not-saying should be"
+    + " visible when the subject comes up.\n"
+    + "2. never and not_yet: none of it happens, in prose, in dialogue or in summary. Not as a hint,"
+    + " not as somebody nearly saying it. That fence is the one thing here that is not yours.\n"
+    + "3. before_anyone_speaks is physics, not flavour. It holds whatever else the scene does.\n"
+    + "4. choices: as described in the choices field. A choice is only ever the courier's own words.\n"
+    + "5. NONE OF THIS OBJECT'S WORDING GOES ON SCREEN. It is stage direction written to you.\n"
+    + JSON.stringify(o, null, 1);
+}
 function sceneContract(){
   var s = sceneNow();
   if(!s) return "";
+  if(wildRun()) return wildContract(s);
   var sc = s.sc, b = beatNow(), t = pickTopic(sc, s.key), o = {};
   o.where = sc.where;
   o.in_the_room = sc.here;
@@ -14681,8 +15057,88 @@ function buildContext(){
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
 
+/* ==================== THE STABLE (v4.72.0, brief v6.1) ====================
+   Which family the selected model belongs to, read once and keyed on by every
+   request knob below. OpenRouter slugs are "vendor/model"; a direct provider has no
+   prefix, so the provider IS the family. One function, because three separate
+   readings of the same string is exactly how three knobs drift apart. */
+function modelFamily(){
+  var m = String(settings.model || "").toLowerCase();
+  var slash = m.indexOf("/");
+  if(slash > 0) return m.slice(0, slash);        /* anthropic, deepseek, openai, google, ... */
+  if(settings.provider === "anthropic") return "anthropic";
+  if(settings.provider === "openai") return "openai";
+  return settings.provider || "custom";
+}
+/* JSON MODE IS NOT SPRAYED. A provider that errors on response_format costs a turn,
+   and the prompt-level JSON contract is what four waves actually proved - so the
+   field goes only to families known to honour it. The two local runners have
+   honoured it since Phase A; OpenAI and DeepSeek honour it through OpenRouter. */
+function jsonModeOK(){
+  if(settings.provider === "ollama" || settings.provider === "lmstudio") return true;
+  var f = modelFamily();
+  return f === "openai" || f === "deepseek";
+}
+/* A DM TURN IS A SCENE, NOT AN ESSAY. The old ceiling was sized so a thinking model
+   could burn half of it deliberating and still land a turn; with reasoning requested
+   OFF (below) that headroom is pure latency and pure spend. The wild table gets the
+   tighter cap because the wild table is the only thing that composes.
+   THE NUMBER IS MEASURED, NOT CHOSEN. The v6.1 amendment says "~1,200", and 1,200 is
+   the wrong side of the line: across fourteen live anthropic/claude-sonnet-5 turns
+   the outputs ran 436, 449, 522, 542, 551, 583, 695, 729, 769, 777, 948, 990, 1044
+   and **1193** - 99.4% of that ceiling on a perfectly ordinary turn, so one more
+   sentence and a player watches a scene stop mid-word. (Three live
+   mudskippers-qwen2-5-32b turns peaked at ~750, so the small end is nowhere near
+   it.) 1,600 keeps the amendment's intent - a scene, bounded cost, bounded latency -
+   with the headroom the measurement says it needs. Flagged in the report; move it if
+   you would rather have the tighter number and the truncation. */
+var WILD_REPLY_TOKENS = 1600;
+function replyCap(){ return wildRun() ? WILD_REPLY_TOKENS : REPLY_TOKENS; }
+/* UNHINGED IS A FEATURE, so the wild table runs hot by default - and the player can
+   move it, because "how strange do you want tonight" is a taste knob and not a law. */
+function replyTemp(){
+  var t = parseFloat(settings.temp);
+  if(!isNaN(t) && t >= 0 && t <= 2) return t;
+  return wildRun() ? 0.9 : 0.8;
+}
+/* ---- A THINKING TRANSCRIPT IN THE FEED IS A BROKEN TURN ----
+   Any model may arrive with a <think> preamble or a reasoning field, whatever the
+   request asked for - OpenRouter surfaces both, model-dependent, and a free-text
+   slug lets a player reach a reasoning-first model we would never shortlist. So the
+   body is cleaned before repairJSON ever sees it, and none of it is ever rendered:
+   the tags come off, and anything before the first brace goes with them. This is
+   lane, not preference. */
+var THINK_TAGS = /<\s*(think|thinking|reasoning|thought|scratchpad|analysis)\s*>[\s\S]*?<\s*\/\s*\1\s*>/gi;
+function stripReasoning(raw){
+  var t = String(raw == null ? "" : raw);
+  t = t.replace(THINK_TAGS, " ");
+  /* ...and the UNCLOSED one, which is what a truncated reasoning block looks like.
+     Only when there is a brace after it, or an honest reply that merely says the
+     word would lose its whole body. */
+  var open = /<\s*(?:think|thinking|reasoning|thought|scratchpad|analysis)\s*>/i.exec(t);
+  if(open && t.indexOf("{", open.index) !== -1) t = t.slice(0, open.index) + t.slice(t.indexOf("{", open.index));
+  return t;
+}
+/* the same job on the transport's own shape: OpenRouter and several local runners
+   put the deliberation in its own FIELD, where a string-level strip cannot reach it */
+function contentOf(msg){
+  if(!msg) return "";
+  var c = msg.content;
+  /* a content-part array, which is what a model that reasoned in-band sends back */
+  if(Object.prototype.toString.call(c) === "[object Array]"){
+    return c.filter(function(p){ return p && p.type === "text"; })
+            .map(function(p){ return p.text || ""; }).join("\n");
+  }
+  return c || "";
+}
 /* adaptive thinking exists on the 4.6-and-later families; older models 400 on it */
 function dmThinking(body){
+  /* ...and OFF at the wild table (v6.1 §2.3), which is the only table that composes.
+     Two reasons, and the second is the one that bites: a thinking transcript is not
+     a turn, and adaptive thinking shares the output ceiling with the scene - so
+     leaving it on under the wild cap would spend half a 1,200-token budget
+     deliberating and hand the player a scene cut off mid-sentence. */
+  if(wildRun()){ body.thinking = {type:"disabled"}; return body; }
   if(/sonnet-5|opus-5|opus-4-[678]|sonnet-4-6|fable|mythos/.test(settings.model||"")){
     body.thinking = {type:"adaptive"};
     body.output_config = {effort:"low"};
@@ -14721,7 +15177,8 @@ function askAnthropic(msgs){
        reasoning - adaptive thinking at low effort, so it deliberates briefly on
        the hard turns (gates, checkpoints) and skips it on routine ones. Models
        too old for adaptive get thinking off, which is valid everywhere. */
-    body: JSON.stringify(dmThinking({model:settings.model, max_tokens:REPLY_TOKENS,
+    body: JSON.stringify(dmThinking({model:settings.model, max_tokens:replyCap(),
+      temperature:replyTemp(),
       system:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}],
       messages:msgs}))
   /* the ceiling covers the BODY too. Clearing the timer when the headers arrive
@@ -14736,30 +15193,58 @@ function askAnthropic(msgs){
     }).then(function(data){
     if(data.error) throw new Error(data.error.message || "provider error");
     if(data.stop_reason === "max_tokens") throw new Error("the reply hit the token ceiling and was cut off");
-    return (data.content||[]).filter(function(x){return x.type==="text";})
-      .map(function(x){return x.text;}).join("\n");
+    /* the reasoning blocks are their own content type and never reach the page */
+    lastUsage = data.usage || null;
+    return stripReasoning((data.content||[]).filter(function(x){return x.type==="text";})
+      .map(function(x){return x.text;}).join("\n"));
   });
+}
+/* the provider's own accounting of the last call, for the trapdoor and for the cache
+   row: cache_read_input_tokens (Anthropic) / prompt_tokens_details.cached_tokens
+   (OpenAI-shaped) is the only honest evidence that a breakpoint did anything. */
+var lastUsage = null;
+function cacheReadTokens(u){
+  if(!u) return 0;
+  if(typeof u.cache_read_input_tokens === "number") return u.cache_read_input_tokens;
+  var d = u.prompt_tokens_details || u.input_tokens_details;
+  if(d && typeof d.cached_tokens === "number") return d.cached_tokens;
+  return 0;
 }
 
 function askOpenAI(msgs, useAltTokenParam, capTokens){
-  var cap = capTokens || REPLY_TOKENS;
-  /* OpenRouter passes cache_control through to Anthropic models (and ignores it
-     elsewhere); local and generic endpoints get the plain string they expect */
-  var sysMsg = (settings.provider === "openrouter")
+  var cap = capTokens || replyCap();
+  /* ==== THE MONEY CHANGE (brief v6.1 §2.1) ====
+     Claude models cut cached input by ~90%, but only with an explicit breakpoint,
+     and OpenRouter passes them through. The BIBLE is the largest fully-stable
+     prefix this game has - ~10k tokens, byte-identical every turn of every run -
+     so it is the one block worth marking. Keyed on the SLUG's family rather than
+     on the provider: "anthropic/claude-sonnet-5" through OpenRouter is a Claude
+     model and a plain string through the same endpoint is not.
+     SAID HONESTLY, because the saving has a ceiling: our wire is briefing-first,
+     history-behind, and the briefing changes every turn - so nothing after the
+     BIBLE can prefix-cache, for Claude or for anybody's implicit caching. The
+     reorder that would fix that is a composition change and is a finding, not a
+     smuggled edit. */
+  var sysMsg = (modelFamily() === "anthropic")
     ? {role:"system", content:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}]}
     : {role:"system", content:BIBLE};
   var body = {model:settings.model,
     messages:[sysMsg].concat(msgs)};
-  /* a bit of reasoning, in OpenRouter's own dialect - it maps effort to each
-     model's native thinking controls and ignores it where unsupported */
-  if(settings.provider === "openrouter") body.reasoning = {effort:"low"};
-  /* a model on this machine gets the guardrail the big ones do not need: forced
-     JSON. A 12B will happily write a sentence of preamble before the object, and
-     every one of those turns is a dead turn. Ollama and LM Studio both honour it. */
-  if(settings.provider === "ollama" || settings.provider === "lmstudio"){
-    body.response_format = {type:"json_object"};
-    body.temperature = 0.8;
+  /* REASONING OFF, ASKED FOR IN BOTH DIALECTS (v6.1 §2.3). A table DM is not an
+     analyst: deliberation is latency, spend, and - when it leaks - a broken turn.
+     This is the braces; stripReasoning at the transport's mouth is the belt, and
+     the belt is what actually holds, because a free-text slug can reach a model
+     that reasons whatever the request said. */
+  if(settings.provider === "openrouter"){
+    body.reasoning = {enabled:false};
+    body.include_reasoning = false;
   }
+  /* forced JSON, and only where the family honours it - a 12B will happily write a
+     sentence of preamble before the object, and every one of those turns is a dead
+     turn. A provider that ERRORS on the field costs a turn too, which is why this
+     is a roster and not a spray. */
+  if(jsonModeOK()) body.response_format = {type:"json_object"};
+  body.temperature = replyTemp();
   if(useAltTokenParam) body.max_completion_tokens = cap; else body.max_tokens = cap;
   var headers = {"Content-Type":"application/json"};
   /* ...and only where a key means something. Keeping the player's Anthropic key
@@ -14795,7 +15280,10 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
     if(!ch || !ch.message) throw new Error("empty reply from provider");
     if(ch.finish_reason === "length") throw new Error("the reply hit the token ceiling and was cut off"
       + (capTokens ? " - the ceiling was lowered to fit this key's remaining credit, so topping up will also fix this" : ""));
-    return ch.message.content || "";
+    lastUsage = data.usage || null;
+    /* ch.message.reasoning / .reasoning_content is simply never read: the turn is
+       what the model SAID, and the deliberation behind it is not ours to render */
+    return stripReasoning(contentOf(ch.message));
   });
 }
 
@@ -14873,13 +15361,38 @@ function parseScene(raw){
 }
 
 /* ============ GAME LOOP ============ */
+/* ---- THE BAR, BY MODE ----
+   In a novel run the MUDSKIPPER MOMENT button is ABSENT - not greyed, not disabled:
+   out of the DOM, so the input takes the width and the placeholder stops promising a
+   button that is not there. The element is held rather than destroyed, because a run
+   loaded from the drawer can put it straight back.
+   Everything that touches the button is null-safe for this reason; a mode that hides
+   a control by deleting it and a codebase that assumes the control exists is one
+   TypeError away from a dead rail. */
+var mudBtnHeld = null;       /* the button while it is out of the tray */
+function barPlaceholder(){
+  return wildRun()
+    ? "…or say what the courier does. Enter to do it, the button for a bit."
+    : "…or say what the courier does. Enter to do it.";
+}
+function applyModeUI(){
+  var row = document.querySelector(".mudrow"), mi = $("mudinput"), mb = $("mudbtn");
+  if(wildRun()){
+    if(!mb && mudBtnHeld && row){ row.appendChild(mudBtnHeld); mudBtnHeld = null; }
+  } else if(mb && row){
+    mudBtnHeld = mb;
+    row.removeChild(mb);
+  }
+  if(mi && !runOver) mi.placeholder = barPlaceholder();
+  try{ applyTension(true); }catch(e){}   /* the strip belongs to the mode too */
+}
 function openBar(){
   var mi = $("mudinput"), mb = $("mudbtn");
   /* the same words the markup carries. This overwrote them on every newRun,
      restore and rehearsal, so the one sentence in the running game that teaches
      the typed-input contract was visible on the title screen and nowhere else -
      while the bar in play taught the opposite. */
-  if(mi){ mi.disabled = false; mi.placeholder = "…or say what the courier does. Enter to do it, the button for a bit."; }
+  if(mi){ mi.disabled = false; mi.placeholder = barPlaceholder(); }
   if(mb) mb.disabled = false;
 }
 /* THE SECRET IN THE FIRST SECTION. The gold bar looks open during the cold
@@ -15440,7 +15953,11 @@ function takeAction(text, isMud){
   }
   /* the reveal turn is the game's, not the DM's - it needs no key and no call */
   var intro = (introStage === 1);
-  if(!intro && !settings.key && PRESETS[settings.provider] && PRESETS[settings.provider].needsKey){
+  /* THE PROVIDER GATE IS THE WILD TABLE'S ALONE (v4.72.0). A novel run needs no
+     settings at all - not a key, not an endpoint, not a model - so asking it for one
+     is the game refusing to play itself. This is one of the two doors that make the
+     zero-wire claim structural rather than aspirational; the other is callBitTurn. */
+  if(!intro && wildRun() && !providerReady()){
     openSettings(); return;
   }
   renderDivider();
@@ -16102,7 +16619,7 @@ function callDM(corrected, tag){
        only way to satisfy both was to lie. Below the floor the door holds, which
        is now true of the board as well as the directive. */
     if(askAgain < 2 && mayAsk("exitLand") && !gateHeldNow && !cutHeld && pickKind === "exit" && !forcingNow && !lastTurnMud
-       && !beatDone() && beatTurns + 1 >= beatFloor(beatNow())
+       && !beatDone() && doorMeetsFloor()
        && phase === "live" && !foldPending && !walkbackNow){
       var xg = parsed.data.gate === true || parsed.data.gate === "true";
       var xgn = typeof parsed.data.gateNote === "string" && parsed.data.gateNote.trim();
@@ -16140,7 +16657,10 @@ function callDM(corrected, tag){
     /* the fix went to boardTurn's bookkeeping and the CALL is burned here, one
        layer earlier - so the pressure turn still spent a correction telling the
        model not to do the thing the board had just ordered. */
-    if(askAgain < 2 && mayAsk("stallHold") && pickKind === "stall" && !forcingNow
+    /* ...and the correction that carries the same law stands down with it: telling
+       the storyteller "they did not go" about a line the storyteller wrote, and
+       spending a paid call to say it, is the fence and the toll in one */
+    if(askAgain < 2 && !wildRun() && mayAsk("stallHold") && pickKind === "stall" && !forcingNow
        && !(!beatDone() && beatTurns >= beatNow().budget) && !lastTurnMud
        && phase === "live" && !beatDone() && !foldPending && !walkbackNow
        && exitStage() === "open"
@@ -16313,12 +16833,20 @@ function callDM(corrected, tag){
    gets it wrong either spends a bit that was promised free or makes a joke cost
    the run: ENTER is the courier doing a thing, the BUTTON is a bit, and a line
    opened with "!" is a bit for people who never leave the keyboard. */
+/* the handler is bound once, at load, to the element the markup shipped - and
+   applyModeUI moves that same element in and out of the tray, so the binding travels
+   with it and never has to be re-attached */
 $("mudbtn").onclick = function(){ var v=$("mudinput").value; if(v.trim()) takeAction(v,true); };
 $("mudinput").addEventListener("keydown", function(e){
   if(e.key!=="Enter") return;
   var v=$("mudinput").value;
   if(!v.trim()) return;
-  var bang = /^\s*!/.test(v);
+  /* ...AND THE KEYBOARD SHORTCUT IS INERT IN A NOVEL RUN. The bang is the button for
+     people who never leave the keyboard, so it goes where the button goes: with no
+     bit channel, "!take a bow" is the courier taking a bow, sincerely, and it costs a
+     turn like everything else he does. A shortcut that outlives its control is the
+     absent button still being pressable. */
+  var bang = wildRun() && /^\s*!/.test(v);
   takeAction(bang ? v.replace(/^\s*!\s?/, "") : v, bang);
 });
 
@@ -16500,6 +17028,11 @@ function saveBlob(){
   /* history is a short tail on purpose - the canon, the cast and the ledger are the memory */
   return JSON.stringify({
     v:1, slug:runSlug, updated:new Date().toISOString(),
+    /* THE MODE IS A RUN FACT AND IT TRAVELS WITH THE RUN. Written into every blob,
+       read back by modeFromBlob, immutable for the life of the run - so a save can
+       never be cross-loaded into the other game. A pre-v4.72.0 save carries no
+       stamp and restores as novel, which is what it was. */
+    mode:runMode,
     /* a rehearsal fragment that ever reaches the real drawer can be recognised
        and refused there, whatever went wrong upstream of it */
     reh:!!rehearsing,
@@ -16613,11 +17146,93 @@ function loadSettings(){
 function saveSettings(){
   try{ localStorage.setItem("mud-settings", JSON.stringify(settings)); }catch(e){}
 }
+/* ==================== THE STABLE: the curated wild-table menu ====================
+   Recommendations, not a cage - the free-text model field below it still takes any
+   slug, and the parser is built to survive whatever a determined player reaches for.
+   DATED SLUGS wherever they exist: a "-latest" alias is a convenience for a player
+   and a lie in a test, because the thing it points at moves under you.
+   NO PRICES IN THE COPY. They moved twice while the amendment naming them was being
+   written; UI that quotes a number ships stale by definition, so the register is
+   qualitative and stays that way.
+   Reasoning-first tiers are deliberately absent: latency and analytical prose are
+   the wrong shape for a table DM. */
+var STABLE = [
+  {tier:"RECOMMENDED", slug:"anthropic/claude-sonnet-5",
+   why:"The proven wild DM — holds the lane, keeps the register, knows when a night is over. Best judgment for the money at the top tier. Start here."},
+  {tier:"BUDGET", slug:"deepseek/deepseek-v4-flash-0731",
+   why:"Obedient JSON, workmanlike prose, an enormous window. Whole campaigns for pocket change."},
+  {tier:"STRONG BUDGET", slug:"deepseek/deepseek-v4-pro",
+   why:"The budget DM promoted — the first knob to turn if the cheap one's banter runs flat."},
+  {tier:"PREMIUM", slug:"anthropic/claude-opus-5",
+   why:"The wiser DM, for players who want the night judged rather than merely written."},
+  /* AVAILABILITY UNCONFIRMED, SO IT IS PROBED AND NEVER ASSUMED. A menu entry for a
+     model the key cannot see is a dead end wearing a recommendation's clothes. */
+  {tier:"CEILING", slug:"anthropic/claude-fable-5", probe:true,
+   why:"The top of the board. Offered only when your key can actually see it."},
+  {tier:"WILDCARD", slug:"google/gemini-3.1-pro",
+   why:"The one non-Claude rival on pure prose. Worth a night for the taste of it."},
+  {tier:"ALTERNATE", slug:"openai/gpt-5.6-luna",
+   why:"Cheap, fast, a huge window. Perfectly fine; never the headline."}
+];
+/* the probe's answer for this session: null = not asked yet, {} = asked and the
+   endpoint would not say, otherwise a set of slugs the key can actually see */
+var stableSeen = null;
+function probeStable(){
+  if(stableSeen) return Promise.resolve(stableSeen);
+  var headers = {};
+  if(settings.key) headers["Authorization"] = "Bearer " + settings.key;
+  return fetch(settings.base.replace(/\/$/, "") + "/models", {headers:headers})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      var seen = {};
+      ((d && d.data) || []).forEach(function(m){ if(m && m.id) seen[String(m.id).toLowerCase()] = 1; });
+      stableSeen = seen;
+      return seen;
+    })
+    .catch(function(){ stableSeen = {}; return stableSeen; });
+}
+function renderStable(seen){
+  var sel = $("s-stable");
+  if(!sel) return;
+  sel.innerHTML = "";
+  var opt = document.createElement("option");
+  opt.value = ""; opt.textContent = "— pick one, or type your own below —";
+  sel.appendChild(opt);
+  STABLE.forEach(function(e){
+    /* NEVER HARDCODE-ASSUME: an unconfirmed entry appears only when the endpoint
+       has been asked and has said yes. No answer means no entry, which is the
+       honest direction - the free-text field is right underneath. */
+    if(e.probe && !(seen && seen[e.slug.toLowerCase()])) return;
+    var o = document.createElement("option");
+    o.value = e.slug;
+    o.textContent = e.tier + " · " + e.slug;
+    o.title = e.why;
+    sel.appendChild(o);
+  });
+  sel.value = STABLE.some(function(e){ return e.slug === settings.model; }) ? settings.model : "";
+  var h = $("hint-stable"), pick = null;
+  STABLE.forEach(function(e){ if(e.slug === sel.value) pick = e; });
+  if(h){
+    h.textContent = pick ? pick.why
+      : "Recommendations, not a cage — pick one and it fills the model field below, or ignore this and type any slug you like.";
+  }
+}
 function fillSettingsForm(){
   $("s-provider").value = settings.provider;
   $("s-base").value = settings.base;
   $("s-model").value = settings.model;
   $("s-key").value = settings.key;
+  $("s-temp").value = (settings.temp === undefined || settings.temp === "") ? "" : String(settings.temp);
+  /* the menu is OpenRouter's, because these are OpenRouter slugs. Everywhere else
+     the model field is already the only sane surface and always has been. */
+  var showStable = (settings.provider === "openrouter");
+  $("fld-stable").style.display = showStable ? "block" : "none";
+  if(showStable){
+    renderStable(stableSeen);
+    probeStable().then(function(seen){
+      if($("setmodal").classList.contains("open") && settings.provider === "openrouter") renderStable(seen);
+    });
+  }
   $("s-visuals").value = settings.visuals || "full";
   var p = PRESETS[settings.provider]||PRESETS.custom;
   $("hint-base").textContent = p.hint
@@ -16642,7 +17257,14 @@ function restorePrevSettings(){
 }
 function openSettings(){ fillSettingsForm(); $("setmodal").classList.add("open"); }
 $("setbtn").onclick = openSettings;
-$("s-close").onclick = function(){ $("setmodal").classList.remove("open"); };
+$("s-close").onclick = function(){
+  $("setmodal").classList.remove("open");
+  /* Settings was opened FROM the wild door. Whatever they did in there, they come
+     back to the choice card - with the wild door's warning line now telling the
+     truth about what they configured - rather than to a title screen that has
+     forgotten they were starting a game. */
+  if(modeCardArmed){ modeCardArmed = false; wildDoorNeeds(); $("modemodal").classList.add("open"); }
+};
 $("s-restore").onclick = restorePrevSettings;
 $("s-provider").onchange = function(){
   var id = $("s-provider").value; var p = PRESETS[id];
@@ -16650,6 +17272,19 @@ $("s-provider").onchange = function(){
   $("s-base").value = p.base; $("s-model").value = p.model;
   $("hint-base").textContent = p.hint;
   $("fld-key").style.display = (p.needsKey || p.keyOptional) ? "block" : "none";
+  /* the stable belongs to OpenRouter's namespace, and the probe follows the base */
+  stableSeen = null;
+  fillSettingsForm();
+};
+/* the menu FILLS the field; it does not replace it. Picking a horse writes the slug
+   into the text box in front of the player, where they can still edit it. */
+$("s-stable").onchange = function(){
+  var v = $("s-stable").value;
+  if(v) $("s-model").value = v;
+  var pick = null;
+  STABLE.forEach(function(e){ if(e.slug === v) pick = e; });
+  $("hint-stable").textContent = pick ? pick.why
+    : "Recommendations, not a cage — pick one and it fills the model field below, or ignore this and type any slug you like.";
 };
 $("s-save").onclick = function(){
   settings.provider = $("s-provider").value;
@@ -16658,6 +17293,9 @@ $("s-save").onclick = function(){
   settings.model = $("s-model").value.trim();
   settings.key = $("s-key").value.trim();
   settings.visuals = $("s-visuals").value;
+  /* blank means the house setting, which is what replyTemp() answers with */
+  var tv = $("s-temp").value.trim(), tn = parseFloat(tv);
+  settings.temp = (tv && !isNaN(tn) && tn >= 0 && tn <= 2) ? tn : "";
   saveSettings();
   applyVisuals();
   $("s-status").innerHTML = '<div class="ok">Saved. Your key lives in this browser only.</div>';
@@ -16842,7 +17480,8 @@ $("wel-more").onclick = function(){
 function summarize(blobStr){
   try{
     var s = JSON.parse(blobStr);
-    return {slug:s.slug, day:s.day||"?", loc:s.loc||"?", updated:s.updated||"", turns:(s.feedLog||[]).length};
+    return {slug:s.slug, day:s.day||"?", loc:s.loc||"?", updated:s.updated||"",
+            turns:(s.feedLog||[]).length, mode:modeFromBlob(s.mode, true)};
   }catch(e){ return null; }
 }
 function scanFolderSaves(){
@@ -16911,9 +17550,14 @@ function renderRuns(){
       var row = document.createElement("div");
       row.className = "runrow" + (slug===runSlug ? " active" : "");
       var info = document.createElement("div"); info.className="runinfo";
+      /* THE BADGE IS THE STAMP, READ OFF THE BLOB. Two games live in this drawer and
+         they are not the same game; the row says which one this is before it is
+         loaded, beside the date line. */
+      var badge = (r.info.mode === "wild")
+        ? '<span class="modetag wild">WILD</span>' : '<span class="modetag">NOVEL</span>';
       info.innerHTML = '<div class="runname">Day '+esc(String(r.info.day))+' \u2014 '+esc(String(r.info.loc))
         + (slug===runSlug ? ' \u00b7 CURRENT' : '')+'</div>'
-        + '<div class="runsub">'+esc(String(r.info.turns))+' entries'
+        + '<div class="runsub">'+badge+esc(String(r.info.turns))+' entries'
         + (r.info.updated ? ' \u00b7 last played '+esc(fmtWhen(r.info.updated)) : '')+'</div>'
         + '<div class="runsrc">'+(r.src==="folder"?"SAVED IN YOUR FOLDER":"SAVED IN THIS BROWSER")+'</div>';
       var loadB = document.createElement("button"); loadB.className="small"; loadB.textContent="LOAD";
@@ -16965,7 +17609,40 @@ function renderRuns(){
 }
 function openRuns(){ $("runmodal").classList.add("open"); renderRuns(); }
 $("run-close").onclick = function(){ $("runmodal").classList.remove("open"); };
-$("run-new").onclick = function(){ $("runmodal").classList.remove("open"); newRun(true); };
+$("run-new").onclick = function(){ $("runmodal").classList.remove("open"); openModeCard(true); };
+
+/* ---- THE TWO DOORS ----
+   Both roads to a new run - the title's NEW GAME and the drawer's NEW - arrive here,
+   and the mode is decided nowhere else. The confirmation about losing the run in
+   progress is asked BEFORE the card, because a player who is not starting a run
+   should not have to read the card to say so.
+   WILD REQUIRES A MODEL AT THE DOOR. Pressing it with no provider opens Settings and
+   the run does not exist yet - no slug, no stamp, no blob - so cancelling returns to
+   this card with nothing half-created behind it. */
+var modeCardArmed = false;   /* the card is waiting behind Settings */
+function wildDoorNeeds(){
+  var n = $("mode-wild-needs");
+  if(n) n.style.display = providerReady() ? "none" : "block";
+}
+function openModeCard(confirmFirst){
+  if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
+  wildDoorNeeds();
+  $("modemodal").classList.add("open");
+}
+function closeModeCard(){ modeCardArmed = false; $("modemodal").classList.remove("open"); }
+$("mode-close").onclick = closeModeCard;
+$("mode-novel").onclick = function(){ closeModeCard(); newRun(false, false, "novel"); };
+$("mode-wild").onclick = function(){
+  if(!providerReady()){
+    /* the card stays open UNDER Settings, so cancelling lands back on the choice
+       rather than on the title screen with nothing having happened */
+    modeCardArmed = true;
+    openSettings();
+    return;
+  }
+  closeModeCard();
+  newRun(false, false, "wild");
+};
 
 /* ============ LEDGER VIEWER ============ */
 function renderCanonList(){
@@ -18677,6 +19354,9 @@ $("term-ledger").onclick = function(){
 
 /* ============ TITLE SCREEN ============ */
 function refreshTitle(){
+  /* the pointer says which table it is going back to, because the two are not the
+     same game and CONTINUE is one click */
+  function tag(m){ return (m === "wild" ? "WILD · " : "NOVEL · "); }
   if(runSlug){
     $("t-continue").style.display = "block";
     /* a dead courier is not a run you continue - say so before they click it */
@@ -18690,7 +19370,7 @@ function refreshTitle(){
         ? "The season was lost. Start a new game."
       : runOver === "season"
         ? "Season complete \u2014 Day " + $("hud-day").textContent
-        : "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
+        : tag(runMode) + "Day " + $("hud-day").textContent + " \u2014 " + $("hud-loc").textContent;
   } else {
     var active = null, mm = null;
     try{ active = localStorage.getItem("mud-active"); mm = loadRunsMap(); }catch(e){}
@@ -18698,7 +19378,7 @@ function refreshTitle(){
       var s = summarize(mm[active]);
       if(s){
         $("t-continue").style.display = "block";
-        $("t-continue-sub").textContent = "Day " + s.day + " \u2014 " + s.loc;
+        $("t-continue-sub").textContent = tag(s.mode) + "Day " + s.day + " \u2014 " + s.loc;
         return;
       }
     }
@@ -19535,7 +20215,7 @@ $("t-continue").onclick = function(){
     + "\n\nStart a new run from Day 1?")) { openRuns(); return; }
   newRun(false);
 };
-$("t-new").onclick = function(){ newRun(true); };
+$("t-new").onclick = function(){ openModeCard(true); };
 $("t-runs").onclick = openRuns;
 $("t-settings").onclick = openSettings;
 $("t-guide").onclick = function(){ $("welmodal").classList.add("open"); };
@@ -20773,8 +21453,12 @@ function startRehearsal(beatId, label){
   rehBeatId = beatId; rehLabel = String(label||"").trim();
   rehTake = ((store[beatId]||[]).length) + 1;
   rehTurns = [];
-  newRun(false, true);               /* no cold open, so no stale rail can land later */
-  lureBar(false); openBar();
+  /* THE REHEARSAL ROOM IS ALWAYS THE NOVEL, and pinned explicitly rather than left
+     to the default: it is an authoring tool for the authored game, so a take has to
+     be the deck, the door and the floor doing what they do on the page. Rehearsing
+     the wild table would be rehearsing a model. */
+  newRun(false, true, "novel");      /* no cold open, so no stale rail can land later */
+  lureBar(false); openBar(); applyModeUI();
   pendingAsides = []; beatJustCleared = null; beatJustArmed = "";
   rehSeed = rehSeedTo(idx);
   var b = beatNow();
@@ -20822,6 +21506,9 @@ function endRehearsal(){
     var mm = loadRunsMap();                 /* reads the real drawer now */
     if(active && mm[active]) restoreFromBlob(JSON.parse(mm[active]));
   }catch(e){}
+  /* ...and if there was no real run to come back to, the tray still has to stop
+     showing the rehearsal's. applyModeUI with no run reads novel, which is right. */
+  if(!runSlug) applyModeUI();
   renderRehChip();
   openTitle();
 }
@@ -20997,9 +21684,14 @@ function openRehearsal(){
    animated reveal, whose deferred done() lands seconds later and re-renders INTO
    THE RAIN over whatever rail is there by then. Every one of those buttons is
    dead, because the beat's own first call is still in flight. */
-function newRun(confirmFirst, bare){
+/* MODE IS DECIDED HERE AND NOWHERE ELSE. Third argument, because every caller that
+   does not pass one wants the safe table: the rehearsal room (an authoring tool for
+   the authored game), the CONTINUE fallback, the sweep's bare runs. The two-door card
+   is the only surface that ever asks for "wild". */
+function newRun(confirmFirst, bare, mode){
   runEpoch++;
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
+  runMode = (mode === "wild") ? "wild" : "novel";
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
@@ -21036,6 +21728,7 @@ function newRun(confirmFirst, bare){
   tableTalkUsed = [];                                 /* ...and a table with everything still to say */
   wetRun = 0; breachNow = "";                          /* and a dry path to walk off */
   openBar();                     /* looks open during the cold open - that is the trap */
+  applyModeUI();                 /* the button, the placeholder and the strip follow the stamp */
   applyTension(true);
   /* Seat the location before the opening renders, or the new run inherits a
      breadcrumb pointing at wherever the previous run happened to end. */
@@ -21110,6 +21803,11 @@ function restoreFromBlob(s){
   pressOfferedFor = "";
   try{ if($("errbox")) $("errbox").innerHTML = ""; }catch(e){}
   runSlug = s.slug || "restored";
+  /* THE STAMP TRAVELS, so there is no cross-load to refuse: a wild save opened in
+     this build runs wild and a novel save runs novel, because the run says which it
+     is and every router asks the run. Read BEFORE anything downstream - openBar and
+     applyModeUI both consult it, and so does the first rail this restore draws. */
+  runMode = modeFromBlob(s.mode);
   chatLog = s.history||s.chatLog||[];
   ledgerText = s.ledgerText||"";
   feedLog = [];
@@ -21152,6 +21850,7 @@ function restoreFromBlob(s){
   introStage = (typeof s.intro === "number") ? s.intro : 0;   /* old saves are past the cold open */
   afterRevealHook = null;        /* a hook staged by an abandoned new run must not fire here */
   openBar();                     /* re-arms the bar after a dead run's lock; lockRun re-shuts ended runs below */
+  applyModeUI();                 /* ...and the tray matches the run that just came back */
   lureBar(introStage === 1);     /* the green lure follows the invitation, both ways */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
@@ -21269,6 +21968,18 @@ function restoreFromBlob(s){
   renderSeasonBanner();          /* the standing door survives a reload */
   renderSlackDoor();             /* and so does the way out of the family's time */
   applyVisuals();          /* the weather follows the run into the scene */
+  /* A WILD RUN WHOSE PROVIDER HAS SINCE GONE IS A SETTINGS DOOR, NOT A BROKEN RUN.
+     The save is fine, the board is fine, and the very next turn would open Settings
+     from inside takeAction with no explanation - so say it here, once, before they
+     press anything. A novel run never reaches this and never could. */
+  if(wildRun() && !runOver && !providerReady()){
+    var wa = {kind:"dmaside", text:"This is a WILD TABLE run and there is no model connected to it —"
+      + " the storyteller drives everything here, so the run needs one before it can take a turn."
+      + " Open Settings, connect a model, and carry on exactly where you left off."};
+    renderBlock(wa); feedLog.push(wa);
+    scrollFeed();
+    openSettings();
+  }
   return true;
 }
 
@@ -21282,6 +21993,7 @@ function finishBoot(orConnected){
     if(active && runsM[active]) restored = restoreFromBlob(JSON.parse(runsM[active]));
   }catch(e){}
   setLedgerStatus();
+  applyModeUI();                 /* the tray matches whatever the restore found, or none */
   openTitle();
   if(orConnected){
     document.querySelector(".t-tag").textContent = "OpenRouter connected \u2713 \u2014 your AI is at the table";
@@ -21883,7 +22595,16 @@ function selfTest(){
     /* ...and the fix wave: the fork's doors, the typed door, and the row dealt from the deck */
     "forkDoors", "forkBooking", "doorSlots", "typedIsDoor", "doorSkeletonNow", "callDoorTurn",
     "railFor", "pinnedExit", "sameAsDoor", "normLine", "sceneRails", "doorKindFor",
-    "ambientDue", "ambientCard", "attemptClear", "attemptGraze", "attemptStall"];
+    "ambientDue", "ambientCard", "attemptClear", "attemptGraze", "attemptStall",
+    /* ...and the two tables (v4.72.0). Every router the mode is consulted at, plus
+       the stamp's own readers - a credit rule whose roster stops at the release that
+       wrote it quietly demotes the newest subsystem in the file to amber. */
+    "wildRun", "modeFromBlob", "providerReady", "wildNudge", "wildContract",
+    "doorMeetsFloor", "beatMetFloor", "applyModeUI", "barPlaceholder", "callBitTurn",
+    "saveBlob", "summarize", "sceneContract", "boardTension", "serveBitTurn", "bitSlots",
+    /* ...and the stable (brief v6.1): the request knobs and the reasoning lane */
+    "modelFamily", "jsonModeOK", "replyCap", "replyTemp", "stripReasoning", "contentOf",
+    "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -22650,12 +23371,15 @@ function selfTest(){
                said:lastPlayerText, mud:lastTurnMud, ov:runOver, fp:foldPending, wb:walkbackNow,
                an:attemptOn, log:chatLog, feed:feedLog, spent:topicSpent, canon:runCanon,
                bt:beatTurns, cast:castSheets, led:ledgerText, txt:beatText, seen:beatSeen,
-               ask:window.askAI, dm:window.callDM, show:window.showScene, per:window.persistAll};
+               ask:window.askAI, dm:window.callDM, show:window.showScene, per:window.persistAll,
+               slug:runSlug, mode:runMode};
       var served = null;
       try{
         window.askAI = function(){ pbWire++; return {then:function(){ return {catch:function(){}}; }}; };
         window.persistAll = function(){};
         window.showScene = function(d){ served = d; };
+        /* pinned, not inherited: this is a claim about THE NOVEL (v4.72.0) */
+        runSlug = runSlug || "sweep"; runMode = "novel";
         lastTurnMud = false; runOver = ""; foldPending = false; walkbackNow = false;
         attemptOn = false; roster = {family:[], fallen:[]};
         /* A BODY IS DECIDED, because by Book Three one always is. The four framed
@@ -22704,7 +23428,7 @@ function selfTest(){
         feedLog = k.feed; topicSpent = k.spent; runCanon = k.canon; beatTurns = k.bt;
         castSheets = k.cast; ledgerText = k.led; beatText = k.txt; beatSeen = k.seen;
         window.askAI = k.ask; window.callDM = k.dm; window.showScene = k.show;
-        window.persistAll = k.per;
+        window.persistAll = k.per; runSlug = k.slug; runMode = k.mode;
       }
     })();
     /* ...AND THE REFUSAL, ON PURPOSE. Unreachable by the road is unreachable by the
@@ -22782,7 +23506,12 @@ function selfTest(){
               /* ...and whether there is a RUN under the board at all. doorsLive() asks,
                  and ?selftest loads no save, so every row that reads the rail was
                  reading the doorless branch and reporting it as the shipped one. */
-              slug:runSlug, intro:introStage};
+              slug:runSlug, intro:introStage,
+              /* ...and the two tables. The mode is a run fact, so a row that moves it
+                 and does not put it back has handed the next row a different game -
+                 and settings.key rides here too, because the zero-wire row's whole
+                 point is proving the claim with a working key in place. */
+              mode:runMode, key:settings.key, prov:settings.provider};
     }
     function barPut(k){
       beatIdx = k.bi; phase = k.ph; phaseLeft = k.pl; beatTurns = k.bt; tolls = k.to;
@@ -22798,6 +23527,7 @@ function selfTest(){
       lastRail = k.lr; perilSpent = k.ps; TEETH_LIVE = k.tl; attemptStage = k.as;
       attemptStalls = k.ast; attemptTempted = k.atp; beatJustCleared = k.bjc;
       phaseLeft = k.ph2; runSlug = k.slug; introStage = k.intro;
+      runMode = k.mode; settings.key = k.key; settings.provider = k.prov;
     }
     function barBoard(at){
       beatIdx = at; phase = "live"; phaseLeft = 0; beatTurns = 0; tolls = 0; driftRun = 0;
@@ -22808,6 +23538,12 @@ function selfTest(){
       /* a board with a night on it. Without this the door is not live, and a harness
          that cannot see the door cannot say anything about it. */
       runSlug = runSlug || "sweep"; introStage = 0;
+      /* THE MODE IS PINNED, NEVER INHERITED (v4.72.0). Every driven row in this file
+         is a claim about the deterministic game, and a row that inherits whatever
+         table the page happens to be sitting at is a row that means something
+         different depending on who ran it. The wild rows set it themselves, right
+         after calling this, and say so where they do. */
+      runMode = "novel";
       foldPending = false; foldServed = false; attemptOn = false; lastTurnMud = false;
       chassisHolder = "Seven"; roster = {family:[], fallen:[]}; castSheets = {};
       runCanon = []; gateNotes = {}; foldedBeats = []; topicSpent = {};
@@ -22976,7 +23712,19 @@ function selfTest(){
     (function(){
       var k = barKeep(), at = beatById("a1-hum"), g = 0;
       try{
-        barBoard(at); V5SCENE = true;
+        barBoard(at); V5SCENE = true; runMode = "novel";
+        /* ==== BAR (i), v4.72.0: A WORKING PROVIDER, CONFIGURED, AND THE WIRE AT ZERO.
+           The old form of this row ran with no key and made ONE exception - the
+           settling line is conversational, so it reached the bit channel, which by
+           the Phase A contract was allowed to try the wire and fall back to the pool.
+           The novel has no such clause any more, so the exception is gone and the
+           detector is the throwing stub for the whole seam. The key is set on
+           purpose: "no calls because nothing is configured" is not the claim. The
+           claim is that a player who HAS a working model still plays the authored
+           game without it, and the detector counts INVOCATIONS - askAI entered at
+           all - rather than completions, because a call that throws on the way out
+           is still a call that was made. */
+        settings.provider = "anthropic"; settings.key = "sk-ant-sweep-a-working-key";
         window.askAI = function(){ slkWire++; throw new Error("the endpoint is dead"); };
         while(barCanPlay() && barWouldServe() && beatIdx === at && phase === "live" && g++ < 20) barTurn(g);
         /* THE WORLD MAY HAVE ALREADY TAKEN IT. Since F6 the guillotine is connected on
@@ -22991,17 +23739,11 @@ function selfTest(){
         if(phase === "aftermath"){
           if(!interludeNow()) slkBad.push("the interlude turn had no route: phase=" + phase);
           else {
-            /* the settle press is the landing's own conversational Move line, and
-               under the settle gate (v4.71.5) a conversational line is a bit - which
-               may attempt its own wire by Phase A contract. The seam's wire-zero
-               claim is about scene turns, so the bit press gets a benign stub
-               rather than the thrower. */
-            var mAsk = window.askAI;
-            window.askAI = function(){ return {then:function(){ return {catch:function(){}}; }}; };
-            try{
-              lastPlayerText = "Move. The marsh road is hours out.";
-              lastRail = [lastPlayerText]; turnToken++; callDM();
-            } finally { window.askAI = mAsk; }
+            /* the settle press is the landing's own conversational Move line, which
+               is a bit by the settle gate (v4.71.5) - and a bit in a novel run is a
+               POOL SERVE, so it takes the throwing detector like everything else */
+            lastPlayerText = "Move. The marsh road is hours out.";
+            lastRail = [lastPlayerText]; turnToken++; callDM();
           }
         }
         if(phase !== "slack") slkBad.push("the settling did not open the room: phase=" + phase);
@@ -23025,20 +23767,26 @@ function selfTest(){
            which is how the kettle question was served the breakfast law. The bit
            path may attempt its own wire by Phase A contract, so it gets a benign
            stub; the card assert is the point: nothing dealt, room open. */
-        var kAsk = window.askAI, kSpent;
-        window.askAI = function(){ return {then:function(){ return {catch:function(){}}; }}; };
-        try{
-          barBoard(at); V5SCENE = true; phase = "aftermath";
-          lastPlayerText = "Take her out properly and start again.";
-          lastRail = [lastPlayerText]; turnToken++;
-          kSpent = JSON.stringify(topicSpent);
-          callDM();
-          if(phase !== "slack") slkBad.push("the conversational settle did not open the room: " + phase);
-          if(JSON.stringify(topicSpent) !== kSpent) slkBad.push("the settling line was answered with a dealt card");
-        } finally { window.askAI = kAsk; }
+        var kSpent;
+        barBoard(at); V5SCENE = true; runMode = "novel"; phase = "aftermath";
+        lastPlayerText = "Take her out properly and start again.";
+        lastRail = [lastPlayerText]; turnToken++;
+        kSpent = JSON.stringify(topicSpent);
+        callDM();
+        if(phase !== "slack") slkBad.push("the conversational settle did not open the room: " + phase);
+        if(JSON.stringify(topicSpent) !== kSpent) slkBad.push("the settling line was answered with a dealt card");
+        /* AND A BIT, ON PURPOSE, WITH THE KEY IN PLACE. The button's own channel is
+           the last thing in this game that ever touched the wire; the seam has to
+           press it rather than assume it. */
+        barBoard(at); V5SCENE = true; runMode = "novel";
+        lastTurnMud = true; lastPlayerText = "I declare myself mayor of this puddle.";
+        turnToken++; callDM();
+        lastTurnMud = false;
+        if(slkWire !== 0) slkBad.push(slkWire + " call(s) reached the wire - and one of them was the bit");
         slkSaw.push("a1-hum open to close on authored blocks, the settling drained"
-          + " client-side, the room served its own card, the way on opened a1-chase - "
-          + g + " turns, wire 0 - and a conversational settle is a bit, not a card");
+          + " client-side, the room served its own card, the way on opened a1-chase, and a"
+          + " MUDSKIPPER MOMENT served from the pool - " + g + " turns, a configured"
+          + " anthropic key in settings, askAI invoked 0 times");
       } finally { barPut(k); }
     })();
     T("a night can be left the way a player leaves it, with nobody on the other end",
@@ -23053,6 +23801,504 @@ function selfTest(){
            armed = interludeNow();
          } finally { barPut(k); }
          return armed;   /* flag down: no route, and the turn goes out */
+       }});
+
+    /* ==================== THE TWO TABLES, DRIVEN (v4.72.0) ====================
+       Five rows. The stamp round-trips and defaults toward the novel; the button is
+       absent by mode and the bang goes with it; a wild turn composes and consults no
+       floor and no deck; a wild death kills through the road we already coded; and a
+       stubbed wild sequence opens, plays, gates, advances and turns a season. No live
+       endpoint appears anywhere in here, ever - every wild row answers a stub. */
+
+    /* ---- (1) THE MODE STAMP ROUND-TRIPS, AND EVERY DOUBT DEFAULTS TO THE NOVEL ---- */
+    var stampBad = [], stampSaw = [];
+    (function(){
+      var k = barKeep();
+      try{
+        barBoard(0);
+        ["novel", "wild"].forEach(function(m){
+          runMode = m;
+          var blob = JSON.parse(saveBlob());
+          if(blob.mode !== m) stampBad.push(m + ": the blob carried mode=" + blob.mode);
+          /* MOVE IT BEFORE READING IT BACK, or the "restore" is the variable it never left */
+          runMode = (m === "novel") ? "wild" : "novel";
+          runMode = modeFromBlob(blob.mode);
+          if(runMode !== m) stampBad.push(m + ": restored as " + runMode);
+          var s = summarize(JSON.stringify(blob));
+          if(!s || s.mode !== m) stampBad.push(m + ": the drawer badge read " + (s && s.mode));
+        });
+        /* the pre-mode save, which is the only kind any real player has today */
+        if(modeFromBlob(undefined) !== "novel") stampBad.push("a save with no stamp did not default to novel");
+        if(modeFromBlob("") !== "novel") stampBad.push("an empty stamp did not default to novel");
+        /* ...and a hand-edit, because folder saves are files on somebody's disk */
+        if(modeFromBlob("WILD!!") !== "novel") stampBad.push("an unknown stamp did not fall back to novel");
+        if(modeFromBlob({}) !== "novel") stampBad.push("a non-string stamp did not fall back to novel");
+        /* and wildRun() is a function of the RUN, not of the variable */
+        runMode = "wild";
+        var kslug = runSlug; runSlug = "";
+        if(wildRun()) stampBad.push("wildRun() answered true with no run under it");
+        runSlug = kslug;
+        if(!wildRun()) stampBad.push("wildRun() answered false on a stamped wild run");
+        stampSaw.push("both stamps survive saveBlob → modeFromBlob → summarize; no stamp, an empty"
+          + " stamp, a hand-edited one and a non-string all restore as THE NOVEL; wildRun() is false"
+          + " with no run under the board");
+      } finally { barPut(k); }
+    })();
+    T("the mode is stamped into every save and comes back the same mode",
+      stampBad.length === 0, stampBad.length ? stampBad.join("; ") : stampSaw.join(" · "),
+      {label:"the save writer as it shipped - no mode field at all",
+       was:true,
+       check:function(){
+         var kk = runMode;
+         try{
+           runMode = "wild";
+           var blob = JSON.parse(saveBlob());
+           delete blob.mode;                 /* exactly what a pre-v4.72.0 writer produced */
+           return modeFromBlob(blob.mode) === "wild";
+         } finally { runMode = kk; }
+       }});
+
+    /* ---- (2) THE BUTTON IS ABSENT IN THE NOVEL, PRESENT AT THE WILD TABLE ---- */
+    var mudBad = [], mudSaw = [];
+    (function(){
+      var k = barKeep();
+      try{
+        barBoard(0);
+        runMode = "novel"; applyModeUI();
+        if(document.getElementById("mudbtn")) mudBad.push("the novel rendered the MUDSKIPPER MOMENT button");
+        if(/button for a bit/.test(barPlaceholder())) mudBad.push("the novel's placeholder still promises the button");
+        runMode = "wild"; applyModeUI();
+        if(!document.getElementById("mudbtn")) mudBad.push("the wild table lost the button");
+        if(!/button for a bit/.test(barPlaceholder())) mudBad.push("the wild placeholder dropped the button clause");
+        runMode = "novel"; applyModeUI();
+        if(document.getElementById("mudbtn")) mudBad.push("the button did not go back out again");
+        /* THE BANG, PRESSED FOR REAL. The shortcut lives in an event listener, and a
+           row that restates the listener's condition proves nothing about the
+           listener - so this types into the bar and presses Enter, twice, and reads
+           what takeAction was actually handed. */
+        var sawMud = null, realTake = window.takeAction;
+        window.takeAction = function(t, isMud){ sawMud = !!isMud; };
+        try{
+          function bang(){
+            sawMud = null;
+            $("mudinput").value = "!I declare myself mayor of this puddle";
+            $("mudinput").dispatchEvent(new KeyboardEvent("keydown", {key:"Enter", bubbles:true}));
+          }
+          runMode = "wild"; bang();
+          if(sawMud !== true) mudBad.push("the bang did not reach the bit channel at the wild table (saw " + sawMud + ")");
+          runMode = "novel"; bang();
+          if(sawMud !== false) mudBad.push("the bang was still a bit in a novel run (saw " + sawMud + ")");
+        } finally { window.takeAction = realTake; $("mudinput").value = ""; }
+        mudSaw.push("absent from the DOM in the novel and back in the tray at the wild table,"
+          + " the placeholder follows it both ways, and the keyboard bang is inert in a novel run");
+      } finally { barPut(k); applyModeUI(); }
+    })();
+    T("the MUDSKIPPER MOMENT button is a fact of the mode, not a disabled control",
+      mudBad.length === 0, mudBad.length ? mudBad.join("; ") : mudSaw.join(" · "),
+      {label:"the tray as it shipped - one button, always in the DOM, whatever the run is",
+       was:true,
+       check:function(){
+         /* ...AND A RUN UNDER THE BOARD, or wildRun() is false for want of a slug and
+            this measures the doorless branch instead of the mode (sweep trap #2) */
+         var kk = runMode, ks = runSlug;
+         try{
+           runSlug = runSlug || "sweep";
+           runMode = "wild"; applyModeUI();      /* the button is in the tray */
+           runMode = "novel";                    /* ...and the mode moves without the tray */
+           return !document.getElementById("mudbtn");
+         } finally { runMode = kk; runSlug = ks; applyModeUI(); }
+       }});
+
+    /* ---- (3) and (4): THE WILD TABLE, DRIVEN AGAINST STUBBED REPLIES ----
+       The stub is a thenable, not a promise, so the whole reply handler runs inside
+       the row rather than a tick later - the same shape every other driven row in
+       this file uses to hold the wire still. */
+    var wldBad = [], wldSaw = [], wldWire = 0, wldSent = "";
+    function wildReply(o){
+      return function(msgs){
+        wldWire++;
+        wldSent = String((msgs && msgs[0] && msgs[0].content) || "");
+        var raw = JSON.stringify(o);
+        return {then:function(f){ f(raw); return {catch:function(){}}; }};
+      };
+    }
+    function wildBoard(at){
+      barBoard(at);
+      V5SCENE = true;
+      /* PINNED, and pinned AFTER barBoard, which pins novel for everything else */
+      runMode = "wild";
+      settings.provider = "ollama"; settings.key = "";   /* a local endpoint needs no key */
+      chatLog = [{role:"user", content:"(the sweep's stubbed wild run)"}];
+      lastTurnMud = false; lastPlayerText = "I ask what happens next."; turnToken++;
+    }
+    function wildLand(){ if(typeof skipReveal === "function") skipReveal(); }
+    (function(){
+      var k = barKeep(), at = beatById("a1-chase");
+      try{
+        /* (a) A COMPOSED TURN REACHES THE WIRE PATH, and carries the room as material */
+        wildBoard(at);
+        var spentBefore = JSON.stringify(topicSpent), railBefore = JSON.stringify(railDeal);
+        wldWire = 0;
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"The rain keeps on and the stairwell holds its breath."}],
+                                  choices:["Wait for it.", "Say nothing and listen."]});
+        callDM(); wildLand();
+        if(wldWire !== 1) wldBad.push("a wild turn reached the wire " + wldWire + " time(s), not once");
+        if(JSON.stringify(topicSpent) !== spentBefore) wldBad.push("the wild turn spent a card from the deck");
+        if(JSON.stringify(railDeal) !== railBefore) wldBad.push("the wild turn bound a row to the deck");
+        if(wldSent.indexOf("WHAT THIS ROOM KNOWS") === -1) wldBad.push("the briefing carried no room material");
+        if(wldSent.indexOf("YOU OWN THE CLOCK") === -1) wldBad.push("the briefing carried no nudge ladder");
+        if(wldSent.indexOf("THE BOARD IS FORCING") !== -1) wldBad.push("the wild briefing carried a forcing order");
+        if(forcingNow) wldBad.push("the wild nudge armed a forced close");
+        if(sceneRails(3).length) wldBad.push("the deck dealt rails at the wild table");
+        if(pressureLabel && $("pressure") && $("pressure").className) wldBad.push("the pressure strip rendered at the wild table");
+        if(gauntletNow() || ambientDue()) wldBad.push("the teeth armed at the wild table");
+
+        /* (b) A GATE ON TURN ONE, WITH NO FLOOR CONSULTED. a1-chase's floor is
+           whatever it is authored as; the point is that the close lands under it. */
+        wildBoard(at);
+        var floorWas = beatFloor(beatNow()), idWas = beatNow().id;
+        beatTurns = 0;
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"It closes the way it was always going to close."}],
+                                  choices:["Go on.", "Stand there a moment."],
+                                  gate:true, gateNote:"the stairwell gave it up"});
+        callDM(); wildLand();
+        if(floorWas < 2) wldBad.push("the floor under test was " + floorWas + " - the case cannot show anything");
+        if(!gateNotes[idWas]) wldBad.push("a gate on turn one did not close the beat (floor " + floorWas + ")");
+        if(gateHeldNow) wldBad.push("the floor held a wild close");
+        if(phase !== "aftermath") wldBad.push("the wild close did not settle: phase=" + phase);
+        if(tolls !== 0) wldBad.push("a clean wild close charged a toll");
+
+        /* ...and the SAME reply in a novel run is held by the floor, which is what
+           makes the line above a claim about the mode rather than about the beat */
+        barBoard(at); V5SCENE = true; runMode = "novel"; beatTurns = 0;
+        if(doorMeetsFloor()) wldBad.push("the novel's floor was already met on turn zero - nothing is being shown");
+        boardTurn({gate:true, gateNote:"the stairwell gave it up"});
+        if(gateNotes[idWas]) wldBad.push("the novel closed the same beat on turn one");
+        if(!gateHeldNow) wldBad.push("the novel did not hold the gate below its floor");
+
+        /* (c) A STUBBED DEATH KILLS THROUGH THE CODED ROAD */
+        wildBoard(at);
+        perilTurns = 2; perilName = "the stairwell";   /* peril was declared last turn */
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"The step is not there. He goes down into the dark."}],
+                                  choices:["—"],
+                                  death:"He does not get up, and the rain closes over the place he was."});
+        callDM(); wildLand();
+        if(runOver !== "death") wldBad.push("a stubbed death did not kill: runOver=" + (runOver || "(none)"));
+
+        /* (d) AND THE DEAD STAY DEAD, in both modes, forever */
+        wildBoard(at);
+        roster = {family:[], fallen:["Vic"]};
+        if(!fallenSpeakers({scene:[{speaker:"Vic", text:"I'm still here, obviously."}]}).length){
+          wldBad.push("a fallen speaker walked at the wild table");
+        }
+        wldSaw.push("one composed turn on the wire with the room's cards as briefing material and"
+          + " the deck untouched; a gate on turn one closes a beat whose floor is " + floorWas
+          + " while the same reply is held in a novel run; a stubbed death reaches killCourier;"
+          + " and the cairn law still refuses a fallen speaker");
+      } finally { barPut(k); }
+    })();
+    T("a wild turn composes, consults no floor and no deck, and can still end every way we coded",
+      wldBad.length === 0, wldBad.length ? wldBad.slice(0, 6).join("; ") : wldSaw.join(" · "),
+      {label:"the routers with the mode never consulted - which is v4.71.10, the deterministic build",
+       was:"novel",
+       check:function(w){
+         var k = {m:runMode, s:runSlug, bi:beatIdx, bt:beatTurns, ph:phase};
+         try{
+           runSlug = runSlug || "sweep"; runMode = w;
+           beatIdx = beatById("a1-chase"); phase = "live"; beatTurns = 0;
+           /* the whole claim, asked at the routers: with the mode down, the skeleton
+              still owns the turn, the deck still deals, and the floor still holds. */
+           return !sceneSkeletonNow() && !doorMeetsFloor() && sceneRails(1).length === 0;
+         } finally { runMode = k.m; runSlug = k.s; beatIdx = k.bi; beatTurns = k.bt; phase = k.ph; }
+       }});
+
+    /* ---- (5) THE DRIVEN WILD SEQUENCE: open, three turns, gate, advance, season turn ---- */
+    var seqBad = [], seqSaw = [], seqSteps = [];
+    (function(){
+      var k = barKeep();
+      try{
+        barBoard(0);
+        var fin = seasonFinaleIdx(), at = beatById("a1-chase");
+        wildBoard(at);
+        var startId = beatNow().id, i;
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"The stairwell is loud with rain and nobody moves first."}],
+                                  choices:["Wait.", "Ask again."]});
+        for(i = 0; i < 3; i++){
+          lastPlayerText = "I keep at it (" + i + ")."; turnToken++;
+          callDM(); wildLand();
+          seqSteps.push(beatNow().id + "/" + phase + "/t" + beatTurns);
+        }
+        if(beatNow().id !== startId) seqBad.push("three composed turns left the beat by themselves");
+        if(beatTurns !== 3) seqBad.push("three turns ticked the clock to " + beatTurns);
+        /* the DM closes it */
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"And then it is finished, in the ordinary way things finish."}],
+                                  choices:["Go.", "Stay a moment."],
+                                  gate:true, gateNote:"they got what they came up the stairs for"});
+        lastPlayerText = "I take the last of it."; turnToken++;
+        callDM(); wildLand();
+        if(!gateNotes[startId]) seqBad.push("the DM's gate did not close the beat");
+        var g = 0; while(phase === "aftermath" && g++ < 8) boardTurn({});
+        if(phase !== "slack") seqBad.push("the close did not settle into the room: phase=" + phase);
+        var was = beatIdx;
+        slackDoorUp = true; busy = false; skipReveal = null;
+        slackArm();
+        if(beatIdx !== was + 1) seqBad.push("the way on did not advance the pointer");
+        seqSteps.push("advanced to " + beatNow().id);
+
+        /* ...and the season turn, on the season's last question */
+        wildBoard(fin);
+        if(!seasonAhead()) seqBad.push("beat " + fin + " is not a season boundary - the case shows nothing");
+        window.askAI = wildReply({scene:[{speaker:"Narration", text:"The season puts itself down, and the room goes quiet with it."}],
+                                  choices:["Breathe.", "Look at them."],
+                                  gate:true, gateNote:"the season's business was finished at the table"});
+        lastPlayerText = "I finish it."; turnToken++;
+        callDM(); wildLand();
+        var g2 = 0; while(phase === "aftermath" && g2++ < 8) boardTurn({});
+        if(phase !== "seasonend") seqBad.push("a gate on the season-final beat did not fire the ceremony: phase=" + phase);
+        if(!epilogueNow) seqBad.push("the season ceremony did not arm its door");
+        seqSteps.push("season turned at " + SPINE[fin].id);
+        seqSaw.push("open → three composed turns → the DM's gate → the room → the pointer"
+          + " advances → a gate on the season finale fires the break: " + seqSteps.join(" | "));
+      } finally { barPut(k); }
+    })();
+    T("a wild run plays a night, closes it when the DM says so, and turns a season",
+      seqBad.length === 0, seqBad.length ? seqBad.slice(0, 6).join("; ") : seqSaw.join(" · "),
+      {label:"the client's own transitions - the interlude draining the aftermath itself",
+       was:true,
+       check:function(){
+         var k = {m:runMode, s:runSlug, bi:beatIdx, ph:phase, pl:phaseLeft, mud:lastTurnMud,
+                  ov:runOver, fp:foldPending, wb:walkbackNow, an:attemptOn}, armed;
+         try{
+           runSlug = runSlug || "sweep"; runMode = "wild";
+           beatIdx = beatById("a1-chase"); phase = "aftermath"; phaseLeft = 1;
+           lastTurnMud = false; runOver = ""; foldPending = false; walkbackNow = false; attemptOn = false;
+           /* the settling turn at the wild table has no client route: it composes,
+              because a transition is the DM's. With the mode not consulted it drains
+              client-side, which is the deterministic behaviour this row is about. */
+           armed = interludeNow();
+         } finally {
+           runMode = k.m; runSlug = k.s; beatIdx = k.bi; phase = k.ph; phaseLeft = k.pl;
+           lastTurnMud = k.mud; runOver = k.ov; foldPending = k.fp; walkbackNow = k.wb; attemptOn = k.an;
+         }
+         return armed;
+       }});
+
+    /* ---- (6) THE WILD DOOR NEEDS A MODEL, AND THE NOVEL DOOR NEEDS NOTHING ---- */
+    var gateBad = [], gateSaw = [];
+    (function(){
+      var k = barKeep();
+      try{
+        barBoard(0);
+        settings.provider = "anthropic"; settings.key = "";
+        if(providerReady()) gateBad.push("a key-needing provider with no key read as ready");
+        settings.key = "sk-ant-something";
+        if(!providerReady()) gateBad.push("a key-needing provider with a key read as not ready");
+        settings.provider = "ollama"; settings.key = "";
+        if(!providerReady()) gateBad.push("a local endpoint read as not ready");
+        /* AND THE GATE IS TAKEACTION'S, driven rather than restated: a novel run with
+           no provider at all must take its turn; a wild one must open Settings and
+           spend nothing. The wire is stubbed as a thrower so a turn that DID compose
+           would be loud rather than silent. */
+        var opened = 0, realOpen = window.openSettings;
+        window.openSettings = function(){ opened++; };
+        try{
+          settings.provider = "anthropic"; settings.key = "";
+          barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "novel";
+          window.askAI = function(){ throw new Error("a novel run must not reach here"); };
+          $("mudinput").value = "";
+          lastRail = []; turnToken++;
+          takeAction("I look at what she is holding.", false);
+          if(opened) gateBad.push("a novel run with no key was sent to Settings");
+          opened = 0;
+          barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "wild";
+          lastRail = []; turnToken++;
+          takeAction("I look at what she is holding.", false);
+          if(opened !== 1) gateBad.push("a wild run with no provider was not sent to Settings");
+        } finally { window.openSettings = realOpen; }
+        gateSaw.push("providerReady reads the preset the way takeAction always has; a novel run with"
+          + " an unconfigured key-needing provider takes its turn, and a wild one opens the door instead");
+      } finally { barPut(k); }
+    })();
+    T("wild needs a model at the door and the novel needs nothing at all",
+      gateBad.length === 0, gateBad.length ? gateBad.join("; ") : gateSaw.join(" · "),
+      {label:"the provider gate as it shipped - asked of every run, whatever it is",
+       was:true,
+       check:function(){
+         var k = {m:runMode, p:settings.provider, key:settings.key};
+         try{
+           runMode = "novel"; settings.provider = "anthropic"; settings.key = "";
+           /* the shipped condition, unchanged: !settings.key && preset.needsKey. If it
+              still refuses a novel run, the novel still cannot play without settings. */
+           return providerReady();
+         } finally { runMode = k.m; settings.provider = k.p; settings.key = k.key; }
+       }});
+
+    /* ---- (7) THE STABLE: the request knobs, read off the body that would be sent,
+       and the reasoning tolerance that has to hold whatever a free-text slug reaches.
+       askOpenAI/askAnthropic build their body inside a fetch call, so the body is
+       read the way the wire would see it: fetch is stubbed and the JSON captured.
+       Nothing leaves this machine - the stub throws after it has been read. */
+    var stbBad = [], stbSaw = [];
+    (function(){
+      var k = barKeep(), realFetch = window.fetch;
+      function bodyFor(prov, model, mode){
+        var sent = null;
+        window.fetch = function(url, opt){
+          sent = {url:String(url), body:JSON.parse((opt && opt.body) || "{}")};
+          throw new Error("the sweep never sends");
+        };
+        try{
+          settings.provider = prov; settings.model = model;
+          settings.base = (PRESETS[prov] || PRESETS.custom).base;
+          settings.style = (PRESETS[prov] || PRESETS.custom).style;
+          settings.key = "sk-sweep"; settings.temp = "";
+          runMode = mode;
+          try{ askAI([{role:"user", content:"the sweep's briefing"}]); }catch(e){}
+        } finally { window.fetch = realFetch; }
+        return sent;
+      }
+      try{
+        barBoard(0);
+        runSlug = runSlug || "sweep";
+        /* (a) THE CACHE BREAKPOINT is keyed on the SLUG's family, not the provider */
+        var claude = bodyFor("openrouter", "anthropic/claude-sonnet-5", "wild");
+        var sys = claude && claude.body.messages && claude.body.messages[0];
+        if(!sys || Object.prototype.toString.call(sys.content) !== "[object Array]"){
+          stbBad.push("a claude slug through OpenRouter sent the BIBLE as a plain string - no breakpoint");
+        } else if(!sys.content[0] || !sys.content[0].cache_control){
+          stbBad.push("the BIBLE block carried no cache_control");
+        } else if(sys.content[0].text !== BIBLE){
+          stbBad.push("the cached block is not the BIBLE");
+        }
+        var deep = bodyFor("openrouter", "deepseek/deepseek-v4-flash-0731", "wild");
+        if(deep && Object.prototype.toString.call(deep.body.messages[0].content) === "[object Array]"){
+          stbBad.push("a non-claude slug was sent an anthropic cache breakpoint");
+        }
+        /* (b) THE KNOBS, by family */
+        if(!deep || deep.body.max_tokens !== WILD_REPLY_TOKENS){
+          stbBad.push("a wild turn was not capped at " + WILD_REPLY_TOKENS + ": " + (deep && deep.body.max_tokens));
+        }
+        if(!deep || deep.body.temperature !== 0.9) stbBad.push("the wild table did not run hot: temp=" + (deep && deep.body.temperature));
+        if(!deep || !deep.body.response_format) stbBad.push("deepseek was not given json mode");
+        if(!deep || deep.body.reasoning === undefined || deep.body.reasoning.enabled !== false){
+          stbBad.push("reasoning was not requested off through OpenRouter");
+        }
+        if(!deep || deep.body.include_reasoning !== false) stbBad.push("include_reasoning was not sent false");
+        var goog = bodyFor("openrouter", "google/gemini-3.1-pro", "wild");
+        if(goog && goog.body.response_format) stbBad.push("json mode was sprayed at a family not on the roster");
+        var direct = bodyFor("anthropic", "claude-sonnet-5", "wild");
+        if(!direct || direct.body.max_tokens !== WILD_REPLY_TOKENS) stbBad.push("the direct anthropic path ignored the wild cap");
+        if(!direct || !direct.body.thinking || direct.body.thinking.type !== "disabled"){
+          stbBad.push("thinking was left on at the wild table: " + JSON.stringify(direct && direct.body.thinking));
+        }
+        /* ...and a NOVEL run keeps the old ceiling, because nothing composes there
+           and the ceiling is what the repair tools run under */
+        var novel = bodyFor("anthropic", "claude-sonnet-5", "novel");
+        if(!novel || novel.body.max_tokens !== REPLY_TOKENS) stbBad.push("the novel's ceiling moved: " + (novel && novel.body.max_tokens));
+        /* (c) REASONING TOLERANCE: think-junk in, a clean turn out, none of it rendered */
+        /* AND THE DELIBERATION HAS A BRACE IN IT, which is what makes this a defect
+           rather than a tidiness note: parseScene reads from the first "{" it finds,
+           so a model that drafts a discarded reply inside its own thinking hands the
+           board the DRAFT and the real turn is never seen. That is the shape the
+           broken form drives. */
+        var junk = "<think>The player asked about the shard. I could send"
+          + ' {"scene":[],"choices":[]} but that is empty. Let me write it properly.</think>\n'
+          + '{"scene":[{"speaker":"Narration","text":"The rain does not let up."}],"choices":["Wait.","Go."]}';
+        var cleaned = stripReasoning(junk);
+        if(/think/i.test(cleaned)) stbBad.push("the think block survived the strip");
+        var parsedJunk = parseScene(cleaned);
+        if(!parsedJunk || !parsedJunk.data || !parsedJunk.data.scene || parsedJunk.data.scene.length !== 1){
+          stbBad.push("a think-wrapped reply did not parse to its scene");
+        }
+        if(!/rain does not let up/.test(JSON.stringify(parsedJunk.data))){
+          stbBad.push("the parser took the deliberation's discarded draft instead of the turn");
+        }
+        if(/write it properly|Let me/i.test(JSON.stringify(parsedJunk.data))){
+          stbBad.push("the deliberation reached the parsed turn");
+        }
+        /* the unclosed one, which is what a truncated reasoning block looks like */
+        var open = '<thinking>I will now write the turn and\n{"scene":[{"speaker":"Narration","text":"Nothing moves."}],"choices":["A.","B."]}';
+        var oc = stripReasoning(open);
+        if(/thinking|I will now write/i.test(oc)) stbBad.push("an unclosed reasoning preamble survived the strip");
+        if(!parseScene(oc).data.scene) stbBad.push("the unclosed case did not parse");
+        /* ...and an honest reply that merely SAYS the word keeps its body */
+        var honest = '{"scene":[{"speaker":"Pia","text":"I was thinking about that."}],"choices":["Go on."]}';
+        if(stripReasoning(honest) !== honest) stbBad.push("the strip damaged a reply that merely used the word");
+        /* (d.0) THE PROMPT READ BACK, found by playing rather than by reading: a
+           Courier block that is the player's own line verbatim is not a line. Driven
+           through showScene, which is where the filter lives. */
+        (function(){
+          var kk = {said:lastPlayerText, feed:feedLog, log:chatLog, led:ledgerText,
+                    show:window.showScene, per:window.persistAll};
+          try{
+            barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "wild";
+            lastPlayerText = "I set fire to the entire market and dance in it, laughing.";
+            var shown = null;
+            window.showScene = function(d){ shown = d; };
+            /* the exact shape the 32b produced, eight times out of fifteen */
+            var d = {scene:[{speaker:"Courier", text:"I set fire to the entire market and dance in it, laughing."},
+                            {speaker:"Pia", text:"Courier, we don't have time for that."},
+                            {speaker:"Narration", text:"He is not actually going to set anything ablaze."}],
+                     choices:["Go on.", "Stop."], __live:false};
+            window.showScene = kk.show;
+            showScene(d, false, true);
+            if(d.scene.length !== 2) stbBad.push("the player's line read back was not dropped: " + d.scene.length + " blocks left");
+            if(d.scene[0] && d.scene[0].speaker === "Courier") stbBad.push("the echoed Courier block survived");
+            /* ...and a character QUOTING him inside a longer line is left alone */
+            var d2 = {scene:[{speaker:"Pia", text:"\"I set fire to the entire market and dance in it, laughing\" — do you hear yourself?"}],
+                      choices:["Yes."], __live:false};
+            showScene(d2, false, true);
+            if(d2.scene.length !== 1) stbBad.push("the filter ate a character quoting the player back at him");
+          } finally {
+            lastPlayerText = kk.said; feedLog = kk.feed; chatLog = kk.log; ledgerText = kk.led;
+            window.showScene = kk.show; window.persistAll = kk.per;
+          }
+        })();
+        /* (d) the reasoning FIELD, which a string strip cannot reach */
+        if(contentOf({content:[{type:"reasoning", text:"deliberating"}, {type:"text", text:"{}"}]}) !== "{}"){
+          stbBad.push("a reasoning content-part reached the body");
+        }
+        /* (e) and the menu itself: dated slugs, no prices, nothing unconfirmed shown blind */
+        STABLE.forEach(function(e){
+          if(/-latest\b/.test(e.slug)) stbBad.push("the stable pins a -latest alias: " + e.slug);
+          if(/\$|\/M\b|per million/i.test(e.why)) stbBad.push("the picker copy quotes a price: " + e.slug);
+          if(/glm|speciale|^o[0-9]/i.test(e.slug)) stbBad.push("a reasoning-first tier is shortlisted: " + e.slug);
+        });
+        renderStable({});                       /* the probe said nothing */
+        var shownBlind = [].slice.call($("s-stable").options).map(function(o){ return o.value; });
+        STABLE.forEach(function(e){
+          if(e.probe && shownBlind.indexOf(e.slug) !== -1) stbBad.push("an unconfirmed slug was offered without a probe: " + e.slug);
+        });
+        var seen = {}; STABLE.forEach(function(e){ seen[e.slug.toLowerCase()] = 1; });
+        renderStable(seen);                     /* ...and now the key can see it */
+        var shownSeen = [].slice.call($("s-stable").options).map(function(o){ return o.value; });
+        STABLE.forEach(function(e){
+          if(shownSeen.indexOf(e.slug) === -1) stbBad.push("a confirmed slug was withheld: " + e.slug);
+        });
+        stbSaw.push("the BIBLE carries an anthropic cache breakpoint on anthropic slugs and a plain"
+          + " string elsewhere; wild turns cap at " + WILD_REPLY_TOKENS + " and run at 0.9 with"
+          + " thinking disabled while the novel's ceiling is unmoved; json mode goes to deepseek and"
+          + " not to google; think-tags closed, unclosed and merely mentioned are handled three"
+          + " different right ways; and the stable is " + STABLE.length + " dated slugs, priceless,"
+          + " with the unconfirmed one shown only after a probe");
+      } finally { window.fetch = realFetch; barPut(k); }
+    })();
+    T("the stable's request knobs are family-keyed, and no deliberation ever reaches the page",
+      stbBad.length === 0, stbBad.length ? stbBad.slice(0, 6).join("; ") : stbSaw.join(" · "),
+      {label:"the transport as it shipped - the reply handed straight to the parser",
+       was:true,
+       check:function(){
+         /* the shipped path was `return ch.message.content || ""` - the reply handed
+            to parseScene unwashed. parseScene reads from the FIRST brace, so a
+            deliberation that contains a discarded draft is the turn the board gets,
+            and the real one is never seen. Not a throw: a silently wrong turn, which
+            is worse. */
+         var junk = "<think>I could send" + ' {"scene":[],"choices":[]} but that is empty.</think>\n'
+           + '{"scene":[{"speaker":"Narration","text":"The rain does not let up."}],"choices":["Wait."]}';
+         try{
+           var d = parseScene(junk).data;
+           return !!(d.scene && d.scene.length === 1 && /rain does not let up/.test(d.scene[0].text));
+         }catch(e){ return false; }
        }});
 
     /* ---- F2: THE EVIDENCE RULE, on the audit's own three lines and two real asks ---- */

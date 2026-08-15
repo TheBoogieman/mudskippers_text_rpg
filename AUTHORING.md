@@ -4,7 +4,23 @@
 
 ---
 
-## The two tables
+## A word before you start: which game are you authoring?
+
+Since v4.72.0 there are two, and **everything in this guide is THE NOVEL**. The
+authored deck, the pinned door, the beat floor, the budget and its guillotine, the
+teeth runtime — all of it is novel-mode machinery, and the rehearsal room pins novel
+for exactly that reason.
+
+**THE WILD TABLE** reads the same two tables, but as *material* rather than as a
+script: the beat's cards go into the model's briefing as "what this room knows"
+(subject, who would know, the true thing, the held-back thing), the `never` list and
+the `before` physics go with them as law, and the teeth card travels as peril
+material. Nothing is dealt and nothing is spent. So: **a card you write is read at
+both tables, and enforced at only one.** Write `gives` and `holds` as facts about the
+world rather than as instructions to a renderer, and both tables get what they need.
+`rail`/`railAlt` and `key` are novel-only — the wild table builds its own rail.
+
+## The two tables (of the SCENEBOOK, not of the game)
 
 ### `var SCENEBOOK = {` — the conversation decks
 
@@ -71,7 +87,7 @@ Search a beat by `id:"a1-vic"`. The authored fields:
 ## The ritual after every edit
 
 1. **Syntax**: the game not booting is the first test. (If you edit outside the browser, any JS checker on the `<script>` body works.)
-2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 53 rows as of v4.71.x.
+2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 59 rows as of v4.72.0.
 3. **The fixture**: if the drift row goes red, it names exactly which lines started or stopped firing which predicate (names, deaths, shard moves, tells). If the diff is exactly your edit and reads as intended, update `var VERDICT_FIXTURE` from the live map (`window.__VERDICTS__` after a selftest run) and add a line to the annotated ledger above it saying what moved and why. **Never regenerate to silence a row you have not read** — that is the one move the mechanism exists to prevent.
 4. **Play it**: the **REHEARSAL ROOM** (menu) runs one beat in isolation, over and over — built for exactly this. For full context, a fresh run reaches any Book One beat in minutes.
 
