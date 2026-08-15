@@ -20,6 +20,17 @@ both tables, and enforced at only one.** Write `gives` and `holds` as facts abou
 world rather than as instructions to a renderer, and both tables get what they need.
 `rail`/`railAlt` and `key` are novel-only — the wild table builds its own rail.
 
+**And since v4.72.2 the SPINE's seams can change hands too.** In a wild run started
+above a temperature of 1, the DM writes each beat's **opening scene and its landing
+passage** instead of the client playing your `opens`/`lands`/`landsHard`. Your prose
+is not discarded: the board still reads the variant's `day`, `time`, `place`, `amb`,
+`shard` and `now` and stamps them *before* the ask, so the model writes into the room
+you put them in — and `anchors` rides the ask as the names that must be in it. What
+that means for you: **keep writing the stamp fields as carefully as the prose**, because
+above the line they are the only part of the passage that survives. `press`, `canon`,
+`canonAlt`, `canonSoft` and `scar` are unaffected at either table — the client keeps
+the books in both.
+
 ## The two tables (of the SCENEBOOK, not of the game)
 
 ### `var SCENEBOOK = {` — the conversation decks
@@ -75,7 +86,7 @@ Search a beat by `id:"a1-vic"`. The authored fields:
 
 1. **Presence.** Every speaker in a scene is on the beat's `here`. The market is weather and scenery.
 2. **Nine's physics.** Skin is voice; through cloth she is weather. Others hear her only bare-held. In a1-hum's walk, before the door: she answers in **shape, never in words** — the first worded sentence belongs to the exit.
-3. **Anchors are earned by play.** The opening cannot witness for them. If a beat's subject never gets named in a played card, the door closes thin — on purpose. If you write the subject's name out of a beat's cards, you have made its good ending unreachable (this happened; see the `VERDICT_FIXTURE` ledger, v4.71.4).
+3. **Anchors are earned by play — but never at the player's expense (changed v4.72.2).** The opening cannot witness for them. A gate the *DM* claims is still refused when the beat's named parts never reached its prose. What no longer happens is the **thin close off the door**: a night the player ended by reaching for the ending is never recorded as a night that went wrong. That rule was measured across all 33 beats and it was not a corner case — 18 of the 23 anchored beats closed thin under ordinary typed play, and three (`a2-hand`, `a2-chassis`, `a3-stone`) closed thin under *every* play pattern, including the season's own fork. Writing a subject's name out of its cards is still an authoring fault and the console still names it — it is just no longer charged to the player.
 4. **Keys discriminate.** A distinctive token used by two cards in one deck stops meaning either. A rare token (8+ letters, one owner) earns its card on a typed line alone; short common words need two hits.
 5. **A rail is a line, not an echo.** First person, the courier's voice. It must not redo the scene it hangs under, and it must not shadow a door's wording — a typed door is a door.
 6. **Rooms are append-only between releases.** Saves remember spent cards by position. Replace card text freely; add new cards at the end; never reorder a shipped deck.
@@ -87,7 +98,7 @@ Search a beat by `id:"a1-vic"`. The authored fields:
 ## The ritual after every edit
 
 1. **Syntax**: the game not booting is the first test. (If you edit outside the browser, any JS checker on the `<script>` body works.)
-2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 59 rows as of v4.72.0.
+2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 64 rows as of v4.72.2.
 3. **The fixture**: if the drift row goes red, it names exactly which lines started or stopped firing which predicate (names, deaths, shard moves, tells). If the diff is exactly your edit and reads as intended, update `var VERDICT_FIXTURE` from the live map (`window.__VERDICTS__` after a selftest run) and add a line to the annotated ledger above it saying what moved and why. **Never regenerate to silence a row you have not read** — that is the one move the mechanism exists to prevent.
 4. **Play it**: the **REHEARSAL ROOM** (menu) runs one beat in isolation, over and over — built for exactly this. For full context, a fresh run reaches any Book One beat in minutes.
 

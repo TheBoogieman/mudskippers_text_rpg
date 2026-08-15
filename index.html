@@ -1239,7 +1239,8 @@
     </div>
     <div class="ep">
       <h3>STEP 3 — PLAY</h3>
-      <p>Pick a numbered choice each turn — or say what the courier does in the gold bar and press Enter. At <b>the wild table</b> there is a second button beside the bar: MUDSKIPPER MOMENT, for the other kind of line — the wild one, the joke, the thing that gets you thrown out of better establishments. Those are free; they never cost you a turn. (A <b>!</b> in front of anything does the same from the keyboard.) <b>The novel</b> has no such button, on purpose: every line you type there is the courier doing a thing, and the room answers it out of its own writing.</p>
+      <p><b>THE NOVEL</b> is played on the rail: pick a numbered choice each turn, and that is the whole control. The typing bar is switched off there on purpose — every line in that game is written, and the rail is how you reach it.</p>
+      <p><b>THE WILD TABLE</b> gives you the bar as well: say what the courier does and press Enter. Beside it is a second button, MUDSKIPPER MOMENT, for the other kind of line — the wild one, the joke, the thing that gets you thrown out of better establishments. Those are free; they never cost you a turn. (A <b>!</b> in front of anything does the same from the keyboard.)</p>
       <p><b>Three sentences and you know this game.</b> One question is live at a time. The first choice on the rail ends it; the others dig. The red one is the game's own, and it always asks twice.</p>
       <p style="opacity:.7">Everything else explains itself as it happens. The story bends around you; that's the whole game.</p>
     </div>
@@ -1657,9 +1658,14 @@
       <input id="s-model" type="text" spellcheck="false">
     </div>
     <div class="fld">
-      <label>HOW STRANGE DO YOU WANT IT — TEMPERATURE</label>
+      <label>HOW MUCH OF THE NIGHT IS THE DM'S — TEMPERATURE</label>
       <input id="s-temp" type="text" spellcheck="false" placeholder="0.9">
-      <div class="hint">Leave it blank for the house setting: 0.9 at the wild table, because unhinged is the point. Lower is steadier and duller; higher is stranger and less reliable. 0 to 2.</div>
+      <div class="hint">
+        <b>THE WILD TABLE ONLY.</b> THE NOVEL never calls a model, so this does nothing there.<br>
+        Blank means the house setting, <b>0.9</b>. Lower is steadier and duller; higher is stranger and less reliable.<br>
+        <b>Above 1.0 the storyteller also writes the seams</b> — the scene that opens each night and the passage that lands it, which the game otherwise plays from its own book. That is decided once, when you start a run, and it stays decided for the life of that run; moving this dial afterwards changes the writing, not who writes the seams.<br>
+        <span style="opacity:.75">Claude models cap out at 1.0 — the game sends 1.0 and keeps your number for the seam decision. Range 0 to 2.</span>
+      </div>
     </div>
     <div class="fld" id="fld-key">
       <label>API KEY</label>
@@ -1701,7 +1707,10 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.72.1 "The Audit Seats the House"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.72.2 "Both Ends of the Night"
+   the door never books thin · a night the player closed is never a night that failed
+   the novel is a rail game · its typing bar is dark and its repair tools are gone
+   above a temperature of 1 the DM writes the seams · the client still keeps the books
    the two tables audited live: every road to a run passes the doors · a bit is one
    call · drift is conversation at the wild table · the provider switch keeps its
    preset · the dial meets each family's range · the harness puts back what it moves
@@ -7357,7 +7366,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.72.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.72.2";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -9441,6 +9450,11 @@ function showScene(data, logIt, instant){
        no-op for exactly the two behaviours it was written for.) */
     if(beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
+    /* ...AND THE SEAM THE CEREMONY JUST ORDERED, asked on its own turn. Deferred on
+       purpose: this is the tail of a reply's own render, and re-entering callDM from
+       inside it is how a ceremony ends up nested in itself. A tick later the turn is
+       settled, busy is down, and the seam is an ordinary composed turn. */
+    if(seamPending) setTimeout(function(){ try{ seamFire(); }catch(e){} }, 0);
   }
   if(instant || els.length === 0){
     els.forEach(function(el){ el.classList.remove("reveal"); el.classList.add("shown"); });
@@ -9476,7 +9490,8 @@ function setBusy(v){
   for(var i=0;i<els.length;i++) els[i].disabled = v;
   /* null-safe: in a novel run the button is not in the DOM at all (applyModeUI) */
   var mbB = $("mudbtn"); if(mbB) mbB.disabled = v || !!runOver;
-  $("mudinput").disabled = v || !!runOver;
+  /* ...and never re-opened by the end of a turn in a novel run (v4.72.2) */
+  $("mudinput").disabled = v || !barTyping();
   if(v) scrollFeed();
 }
 
@@ -10821,6 +10836,11 @@ function pickTableTalk(){
 }
 function dealTableTalk(){
   if(phase !== "slack" || runOver || beatDone() || foldPending || walkbackNow) return false;
+  /* the room is a seam too. Above the line the DM is already writing every turn of
+     the family's own time, so an authored banter card dealt on top of it is the
+     second voice the ruling exists to remove. Nothing is consumed: the cards keep
+     their place in the deck for a run that plays below the line. */
+  if(seamsWild()) return false;
   if(!roomDeckDry()) return false;
   var c = pickTableTalk();
   if(!c) return false;
@@ -11276,6 +11296,9 @@ function slackArm(){
   showChoices(out);
   scrollFeed();
   persistAll(out);
+  /* the way on out of the room is a fresh player action, so the seam it ordered can
+     go straight out - there is no reply mid-render to nest inside here */
+  if(seamPending) seamFire();
 }
 /* the premiere itself, split out because a save can be sitting at the seam right
    now - written by the version that asked the DM for this page and then reloaded
@@ -11286,6 +11309,14 @@ function slackArm(){
    door out of the room, and the season premiere - where leaving it queued means
    the card announcing tonight arrives after tonight has been played into. */
 function dealTease(){
+  /* above the line the night names itself in the DM's own opening, so the authored
+     TONIGHT card is dropped rather than stacked in front of it */
+  if(seamsWild()){
+    for(var g = 0; g < pendingAsides.length; g++){
+      if(pendingAsides[g].tone === "green"){ pendingAsides.splice(g, 1); return false; }
+    }
+    return false;
+  }
   for(var i = 0; i < pendingAsides.length; i++){
     if(pendingAsides[i].tone !== "green") continue;
     var t = pendingAsides.splice(i, 1)[0];
@@ -11299,8 +11330,14 @@ function playPremiere(){
   armBeat();                   /* into the new book: the pointer moves, the season turns */
   beatJustArmed = "";          /* the premiere IS this beat's opening - never both */
   dealTease();                 /* the new book's first question names itself here */
-  var rail = playAuthored(pickVariant(SEASON_OPENS[currentSeason] || [], "premiere" + currentSeason),
-                          "premiere" + currentSeason);
+  var PV = pickVariant(SEASON_OPENS[currentSeason] || [], "premiere" + currentSeason);
+  if(seamsWild()){
+    /* the board still turns the page into the new book; the DM writes the arrival */
+    seamStamp(PV);
+    seamAsk("premiere", beatNow().id, false);
+    return [];
+  }
+  var rail = playAuthored(PV, "premiere" + currentSeason);
   if(!rail) rail = playOpening(beatNow().id);   /* a season without a written premiere still opens */
   return rail ? railFor(rail, true) : [];
 }
@@ -12416,12 +12453,34 @@ function boardTurn(data){
       }
       return;
     }
+    /* ==== THE DOOR NEVER BOOKS THIN (v4.72.2) ====
+       Fifth pass over these two lines, and the last: the door's contract - four
+       releases of doctrine - is that reaching for the ending COSTS THE PLAYER
+       NOTHING. It charged no toll, which is what the doctrine was checked against
+       every previous time; what nobody measured until now is that it wrote the
+       SCAR, into gateNotes and into permanent canon, and the scar is the thing the
+       player actually reads. Their good ending, replaced by an authored sentence
+       saying the night went wrong.
+       AND IT WAS NOT ONE BEAT. Driven across all thirty-three, four play patterns
+       each, at the floor: of the 23 beats that carry anchors, EIGHTEEN closed thin
+       under ordinary typed play, EIGHT under at least one rail-clicking pattern,
+       and THREE under every pattern there is - a2-hand, a3-stone, and a2-chassis,
+       which is the season's fork. The beat that books which body Nine chooses
+       recorded a scar however it was played.
+       The anchor law keeps its whole job everywhere else: a gate the DM claims is
+       still refused without its named parts (see the branch below), and the world's
+       own forced close still books the scar it threatens. What retires is the one
+       cell of the matrix where the PLAYER did the thing and the board booked a
+       failure at them. The witness is still taken, and still said out loud, because
+       a beat whose people never reached the page is a real authoring finding - it
+       is just no longer the player's fee. */
     var xmiss = anchorsMissing(beatNow());
-    if(xmiss.length && window.console && console.warn){
-      console.warn("[mudskippers] the door closed on a scene without " + xmiss.join(", ")
-        + " in it - recording the scar rather than the exit");
+    if(xmiss.length && window.console && console.info){
+      console.info("[mudskippers] the door closed on a scene without " + xmiss.join(", ")
+        + " in it - closing clean anyway: the player reached for the ending."
+        + " (An authoring finding on \"" + beatNow().id + "\", not a player's fault.)");
     }
-    closeBeat(xmiss.length ? "thin" : false, note);
+    closeBeat(false, note);
     return;
   }
   /* the floor: a gate below it is held, not refused - the haste was the DM's,
@@ -12723,6 +12782,112 @@ function pickLines(V, salt){
    coming and never has to write it - but it MUST land in the chat log as though
    it did, or the next turn opens with the model quietly missing a scene the
    player has already read, which is exactly the amnesia this whole file fights. */
+/* ==================== THE SEAMS (v4.72.2) ====================
+   RULED by the Architect: at the wild table, above a temperature of 1, the DM writes
+   the seams too - the scene that opens a night and the passage that lands it - and
+   below that line the client plays the authored ones exactly as it always has.
+
+   THE SWITCH IS A RUN FACT, NOT A LIVE SETTING. `settings.temp` can be moved
+   mid-run; seam authorship cannot, or one night's landing is written and the next is
+   composed. So `replyTemp() > 1` is read ONCE, at run creation, stamped into the save
+   blob, and immutable for the life of the run - the same law `runMode` lives under,
+   for the same reason. A save with no stamp is a client-seam save, which is what
+   every run before this build was.
+
+   AND THE CLIENT STILL KEEPS THE BOOKS. This is the line the ruling drew, and it is
+   the file's oldest law - the BIBLE says it in capitals: THE GAME KEEPS THE BOOKS,
+   NOT YOU. So closeBeat runs exactly as it does today: it decides clean or hard,
+   merges the authored canon, canonSoft and the fork's canonAlt, files the gateNote,
+   pays any toll and moves the pointer. What the DM is handed is the seam's SPEC -
+   where the family lands, at what hour, in what weather, with the shard where the
+   board says it is, and which names have to be in it - and it writes the prose to
+   that. The page-turn is still stamped by the client, before the ask goes out, so
+   the model is describing a room the board has already moved them to.
+   The beat card needs no fork: its summary is already `note || b.exit`, and `note`
+   is the DM's own gateNote - so above the line the card is already in its voice. */
+var seamsDM = false;         /* the stamp: does this run's DM write its own seams? */
+function seamsWild(){ return wildRun() && seamsDM; }
+var seamPending = null;      /* {kind, id, forced} - a seam the DM owes us */
+/* the page-turn, applied without rendering a word of the authored passage. Same
+   fields playAuthored sets, and deliberately the same order, because the clock
+   re-bases off day+time together and the room's move is noted off the old name. */
+function seamStamp(V){
+  if(!V) return;
+  if(V.day){ $("hud-day").textContent = V.day; $("w-day").textContent = V.day; }
+  if(V.time) nowTime = V.time;
+  if(V.day && V.time){
+    var vAbs = storyMinutes(V.day, V.time, storyMin, true);
+    if(vAbs >= 0) storyMin = vAbs;
+  }
+  if(V.place){
+    var was = $("hud-loc").textContent, now = String(V.place).toUpperCase();
+    if(was && was !== now) noteMove(was, now);
+    $("hud-loc").textContent = now;
+  }
+  if(V.amb) setAmbience(V.amb);
+  if(V.now) nowText = V.now;
+  if(V.shard === "hand" || V.shard === "jacket") shardWhere = V.shard;
+  renderNow();
+}
+/* the contract. Not the authored prose - the authored prose is exactly what the DM
+   is replacing - but everything the board knows about what this seam has to DO. */
+function seamBrief(s){
+  var i = beatById(s.id), b = i >= 0 ? SPINE[i] : null, o = {};
+  o.write = (s.kind === "landing")
+    ? "THE LANDING of the night that just closed - the passage that puts this family down afterwards"
+    : (s.kind === "premiere") ? "THE SEASON'S OPENING - where the story picks up after the break"
+    : "THE OPENING of tonight - the establishing scene that puts the family in the room";
+  o.where_they_are_now = $("hud-loc").textContent;
+  o.the_day = $("hud-day").textContent;
+  o.the_hour = nowTime;
+  o.the_weather = currentAmbience;
+  if(nineIsShard()) o.the_shard = (shardWhere === "hand") ? "in his bare hand" : "in his jacket";
+  if(b && s.kind === "landing"){
+    o.the_night_that_just_ended = b.title;
+    o.what_it_was_for = b.goal;
+    o.how_it_ended = gateNotes[b.id] || b.exit;
+    o.the_world_took_it = !!s.forced;
+    if((b.anchors || []).length) o.must_be_in_it = b.anchors;
+  }
+  if(b && s.kind !== "landing"){
+    o.tonight_is = b.title;
+    o.tonight_is_for = b.goal;
+    if((b.here || (SCENEBOOK[b.id] && SCENEBOOK[b.id].here))) o.in_the_room = b.here || SCENEBOOK[b.id].here;
+  }
+  return "WRITE THE SEAM. This turn is not the player's - they have not acted, and they are"
+    + " waiting to read what you write. The board has already moved them: the day, the hour,"
+    + " the room and the weather below are FACTS, already on their screen, and your scene"
+    + " happens in them. Send them back unchanged.\n"
+    + "1. Three or four blocks. Put people in it and let them speak - this is a scene, not a"
+    + " caption.\n"
+    + "2. THE COURIER SAYS NOTHING. He never does unless the player types it, and here they"
+    + " have not.\n"
+    + (o.must_be_in_it ? "3. must_be_in_it names the people this night was about. They belong"
+        + " in the prose by name.\n" : "3. Keep it to the people who are actually here.\n")
+    + "4. choices: two or three things the courier could do next, in his own words.\n"
+    + JSON.stringify(o, null, 1);
+}
+/* the seam is asked for AFTER the turn that caused it has finished landing - never
+   from inside its own render pass, which is how a ceremony re-enters itself. */
+function seamAsk(kind, id, forced){
+  seamPending = {kind:kind, id:id, forced:!!forced};
+}
+/* the seam being written right now, read by buildContext. It is NOT pushed into
+   chatLog as a bare user line: the history tail is where instructions go to be
+   averaged, and the whole point of a seam ask is that it OUTRANKS the ordinary scene
+   contract for one turn. Found by driving it - the first cut pushed it into the
+   history and the composed briefing went out still asking for a normal middle-of-the
+   -night turn, with the seam order buried four messages down. */
+var seamServing = null;
+function seamFire(){
+  if(!seamPending || busy || runOver) return false;
+  var s = seamPending; seamPending = null;
+  seamServing = s;
+  turnToken++;
+  lastPlayerText = ""; lastTurnMud = false; pickKind = "";
+  callDM();
+  return true;
+}
 function playAuthored(V, salt){
   if(!V) return null;
   var LN = pickLines(V, salt);
@@ -12832,6 +12997,9 @@ function playLanding(id, forced){
   var pool = (forced && b.landsHard && b.landsHard.length) ? b.landsHard : b.lands;
   var V = pickVariant(pool, id + (forced ? "|hard" : "|land"));
   if(!V && forced) V = pickVariant(b.lands, id + "|land");
+  /* above the line the DM writes it - but the board still turns the page first, so
+     the scene it writes happens where the board says the family ended up */
+  if(seamsWild()){ seamStamp(V); seamAsk("landing", id, forced); return null; }
   return playAuthored(V, id);
 }
 /* THE OPENING. armBeat used to move a pointer and hope: the next DM turn had to
@@ -12841,7 +13009,9 @@ function playLanding(id, forced){
 function playOpening(id){
   var i = beatById(id), b = i >= 0 ? SPINE[i] : null;
   if(!b || !b.opens) return null;
-  return playAuthored(pickVariant(b.opens, id + "|open"), id);
+  var V = pickVariant(b.opens, id + "|open");
+  if(seamsWild()){ seamStamp(V); seamAsk("opening", id, false); return null; }
+  return playAuthored(V, id);
 }
 function pushBeatCard(info){
   var b = {kind:"beat", title:info.title, forced:!!info.world, arcturn:!!info.arcturn,
@@ -15072,8 +15242,11 @@ function buildContext(){
      the beat is still open", on a beat that had closed. */
   if(cutHeldNote && beatDone()) cutHeldNote = "";
   if(cutHeldNote){ msg += "\n\n(" + cutHeldNote + ")"; cutHeldNote = ""; }
-  /* the contract speaks last of all, because last is the part that gets read */
-  var deal = sceneContract();
+  /* the contract speaks last of all, because last is the part that gets read - and
+     on a seam turn the seam IS the contract. The board is not asking for a middle of
+     a night here; it is asking for the passage that opens or closes one, and the
+     ordinary scene contract would be two orders in one payload. */
+  var deal = seamServing ? seamBrief(seamServing) : sceneContract();
   if(deal) msg += "\n\n" + deal;
   return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
 }
@@ -15402,10 +15575,24 @@ function parseScene(raw){
    a control by deleting it and a codebase that assumes the control exists is one
    TypeError away from a dead rail. */
 var mudBtnHeld = null;       /* the button while it is out of the tray */
+/* ==== THE BAR IS THE WILD TABLE'S (v4.72.2, the Architect's call) ====
+   The novel took the button in v4.72.0 and kept the box, which left one channel open
+   into a game that has no channel: every line typed there went to the pool, answered
+   in house voices, and - as the class sweep then proved - was the single commonest
+   road to a beat closing on a scar. THE NOVEL IS A RAIL GAME. The box is disabled
+   rather than removed, because an empty tray reads as a layout bug where a greyed
+   field with a sentence in it reads as a rule.
+   Three functions re-enable this input on their own schedule - openBar on every new
+   run and restore, setBusy on every turn's end, lockRun at the end of a run - so the
+   permission is one predicate they all ask, or the box comes back on the next turn. */
+function barTyping(){
+  if(runOver) return false;
+  return !runSlug || wildRun();     /* no run yet: the title screen's bar is nobody's */
+}
 function barPlaceholder(){
-  return wildRun()
-    ? "…or say what the courier does. Enter to do it, the button for a bit."
-    : "…or say what the courier does. Enter to do it.";
+  if(runOver) return "The run is over. Start a new game.";
+  if(!barTyping()) return "Tonight is written — the rail is the game. Pick a line.";
+  return "…or say what the courier does. Enter to do it, the button for a bit.";
 }
 function applyModeUI(){
   var row = document.querySelector(".mudrow"), mi = $("mudinput"), mb = $("mudbtn");
@@ -15415,7 +15602,11 @@ function applyModeUI(){
     mudBtnHeld = mb;
     row.removeChild(mb);
   }
-  if(mi && !runOver) mi.placeholder = barPlaceholder();
+  if(mi){
+    mi.placeholder = barPlaceholder();
+    if(!barTyping()){ mi.value = ""; mi.disabled = true; }
+    else if(!busy) mi.disabled = false;
+  }
   try{ applyTension(true); }catch(e){}   /* the strip belongs to the mode too */
 }
 function openBar(){
@@ -15424,7 +15615,7 @@ function openBar(){
      restore and rehearsal, so the one sentence in the running game that teaches
      the typed-input contract was visible on the title screen and nowhere else -
      while the bar in play taught the opposite. */
-  if(mi){ mi.disabled = false; mi.placeholder = barPlaceholder(); }
+  if(mi){ mi.disabled = !barTyping(); mi.placeholder = barPlaceholder(); }
   if(mb) mb.disabled = false;
 }
 /* THE SECRET IN THE FIRST SECTION. The gold bar looks open during the cold
@@ -15447,6 +15638,13 @@ var DM_ASIDE = "Noted, and noted properly \u2014 the record in this game is a tw
   + "have opinions. That is the whole point of them.\n\nNow \u2014 the rain is still falling, and "
   + "Pia is still waiting. Into it when you're ready.";
 var DM_INVITE = "Go on, try going off the rails. Type anything down there.";
+/* ...AND THE INVITATION MUST NOT LIE (v4.72.2). The green box is the cold open's
+   best beat and it dares the player to misbehave in a bar that, at the novel table,
+   is now disabled. So the novel gets its own dare, in the same voice, aimed at the
+   thing it actually has: the rail, and the fact that every line on it is written. */
+var DM_INVITE_NOVEL = "No bar tonight — this one's written, all the way down. "
+  + "Go on: pick the line you'd actually say.";
+function inviteLine(){ return wildRun() ? DM_INVITE : DM_INVITE_NOVEL; }
 /* the lure: the gold bar glows green only while the invitation stands */
 function lureBar(on){
   var mi = $("mudinput");
@@ -15455,9 +15653,9 @@ function lureBar(on){
 }
 /* dealt when the opening finishes revealing: the DM baits the trap out loud */
 function introInvite(){
-  var inv = {kind:"dmaside", invite:true, text:DM_INVITE};
+  var inv = {kind:"dmaside", invite:true, text:inviteLine()};
   renderBlock(inv); feedLog.push(inv);
-  lureBar(true);
+  lureBar(wildRun());          /* the gold bar glows only where there is a bar to glow */
   scrollFeed();
 }
 function dmAside(attempt){
@@ -16006,6 +16204,9 @@ function takeAction(text, isMud){
   /* F3: and which future that door books, click or keyboard, matched on the wording */
   chassisDoor = (pickKind === "exit" && !beatDone()) ? forkBooking(beatNow(), text) : "";
   turnToken++;                    /* a new player action composes its briefing once */
+  /* the seam is spent the moment the player acts again. A seam order left standing
+     would re-order the same passage on every turn after it. */
+  seamServing = null;
   cutHeld = false;
   turnContext = null;
   askedFor = {}; turnCalls = 0; turnNotes = [];
@@ -16924,6 +17125,9 @@ function maybeRehydrate(){
   var box = $("rehydbox"); if(!box) return;
   box.innerHTML = "";
   if(rehydDismissed) return;
+  /* ...and it never offers a novel run a repair it no longer has a button for. A
+     deterministic run cannot lose its memory: the board is the memory. */
+  if(!wildRun()) return;
   if(introStage === 1) return;   /* a cold open has no sheets YET - that is newness, not damage */
   if(runCanon.length !== 0 && Object.keys(castSheets).length !== 0) return;
   if(feedLog.length <= 6) return;
@@ -17078,6 +17282,12 @@ function saveBlob(){
        never be cross-loaded into the other game. A pre-v4.72.0 save carries no
        stamp and restores as novel, which is what it was. */
     mode:runMode,
+    /* ...and whether this run's DM writes its own seams. Decided once at run
+       creation off the temperature dial, then immutable - a live setting cannot be
+       allowed to change hands mid-run, or one night's landing is authored and the
+       next is composed. No stamp means the client keeps the seams, which is what
+       every run before v4.72.2 was played with. */
+    seams:seamsDM,
     /* a rehearsal fragment that ever reaches the real drawer can be recognised
        and refused there, whatever went wrong upstream of it */
     reh:!!rehearsing,
@@ -17717,7 +17927,15 @@ function renderCanonList(){
     li.innerHTML = '<b>' + (i+1) + '.</b>' + esc(f);
     ch.appendChild(li);
   });
-  $("rebuild-open").style.display = runSlug ? "inline-block" : "none";
+  /* ==== THE REPAIR TOOLS ARE THE WILD TABLE'S (v4.72.2) ====
+     FIND OUR PLACE and REBUILD MEMORY both spend a call to re-read the chronicle and
+     put a drifted run back where it belongs. In a novel run nothing can drift: the
+     board owns the pointer, the deck owns the scene and the client keeps the books,
+     so the two buttons are dead weight - and they are the only two surfaces left that
+     could take a novel run to the wire at all. They go where the wire goes. */
+  var repairsOn = !!runSlug && wildRun();
+  $("rebuild-open").style.display = repairsOn ? "inline-block" : "none";
+  $("place-open").style.display = repairsOn ? "inline-block" : "none";
   var ol = $("canonlist"); ol.innerHTML = "";
   if(!runCanon.length){
     var e = document.createElement("li");
@@ -18348,7 +18566,8 @@ function enterArchive(tab){
     $("tpane-" + k).classList.remove("on");
   });
   $("tpane-arch").classList.add("on");
-  $("place-open").style.display = runSlug ? "inline-block" : "none";
+  /* the wild table's, like its sibling REBUILD - see renderArchive (v4.72.2) */
+  $("place-open").style.display = (runSlug && wildRun()) ? "inline-block" : "none";
   placeBox("");
   archSelect(tab || archTab);
 }
@@ -21757,6 +21976,9 @@ function newRun(confirmFirst, bare, mode){
   runEpoch++;
   if(confirmFirst && feedLog.length && !confirm("Start a new run from Day 1? A fresh save and a fresh ledger will be created. The old files stay in your folder.")) return;
   runMode = (mode === "wild") ? "wild" : "novel";
+  /* READ ONCE, HERE, AND NEVER AGAIN. The dial is live; the run fact is not. */
+  seamsDM = (runMode === "wild") && replyTemp() > 1;
+  seamPending = null; seamServing = null;
   var now = new Date();
   runSlug = now.toISOString().slice(0,19).replace(/[:T]/g,"-");
   chatLog = []; feedLog = [];
@@ -21873,6 +22095,8 @@ function restoreFromBlob(s){
      is and every router asks the run. Read BEFORE anything downstream - openBar and
      applyModeUI both consult it, and so does the first rail this restore draws. */
   runMode = modeFromBlob(s.mode);
+  seamsDM = (s.seams === true);      /* absent, false, or anything else: the client's */
+  seamPending = null; seamServing = null;
   chatLog = s.history||s.chatLog||[];
   ledgerText = s.ledgerText||"";
   feedLog = [];
@@ -21916,7 +22140,7 @@ function restoreFromBlob(s){
   afterRevealHook = null;        /* a hook staged by an abandoned new run must not fire here */
   openBar();                     /* re-arms the bar after a dead run's lock; lockRun re-shuts ended runs below */
   applyModeUI();                 /* ...and the tray matches the run that just came back */
-  lureBar(introStage === 1);     /* the green lure follows the invitation, both ways */
+  lureBar(introStage === 1 && wildRun());   /* the lure follows the invitation, and the bar */
   /* The board landed in v3.0. A save from before it has no pointer, so the run is
      placed at the first beat of whatever arc it had reached and offered a one-call
      repair rather than being silently dropped somewhere wrong. */
@@ -22668,6 +22892,12 @@ function selfTest(){
     "doorMeetsFloor", "beatMetFloor", "applyModeUI", "barPlaceholder", "callBitTurn",
     "saveBlob", "summarize", "sceneContract", "boardTension", "serveBitTurn", "bitSlots",
     /* ...and the stable (brief v6.1): the request knobs and the reasoning lane */
+    "barTyping", "openBar", "setBusy", "inviteLine", "lureBar",
+    /* ...and the seams (v4.72.2) */
+    "renderCanonList", "enterArchive", "maybeRehydrate",
+    "seamsWild", "seamStamp", "seamBrief", "seamAsk", "seamFire", "playLanding",
+    "buildContext", "contextForThisTurn",
+    "playOpening", "playAuthored", "dealTableTalk", "playPremiere", "dealTease",
     "modelFamily", "jsonModeOK", "replyCap", "replyTemp", "stripReasoning", "contentOf",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
     /* ...and the audit's rows (v4.72.1): the bit hold and the board itself */
@@ -23966,8 +24196,37 @@ function selfTest(){
           runMode = "novel"; bang();
           if(sawMud !== false) mudBad.push("the bang was still a bit in a novel run (saw " + sawMud + ")");
         } finally { window.takeAction = realTake; $("mudinput").value = ""; }
+        /* ---- THE BAR ITSELF IS OFF IN A NOVEL RUN (v4.72.2) ----
+           Three functions re-enable this input on their own schedule, so each is
+           driven rather than reasoned about: openBar (every new run and restore),
+           setBusy (every turn's end) and applyModeUI (the mode's own door). */
+        runMode = "novel"; applyModeUI();
+        if(!$("mudinput").disabled) mudBad.push("the novel's typing bar was left enabled");
+        if(/say what the courier does/.test(barPlaceholder())){
+          mudBad.push("the novel's placeholder still invites a line into a dead field");
+        }
+        openBar();
+        if(!$("mudinput").disabled) mudBad.push("openBar re-opened the novel's bar");
+        setBusy(true); setBusy(false);
+        if(!$("mudinput").disabled) mudBad.push("the end of a turn re-opened the novel's bar");
+        if(lureBar && $("mudinput").className.indexOf("lure") !== -1){
+          mudBad.push("the green lure glowed on a bar that is switched off");
+        }
+        if(inviteLine() === DM_INVITE) mudBad.push("the cold open still dares the player to type");
+        runMode = "wild"; applyModeUI();
+        if($("mudinput").disabled) mudBad.push("the wild table's bar did not come back");
+        openBar(); setBusy(true); setBusy(false);
+        if($("mudinput").disabled) mudBad.push("the wild bar was shut by openBar/setBusy");
+        if(inviteLine() !== DM_INVITE) mudBad.push("the wild cold open lost its dare");
+        /* ...and a finished run shuts the bar in BOTH modes, as it always has */
+        var kOver = runOver; runOver = "death";
+        if(barTyping()) mudBad.push("a dead courier could still be typed for");
+        runOver = kOver;
+        runMode = "novel"; applyModeUI();
         mudSaw.push("absent from the DOM in the novel and back in the tray at the wild table,"
-          + " the placeholder follows it both ways, and the keyboard bang is inert in a novel run");
+          + " the placeholder follows it both ways, the keyboard bang is inert in a novel run,"
+          + " and the novel's typing bar is disabled through applyModeUI, openBar and the end"
+          + " of a turn alike - with the cold open's dare rewritten so it is not lying");
       } finally { barPut(k); applyModeUI(); }
     })();
     T("the MUDSKIPPER MOMENT button is a fact of the mode, not a disabled control",
@@ -24329,8 +24588,30 @@ function selfTest(){
           takeAction("I look at what she is holding.", false);
           if(opened !== 1) gateBad.push("a wild run with no provider was not sent to Settings");
         } finally { window.openSettings = realOpen; }
+        /* ---- AND THE LAST TWO ROADS TO THE WIRE (v4.72.2) ----
+           FIND OUR PLACE and REBUILD MEMORY were the only surfaces left that could
+           take a NOVEL run to a provider. Driven through the real renderers, because
+           two of them set the same button from different panes. */
+        barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "novel";
+        renderCanonList(); enterArchive();
+        if($("rebuild-open").style.display !== "none") gateBad.push("REBUILD MEMORY was offered to a novel run");
+        if($("place-open").style.display !== "none") gateBad.push("FIND OUR PLACE was offered to a novel run");
+        rehydDismissed = false; runCanon = []; castSheets = {};
+        feedLog = [{kind:"player", text:"x"},{kind:"player", text:"x"},{kind:"player", text:"x"},
+                   {kind:"player", text:"x"},{kind:"player", text:"x"},{kind:"player", text:"x"},
+                   {kind:"player", text:"x"}];
+        maybeRehydrate();
+        if(($("rehydbox").innerHTML || "").indexOf("REBUILD") !== -1){
+          gateBad.push("the rehydrate banner still pushed a novel run at the wire");
+        }
+        runMode = "wild"; renderCanonList(); enterArchive();
+        if($("rebuild-open").style.display === "none") gateBad.push("the wild table lost REBUILD MEMORY");
+        if($("place-open").style.display === "none") gateBad.push("the wild table lost FIND OUR PLACE");
+        $("rehydbox").innerHTML = "";
         gateSaw.push("providerReady reads the preset the way takeAction always has; a novel run with"
-          + " an unconfigured key-needing provider takes its turn, and a wild one opens the door instead");
+          + " an unconfigured key-needing provider takes its turn, and a wild one opens the door"
+          + " instead; and the two repair tools - the last surfaces that could take a novel run to"
+          + " a provider - are the wild table's alone, banner included");
       } finally { barPut(k); }
     })();
     T("wild needs a model at the door and the novel needs nothing at all",
@@ -24345,6 +24626,208 @@ function selfTest(){
               still refuses a novel run, the novel still cannot play without settings. */
            return providerReady();
          } finally { runMode = k.m; settings.provider = k.p; settings.key = k.key; }
+       }});
+
+    /* ---- (6c) THE SEAMS (v4.72.2) — BOTH SIDES OF THE LINE ----
+       The ruling is two claims, and the second is the one that rots silently: above a
+       temperature of 1 the DM writes the openings and landings, AND below it the
+       client plays the authored ones exactly as before. So every assertion here is
+       made twice, once each side, off the same beat. */
+    var seamBad = [], seamSaw = [];
+    (function(){
+      var k = barKeep(), kSeam = seamsDM, kPend = seamPending, at = beatById("a1-chase");
+      try{
+        /* (a) THE STAMP IS A RUN FACT, read once and never again */
+        barBoard(0); runMode = "wild"; settings.temp = 1.4;
+        /* the same expression newRun evaluates, at the same instant it evaluates it */
+        seamsDM = (runMode === "wild") && replyTemp() > 1;
+        if(!seamsDM) seamBad.push("temp 1.4 on a wild run did not hand the DM the seams");
+        settings.temp = 0.9;                          /* the dial moves mid-run... */
+        if(!seamsWild()) seamBad.push("moving the dial mid-run took the seams back - the stamp is not a stamp");
+        var blob = JSON.parse(saveBlob());
+        if(blob.seams !== true) seamBad.push("the stamp did not reach the save blob");
+        seamsDM = false;
+        seamsDM = (blob.seams === true);
+        if(!seamsDM) seamBad.push("the stamp did not survive the round trip");
+        settings.temp = 1.4; runMode = "novel";
+        if(seamsWild()) seamBad.push("a NOVEL run took the seams off the temperature dial");
+        runMode = "wild";
+        /* an old save, and a hand-edited one - the same read restoreFromBlob makes */
+        seamsDM = (undefined === true);
+        if(seamsDM) seamBad.push("a save with no seam stamp did not default to the client");
+        seamsDM = ("yes" === true);
+        if(seamsDM) seamBad.push("a non-boolean seam stamp did not default to the client");
+
+        /* (b) BELOW THE LINE the authored seam still plays, untouched */
+        barBoard(at); V5SCENE = true; runMode = "wild"; seamsDM = false; seamPending = null;
+        var feedWas = feedLog.length;
+        playLanding("a1-chase", false);
+        if(feedLog.length <= feedWas) seamBad.push("below the line the authored landing played nothing");
+        if(seamPending) seamBad.push("below the line a seam was asked for anyway");
+        var openWas = feedLog.length;
+        playOpening("a1-vic");
+        if(feedLog.length <= openWas) seamBad.push("below the line the authored opening played nothing");
+
+        /* (c) ABOVE THE LINE it renders nothing and asks instead — and the board has
+           already turned the page, so the DM writes into a room that exists */
+        barBoard(at); V5SCENE = true; runMode = "wild"; seamsDM = true; seamPending = null;
+        var feed2 = feedLog.length, locWas = $("hud-loc").textContent;
+        playLanding("a1-chase", false);
+        if(feedLog.length !== feed2) seamBad.push("above the line the client still printed the landing");
+        if(!seamPending || seamPending.kind !== "landing") seamBad.push("above the line no landing was asked for");
+        if($("hud-loc").textContent === locWas && SPINE[at].lands && SPINE[at].lands.length){
+          var lv = pickVariant(SPINE[at].lands, "a1-chase|land");
+          if(lv && lv.place) seamBad.push("the page did not turn before the ask went out");
+        }
+        var brief = seamBrief(seamPending);
+        if(brief.indexOf("WRITE THE SEAM") === -1) seamBad.push("the seam brief lost its own heading");
+        if(brief.indexOf("THE COURIER SAYS NOTHING") === -1) seamBad.push("the seam brief did not keep the chair");
+        if(brief.indexOf($("hud-loc").textContent) === -1) seamBad.push("the seam brief did not carry the room");
+        (SPINE[at].anchors || []).forEach(function(nm){
+          if(brief.indexOf(nm) === -1) seamBad.push("the seam brief dropped the anchor " + nm);
+        });
+        /* ...AND IT HAS TO REACH msgs[0], WHICH IS THE HALF THE FIRST CUT GOT WRONG.
+           Pushing the brief into chatLog put the order four messages down the history
+           tail while the composed briefing went out still asking for an ordinary
+           middle-of-the-night turn. Caught by driving it against a live model, not by
+           reading it - so the row now reads the bytes that would go on the wire. */
+        (function(){
+          var kServ = seamServing, kTok = turnToken, kLog = chatLog;
+          try{
+            chatLog = [{role:"user", content:"(the sweep's stub run)"}];
+            seamServing = seamPending; turnToken++;
+            var msgs = contextForThisTurn();
+            var head = String((msgs[0] && msgs[0].content) || "");
+            if(head.indexOf("WRITE THE SEAM") === -1){
+              seamBad.push("the seam order never reached the front of the briefing");
+            }
+            if(head.indexOf("THE SCENE CONTRACT") !== -1){
+              seamBad.push("a seam turn carried the ordinary scene contract as well - two orders in one payload");
+            }
+            /* and it is spent by the next player action, or every turn after it
+               re-orders the same passage */
+            seamServing = null; turnToken++;
+            var msgs2 = contextForThisTurn();
+            if(String((msgs2[0] && msgs2[0].content) || "").indexOf("WRITE THE SEAM") !== -1){
+              seamBad.push("the seam order outlived its own turn");
+            }
+          } finally { seamServing = kServ; turnToken = kTok; chatLog = kLog; }
+        })();
+
+        /* (d) THE CLIENT STILL KEEPS THE BOOKS above the line — the oldest law in
+           the file, and the half of the ruling most easily lost */
+        barBoard(at); V5SCENE = true; runMode = "wild"; seamsDM = true; seamPending = null;
+        beatTurns = beatFloor(beatNow());
+        var canonWas = runCanon.length;
+        boardTurn({gate:true, gateNote:"the stairwell gave it up"});
+        if(!gateNotes["a1-chase"]) seamBad.push("above the line the client stopped booking the close");
+        if(runCanon.length <= canonWas) seamBad.push("above the line the authored canon stopped merging");
+        if(phase !== "aftermath") seamBad.push("above the line the close stopped settling");
+
+        /* (e) the room's authored banter stands down above the line and not below */
+        barBoard(at); runMode = "wild"; phase = "slack"; seamsDM = true;
+        var ttUsed = tableTalkUsed.length;
+        if(dealTableTalk()) seamBad.push("above the line an authored banter card was dealt");
+        if(tableTalkUsed.length !== ttUsed) seamBad.push("a stood-down banter card was consumed anyway");
+        seamSaw.push("the stamp is read once and survives the dial moving, the blob and a"
+          + " missing/non-boolean value; below the line the authored opening and landing play"
+          + " exactly as before; above it the client prints nothing, turns the page first, and"
+          + " asks for the seam with the room, the hour and the beat's anchors in the contract;"
+          + " and the close still books its gateNote and its authored canon either way");
+      } finally { seamsDM = kSeam; seamPending = kPend; barPut(k); }
+    })();
+    T("the seams change hands at the line, and the client keeps the books on both sides of it",
+      seamBad.length === 0, seamBad.length ? seamBad.slice(0, 6).join("; ") : seamSaw.join(" · "),
+      {label:"the ceremony as it shipped - the authored seam printed at every table",
+       was:true,
+       check:function(){
+         var k = {sd:seamsDM, m:runMode, s:runSlug, sp:seamPending};
+         try{
+           runSlug = runSlug || "sweep"; runMode = "wild"; seamsDM = true; seamPending = null;
+           /* the shipped ceremony consulted no stamp: playOpening always returned the
+              authored rail and never asked for anything. If it still does, the seam
+              never changed hands. */
+           var r = playOpening("a1-vic");
+           return !!r && !seamPending;
+         } finally { seamsDM = k.sd; runMode = k.m; runSlug = k.s; seamPending = k.sp; }
+       }});
+
+    /* ---- (6b) THE DOOR NEVER BOOKS THIN (v4.72.2) ----
+       Driven on the three beats the class sweep found closing thin under EVERY play
+       pattern - a2-hand, a2-chassis, a3-stone - plus a1-hum, which is where the
+       Architect met it. Four patterns each: three rail-click shapes and typed play.
+       The claim is one sentence: a beat the player closed with the door is never
+       recorded as a night that went wrong. */
+    var thinBad = [], thinSaw = [], thinRan = 0;
+    (function(){
+      var k = barKeep(), CHATTY = ["My boots have opinions about this weather.",
+        "Sometimes I miss being boring.", "Harrumph. Onward, brave puddle navy.",
+        "I would like it noted that I am damp.", "Right. Anyway."];
+      try{
+        ["a1-hum", "a2-hand", "a2-chassis", "a3-stone"].forEach(function(id){
+          var at = beatById(id), b = SPINE[at];
+          ["s1", "s2", "alt", "typed"].forEach(function(mode){
+            barBoard(at); V5SCENE = true; runMode = "novel";
+            /* a peril owns the rail and would answer the press instead of the door */
+            TEETH_LIVE = false;
+            for(var t = 0; t < beatFloor(b); t++){
+              var row = railFor([]);
+              lastRail = row; turnToken++;
+              if(mode === "typed"){ lastPlayerText = CHATTY[t % CHATTY.length]; pickKind = ""; }
+              else {
+                var slot = (mode === "s1") ? 1 : (mode === "s2") ? 2 : (t % 2) + 1;
+                lastPlayerText = row[slot] || row[1] || CHATTY[0]; pickKind = "stall";
+              }
+              callDM();
+              if(typeof skipReveal === "function") skipReveal();
+            }
+            var row2 = railFor([]);
+            lastRail = row2; lastPlayerText = row2[0]; pickKind = "exit"; turnToken++;
+            callDM();
+            if(typeof skipReveal === "function") skipReveal();
+            thinRan++;
+            var note = gateNotes[id];
+            if(!note){ thinBad.push(id + "/" + mode + ": the door did not close the beat"); return; }
+            if(b.scar && note === b.scar) thinBad.push(id + "/" + mode + ": the door booked the SCAR");
+            if(b.scar && runCanon.indexOf(b.scar) !== -1){
+              thinBad.push(id + "/" + mode + ": the scar reached permanent canon");
+            }
+            if(tolls !== 0) thinBad.push(id + "/" + mode + ": the door charged a toll");
+          });
+        });
+        /* ...and the anchor law is NOT retired: a gate the DM claims without its
+           named parts is still refused, which is the other cell of the matrix */
+        barBoard(beatById("a2-chassis")); V5SCENE = true; runMode = "novel";
+        beatTurns = beatFloor(beatNow()); beatText = "";
+        /* NOT "stall" - the stall guard suppresses the gate one screen ABOVE the
+           anchor check, so a stalled control would report the anchor law dead when
+           it had simply never been reached. A typed line is the shape that gets
+           there. (This control failed exactly that way when it was written.) */
+        pickKind = "";
+        boardTurn({gate:true, gateNote:"the fork settled itself off-screen"});
+        if(gateNotes["a2-chassis"]) thinBad.push("a claimed gate closed a beat its prose never earned");
+        if(!gateRefusedNames.length) thinBad.push("the anchor check no longer refuses a claimed gate");
+        thinSaw.push(thinRan + " door closes across 4 beats x 4 play patterns - none booked a scar,"
+          + " none reached canon, none charged a toll; and a DM-claimed gate with the same empty"
+          + " prose is still refused, so the anchor law kept its job");
+      } finally { barPut(k); }
+    })();
+    T("a beat the player closed with the door is never recorded as a night that went wrong",
+      thinBad.length === 0, thinBad.length ? thinBad.slice(0, 6).join("; ") : thinSaw.join(" · "),
+      {label:"the door branch as it shipped through v4.72.1 - thin whenever an anchor was missing",
+       was:true,
+       check:function(){
+         var k = {bi:beatIdx, txt:beatText, m:runMode, s:runSlug};
+         try{
+           runSlug = runSlug || "sweep"; runMode = "novel";
+           beatIdx = beatById("a2-chassis"); beatText = "";
+           /* the shipped rule was closeBeat(miss.length ? "thin" : false), so a clean
+              close required an empty miss list. On the season's fork, played the way
+              the class sweep played it, it is never empty. */
+           return anchorsMissing(beatNow()).length === 0;
+         } finally {
+           beatIdx = k.bi; beatText = k.txt; runMode = k.m; runSlug = k.s;
+         }
        }});
 
     /* ---- (7) THE STABLE: the request knobs, read off the body that would be sent,

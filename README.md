@@ -32,7 +32,8 @@ sharing one file, and a save from one never opens as the other.
 | Needs an AI? | **No.** No key, no model, no setup, no internet. A novel run makes **zero** network requests from the cold open to the epilogue — even with a working key sitting in Settings. | **Yes.** The run will not start without a connected model, and it says so at the door. |
 | The clock | Real. Each night has a budget; run out and the world takes the night and charges a toll. The pressure strip shows it. | Yours and the DM's. No floor, no forced close, no toll from arithmetic — so the strip is hidden, because a gauge wired to nothing is scenery. |
 | The rail | Dealt from the beat's own deck of authored cards. | The DM's own choices, every turn. |
-| MUDSKIPPER MOMENT | No button — every line you type is the courier doing a thing, and the room answers out of its own writing. | The button is back, and the model is unchained behind it. |
+| Typing | **No bar at all.** The novel is played on the rail: pick a numbered choice, and that is the whole control. | The bar, plus a MUDSKIPPER MOMENT button beside it — the joke, the wild line, the thing that gets you thrown out of better establishments. Free; they never cost a turn. |
+| Who writes the seams | The book. Every night's opening scene and its closing passage are authored and dealt. | Yours below a temperature of 1. **Above 1, the storyteller writes those too** — decided once when you start the run, and fixed for that run's life. |
 | Best for | Your first run, a plane, a laptop with no key, or reading the story as written. | A second run, a stranger night, and finding out what your model does with the keys. |
 
 Whichever you pick, the same things are never negotiable: **the dead stay dead**, the
