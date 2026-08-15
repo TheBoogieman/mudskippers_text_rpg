@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.83.0 "Ask Me Again"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.84.0 "The Clock Holds Its Breath"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7515,7 +7515,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.83.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.84.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25956,6 +25956,62 @@ function selfTest(){
        + " opinion as evidence. What the row does instead is live: it drives all 32"
        + " rooms through the shipped transition and reads the door each time, and it"
        + " reads back a save shaped the old way to confirm the migration."});
+
+    /* ---- (6f7) A PERIL DOES NOT SPEND THE NIGHT'S BUDGET (v4.84.0) ----
+       The Architect said it and I could not confirm it, because ambientDue is consulted
+       on the SUBMIT path - a peril opens a whole turn above the place my harness was
+       driving from, so nothing I called could ever arm one. Driven through the real
+       click it arms, and the clock holds: beatTurns does not move when the peril opens,
+       and does not move for a turn spent inside it.
+       It matters. Peril is the only real danger in the written game, and if the budget
+       ran underneath it the player would be punished twice for the same trouble - once
+       by the thing in the water and once by the world taking the beat while they dealt
+       with it. The row carries its own control: an ORDINARY turn on the same beat must
+       advance the clock, or the row is passing because nothing moves at all. */
+    var pcBad = [], pcSaw = [], pcOrd = null, pcArm = null, pcIn = null;
+    (function(){
+      var kk = barKeep();
+      try{
+        /* the control: a plain turn on this beat spends a turn */
+        barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+        var t0 = beatTurns;
+        var row = railFor([]); lastRail = row; turnToken++;
+        lastPlayerText = row[1] || row[0]; pickKind = "stall";
+        callDM(); if(typeof skipReveal === "function") skipReveal();
+        pcOrd = beatTurns - t0;
+        if(pcOrd <= 0) pcBad.push("an ordinary turn spent nothing - the row cannot tell the difference");
+        /* the peril: arming it, and a turn inside it */
+        barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = true;
+        beatTurns = 1; perilSpent = {}; attemptOn = false;
+        if(!ambientDue()) pcBad.push("the peril would not arm at its own turnMin");
+        var b1 = beatTurns;
+        attemptOpen();
+        pcArm = beatTurns - b1;
+        if(!attemptOn) pcBad.push("attemptOpen did not open the peril");
+        if(pcArm !== 0) pcBad.push("arming the peril spent " + pcArm + " turn(s) of the budget");
+        var st = attemptStageNow(), pick = -1, i;
+        for(i = 0; st && i < (st.rail || []).length; i++){ if(st.rail[i] && !st.rail[i].tempt){ pick = i; break; } }
+        if(pick < 0) pcBad.push("every door out of the peril was the fatal one");
+        else {
+          var b2 = beatTurns;
+          attemptTake(pick);
+          pcIn = beatTurns - b2;
+          if(pcIn !== 0) pcBad.push("a turn inside the peril spent " + pcIn + " turn(s) of the budget");
+        }
+        pcSaw.push("an ordinary turn spends " + pcOrd + " · arming the peril spends " + pcArm
+          + " · a turn inside it spends " + pcIn
+          + " - the budget holds while the threat is live, so the night is not taken from a player who is busy surviving");
+      } finally { barPut(kk); attemptOn = false; perilSpent = {}; }
+    })();
+    T("a peril does not spend the night's budget",
+      pcBad.length === 0, pcBad.length ? pcBad.join("; ") : pcSaw.join(" · "),
+      {exempt:"THE CONTROL IS INSIDE THE ROW, which is what a before would have bought."
+       + " There is no old version where the clock ran under a peril - it has held since"
+       + " the teeth engine shipped - so the only broken form available would be a copy"
+       + " of the turn path with the guard taken out, which proves I can delete a line."
+       + " Instead the row measures an ORDINARY turn on the same beat and requires it to"
+       + " spend one, so a build where nothing advances at all fails here rather than"
+       + " passing quietly."});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
        The claim is not "we reordered the messages". It is that turn N+1's request
