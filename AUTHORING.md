@@ -102,7 +102,7 @@ Search a beat by `id:"a1-vic"`. The authored fields:
 ## The ritual after every edit
 
 1. **Syntax**: the game not booting is the first test. (If you edit outside the browser, any JS checker on the `<script>` body works.)
-2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 67 rows as of v4.72.6.
+2. **The sweep**: open the game with `?selftest` in the URL. **0 FAILED** is the bar. 68 rows as of v4.73.0.
 3. **The fixture**: if the drift row goes red, it names exactly which lines started or stopped firing which predicate (names, deaths, shard moves, tells). If the diff is exactly your edit and reads as intended, update `var VERDICT_FIXTURE` from the live map (`window.__VERDICTS__` after a selftest run) and add a line to the annotated ledger above it saying what moved and why. **Never regenerate to silence a row you have not read** — that is the one move the mechanism exists to prevent.
 4. **Play it**: the **REHEARSAL ROOM** (menu) runs one beat in isolation, over and over — built for exactly this. For full context, a fresh run reaches any Book One beat in minutes.
 

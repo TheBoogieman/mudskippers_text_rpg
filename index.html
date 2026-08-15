@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.72.6 "The Name Nobody Says"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.73.0 "What the Provider Already Read"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7411,7 +7411,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.72.6";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.73.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -7667,6 +7667,27 @@ var HISTORY_KEEP = 8;
 /* 12 messages = the last 6 exchanges. The context block is the memory; the tail
    only keeps the voice steady, and it is the second-largest cost of every turn. */
 var CONTEXT_TAIL = 12;
+/* ==================== THE CACHE WINDOW (v4.73.0) ====================
+   Providers bill a fraction for the longest PREFIX of a request they have already
+   seen, and stop reusing at the first byte that moved. Two things were stopping this
+   game from getting any of that past its rulebook:
+
+   1. THE BRIEFING WAS FIRST. It is rebuilt every turn, so the very first message
+      after the rulebook always differed and nothing behind it could ever be reused.
+   2. THE HISTORY SLID EVERY TURN. `chatLog.slice(-CONTEXT_TAIL)` takes the last
+      twelve messages; a turn adds two; so from about the sixth turn of a run the
+      FRONT of that window moved on every single call. Even with the briefing moved
+      out of the way, a window that slides has no stable prefix to sell.
+
+   Fixing only the first buys about six turns of a run and nothing after - measured
+   before this was written, which is why the ordering change alone was refused.
+
+   So the start of the window is QUANTISED: it only moves in steps of CONTEXT_STEP
+   messages, so between steps the window grows by appending and the prefix holds. The
+   model never sees LESS than it did - the window is at least CONTEXT_TAIL long and up
+   to CONTEXT_STEP-1 longer - it simply stops being re-cut on every breath.
+   The cost of a step is one full-price turn; the win is the STEP-1 turns after it. */
+var CONTEXT_STEP = 8;
 
 var CAST_CAP = 14;      /* notes per character */
 var MET_CAP = 12;       /* met is permanent - full means refuse, never forget */
@@ -15316,7 +15337,25 @@ function buildContext(){
      ordinary scene contract would be two orders in one payload. */
   var deal = seamServing ? seamBrief(seamServing) : sceneContract();
   if(deal) msg += "\n\n" + deal;
-  return [{role:"user", content:msg}].concat(chatLog.slice(-CONTEXT_TAIL));
+  /* THE BRIEFING GOES LAST (v4.73.0), so everything in front of it can be reused.
+     It is still the part that gets read - last is the strongest position in a prompt
+     and the BIBLE's own rule 7 says so - and it is still one message, so every reader
+     of "the briefing" asks briefingOf() rather than counting from the front. */
+  return historyWindow().concat([{role:"user", content:msg}]);
+}
+/* the last CONTEXT_TAIL messages, but with a start that only moves in steps - see
+   THE CACHE WINDOW above. Never returns less than the old slice did. */
+function historyWindow(){
+  var n = chatLog.length;
+  if(n <= CONTEXT_TAIL) return chatLog.slice();
+  var raw = n - CONTEXT_TAIL;
+  var start = Math.floor(raw / CONTEXT_STEP) * CONTEXT_STEP;
+  return chatLog.slice(start);
+}
+/* THE BRIEFING IS A MESSAGE, NOT AN INDEX. It was msgs[0] for four releases and five
+   places counted on that; it is msgs[last] now, and one function knows which. */
+function briefingOf(msgs){
+  return (msgs && msgs.length) ? msgs[msgs.length - 1] : null;
 }
 
 /* ==================== THE STABLE (v4.72.0, brief v6.1) ====================
@@ -15504,8 +15543,28 @@ function askOpenAI(msgs, useAltTokenParam, capTokens){
   var sysMsg = (modelFamily() === "anthropic")
     ? {role:"system", content:[{type:"text", text:BIBLE, cache_control:{type:"ephemeral"}}]}
     : {role:"system", content:BIBLE};
+  /* ==== THE SECOND BREAKPOINT (v4.73.0), and it is the one that does the work ====
+     Marking the BIBLE alone caches the BIBLE alone. Anthropic caches everything up to
+     the LAST breakpoint you place, so a stable history sitting behind an unmarked
+     boundary is re-read at full price no matter how stable it is - which is exactly
+     what the first live A/B showed: reordering the messages moved the cached figure
+     not one token, because the provider had been told where to stop and it stopped
+     there. The window's stable part now carries its own marker.
+     WHERE IT GOES: on the last message of the quantised window, so the cached region
+     is [BIBLE + the window] and only the briefing behind it is ever re-read. The
+     window's start moves once every CONTEXT_STEP messages, so the marker's content
+     is stable for that long too - which is what makes it worth marking at all. */
+  var mm = msgs.slice();
+  if(modelFamily() === "anthropic" && mm.length > 1){
+    var last = mm.length - 2;             /* the briefing is last; mark the one before */
+    var lm = mm[last];
+    if(lm && typeof lm.content === "string"){
+      mm[last] = {role:lm.role,
+                  content:[{type:"text", text:lm.content, cache_control:{type:"ephemeral"}}]};
+    }
+  }
   var body = {model:settings.model,
-    messages:[sysMsg].concat(msgs)};
+    messages:[sysMsg].concat(mm)};
   /* REASONING OFF, ASKED FOR IN BOTH DIALECTS (v6.1 §2.3). A table DM is not an
      analyst: deliberation is latency, spend, and - when it leaks - a broken turn.
      This is the braces; stripReasoning at the transport's mouth is the belt, and
@@ -16603,11 +16662,14 @@ function callDM(corrected, tag){
   if(corrected){
     if(turnNotes.indexOf(corrected) === -1) turnNotes.push(corrected);
     msgs = msgs.slice();
-    msgs[0] = {role:"user", content: msgs[0].content + "\n\n" + turnNotes.join("\n\n")};
+    /* onto the BRIEFING, which is the last message now (v4.73.0) - appending to
+       msgs[0] would have pasted the corrections onto the oldest line of history */
+    var bi = msgs.length - 1;
+    msgs[bi] = {role:"user", content: msgs[bi].content + "\n\n" + turnNotes.join("\n\n")};
   }
   /* the byte-real payload, for the archive's SENT tab - session-only */
-  /* the briefing is msgs[0]; the history rides behind it and counts against the
-     same window, so the trapdoor needs the whole wire, not just the front of it */
+  /* the briefing is the LAST message (v4.73.0); the history rides in front of it and
+     counts against the same window, so the trapdoor needs the whole wire */
   /* THE BIBLE COUNTS. wire summed the messages array only - and the 41.5k-char
      system prompt is attached later, inside askOpenAI/askAnthropic, so it was
      never in the number. The panel showed a comfortable figure while the model's
@@ -16616,7 +16678,8 @@ function callDM(corrected, tag){
      on its advice was still silently losing the front of every prompt. */
   var wire = BIBLE.length;
   for(var wi = 0; wi < msgs.length; wi++) wire += String(msgs[wi].content || "").length;
-  lastSent = {text: msgs[0].content, chars: msgs[0].content.length, trim: trimFlagsText(),
+  var brief = briefingOf(msgs) || {content:""};
+  lastSent = {text: brief.content, chars: brief.content.length, trim: trimFlagsText(),
               msgs: msgs.length, wire: wire, bible: BIBLE.length};
   askAI(msgs).then(function(raw){
     /* the run moved out from under this call - a rehearsal was left, another save
@@ -18531,7 +18594,7 @@ function dbgReport(){
   s = S("THE LAST EXCHANGE");
   if(lastSent){
     var wire = lastSent.wire || lastSent.chars, tok = Math.round(wire / 3.7);
-    R(s, "briefing", lastSent.chars + " chars (msgs[0] — the block below)");
+    R(s, "briefing", lastSent.chars + " chars (the LAST message — the block below)");
     /* the number that actually decides whether a local model saw the rules: over
        its window and the front of the prompt is thrown away in silence */
     R(s, "whole wire", (lastSent.msgs || 1) + " messages · " + wire + " chars ≈ " + tok
@@ -23038,7 +23101,7 @@ function selfTest(){
     /* ...and the seams (v4.72.2) */
     "renderCanonList", "enterArchive", "maybeRehydrate",
     "seamsWild", "seamStamp", "seamBrief", "seamAsk", "seamFire", "playLanding",
-    "buildContext", "contextForThisTurn",
+    "buildContext", "contextForThisTurn", "historyWindow", "briefingOf", "memoryBriefing",
     "playOpening", "playAuthored", "dealTableTalk", "playPremiere", "dealTease",
     "modelFamily", "jsonModeOK", "replyCap", "replyTemp", "stripReasoning", "contentOf",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
@@ -24430,7 +24493,7 @@ function selfTest(){
     function wildReply(o){
       return function(msgs){
         wldWire++;
-        wldSent = String((msgs && msgs[0] && msgs[0].content) || "");
+        wldSent = String((briefingOf(msgs) || {}).content || "");
         var raw = JSON.stringify(o);
         return {then:function(f){ f(raw); return {catch:function(){}}; }};
       };
@@ -24843,9 +24906,9 @@ function selfTest(){
             chatLog = [{role:"user", content:"(the sweep's stub run)"}];
             seamServing = seamPending; turnToken++;
             var msgs = contextForThisTurn();
-            var head = String((msgs[0] && msgs[0].content) || "");
+            var head = String((briefingOf(msgs) || {}).content || "");
             if(head.indexOf("WRITE THE SEAM") === -1){
-              seamBad.push("the seam order never reached the front of the briefing");
+              seamBad.push("the seam order never reached the briefing");
             }
             if(head.indexOf("THE SCENE CONTRACT") !== -1){
               seamBad.push("a seam turn carried the ordinary scene contract as well - two orders in one payload");
@@ -24854,7 +24917,7 @@ function selfTest(){
                re-orders the same passage */
             seamServing = null; turnToken++;
             var msgs2 = contextForThisTurn();
-            if(String((msgs2[0] && msgs2[0].content) || "").indexOf("WRITE THE SEAM") !== -1){
+            if(String((briefingOf(msgs2) || {}).content || "").indexOf("WRITE THE SEAM") !== -1){
               seamBad.push("the seam order outlived its own turn");
             }
           } finally { seamServing = kServ; turnToken = kTok; chatLog = kLog; }
@@ -25033,6 +25096,93 @@ function selfTest(){
          } finally {
            beatIdx = k.bi; beatText = k.txt; runMode = k.m; runSlug = k.s;
          }
+       }});
+
+    /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
+       The claim is not "we reordered the messages". It is that turn N+1's request
+       BEGINS with turn N's request, byte for byte, for CONTEXT_STEP-1 turns out of
+       every CONTEXT_STEP - because that shared beginning is the only thing a provider
+       will bill at a discount. So the row composes a run of turns the way play does,
+       and measures the actual shared prefix between consecutive requests.
+       It also holds the two things the reorder could quietly have broken: that the
+       model still sees the most recent exchanges (a cache is worthless if it costs
+       the story its memory), and that the briefing is still on the wire. */
+    var cwBad = [], cwSaw = [], cwHeld = 0, cwBroke = 0;
+    (function(){
+      var k = barKeep(), kLog = chatLog, kTok = turnToken, kServ = seamServing;
+      try{
+        barBoard(beatById("a1-chase")); V5SCENE = true; runMode = "wild"; seamsDM = false;
+        seamServing = null;
+        chatLog = [{role:"user", content:"(the run opens)"}];
+        var prev = null, prevRecent = null, turns = 20;
+        for(var t = 0; t < turns; t++){
+          /* what a turn adds to the log, in the order play adds it */
+          chatLog.push({role:"user", content:"The courier chooses: line " + t + "."});
+          chatLog.push({role:"assistant", content:JSON.stringify({scene:[{speaker:"Narration", text:"Turn " + t + "."}]})});
+          lastPlayerText = "line " + t; turnToken++;
+          var msgs = contextForThisTurn();
+          var brief = briefingOf(msgs);
+          if(!brief || String(brief.content).indexOf("THE CONTEXT BLOCK") === -1){
+            cwBad.push("turn " + t + ": the briefing is not the last message");
+          }
+          /* the model must still be able to see what just happened */
+          var tail = msgs.slice(0, -1).map(function(m){ return String(m.content); }).join("\n");
+          if(tail.indexOf("Turn " + t + ".") === -1){
+            cwBad.push("turn " + t + ": the newest exchange is not in what the model sees");
+          }
+          if(msgs.length - 1 < CONTEXT_TAIL && chatLog.length > CONTEXT_TAIL){
+            cwBad.push("turn " + t + ": the window shrank below CONTEXT_TAIL");
+          }
+          /* THE MEASURE: how much of this request is byte-identical to the last one,
+             counted in whole leading messages, which is the unit a provider reuses. */
+          var cur = msgs.map(function(m){ return m.role + " " + m.content; });
+          if(prev){
+            var shared = 0;
+            while(shared < cur.length && shared < prev.length && cur[shared] === prev[shared]) shared++;
+            if(shared > 0) cwHeld++; else cwBroke++;
+          }
+          prev = cur;
+        }
+        /* over 20 turns with a step of 8, the prefix may break only where the window
+           re-cuts - a couple of times - and must hold on every other turn */
+        var allowed = Math.ceil(turns / CONTEXT_STEP) + 1;
+        if(cwBroke > allowed){
+          cwBad.push("the prefix broke on " + cwBroke + " of " + (turns - 1)
+            + " turns - more than the " + allowed + " re-cuts a step of " + CONTEXT_STEP + " allows");
+        }
+        cwSaw.push(turns + " composed turns: the request shared a leading run of messages with the"
+          + " one before it on " + cwHeld + " of " + (turns - 1) + " turns and broke on " + cwBroke
+          + " (the window re-cuts every " + CONTEXT_STEP + " messages); the briefing is last on"
+          + " every one of them, and the newest exchange is always still in front of the model");
+      } finally { chatLog = kLog; turnToken = kTok; seamServing = kServ; barPut(k); }
+    })();
+    T("each turn's request begins with the one before it, so a provider can reuse it",
+      cwBad.length === 0, cwBad.length ? cwBad.slice(0, 6).join("; ") : cwSaw.join(" · "),
+      {label:"the composition as it shipped - briefing first, and a window re-cut every turn",
+       was:true,
+       check:function(){
+         /* THE SHIPPED BEHAVIOUR, DRIVEN THROUGH THE REAL FUNCTION rather than
+            restated beside it. A step of 1 IS the old slide - floor(raw/1)*1 is raw,
+            which is exactly chatLog.slice(-CONTEXT_TAIL) - so historyWindow with the
+            step wound back to 1 reproduces what every release up to v4.72.6 sent.
+            Put the briefing back at the front of it and two consecutive turns share
+            nothing at all, because message 0 is rebuilt every time. */
+         var kStep = CONTEXT_STEP, kLog = chatLog;
+         try{
+           CONTEXT_STEP = 1;
+           chatLog = [];
+           for(var i = 0; i < 30; i++) chatLog.push({role:"user", content:"m" + i});
+           var w1 = historyWindow();
+           chatLog.push({role:"user", content:"m30"});
+           chatLog.push({role:"assistant", content:"r30"});
+           var w2 = historyWindow();
+           var a = [{content:"briefing turn 1"}].concat(w1);
+           var b = [{content:"briefing turn 2"}].concat(w2);
+           var shared = 0;
+           while(shared < a.length && shared < b.length
+                 && a[shared].content === b[shared].content) shared++;
+           return shared > 0;    /* false: nothing shared, so nothing can be reused */
+         } finally { CONTEXT_STEP = kStep; chatLog = kLog; }
        }});
 
     /* ---- (6f) NO ROW OFFERS THE SAME LINE TWICE (v4.72.6) ----
