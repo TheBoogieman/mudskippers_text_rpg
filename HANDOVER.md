@@ -3,7 +3,7 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v4.90.0.**
+**Last updated: v4.91.0.**
 
 ---
 
@@ -40,26 +40,37 @@ loop up from this file alone.*
 | `a1-exit` | 10 | The porch. Lights on the far bank, the lay-by, the third Vic death plant |
 | `a1-carried` | 11 | The back room after the sweep. The pipe, the second lamp, the bag by the door |
 | `a1-turn` | 11 | The kitchen after. Kept vs chosen, the cover story, the pan moved up the table |
+| `a1-hum` | 9 | Under the overpass. Drown last, the reserve bun, the second and a half |
 
-## CORRECTION: Book One is NOT finished
+## Book One: TWO ROOMS LEFT
 
-This file said `a1-turn` was "the last room in Book One". **That was wrong**, and it was
-wrong because nobody had counted. Driven at v4.90.0, the three remaining Book One rooms
-are:
+This file once said `a1-turn` was "the last room in Book One". That was wrong, and it was
+wrong because nobody had counted. The count now, driven at v4.91.0:
 
 | room | cards | ids | second takes | wired |
 |---|---|---|---|---|
-| `a1-hum` | 9 | all 9 | **1 of 9** | yes (6 rows) |
 | `a1-chase` | 8 | none | none | no |
 | `a1-vic` | 8 | none | none | no |
 
-`a1-hum` is the cheapest of the three and the odd one out: it was the pilot, so it was
-given ids and wiring first and only ever got one second take. It needs **eight second
-takes and nothing else** — no new subjects to rule, no wiring to do. That makes it the
-right next room, and it is a smaller job than any room since `a1-pack`.
+Both are full rooms from scratch: subjects to rule, ids, second takes, both landings.
+**Bring a pick-list before writing either.** Their staged subjects, as they stand:
 
-`a1-chase` and `a1-vic` are full rooms from scratch: subjects to rule, ids, second takes,
-both landings. Ask for subjects as a pick-list before writing either.
+- **`a1-chase`** — the causeway out to the marsh, black water either side, one light
+  ahead that has not moved. Present: Pia, Nine. Staged: what Vic is like / what she
+  thinks he will do when the door opens / whether Pia is scared / what Nine makes of the
+  marsh / what the courier does now, as a person / whether anyone dies of this / the
+  buns, the coat, the boots / what Nine would like to be called.
+- **`a1-vic`** — the safehouse kitchen at three in the morning, shutters down, kettle on.
+  Present: Pia, Nine, **Vic** — the only Book One room he is actually in. Staged: how Vic
+  and the courier go back / how Vic and Pia go back / what Vic did before all this / what
+  Nine is going to do now / whether Vic is sorry / what the family eats at three in the
+  morning / whether Pia is staying / what happens if they are found here.
+
+**A ruling already on record (2026-08-15):** the name conversation happens TWICE, on
+purpose. `a1-chase`'s causeway version is the first — a stranger rings her name like a
+bell. `a1-turn`'s kitchen version has been rewritten to read as the return. When
+`a1-chase` is written, keep the causeway card as the first time and do not let its second
+take reach for material the kitchen already has.
 
 The check that would have caught this, and which should be run at the start of every
 wave from now on — it is three lines in the console on `?selftest`:
@@ -75,9 +86,9 @@ reads `[name, n, n, n]` with n at least 7. Anything else is unfinished, however 
 sweep is — **the sweep does not check for a room being thin**, and that is exactly how a
 whole book came to be called done.
 
-## The four traps that catch me EVERY room
+## The five traps that catch me EVERY room
 
-Written into the fixture ledger as well. All four are invisible when reading; only the
+Written into the fixture ledger as well. All five are invisible when reading; only the
 sweep finds them:
 
 1. **Counting prose.** A bare number in dialogue reads as a character name — Three, Five,
@@ -95,6 +106,17 @@ sweep finds them:
    book reserves that register for the dead — **gone still, stopped moving, went quiet
    and stayed quiet** — and a living character borrowing it reads as a death every time.
    Give them something to do instead ("became extremely interested in the far wall").
+5. **Something that is not her, pocketed.** `shard:stow` fired on *"you put it back like
+   it might have been the pocket's fault"*, written of the WIRE. Anything **put away,
+   tucked, slipped back, stowed** reads as HER being stowed, because she is the thing
+   this book puts in pockets. Name the object in the same clause, or give it another
+   verb — the wire gets looked at, it does not get put back.
+
+**And the lesson that came with the fifth:** trap 1 caught me again in `a1-hum`, in prose
+written the same hour as a ledger paragraph about trap 1. The list only protects prose it
+was read against. **Re-read it immediately before writing, every time** — especially for
+second takes on cards whose first take was written months earlier, which is exactly where
+attention lapses.
 
 Also: **do not name a character before the player has met them.** Pia said "Hesta's lot"
 in Book One and the desk correctly called it summoning an off-stage person.
@@ -106,9 +128,10 @@ in Book One and the desk correctly called it summoning an off-stage person.
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
 - Expect **zero to two** fixture drifts per room. `a1-turn` came back with one, honest,
-  and no false positive at all — the first clean room in five, because the four traps
-  below were read BEFORE the prose was written rather than after. Any predicate drifting
-  is a false positive in the new prose until proven otherwise — read the line, do not
+  and no false positive at all — the first clean room in five, because the trap list was
+  read BEFORE the prose was written rather than after. `a1-hum`, written the same day,
+  came back with two false positives, because it was not. Any predicate drifting is a
+  false positive in the new prose until proven otherwise — read the line, do not
   regenerate.
 - Take the fixture **by delta**, and write a ledger paragraph above `VERDICT_FIXTURE`.
 - Release ritual: banner, `VERSION_TAG`, `sw.js` CACHE slug, encoding check, id/div check,
@@ -128,8 +151,8 @@ in Book One and the desk correctly called it summoning an off-stage person.
 
 ## Still open beyond the rooms
 
-- **Three Book One rooms** — `a1-hum` (eight second takes, nothing else), then `a1-chase`
-  and `a1-vic` from scratch. Then Books Two and Three (24 rooms).
+- **Two Book One rooms** — `a1-chase` and `a1-vic`, both from scratch. Then Books Two and
+  Three (24 rooms).
 - **32 transition scenes** for `TAKE THE NIGHT ON` — short, 3-4 lines, the family pushes
   and the courier stands up. Not started.
 - **~240 staged choices still unwired** outside the finished rooms. 43 rows wired so far,
