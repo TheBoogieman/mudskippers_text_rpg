@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.80.0 "Reaching for the Road"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.81.0 "The Instrument Was Wrong"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -7504,7 +7504,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.80.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.81.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -19409,26 +19409,18 @@ function isFallen(nm){
   var up = String(nm).toUpperCase();
   return roster.fallen.some(function(f){ return String(f).toUpperCase() === up; });
 }
-/* THE DOTS COUNT THE THING THAT ACTUALLY BITES. They were drawn against `budget`, and
-   in a written night budget is a number nothing reads: no pressure fires at it, nothing
-   forces at it - measured by driving a beat five turns past its budget with forcingNow
-   never once going true. So the pips filled, then turned RED, on a beat behaving exactly
-   as designed, and the board was promising a deadline the novel does not keep.
-   What bites in a written night is the FLOOR: the turns before the door stops being
-   held. That is what the row draws now, and it stops when it is full, because after the
-   floor there is nothing left to count. The wild table keeps the budget - there the
-   number is real, and going over it is what forcing means. */
+/* THE DOTS COUNT THE BUDGET, AND THE BUDGET IS REAL. v4.80.0 re-pointed these at the
+   floor on the finding that "nothing fires at the budget in a written night" - and that
+   finding was an instrument error: forcingNow is cleared at the end of boardTurn, and it
+   was being read after the turn, where it is always false. Driven properly, a written
+   night that never takes the door is forced closed one turn past its budget, books the
+   scar, and pays a toll. The pips were right the whole time: they fill, they go red past
+   the budget, and one turn after that the world takes the beat. Restored. */
 function turnDots(b){
-  var dots = "", i;
-  if(wildRun()){
-    var shown = Math.max(b.budget, beatTurns + 1);
-    for(i = 0; i < shown; i++){
-      dots += '<i class="' + (i < beatTurns ? (i >= b.budget ? "over" : "spent") : "") + '"></i>';
-    }
-    return dots;
+  var dots = "", shown = Math.max(b.budget, beatTurns + 1), i;
+  for(i = 0; i < shown; i++){
+    dots += '<i class="' + (i < beatTurns ? (i >= b.budget ? "over" : "spent") : "") + '"></i>';
   }
-  var floor = beatFloor(b);
-  for(i = 0; i < floor; i++) dots += '<i class="' + (i < beatTurns ? "spent" : "") + '"></i>';
   return dots;
 }
 
@@ -25833,6 +25825,68 @@ function selfTest(){
            }
          } finally { barPut(kk); railKnock = {}; knockPending = false; }
          return at === 1;               /* the row's claim, asked of the wire-only knock */
+       }});
+
+    /* ---- (6f5) THE WRITTEN NIGHT HAS A REAL DEADLINE (v4.81.0) ----
+       This row exists because I reported the opposite to the Architect. I drove a beat
+       past its budget, sampled forcingNow AFTER callDM returned, saw false every time,
+       and concluded that budget and pressure were inert in a novel run - that the yellow
+       ladder threatened something that never came, that red was unreachable, and that
+       the 296 blocks of hard-landing prose were dead. All four were wrong, and a change
+       shipped on top of them that hid the deadline from the pips.
+       forcingNow is CLEARED at the end of boardTurn. Sampling it after the turn is
+       sampling a variable the turn has already tidied away.
+       So the row watches the close itself instead of the flag: it plays a beat, never
+       takes the door, and asserts the whole ladder in order - the two yellows at budget
+       and budget+1, then a forced close that books the scar, pays a toll, and lands on
+       the beat's HARD landing. The broken form is my own instrument. */
+    var pwBad = [], pwSaw = [], pwAsides = [], pwHard = null, pwToll = 0, pwAt = -1;
+    (function(){
+      var kk = barKeep(), rq = window.queueAside, rt = window.payToll;
+      try{
+        window.queueAside = function(kind, text){ pwAsides.push(kind + "|" + String(text).slice(0, 40)); };
+        window.payToll = function(){ pwToll++; return rt.apply(this, arguments); };
+        barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+        var b = beatNow();
+        for(var t = 0; t < 10; t++){
+          var row = railFor([]); lastRail = row; turnToken++;
+          lastPlayerText = row[1] || row[0] || "Say nothing."; pickKind = "stall";
+          callDM();
+          if(typeof skipReveal === "function") skipReveal();
+          if(phase !== "live"){ pwAt = t + 1; pwHard = lastCloseHard; break; }
+        }
+        var yellows = pwAsides.filter(function(a){ return a.indexOf("yellow|") === 0; });
+        if(pwAt < 0) pwBad.push("the beat never closed at all - nothing took it");
+        if(pwHard !== true) pwBad.push("the world's own close did not book hard (lastCloseHard=" + pwHard + ")");
+        if(pwToll < 1) pwBad.push("a forced close paid no toll");
+        if(yellows.length < 2) pwBad.push("the ladder gave " + yellows.length + " warning(s) before it took the beat, not 2");
+        pwSaw.push("budget " + b.budget + ": two yellows, then the world takes the beat on turn " + pwAt
+          + " - hard close, scar, toll " + pwToll + " of " + TOLL_MAX
+          + " · every warning the bar prints is one the written game keeps");
+      } finally { window.queueAside = rq; window.payToll = rt; barPut(kk); }
+    })();
+    T("a written night that never takes the door is taken by the world",
+      pwBad.length === 0, pwBad.length ? pwBad.join("; ") : pwSaw.join(" · "),
+      {label:"my own reading - forcingNow sampled after the turn, where boardTurn has already cleared it",
+       was:true,
+       check:function(){
+         /* the instrument that produced the wrong report, run again. It walks the same
+            beat past the same budget and asks the same question the same wrong way. If
+            it ever sees the flag up, the mistake was something else and this row is
+            guarding a story rather than a defect. */
+         var kk = barKeep(), sawForcing = false;
+         try{
+           barBoard(beatById("a1-hum")); V5SCENE = true; runMode = "novel"; TEETH_LIVE = false;
+           for(var t = 0; t < 10; t++){
+             var row = railFor([]); lastRail = row; turnToken++;
+             lastPlayerText = row[1] || row[0] || "Say nothing."; pickKind = "stall";
+             callDM();
+             if(typeof skipReveal === "function") skipReveal();
+             if(forcingNow) sawForcing = true;      /* ...after the turn. Always false. */
+             if(phase !== "live") break;
+           }
+         } finally { barPut(kk); }
+         return sawForcing;    /* the row's claim, asked through the broken instrument */
        }});
 
     /* ---- (6g) THE CACHE WINDOW: A PREFIX THAT ACTUALLY HOLDS (v4.73.0) ----
