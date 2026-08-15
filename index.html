@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v4.76.0 "Which Side of the Fork"
+   MUDSKIPPERS — THE COURIER'S RUN · v4.77.0 "Say Anything, Say the Shopping List"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -2608,7 +2608,7 @@ var SPINE = [
               "The fifth plate is cleared with the rest, washed with the rest, put away with the rest. Depending on who you ask that is either the kindest thing that happened tonight or the worst, and nobody asks her.",
               ["Nine","It's fine. I'm - it's fine. I know what I am in a room."],
               "That is a sentence somebody taught her. You are the only one who hears it, and you do not pass it on, because there is nobody in the kitchen it would improve."],
-       rail:["Say it now. Late is still a time.",
+       rail:["Ask her how it feels, being the only one nobody asked.",
              "Ask her who taught her that sentence.",
              "Let it go tonight. Pick it up in the morning, if morning bothers."]},
       {day:"3", time:"10:20pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
@@ -2717,7 +2717,7 @@ var SPINE = [
               "Nobody watched it. That is the part that will sit badly later: the kind option died alone.",
               ["Pia","We didn't even get to see it not work."],
               "The water is over your boots and nobody has suggested going back up."],
-       rail:["Say out loud that it went.",
+       rail:["Hand in against her: ask if she is alright down here, in the dark and the water.",
              "Ask Hesta what was on the rest of the list.",
              "Ask why nobody has suggested going back up."]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren","Hesta"],
@@ -3098,7 +3098,7 @@ var SPINE = [
               "Three pulls something out of it anyway that is not a scan and not a log. It is a document, and it was written to be read."],
        rail:["Read it.",
              "Ask where Vic went.",
-             "Ask Three for the version where I was sitting down."]}],
+             "Ask what this actually means for me now."]}],
  budget:4, reveals:["housing"],
  press:["Vic pushes for the seating harder than a man pretending to improvise should - like someone who knows what else is stored in there.",
         "The housed mind can suddenly do something it should not be able to do, and it explains itself.",
@@ -3608,15 +3608,29 @@ var SPINE = [
  walks:["Leave him in the yard with it unsaid, and go.",
         "Walk out on Vic. Let the rain have the rest of that conversation.",
         "Refuse the answer. Some debts are better left owed."],
- opens:[{day:"32", time:"9:30pm", place:"THE CANNERY YARD", amb:"storm",
+ opens:[{day:"32", time:"9:30pm", place:"THE CANNERY YARD", amb:"storm", speakers:true,
        now:"Night in the cannery yard. Vic has walked out to it on purpose and is waiting to be followed.",
-       lines:["He goes out to the yard — the only place on this street with no roof and nobody else in it — and does not shut the door behind him.",
+       lines:["Before any of it there is a small thing on the bench under a cloth, and he has been not-mentioning it since breakfast.",
+              ["Vic","It's a speaker and a mount and about forty quid of parts I didn't steal. I'd like that bit said out loud. I didn't steal them."],
+              ["Vic","And I'm asking. I want that said out loud too, in front of everybody, because I have not always. I'm asking. You can say no and it goes back under the cloth and we never discuss it again."],
+              {holder:"Seven", relay:true, text:"You carry the question the way you have carried everything this season, and for the first time you are relaying somebody's answer to a thing they were actually asked. Nine says yes. Nine says yes before you have finished asking."},
+              {holder:"Nine", relay:true, text:"You carry the question the way you have carried everything this season, and for the first time you are relaying somebody's answer to a thing they were actually asked. Seven says yes. Seven says yes before you have finished asking."},
+              "It takes him nineteen minutes and he talks through none of them, which is how you know he is concentrating, and how you know about his hands.",
+              "Then he sits back and wipes the driver on his knee and nods at the room rather than at the person, because he is not certain where to look.",
+              {holder:"Seven", who:"Nine", text:"...Is that it? Is that me? Somebody say something back, I want to know whether it worked, I want to know if it - oh. Oh, you have all turned round."},
+              {holder:"Nine", who:"Seven", text:"...Is that it? Am I in the room? Somebody answer me, I would like to know whether it worked before I say anything I cannot take back. - Ah. You have all turned round. That answers that."},
+              "Nobody says anything clever. Pia gets there first and what she gets out is not a sentence.",
+              ["Pia","Again. Say anything. Say the shopping list, I don't care, just - again."],
+              {holder:"Seven", who:"Nine", text:"The shopping list. Right. We are out of tea. I have known this house was out of tea for a month and had no way of raising it, and I would like the record to show I raised it the moment I could."},
+              {holder:"Nine", who:"Seven", text:"The shopping list. We are out of tea. I have known that for a month with no way of mentioning it, and I would like the record to show that I mentioned it the moment I could."},
+              "And the kitchen laughs, properly, all of it at once — the loudest this house has been since the marsh. Vic laughs too. Vic stops laughing a little before everybody else does.",
+              "He goes out to the yard — the only place on this street with no roof and nobody else in it — and does not shut the door behind him.",
               "It is the most obvious invitation anybody has ever issued and he would deny that under oath.",
               ["Vic","Don't bring anyone. This one's yours to hear first."],
               "Somewhere inside, the family has gone extremely quiet in the manner of people pretending to do washing up.",
               ["Pia","We can hear you both, by the way. The yard echoes. Just so nobody's surprised later."]],
        rail:["Ask him whether he wants an audience.",
-             "Shut the door behind me."]}],
+             "Ask whether he is sorry, or whether he only regrets being caught."]}],
  lands:[{day:"32", time:"11:40pm", place:"THE CANNERY YARD", amb:"storm",
        now:"Late night in the cannery yard. Vic has confessed what he did and paid for it.",
        lines:["He answers it. All of it, without dressing any of it, and then there is nothing left of the question.",
@@ -7463,7 +7477,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v4.76.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v4.77.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -13054,6 +13068,11 @@ function playAuthored(V, salt){
     $("hud-loc").textContent = now;
   }
   if(V.amb) setAmbience(V.amb);
+  /* THE RIG IS A FIELD, THE SAME WAY THE SHARD IS. The night the housed one gets
+     speakers is an authored passage, and the passage says so rather than the engine
+     inferring it from a beat id - so a rewrite that moves the scene moves the fact
+     with it. One direction only: nothing in the book takes speakers away again. */
+  if(V.speakers === true) speakerRig = true;
   /* the NOW line has to move with them or the next turn opens in the old room
      with a new name on the strip */
   if(V.now) nowText = V.now;
@@ -23074,13 +23093,27 @@ function verdictMap(){
    a3-voice/lands0/l3 and a3-voice/landsHard0/l3. NOTHING WAS LOST, which is the check
    that matters: making 19 hidden lines visible did not change the verdict on a single
    line that was already being read. Corpus 3,790 -> 3,811. Fires 415 -> 424. */
+/* v4.77.0, THE RIG AND FOUR RAILS: TWO ENTRIES GAINED, ONE LOST, and all three are the
+   edit. a3-vic's opening now carries the speaker rig - Vic's last build, fitted WITH
+   consent, about an hour before he confesses - so named:Nine gains a3-vic/opens0/l3 and
+   named:Seven gains l4. Those are the two sides of ONE forked line: whichever mind
+   missed the chassis is the one saying yes, so exactly one plays in any run, and the map
+   holds both because the corpus reads both forks now (see the note above).
+   named:Three LOST a2-housing/landsHard0/r2, and losing it was the point. The rail read
+   "Ask Three for the version where I was sitting down" - every word of which the passage
+   above it had already played, and it dealt the card about what the housing means for
+   him regardless. It now says that instead: "Ask what this actually means for me now".
+   Three leaves the entry because Three left the sentence.
+   THE OTHER THREE REWORDED RAILS MOVED NOTHING, which is worth writing down: a rail is
+   prose the player clicks, and rewording one only reaches this map when it starts or
+   stops naming somebody. Corpus 3,811 -> 3,825. Fires 424 -> 425. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/landsHard0/l3","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/landsHard0/r2","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/t2p1","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt2r","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/never2","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/landsHard0/l3","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/canon0","a2-annul/goal","a2-chassis/canonAlt1","a2-chassis/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
@@ -23191,7 +23224,7 @@ function stRunPhysics(scene, canonArr, choicesArr, relay){
   return physicsBreaks(data);
 }
 function selfTest(){
-  var rows = [], pass = 0, fail = 0, amber = 0;
+  var rows = [], pass = 0, fail = 0, amber = 0, exempt = 0;
   /* A CASE THAT CANNOT FAIL IS NOT A CASE. Every case here proves the code is
      currently right; none proved it would have CAUGHT the thing it was written
      for - which is how two green lights shipped over three of the worst defects
@@ -23306,6 +23339,22 @@ function selfTest(){
         note("the broken form fails as required, but the check entered no game code"
            + " - a restatement, not a proof");
       }
+    } else if(broken && broken.exempt){
+      /* A DECLARED EXEMPTION, WITH ITS REASON ON THE PAGE. Some properties genuinely
+         have no "before": nothing was ever broken in that specific way, so there is no
+         old code to run and demand a failure from. Those rows were sitting in amber
+         next to rows that are simply undone, and one number could not tell a debt from
+         a settled account.
+         The reason is the whole mechanism, so it has to cost something to write: a
+         stub short enough to be lazy is refused and the row falls back to amber. This
+         is the one place a future me could quietly hide a weak check, and the length
+         floor plus printing the reason on screen is what stops it. */
+      if(String(broken.exempt).length >= 60){
+        row.exempt = String(broken.exempt);
+      } else {
+        row.amber = true;
+        note("an exemption was claimed with no reason worth the name - counted as debt");
+      }
     } else {
       row.amber = true;
       if(broken) note("broken form declared but it carries no check");
@@ -23319,6 +23368,7 @@ function selfTest(){
        that had not run. Amber is a shade of green; it is not a shade of red. */
     if(!row.ok) fail++;
     else if(row.amber) amber++;
+    else if(row.exempt) exempt++;
     else pass++;
   }
   /* the world is put back exactly as it was, whatever happens in here - and the
@@ -23403,7 +23453,13 @@ function selfTest(){
     var uncovered = PHYSICS.map(function(r){ return r.id; }).filter(function(id){ return !caught[id]; });
     T("negative coverage is declared, not assumed", true,
       (PHYSICS.length - uncovered.length) + "/" + PHYSICS.length + " laws have a case that proves them"
-      + (uncovered.length ? " \u00b7 NO CASE: " + uncovered.join(", ") : ""));
+      + (uncovered.length ? " \u00b7 NO CASE: " + uncovered.join(", ") : ""),
+      {exempt:"This row is the coverage LEDGER, not a test: its whole job is to print which"
+       + " laws nobody has written a case for, so it is green by construction and must stay"
+       + " that way. A broken form would have to be a version of the ledger that lied about"
+       + " its own gaps, which is not a defect this codebase ever shipped - the gaps have"
+       + " always been printed. What guards it is the number beside it, which only ever"
+       + " moves when somebody adds a law or a case."});
 
     /* the counting guard, against the prose that broke it */
     var cg = [
@@ -23645,7 +23701,12 @@ function selfTest(){
       !!(SCENEBOOK["a1-hum"] && SCENEBOOK["a1-hum"].before
          && /answers instead/i.test(SCENEBOOK["a1-hum"].before)
          && /stays unsaid|guess/i.test(SCENEBOOK["a1-hum"].before)),
-      "the golden card the generated relay is written to match");
+      "the golden card the generated relay is written to match",
+      {exempt:"A guard against DELETION has no before: the thing it prevents is a future"
+       + " edit that quietly removes the hand-written passage the generated relay is"
+       + " measured against, and that edit has not happened, so there is no old state to"
+       + " run. Writing one would mean deleting a1-hum's contract to watch the row go red,"
+       + " which proves the regex works rather than that the guard ever caught anything."});
 
     /* A RAIL CLICK IS NEVER A BREACH. The dry path exists to catch what a PLAYER
        types; a line the board itself put on a button is the board's own writing,
@@ -26472,14 +26533,30 @@ function selfTest(){
       });
     });
     var cpDead = COUNT_PHRASES.filter(function(p){ return !cpLive[p]; });
-    T("the count-phrase allowlist earns its entries", true,
+    /* ...and it ASSERTS it now. This row was hardcoded green and merely printed the
+       dead entries beside itself, so an allowlist could rot to nothing and the page
+       would still have said PASS. An entry that fires nowhere in the corpus is a
+       licence granted to no one, and every one of them widens what the counting guard
+       will forgive. */
+    T("the count-phrase allowlist earns its entries", cpDead.length === 0,
       (COUNT_PHRASES.length - cpDead.length) + "/" + COUNT_PHRASES.length
       + " fire somewhere in the authored corpus"
-      + (cpDead.length ? " \u00b7 NEVER FIRES: " + cpDead.join(", ") : ""));
+      + (cpDead.length ? " \u00b7 NEVER FIRES: " + cpDead.join(", ") : ""),
+      {exempt:"The allowlist is data, and its before is an empty list - an absence rather"
+       + " than a defect, so there is no old version to run and demand a failure from."
+       + " What makes the row bite is that it now FAILS on a dead entry instead of being"
+       + " hardcoded green, which is the change this wave made to it: before today it"
+       + " printed its own dead entries beside a passing verdict and nobody had to act."});
 
     /* the board covers the whole spine */
     var noBook = SPINE.filter(function(b){ return !SCENEBOOK[b.id]; }).map(function(b){ return b.id; });
-    T("every beat has a scene contract", noBook.length === 0, noBook.join(", "));
+    T("every beat has a scene contract", noBook.length === 0, noBook.join(", "),
+      {exempt:"A completeness check over the book has no before, because the absence it"
+       + " guards is a beat somebody has not written yet rather than a line of code that"
+       + " once behaved differently. The only broken form available would be an artificial"
+       + " SPINE with a beat deleted, which proves the row can count rather than that it"
+       + " ever caught anything. It earns its place by failing the moment a new beat is"
+       + " added without its deck, which is exactly when it is needed."});
 
     /* ================== PHASE A: THE SKELETON ==================
        The composer, judged on a fixture scene. a1-hum is the right fixture and not
@@ -27794,7 +27871,13 @@ function selfTest(){
          } finally { beatIdx = k2.bi; roster = k2.ro; castSheets = k2.cast; chassisHolder = k2.ch; }
        }});
     T("the degenerate run put the drawer back", window.persistAll === realPersist,
-      wrote + " save(s) intercepted and discarded - a synthetic run never reaches a player's folder");
+      wrote + " save(s) intercepted and discarded - a synthetic run never reaches a player's folder",
+      {exempt:"This row guards the sweep's own housekeeping - that the save function it"
+       + " borrowed for a synthetic run was handed back. There is no shipped before to run"
+       + " it against, because a version that failed to restore would have written test"
+       + " saves into a real player's folder and been fixed as a live incident rather than"
+       + " left in the file as data. The assertion is an identity comparison against the"
+       + " captured original, which cannot pass while the leak it names exists."});
   } catch(e){
     /* AND WHERE. A sweep that dies says only what went wrong, and "cannot read 'content'"
        is true of a hundred lines in this file. Three frames of stack is the difference
@@ -27811,8 +27894,8 @@ function selfTest(){
       $("hud-loc").textContent = keep.loc; $("hud-day").textContent = keep.day;
     }
   }
-  return {pass:pass, fail:fail, amber:amber, proved:pass, total:pass + fail + amber,
-          rows:rows, build:VERSION_TAG};
+  return {pass:pass, fail:fail, amber:amber, exempt:exempt, proved:pass,
+          total:pass + fail + amber + exempt, rows:rows, build:VERSION_TAG};
 }
 function renderSelfTest(){
   /* CI reads __SELFTEST__.fail, so it must exist even when the sweep dies on its
@@ -27829,16 +27912,18 @@ function renderSelfTest(){
     + (r.fail ? r.fail + " FAILED" : r.pass + " PROVED of " + r.total) + '</div>';
   h += '<div style="margin-bottom:20px;font-size:13px;color:' + (r.amber ? "#e0a94e" : "#7a7365") + '">'
     + (r.amber ? r.amber + " case(s) carry no broken form \u2014 undeclared debt"
-               : "every case proves it would have caught its own defect") + '</div>';
+               : "every case either proves it would have caught its own defect, or says why it cannot")
+    + (r.exempt ? " \u00b7 " + r.exempt + " exempt, each with its reason on this page" : "") + '</div>';
   r.rows.forEach(function(row){
-    var col = row.ok ? (row.amber ? "#e0a94e" : "#8bd98b") : "#e08b8b";
-    var bar = row.ok ? (row.amber ? "#6b5a2f" : "#3f6b3f") : "#8b3f3f";
+    var col = row.ok ? (row.amber ? "#e0a94e" : (row.exempt ? "#8aa9c8" : "#8bd98b")) : "#e08b8b";
+    var bar = row.ok ? (row.amber ? "#6b5a2f" : (row.exempt ? "#3f556b" : "#3f6b3f")) : "#8b3f3f";
     h += '<div style="border-left:3px solid ' + bar + ';padding:8px 0 8px 14px;margin-bottom:12px">'
       + '<div style="color:' + col + '">'
-      + (row.ok ? (row.amber ? "PASS\u00b7NO BROKEN FORM" : "PASS") : "FAIL")
+      + (row.ok ? (row.amber ? "PASS\u00b7NO BROKEN FORM" : (row.exempt ? "PASS\u00b7NO BEFORE EXISTS" : "PASS")) : "FAIL")
       + ' \u00b7 ' + esc(row.name) + '</div>'
       + (row.detail ? '<div style="opacity:.65;font-size:12.5px">' + esc(row.detail) + '</div>' : "")
       + (row.proved ? '<div style="opacity:.45;font-size:11.5px">proved against: ' + esc(row.was) + '</div>' : "")
+      + (row.exempt ? '<div style="opacity:.5;font-size:11.5px">no before exists: ' + esc(row.exempt) + '</div>' : "")
       + '</div>';
   });
   h += '<div style="opacity:.5;font-size:12px;margin-top:28px">'
