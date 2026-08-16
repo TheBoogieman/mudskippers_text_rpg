@@ -262,6 +262,57 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
+### `a2-law` (21) IS THE NEXT WAVE, AND ITS SUBJECTS ARE RULED — 2026-08-16
+
+The law night. Hesta's kitchen, **seven at the table** — Pia, Vic, Nine, Hesta, Seven, Three
+and **Marek**, who is nine years under an overlay and is now two souls in one chair learning
+to take turns. A week-old argument hardens into a rule the family writes down, and the
+`before` is explicit: **the law is not supplied ready-made and it is not handed down by an
+elder — it is argued into existence and quoted back in Book Three.**
+
+The night stands at **4 evening cards where the budget wants 6, room at 4 of 7, two takes in
+the whole beat, both landings bare, and it is not fork-aware at all.** That last one is the
+expensive part and this wave is where it gets paid.
+
+**THE EVENING, RULED — two cards:**
+1. **Seven on what a written rule actually does.** He administered written rules for eleven
+   years and is the only person at that table who has seen one from the enforcement side:
+   what happens to a rule after somebody writes it down, who it protects, and the moment it
+   stops protecting them. **The seal on his WORK still holds** — no names, no cases, nothing
+   about what a clerk of theirs does. The shape of a rule's life is not the work.
+2. **What the week-old argument actually was.** The beat's own goal says *"a week-old
+   disagreement about to become a rule"* and **nothing anywhere says what it was.** The
+   opening says it starts over who is allowed to touch the pan and *"within four minutes it
+   is not about the pan"*. Nobody has ever written the four minutes. Same shape of hole the
+   last four waves found by reading the night's own pages.
+
+**THE ROOM, RULED — three cards:**
+1. **What happens the first time it costs something.** Hesta's own rule from night 13 —
+   *"a rule that has never cost anything is not a rule, it is a mood"* — turned on a law this
+   family has now written down deliberately, on a good evening, with nobody at the door.
+2. **Seven under a rule by choice.** The first rule he has ever been under that he agreed to.
+   He walked a hundred miles out from under the last set; the second take is what it costs
+   him to put his name to anything at all.
+3. **Whoever is in the courier's skull.** From night 17 one of Nine and Seven lives in his
+   head, and a law written at a table where one of the family has no chair is a different
+   scene depending which. **This is the card that makes night 21 fork-aware**, and it must be
+   written body-neutral where it can be and forked only where it genuinely cannot exist on
+   the other road — the `a2-housing` pattern: *write the one with the hands, not the name.*
+
+**TWO THINGS TO CARRY IN, FLAGGED AND NOT ARGUED:**
+- **Nine and Marek still have no card on this night.** Both were offered and neither was
+  taken, so five of the night's new cards go to Seven (two), Hesta's law, the argument, and
+  the fork. Marek's first ordinary evening in the book — two souls in one chair, at a table
+  arguing about whose turn it is to touch the pan — stays unwritten. Raise it again only if
+  the room comes out thin; do not smuggle it in.
+- **The week-old argument is a STORY FACT that does not exist yet.** Writing that card means
+  inventing what this family argued about for a week. **Pitch it before writing it** — the
+  subject is ruled, the content is not.
+
+**AND THE MIRREN DOCTRINE STILL WAITS FOR NIGHT 19.** *Machines serve, never harvest* goes
+on `a2-choir`, which is already finished, so it is a REOPENING and it must read as the family
+reaching back to her grave for the name — not as a line she left lying about.
+
 ### `a2-seven` IS DONE (v5.33.0) — and a character had a line on two nights she is not in
 
 Night 14 was written to the ruling of 2026-08-16: a sixth evening card, all four room

@@ -78,6 +78,18 @@ by hesitating — and **`a1-turn` has FOUR landings, not two**, six of whose row
 reached the wiring in nine waves. Both are fixed and both now have a sweep row standing over
 them. See HANDOVER for the full account.
 
+**`a2-law` (21) IS NEXT AND ITS SUBJECTS ARE RULED (2026-08-16).** The law night: seven at
+Hesta's table, a week-old argument hardening into a rule that gets quoted back in Book
+Three. Evening takes **Seven on what a written rule actually does** and **what the week-old
+argument was** — the beat's own goal names that argument and nothing in the book says what
+it was. The room takes **what happens the first time the law costs something**, **Seven
+under a rule by choice**, and **whoever is in the courier's skull**, which is the card that
+finally makes night 21 fork-aware. **Nine and Marek were offered and not taken**, so
+Marek's first ordinary evening — two souls in one chair at a table arguing about whose turn
+it is to touch the pan — stays unwritten; do not smuggle it in. **And the week-old argument
+is a story fact that does not exist: the subject is ruled, the content is not, so pitch it
+before writing it.**
+
 **THE COLD OPENS CAME FIRST, AND THEY ARE DONE (v5.32.0).** All 72 opening rows wired —
 not 64, because the PREMIERE that opens Books Two and Three is a second set of openings
 nobody had counted, and it was the one that never reached the wiring at all. See HANDOVER
