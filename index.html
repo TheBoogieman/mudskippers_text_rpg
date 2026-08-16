@@ -1273,7 +1273,7 @@
   <div id="wbgate">
     <div class="card">
       <div class="cardhead">THE WRITERS' BOARD</div>
-      <div class="cardsub">The authoring surface: every night, every written page, the whole bible.</div>
+      <div class="cardsub">Two pages: the state of the writing, and the whole bible.</div>
       <div class="warn" style="margin-bottom:0">
         This is the entire plot on one screen — all thirty-three nights, what each one is about, every secret and
         the night it belongs to. It is built for writing the game, not playing it. Reading it will not break
@@ -1296,15 +1296,8 @@
       <div id="wb-spine"></div>
     </nav>
     <div class="wb-main" id="wb-main">
-      <div class="wb-view on" id="wbv-start"></div>
-      <div class="wb-view" id="wbv-story"></div>
-      <div class="wb-view" id="wbv-beat"></div>
-      <div class="wb-view" id="wbv-flow"></div>
-      <div class="wb-view" id="wbv-map"></div>
+      <div class="wb-view on" id="wbv-book"></div>
       <div class="wb-view" id="wbv-bible"></div>
-      <div class="wb-view" id="wbv-mech"></div>
-      <div class="wb-view" id="wbv-scope"></div>
-      <div class="wb-view" id="wbv-export"></div>
     </div>
   </div>
 </div>
@@ -1717,7 +1710,12 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.11.0 "One Source"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.12.0 "Counted, Not Remembered"
+   the writers' board is two pages and both are generated · it keeps no copy of anything
+   THE BOOK: what is written and what is not, recounted off SPINE and SCENEBOOK on open
+   THE BIBLE: var BIBLE printed verbatim, every line, in order, nothing re-sorted
+   a night is finished on four counts: cards past its pressure block, a second take,
+   a landing wired to something, and a room past the three it was born with
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -1815,7 +1813,7 @@ var BIBLE = [
 "",
 "THE ANNULMENT (settled 2026-08-16; NOT YET ON THE PAGE - the beats still contradict parts of it):",
 "- WHY A GROWN MIND IS A PERSON, and it is not a concession anybody makes: a grown mind is grown FROM A HOSTED SCRAPE - a real person copied at intake, filed, and cultivated. Not software that resembles a person. A person who was copied and farmed. The machine's founding instruction is literally HOST THE SCRAPES; the family already ruled a scrape IS the person when they said they killed the puppet, not Mirren. It is what the farm farms and why they are numbered. It makes the vow's second clause literal: the vaults are full of people.",
-"- A NUMBER IS THE CHOIR'S FILE NUMBER FOR THE PAIRING. One body, one case, one number. The overlay was Three and the host was Three, because to the filing system they were one line item - that is the horror. It is why Nine is a number on a list and not a name.",
+"- ONE REGISTER, ALL THE WAY DOWN (settled 2026-08-16). The Choir keeps one book and everything it makes goes in it: the minds grown on the farm, the pairings made in the field, the bodies salvaged out of the unlucky. A number is a line in that book, not a species. For a pairing it is one line for two people - the overlay was Three and the host was Three, because to the filing system they were one line item, and that is the horror. For a grown mind it is her line on the farm's list, the one Seven used to read out on ordinary afternoons without ever meeting anybody on it. WHICH MEANS NINE HAS A FILE, in the same book as Mirren's and the same building, and it can be found. That is a night, not a remark: do not let it fall out of a conversation, and do not confirm it before the vaults are open.",
 "- ANNULMENT: THE CHOIR CAN DO IT AND DOES NOT UNDERSTAND IT AT ALL. They tried it on Three's pairing, lost the grown mind, the host stayed, and they declared their business concluded and left her like that - an error that was never entered. Three then spent years researching how it should have been done and COULD NOT FIND THE ANSWER. She is not the author of her own cure.",
 "- THE METHOD IS IN VIC'S FILE, AS STEPS HE NEVER UNDERSTOOD. The Architect's procedure, documented by a man running a dead friend's instructions on faith - the file can document everything and interface with nothing, and documenting is exactly what it is for. It takes the mind seated in the housing to read it out, the same way the manual was decoded. Three brings the years of failed practice; the file brings the steps; NEITHER IS ENOUGH ALONE. The method is never a feeling, an intent, or a knack - it is a document, found by work.",
 "- WHAT ANNULMENT COSTS AND LEAVES: the host always comes back intact and the years are simply gone - nine of them for Marek, which is why he cannot stop talking. The overlay lives on as a passenger, not an officer. It always scars.",
@@ -1824,7 +1822,7 @@ var BIBLE = [
 "- THE CHOIR ESCALATES DENIABLY. No public hunt - that would concede the process hands people back. The family stops being a nuisance and becomes something that quietly must not exist, which is why Book Three goes underground.",
 "- SAY THE FATE-ONE RHYME OUT LOUD. Taking turns and fate one look alike from outside: one god whispering to millions versus two equals sharing a house. THE ONLY DIFFERENCE IS THAT ONE OF THEM WAS ASKED, and that is the whole book. A character names it - probably Three, possibly Five. Do not design the resemblance away.",
 "- THE CAPTURE IS ITS OWN BEAT, between a2-choir and a2-annul: the ambush, what it costs, and a Choir officer in a shack with a recovery team already looking. It is currently missing entirely and the annulment reads as assumed.",
-"- THREE KEEPS THE NUMBER ON PURPOSE and never gives up her name - not in Book Two, not in Book Three. She refuses it because the woman who had it was suppressed for years and she will not pretend otherwise; every time somebody says Three she makes them say what was done to her. a2-three already carries the card ASK HER WHAT HER ACTUAL NAME IS, and the refusal is its payoff.",
+"- THREE KEEPS THE NUMBER ON PURPOSE and never gives up her name - not in Book Two, not in Book Three. She refuses it because the woman who had it was suppressed for years and she will not pretend otherwise; every time somebody says Three she makes them say what was done to her. THE CARD DOES NOT EXIST YET AND MUST BE WRITTEN INTO a2-three: the only card in the whole book with those words is on a1-late, and it is addressed to the thing wearing Mirren's face, which is a different question entirely. Her refusal is that card's payoff and there is currently nothing for it to pay off.",
 "",
 "THE CAST'S TRUTH (bedrock, not destination - strike two or three per season at most; never steer; let the player's digging hit it like a spade on stone):",
 "- NINE: a grown mind escaped from the Choir's farm - grown from a stolen scrape, on the run. Warm, sharp, protective, consent-first; keeps the Ledger. Wants to stop running and to keep her people.",
@@ -9946,7 +9944,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.11.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.12.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -22790,12 +22788,8 @@ $("story-close").onclick = function(){ $("storymodal").classList.remove("open");
    it shows is computed here, at open time, from the same arrays the storyteller
    is briefed from.
    It is behind the pry plate. It is the whole plot on one screen. */
-var wbTab = "start", wbBeat = "", wbKey = "mudskippers-board-v1", wbW = {};
-try{ wbW = JSON.parse(localStorage.getItem(wbKey) || "{}"); }catch(e){ wbW = {}; }
-function wbSave(){ try{ localStorage.setItem(wbKey, JSON.stringify(wbW)); }catch(e){} }
-function wbDone(id){ var w = wbW[id]; return !!(w && w.lines && w.lines.trim()); }
-var WB_TABS = [["start","Start"],["story","The Story"],["beat","Storyboard"],["flow","Flow"],
-               ["map","Map"],["bible","Bible"],["mech","Mechanics"],["scope","Scope"],["export","Export"]];
+var wbTab = "book", wbBeat = "";
+var WB_TABS = [["book","The Book"],["bible","The Bible"]];
 var WB_COLOR = {Nine:"nine",Seven:"seven",Three:"three",Pia:"pia",Vic:"vic",Hesta:"hesta",
   Granny:"granny",Principal:"principal",Marek:"marek"};
 function wbCol(n){ return WB_COLOR[n] ? "var(--" + WB_COLOR[n] + ")" : "var(--granny)"; }
@@ -22833,179 +22827,129 @@ function wbWant(name, b, i){
   return pick;
 }
 
-/* ---- the gaps: what the storyteller writes that a person could ---- */
-function wbGaps(b){
-  var out = [], n = b.budget || 4, i;
-  for(i = 1; i <= n; i++){
-    out.push({id:b.id + "/T" + i + "/A", hint:"Turn " + i + " of " + n
-      + ", first of the two lines that do NOT end the night. Someone gives the player something real -"
-      + " the answer under the answer, a detail, a person read properly - and the night stays open."});
-    out.push({id:b.id + "/T" + i + "/B", hint:"Turn " + i + " of " + n
-      + ", the other one. Make it unlike the first: if A is earnest, B is sideways or funny. Both lean at “"
-      + (b.aim || "") + "” without arriving."});
-  }
-  return out;
-}
-function wbRoom(b, n){
-  var out = [], i;
-  for(i = 1; i <= n; i++){
-    out.push({id:b.id + "/ROOM/" + i, hint:"A moment in the room after “" + b.title
-      + "” closes. No clock, no gate, nobody new, same place. Somebody says a thing there is never"
-      + " time for when something is on fire."});
-  }
-  return out;
-}
-function wbProg(b){
-  var g = wbGaps(b).concat(wbRoom(b, 10)), d = 0;
-  g.forEach(function(x){ if(wbDone(x.id)) d++; });
-  return {done:d, total:g.length};
-}
-
-/* ---- the bible, sectioned and wired to the nights it touches ---- */
-var wbBibleCache = null;
-function wbBible(){
-  if(wbBibleCache) return wbBibleCache;
-  var secs = [], cur = {title:"OPENING CHARGE", rows:[]};
-  /* BIBLE is a joined STRING at runtime, not the array it is written as: the
-     declaration ends in .join(), which is easy to miss reading the source. */
-  var lines = (typeof BIBLE === "string") ? BIBLE.split(String.fromCharCode(10)) : BIBLE;
-  lines.forEach(function(line){
-    var t = String(line).trim();
-    if(!t) return;
-    if(t.length < 130 && t.indexOf("- ") !== 0 && /:$/.test(t)){
-      if(cur.rows.length) secs.push(cur);
-      cur = {title:t.replace(/:$/, ""), rows:[]};
-    } else cur.rows.push(t.replace(/^- /, ""));
-  });
-  if(cur.rows.length) secs.push(cur);
-
-  var PEOPLE = ["Nine","Pia","Vic","Hesta","Seven","Three","Mirren","Marek","Granny","Principal","Architect","Courier"];
-  var TELLS = {housing:["skull-housing","housing","spare room"], hash:["bio-hash","hash","manual"],
-    choir:["three fates","fate three","salvage"], founding:["Architect","founders","Cairn"],
-    vicsin:["consent","knowingly"], principal:["Principal","mark one","landlord"]};
-  var opensAt = {};
-  SPINE.forEach(function(b){ (b.reveals || []).forEach(function(k){ opensAt[k] = b.id; }); });
-  var pb = {};
-  SPINE.forEach(function(b){
-    wbStage(b).forEach(function(n){ (pb[n] = pb[n] || {})[b.id] = 1; });
-  });
-  secs.forEach(function(sec){
-    sec.rows = sec.rows.map(function(text){
-      var who = PEOPLE.filter(function(p){ return new RegExp("\\b" + p + "\\b").test(text); });
-      var sec2 = Object.keys(TELLS).filter(function(k){
-        return TELLS[k].some(function(w){ return new RegExp("\\b" + w + "\\b", "i").test(text); });
-      }).filter(function(k){ return opensAt[k]; });
-      var beats = {};
-      who.forEach(function(p){ Object.keys(pb[p] || {}).forEach(function(id){ beats[id] = 1; }); });
-      sec2.forEach(function(k){ beats[opensAt[k]] = 1; });
-      return {text:text, who:who, secrets:sec2, beats:Object.keys(beats),
-              lands:sec2.map(function(k){ return opensAt[k]; }),
-              kind: sec2.length ? "secret" : (who.length ? "people" : "law")};
-    });
-  });
-  wbBibleCache = secs;
-  return secs;
-}
-
-/* ---- the arithmetic ---- */
-var wbScopeCache = null;
-function wbScope(){
-  if(wbScopeCache) return wbScopeCache;
-  var t = {pass:0, lines:0, rail:0, doors:0, walks:0, press:0, live:0, room:0, after:0,
-           cards:0, cardBeats:0};
-  var places = [], seen = {};
+/* ---- THE STATE OF THE WRITING, counted off the live arrays ----
+   FOUR things make a night finished, and this project has forgotten each of them
+   separately at least once:
+     1  enough cards to outlast the pressure block - budget + 2, so a player who
+        stalls to the forced close still gets a fresh one every turn
+     2  a second take on them, so asking again is a different answer and not a rerun
+     3  a landing rail with real cards on it, so the night lands somewhere
+     4  a room with more than the three it was born with
+   A night that has all four is written. A night that has none is still an outline.
+   Nothing here is stored, remembered or typed in: it is recounted every open, so
+   it cannot be out of date with the thing it describes. */
+var wbStatCache = null;
+function wbStats(){
+  if(wbStatCache) return wbStatCache;
+  var rows = [], t = {cards:0, room:0, takes:0, forks:0, lines:0, pass:0, doors:0, walks:0,
+                      wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0};
   SPINE.forEach(function(b, i){
+    var sb = SCENEBOOK[b.id] || {};
+    var tp = sb.topics || [], rp = (sb.room && sb.room.topics) || [];
+    var need = (b.budget || 4) + 2, takes = 0, forks = 0;
+    tp.concat(rp).forEach(function(c){ takes += (c.takes || []).length; if(c.fork) forks++; });
+    var wired = 0, pass = 0, lines = 0;
     ["opens","lands","landsHard"].forEach(function(k){
       (b[k] || []).forEach(function(V){
-        t.pass++; t.lines += (V.lines || []).length; t.rail += (V.rail || []).length;
-        if(V.place && !seen[V.place]){ seen[V.place] = {name:V.place, beats:[]}; places.push(seen[V.place]); }
-        if(V.place) seen[V.place].beats.push(b.id);
+        pass++; lines += (V.lines || []).length;
+        (V.rail || []).forEach(function(r){
+          if(r && typeof r === "object" && (r.cards || r.knock)) wired++;
+        });
       });
     });
+    var score = (tp.length >= need ? 1 : 0) + (takes ? 1 : 0)
+              + (wired ? 1 : 0) + (rp.length > 3 ? 1 : 0);
+    rows.push({i:i, id:b.id, title:b.title, season:b.season, act:b.act,
+      budget:(b.budget || 4), need:need, cards:tp.length, room:rp.length,
+      takes:takes, forks:forks, wired:wired, pass:pass, lines:lines, score:score,
+      state:(score === 4 ? "written" : (score ? "part" : "outline"))});
+    t.cards += tp.length; t.room += rp.length; t.takes += takes; t.forks += forks;
+    t.lines += lines; t.pass += pass;
     t.doors += (b.exits || []).length;
     t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
-    t.press += (b.press || []).length;
     t.live += (b.budget || 4);
-    t.after += (SPINE[i+1] && SPINE[i+1].act !== b.act) ? 2 : 1;
-    t.room += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
-    /* the scene book counts as written, because it is: these cards are in the game */
-    var sb = SCENEBOOK[b.id];
-    if(sb){
-      t.cardBeats++;
-      t.cards += (sb.topics || []).length + ((sb.room && sb.room.topics) || []).length;
-    }
+    t.slack += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
+    if(wired) t.wired++; else t.dark++;
+    if(tp.length < need) t.short++;
+    if(!takes) t.noTakes++;
+    if(rp.length <= 3) t.bare++;
+    if(score === 4) t.done++;
   });
-  t.turns = t.live + t.room + t.after;
-  t.stalls = t.live * 2 + t.room * 2;
-  wbScopeCache = {t:t, places:places};
-  return wbScopeCache;
+  wbStatCache = {rows:rows, t:t};
+  return wbStatCache;
+}
+/* the first night, in playing order, that is not finished - this is the answer to
+   "what do we write next", and it is never a guess */
+function wbNext(){
+  var r = wbStats().rows, i;
+  for(i = 0; i < r.length; i++) if(r[i].state !== "written") return r[i];
+  return null;
 }
 
 /* ---- rendering helpers ---- */
-function wbPassage(V){
-  var h = '<div class="wb-stamp">Day ' + esc(V.day || "?") + " &middot; " + esc(V.time || "")
-        + " &middot; " + esc(V.place || "") + (V.amb ? " &middot; " + esc(V.amb) : "") + "</div>";
-  h += '<div class="wb-pass">';
-  (V.lines || []).forEach(function(L){
+function wbLines(arr){
+  var h = '<div class="wb-pass" style="margin-bottom:7px">';
+  (arr || []).forEach(function(L){
     if(Object.prototype.toString.call(L) === "[object Array]"){
       h += '<div class="wb-said"><span class="wb-who" style="color:' + wbCol(String(L[0])) + '">'
          + esc(L[0]) + '</span><span>' + esc(L[1]) + "</span></div>";
     } else h += '<div class="wb-narr">' + esc(L) + "</div>";
   });
-  h += "</div>";
+  return h + "</div>";
+}
+function wbPassage(V){
+  var h = '<div class="wb-stamp">Day ' + esc(V.day || "?") + " &middot; " + esc(V.time || "")
+        + " &middot; " + esc(V.place || "") + (V.amb ? " &middot; " + esc(V.amb) : "") + "</div>";
+  h += wbLines(V.lines);
   (V.rail || []).forEach(function(r, i){
     if(!i) h += '<div class="wb-lb">What it offers next</div>';
-    h += '<div class="wb-rl">' + esc(choiceLine(r)) + "</div>";
+    var tag = "";
+    if(r && typeof r === "object"){
+      if(r.knock) tag = ' <span style="color:var(--gold)">&mdash; always there, never runs out</span>';
+      else if(r.cards) tag = ' <span style="color:var(--gold)">&mdash; ' + r.cards.length + " cards behind it</span>";
+    }
+    h += '<div class="wb-rl">' + esc(choiceLine(r)) + tag + "</div>";
   });
   return h;
 }
-/* a scene book card, read-only: this one is already written and in the game */
-function wbTopic(t){
+/* a scene book card, whole: this one is already in the game, and every layer of it
+   is printed, because a take nobody reads is a take nobody checks */
+function wbCard(t){
   var keys = String(t.key || "").split(" ").map(function(w){ return w.replace(/-/g, " "); });
-  return '<div class="wb-c gold"><span class="wb-t gold">' + esc(t.ask) + "</span>"
-    + '<span class="wb-lb">Who answers</span>'
+  var h = '<div class="wb-c gold"><span class="wb-t gold">' + esc(t.ask) + "</span>";
+  if(t.fork) h += '<div class="wb-rl" style="color:var(--wb-slate)">Forked &mdash; dealt only on the '
+    + esc(t.fork) + " side of the chassis choice.</div>";
+  h += '<span class="wb-lb">Who answers</span>'
     + '<div class="wb-pass" style="margin-bottom:7px;color:' + wbCol(t.who) + '">' + esc(t.who) + "</div>"
     + '<span class="wb-lb">What they give up</span>'
     + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.gives) + "</div>"
     + '<span class="wb-lb">What they will not say tonight</span>'
     + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.holds) + "</div>"
-    + '<span class="wb-lb">Reached by typing any of</span>'
+    + '<span class="wb-lb">Asked once</span>' + wbLines(t.plays);
+  (t.takes || []).forEach(function(L, k){
+    h += '<span class="wb-lb">Asked again &mdash; take ' + (k + 2) + "</span>" + wbLines(L);
+  });
+  if(!(t.takes || []).length) h += '<div class="wb-rl" style="color:var(--wb-slate)">'
+    + "No second take. Asked twice, this card says the same thing again.</div>";
+  h += '<span class="wb-lb">Reached by typing any of</span>'
     + '<div class="wb-rl">' + esc(keys.join(" · ")) + "</div></div>";
-}
-function wbSlot(g){
-  var w = wbW[g.id] || {}, done = wbDone(g.id);
-  return '<div class="wb-slot' + (done ? " done" : "") + '" data-wbslot="' + esc(g.id) + '">'
-    + '<div class="wb-sh2"><span class="wb-sid">' + esc(g.id) + '</span>'
-    + '<span class="wb-sid">' + (done ? "written" : "not written yet") + "</span></div>"
-    + '<div class="wb-hint">' + esc(g.hint) + "</div>"
-    + '<span class="wb-lb">Who speaks (must already be in the room)</span>'
-    + '<input class="wb-in" type="text" data-wbf="who" value="' + esc(w.who || "") + '" placeholder="Pia" />'
-    + '<span class="wb-lb">When this can fire (blank for any time)</span>'
-    + '<input class="wb-in" type="text" data-wbf="when" value="' + esc(w.when || "") + '" placeholder="only after Nine has spoken aloud" />'
-    + '<span class="wb-lb">The lines, as the player will read them</span>'
-    + '<textarea class="wb-ta" data-wbf="lines">' + esc(w.lines || "") + "</textarea>"
-    + '<span class="wb-lb">What it offers next (one per line, two is right)</span>'
-    + '<textarea class="wb-ta" data-wbf="rail">' + esc(w.rail || "") + "</textarea>"
-    + '<span class="wb-lb">Can it come round again?</span>'
-    + '<select class="wb-sel" data-wbf="once"><option value="once"' + (w.once === "once" ? " selected" : "") + ">Once per run</option>"
-    + '<option value="repeat"' + (w.once === "repeat" ? " selected" : "") + ">Can repeat</option></select>"
-    + '<span class="wb-lb">What it marks (optional)</span>'
-    + '<input class="wb-in" type="text" data-wbf="marks" value="' + esc(w.marks || "") + '" placeholder="Nine has told him where she came from" />'
-    + "</div>";
+  return h;
 }
 
-/* ---- the rail ---- */
+/* ---- the rail: every night, with how far along it is ---- */
 function wbDrawRail(){
-  var h = "", s = 0, a = 0;
+  var st = wbStats(), h = "", s = 0, a = 0;
+  h += '<button class="wb-row" data-wbhome="1" aria-current="' + (wbTab === "book" && !wbBeat) + '">'
+     + '<span class="wb-n">&#9733;</span><span>The whole book</span></button>';
   SPINE.forEach(function(b, i){
     if(b.season !== s){ s = b.season; a = 0;
       h += '<div class="wb-sb">Season ' + s + " &middot; " + esc(SEASON_NAMES[s]) + "</div>"; }
     if(b.act !== a){ a = b.act;
-      h += '<div class="wb-ab">Act ' + a + " — " + esc(ACT_NAMES[s][a]) + "</div>"; }
-    var p = wbProg(b), pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+      h += '<div class="wb-ab">Act ' + a + " &mdash; " + esc(ACT_NAMES[s][a]) + "</div>"; }
+    var r = st.rows[i];
     h += '<button class="wb-row" data-wbbeat="' + esc(b.id) + '" aria-current="' + (b.id === wbBeat) + '">'
       + '<span class="wb-n">' + (i + 1) + '</span><span>' + esc(b.title) + "</span>"
-      + '<span class="wb-m' + (p.done ? " any" : "") + '"><i style="width:' + pct + '%"></i></span></button>';
+      + '<span class="wb-m' + (r.score ? " any" : "") + '"><i style="width:' + (r.score * 25) + '%"></i></span></button>';
   });
   $("wb-spine").innerHTML = h;
 }
@@ -23016,50 +22960,123 @@ function wbGo(t){
     var b = document.querySelector('[data-wbtab="' + x[0] + '"]');
     if(b) b.setAttribute("aria-current", String(x[0] === t));
   });
-  if(t === "beat") wbDrawBeat();
-  if(t === "scope") wbDrawScope();
-  if(t === "export") wbDrawExport();
+  if(t === "book"){ if(wbBeat) wbDrawBeat(); else wbDrawBook(); }
+  if(t === "bible") wbDrawBible();
   wbDrawRail();
   $("wb-main").scrollTop = 0;
 }
 
-/* ---- views ---- */
+/* ---- tab one, the dashboard: what is written and what is not ---- */
+function wbDrawBook(){
+  var st = wbStats(), t = st.t, nx = wbNext();
+  var h = '<div class="wb-eyebrow">Mudskippers &middot; ' + esc(VERSION_TAG) + '</div>';
+  h += '<div class="wb-h">The Book</div>';
+  h += '<p class="wb-lede">Counted out of the game itself every time this page opens. There is nothing to keep'
+    + " up to date here, because there is no copy of anything &mdash; the numbers below are the writing.</p>";
+  h += '<div class="wb-g3">'
+    + '<div class="wb-stat"><b>' + SPINE.length + "</b><span>nights</span></div>"
+    + '<div class="wb-stat"><b>' + (t.cards + t.room) + "</b><span>cards written</span></div>"
+    + '<div class="wb-stat"><b>' + t.takes + "</b><span>second and third takes</span></div>"
+    + '<div class="wb-stat"><b>' + t.pass + "</b><span>openings and landings</span></div>"
+    + '<div class="wb-stat"><b>' + t.lines + "</b><span>lines inside them</span></div>"
+    + '<div class="wb-stat"><b>' + t.forks + "</b><span>cards that fork</span></div></div>";
+
+  h += '<div class="wb-sh">Finished nights</div>';
+  h += '<div class="wb-g3"><div class="wb-stat"><b style="color:var(--gold)">' + t.done + "</b><span>of "
+    + SPINE.length + " nights have all four</span></div></div>";
+  h += '<p class="wb-p">A night counts as finished when it has all four of these, and not before:'
+    + " enough cards to outlast its own pressure block, a second take on them, a landing that leads"
+    + " somewhere, and a room with more than the three it was born with.</p>";
+
+  h += '<div class="wb-sh">What is missing, in the order it bites</div><div class="wb-g3">'
+    + '<div class="wb-stat"><b class="s">' + t.short + "</b><span>nights run out of cards before the night ends</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.noTakes + "</b><span>nights repeat themselves if asked twice</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.dark + "</b><span>nights land on nothing to click</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div></div>";
+  h += '<div class="wb-note"><b>Why the card count is budget plus two.</b> A night gives the player '
+    + " a set number of turns before the world closes it. If the cards run out first the player spends"
+    + " the last turns being told the same things again, so every night wants two more cards than it has"
+    + " turns &mdash; enough that stalling all the way to the forced close still turns up something new.</div>";
+
+  if(nx){
+    h += '<div class="wb-sh">Next, in playing order</div>';
+    h += '<div class="wb-c gold"><span class="wb-t gold">' + (nx.i + 1) + " &middot; " + esc(nx.title) + "</span>"
+      + '<div class="wb-pass">' + esc(SPINE[nx.i].goal) + "</div>"
+      + '<div class="wb-rl">' + nx.cards + " of " + nx.need + " cards"
+      + " &middot; " + nx.takes + " takes"
+      + " &middot; " + (nx.wired ? nx.wired + " landing rows" : "landing not wired")
+      + " &middot; " + nx.room + " cards in the room</div>"
+      + '<div style="margin-top:8px"><button class="wb-chip" data-wbjump="' + esc(nx.id) + '">open it</button></div></div>';
+  } else h += '<div class="wb-note"><b>Every night has all four.</b> The book is written.</div>';
+
+  h += '<div class="wb-sh">Every night</div>';
+  h += '<div class="wb-scroll"><table class="wb-tb"><thead><tr>'
+    + "<th>#</th><th>Night</th><th>Bk</th><th>Turns</th><th>Cards</th><th>Needs</th>"
+    + "<th>Room</th><th>Takes</th><th>Landing</th><th>State</th></tr></thead><tbody>";
+  st.rows.forEach(function(r){
+    var col = r.state === "written" ? "var(--gold)" : (r.state === "outline" ? "#e08b8b" : "");
+    h += '<tr><td class="n">' + (r.i + 1) + "</td>"
+      + '<td><button class="wb-link" data-wbjump="' + esc(r.id) + '">' + esc(r.title) + "</button></td>"
+      + '<td class="n">' + r.season + '</td><td class="n">' + r.budget + "</td>"
+      + '<td class="n"' + (r.cards < r.need ? ' style="color:#e08b8b"' : "") + ">" + r.cards + "</td>"
+      + '<td class="n">' + r.need + "</td>"
+      + '<td class="n"' + (r.room <= 3 ? ' style="color:#e08b8b"' : "") + ">" + r.room + "</td>"
+      + '<td class="n"' + (!r.takes ? ' style="color:#e08b8b"' : "") + ">" + r.takes + "</td>"
+      + '<td class="n"' + (!r.wired ? ' style="color:#e08b8b"' : "") + ">" + (r.wired || "&mdash;") + "</td>"
+      + '<td class="n"' + (col ? ' style="color:' + col + '"' : "") + ">" + r.state + "</td></tr>";
+  });
+  h += "</tbody></table></div>";
+  h += '<p class="wb-p">Click any night to read the whole of it &mdash; the opening, the doors, every card with'
+    + " all of its takes, and the landing. It is the game's own text, not a description of it.</p>";
+  $("wbv-book").innerHTML = h;
+}
+
+/* ---- tab one, drilled in: one night, whole ---- */
 function wbDrawBeat(){
-  var b = null, i = 0;
+  var b = null, i = 0, st = wbStats();
   SPINE.forEach(function(x, n){ if(x.id === wbBeat){ b = x; i = n; } });
-  if(!b){ b = SPINE[0]; i = 0; wbBeat = b.id; }
+  if(!b){ wbBeat = ""; wbDrawBook(); return; }
+  var r = st.rows[i];
   var here = wbStage(b), met = wbMet(i).filter(function(n){ return here.indexOf(n) === -1; });
-  var h = '<div class="wb-eyebrow">Beat ' + (i + 1) + " of " + SPINE.length + " &middot; Season " + b.season + " &middot; Act " + b.act + "</div>";
+  var h = '<button class="wb-chip" data-wbhome="1">&larr; the whole book</button>';
+  h += '<div class="wb-eyebrow">Night ' + (i + 1) + " of " + SPINE.length + " &middot; Season " + b.season
+     + " &middot; Act " + b.act + "</div>";
   h += '<div class="wb-h">' + esc(b.title) + "</div>";
   h += '<p class="wb-lede">' + esc(b.goal) + "</p>";
-  h += '<div class="wb-g3"><div class="wb-stat"><b>' + (b.budget || 4) + "</b><span>turns before the world acts</span></div>"
-    + '<div class="wb-stat"><b>' + (b.floor || 3) + "</b><span>turns before it may close</span></div>"
-    + '<div class="wb-stat"><b class="s">' + ((b.budget || 4) * 2) + "</b><span>stall lines improvised</span></div></div>";
+
+  h += '<div class="wb-sh">Where this night stands</div><div class="wb-g3">'
+    + '<div class="wb-stat"><b' + (r.cards < r.need ? ' class="s"' : "") + ">" + r.cards + "/" + r.need
+    + "</b><span>cards, against its pressure block</span></div>"
+    + '<div class="wb-stat"><b' + (!r.takes ? ' class="s"' : "") + ">" + r.takes + "</b><span>second and third takes</span></div>"
+    + '<div class="wb-stat"><b' + (!r.wired ? ' class="s"' : "") + ">" + (r.wired || 0) + "</b><span>landing rows wired</span></div>"
+    + '<div class="wb-stat"><b' + (r.room <= 3 ? ' class="s"' : "") + ">" + r.room + "</b><span>cards in the room after</span></div>"
+    + '<div class="wb-stat"><b>' + r.budget + "</b><span>turns before the world acts</span></div>"
+    + '<div class="wb-stat"><b>' + r.pass + "</b><span>passages written</span></div></div>";
 
   h += '<div class="wb-sh">The question, and the line that answers it</div>';
-  h += '<div class="wb-c gold"><span class="wb-t gold">The gate — what must become true</span><div class="wb-pass">' + esc(b.exit) + "</div></div>";
-  h += '<div class="wb-c gold"><span class="wb-t gold">The door — authored, rotates, always slot one</span>';
+  h += '<div class="wb-c gold"><span class="wb-t gold">The gate &mdash; what must become true</span><div class="wb-pass">' + esc(b.exit) + "</div></div>";
+  h += '<div class="wb-c gold"><span class="wb-t gold">The door &mdash; authored, rotates, always slot one</span>';
   (b.exits || []).forEach(function(x){ h += '<div class="wb-rl">' + esc(x) + "</div>"; });
   h += "</div>";
-  h += '<div class="wb-c red"><span class="wb-t red">The red line — putting the whole job down</span>'
+  h += '<div class="wb-c red"><span class="wb-t red">The red line &mdash; putting the whole job down</span>'
     + '<div class="wb-pass" style="margin-bottom:7px">' + esc(b.walkLine || "") + "</div>";
   (b.walks || []).forEach(function(x){ h += '<div class="wb-rl">' + esc(x) + "</div>"; });
   h += "</div>";
 
   if((b.anchors || []).length){
-    h += '<div class="wb-sh">Anchors — the gate does not count until these names are on screen</div><div>';
+    h += '<div class="wb-sh">Anchors &mdash; the gate does not count until these names are on screen</div><div>';
     b.anchors.forEach(function(a){ h += '<span class="wb-chip on">' + esc(a) + "</span>"; });
     h += "</div>";
   }
   if((b.reveals || []).length){
-    h += '<div class="wb-sh">This beat is allowed to say</div><div>';
-    b.reveals.forEach(function(r){ h += '<span class="wb-chip on">' + esc(REVEALS[r] || r) + "</span>"; });
+    h += '<div class="wb-sh">This night is allowed to say</div><div>';
+    b.reveals.forEach(function(x){ h += '<span class="wb-chip on">' + esc(REVEALS[x] || x) + "</span>"; });
     h += "</div>";
   }
 
   h += '<div class="wb-sh">Who is in the room</div>';
   if(here.length){
-    h += '<p class="wb-p">On stage in this night’s written pages — they speak in it, or the night will not close until they are named.</p>';
+    h += '<p class="wb-p">On stage in this night&rsquo;s written pages &mdash; they speak in it, or the night will not close until they are named.</p>';
     here.forEach(function(n){
       var w = wbWant(n, b, i);
       h += '<div class="wb-c"><span class="wb-t" style="color:' + wbCol(n) + '">' + esc(n) + "</span>"
@@ -23078,26 +23095,58 @@ function wbDrawBeat(){
     if(away.indexOf(w.who) === -1) away.push(w.who);
   });
   if(away.length){
-    h += '<p class="wb-p">Out in the world, wanting things, but <i>not</i> in this room — do not write them into it.</p><div>';
+    h += '<p class="wb-p">Out in the world, wanting things, but <i>not</i> in this room &mdash; do not write them into it.</p><div>';
     away.forEach(function(n){ h += '<span class="wb-chip">' + esc(n) + "</span>"; });
     h += "</div>";
   }
 
-  h += '<div class="wb-sh">Written already — the opening</div>';
+  h += '<div class="wb-sh">The opening</div>';
   if((b.opens || []).length){
     b.opens.forEach(function(V, n){
       h += '<div class="wb-c gold"><span class="wb-t gold">Opening, version ' + (n + 1) + "</span>" + wbPassage(V) + "</div>";
     });
-  } else h += '<div class="wb-c slate"><span class="wb-t slate">No opening written</span><p class="wb-p" style="margin:0">This beat opens straight out of the cold open, so it needs none.</p></div>';
+  } else h += '<div class="wb-c slate"><span class="wb-t slate">No opening written</span><p class="wb-p" style="margin:0">This night opens straight out of the cold open, so it needs none.</p></div>';
 
-  h += '<div class="wb-sh">Written already — the landing</div>';
+  var SB = SCENEBOOK[b.id];
+  if(SB){
+    h += '<div class="wb-sh">The middle &mdash; ' + (SB.topics || []).length + " cards, dealt one a turn</div>";
+    h += '<p class="wb-p">The game reads what the player typed, picks the one card that answers it, and sends'
+      + " <i>that card alone</i> as the turn&rsquo;s instructions. Ask about nothing in particular and it deals the"
+      + " next unplayed one. Ask the same thing twice and it moves to the next take &mdash; where one exists.</p>";
+    if(SB.before) h += '<div class="wb-c red"><span class="wb-t red">True all night, before anybody speaks</span>'
+      + '<div class="wb-pass">' + esc(SB.before) + "</div></div>";
+    if((SB.never || []).length){
+      h += '<div class="wb-c red"><span class="wb-t red">Never, on this night</span>';
+      SB.never.forEach(function(x){ h += '<div class="wb-rl">' + esc(x) + "</div>"; });
+      h += "</div>";
+    }
+    (SB.topics || []).forEach(function(c){ h += wbCard(c); });
+  } else {
+    h += '<div class="wb-sh">The middle</div>';
+    h += '<div class="wb-c red"><span class="wb-t red">Not written</span><p class="wb-p" style="margin:0">'
+      + "This night has no scene book, so the storyteller invents its whole middle.</p></div>";
+  }
+
+  h += '<div class="wb-sh">The landing</div>';
   (b.lands || []).forEach(function(V, n){
-    h += '<div class="wb-c gold"><span class="wb-t gold">Landing ' + (n + 1) + " — the player finished it</span>" + wbPassage(V) + "</div>";
+    h += '<div class="wb-c gold"><span class="wb-t gold">Landing ' + (n + 1) + " &mdash; the player finished it</span>" + wbPassage(V) + "</div>";
   });
   (b.landsHard || []).forEach(function(V, n){
-    h += '<div class="wb-c red"><span class="wb-t red">Landing ' + (n + 1) + " — the world took it, and it cost</span>" + wbPassage(V) + "</div>";
+    h += '<div class="wb-c red"><span class="wb-t red">Landing ' + (n + 1) + " &mdash; the world took it, and it cost</span>" + wbPassage(V) + "</div>";
   });
   if(b.scar) h += '<div class="wb-c red"><span class="wb-t red">The scar</span><div class="wb-pass">' + esc(b.scar) + "</div></div>";
+
+  if(SB && SB.room){
+    h += '<div class="wb-sh">The room afterwards &mdash; ' + ((SB.room.topics || []).length) + " cards</div>";
+    h += '<p class="wb-p">Same cards, same rule, in the sealed room at ' + esc(SB.room.where) + ". Nothing counts"
+      + " down out there; the way out stands from the first turn.</p>";
+    var forked = (SB.room.topics || []).filter(function(c){ return c && c.fork; });
+    if(forked.length){
+      h += '<div class="wb-rl" style="color:var(--wb-slate)">This room forks. ' + forked.length + " of its "
+         + SB.room.topics.length + " cards belong to one side of the chassis choice and are never dealt on the other.</div>";
+    }
+    (SB.room.topics || []).forEach(function(c){ h += wbCard(c); });
+  }
 
   h += '<div class="wb-sh">What the run will remember either way</div><div class="wb-c">';
   (b.canon || []).forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
@@ -23105,376 +23154,66 @@ function wbDrawBeat(){
   h += "</div>";
 
   if((b.press || []).length){
-    h += '<div class="wb-sh">Pressure — offered when the night runs short</div>';
+    h += '<div class="wb-sh">Pressure &mdash; offered when the night runs short</div>';
     b.press.forEach(function(p, n){
       h += '<div class="wb-c"><span class="wb-t">' + (n ? "Out of room" : "Squeeze") + '</span><div class="wb-pass">' + esc(p) + "</div></div>";
     });
   }
-
-  /* the scene book, where this night has one. These are not slots to fill - they
-     are already in the game, and the board shows them so the writing that exists
-     and the writing that does not sit on the same page. */
-  var SB = SCENEBOOK[b.id];
-  if(SB){
-    h += '<div class="wb-sh">The middle — written, and dealt one card a turn</div>';
-    h += '<p class="wb-p">These are the things that can actually be dug into on this night. The game reads what the'
-      + " player typed, picks the one card that answers it, and sends <i>that card alone</i> to the storyteller as the"
-      + " turn’s instructions: who speaks, the true thing they give up, and the thing they will not say. Ask about"
-      + " nothing in particular and it deals the next unplayed card instead. Stalling spends this list rather than"
-      + " inventing past it — which is the whole point.</p>";
-    if(SB.before) h += '<div class="wb-c red"><span class="wb-t red">True all night, before anybody speaks</span>'
-      + '<div class="wb-pass">' + esc(SB.before) + "</div></div>";
-    (SB.topics || []).forEach(function(t){ h += wbTopic(t); });
-    if(SB.room){
-      h += '<div class="wb-sh">The room afterwards — written</div>';
-      h += '<p class="wb-p">Same cards, same rule, in the sealed room at ' + esc(SB.room.where) + ".</p>";
-      var forked = (SB.room.topics || []).filter(function(t){ return t && t.fork; });
-      if(forked.length){
-        h += '<div class="wb-rl" style="color:var(--wb-slate)">This room forks. '
-           + forked.length + ' of its ' + SB.room.topics.length + ' cards belong to one side of the chassis choice and are never dealt on the other: '
-           + esc(forked.map(function(t){ return t.fork + " - " + t.ask; }).join("; ")) + ".</div>";
-      }
-      (SB.room.topics || []).forEach(function(t){ h += wbTopic(t); });
-    }
-  }
-
-  var gaps = wbGaps(b), gd = 0;
-  gaps.forEach(function(g){ if(wbDone(g.id)) gd++; });
-  h += '<div class="wb-sh">' + (SB ? "The rail underneath — still improvised, " : "The middle — improvised today, ")
-    + gd + " of " + gaps.length + " written</div>";
-  h += '<p class="wb-p">Between the opening and the landing the player gets <b>' + (b.budget || 4)
-    + ' turns</b>. Every one offers the door above and two lines that keep the night open. Those two are written'
-    + " fresh by the storyteller each time. Each card below is one of them.</p>";
-  gaps.forEach(function(g){ h += wbSlot(g); });
-
-  var rg = wbRoom(b, 10), rd = 0;
-  rg.forEach(function(g){ if(wbDone(g.id)) rd++; });
-  h += '<div class="wb-sh">The room afterwards — ' + rd + " of 10 written</div>";
-  h += '<p class="wb-p">When this beat closes the family gets its own time in one sealed room: same place, same hour,'
-    + " nobody new at the door. It runs as long as the player wants, and <b>the way out is standing from the very"
-    + " first turn</b> - nothing out there counts down toward it.</p>";
-  rg.forEach(function(g){ h += wbSlot(g); });
-  $("wbv-beat").innerHTML = h;
+  h += '<div style="margin-top:18px"><button class="wb-chip" data-wbhome="1">&larr; the whole book</button></div>';
+  $("wbv-book").innerHTML = h;
 }
 
-var WB_BOOKS = {
- 1:{b:"Three days. A courier with a shard that hums, a job from the only person who ever looked after him, and a receiver who has been dead since Tuesday. Nothing about his situation improves. Everything about him does.",
-    a:{1:"It starts with a delivery and a piece of rock that will not stop making a noise. By the end of the first night the rock has a name, the way home has closed behind him, and the door he is knocking on is the door of the man who sent him.",
-       2:"He finds out where he stands with his own pack, runs the last honest fare of his working life, and meets the thing wearing his contact’s face, asking politely after a late delivery. Somewhere in there he is offered a clean way out of all of it.",
-       3:"A frightened person spends everything she knows to walk him through a sweep he cannot see. Then a kitchen, five plates, four people, and a sentence that costs him the fee and the job and the life he had."}},
- 2:{b:"Six days later, a diner that props its door open with a brick in the rain. This is the book where a group of people going the same way becomes a family, discovers that keeping people has a price, and gets handed the invoice.",
-    a:{1:"A table, hot food, and the first meal anybody has eaten sitting down. Then the hunt that has been walking after them since the first night ends — by the family’s own hand, and the room knows exactly whose. Afterwards a name is said properly over a grave, and a vow is made on it.",
-       2:"The vow gets tested immediately: a defector dying, a body that only one of two people can have, and a frightening woman who does not ask to be trusted, only to stay.",
-       3:"The courier learns what is in his skull, what it opens, and what the Choir actually does with people. A law goes up crooked on a wall and stays permanent. And a very good piece of watermarked paper arrives with a twelve-year-old’s name on it."}},
- 3:{b:"The offensive. Eight days of paperwork, then a street taken back at six in the morning in front of witnesses — and after that, only the deep.",
-    a:{1:"They take the city back the kind way, publicly, on a schedule, and the city watches people it wrote off do the impossible politely. In among it: the gentle voice, the grief the founders built the machine out of, the bill Vic has been carrying, and the first stone.",
-       2:"What the family is actually for, said out loud, and then the way down: the deep dark, and the ones still dreaming in it.",
-       3:"The surviving founder, the child under the Exchange, and the last move — custody, not conquest."}}
-};
-function wbDrawStory(){
-  var h = '<div class="wb-eyebrow">The Story</div><div class="wb-h">All three books, start to finish</div>';
-  h += '<p class="wb-lede">The events are fixed — every playthrough goes through these ' + SPINE.length
-    + " nights in this order. What changes is <i>how</i> each one closes: the player reaches the ending themselves,"
-    + " or the night runs out and the world reaches it for them, which costs something and leaves a mark. Both are shown.</p>";
-  [1,2,3].forEach(function(s){
-    var bk = WB_BOOKS[s], act = 0;
-    h += '<div class="wb-sh" style="margin-top:30px">Book ' + s + "</div>";
-    h += '<div class="wb-h">' + esc(SEASON_NAMES[s]) + "</div>";
-    h += '<p class="wb-lede" style="margin-bottom:16px">' + esc(bk.b) + "</p>";
-    SPINE.forEach(function(b, i){
-      if(b.season !== s) return;
-      if(b.act !== act){
-        act = b.act;
-        h += '<div class="wb-sh">Act ' + act + " — " + esc(ACT_NAMES[s][act]) + "</div>";
-        if(bk.a[act]) h += '<p class="wb-p">' + esc(bk.a[act]) + "</p>";
-      }
-      var fin = /SEASON FINALE|SERIES FINALE/.test(b.goal || "");
-      h += '<div class="wb-c' + (fin ? " gold" : "") + '"><span class="wb-t' + (fin ? " gold" : "") + '">'
-        + (i + 1) + " &middot; " + esc(b.title) + (fin ? " &middot; the book ends here" : "") + "</span>";
-      h += '<div class="wb-pass" style="margin-bottom:9px">' + esc(b.exit) + ".</div>";
-      (b.canon || []).forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
-      if(b.canonAlt || b.canonA || b.canonB) h += '<div class="wb-rl" style="color:var(--wb-slate)">This night forks, and the run remembers whichever way it went.</div>';
-      if(b.scar) h += '<div class="wb-rl" style="color:#e08b8b;border-left-color:#6b3030">If the world closed it: ' + esc(b.scar) + "</div>";
-      (b.reveals || []).forEach(function(r){
-        h += '<div class="wb-rl" style="color:var(--wb-slate);border-left-color:var(--wb-slate-dim)">The story finally says it here: ' + esc(REVEALS[r] || r) + "</div>";
-      });
-      if(b.stone) h += '<div class="wb-rl" style="color:var(--gold);border-left-color:var(--gold)">' + esc(b.stone) + "</div>";
-      h += '<div style="margin-top:9px"><button class="wb-chip" data-wbjump="' + esc(b.id) + '">Open this night on the board</button></div></div>';
-    });
-    if(s < 3) h += '<div class="wb-note">Between the books the family drops out of sight for '
-      + (s === 1 ? "six days" : "a week") + ". The board writes that gap itself: the record of the book that just"
-      + " closed, a recap, and then the first page of the next one in a new room on a new day.</div>";
-  });
-  h += '<div class="wb-note" style="margin-top:26px">Two endings sit outside this list and neither is a failure state.'
-    + " If the world answers four questions without the player it <b>folds the table</b>: the story catches itself up"
-    + " and hands them the book’s finale with a clean slate. And the red line is always there — used twice in a"
-    + " row, the courier puts the job down and walks, and that run ends quietly with nobody dead.</div>";
-  $("wbv-story").innerHTML = h;
-}
-function wbNode(cls, title, sub){
-  return '<div class="wb-node ' + cls + '">' + title + (sub ? "<small>" + sub + "</small>" : "") + "</div>";
-}
-function wbDrawFlow(){
-  var h = '<div class="wb-eyebrow">Flow</div><div class="wb-h">How one night moves</div>';
-  h += '<p class="wb-lede">One question is live at a time. It opens on a written page, runs a handful of turns, and'
-    + " closes either because the player reached for the ending or because the night ran out and the world reached"
-    + " it instead. Then a written landing, then the room.</p>";
-  h += '<div class="wb-legend"><span><i style="background:var(--gold)"></i>written by a person</span>'
-    + '<span><i style="background:var(--wb-slate)"></i>improvised</span>'
-    + '<span><i style="background:#e08b8b"></i>costs something</span></div>';
-  var A = '<div class="wb-arrow"></div>';
-  h += '<div class="wb-flow">'
-    + wbNode("w", "The opening", "The board plays a written page: the room, the hour, people mid-sentence.") + A
-    + wbNode("", "The player’s turn", "Three lines on the rail, or type anything.") + A
-    + '<div class="wb-branch">' + wbNode("w", "Takes the door", "The night ends, because they ended it.")
-    + wbNode("m", "Takes a stall", "The night stays open. Costs a turn.")
-    + wbNode("c", "Takes the red line", "Warned once. Twice and the run is over.") + "</div>" + A
-    + wbNode("c", "Or the turns run out", "The world answers the question for them, and a toll is paid.") + A
-    + wbNode("w", "The landing", "A written page — the warm one, or the scarred one.") + A
-    + wbNode("m", "The landing settles", "One or two turns where nothing new may begin.") + A
-    + wbNode("m", "The room", "Sealed: same place, same hour, nobody new. Runs as long as they want.") + A
-    + wbNode("w", "The next question", "Opens when the player says so, on another written page.")
-    + "</div>";
-  h += '<div class="wb-sh">The three books</div>';
-  [1,2,3].forEach(function(s){
-    var list = SPINE.filter(function(b){ return b.season === s; });
-    h += '<p class="wb-p"><b>Season ' + s + " — " + esc(SEASON_NAMES[s]) + "</b><br />"
-      + list.map(function(b, n){ return (n + 1) + ". " + esc(b.title); }).join(" &rarr; ") + "</p>";
-  });
-  $("wbv-flow").innerHTML = h;
-}
-function wbDrawMap(){
-  var sc = wbScope();
-  var h = '<div class="wb-eyebrow">Map</div><div class="wb-h">Every room the written pages name</div>';
-  h += '<p class="wb-lede">Not invented for this screen. Each one is the place stamped on a written passage, so this'
-    + " is the real route through the three books — " + sc.places.length + " rooms across " + SPINE.length + " nights.</p>";
-  h += '<div class="wb-places">';
-  sc.places.forEach(function(p){
-    h += '<div class="wb-place"><b>' + esc(p.name) + "</b><span>" + esc(p.beats.join(" · ")) + "</span></div>";
-  });
-  h += "</div>";
-  $("wbv-map").innerHTML = h;
-}
+/* ---- tab two: var BIBLE, printed exactly ----
+   VERBATIM IS THE POINT. Every earlier version of this page re-sorted the bible
+   into categories and guessed which night each line belonged to, which meant the
+   page could be wrong about the one document that is never wrong. It prints the
+   lines now, in order, as the storyteller receives them, and adds nothing. */
 function wbDrawBible(){
-  var h = '<div class="wb-eyebrow">The Bible</div><div class="wb-h">What the storyteller is told, and which nights it touches</div>';
-  h += '<p class="wb-lede">The whole standing brief, handed over on every single turn. Most of it is <i>law</i>: it'
-    + " governs every night equally, which is why it reads as background. Some names a person. Some is a secret with a"
-    + " night of its own.</p>";
-  h += '<div class="wb-legend"><span><i style="background:#8a7c68"></i>law</span>'
-    + '<span><i style="background:var(--gold)"></i>names a person</span>'
-    + '<span><i style="background:#e08b8b"></i>fenced secret</span></div>';
-  wbBible().forEach(function(sec){
-    h += '<details class="wb-det"><summary>' + esc(sec.title) + " (" + sec.rows.length + ")</summary><div class=\"wb-db\">";
-    sec.rows.forEach(function(e){
-      var cls = e.kind === "secret" ? "red" : (e.kind === "people" ? "gold" : "");
-      h += '<div class="wb-c ' + cls + '">';
-      if(e.kind === "secret") h += '<span class="wb-t red">Fenced — belongs to ' + e.lands.map(esc).join(", ") + "</span>";
-      else if(e.who.length) h += '<span class="wb-t gold">' + e.who.map(esc).join(" · ") + "</span>";
-      else h += '<span class="wb-t">Law — every beat</span>';
-      h += '<div class="wb-pass">' + esc(e.text) + "</div>";
-      if(e.beats.length && e.beats.length < 12){
-        h += '<div style="margin-top:8px">';
-        e.beats.forEach(function(id){ h += '<button class="wb-chip" data-wbjump="' + esc(id) + '">' + esc(id) + "</button>"; });
-        h += "</div>";
-      }
-      h += "</div>";
-    });
-    h += "</div></details>";
+  var raw = (typeof BIBLE === "string") ? BIBLE.split(String.fromCharCode(10)) : BIBLE;
+  var h = '<div class="wb-eyebrow">Mudskippers &middot; ' + esc(VERSION_TAG) + '</div>';
+  h += '<div class="wb-h">The Bible</div>';
+  h += '<p class="wb-lede">The whole standing brief, exactly as the storyteller is handed it on every single'
+    + " turn &mdash; " + raw.length + " lines, in order, unedited. This is the only place the world is written down."
+    + " If something here and something in the nights disagree, this one is right and the night is a fault.</p>";
+  h += '<div class="btnrow"><button class="btn ghost" id="wb-bcp">COPY THE WHOLE THING</button>'
+    + '<span id="wb-bmsg" class="hint"></span></div>';
+  var open = false;
+  raw.forEach(function(line){
+    var s = String(line);
+    var t = s.replace(/\s+$/, "");
+    if(!t.replace(/\s/g, "")) return;
+    /* a heading is any line that is not a bullet and ends in a colon. NO length
+       guard and NO trimming of the colon: an earlier version did both, and the
+       result was nine lines of the bible that this page could not show you. */
+    if(t.indexOf("- ") !== 0 && /:$/.test(t)){
+      if(open) h += "</div></details>";
+      h += '<details class="wb-det" open><summary>' + esc(t) + '</summary><div class="wb-db">';
+      open = true;
+      return;
+    }
+    if(!open){ h += '<details class="wb-det" open><summary>Opening charge</summary><div class="wb-db">'; open = true; }
+    h += '<div class="wb-c"><div class="wb-pass">' + esc(s) + "</div></div>";
   });
+  if(open) h += "</div></details>";
   $("wbv-bible").innerHTML = h;
-}
-var WB_MECH = [
- ["The beat","One question the night asks. Their order never changes. A beat is live until it is answered."],
- ["The gate","The moment the question is answered and the beat closes. The board holds the sentence — it is not the storyteller’s to decide."],
- ["The door","The one line on the rail that really does end the night. Always first, written by us, rotating between three wordings."],
- ["The stalls","The other two. They cannot end the night, so they are free to be about anything. Improvised today, and the largest single thing a person could take over."],
- ["The red line","Putting the whole job down. It asks twice: the first time the family feels it, the second time the courier goes and that run is over."],
- ["Anchors","Named people who must appear in the night’s own prose before the gate is allowed to count."],
- ["Pressure","Each beat has a number of turns. Run out and the world answers the question for you."],
- ["The toll","The fee for a question the night answered without you. Three are survivable and the count resets each book. A fourth folds the table."],
- ["The scar","What a beat leaves behind when the world closed it instead of the player. Every beat has one written."],
- ["The room","The family’s own time after a beat lands. Sealed: same place, same hour, nobody new. The way out is up from the first turn and never goes away - it is yours whenever you have had enough."],
- ["Wants and will-nots","One standing desire and one thing each person will not say. Gravity, not dialogue."],
- ["The fence","Secrets belonging to a night that has not happened yet. Saying one early spends that night, and the board checks every reply for them."],
- ["Peril","The storyteller declaring the courier is one wrong move from dying. It must be declared, with a way out on the rail, before a wrong answer can be fatal."],
- ["The record","What the run remembers. Written by the board when a gate falls, not by the storyteller."]
-];
-function wbDrawMech(){
-  var h = '<div class="wb-eyebrow">Mechanics</div><div class="wb-h">Every moving part, in plain words</div>';
-  WB_MECH.forEach(function(m){
-    h += '<div class="wb-c"><span class="wb-t gold">' + esc(m[0]) + '</span><div class="wb-pass">' + esc(m[1]) + "</div></div>";
-  });
-  /* the physics desk, listed for the writer: these are the things the game will
-     not let a scene do, so a card that needs one of them will not survive */
-  h += '<div class="wb-sh">The laws the game enforces itself</div>';
-  h += '<p class="wb-p">The storyteller is told these every turn <i>and</i> checked against them afterwards.'
-    + " A reply that breaks one is written again, and if it breaks the same law twice the offending lines are"
-    + " cut before anybody reads them. Worth knowing while writing: a card that needs one of these to bend"
-    + " will not survive contact with the game.</p>";
-  PHYSICS.forEach(function(r){
-    h += '<div class="wb-c red"><span class="wb-t red">' + esc(r.id) + '</span><div class="wb-pass">'
-      + esc(String(r.say()).replace(/^\(|\)$/g, "")) + "</div></div>";
-  });
-  h += '<div class="wb-sh">The interludes already written</div>';
-  h += '<p class="wb-p">Optional scenes offered during the room. Each is dealt at most once a season.</p>';
-  (INTERLUDES || []).forEach(function(c){
-    h += '<div class="wb-c gold"><span class="wb-t gold">' + esc(c.id || "interlude") + '</span><div class="wb-pass">' + esc(c.text || "") + "</div></div>";
-  });
-  $("wbv-mech").innerHTML = h;
-}
-function wbDrawScope(){
-  var sc = wbScope(), t = sc.t, w = 0, tot = 0;
-  SPINE.forEach(function(b){ var p = wbProg(b); w += p.done; tot += p.total; });
-  var h = '<div class="wb-eyebrow">Scope</div><div class="wb-h">How much is written, and how much is not</div>';
-  h += '<p class="wb-lede">The storyteller currently writes <b>' + t.turns + " turns</b> of a full run. That is the"
-    + " number to bring down. Everything below is counted off the live spine.</p>";
-  h += '<div class="wb-sh">Written by a person today</div><div class="wb-g3">'
-    + '<div class="wb-stat"><b>' + t.pass + "</b><span>passages</span></div>"
-    + '<div class="wb-stat"><b>' + t.lines + "</b><span>lines inside them</span></div>"
-    + '<div class="wb-stat"><b>' + t.doors + "</b><span>door lines</span></div>"
-    + '<div class="wb-stat"><b>' + t.walks + "</b><span>red lines</span></div>"
-    + '<div class="wb-stat"><b>' + t.rail + "</b><span>rail lines</span></div>"
-    + '<div class="wb-stat"><b>' + t.press + "</b><span>pressure offers</span></div>"
-    + '<div class="wb-stat"><b>' + t.cards + "</b><span>scene-book cards</span></div></div>";
-  if(t.cards){
-    h += '<div class="wb-note"><b>The scene book has started.</b> ' + t.cardBeats + " of " + SPINE.length
-      + " nights now hand the storyteller a written card instead of a description of what a card would be like."
-      + " On those nights the middle is authored: the topic, who answers, what they give up, and what they will"
-      + " not say. That is the mechanism this whole board is scoping — the rest of the spine is the same job again.</div>";
-  }
-  h += '<div class="wb-sh">Improvised today</div><div class="wb-g3">'
-    + '<div class="wb-stat"><b class="s">' + t.live + "</b><span>turns inside beats</span></div>"
-    + '<div class="wb-stat"><b class="s">' + t.room + "</b><span>turns in the rooms</span></div>"
-    + '<div class="wb-stat"><b class="s">' + t.after + "</b><span>landing turns</span></div>"
-    + '<div class="wb-stat"><b class="s">' + t.stalls + "</b><span>stall lines</span></div></div>";
-  h += '<div class="wb-note"><b>Why a branching tree is the wrong shape.</b> If each of the ' + t.live
-    + " live turns branched into the next, the paths would multiply past counting before the end of the first book.</div>";
-  h += '<div class="wb-sh">The shape that works: a pool per room</div>';
-  h += '<p class="wb-p">Instead of a tree, each beat gets a <b>pool</b> of moments. Any can fire on any turn as long'
-    + " as its condition is true — who is present, what has been said, how deep into the night it is. Order does not"
-    + " multiply the cost: ten moments stay ten moments however they are dealt.</p>";
-  h += '<div class="wb-c"><span class="wb-lb">Moments per beat, for the middle of the night</span>'
-    + '<input id="wb-s1" type="range" min="0" max="12" value="4" style="width:100%" />'
-    + '<span class="wb-lb">Moments per room, for the family’s own time</span>'
-    + '<input id="wb-s2" type="range" min="0" max="20" value="10" style="width:100%" />'
-    + '<div id="wb-so" style="margin-top:12px"></div></div>';
-  h += '<div class="wb-sh">Beat by beat</div><div class="wb-scroll"><table class="wb-tb"><thead><tr>'
-    + "<th>#</th><th>Beat</th><th>Bk</th><th>Turns</th><th>Open</th><th>Land</th><th>Doors</th><th>Anchors</th><th>Written</th>"
-    + "</tr></thead><tbody>";
-  SPINE.forEach(function(b, i){
-    var p = wbProg(b);
-    h += '<tr><td class="n">' + (i + 1) + "</td>"
-      + '<td><button class="wb-link" data-wbjump="' + esc(b.id) + '">' + esc(b.title) + "</button></td>"
-      + '<td class="n">' + b.season + '</td><td class="n">' + (b.budget || 4) + "</td>"
-      + '<td class="n">' + (b.opens || []).length + '</td><td class="n">' + ((b.lands || []).length + (b.landsHard || []).length) + "</td>"
-      + '<td class="n">' + (b.exits || []).length + '</td><td class="n">' + (b.anchors || []).length + "</td>"
-      + '<td class="n" style="color:var(--gold)">' + p.done + "/" + p.total + "</td></tr>";
-  });
-  h += "</tbody></table></div>";
-  h += '<p class="wb-p">Written across the whole board so far: <b>' + w + " of " + tot + "</b> cards.</p>";
-  $("wbv-scope").innerHTML = h;
-  function calc(){
-    var a = +$("wb-s1").value, bb = +$("wb-s2").value;
-    var beats = SPINE.length, rooms = beats - 1, cards = a * beats + bb * rooms;
-    var ratio = cards / t.turns, read;
-    if(!cards) read = "Nothing written: the storyteller writes all " + t.turns + " turns, as it does today.";
-    else if(ratio < 0.5) read = "About " + ratio.toFixed(2) + " written moments for every improvised turn. The storyteller is still doing most of the talking and the writing shows up as highlights.";
-    else if(ratio < 1) read = "About " + ratio.toFixed(2) + " written moments per improvised turn. Most turns could be written ones, but a player who lingers will run the pool dry.";
-    else read = "About " + ratio.toFixed(2) + " written moments per improvised turn, with " + (cards - t.turns)
-      + " spare. A whole run could be played on written material, provided the conditions spread the cards evenly — ten moments in a kitchen do not cover a turn on a rooftop, so the real number lands higher.";
-    $("wb-so").innerHTML = '<div class="wb-g3">'
-      + '<div class="wb-stat"><b>' + cards + "</b><span>cards to write</span></div>"
-      + '<div class="wb-stat"><b>' + (cards * 45).toLocaleString() + "</b><span>words at ~45 a card</span></div>"
-      + '<div class="wb-stat"><b>' + Math.ceil(cards / 12) + "</b><span>days at 12 a day</span></div></div>"
-      + '<p class="wb-p" style="margin-top:9px">' + read + "</p>";
-  }
-  $("wb-s1").addEventListener("input", calc);
-  $("wb-s2").addEventListener("input", calc);
-  calc();
-}
-function wbDrawExport(){
-  var keys = Object.keys(wbW).filter(wbDone);
-  var h = '<div class="wb-eyebrow">Export</div><div class="wb-h">Hand the writing back</div>';
-  h += '<p class="wb-lede">Everything typed into this board lives in this browser. When there is a batch worth'
-    + " implementing, export it as one file.</p>";
-  h += '<div class="wb-g3"><div class="wb-stat"><b>' + keys.length + "</b><span>cards written</span></div></div>";
-  h += '<div class="btnrow"><button class="btn" id="wb-dl">DOWNLOAD THE FILE</button>'
-    + '<button class="btn ghost" id="wb-cp">COPY TO CLIPBOARD</button><span id="wb-msg" class="hint"></span></div>';
-  h += '<div class="wb-scroll" style="margin-top:14px"><table class="wb-tb"><thead><tr><th>Card</th><th>Who</th><th>Opens</th></tr></thead><tbody>';
-  keys.forEach(function(k){
-    h += "<tr><td>" + esc(k) + "</td><td>" + esc(wbW[k].who || "—") + "</td><td>" + esc((wbW[k].lines || "").slice(0, 60)) + "</td></tr>";
-  });
-  h += "</tbody></table></div>";
-  $("wbv-export").innerHTML = h;
-  function payload(){ return JSON.stringify({board:"mudskippers", build:VERSION_TAG, written:wbW}, null, 1); }
-  $("wb-dl").onclick = function(){
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([payload()], {type:"application/json"}));
-    a.download = "mudskippers-writing.json"; a.click();
-    $("wb-msg").textContent = "Downloaded";
+  $("wb-bcp").onclick = function(){
+    var text = (typeof BIBLE === "string") ? BIBLE : BIBLE.join(String.fromCharCode(10));
+    if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){
+      $("wb-bmsg").textContent = "Copied — " + raw.length + " lines";
+    });
   };
-  $("wb-cp").onclick = function(){
-    if(navigator.clipboard) navigator.clipboard.writeText(payload()).then(function(){ $("wb-msg").textContent = "Copied"; });
-  };
-}
-function wbDrawStart(){
-  var sc = wbScope(), t = sc.t;
-  var h = '<div class="wb-eyebrow">Mudskippers &middot; ' + esc(VERSION_TAG) + '</div><div class="wb-h">The Writers’ Board</div>';
-  h += '<p class="wb-lede">Roughly half of what a player reads is written by hand; the rest is improvised by the'
-    + " storyteller as they play. This board exists to shift that ratio. Everything on it is read out of the game"
-    + " itself, so it is never out of date.</p>";
-  h += '<div class="wb-g3"><div class="wb-stat"><b>' + SPINE.length + "</b><span>nights</span></div>"
-    + '<div class="wb-stat"><b>' + t.pass + "</b><span>passages written</span></div>"
-    + '<div class="wb-stat"><b class="s">' + t.turns + "</b><span>turns still improvised</span></div></div>";
-  h += '<div class="wb-sh">How to use this</div>';
-  h += '<p class="wb-p"><b>Storyboard</b> is the working surface. Pick any night from the list on the left and you get'
-    + " the whole of it: the question it asks, the line that answers it, everything already written, and then a stack"
-    + " of blank cards for the parts the storyteller currently invents. Fill in any card and it saves itself.</p>";
-  h += '<p class="wb-p"><b>Scope</b> counts what exists and what does not, and lets you try sizes.'
-    + " <b>Bible</b> is the world as the storyteller is told it, secrets marked and linked to the night each belongs to."
-    + " <b>Map</b> is every room. <b>Flow</b> is the shape of a night. <b>Mechanics</b> is the vocabulary."
-    + " <b>Export</b> hands the writing back.</p>";
-  h += '<p class="wb-p">If you read one thing first, read <b>The Story</b> — all three books end to end.</p>';
-  h += '<div class="wb-note">A <b>beat</b> is one night, one question. The <b>room</b> is the quiet afterwards, where'
-    + " the family talk and nothing is at stake — it is the largest unwritten space in the game and probably the"
-    + " best place to start.</div>";
-  h += '<div class="wb-sh">The one rule about the cards</div>';
-  h += '<p class="wb-p">A card is a moment, not a branch. It does not need to know what came before it or what follows'
-    + " — only a condition saying when it may fire. That is what keeps the job finite.</p>";
-  $("wbv-start").innerHTML = h;
 }
 
 /* ---- wiring ---- */
-$("wbmodal").addEventListener("input", function(e){
-  var box = e.target.closest ? e.target.closest("[data-wbslot]") : null;
-  if(!box) return;
-  var f = e.target.getAttribute("data-wbf");
-  if(!f) return;
-  var id = box.getAttribute("data-wbslot");
-  wbW[id] = wbW[id] || {};
-  wbW[id][f] = e.target.value;
-  wbSave();
-  var d = wbDone(id);
-  box.classList.toggle("done", d);
-  box.querySelectorAll(".wb-sid")[1].textContent = d ? "written" : "not written yet";
-  wbDrawRail();
-});
-$("wbmodal").addEventListener("change", function(e){
-  var box = e.target.closest ? e.target.closest("[data-wbslot]") : null;
-  if(box && e.target.tagName === "SELECT"){
-    var id = box.getAttribute("data-wbslot");
-    wbW[id] = wbW[id] || {};
-    wbW[id][e.target.getAttribute("data-wbf")] = e.target.value;
-    wbSave();
-  }
-});
 $("wbmodal").addEventListener("click", function(e){
   var t = e.target.closest ? e.target.closest("[data-wbtab]") : null;
   if(t){ wbGo(t.getAttribute("data-wbtab")); return; }
+  var home = e.target.closest ? e.target.closest("[data-wbhome]") : null;
+  if(home){ wbBeat = ""; wbGo("book"); return; }
   var b = e.target.closest ? e.target.closest("[data-wbbeat]") : null;
-  if(b){ wbBeat = b.getAttribute("data-wbbeat"); wbGo("beat"); return; }
+  if(b){ wbBeat = b.getAttribute("data-wbbeat"); wbGo("book"); return; }
   var j = e.target.closest ? e.target.closest("[data-wbjump]") : null;
-  if(j){ wbBeat = j.getAttribute("data-wbjump"); wbGo("beat"); }
+  if(j){ wbBeat = j.getAttribute("data-wbjump"); wbGo("book"); }
 });
 function wbOpen(){
   if(!prySpoilers){
@@ -23483,13 +23222,12 @@ function wbOpen(){
   } else {
     $("wbgate").style.display = "none";
     $("wbboard").style.display = "";
-    /* open on the night the run is actually standing in - that is the one the
-       writer is most likely to have just watched the storyteller improvise */
-    if(!wbBeat) wbBeat = (runSlug && !beatDone()) ? beatNow().id : SPINE[0].id;
+    /* it opens on the whole book, never on a night: the first question is always
+       what is written and what is not, and that answer is recounted here and now */
     $("wb-nav").innerHTML = WB_TABS.map(function(x){
       return '<button class="wb-nb" data-wbtab="' + x[0] + '" aria-current="' + (x[0] === wbTab) + '">' + x[1] + "</button>";
     }).join("");
-    wbDrawStart(); wbDrawStory(); wbDrawFlow(); wbDrawMap(); wbDrawBible(); wbDrawMech();
+    wbStatCache = null;
     wbGo(wbTab);
   }
   $("wbmodal").classList.add("open");
