@@ -62,10 +62,17 @@ nobody had counted, and it was the one that never reached the wiring at all. See
 for what it cost and the three readers that had to be hunted. **So the next wave IS a
 night, and it is `a2-seven`.**
 
-**AND WHEN `a2-seven` DOES COME ROUND, THE EVENING CARD IS A PITCH, NOT A WRITE-UP** (ruled
-the same day): audit the night, bring the author three or four options for what the missing
-evening conversation is about, he rules the subject, then I write it. Understudy mode, as
-with every room subject since v4.73.0.
+**`a2-seven`'S SUBJECTS ARE RULED (2026-08-16), so the next wave starts with writing.** The
+evening card is **Nine knowing his voice from inside the farm** — canon on the beat, staged
+nowhere — and by the bible's own physics it is private to whoever is holding her, so the
+family argues loudly about a stranger while the courier holds the one person who knows who
+he is. The room takes all four offered subjects (Vic and the dead frame · Hesta and the
+brick · Nine and the list · Pia's assessment), which with its three makes seven.
+
+**ONE WORLD FACT IS OPEN AND MUST NOT BE INVENTED: how Nine heard anything inside the
+farm.** A shard is a stone unless somebody is holding it, and she was in nobody's hand
+there. Night 14 does not need the answer. **`a3-dreamers` (29) does** — that is the night
+the family walks into a room of shelved people. It is the author's to rule.
 
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at

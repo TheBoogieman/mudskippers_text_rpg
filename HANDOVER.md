@@ -262,6 +262,35 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
+### `a2-seven` (14) IS THE NEXT WAVE, AND ITS SUBJECTS ARE RULED — 2026-08-16
+
+**The evening card: NINE KNOWS HIS VOICE.** The night's own canon already says it — *"Nine
+knew his voice from inside the farm: he read the lists, and she was a number on one. He does
+not remember her"* — and nothing anywhere in the book stages it. Ruled by the author after
+he asked, correctly, how a shard hears anybody at all. **It is a PRIVATE scene by physics:**
+the bible says a shard *"speaks ONLY as a private bone-hum to a carrier in sustained skin
+contact"* and *"can never address a room"*, so the courier must be holding her bare-handed,
+and he is the only person who knows she reacted. The family is loudly deciding whether to
+save a stranger while the courier holds the one person in the room who knows exactly who he
+is. Takes the evening from 5 to 6, which is its budget + 2.
+
+**The room: ALL FOUR TAKEN**, which with the three already written makes seven.
+1. **Vic and the dead frame** — the man who builds bodies looking at what a botched
+   self-extraction does to somebody, while a chassis he has never mentioned sits under the
+   floor of the building he is standing in. (The room's `never` still forbids naming it.)
+2. **Hesta and the brick** — he came because of a rumour about her door, from another city,
+   on his last legs. Finding out your reputation walked further than you have.
+3. **Nine and the list** — the payoff of the evening card. Her existing room card is careful
+   unsentimental curiosity and does not touch this.
+4. **Pia's assessment** — twelve-year-old sizing up a houseguest who cannot eat, cannot
+   leave, and keeps apologising.
+
+**AND ONE WORLD QUESTION IS OPEN, DELIBERATELY NOT INVENTED.** The book never says **how
+Nine heard anything inside the farm.** She was in nobody's hand there, and a shard across a
+room is a stone. Tonight's card does not need the answer — she can simply know the voice —
+but **`a3-dreamers` (29) walks the family into a room full of shelved people and will need
+it.** Take it to the author as its own question; do not fill it in while writing night 14.
+
 ### THE COLD OPENS ARE DONE (v5.32.0) — and there were 72 of them, not 64
 
 **Every night opens on a staged passage and two clickable lines. All 72 are now wired to a
