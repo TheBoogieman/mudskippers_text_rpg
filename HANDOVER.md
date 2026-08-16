@@ -245,6 +245,22 @@ the nights are written a wave apart.
 3. **One word may not win two cards in the same deck.** `standing` meant a standing
    arrangement on one card and a man refusing to sit down on the other.
 
+### THE NEXT ONE IS `a2-mirren` (13), ALONE — ruled 2026-08-16
+
+**One night per wave from here.** Nights 11 and 12 were paired because they are one
+unbroken action; 13 and 14 are not, so pairing them buys less than it costs.
+
+**`a2-mirren` is the act turn and the heaviest single night in the season.** They carry her
+home — not the hunter, *Mirren* — bury her, say her name aloud one after another, and the
+vow comes out of the worst thing they have ever had to do. **Its evening deck is already
+full at 6 of 6**, so this is a room wave: 3 cards to 7, second takes, both landings.
+
+**Two fences on it, and both are in the beat already.** Nothing in nights 11 or 12 says the
+whole name, on purpose — night 12's `never` fences the burial and the vow to tomorrow, and
+BOTH of night 12's landings end on the fact of the silence. Night 13 is where the name gets
+said, and it must be the first time. And **Pia's background stays blank** (ruled the same
+day): she gets no family, in either direction, until the author says so.
+
 ## THE NEXT WAVE — and it is still a fork the author has to call
 
 The nights get written in order, and the order says the next thing is **the capture**.

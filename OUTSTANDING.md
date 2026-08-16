@@ -250,8 +250,14 @@ only when one is written.
 
 **A CHARACTER'S FAMILY IS THE AUTHOR'S TO INVENT, AND THE DETECTOR ENFORCES IT.** A take
 written for Pia at v5.30.0 opened *"when my mum went"* — and `breach` caught it on the kin
-rule. The book has never given Pia a family. **Pia's background is an open question for the
-author**, and nothing should assume an answer to it until it is ruled on.
+rule. The book has never given Pia a family.
+
+**RULED 2026-08-16: PIA'S BACKGROUND STAYS BLANK.** Not "she has nobody" — blank, unwritten,
+and not to be assumed either way. Nothing may imply where she came from, that she has
+people, or that she does not, until the author rules otherwise. **The bill for this falls
+due at `a2-turn` (22)**, the season finale, where her name goes on the Choir's paper as a
+salvage listing: that night will want to know whether anybody outside this family would
+come looking for her. Raise it before writing 22, not during.
 
 **A LANDING RAIL IS THREE ROWS AND NO MORE.** `playAuthored` ends on `V.rail.slice(0, 3)`,
 so a fourth row is written, counted by the board as a cut row, and never once seen by a
