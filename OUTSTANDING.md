@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.31.0. **Book One is closed. Season 2 has ten of its thirteen nights finished, and the hole in its middle is down to one.***
+*Written 2026-08-16, updated at v5.32.0. **Book One is closed. Season 2 has ten of its thirteen nights finished, the hole in its middle is down to one, and every night in the book now opens on two questions that get two different answers.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -18,7 +18,7 @@ the way it is, what has been ruled, and which of it is a trap.
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.31.0, not carried forward.*
+*Every figure below was read off the board at v5.32.0, not carried forward.*
 
 | | count |
 |---|---|
@@ -27,9 +27,15 @@ the way it is, what has been ruled, and which of it is a trap.
 | second and third takes | 209 |
 | **takes with no choice line of their own** | **49 of 209** |
 | nights short of cards | 13 |
-| nights that land on nothing to click | 14 |
+| nights with no wired row at all | **0** (was 14) |
 | rooms still on their first three cards | 12 |
 | authored lines in the drift net | 7,177 |
+
+**The opening rows are all wired as of v5.32.0** — 72 of them, across 36 openings, every
+one dealing the card it names, driven every release by two sweep rows. Fourteen openings
+used to give one answer to two different questions. **This did not finish a single night**:
+a night is finished on the four counts above and an opening is not one of them. What it
+changed is that every night now *starts* honestly.
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
@@ -50,10 +56,11 @@ where the budget wants 6**, room at 3. It is the one where a defector walks up t
 failing frame asking for nothing, and where the question `a2-mirren` deliberately left open
 gets answered — *does the vow cover somebody who is not ours?*
 
-**BUT THE NEXT WAVE IS NOT A NIGHT — ruled 2026-08-16.** The 33 cold opens come first: 64
-opening rail lines, none wired, and **13 of 33 nights show two questions that give the same
-answer**. See HANDOVER for the shape (two parts, the first verifiable as a no-op, no engine
-work — proved, not assumed).
+**THE COLD OPENS CAME FIRST, AND THEY ARE DONE (v5.32.0).** All 72 opening rows wired —
+not 64, because the PREMIERE that opens Books Two and Three is a second set of openings
+nobody had counted, and it was the one that never reached the wiring at all. See HANDOVER
+for what it cost and the three readers that had to be hunted. **So the next wave IS a
+night, and it is `a2-seven`.**
 
 **AND WHEN `a2-seven` DOES COME ROUND, THE EVENING CARD IS A PITCH, NOT A WRITE-UP** (ruled
 the same day): audit the night, bring the author three or four options for what the missing
@@ -304,6 +311,25 @@ happened to be a night's name does not.
 **A hole in a deck is legal JavaScript.** `[{...},,{...}]` passes `node --check` and leaves
 an undefined card every walker steps over. One got in this session from a splice that put a
 comma after a block that already ended in one. **The board counts holes now.**
+
+**A SCRIPTED SPLICE MUST ASSERT ITS ANCHOR IS UNIQUE, AND THE REFUSAL IS THE FINDING.**
+v5.32.0's wiring script required exactly one source match per row and refused to write when
+`a3-evict`'s opening row returned three. That is how `SEASON_OPENS` — a whole second set of
+openings, and the only ones that had never reached the wiring at all — got found. A script
+that had simply replaced the first match would have shipped and been believed. **Count your
+anchors; a surprising count is a reader you have not met.**
+
+**MEASURE A ROW FROM THE STATE THE SCREEN WAS DRAWN IN.** The two lines of an opening are
+offered together and the player clicks ONE. A harness that clicks both in sequence spends
+row one's card, so row two scores onto something else and a genuine collision reads as two
+different answers. Measured that way the book had **zero** duplicate openings; measured
+correctly it had **fourteen**. Wire once, snapshot, then click each line from the snapshot.
+
+**AN OPENING WIRES AGAINST THE NIGHT; A LANDING WIRES AGAINST THE ROOM.** `playOpening`
+passes `SCENEBOOK[id]`, `playLanding` passes `SCENEBOOK[id].room`, and they have always
+been different decks. `wbReach` — the join that reports a row naming a card that is not
+there — resolved both against the room, so the day the openings were wired it would have
+called all 72 broken. Repaired at v5.32.0. **A form has readers: hunt all of them.**
 
 ---
 

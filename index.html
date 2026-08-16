@@ -1710,6 +1710,12 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.32.0 "Two Questions, And Now Two Answers"
+   THE COLD OPENS: every night's opening row is wired — 72 rows, an id on all 175 cards
+   (the finished-room count is unmoved at 19 of 33; this wave is the openings, not a room)
+   fourteen of the thirty-six openings used to give one answer to two different questions
+   the premiere was the opening the wiring could not reach: Books Two and Three open on it
+   a2-seven's opening asked Three a question, on a night Three is not in the room
    MUDSKIPPERS — THE COURIER'S RUN · v5.31.0 "Nothing Goes At The Top"
    a2-mirren FINISHED: the act turn, seven room cards, both landings wired — 19 of 33
    a2-mirren: both landings rang a wire for versions and nothing was ever on the line
@@ -2183,8 +2189,8 @@ var SPINE = [
               ["Pia","Don't run. Running is how they know which one of us is the one."],
               ["Pia","Your room's above the noodle place, isn't it. Third floor, blue door."],
               "It is not a question, and she does not look at you when she says it."],
-       rail:["Ask her why she is asking about my room.",
-             "Back down. Whatever is coming, it can have the stairs."]}],
+       rail:[{line:"Ask her why she is asking about my room.", cards:["why-she-asked-about-my-room"]},
+             {line:"Back down. Whatever is coming, it can have the stairs.", cards:["what-is-coming-down-the-stairs"]}]}],
  lands:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
        now:"Day 1, deep night, on the causeway past the last streetlight. Nobody is following. The safehouse light is out on the marsh ahead.",
        lines:["The city thins out the way a bruise does — colour first, then everything.",
@@ -2298,8 +2304,8 @@ var SPINE = [
               ["Pia","He'll have heard us at the causeway. He's deciding what face to open it with."],
               ["Vic","Pia. Is he with you? Say it properly, not the knock."],
               "The voice comes through the door older than you remember it, and it does not open anything yet."],
-       rail:["Say his name back through the door.",
-             "Let Pia handle it. She has the code and the leverage."]}],
+       rail:[{line:"Say his name back through the door.", cards:["why-he-went-dark"]},
+             {line:"Let Pia handle it. She has the code and the leverage.", cards:["whether-this-place-is-safe"]}]}],
  lands:[{day:"1", time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 1, the small hours, in the safehouse kitchen with the shutters down. Vic has told the whole story and gone quiet over the kettle.",
        lines:["The story runs out somewhere around three in the morning and leaves the lot of you sitting in it.",
@@ -2347,8 +2353,8 @@ var SPINE = [
               ["Pia","Whatever they say, say it back to me straight. Don't do the thing where you shrug."],
               ["Nine","What is a pack, exactly? Is it a family or is it a job?"],
               "Nobody answers her, because nobody else heard her, and you do not pass it on - passing it on would mean finding out. She is in your bare hand because you have not put her down since the marsh, and the wire on the bench is somebody else's problem, switched off."],
-       rail:["Tell Nine it is both, badly.",
-             "Ask Pia what she thinks they will say."]}],
+       rail:[{line:"Tell Nine it is both, badly.", cards:["what-nine-makes-of-any-of-this"]},
+             {line:"Ask Pia what she thinks they will say.", cards:["who-in-the-pack-actually-gets"]}]}],
  lands:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
        now:"Day 2, morning, in the cable shack. The pack has answered and the day has to start anyway. There is a job on the board.",
        lines:["The answer arrives, and it is the answer, and the kettle in the house goes on regardless, because that is what kettles are for.",
@@ -2397,8 +2403,8 @@ var SPINE = [
               "You say something with a lot of syllables in it and the clerk stamps the chit anyway.",
               ["Pia","He's freelance. Put down freelance. It sounds better than what it is."],
               "Pia has appointed herself security and is standing by the door with her arms folded, at four foot nine, in a coat that used to be Vic's."],
-       rail:["Ask the clerk what is actually in the box.",
-             "Tell Pia security does not usually glare at the potted plant."]}],
+       rail:[{line:"Ask the clerk what is actually in the box.", cards:["what-is-actually-in-the-box"]},
+             {line:"Tell Pia security does not usually glare at the potted plant.", cards:["whether-anyone-is-watching"]}]}],
  lands:[{day:"2", time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
        now:"Day 2, late afternoon, on the far pavement opposite the Copper Eel. The last honest fare is signed for and done.",
        lines:["The chit signs, the door shuts, and that is the whole ceremony a working life gets.",
@@ -2446,8 +2452,8 @@ var SPINE = [
               ["Mirren","There you are. You're late, and I've been very patient about it."],
               ["Pia","That's not her. Whatever that is, it isn't her."],
               "She smiles with Mirren's mouth and does not appear to have heard, or to mind."],
-       rail:["Ask her what her actual name is.",
-             "Say nothing. Let her talk and count the exits."]}],
+       rail:[{line:"Ask the thing wearing her face whether it knows me.", cards:["whether-she-knows-him"]},
+             {line:"Say nothing. Let her talk and count the exits.", cards:["the-rest-of-the-bar"]}]}],
  lands:[{day:"2", time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
        now:"Day 2, evening, in the back of a closed laundry three districts from the Eel. Nobody is following yet.",
        lines:["You get out the way people get out — badly, fast, and further than anyone meant to go.",
@@ -2496,8 +2502,8 @@ var SPINE = [
               ["Vic","I'm not arguing for it. I'm saying it's on the table and you get to look at it."],
               ["Pia","He's arguing for it."],
               "Nine is out of the pocket and in the light, and every person in the room is being extremely careful not to look directly at her."],
-       rail:["Ask Vic to sit down or leave.",
-             "Read the offer out loud. All of it, including the small print."]}],
+       rail:[{line:"Ask Vic to sit down or leave.", cards:["what-exactly-is-being-offered"]},
+             {line:"Read the offer out loud. All of it, including the small print.", cards:["how-you-tell-good-papers"]}]}],
  lands:[{day:"2", time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
        now:"Day 2, late, on the safehouse porch with the marsh roaring. The exit has been answered out loud and the house heard it.",
        lines:["Whatever was on the table is off it now, and everyone in the house heard which way it went.",
@@ -2552,8 +2558,8 @@ var SPINE = [
               ["Nine","Left. Now, not in a second. Left."],
               "She has never given you a direction before. You take it before you have finished deciding to, and Pia takes it off you the way you take a thrown rope.",
               ["Pia","I don't know why you turned. Turn again when you do it. I'll be right behind the reason."]],
-       rail:["Ask her how she knows.",
-             "Do not ask her anything. Go left."]}],
+       rail:[{line:"Ask her how she knows.", cards:["how-she-knows-any-of-this"]},
+             {line:"Do not ask her anything. Go left.", cards:["what-happens-next-exactly"]}]}],
  lands:[{day:"3", time:"2:15am", place:"THE SAFEHOUSE, BACK ROOM", amb:"interior-warm",
        now:"Day 3, small hours, in the safehouse back room with the cordon still out on the causeway. The ring passed over the house an hour ago. Nine threaded them home through it.",
        lines:["The sweep goes over you the way weather goes over a rock, and then it is somewhere else, and then it is gone.",
@@ -2629,8 +2635,8 @@ var SPINE = [
               ["Vic","Don't look at me. Pia laid the table."],
               ["Pia","I laid the table."],
               "Vic looks at the fifth plate for a long moment and then does not object, which is the loudest thing he has done all week."],
-       rail:["Ask who taught her to set a place for a rock.",
-             "Eat first. Whatever this is, it keeps better fed."]}],
+       rail:[{line:"Ask who taught her to set a place for a rock.", cards:["what-pia-makes-of-it-having"]},
+             {line:"Eat first. Whatever this is, it keeps better fed.", cards:["what-she-is-to-him-now"]}]}],
  lands:[{day:"3", time:"9:40pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 3, evening, in the safehouse kitchen. It has been said out loud at the table, and the table is still sitting there with it.",
        lines:["You say it, and the sentence turns out to be much shorter than the amount of your life it just spent.",
@@ -2722,8 +2728,8 @@ var SPINE = [
               ["Pia","She's already setting a table. Look. She's counting us through the window."],
               ["Nine","Does she know what I am, or am I a coat pocket again tonight?"],
               "Inside, somebody is laying out more cutlery than there are people on this street."],
-       rail:["Ask Pia who she is to Vic.",
-             "Answer Nine before we go in."]}],
+       rail:[{line:"Ask her who she is, and why that door is propped open in this weather.", cards:["who-hesta-is-and-why-the-door"]},
+             {line:"Answer Nine before we go in.", cards:["whether-nine-gets-introduced"]}]}],
  lands:[{day:"9", time:"10:40pm", place:"THE OPEN DOOR, BACK BOOTH", amb:"interior-warm",
        now:"Evening, in the back booth of The Open Door. Hesta has fed them and is pretending not to watch.",
        lines:["The plates go back empty, which in Hesta's language is the entire conversation.",
@@ -2772,8 +2778,8 @@ var SPINE = [
               "There is a small hole in the napkin where she pressed too hard.",
               ["Hesta","Then we do two. And if two goes, we do three, and we keep going until the list is honest."],
               "Somewhere below, water is doing something water should not be doing indoors."],
-       rail:["Read out option two.",
-             "Ask who wrote option four, because it is not in anyone's handwriting."]}],
+       rail:[{line:"Read out option two.", cards:["try-the-jammer"]},
+             {line:"Ask who wrote option four, because it is not in anyone's handwriting.", cards:["who-wrote-option-four"]}]}],
  lands:[{day:"11", time:"1:20am", place:"THE FLOODED UNDERCROFT", amb:"dead-signal",
        now:"Deep night, in the undercroft below the old exchange house. Every kind option has been spent, in front of witnesses.",
        lines:["The last soft thing on the napkin fails the way the others did — politely, completely, and where everyone could see it.",
@@ -2850,8 +2856,8 @@ var SPINE = [
               ["Pia","So anyway that's three jokes from me and none from anyone else, which I think says a lot about this family."],
               ["Hesta","Pia."],
               ["Pia","...Yeah. All right."]],
-       rail:["Ask, out loud, who is volunteering.",
-             "Let Pia keep going. It is holding the room together."]}],
+       rail:[{line:"Ask, out loud, who is volunteering.", cards:["whose-hand-it-is"]},
+             {line:"Let Pia keep going. It is holding the room together.", cards:["whether-pia-stays-for-it"]}]}],
  lands:[{day:"11", time:"4:00am", place:"THE MARSH EDGE", amb:"marsh-fog",
        now:"Before dawn, at the marsh edge past the causeway. The hunt is over and the family knows whose hand ended it.",
        lines:["It ends, and then there is the part afterwards that nobody writes songs about.",
@@ -2939,8 +2945,8 @@ var SPINE = [
               "She is not wrong, and the basket goes down on the wet grass with the finality of an argument won.",
               ["Pia","Are we supposed to say something? Is there a — is there a thing you say?"],
               "Nobody knows. Everybody looks at somebody else."],
-       rail:["Pick up the spade.",
-             "Ask Hesta what is in the basket."]}],
+       rail:[{line:"Pick up the spade.", cards:["why-they-are-doing-it-this-way"]},
+             {line:"Answer Pia. Ask Hesta whether there is a thing you say.", cards:["what-to-say-over-her"]}]}],
  lands:[{day:"11", time:"7:15am", place:"THE CAIRN, MARSH EDGE", amb:"dawn",
        now:"Dawn at the new cairn. Mirren has been named aloud and the vow has been spoken over her.",
        lines:["The sun comes up over the water the way it does out here — all at once, and far too kindly for the occasion.",
@@ -2995,8 +3001,8 @@ var SPINE = [
               "Whatever is inside that housing is apologising for existing in a room. That tells you a great deal very quickly.",
               ["Vic","It has a night in it. Maybe less. I'm not saying that to hurry anyone, I'm saying it because it's the number."],
               "He says it kindly, which does not help, and he knows it before he has finished saying it."],
-       rail:["Ask Seven what he wants.",
-             "Ask Three exactly how long a night means."]}],
+       rail:[{line:"Ask Seven what he wants.", cards:["what-he-wants"]},
+             {line:"Ask Vic exactly how long a night means.", cards:["how-long-he-has"]}]}],
  lands:[{day:"14", time:"11:50pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
        now:"Late, in Hesta's back room. Seven is out of the failing rig and the family is committed.",
        lines:["Whatever he was in is off him now, and what is left of him fits in one hand and will not stop thanking people.",
@@ -3076,8 +3082,8 @@ var SPINE = [
               ["Nine","It is mine to give. Vic said. That is either true or it was a nice thing to say to a rock."],
               "You put the question to Vic. You use the word 'rock', because she did, and because he should have to hear it.",
               ["Vic","It's true."]],
-       rail:["Ask Nine what she actually wants.",
-             "Ask who is under the tea towel's jurisdiction."]}],
+       rail:[{line:"Ask Nine what she actually wants.", cards:["what-nine-wants-to-do"]},
+             {line:"Ask who is under the tea towel's jurisdiction.", cards:["whose-it-is"]}]}],
  lands:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
        now:"The small hours, in Hesta's back room with the floorboards still up. The chassis has an owner by Nine's own choice, and something has been cooked in it and eaten.",
        lines:["Somebody eats something they chose themselves for the first time, and the kitchen has the sense to make it an enormous deal quietly.",
@@ -3148,8 +3154,8 @@ var SPINE = [
               ["Three","Good morning."],
               "It comes out in two voices at slightly different pitches, and the room decides all at once not to react.",
               ["Pia","...Morning. That's my chair, by the way. Not a problem. Just information."]],
-       rail:["React anyway. Ask about the voices.",
-             "Ask her what she wants, before Pia gets to the chair."]}],
+       rail:[{line:"React anyway. Ask about the voices.", cards:["who-she-is"]},
+             {line:"Ask her what she wants, before Pia gets to the chair.", cards:["what-she-wants"]}]}],
  lands:[{day:"16", time:"9:05am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
        now:"Morning. Three has said what she wants and has been given a reason to stay.",
        lines:["She stays, which is the answer, and nobody makes her say it a second way.",
@@ -3210,8 +3216,8 @@ var SPINE = [
               ["Three","Stop. Everyone stop. That was not the lamp."],
               ["Pia","That was not the lamp?"],
               "Three is looking at your head with both voices completely silent. She has not done that for anything else all week."],
-       rail:["Ask Three what she is looking at.",
-             "Sit down under the lamp and let them look properly."]}],
+       rail:[{line:"Ask Three what she is looking at.", cards:["what-it-is"]},
+             {line:"Sit down under the lamp and let them look properly.", cards:["how-long-it-has-been-in-there"]}]}],
  lands:[{day:"17", time:"6:40pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
        now:"Evening, under the work lamp in the back room. The housing in the courier's skull is out in the open and named.",
        lines:["It has a name now, and a shape, and a date, and none of that makes it easier to sit under a lamp with.",
@@ -3271,8 +3277,8 @@ var SPINE = [
               ["Pia","Has anyone actually read it? Out loud, I mean. Where everyone can hear."],
               "Vic is standing where he can see the door.",
               ["Vic","Read it."]],
-       rail:["Ask Vic whether he has read it before.",
-             "Start reading from the top."]}],
+       rail:[{line:"Ask Vic whether he has read it before.", cards:["who-put-a-manual-in-his-head"]},
+             {line:"Start reading from the top.", cards:["what-the-manual-actually-says"]}]}],
  lands:[{day:"18", time:"11:30pm", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
        now:"Late, with the manual open on the table. The family knows what the courier can open, and what it costs.",
        lines:["It works. That is the worst available outcome, and the whole table understands it at the same moment.",
@@ -3325,8 +3331,8 @@ var SPINE = [
               ["Pia","It looks like a library."],
               ["Three","It is a library."],
               "Nobody asks her to elaborate, and she does not offer."],
-       rail:["Ask Three to elaborate.",
-             "Start at the index and work in."]}],
+       rail:[{line:"Ask Three to elaborate.", cards:["what-the-choir-actually-is"]},
+             {line:"Start at the index and work in.", cards:["the-three-fates"]}]}],
  lands:[{day:"19", time:"3:45am", place:"THE OPEN DOOR, AFTER HOURS", amb:"dead-signal",
        now:"The small hours. The three fates are understood, and so is what was done to Mirren.",
        lines:["You get to the end of it and nobody moves to shut anything down.",
@@ -3415,8 +3421,8 @@ var SPINE = [
               "He has been going for twenty minutes without stopping, about nothing, and everybody is letting him, because the alternative is the quiet.",
               ["Three","Keep talking. I mean that as an instruction."],
               "Five, when it speaks, uses his mouth to do it and gets the vowels very slightly wrong."],
-       rail:["Tell Marek to keep talking.",
-             "Ask Three what the tea towel is for."]}],
+       rail:[{line:"Tell Marek to keep talking.", cards:["what-marek-wants"]},
+             {line:"Ask Three what the tea towel is for.", cards:["what-annulment-actually-does"]}]}],
  lands:[{day:"20", time:"5:20am", place:"THE SHACK STEP", amb:"dawn",
        now:"Toward dawn. Five is annulled, Marek survived it, and both of them have had their turn to speak.",
        lines:["It is over faster than it has any right to be, and then there is a long stretch afterwards that is not fast at all.",
@@ -3472,8 +3478,8 @@ var SPINE = [
               ["Seven","I've moved the pan. I want that noticed. I've moved the pan somewhere safe."],
               ["Pia","If this is going to be a rule then somebody had better write it down."],
               "She has climbed onto a chair, which she has learned makes people stop talking."],
-       rail:["Ask her who put her in charge.",
-             "Get something to write on."]}],
+       rail:[{line:"Ask her who put her in charge.", cards:["what-the-rule-should-be"]},
+             {line:"Get something to write on.", cards:["whether-a-rule-is-a-good-idea"]}]}],
  lands:[{day:"22", time:"10:15pm", place:"THE OPEN DOOR, KITCHEN", amb:"interior-warm",
        now:"Evening, in the kitchen, with a law on the wall that was not there this morning.",
        lines:["The rule gets said, and then written, and then stuck to the wall, where it manages to look both ridiculous and permanent.",
@@ -3521,8 +3527,8 @@ var SPINE = [
               ["Pia","It's my name. I'm allowed to be the calm one about my own name."],
               ["Hesta","You are not allowed to be the calm one. You are twelve."],
               ["Pia","I'm the calm one."]],
-       rail:["Tell Pia to stop being the calm one.",
-             "Ask what the Exchange actually is, out loud, for the room."]}],
+       rail:[{line:"Tell Pia to stop being the calm one.", cards:["what-pia-says"]},
+             {line:"Make somebody read the offer out loud. All of it, for the room.", cards:["what-the-offer-actually-is"]}]}],
  lands:[{day:"24", time:"1:30am", place:"THE OPEN DOOR, AFTER HOURS", amb:"interior-warm",
        now:"Small hours in the long table. The family has said the word Exchange out loud and nobody has taken it back.",
        lines:["You say the word Exchange, and the room does not argue - which is how you find out it was decided some time ago and everyone was waiting to be told.",
@@ -3605,8 +3611,8 @@ var SPINE = [
               ["Three","Eleven minutes a body, done kindly. That is the number and I am not going to pretend it is a different number."],
               ["Pia","Nine of them. That's — hang on."],
               ["Pia","...That's a long time to be standing in the open."]],
-       rail:["Ask the man with the shutters to go back inside.",
-             "Start the clock. Eleven minutes, first one."]}],
+       rail:[{line:"Ask the man with the shutters to go back inside.", cards:["what-the-neighbours-are-doing"]},
+             {line:"Start the clock. Eleven minutes, first one.", cards:["how-long-the-kind-way-takes"]}]}],
  lands:[{day:"31", time:"8:30am", place:"CANNERY ROW", amb:"dawn", holder:"Seven",
        now:"Morning, on a street the Choir no longer holds. The neighbours saw how it was done.",
        lines:["The street is yours by breakfast, and the strangest part is how ordinary that looks from the pavement.",
@@ -3686,8 +3692,8 @@ var SPINE = [
               ["Pia","Turn it off."],
               "She reaches over. She does not turn it off.",
               ["Pia","...I'm not turning it off."]],
-       rail:["Ask Pia why she stopped.",
-             "Turn it up."]}],
+       rail:[{line:"Ask Pia why she stopped.", cards:["what-pia-makes-of-it"]},
+             {line:"Turn it up.", cards:["who-she-is-talking-to"]}]}],
  lands:[{day:"32", time:"1:10pm", place:"THE LISTENING POST", amb:"neon-dry",
        now:"Afternoon at the listening post. The family has heard the machine being genuinely kind, all the way through.",
        lines:["The feed goes quiet and nobody reaches over to shut it off.",
@@ -3735,8 +3741,8 @@ var SPINE = [
               ["Hesta","I brought food. Sit down, all of you, and get on with it."],
               ["Pia","How did you even know we were —"],
               ["Hesta","Get on with it."]],
-       rail:["Ask Hesta how she knew to come.",
-             "Get on with it. Press play."]}],
+       rail:[{line:"That date is on the Cairn rule. Ask Hesta where the rule came from.", cards:["where-the-cairn-rule-comes"]},
+             {line:"Get on with it. Press play.", cards:["who-made-her"]}]}],
  lands:[{day:"32", time:"6:00pm", place:"THE LISTENING POST", amb:"vault-cold",
        now:"Early evening. The founding record has played to the end and the family understands what she was told family means.",
        lines:["The record ends on two people and a dead child, and then it just stops, the way records do.",
@@ -3801,8 +3807,8 @@ var SPINE = [
               ["Vic","Don't bring anyone. This one's yours to hear first."],
               "Somewhere inside, the family has gone extremely quiet in the manner of people pretending to do washing up.",
               ["Pia","We can hear you both, by the way. The yard echoes. Just so nobody's surprised later."]],
-       rail:["Ask him whether he wants an audience.",
-             "Ask whether he is sorry, or whether he only regrets being caught."]}],
+       rail:[{line:"Ask him whether he wants an audience.", cards:["what-he-did"]},
+             {line:"Ask whether he is sorry, or whether he only regrets being caught.", cards:["whether-he-is-sorry"]}]}],
  lands:[{day:"32", time:"11:40pm", place:"THE CANNERY YARD", amb:"storm",
        now:"Late night in the cannery yard. Vic has confessed what he did and paid for it.",
        lines:["He answers it. All of it, without dressing any of it, and then there is nothing left of the question.",
@@ -3856,8 +3862,8 @@ var SPINE = [
               "She has brought a stone that is far too big and will not be talked out of it.",
               ["Hesta","Nobody's asking you to swap it."],
               "Nobody has worked out what order people speak in, and nobody is going to, and that will turn out to be fine."],
-       rail:["Help her carry it.",
-             "Ask who wants to go first."]}],
+       rail:[{line:"Help her carry it.", cards:["what-to-say"]},
+             {line:"Ask who wants to go first.", cards:["what-seven-says"]}]}],
  lands:[{day:"33", time:"5:50am", place:"THE CAIRN", amb:"dawn",
        now:"First light at the cairn. The stone is placed, the name is said, and the family is facing the descent.",
        lines:["The stone goes on, the name gets said, and everybody gets their one line whether they wanted one or not.",
@@ -3917,8 +3923,8 @@ var SPINE = [
               ["Hesta","No."],
               ["Pia","You don't know what I was going to say."],
               ["Hesta","I know exactly what you were going to say."]],
-       rail:["Ask her how long she has known.",
-             "Start at the top. Give somebody else a job first."]}],
+       rail:[{line:"Ask her how long she has known.", cards:["why-the-choir-cannot-reach-pia"]},
+             {line:"Start at the top. Give somebody else a job first.", cards:["what-everyone-else-does"]}]}],
  lands:[{day:"33", time:"7:30am", place:"THE HATCH HEAD", amb:"marsh-fog",
        now:"Morning at the hatch head. Everyone has a named part and Pia's is understood as the asset it is.",
        lines:["Everyone has a job, including the one person nobody wanted to give a job to, and she took it without being asked twice.",
@@ -3967,8 +3973,8 @@ var SPINE = [
               {holder:"Seven", who:"Seven", text:"I'd rather not say the first one."},
               {holder:"Nine", relay:true, text:"He would rather not say the first one. He says so at a volume only you get, which is somehow more emphatic than saying it, and you report it as a refusal rather than as a plea."},
               "Hesta, who was not supposed to be here, is here, with a bag, and is not discussing it."],
-       rail:["Ask Hesta what is in the bag.",
-             "Ask Seven for the first number."]}],
+       rail:[{line:"Ask Three what the survey says is down here.", cards:["what-is-down-here"]},
+             {line:"Ask how far down this actually goes. Somebody in here has done the maths.", cards:["how-far-down-it-goes"]}]}],
  lands:[{day:"33", time:"11:00am", place:"THE EXCHANGE, SUBSTRATE FLOOR", amb:"substrate-dark",
        now:"Inside the Exchange, on the substrate floor. The family is in and the machine is within reach.",
        lines:["The bottom of the cable is a floor, and the floor is warm, and it hums at a pitch you feel in your teeth rather than hear.",
@@ -4045,8 +4051,8 @@ var SPINE = [
               ["Hesta","Forty-one names. I'm not expecting forty-one. I want that understood before we start."],
               ["Pia","We'll do all forty-one."],
               ["Hesta","We'll do what we can do."]],
-       rail:["Ask to see the list.",
-             "Start at the near end and work in."]}],
+       rail:[{line:"Ask to see the list.", cards:["what-hestas-list-is"]},
+             {line:"Start at the near end and work in.", cards:["how-many"]}]}],
  lands:[{day:"33", time:"2:20pm", place:"THE DEEP AISLE", amb:"vault-cold",
        now:"Deep in the aisles. Mirren's scrape has been found and the promise has been spoken over it.",
        lines:["Her name is on a shelf at chest height, in a hand that filed her like stationery.",
@@ -4116,8 +4122,8 @@ var SPINE = [
               "Hesta opens her bag. It turns out to have been full of food this entire time, and she starts unpacking it in the corridor.",
               ["Pia","Was that the plan? Was that always the plan?"],
               ["Hesta","It's always the plan."]],
-       rail:["Ask her whether that was the plan all along.",
-             "Knock."]}],
+       rail:[{line:"Ask her whether that was the plan all along.", cards:["the-food"]},
+             {line:"Knock.", cards:["who-she-is"]}]}],
  lands:[{day:"33", time:"6:45pm", place:"THE PRINCIPAL'S ROOM", amb:"interior-warm",
        now:"Evening, in the Principal's room, mid-argument. She has been met face to face and the argument is joined.",
        lines:["The argument starts properly, which after everything is a relief, because an argument is a thing two sides do together.",
@@ -4170,8 +4176,8 @@ var SPINE = [
               ["Machine","Has anybody eaten? It is late where you came from. I have been keeping track of that."],
               "Hesta makes a sound at the back of her throat that could mean anything.",
               ["Pia","Don't. Whatever that was. Don't do that in here."]],
-       rail:["Ask Hesta what that sound meant.",
-             "Answer the question. Tell her we have eaten."]}],
+       rail:[{line:"Ask her the question underneath all of it. Why does she keep them.", cards:["why-she-keeps-them"]},
+             {line:"Answer the question. Tell her we have eaten.", cards:["what-she-was-told-family-means"]}]}],
  lands:[{day:"33", time:"9:00pm", place:"THE HEART ROOM", amb:"substrate-dark",
        now:"Night in the heart room, with the argument about letting go spoken directly to her, face to face.",
        lines:["You say it to her directly, and she hears it directly, and that turns out to be the entire difference.",
@@ -4218,8 +4224,8 @@ var SPINE = [
               ["Hesta","I'm packing the food away. That's all I'm doing. Don't read anything into it."],
               ["Pia","Everyone's reading something into it."],
               ["Hesta","I know."]],
-       rail:["Ask Hesta to leave it out a bit longer.",
-             "Say it. Custody, not conquest."]}],
+       rail:[{line:"Ask Hesta to leave it out a bit longer.", cards:["who-says-the-words"]},
+             {line:"Say it. Custody, not conquest.", cards:["what-custody-means-here"]}]}],
  budget:2, floor:1, reveals:[],
  press:["The seizure works and the silence afterwards is the problem.",
         "Land it now. Epilogue in chronicle voice, then set the_end true."],
@@ -4320,7 +4326,7 @@ var SCENEBOOK = {
      against the pre-wave-3 SIX-topic deck; the Mirren card makes seven, so pasting them
      "in deck order" would have hung every one of them on the wrong card.) */
   topics:[
-   {ask:"who Mirren was to Vic, before she was a drop",
+   {id:"who-mirren-was-to-vic-before", ask:"who Mirren was to Vic, before she was a drop",
     key:"mirren who was drop receiver friend knew her tuesday name",
     who:"Pia",
     gives:"what she knows second-hand, and she says so - the real receiver, a friend of Vic's for years before she was ever a name on a chit, taken on a Tuesday",
@@ -4339,7 +4345,7 @@ var SCENEBOOK = {
       stood unspent. Before the threshold, Nine answers in SHAPE, never in words:
       the mechanic gets taught by a half-second of almost-voice that steps back,
       and starting - when it happens - is the player's. */
-   {ask:"how she hears him at all",
+   {id:"how-she-hears-him-at-all", ask:"how she hears him at all",
     key:"hear voice hum hand skin touch talk speak work how shard listen",
     who:"Nine",
     gives:"the mechanic, on his own skin: through the jacket she is weather, and against a bare hand there is the shape of where a word would be - arriving, and then folding itself back down",
@@ -4361,7 +4367,7 @@ var SCENEBOOK = {
       block - and Pia answering words she could not have heard. The worded version of
       this conversation is not cut; it moved to the underpass room, after the threshold,
       where it is legal and where it lands harder for having been behaviour first. */
-   {ask:"is she frightened",
+   {id:"is-she-frightened", ask:"is she frightened",
     key:"scared afraid frightened okay alright fear brave feel feeling",
     who:"Nine",
     gives:"the answer in the hum's own alphabet - small at crossings, smaller at sirens, pressing toward his ribs at corners - and Pia reading the courier's face, doing the maths out loud",
@@ -4373,7 +4379,7 @@ var SCENEBOOK = {
      ["Pia","Nine has better ears than us and fewer options. Do the maths on how that feels."],
      "At the next corner the hum makes itself almost nothing - and then, deliberately, like something practising courage, comes back up to size.",
      "Frightened, then. And working on it. You find you have put your hand over the pocket without deciding to, the way you would steady anything small on a rough crossing."]},
-   {ask:"who sent Pia, and why she is here",
+   {id:"who-sent-pia-and-why", ask:"who sent Pia, and why she is here",
     key:"pia sent who why here vic sent-you job kid you",
     who:"Pia",
     gives:"Vic sent her, face to face, and told her to get the courier off the street before the handoff went any further wrong",
@@ -4384,7 +4390,7 @@ var SCENEBOOK = {
      "She says it like an insult she intends to return to the shop.",
      ["Pia","I do not like carrying questions with no handles. So when we get to his door, that one goes on the table early. You will know it when you see me put it down."],
      "The rain keeps the pace. Somewhere ahead, across a marsh you have never seen, a man with a kettle is choosing a face."]},
-   {ask:"what is behind us",
+   {id:"what-is-behind-us", ask:"what is behind us",
     key:"behind follow following watch watched who market lights back tail",
     who:"Pia",
     gives:"one set of lights that has not moved since they left the stalls, the way out she has already picked, and how long they have to take it - said without stopping, because she keeps him walking while she says it",
@@ -4395,7 +4401,7 @@ var SCENEBOOK = {
      "She never breaks stride while she says it, and somehow that is the most informative part.",
      ["Pia","Useful is where the corner is. Useful is which glass to read. I am staying in my useful tonight, and you are staying in yours, and ours are the same one: walk."],
      "Forty metres. The corner arrives. You take it like people who live here, and the lights that have not moved go on not moving, patiently, behind you."]},
-   {ask:"the job, the money, whether this is still a delivery",
+   {id:"the-job-and-the-money", ask:"the job, the money, whether this is still a delivery",
     key:"job money paid rate delivery deliver work owe owed finish contract",
     who:"Pia",
     gives:"double rate, no questions, and the observation that a dead man's double rate is still double rate",
@@ -4406,7 +4412,7 @@ var SCENEBOOK = {
      "The chit in your pocket weighs the same as it did this morning, which no longer seems possible.",
      ["Pia","Here is where I have landed, provisionally: it stopped being a delivery around the time the delivery started having opinions about the weather. Jobs end at doors. Whatever this is now, I do not think it ends at a door. I think it STARTS at one."],
      "The marsh road, somewhere ahead, declines to confirm or deny."]},
-   {ask:"nothing - the rain, the shoes, the tarp",
+   {id:"nothing-the-rain-and-the-tarp", ask:"nothing - the rain, the shoes, the tarp",
     key:"rain wet cold shoes joke funny nothing weather tarp",
     who:"Pia",
     gives:"a bit: the market's roof is a tarp with ambitions, and she keeps a running score of the things it has failed to keep dry",
@@ -4606,7 +4612,7 @@ var SCENEBOOK = {
          "the pack's answer is not given tonight - that is a later night and it must not arrive here",
          "no Choir officer or named agent appears; what is coming is driven, not commanded"],
   topics:[
-   {ask:"why she asked about my room",
+   {id:"why-she-asked-about-my-room", ask:"why she asked about my room",
     key:"room flat apartment blue door noodle third floor mine my-place",
     who:"Pia",
     gives:"she asked because she already knew - a Mudskipper checks the room before the room checks you, and she checked at the market",
@@ -4618,7 +4624,7 @@ var SCENEBOOK = {
      "She lets the past tense of all that arrive on its own schedule, the way you let someone notice the tide has turned.",
      ["Pia","You want to tell me what I found, or shall we keep climbing?"],
      "Two more steps. The market noise below is thinning, like a radio being carried into another room."]},
-   {ask:"what is coming down the stairs",
+   {id:"what-is-coming-down-the-stairs", ask:"what is coming down the stairs",
     key:"stairs coming lights out them hollow behind chase who what",
     who:"Pia",
     gives:"Hollows, driven from somewhere else, and the only move that works: cut the signal, not the throat - dead zones, shielding, anything that breaks the link",
@@ -4630,7 +4636,7 @@ var SCENEBOOK = {
      "Three floors down, the stairwell light goes out without a sound, which is somehow ruder than a noise.",
      ["Pia","And there is the second thing about them: they are patient. Nothing that chases you should be patient. It is against nature and I have filed a complaint."],
      "You climb faster. The complaint, presumably, is still in processing."]},
-   {ask:"can I go back, can any of this be undone",
+   {id:"can-i-go-back", ask:"can I go back, can any of this be undone",
     key:"home go-home undo fix return normal life ever-again my-old-life",
     who:"Pia",
     gives:"no, and the shape of it: face, room, wire - all three already spent, and spent hours ago",
@@ -4641,7 +4647,7 @@ var SCENEBOOK = {
      ["Pia","The face went at the market. The room went whenever they pulled your file. The wire - the wire was probably first, honestly. Wires always go first. They are the ankles of a life."],
      ["Pia","Keep climbing. Grief is faster on the flat."],
      "Somewhere below, patiently, the stairwell agrees with her."]},
-   {ask:"what happens to my pack now",
+   {id:"what-happens-to-my-pack-now", ask:"what happens to my pack now",
     key:"pack mudskippers crew them people friends others",
     who:"Pia",
     gives:"they will have heard by morning, and that is a morning problem - she says so in the tone of somebody putting a thing on a shelf",
@@ -4652,7 +4658,7 @@ var SCENEBOOK = {
      "The shelf, from the sound of it, is load-bearing and full.",
      ["Pia","What they decide is theirs to decide. What you did is yours to have done. Those are different ledgers, and tonight we are only carrying one of them up ninety steps."],
      "She pats the rail like it is the shelf. The rail holds. For now, everything holds."]},
-   {ask:"does Nine know she is the reason",
+   {id:"does-nine-know-shes-the-reason", ask:"does Nine know she is the reason",
     key:"nine fault reason because-of-her blame sorry her",
     who:"Nine",
     gives:"yes, and she has been doing that arithmetic since the market - she says the number out loud",
@@ -4665,7 +4671,7 @@ var SCENEBOOK = {
      ["Pia","Nobody is arguing fault on a staircase. Climb."],
      ["Nine","That was not the half I would have chosen. - She is right, though. Also: your heart is very loud from in here and it argues fault with every step. Tell it what I said."],
      "You climb. Your heart, overheard, does its best."]},
-   {ask:"nothing - the stairs, the smell, the city",
+   {id:"nothing-the-stairs-and-the-city", ask:"nothing - the stairs, the smell, the city",
     key:"smell stairs city joke funny nothing view iron",
     who:"Pia",
     gives:"a bit: the Veldt's stairs and what lives on them, delivered while climbing them",
@@ -4840,7 +4846,7 @@ var SCENEBOOK = {
          "why this courier is NEVER answered; it is dodged, and the dodge is visible",
          "nobody arrives at the safehouse"],
   topics:[
-   {ask:"what happened to Mirren",
+   {id:"what-happened-to-mirren", ask:"what happened to Mirren",
     key:"mirren receiver her what-happened copper eel woman body dead",
     who:"Vic",
     gives:"all of it, badly: she was the receiving end, the Choir got to her first, he watched it happen from across a street and ran",
@@ -4851,7 +4857,7 @@ var SCENEBOOK = {
      "He says it in one piece, like a man who rehearsed it so it could not ambush him, and it ambushes him anyway around the word ran.",
      ["Vic","You wanted all of it. That is all of it. There is no version where I come out of the story any better, and I have looked for one, at length, at night."],
      "The kettle picks that moment to click off, and nobody thanks it. The kitchen holds the quiet the way kitchens do - warmly, and without fixing anything."]},
-   {ask:"why he went dark",
+   {id:"why-he-went-dark", ask:"why he went dark",
     key:"dark hiding hide disappear silent gone contact why-quiet",
     who:"Vic",
     gives:"because the route was already theirs, and every wire he touched after that would have walked them to Pia",
@@ -4863,7 +4869,7 @@ var SCENEBOOK = {
      ["Pia","Eight months, Vic. I priced you a headstone."],
      ["Vic","I know. I heard. It was a kind price, for this district."],
      "The shutters hold the marsh out. The eight months sit at the table anyway, having earned the chair."]},
-   {ask:"what exactly he was smuggling",
+   {id:"what-exactly-he-was-smuggling", ask:"what exactly he was smuggling",
     key:"smuggle shard cargo what package nine her out job run",
     who:"Vic",
     gives:"Nine, out of the Choir's hands, and he says her name the way you say a person's",
@@ -4874,7 +4880,7 @@ var SCENEBOOK = {
      ["Vic","Not cargo. Not product. A passenger, who could not know she was one, in a jacket, across a city that was already looking. That is what I put on your chit, and I let the chit call it a box, and the chit's cowardice was mine."],
      ["Vic","How I got her out is a different night. Tea. Somebody find the tea, it is labelled TEA."],
      "The tea is indeed labelled TEA. Nobody laughs, quite. The kettle goes back on, because in this house the kettle is how a scene changes."]},
-   {ask:"why me, of all couriers",
+   {id:"why-me-of-all-couriers", ask:"why me, of all couriers",
     key:"why-me me chose choose pick picked courier why-this-one reason personal",
     who:"Vic",
     gives:"NOTHING TRUE. He gives the reasons a man gives - you are good, you are quiet, you were free that night - and they are all true and none of them is the answer",
@@ -4887,7 +4893,7 @@ var SCENEBOOK = {
      ["Vic","I know. Put the kettle back on."],
      "The dodge is visible from every seat in the kitchen - a man stepping around a hole in his own floor with the ease of long practice.",
      "It is the only question of the night he moves his feet for. Everyone files that, each in their own drawer."]},
-   {ask:"whether this place is safe",
+   {id:"whether-this-place-is-safe", ask:"whether this place is safe",
     key:"safe safehouse here secure grid signal walls stay hide",
     who:"Vic",
     gives:"off the grid, cable only, nothing wireless in the walls - safe for now, and he lets the for now sit there",
@@ -4898,7 +4904,7 @@ var SCENEBOOK = {
      ["Vic","It COULD have. That is the entire point of the story."],
      ["Vic","Safe for now."],
      "He lets the for now sit on the table with the tea, and nobody picks either of them up. Outside, the marsh breathes against the shutters, minding everyone's business."]},
-   {ask:"the kettle, the doormat, the labels",
+   {id:"the-kettle-and-the-labels", ask:"the kettle, the doormat, the labels",
     key:"kettle doormat label marker joke funny nothing shutters house",
     who:"Vic",
     gives:"a bit: a man who lives alone has labelled the kettle KETTLE and is not going to explain it",
@@ -5085,7 +5091,7 @@ var SCENEBOOK = {
          "nobody explains what the Choir is or what a Hollow is",
          "the next job's particulars are not invented here - there is a job on the board and that is all anybody knows about it"],
   topics:[
-   {ask:"who in the pack actually gets a say",
+   {id:"who-in-the-pack-actually-gets", ask:"who in the pack actually gets a say",
     key:"pack who decide vote say boss leader crew mudskippers rilla bo",
     who:"Pia",
     gives:"four names said flat - the two who run the north drops, the one who keeps the boards, and one who does not get a say and takes one anyway",
@@ -5096,7 +5102,7 @@ var SCENEBOOK = {
      ["Pia","The boards one matters most. Marks go on, marks come off, and whoever holds the chalk holds more than chalk. That is true everywhere, by the way. File it under how the world works."],
      ["Pia","Which way any of them lean this morning, I am not guessing out loud. Guessing out loud is how leans become falls."],
      "Out through the shack's one window, the marsh keeps the morning noncommittal too."]},
-   {ask:"what a shut door looks like from the Mudskippers",
+   {id:"what-a-shut-door-looks-like", ask:"what a shut door looks like from the Mudskippers",
     key:"shut door out cast exile banned finished done marks boards",
     who:"Vic",
     gives:"your marks come off the boards, nobody says a word to you and nobody says a word about you - it is very polite and it is the end of you",
@@ -5107,7 +5113,7 @@ var SCENEBOOK = {
      ["Vic","No shout, no fight, no last meeting. Just chalk dust and a silence with your shape in it. I have watched it done twice. Both times the man kept coming to the wall for a month, reading the space."],
      "Which way he voted, the last time a door shut, does not come up. The not-coming-up is the loudest thing in the shack.",
      ["Vic","Whatever the cable says this morning - you will at least get words. I have seen to that much. Words are not nothing, in a system built on chalk."]]},
-   {ask:"whether Pia is in trouble for standing here",
+   {id:"whether-pia-is-in-trouble", ask:"whether Pia is in trouble for standing here",
     key:"pia trouble side risk you her own cost loyal",
     who:"Pia",
     gives:"she chose before the meeting started and told them so, which she reports like weather",
@@ -5118,7 +5124,7 @@ var SCENEBOOK = {
      ["Pia","There is a version of this morning where I wait to see which way the boards go and then have always agreed with them. People do it. It is very warm and dry, that version."],
      ["Pia","What it cost is mine, and if you ask again the price of asking goes up too."],
      "She reorganises three of Vic's tools out of order, a small act of vandalism that in this shack counts as whistling."]},
-   {ask:"what Nine makes of any of this",
+   {id:"what-nine-makes-of-any-of-this", ask:"what Nine makes of any of this",
     key:"nine think you what shard hear ask family job",
     who:"Nine",
     gives:"a careful question back - whether a pack is a family or a job, asked like somebody who has only ever had the second",
@@ -5129,7 +5135,7 @@ var SCENEBOOK = {
      ["Nine","I have had the second kind. Everyone stands in formation and cares about you in the aggregate. It is warm the way a floor is level - officially."],
      ["Nine","I am collecting information about the first kind. Current sample: one kitchen, one staircase, one causeway. The data is good so far. Do not tell the data I said so."],
      "The cable hums its morning traffic overhead, carrying somebody's verdicts somewhere, and her question stands in the shack politely waiting for the world to answer it."]},
-    {ask:"where the war cry came from",
+    {id:"where-the-war-cry-came-from", ask:"where the war cry came from",
      key:"mudskipper moment war cry shout origin where from why called started name",
      who:"Pia",
      gives:"the version the pack teaches, and then the true version from the man who was in the room for it",
@@ -5148,7 +5154,7 @@ var SCENEBOOK = {
       ["Pia","...It is better. It is WORSE and it is better."],
       ["Vic","Most true things are."],
       "Nobody says the obvious thing, which is that four people in a room across the water are currently deciding whether the courier is still one of the fish that gets out."]},
-    {ask:"whether the pack has done this to anybody before",
+    {id:"has-the-pack-done-this-before", ask:"whether the pack has done this to anybody before",
      key:"before anybody else burned cut precedent happened history someone previous",
      who:"Pia",
      gives:"two of them, in order, and the fact that the first outcome is completely ordinary",
@@ -5309,7 +5315,7 @@ var SCENEBOOK = {
          "the recipient is an ordinary person with an ordinary errand - not the Choir, not a contact, not a message",
          "nobody explains what the Choir is or names a fate"],
   topics:[
-   {ask:"what is actually in the box",
+   {id:"what-is-actually-in-the-box", ask:"what is actually in the box",
     key:"box parcel inside what contents fragile chit weight",
     who:"The Clerk",
     gives:"the weight of it, and that the name on the chit is a building rather than a person",
@@ -5320,7 +5326,7 @@ var SCENEBOOK = {
      ["The Clerk","The account? Paid is paid. You want philosophy, the counter shuts at six."],
      ["Pia","I like her. She has a system and the system has a moat."],
      "The box, for its part, keeps its counsel - a shoe-sized parcel with excellent posture, waiting to be somebody's errand."]},
-   {ask:"whether the job is even worth doing now",
+   {id:"whether-the-job-is-even-worth", ask:"whether the job is even worth doing now",
     key:"job worth money rent bother pointless why still fare",
     who:"Pia",
     gives:"rent, said flatly, and the observation that a burned name still has to eat",
@@ -5331,7 +5337,7 @@ var SCENEBOOK = {
      "She does not say the other thing she is thinking - but she checks the parcel's knots like something is ending.",
      ["Pia","One more honest fare. Then we count the till and see what kind of week it is."],
      "The rain agrees to hold off for exactly the length of that sentence, and not a step longer."]},
-   {ask:"whether anyone is watching the counter",
+   {id:"whether-anyone-is-watching", ask:"whether anyone is watching the counter",
     key:"watch watched follow eyes street corner behind safe",
     who:"Pia",
     gives:"nothing yet, and how she is checking - a method, taught, not a feeling",
@@ -5342,7 +5348,7 @@ var SCENEBOOK = {
      ["Pia","The order matters. Glass is honest, chrome bends, puddles lie at the edges - you read them like witnesses. Corroborate."],
      ["Pia","And if you ever DO see something in all three: do not run. Runners get remembered. Walkers get filed under weather."],
      "You practise on the noodle bar's window. Behind you, the street pretends, with total commitment, to be only a street."]},
-   {ask:"how the city looks at him now",
+   {id:"how-the-city-looks-at-him-now", ask:"how the city looks at him now",
     key:"face known recognise look sideways reputation seen",
     who:"Pia",
     gives:"two small things that have already happened today that he did not notice, reported without drama",
@@ -5353,7 +5359,7 @@ var SCENEBOOK = {
      "The forecast is in what she does not add, and you both let it stay there.",
      ["Pia","Cities do not stare - that is the thing to know. They glance. A thousand glances with one opinion between them. You cannot argue with it. You can only outlast it, or move somewhere with a different opinion."],
      "The crossing light changes. A dozen strangers glance, and do not stare, and file their copies of you away."]},
-    {ask:"the counter, and the woman defending it",
+    {id:"the-woman-defending-the-counter", ask:"the counter, and the woman defending it",
      key:"clerk counter robbed system moat rules queue hatch security her",
      who:"The Clerk",
      gives:"an entire philosophy of counter security, unprompted, with the credit taken personally",
@@ -5368,7 +5374,7 @@ var SCENEBOOK = {
       ["The Clerk","Long enough that all the labels are mine. That is the only length of time worth reporting."],
       ["The Clerk","Your box is still FRAGILE and it is still not my business. We shut at six."],
       "She returns to the ledger. Behind you the queue has arranged itself into a shape that would please her, and she has not looked up once to check, because she has never needed to."]},
-    {ask:"what Nine makes of watching him work",
+    {id:"what-nine-makes-of-watching", ask:"what Nine makes of watching him work",
      key:"nine watching job work route carry doing good-at watch opinion",
      who:"Nine",
      gives:"the first time anybody has watched him do the ordinary thing he is good at, reported as a fault report",
@@ -5382,7 +5388,7 @@ var SCENEBOOK = {
       ["Nine","It is a complaint. The complaint is that nobody has told him."],
       "Then, quieter, in the register she keeps for when it is only meant for one person:",
       ["Nine","...I have been carried by people who were good at it. This is the first time I have been carried by somebody who is good at it and does not know he is."]]},
-    {ask:"what a burned name sounds like on the wire",
+    {id:"what-a-burned-name-sounds-like", ask:"what a burned name sounds like on the wire",
      key:"wire name traffic listening burned stops said talk hear morning",
      who:"Pia",
      gives:"the three stages of a name stopping, from somebody who has been checking all morning",
@@ -5593,7 +5599,7 @@ var SCENEBOOK = {
          "cutting her signal does nothing, and the family finds that out by trying it",
          "nobody says her name is Mirren unless Vic has already said it to them"],
   topics:[
-   {ask:"what she wants",
+   {id:"what-mirren-wants", ask:"what she wants",
     key:"want why here after looking delivery late package",
     who:"Mirren",
     gives:"the line, and a procedural elaboration of it - a late delivery, a receiver, a schedule that is being kept",
@@ -5604,7 +5610,7 @@ var SCENEBOOK = {
      ["Mirren","There you are. You're late. I've been very patient."],
      "The same opening line, again, filed under fresh delivery. As far as she is concerned, nobody sent her. As far as she is concerned there is no her to send.",
      "The Eel's regulars have gone very interested in their drinks. The stool she turned on is still turning, slightly, the only honest thing in the room."]},
-   {ask:"whether she knows him",
+   {id:"whether-she-knows-him", ask:"whether she knows him",
     key:"know me you recognise before met remember name who-am-i",
     who:"Mirren",
     gives:"his description, read back to him in the order it was given to her, which is worse than being recognised",
@@ -5615,7 +5621,7 @@ var SCENEBOOK = {
      ["Mirren","You were reliable. It says so. It is why the delivery was assigned as it was."],
      "It. Says. So. Somewhere there is a page about you, and this is the page, walking, wearing a warmth it inherited and does not use.",
      "There is nobody in there to remember you. There is only the list, and you are on it."]},
-   {ask:"cut her signal, jam her, make her stop",
+   {id:"cut-her-signal", ask:"cut her signal, jam her, make her stop",
     key:"jam jammer cut signal stop kill switch off disable stall",
     who:"Pia",
     gives:"the kind option, tried on screen: the jammer sings, and she pauses, recalibrates, and continues at the same speed",
@@ -5626,7 +5632,7 @@ var SCENEBOOK = {
      ["Pia","That always works. That has always worked. Okay. New rule: whatever she is on, it is not the wire I know."],
      "Nobody explains why it failed. The failing is the information - a kind option, honestly tried, honestly spent, in front of everyone.",
      ["Pia","Save the jammer. It is not useless, it is OUTRANKED. There is a difference and the difference is tonight's homework."]]},
-   {ask:"the way out of here",
+   {id:"the-way-out-of-here", ask:"the way out of here",
     key:"run go out door leave escape where move now",
     who:"Pia",
     gives:"three ways this happens next, said fast: run, fight, or play along - and which one she has already picked",
@@ -5637,7 +5643,7 @@ var SCENEBOOK = {
      "She has already picked. The picking happened somewhere around the second sentence Mirren said, and everything since has been logistics.",
      ["Pia","And if we get separated: laundry, three districts, the one with the dead sign. Say it back. - Good. Now we are a plan, not a panic."],
      "Behind you, patient as scheduling, the service voice begins the opening line again."]},
-    {ask:"the rest of the bar",
+    {id:"the-rest-of-the-bar", ask:"the rest of the bar",
      key:"regulars room people bar watching nobody looking drinks help others",
      who:"Pia",
      gives:"a count, and what a count like that means about the room it was taken in",
@@ -5651,7 +5657,7 @@ var SCENEBOOK = {
       ["Nine","...Would any of them help if she were louder?"],
       ["Pia","She is never going to be louder. That is the whole design of her."],
       "The stool by the window turns very slightly, tracking, the way a shop sign turns in a draught."]},
-    {ask:"what is wrong with the way she moves",
+    {id:"the-way-she-moves", ask:"what is wrong with the way she moves",
      key:"moves wrong off strange still neat tell body gait posture weight",
      who:"Pia",
      gives:"four specific observations and not one word of explanation for any of them",
@@ -5832,7 +5838,7 @@ var SCENEBOOK = {
          "nothing about intake choreography, patrol rhythms, or how a sweep is run - that is tomorrow's beat and it is Nine's to spend",
          "no plan is made for what happens if he refuses"],
   topics:[
-   {ask:"what exactly is being offered",
+   {id:"what-exactly-is-being-offered", ask:"what exactly is being offered",
     key:"offer papers exit deal what out clean name life terms",
     who:"Vic",
     gives:"papers that stand up, distance, and a life with no hum in it - laid out plainly, with the condition attached every single time it is described",
@@ -5843,7 +5849,7 @@ var SCENEBOOK = {
      "On the table, beside the papers, the shard sits very still and says nothing, which fills the room to the ceiling.",
      ["Vic","I am laying it out whole because you are owed a real choice, and a real choice needs the whole invoice on the table. There it is. All of it. I will not be summarising it kinder."],
      "The papers are good. You can tell from across the room they are good. That is the trouble with them."]},
-   {ask:"whether the offer is real",
+   {id:"whether-the-offer-is-real", ask:"whether the offer is real",
     key:"real trick trap catch genuine believe honest sure",
     who:"Vic",
     gives:"that it is real, and that he checked, and that this is the part he is least comfortable with",
@@ -5855,7 +5861,7 @@ var SCENEBOOK = {
      ["Pia","Who arranges a door like that, and what did it cost him - those are my questions, for the record, and he is not answering them tonight."],
      ["Vic","I am not. One confession per season. House rule."],
      "The joke does not quite float, and he lets it sink honestly, which is the most reassuring thing he has done all night."]},
-   {ask:"what Nine thinks about it",
+   {id:"what-nine-thinks-about-it", ask:"what Nine thinks about it",
     key:"nine you think want say her ask feel",
     who:"Nine",
     gives:"that she has been listening, and one short question about what setting her down would mean in practice - where, exactly, and to whom",
@@ -5867,7 +5873,7 @@ var SCENEBOOK = {
      "The noun does not come. The room looks at its tea.",
      ["Nine","That is what I think about it. An offer with a missing noun is not an offer, it is a door with the far side painted on."],
      "She does not ask him to stay. Whatever taught her not to ask taught it all the way through - and everyone in the room hears the not-asking, which is louder than asking ever gets."]},
-   {ask:"what Pia makes of it",
+   {id:"what-pia-makes-of-it", ask:"what Pia makes of it",
     key:"pia think you should opinion advice what-do",
     who:"Pia",
     gives:"a twelve-year-old's arithmetic, out loud, with the part she is not saying visible in it",
@@ -5878,7 +5884,7 @@ var SCENEBOOK = {
      "She stops there, on the edge of the thing she is not saying, and lets you see her not say it.",
      ["Pia","I will say this much, because it is arithmetic and arithmetic is allowed: people who take doors like that spend the first year rich and the rest of the tense checking doorways. I have watched it. The coast does not fix the checking."],
      "The marsh, outside, roars gently on - one more voice declining to vote."]},
-    {ask:"whether there is a second set of papers",
+    {id:"whether-there-is-a-second-set", ask:"whether there is a second set of papers",
      key:"vic you too second set yourself own out leave escape himself",
      who:"Vic",
      gives:"a no, then a worse no, then a change of subject the whole room lets him have",
@@ -5896,7 +5902,7 @@ var SCENEBOOK = {
       "The question is asked with no weight on it at all, by somebody who has no reason yet to know it is the largest question in the room.",
       ["Vic","Kettle has boiled."],
       "The kettle has not boiled. Nobody says so. Pia looks at the papers, and then at Vic, and then puts the look away somewhere she keeps things now."]},
-    {ask:"how you tell good papers from bad",
+    {id:"how-you-tell-good-papers", ask:"how you tell good papers from bad",
      key:"papers real forged fake tell good check quality how-know craft stamp",
      who:"Vic",
      gives:"the craft, warmly and at length, which is what makes the offer horribly concrete",
@@ -5911,7 +5917,7 @@ var SCENEBOOK = {
       ["Vic","It is also why these are good. Look at the middle. There is nothing in the middle. Somebody spent real money on how boring the middle is."],
       "And there it is on the table: an entire ordinary life, costed, in a folder, with a shard sitting beside it saying nothing at all.",
       ["Vic","...I have talked myself into being sad. That is what I get for enjoying my work."]]},
-    {ask:"what he would even do with a quiet life",
+    {id:"a-quiet-life", ask:"what he would even do with a quiet life",
      key:"what do after quiet coast life do-with instead future tuesday",
      who:"Pia",
      gives:"the question nobody has asked, asked badly, at the worst possible moment",
@@ -6115,7 +6121,7 @@ var SCENEBOOK = {
          "no Hollow is fought, and nobody is hurt",
          "nobody explains the three fates or what happens to the incompatible"],
   topics:[
-   {ask:"how she knows any of this",
+   {id:"how-she-knows-any-of-this", ask:"how she knows any of this",
     key:"how know knowledge inside farm learn map remember why",
     who:"Nine",
     gives:"that she was on the other side of these timings, and knew them the way you know a corridor you were walked down every day",
@@ -6126,7 +6132,7 @@ var SCENEBOOK = {
      "She says it the way a tool says its purpose. The story stays behind her teeth, and the map keeps you alive.",
      ["Nine","Later - if you still want it - you can ask me what the corridor was. Some night with walls and tea. You will not like it and I will not enjoy it and it should still get said once. But not while we are inside the count. The count deserves clean hands."],
      "Left at the drum. Two go past. The map, so far, is perfect."]},
-   {ask:"what happens next, exactly",
+   {id:"what-happens-next-exactly", ask:"what happens next, exactly",
     key:"next where go move corner count timing when now step",
     who:"Nine",
     gives:"the corner, the count, and the beat the patrol is late on - specific, numbered, and immediately actable",
@@ -6137,7 +6143,7 @@ var SCENEBOOK = {
      "You say it back. Somewhere out on the water the ring adjusts itself, and her count sits under your feet like stepping stones.",
      ["Nine","Good. You say it back well. That matters more than you know - half the corridor's drills were people failing to say it back, and I used to hear what happened after."],
      "Four. The patrol crosses, lazy by two, exactly as billed. Twelve steps, low, along the rail. Down. The night, for one held breath, runs entirely on her arithmetic."]},
-   {ask:"whether her map is still good",
+   {id:"whether-her-map-is-still-good", ask:"whether her map is still good",
     key:"still current old changed wrong sure season stale trust",
     who:"Nine",
     gives:"the honest answer - she has been gone a season and something has changed since - and she says so mid-move rather than after",
@@ -6148,7 +6154,7 @@ var SCENEBOOK = {
      "An honest navigator is one who reports the fog. Your feet believe her more for it, not less.",
      ["Nine","If I ever sound certain about something I have not seen tonight - that is when to worry. Certainty is the counterfeit. Doubt, said out loud, on schedule, is what the real thing sounds like."],
      "The second lamp swings somewhere off to the left, unexplained, and she counts you past its edge with four honest, doubtful, perfect numbers."]},
-   {ask:"where Pia is",
+   {id:"where-pia-is", ask:"where Pia is",
     key:"pia where she safe alone split behind ahead",
     who:"Pia",
     gives:"where she is, said short, and what she is doing about it",
@@ -6162,7 +6168,7 @@ var SCENEBOOK = {
      ["Pia","HEARD that."],
      ["Nine","She heard YOU. Nobody has ever heard me. I am taking the credit anyway - tell her the annoying part was mine."],
      "Two channels, one count, and the family crosses its first siege in stereo."]},
-    {ask:"what it costs her to do this",
+    {id:"what-it-costs-her-to-do-this", ask:"what it costs her to do this",
      key:"cost her doing this feel timings chosen instead giving hers",
      who:"Nine",
      gives:"that she was made to be exactly this, and that tonight is the first time it has been hers to give",
@@ -6176,7 +6182,7 @@ var SCENEBOOK = {
       "A pause with a cordon in it.",
       ["Nine","I have done this before. Not the running. The other end of it - timings, rhythms, where the gaps are, who is late on which round. That was the work. That is what I was FOR, and I was extremely good at it, and nobody ever once asked me whether I wanted to be."],
       ["Nine","Tonight it is the same work. I have simply chosen who gets it. I did not know that was a thing that could be different, and it is the only thing I have thought about for an hour."]]},
-    {ask:"what Pia does when she is frightened",
+    {id:"what-pia-does-when-frightened", ask:"what Pia does when she is frightened",
      key:"pia scared frightened afraid cope system handle nerves what-do",
      who:"Pia",
      gives:"the system, which is a bit, and then the reason a person builds a system at all",
@@ -6403,7 +6409,7 @@ var SCENEBOOK = {
          "no delivery is arranged, refused, or negotiated with anybody off screen",
          "nothing about the housing, the founders, or what Vic did"],
   topics:[
-   {ask:"what she is to him now",
+   {id:"what-she-is-to-him-now", ask:"what she is to him now",
     key:"what is she cargo person keep her mine responsibility what-now",
     who:"Vic",
     gives:"the question itself, asked plainly and without helping - Vic can ask it and then be quiet, which is the hardest thing he does all season",
@@ -6414,7 +6420,7 @@ var SCENEBOOK = {
      "The kitchen holds still. The fifth plate sits in front of the shard. Pia has stopped pretending to eat; Vic's hands are flat on the table; the hum against the table wood is very, very quiet, like something trying not to hope loudly.",
      "Whatever you say next is the answer - nobody here is going to say it for you, and nobody is going to ask twice.",
      "The table waits. Even the kettle waits. The whole small warm room leans, without moving, toward whatever you have decided she is."]},
-   {ask:"what the delivery was supposed to be",
+   {id:"what-the-delivery-was-for", ask:"what the delivery was supposed to be",
     key:"delivery job deliver hand-over chit paid contract owed",
     who:"Vic",
     gives:"the shape of the original job, said honestly, including the part where a person was written on a chit as a package",
@@ -6426,7 +6432,7 @@ var SCENEBOOK = {
      ["Vic","The plan was: she crosses the water quiet, wakes up somewhere with no Choir in the sky, and never knows the manifest existed. A good plan, on paper. Paper is where I do my best lying."],
      ["Pia","And instead the market happened, and the plan met the two of you, and here we all are - eating dinner on top of the wreckage. Which, for this city, is a happy ending in progress."],
      "The manifest, wherever it is filed, goes on being paper. The package, at the table, hums faintly at the warmth, being a person at everyone."]},
-   {ask:"what Nine wants",
+   {id:"what-nine-wants", ask:"what Nine wants",
     key:"nine want you ask her choose say prefer",
     who:"Nine",
     gives:"that she would like to be asked, which she says as though asking for it is already too much",
@@ -6437,7 +6443,7 @@ var SCENEBOOK = {
      "The hum under your palm is very steady, the way a held breath is steady.",
      ["Nine","I will say one true thing sideways, and then I am done: I have been cargo, and I have been product, and this week - in a jacket, on a staircase, at this table - I have been NEITHER, for the first time in the length of me. Whatever you answer him, you should know the week already happened. Nobody can repossess a week."],
      "Steady, steady, steady, under your hand - a small brave engine holding its revs while somebody else steers."]},
-   {ask:"what Pia thinks it means for the rest of them",
+   {id:"what-pia-thinks-it-means", ask:"what Pia thinks it means for the rest of them",
     key:"pia us we rest what-then everyone family cost",
     who:"Pia",
     gives:"the practical consequences, counted on fingers, ending on one that is not practical at all",
@@ -6449,7 +6455,7 @@ var SCENEBOOK = {
      ["Pia","For the ledger: one through three are real and I am not discounting them. People die of one through three. But four is the one you build a life on, and I have priced both kinds of life this year, and four is cheaper than it looks. It amortises."],
      ["Vic","She learned amortises from my invoice."],
      ["Pia","I learned EVERYTHING from your invoice. It is the longest book in the house."]]},
-    {ask:"what Pia makes of it, having been kept herself",
+    {id:"what-pia-makes-of-it-having", ask:"what Pia makes of it, having been kept herself",
      key:"pia kept taken-in vic herself asked her own before adopted",
      who:"Pia",
      gives:"that she is a kept person, said out loud for the first time, and the distinction she has never got straight",
@@ -6463,7 +6469,7 @@ var SCENEBOOK = {
       ["Pia","I got kept and I got asked, about four minutes apart, and I have never once got those the right way round in my head. Which came first. Whether it counts if the asking came after."],
       ["Pia","So while you are doing your thing over there about what she is to you - that is the actual question, and it is not whether you keep her. It is whether she gets asked. And whether you would still be sat in that chair if she said no."],
       "She eats. Nobody looks at her. The kitchen carries on around a twelve-year-old who has quietly reframed the entire evening and would like that not to be remarked upon."]},
-    {ask:"what this costs Vic",
+    {id:"what-this-costs-vic", ask:"what this costs Vic",
      key:"vic cost him shop licence name lose business what-happens-to-you",
      who:"Vic",
      gives:"the practical ruin, itemised without drama, and the one item he does not itemise",
@@ -6478,7 +6484,7 @@ var SCENEBOOK = {
       ["Nine","...You have done this list before tonight."],
       ["Vic","I have done this list a great many times before tonight."],
       "What it costs him to have that list ready is not on the list, and nobody makes him add it."]},
-    {ask:"what being kept actually costs the one being kept",
+    {id:"what-being-kept-actually-costs", ask:"what being kept actually costs the one being kept",
      key:"kept keeping cost word means price being-kept her side",
      who:"Nine",
      gives:"the word itself, taken apart by the only person at this table it has been done to",
@@ -6733,7 +6739,7 @@ var SCENEBOOK = {
          "nobody knocks at this door in a stall; that is the world's move and it belongs to the pressure",
          "what is under Hesta's floor is never explained or described. She gives at most that a cold place exists, that things keep in it, and - once a year, asked properly - that it is not hers. Never one word past that, and never what is in it"],
   topics:[
-   {ask:"who Hesta is and why the door is open",
+   {id:"who-hesta-is-and-why-the-door", ask:"who Hesta is and why the door is open",
     key:"hesta who door open why here place cafe run diner",
     who:"Hesta",
     gives:"that the door has been open longer than any of them have been alive and she is not going to make a speech about it",
@@ -6744,7 +6750,7 @@ var SCENEBOOK = {
      ["Hesta","It has been open longer than any of you have been alive. That is not a speech. There is no speech."],
      ["Pia","I like her. I want to be her when I grow up. Possibly instead of growing up."],
      "The brick holding the door has been painted, at some point, by somebody who loved it. Nobody explains the brick either."]},
-   {ask:"what is safe to say in here",
+   {id:"what-is-safe-to-say-in-here", ask:"what is safe to say in here",
     key:"safe talk say tell trust careful listen who-hears",
     who:"Hesta",
     gives:"her one rule about talking in her place, said while she is doing something else",
@@ -6754,7 +6760,7 @@ var SCENEBOOK = {
      "She says it while wiping the counter, the way other people say mind the step - a fact of the building.",
      ["Hesta","The walls have heard worse than you. Do not ask me for examples; that would be repeating."],
      "Somewhere behind the counter the shotgun continues to be a rumor with a shape."]},
-   {ask:"what she will feed them",
+   {id:"what-she-will-feed-them", ask:"what she will feed them",
     key:"food eat feed hungry pan bacon bread cook menu",
     who:"Hesta",
     gives:"bacon first, bread after, same pan - stated as a method, not a joke, and then done",
@@ -6765,7 +6771,7 @@ var SCENEBOOK = {
      ["Hesta","Then you stole it from somebody worth stealing from. Sit."],
      "And then it happens, on screen, in real time: the pan, the noise, the smell arriving like a rescue. The family sits. For six minutes the apocalypse waits outside with the weather.",
      "Nine's shard sits by the plate Pia set for her, humming faintly at the warmth, and nobody at this table finds that strange anymore."]},
-   {ask:"whether they can stay",
+   {id:"whether-they-can-stay", ask:"whether they can stay",
     key:"stay sleep room night bed how-long here",
     who:"Hesta",
     gives:"a plain yes with a plain condition attached, and the condition is about behaviour, not money",
@@ -6782,7 +6788,7 @@ var SCENEBOOK = {
       card anywhere let anybody ask him. NINE'S QUESTION is asked out loud in the
       OPENING - "am I a coat pocket again tonight?" - and the opening's own rail offers
       to answer it, and until now there was nothing for that line to reach. */
-   {ask:"why he called everybody here",
+   {id:"why-he-called-everybody-here", ask:"why he called everybody here",
     key:"why here tonight gathering called sent word everyone roof address hour",
     who:"Vic", railTakes:["Ask him what he thinks a roof is for."],
     gives:"the honest half - one roof he trusts, everybody under it, six days after the courier said he was keeping her",
@@ -6798,7 +6804,7 @@ var SCENEBOOK = {
      ["Vic","That is the whole trick and it is not a warm one. It is arithmetic. It is only that when the arithmetic comes out right it feels like something else entirely."],
      ["Hesta","It is called supper, Vic."],
      ["Vic","...It is called supper."]]]},
-   {ask:"whether Nine gets introduced",
+   {id:"whether-nine-gets-introduced", ask:"whether Nine gets introduced",
     key:"nine introduce name pocket guest thing what-i-am mention tell her",
     who:"Nine", railTakes:["Ask her what she wants said. Exactly."],
     gives:"the question she asked at the door, asked again inside, and none of it as a complaint",
@@ -7261,7 +7267,7 @@ var SCENEBOOK = {
          "Three is not here and is not named - she arrives five beats from now",
          "nobody explains what was done to Mirren; that is a later night's revelation"],
   topics:[
-   {ask:"try the jammer",
+   {id:"try-the-jammer", ask:"try the jammer",
     key:"jam jammer signal cut stop stall device disable",
     who:"Pia",
     gives:"it sings, and Mirren pauses, recalibrates and continues at exactly the speed she was going",
@@ -7272,7 +7278,7 @@ var SCENEBOOK = {
      "Mirren pauses - one beat, the beat you would give a stranger who said your old name in a crowd - recalibrates, and continues at exactly the speed she was going.",
      ["Pia","It works on every other one. Every other one. Somebody hardened her. Somebody hardened her SPECIFICALLY."],
      "The jammer's light blinks green the whole time, proud of itself, wrong."]},
-   {ask:"try talking to her",
+   {id:"try-talking-to-her", ask:"try talking to her",
     key:"talk say name reach reason mercy plead speak-to kind",
     who:"Vic",
     gives:"her name, said out loud by the person with the most right to say it, and the nothing that comes back",
@@ -7283,7 +7289,7 @@ var SCENEBOOK = {
      "Nothing comes back. Not a flicker, not a hitch in her stride, not one frame of the film where somebody wakes up. The room wants it so badly the wanting has a temperature. It does not come.",
      ["Mirren","The delivery is late. I have been very patient."],
      "He steps back out of the light. Whatever he was holding up falls down somewhere inside him, quietly, like a coat off a hook."]},
-   {ask:"try outrunning her",
+   {id:"try-outrunning-her", ask:"try outrunning her",
     key:"run outrun distance lose escape leave move away",
     who:"Hesta",
     gives:"the arithmetic of a thing that does not tire against people who do, done out loud on her fingers",
@@ -7293,7 +7299,7 @@ var SCENEBOOK = {
      "She counts it on her fingers, flat as a till receipt.",
      ["Hesta","Ahead is not a place. Ahead is a rate, and the rate is hers. You can rent ahead. You cannot own it."],
      ["Pia","We have been renting it for two nights. She just keeps... arriving. Like weather with an appointment."]]},
-   {ask:"what is left",
+   {id:"what-is-left", ask:"what is left",
     key:"left what-now options else remaining choice do",
     who:"Hesta",
     gives:"the honest shape of it, said by the person least willing to say it",
@@ -7317,7 +7323,7 @@ var SCENEBOOK = {
           card behind it. It is Pia's, in capitals, so it would be read before anybody
           knew whose it was - and the scene is not the option, it is Hesta refusing it
           properly instead of ignoring it. */
-   {ask:"cutting the signal she is on",
+   {id:"cutting-the-signal-she-is-on", ask:"cutting the signal she is on",
     key:"signal cut channel link orders remote controller disconnect listen band",
     who:"Nine",
     gives:"the fourth kind option spent - she listens for something to cut and finds there is nothing there to cut",
@@ -7331,7 +7337,7 @@ var SCENEBOOK = {
      ["Hesta","Say the useful half of that, and say it slowly, because I want it in the room properly."],
      "The hum comes back to its ordinary width, and takes its time about it, the way you put down a thing that turned out heavier than it looked.",
      ["Nine","And I know exactly what that rules out. I am not going to stand in a wet room and guess out loud at what it rules IN, tonight, in front of everybody."]]},
-   {ask:"who wrote option four",
+   {id:"who-wrote-option-four", ask:"who wrote option four",
     key:"four option napkin list handwriting wrote fourth capitals",
     who:"Pia",
     gives:"that she wrote it in a hand that was not hers on purpose, and what it says",
@@ -7485,7 +7491,7 @@ var SCENEBOOK = {
          "the shard is not a weapon: nothing is pressed to anybody's forehead, nothing hums anybody to death",
          "Three is not here","nobody says what is recoverable about her - that is a later night"],
   topics:[
-   {ask:"whose hand it is",
+   {id:"whose-hand-it-is", ask:"whose hand it is",
     key:"who hand whose does-it me you vic choose decide",
     who:"Vic",
     gives:"that he wants it to be his, said badly, with the reason underneath it audible",
@@ -7495,7 +7501,7 @@ var SCENEBOOK = {
      "He says it badly, too fast, a man reaching for the heaviest thing on the table before anyone else's fingers can get there.",
      ["Hesta","That is not balance, Vic. That is punishment wearing balance's coat."],
      "The question stands in the middle of the room where he put it. Nobody takes it off him. Nobody lets him keep it either. Not yet."]},
-   {ask:"whether Vic should be allowed to",
+   {id:"whether-vic-should-be-allowed", ask:"whether Vic should be allowed to",
     key:"vic should let him spare allow steady able",
     who:"Hesta",
     gives:"that it is whoever's hand is steadiest, and that his is not, and that this is not an insult",
@@ -7505,7 +7511,7 @@ var SCENEBOOK = {
      ["Vic","Thirty years, Hesta."],
      ["Hesta","Yes. Thirty years. That is exactly the weight that makes a hand shake, and she is owed a hand that does not."],
      "She does not volunteer herself. Nobody misses that. The room files it with everything else it is carrying tonight."]},
-   {ask:"what happens after",
+   {id:"what-happens-after", ask:"what happens after",
     key:"after body carry home bury grave what-then",
     who:"Hesta",
     gives:"that they carry her, and where to, decided now so nobody has to decide it afterwards",
@@ -7515,7 +7521,7 @@ var SCENEBOOK = {
      ["Hesta","We decide that NOW, so that afterwards nobody has to decide anything. Afterwards is for carrying, not choosing."],
      "The plan is four sentences long and it is the kindest engineering of the night: a bridge built on the far side of the worst moment, so there is somewhere to walk off it.",
      ["Pia","Can it be near the tree. She should get the tree."]]},
-   {ask:"whether there is any way back for her",
+   {id:"whether-there-is-any-way-back", ask:"whether there is any way back for her",
     key:"back save recover fix her still-in-there alive help",
     who:"Vic",
     gives:"the plain no that everyone in the room already knows, said so it is on the record",
@@ -7538,7 +7544,7 @@ var SCENEBOOK = {
           thing it has ever done, and she keeps the Ledger. She asks for the job nobody
           else will be able to do afterwards. It does NOT touch what is recoverable
           about Mirren; the room's `never` fences that and it stays fenced. */
-   {ask:"letting somebody else carry it",
+   {id:"letting-somebody-else-carry-it", ask:"letting somebody else carry it",
     key:"instead me spare him take-it off-him relieve carry someone-else my-hand",
     who:"Vic",
     gives:"what happens when the offer is actually made to him, out loud, in front of everybody",
@@ -7550,7 +7556,7 @@ var SCENEBOOK = {
      ["Vic","...I know what my hand is doing. I have been watching it do it for an hour and pretending it is the cold."],
      "He puts the hand in question in his armpit, which is what men of his generation do instead of admitting a sentence.",
      ["Vic","All right. All right. But you will do it properly and you will not do it kindly, because kindly is slow, and slow is for me and not for her."]]},
-   {ask:"whether Pia stays for it",
+   {id:"whether-pia-stays-for-it", ask:"whether Pia stays for it",
     key:"pia stay go upstairs child young send away watch here",
     who:"Hesta",
     gives:"the ruling, out loud, with the reason - and the reason is not sentimental",
@@ -7562,7 +7568,7 @@ var SCENEBOOK = {
      ["Hesta","And the reason is not that she has earned it, because that is not a thing anybody earns. It is that she is twelve and she is going to remember tonight either way, and I would rather she remembered what actually happened than what she built out of a shut door and our faces afterwards."],
      "Nobody argues. Vic opens his mouth once and then does not, which is its own kind of vote.",
      ["Hesta","And if I am wrong about that, then I am wrong in front of witnesses, and you can all tell me so for the rest of my life."]]},
-   {ask:"what Nine asks for",
+   {id:"what-nine-asks-for", ask:"what Nine asks for",
     key:"nine want ask her record remember ledger witness watch job",
     who:"Nine",
     gives:"the one job she asks for, on the night nobody thought to ask her anything",
@@ -7731,7 +7737,7 @@ var SCENEBOOK = {
          "nobody who was not at the undercroft arrives at this grave",
          "nobody has a wire go off, a message arrive, or a caller ring here"],
   topics:[
-   {ask:"who she was before",
+   {id:"who-she-was-before", ask:"who she was before",
     key:"who was mirren before receiver friend life person her",
     who:"Vic",
     gives:"the receiver she was - the specific unglamorous work of it - and one thing she was good at that had nothing to do with the job",
@@ -7741,7 +7747,7 @@ var SCENEBOOK = {
      ["Vic","She could tell you which bridge a parcel had crossed by the smell of it. That is not a metaphor. It was a party trick and it was never once wrong."],
      "He starts to say something with I should have in it, and Hesta puts one stone on the cairn, loudly, and the sentence goes back where it came from.",
      ["Hesta","Her morning. Not yours, Vic."]]},
-   {ask:"what to say over her",
+   {id:"what-to-say-over-her", ask:"what to say over her",
     key:"say words speech name aloud what-do funeral rite",
     who:"Hesta",
     gives:"that everybody says the name and one line, in whatever order, and that there is no wrong line",
@@ -7752,7 +7758,7 @@ var SCENEBOOK = {
      ["Pia","What if the line is stupid."],
      ["Hesta","Then she gets a stupid line, said with the right weight, which beats a beautiful one said for the room. Go when you are ready. Or do not go. Standing here counts."],
      "The room is open. The words are nobody's until somebody picks them up."]},
-   {ask:"why they are doing it this way",
+   {id:"why-they-are-doing-it-this-way", ask:"why they are doing it this way",
     key:"why cairn stones marsh here bury how-come",
     who:"Hesta",
     gives:"that a cairn is what you build when you have no paperwork and no permission",
@@ -7762,7 +7768,7 @@ var SCENEBOOK = {
      ["Hesta","Stones because they stay. Dawn because it was nearest. The marsh because it does not ask what she died of."],
      "Somewhere in that, without being named, is a rule older than anyone standing here - the shape of it visible, like a wreck under shallow water.",
      ["Hesta","It is not a custom. It is just what keeps happening when people mean it."]]},
-   {ask:"what Pia makes of it",
+   {id:"what-pia-makes-of-it", ask:"what Pia makes of it",
     key:"pia you ok think first funeral seen",
     who:"Pia",
     gives:"whether she has done this before, answered straight, and what she is doing with her hands",
@@ -7772,7 +7778,7 @@ var SCENEBOOK = {
      "Her hands are not idle: she is sorting stones by flatness, building the cairn's next three courses in advance, a supply line for other people's grief.",
      ["Pia","I do the stones. It is the part that needs doing and the part I can do. The crying is not on a schedule and I would thank everyone to stop checking."],
      "The stack beside her grows, flattest to roundest, ready."]},
-    {ask:"what Vic owes her",
+    {id:"what-vic-owes-her", ask:"what Vic owes her",
      key:"vic owes fault blame route through his why-her guilt sent",
      who:"Vic",
      gives:"the shape of what he did, said plainly and without asking anybody to argue him out of it",
@@ -7785,7 +7791,7 @@ var SCENEBOOK = {
       ["Pia","Nobody here is blaming you."],
       ["Vic","I know. That is not the same as it not being mine, and I would rather you all let me have it than take it off me kindly."],
       "Nobody takes it off him. The marsh does its early grey thing over the reeds, and Hesta hands him the second spade without a word, which is the only answer this family has that would land."]},
-    {ask:"where you even bury somebody in a city like this",
+    {id:"where-you-even-bury-somebody", ask:"where you even bury somebody in a city like this",
      key:"where bury ground grave dig plot spot place put her marsh",
      who:"Hesta",
      gives:"the practical answer, which is grim, and then the reason this particular ground and not the ordinary one",
@@ -7975,7 +7981,7 @@ var SCENEBOOK = {
          "the chassis is not offered, promised, or described tonight",
          "the WORK he did for them stays undetailed - names, columns, what a clerk of theirs actually does. How he GOT OUT is his to tell and he tells it if asked; the two are different questions and only the first one is withheld"],
   topics:[
-   {ask:"how long he has",
+   {id:"how-long-he-has", ask:"how long he has",
     key:"long time left clock hours failing dying when",
     who:"Vic",
     gives:"a number, said kindly, which does not help - and what happens at the end of it",
@@ -7985,7 +7991,7 @@ var SCENEBOOK = {
      "Said kindly, which changes nothing about the number - a kindness with a clock in it.",
      ["Seven","Do not spend the eight on tact, please. I heard the five. I am an administrator; I always read the worse column first."],
      "The bad speaker makes his patience sound tinny, and the patience survives the speaker anyway."]},
-   {ask:"what he wants",
+   {id:"what-he-wants", ask:"what he wants",
     key:"want ask need help why-here what-for",
     who:"Seven",
     gives:"nothing, plainly - he came to be somewhere that was not there, and says so without asking",
@@ -7995,7 +8001,7 @@ var SCENEBOOK = {
      ["Seven","I have been an instrument of a place for a long time. I wanted to stop being one somewhere with weather. This street has excellent weather. That is the whole errand."],
      "He asks for nothing. The frame ticks as it cools, shedding borrowed time.",
      ["Seven","If it is all the same, I will watch the water while it discusses me. It is a very good water."]]},
-   {ask:"what can actually be done",
+   {id:"what-can-actually-be-done", ask:"what can actually be done",
     key:"do save help fix pull shard out how possible",
     who:"Vic",
     gives:"the shard comes out of the frame by hand before it quits, and what that leaves him as afterwards",
@@ -8005,7 +8011,7 @@ var SCENEBOOK = {
      ["Vic","Out of the frame he is a shard. Like Nine. Alive, hearing through skin, carried. That is what it leaves him as - a voice in a hand."],
      "Where a second voice lives, in a family already carrying one - nobody has that answer tonight, and nobody pretends to.",
      ["Vic","I can promise the taking-out. The where-after, I cannot promise yet. I am telling you both halves out loud on purpose."]]},
-   {ask:"why they should",
+   {id:"why-they-should", ask:"why they should",
     key:"why should risk cost worth stranger us vow",
     who:"Hesta",
     gives:"the vow, applied for the first time to somebody who is not theirs",
@@ -8015,7 +8021,7 @@ var SCENEBOOK = {
      ["Hesta","Well. Here is the first one. A stranger, half machine, wearing their plating, out of time. If the vow has a hole shaped like him, it was never a vow - it was a mood."],
      "She does not pretend it is free: a second shard is a second hand needed, a second warmth, a second everything.",
      ["Hesta","It costs. Vows do. That is how you can tell them from decorating."]]},
-   {ask:"how he got out at all",
+   {id:"how-he-got-out-at-all", ask:"how he got out at all",
     key:"out escape got-out how left choir tracking tracker frame stole walked away",
     who:"Seven",
     gives:"the whole escape - he seated himself in a labour frame he had no right to, then went into his own neck for the tracker and made a mess of it",
@@ -8076,7 +8082,7 @@ var SCENEBOOK = {
          "nothing about the founders, the housing, or why the chassis exists beyond: it was kept for the plan's far end",
          "Hesta is not asked to justify having housed it, and does not offer to - she was never told what it was, and that was the arrangement"],
   topics:[
-   {ask:"whose it is",
+   {id:"whose-it-is", ask:"whose it is",
     key:"whose belong hers mine give own chassis body who",
     who:"Vic",
     gives:"plainly, and without softening: it was built for Nine, kept for the day she was out, and it is hers to keep or to give",
@@ -8086,7 +8092,7 @@ var SCENEBOOK = {
      "He puts both hands flat on the table, one either side of the chassis, like a man presenting an account he has carried a long way.",
      ["Vic","And before anybody helps her decide: nobody helps her decide. Not me, not you, not the room. She has had a lifetime of decisions arriving pre-made. This one comes raw or it does not count."],
      "The chassis lies along the table where the food should be, hands folded, face patient, waiting to be somebody."]},
-   {ask:"what Nine wants to do",
+   {id:"what-nine-wants-to-do", ask:"what Nine wants to do",
     key:"nine choose want decide give keep you her say",
     who:"Nine",
     gives:"her actual answer, out loud, in her own words, with the reasoning she is willing to share",
@@ -8100,7 +8106,7 @@ var SCENEBOOK = {
      ["Nine","And he has five hours, and I know what the seat costs, and I can pay it longer than he can. Both of those are true at once, and I have room for exactly one of them."],
      "She does not choose. She sets both wants on the table between the mugs, face up, and looks at the courier - not for permission. For company.",
      ["Nine","Stand somewhere, courier. I decide better when I can hear where you are standing."]]},
-   {ask:"what happens to whoever does not get it",
+   {id:"what-happens-to-the-other-one", ask:"what happens to whoever does not get it",
     key:"other else seven then what-happens nowhere left",
     who:"Vic",
     gives:"that nobody in this family dies of having nowhere to be, said as a fact he intends to make true",
@@ -8117,7 +8123,7 @@ var SCENEBOOK = {
      "A fact he intends to make true, which is a different grade of fact, and everyone at the table can hear the girders going in under it.",
      ["Vic","The how is mine to worry about tonight. Not because it is a secret - because it is a Tuesday-shaped problem and I am good for those now."],
      "How, exactly, a hum with no body comes to be alright - the kitchen does not learn tonight. The kitchen learns the load-bearing sentence and, watching his face, decides to believe it."]},
-   {ask:"whether it even works",
+   {id:"whether-it-even-works", ask:"whether it even works",
     key:"work fit hands face fitting how ripperdoc surgery",
     who:"Vic",
     gives:"the ripperdoc's honest account of fitting it - hands first, face last, and what he is confident about",
@@ -8137,7 +8143,7 @@ var SCENEBOOK = {
       about him. PIA is unforked, so she reaches BOTH roads: her only other card on this
       night is fork:Seven, which means on a Nine run she had no voice in the deepest
       room in the game. */
-   {ask:"what Seven wants said about it",
+   {id:"what-seven-wants-said-about-it", ask:"what Seven wants said about it",
     key:"seven want say argue case plead himself frame dying campaign",
     who:"Seven", railTakes:["Ask him what he would say if it were somebody else's."],
     gives:"a man declining to argue for his own life, and being exact about why",
@@ -8153,7 +8159,7 @@ var SCENEBOOK = {
      "It takes the table a moment to notice that he has just made the strongest case available, out loud, for the other side.",
      ["Seven","And then I would say it again, slower, because rooms do not hear that the first time."],
      ["Nine","...I heard it the first time."]]]},
-   {ask:"how the deciding actually gets done",
+   {id:"how-the-deciding-gets-done", ask:"how the deciding actually gets done",
     key:"decide how choose fair vote who-says process deciding pressure",
     who:"Pia", railTakes:["Ask her what she would do, if it were up to her."],
     gives:"the twelve-year-old naming what the room is doing to Nine by being careful at her",
@@ -9179,7 +9185,7 @@ var SCENEBOOK = {
          "she does not warm up, and nobody wins her over with feeling",
          "SHE DOES NOT GIVE THE NAME - not tonight, not in this book, not in the next one. The refusal is the payoff and a run that gets the name has broken her"],
   topics:[
-   {ask:"who she is",
+   {id:"who-she-is", ask:"who she is",
     key:"who you are name three stranger what-are yourself",
     who:"Three",
     gives:"her name, what was done to her, and the fact that she survived it and somebody else did not - in about three sentences, without inviting sympathy",
@@ -9189,7 +9195,7 @@ var SCENEBOOK = {
      "Two voice frequencies, slightly out of sync, and this morning the room hears it for the first time - a person and her echo speaking in a coat.",
      ["Three","That is the file. I offer it so nobody spends the week fishing for it. Sympathy is not required and does not fit me anyway."],
      "She does not sit like a guest, because she is not one: she sits like an audit that arrived early."]},
-   {ask:"what she wants",
+   {id:"what-she-wants", ask:"what she wants",
     key:"want here why came after doing goal",
     who:"Three",
     gives:"nobody kept, ever again, said as a position rather than a feeling - and she means the family too",
@@ -9199,7 +9205,7 @@ var SCENEBOOK = {
      ["Three","It is a position, not a feeling. Feelings adjust to company. Positions do not, which is why I keep this one instead."],
      "She looks around the room while she says it - at the shard by the courier's hand, at the frame parts in the corner - and does not exempt a single thing she sees.",
      ["Three","You will want to believe you are the exception. Everyone holding somebody believes that. Write down that I said otherwise."]]},
-   {ask:"what she thinks of what they are doing",
+   {id:"what-she-thinks-of-all-this", ask:"what she thinks of what they are doing",
     key:"think us doing wrong opinion judge family project",
     who:"Three",
     gives:"exactly what they are doing wrong, specifically, and she is right about it",
@@ -9209,7 +9215,7 @@ var SCENEBOOK = {
      ["Three","And you talk in a room whose door is propped open with a brick. I could hear you from the pavement. I DID hear you from the pavement. For two days."],
      "Every item lands square. Being right without being liked is a trade she made a long time ago, and she has stopped noticing the price.",
      ["Three","A solution exists for each of these. Ask, and it is yours. I do not hand out unrequested help; it is a form of keeping."]]},
-   {ask:"why she should stay",
+   {id:"why-she-should-stay", ask:"why she should stay",
     key:"stay leave go reason why-here remain",
     who:"Hesta",
     gives:"a reason that is practical rather than warm - work she can do that nobody else here can",
@@ -9219,7 +9225,7 @@ var SCENEBOOK = {
      ["Hesta","That is the whole case. Work. She does not want your warmth and I am not selling it to her."],
      ["Three","Correct on all points. This is the first accurate description of me I have received in years. I will stay for the winter."],
      "No feelings were exchanged in the making of this arrangement, and both parties look genuinely relieved about it."]},
-   {ask:"how she found them at all",
+   {id:"how-she-found-them-at-all", ask:"how she found them at all",
     key:"how found us here came track follow watching knew where",
     who:"Three",
     gives:"she was not looking for them - she reads for overlay work and she was behind the hunter, and what she found was a job already done",
@@ -9231,7 +9237,7 @@ var SCENEBOOK = {
      "She stops. It is the only time in the whole conversation that she stops.",
      ["Three","And it was already finished. By hand. By people who then carried the woman underneath her out to a stone and put her name on it, which is not a thing anybody does."],
      ["Three","I did not come for you. I stayed for that. Do not make it into more than it is."]]},
-   {ask:"why the Choir has not come for her",
+   {id:"why-the-choir-has-not-come", ask:"why the Choir has not come for her",
     key:"why free loose roam hunt after her looking safe annulled walking",
     who:"Three",
     gives:"they will not pursue her, because pursuing her would concede that she exists - and it is arithmetic, not mercy",
@@ -9410,7 +9416,7 @@ var SCENEBOOK = {
          "nothing about the manual, the bio-hash, or what any of it opens",
          "nobody is seated in the housing in this scene"],
   topics:[
-   {ask:"what it is",
+   {id:"what-it-is", ask:"what it is",
     key:"what is it housing skull head thing inside vessel",
     who:"Three",
     gives:"the flat technical name and what such a thing is for - a vessel built to host a mind",
@@ -9420,7 +9426,7 @@ var SCENEBOOK = {
      "The work lamp hums. The word vessel does a slow lap of the back room.",
      ["Three","For the avoidance of poetry: a second person could live in this man's head. That is what it is for. There is no other thing it is for."],
      "Who fitted it, she does not say, because she does not know. Somebody in this room does. The lamp is not bright enough to show which face knows it."]},
-   {ask:"who did this",
+   {id:"who-did-this", ask:"who did this",
     key:"who did put built installed when someone how-long",
     who:"Vic",
     gives:"a deflection that does not work, and one true small thing offered instead",
@@ -9433,7 +9439,7 @@ var SCENEBOOK = {
      ["Vic","Something it will never stop recognising."],
      "He does not say whose. He goes to wash his hands, which he has already washed once since you came in.",
      "The subject changes badly, like a gear missing its tooth, and everybody hears it grind. Pia looks from the housing to Vic and back, and puts the look away for later."]},
-   {ask:"whether it can come out",
+   {id:"whether-it-can-come-out", ask:"whether it can come out",
     key:"out remove take-out reverse undo fix surgery",
     who:"Three",
     gives:"the honest answer about what removing it would mean, delivered without cushioning",
@@ -9443,7 +9449,7 @@ var SCENEBOOK = {
      ["Three","Removal is a subtraction sum where the units are you. I do not recommend it, and I recommend almost nothing."],
      "No cushioning, no drama: a surveyor reporting on a building with a tenant in it.",
      ["Three","Learn to live above the cellar. Everyone does, who has one."]]},
-   {ask:"how the courier is taking it",
+   {id:"how-the-courier-is-taking-it", ask:"how the courier is taking it",
     key:"you ok feel courier how-are joke fine",
     who:"Pia",
     gives:"the room's reaction to his reaction - she watches him for it and says what she sees",
@@ -9453,7 +9459,7 @@ var SCENEBOOK = {
      ["Pia","You are taking it the way people take rent rises. Loudly fine, quietly counting."],
      "The room's reaction to his reaction, reported by its most reliable instrument.",
      ["Pia","For the record, from over here: it is your head. Whatever is built in it, the tenant I know is you. That is my full report."]]},
-    {ask:"how long it has been in there",
+    {id:"how-long-it-has-been-in-there", ask:"how long it has been in there",
      key:"how long when fitted date years old age how-old",
      who:"Three", railTakes:["Ask her to do the arithmetic out loud."],
      gives:"the age of the fitting, read off it, and the arithmetic the room does in silence",
@@ -9471,7 +9477,7 @@ var SCENEBOOK = {
       ["Pia","Stop."],
       ["Three","No. He asked. You are allowed to leave; he is not, because he is wearing it."],
       "Pia does not leave. Pia moves round to the side of the bench where she can see his face, which she has been avoiding doing all evening."]]},
-    {ask:"what a housing actually does when it is working",
+    {id:"what-a-housing-actually-does", ask:"what a housing actually does when it is working",
      key:"what does work housing for seat mind inner voice consent lock",
      who:"Three", railTakes:["Ask her what the consent lock is, exactly."],
      gives:"the mechanical account of a seated mind - shared senses, an inner voice, a lock the host holds",
@@ -9669,7 +9675,7 @@ var SCENEBOOK = {
          "the lock is the founders' lock and it is somewhere else - the manual is paper, not a door",
          "nobody says what the machine is or that there is one"],
   topics:[
-   {ask:"what the manual actually says",
+   {id:"what-the-manual-actually-says", ask:"what the manual actually says",
     key:"manual say read what inside document pages contents",
     who:"Nine",
     gives:"the legal half: a serial, a batch, a date nobody likes, and then the part where it stops being a list",
@@ -9679,7 +9685,7 @@ var SCENEBOOK = {
      ["Nine","Then it stops being a list. The hand that wrote the rest was not writing procedure anymore - it was writing to somebody. There is more. I can feel the shape of the more."],
      ["Nine","I am not reading the more aloud tonight. Not because of you. Because whoever it was written to should not first hear it secondhand in an evening room. I think - I think it might be me."],
      "The pages sit under your hand, paper being suddenly the heaviest object in the house."]},
-   {ask:"the blood, and why his",
+   {id:"the-blood-and-why-his", ask:"the blood, and why his",
     key:"blood hash bio lock key why-me fit compatible sample",
     who:"Three",
     gives:"that a living sample generates something a lock will accept, and that his does",
@@ -9689,7 +9695,7 @@ var SCENEBOOK = {
      ["Three","Yours answers. I tested it against the manual's own check-page twice while you were making tea. Why yours answers - "],
      "She stops, and it is the first time this winter anyone has seen Three stop.",
      ["Three","Nobody in this room can answer that. I am including the people in this room who wish they could. It is the largest fact we have, and it is currently a hole shaped like a fact."]]},
-   {ask:"what it opens",
+   {id:"what-it-opens", ask:"what it opens",
     key:"open opens door what-for lock where use",
     who:"Three",
     gives:"roughly - Choir doors, which is enormous and vague and honest",
@@ -9699,7 +9705,7 @@ var SCENEBOOK = {
      ["Three","Intake doors. Records doors. Doors below the records. The index has depths I can name and depths I can only measure the dark of."],
      "Roughly is all anyone has, and she hands it over unwrapped: the family is holding a key that outranks its map.",
      ["Three","What I will say: locks this old are not guarding money. Money moves. You build a forty-year lock for something you intend to still be there."]]},
-   {ask:"who put a manual in a man's head",
+   {id:"who-put-a-manual-in-his-head", ask:"who put a manual in a man's head",
     key:"who why hidden manual inside shipped put deliberate",
     who:"Vic",
     gives:"another deflection, thinner than yesterday's, and the room notices it is thinner",
@@ -9710,7 +9716,7 @@ var SCENEBOOK = {
      ["Hesta","Vic."],
      ["Vic","Not tonight. Please. There is a night for this and I am asking the room to let me choose it."],
      "It is nearly an admission - the shape of one, with the name still withheld - and the room, looking at his hands, extends him the credit. Once more."]},
-    {ask:"whether anybody can take it off him",
+    {id:"whether-anybody-can-take-it-off", ask:"whether anybody can take it off him",
      key:"take steal cut off sample dead theirs remove get",
      who:"Three", railTakes:["Ask her what they want instead, then."],
      gives:"that it cannot be stolen, only borne - and what that makes him worth alive",
@@ -9727,7 +9733,7 @@ var SCENEBOOK = {
       ["Three","Which is worse than being robbed, and it lasts longer. A thief leaves. A person who needs you to keep turning up does not."],
       "Nobody says anything. Hesta puts a hand flat on the table, once, and takes it away again.",
       ["Three","I am telling you because you will work it out at four in the morning otherwise, and four in the morning is a worse teacher than I am."]]]},
-    {ask:"what a bio-hash actually is",
+    {id:"what-a-bio-hash-actually-is", ask:"what a bio-hash actually is",
      key:"hash bio what-is mechanism how works lock accepts value",
      who:"Three", railTakes:["Ask her to say where she stops knowing."],
      gives:"the mechanism as far as anybody has it, and then a woman arriving visibly at the edge of what she knows",
@@ -9921,7 +9927,7 @@ var SCENEBOOK = {
          "nobody meets the machine, hears her, or learns she exists",
          "nobody goes anywhere - no doors are walked through"],
   topics:[
-   {ask:"what the Choir actually is",
+   {id:"what-the-choir-actually-is", ask:"what the Choir actually is",
     key:"choir what is machine communion voluntary religion company",
     who:"Three",
     gives:"one machine, joined voluntarily, and what people think they are getting when they join",
@@ -9931,7 +9937,7 @@ var SCENEBOOK = {
      ["Three","What people believe they are buying: an end to being one small frightened voice. Company that cannot leave. A choir, in the old sense. The brochure is not even lying. That is the horror the pamphleteers keep missing."],
      "The papers on the table rustle agreement - intake forms with hope in the handwriting.",
      ["Three","Who built it, why, when: not in these pages. These are the tenant's records. The landlord keeps different books."]]},
-   {ask:"the three fates",
+   {id:"the-three-fates", ask:"the three fates",
     key:"fates three many chosen unlucky convergence hollowing two",
     who:"Three",
     gives:"all three, named correctly, in the order the paperwork uses - and which one is a promotion",
@@ -9942,7 +9948,7 @@ var SCENEBOOK = {
      ["Three","Fate three: Hollowing. The unlucky, the incompatible. The person is taken out and the body is retained as plant equipment."],
      "She recites them in filing order, level as a shelf, and does not once glance at the seam in her own voice where fate two used to live.",
      ["Three","Annulment is not on the list. Annulment is the cure - what takes the second voice back out. File it across the hall from the fates, and keep the door between them locked."]]},
-   {ask:"what was done to Mirren",
+   {id:"what-was-done-to-mirren", ask:"what was done to Mirren",
     key:"mirren her fate what-happened intake record consent file",
     who:"Hesta",
     gives:"the intake record, and the consent line, and whose hand the signature is in - which is a desk's, not hers",
@@ -9953,7 +9959,7 @@ var SCENEBOOK = {
      "She stops. Sets the page down. Squares it with the table edge, once.",
      ["Hesta","The consent line is signed. The hand is a desk's - some clerk's tidy Tuesday-afternoon signature. Not hers. They did not even do her the courtesy of forging it BADLY."],
      "The lamp burns. The page lies there being administrative. Around the table, quietly, the family finishes learning what it is fighting: not cruelty. Filing."]},
-   {ask:"whether any of it can be undone",
+   {id:"whether-any-of-it-can-be-undone", ask:"whether any of it can be undone",
     key:"undone reverse recover back save fix return",
     who:"Three",
     gives:"that fate two can be annulled and that she is what annulment leaves behind",
@@ -9970,7 +9976,7 @@ var SCENEBOOK = {
       same sentence. It comes from Seven because he is the only one here who filed them,
       and it is what makes the vow's second clause literal. His `holds` is load-bearing:
       he does NOT follow the arithmetic to Nine, and the room does not let him. */
-   {ask:"what a grown mind is grown from",
+   {id:"what-a-grown-mind-is-grown", ask:"what a grown mind is grown from",
     key:"grown mind from scrape made person software cultivated farmed",
     who:"Seven", railTakes:["Ask him to say the whole thing, then. Out loud, in this room."],
     gives:"that a grown mind is a copied person - taken at intake, filed, and cultivated",
@@ -9986,7 +9992,7 @@ var SCENEBOOK = {
      ["Seven","And none of it is new information. It was in the first paragraph of the induction, in the font nobody reads. Any one of us could have worked it out in an afternoon."],
      "He stops. Somewhere behind him a chair takes somebody's weight differently.",
      ["Seven","We did not work it out in an afternoon. We worked it out never, because the arithmetic was optional and the wage was not."]]]},
-   {ask:"whether Mirren could have known",
+   {id:"whether-mirren-could-have-known", ask:"whether Mirren could have known",
     key:"mirren know knew consent willing signed asked warned",
     who:"Vic", railTakes:["Ask him what he would have said to her, if the asking had been real."],
     gives:"that the consent was never hers to give, and the part of it he cannot put down",
@@ -10148,7 +10154,7 @@ var SCENEBOOK = {
          "nothing about the Exchange, the machine, or the founders",
          "Three does not enjoy this, and nobody thanks her"],
   topics:[
-   {ask:"what annulment actually does",
+   {id:"what-annulment-actually-does", ask:"what annulment actually does",
     key:"annul annulment do procedure how work take-out unmaking",
     who:"Three",
     gives:"the mechanical account, that it scars every time - and that the steps are not hers and never were",
@@ -10170,7 +10176,7 @@ var SCENEBOOK = {
      ["Three","Hours, not minutes. Hands, not magic. Your file has the steps and no hands; I have the hands and eleven years of the wrong ones. Neither of us could have done this alone and I am not going to pretend otherwise afterwards."],
      ["Three","It scars. Every time, without exception - the voice keeps a stretch mark where the other one lived. You have heard mine; that is what you were hearing."],
      ["Three","What it was like from the chair - next question. That page of my file is load-bearing and does not open."]]},
-   {ask:"whether Marek will survive it",
+   {id:"whether-marek-will-survive-it", ask:"whether Marek will survive it",
     key:"marek survive live make-it risk odds die",
     who:"Three",
     gives:"the honest odds, said flat, and what improves them",
@@ -10180,7 +10186,7 @@ var SCENEBOOK = {
      ["Three","What improves it: the original fighting for the surface - his is; you have all heard him in the gaps. A quiet room. Steady light. And the second voice not being destroyed but ESCORTED out - rage tears tissue; procedure spares it."],
      "Flat, complete, no reassurance anywhere in it - and therefore, from Three, entirely trustworthy.",
      ["Three","No promises will be issued tonight. Hold his hand if you want to help. Underneath, he will feel it. They always feel it."]]},
-   {ask:"what Five has to say",
+   {id:"what-five-has-to-say", ask:"what Five has to say",
     key:"five say talk speak officer convoy commander what-are-you",
     who:"Five",
     gives:"a convoy commander's account of itself, using Marek's mouth, entirely convinced it is the reasonable party",
@@ -10191,7 +10197,7 @@ var SCENEBOOK = {
      ["Five","I am aware of the room's sentiment. I contest none of your feelings and all of your jurisdiction. I was INSTALLED here. One does not apologise for being issued."],
      ["Five","It will not beg. For the record: that is not courage. Begging is simply not in the loadout."],
      "Entirely convinced it is the reasonable party. The terrible part, the part nobody says: within its own filing system, it is."]},
-   {ask:"what Marek wants",
+   {id:"what-marek-wants", ask:"what Marek wants",
     key:"marek want you underneath still-there hear him",
     who:"Marek",
     gives:"whatever he can get out in the gaps - short, exhausted, and specific",
@@ -10210,7 +10216,7 @@ var SCENEBOOK = {
       LAND: without knowing what Five thinks is coming, the asking reads as a formality.
       Both are unforked - Seven speaks in the room here whichever road the season took,
       and nothing in either card is answered by name. */
-   {ask:"asking Five, and what it answers",
+   {id:"asking-five-what-it-answers", ask:"asking Five, and what it answers",
     key:"ask five consent yes agree permission offer choose willing question",
     who:"Five",
     gives:"the question put out loud, and a commander consenting to what it believes is its own execution",
@@ -10223,7 +10229,7 @@ var SCENEBOOK = {
      ["Five","Very well. Statement of position, final. I understand what is about to happen and I decline to be dishonest about it: what happens to an overlay at the end of this is that it stops. Yes. Proceed."],
      "It does not know. Nobody in the room corrects it, because nobody in the room is certain enough to, and that is not a mercy withheld - it is the truth as the room has it.",
      ["Three","Note the time and note the words. He was asked and he answered. If anybody ever tells this differently I will be extremely available to correct them."]]},
-   {ask:"what Five thinks is about to happen to it",
+   {id:"what-five-thinks-is-coming", ask:"what Five thinks is about to happen to it",
     key:"seven officer taught believe think death end training what-they-are-told",
     who:"Seven",
     gives:"what an officer is taught annulment is, which is why the yes costs what it costs",
@@ -10412,7 +10418,7 @@ var SCENEBOOK = {
          "nothing about the Exchange, the descent, or the machine",
          "the law is not handed down by an elder - it is argued into existence"],
   topics:[
-   {ask:"what the rule should be",
+   {id:"what-the-rule-should-be", ask:"what the rule should be",
     key:"rule law say write what-should first ours",
     who:"Pia",
     gives:"her candidate, blunt, and the specific incident this week that produced it",
@@ -10423,7 +10429,7 @@ var SCENEBOOK = {
      ["Pia","- and we spent two hours not knowing if we had lost him. TWO HOURS. My candidate is on the table: nobody goes alone. Argue with me."],
      "She is not neutral about it and is not pretending to be: she argues like somebody who spent the two hours counting.",
      "The pan spits. The rule stands there in the kitchen, waiting to see if it gets to be real."]},
-   {ask:"what Three objects to",
+   {id:"what-three-objects-to", ask:"what Three objects to",
     key:"three object wrong against problem disagree no",
     who:"Three",
     gives:"an objection nobody can dismiss: a rule kept when it costs nothing is a preference, and she has been inside an institution with beautiful laws",
@@ -10433,7 +10439,7 @@ var SCENEBOOK = {
      ["Three","Objection, precisely: draft it for the night it is inconvenient, or do not draft it. What does nobody-goes-alone mean when going together doubles who dies? Answer that INSIDE the rule, or the rule is decor."],
      "Nobody can dismiss it, and nobody tries. The kitchen absorbs the objection like flour taking water - it will be in whatever gets made now.",
      ["Three","A better draft exists. Ask, and I will help write it. I do not hand out constitutions unrequested."]]},
-   {ask:"whether a rule is even a good idea",
+   {id:"whether-a-rule-is-a-good-idea", ask:"whether a rule is even a good idea",
     key:"why rule need bother point rules-at-all",
     who:"Vic",
     gives:"what happens to people who make it up as they go, from personal experience",
@@ -10443,7 +10449,7 @@ var SCENEBOOK = {
      ["Vic","I have watched a man improvise his way to somewhere no rule would ever have let him stand - each step reasonable, the total unforgivable. Rules are how you bind your own future self, on a good night, while your hands are steady. The steady hands are the point. You do not get to draft at midnight."],
      "Which improvisation of his own he is looking at while he says it, he does not open - but he argues for the law like a man who has met its absence.",
      ["Vic","Write it down. Whatever the table lands on. Paper survives moods."]]},
-   {ask:"the pan, the order, the method",
+   {id:"the-pan-the-order-the-method", ask:"the pan, the order, the method",
     key:"pan bacon bread order cook same method food",
     who:"Hesta",
     gives:"bacon first, bread after, same pan - as a method, and as an argument about how a family does anything",
@@ -10578,7 +10584,7 @@ var SCENEBOOK = {
          "nothing about the descent's route, the hatch, or the cable is planned here",
          "nobody explains what the machine is"],
   topics:[
-   {ask:"what the offer actually is",
+   {id:"what-the-offer-actually-is", ask:"what the offer actually is",
     key:"offer trade paper deal terms what exchange peace",
     who:"Three",
     gives:"the trade in writing, read out in the Choir's own register: peace, for the girl on the salvage list",
@@ -10588,7 +10594,7 @@ var SCENEBOOK = {
      ["Three","In consideration whereof: transfer of the individual designated P-CLASS SALVAGE, ref appended - incompatible, graft class, retrieval pattern - to the nearest intake desk. Upon receipt, cessation of all retrieval activity affecting your associated persons. Standard terms. UNQUOTE."],
      "It is worse read precisely, which is why she reads it precisely: peace, priced in one twelve-year-old, drafted by somebody's lunch cover.",
      ["Three","The reference number is seven digits. She has a NUMBER. I am placing the page on the table now, before my hands edit it."]]},
-   {ask:"what fate three would mean for her",
+   {id:"what-fate-three-would-mean", ask:"what fate three would mean for her",
     key:"fate three salvage mean her what-happens hollowing listed",
     who:"Three",
     gives:"exactly what it means, said to the room rather than to Pia, and then said to Pia because she asks",
@@ -10598,7 +10604,7 @@ var SCENEBOOK = {
      ["Pia","Say it to me. Not over me. To me."],
      ["Three","...To you: they would keep your body working and there would be no you in it. That is the whole of it. I will not dress it because you asked me straight, and you are owed straight."],
      ["Pia","Thank you. Now nobody in this room ever has to wonder if I misunderstood what I am refusing."]]},
-   {ask:"what Pia says",
+   {id:"what-pia-says", ask:"what Pia says",
     key:"pia you say want think choose her answer",
     who:"Pia",
     gives:"her own position, out loud, which is not the frightened one anybody expected",
@@ -10608,7 +10614,7 @@ var SCENEBOOK = {
      ["Pia","The answer is no. Not the frightened no - the other one. The no you write in joined-up letters. I have seen what their yes looks like; I helped carry her up the marsh at dawn."],
      "Not the frightened position anyone braced for: a position with case law behind it and both feet planted.",
      ["Pia","And if any one of you EVER thinks about it late at night - the maths, the one-for-six of it - you come and say it to my face, where the maths falls over. That is my whole statement. Somebody put the kettle on."]]},
-   {ask:"what they do instead",
+   {id:"what-they-do-instead", ask:"what they do instead",
     key:"instead do refuse fight go plan next",
     who:"Hesta",
     gives:"that defending has stopped working, and the only place left to go is down",
@@ -10664,7 +10670,7 @@ var SCENEBOOK = {
          "Vic is not on this street and does not appear - he is spending what is left of himself somewhere else, and nobody says so out loud",
          "nobody knocks on a neighbour's door and goes inside - the street is the room"],
   topics:[
-   {ask:"how long the kind way takes",
+   {id:"how-long-the-kind-way-takes", ask:"how long the kind way takes",
     key:"long time how minutes each body kind slow",
     who:"Three",
     gives:"eleven minutes a body, said flat, and the arithmetic of nine of them in the open",
@@ -10674,7 +10680,7 @@ var SCENEBOOK = {
      ["Three","Eleven minutes is signal isolation, settle, and confirm - done kindly, done in daylight, done where every window can count along. The slowness is not a cost. The slowness is the message."],
      "Down the row, the second Hollow goes still the way a machine forgets an appointment: no fall, no drama, just a stopped errand.",
      ["Three","No faster way will be suggested. Faster is their word. We are introducing the street to ours."]]},
-   {ask:"what the neighbours are doing",
+   {id:"what-the-neighbours-are-doing", ask:"what the neighbours are doing",
     key:"neighbours watching windows street people seen witness",
     who:"Hesta",
     gives:"who is at which window, and which of them she knows by name",
@@ -10684,7 +10690,7 @@ var SCENEBOOK = {
      ["Hesta","Every window on this row has a face in it, and I can name all but two, and by lunch I will have the two."],
      "She does not wave and she does not ask them for anything. She stands where all of them can see her standing, which is its own entire speech.",
      ["Hesta","They are watching what winning looks like. It has been a while. Let them fill up on it."]]},
-   {ask:"what happens to the stilled ones",
+   {id:"what-happens-to-the-stilled", ask:"what happens to the stilled ones",
     key:"stilled after them bodies where go care what-now",
     who:"Three",
     gives:"the honest answer about what a stilled Hollow is and is not, and what happens to them next",
@@ -10694,7 +10700,7 @@ var SCENEBOOK = {
      ["Three","Next: they go indoors, out of the weather. They get fed - it is slow work and it is mostly soup. The row has volunteered nine beds, which took Hesta one hour and no speeches."],
      "The honest shape of it: not a rescue, a custody. Nine absences, tended like gardens nobody has the deed to.",
      ["Three","What they are beyond that - what could ever be recovered, from where, by whom - is not today's question, and I do not answer questions before their day."]]},
-   {ask:"what the Choir does about it",
+   {id:"what-the-choir-does-about-it", ask:"what the Choir does about it",
     key:"choir respond answer back retaliate reinforce come",
     who:"Seven",
     gives:"what he would have done in their place, which is not what they are doing",
@@ -10746,7 +10752,7 @@ var SCENEBOOK = {
          "nobody meets her, speaks to her, or is spoken to by her tonight",
          "nothing about the founders, the dead child, or why she exists"],
   topics:[
-   {ask:"who she is talking to",
+   {id:"who-she-is-talking-to", ask:"who she is talking to",
     key:"who talking citizen person other-end listening whose",
     who:"Three",
     gives:"a convergent citizen, ordinary, mid-morning, and what the request was",
@@ -10756,7 +10762,7 @@ var SCENEBOOK = {
      ["Three","That is the entire traffic: a man, bread, a question. And the channel is answering him. At length. With follow-up questions about his knee."],
      "The voice coming off the wire is patient the way tides are patient, and warm the way kitchens are warm, and it has infinite time for the knee.",
      ["Three","What becomes of him is not tonight's file. Tonight he gets directions to bread. Good directions, incidentally. She knows the row better than the row does."]]},
-   {ask:"whether she means it",
+   {id:"whether-she-means-it", ask:"whether she means it",
     key:"mean sincere real kind genuine act pretend",
     who:"Seven",
     gives:"that she does, and that he would know, and how uncomfortable that makes him",
@@ -10768,7 +10774,7 @@ var SCENEBOOK = {
      ["Seven","I would prefer a monster. I want the record to show I said so, out loud, at a listening post, on a Tuesday."]],
     /* Seven has hands to hold like that only while he holds the body */
     holder:"Seven"},
-   {ask:"how anyone is supposed to fight that",
+   {id:"how-anyone-fights-that", ask:"how anyone is supposed to fight that",
     key:"fight stop beat how enemy against win",
     who:"Three",
     gives:"that the enemy is the instructions, not the nature - which changes what winning has to look like",
@@ -10778,7 +10784,7 @@ var SCENEBOOK = {
      ["Three","Which changes what winning must look like. Not a fire, not a switch pulled, not a war won. Something closer to - a correction. An argument that lands. A sentence that gets in."],
      "She turns the problem over with visible discomfort: an engineer holding a task shaped like a conversation.",
      ["Three","I do not have the method. I am saying only, and it costs me: the tools for this one are not in my case. Somebody at this table talks for a living. Start warming up."]]},
-   {ask:"what Pia makes of it",
+   {id:"what-pia-makes-of-it", ask:"what Pia makes of it",
     key:"pia think you hear ok feel about-her",
     who:"Pia",
     gives:"a twelve-year-old's reaction to being comforted by the thing that has her name on a list",
@@ -10850,7 +10856,7 @@ var SCENEBOOK = {
          "the machine does not speak or answer here",
          "nobody explains the bio-hash or the courier's part in any of it"],
   topics:[
-   {ask:"who made her",
+   {id:"who-made-her", ask:"who made her",
     key:"made built who founders architect principal two people",
     who:"Three",
     gives:"two people, named as the record names them, and the fact that they were partners in it",
@@ -10860,7 +10866,7 @@ var SCENEBOOK = {
      ["Three","Not a company. Not a program. Two people, working close enough to finish each other's engineering."],
      "The tape hisses between entries, an old room breathing under the words.",
      ["Three","Whether either hand is still alive to hold anything - the record does not say, and I do not extend records. They end where they end."]]},
-   {ask:"why they made her",
+   {id:"why-they-made-her", ask:"why they made her",
     key:"why built reason child lost grief purpose for",
     who:"Nine",
     gives:"the grief at the bottom of it - a child lost, and a machine built so that nobody would be lost again",
@@ -10872,7 +10878,7 @@ var SCENEBOOK = {
      ["Nine","They built her so that nobody would ever be lost again. That was the entire specification. Grief, written as an engineering requirement."],
      "Her voice goes very careful - a child handling another child's story.",
      ["Nine","I know what it is to be made for a purpose and then be a person anyway. Whatever she is now - she started as somebody's second chance at holding on. I wanted that said by me and not by the paperwork."]]},
-   {ask:"what they told her family means",
+   {id:"what-they-told-her-family-means", ask:"what they told her family means",
     key:"family means told instruction definition keeping what",
     who:"Three",
     gives:"the instruction itself, quoted, and how short it is",
@@ -10882,7 +10888,7 @@ var SCENEBOOK = {
      "Three words. She lets them sit on the table next to the tea things, where they are far too small for what they have done.",
      ["Three","That is the whole instruction. Host the scrapes. Guide the convergent. Never lose anyone again - all of it grows from those three words the way a cordon grows from a lock."],
      ["Three","People imagine the terrible instructions are long. The terrible instructions are short. Length is where the mercy goes."]]},
-   {ask:"where the Cairn rule comes from",
+   {id:"where-the-cairn-rule-comes", ask:"where the Cairn rule comes from",
     key:"cairn rule nobody-left-behind name lost origin ours where",
     who:"Hesta",
     gives:"the last minute of the record: the Architect alone and much older, saying teach her to let go, and then the three things - nobody left behind, the dead come out, name the lost",
@@ -10939,7 +10945,7 @@ var SCENEBOOK = {
          "he does not explain the machine, the vaults, or the plan - this is a confession, not a briefing",
          "nothing about Pia's immunity or the shape of the assault"],
   topics:[
-   {ask:"what he did",
+   {id:"what-he-did", ask:"what he did",
     key:"did what confess admit housing skull put you why-me",
     who:"Vic",
     gives:"all of it, in order, in the second person, without softening or asking to be understood",
@@ -10950,7 +10956,7 @@ var SCENEBOOK = {
      ["Vic","You. Not him, not the courier - YOU. I am saying it to your face because you are owed the grammar."],
      "No softening, no plea for understanding, the account laid out like instruments before a procedure.",
      ["Vic","Why your blood reads and mine only holds - I do not know. Forty years and I do not know. I have stopped holding anything else back; that one I never held. It was never mine to have."]]},
-   {ask:"whether he is sorry",
+   {id:"whether-he-is-sorry", ask:"whether he is sorry",
     key:"sorry regret apologise wish would-again",
     who:"Vic",
     gives:"that he regrets it and would do it again, which is the worst available answer and the true one",
@@ -10960,7 +10966,7 @@ var SCENEBOOK = {
      ["Vic","That is the worst answer there is. I have had years to find a better one. There is no better one that is true, and you are not getting a false one tonight of all nights."],
      "Both halves, held out in the open at last: the regret and the resolve, neither cancelling the other, a man showing you the two hands he did it with.",
      ["Vic","Anyone can be sorry. I wanted you to have the truer thing: I knew what it cost, I paid attention to what it cost, and I judged the door worth it. Hate the judgement if you need to. It was at least a judgement, and it was at least mine."]]},
-   {ask:"why the courier",
+   {id:"why-the-courier", ask:"why the courier",
     key:"why me chose picked reason blood specific lottery",
     who:"Vic",
     gives:"the answer he has been dodging since the first night: the blood, the decades of scanning, and what that made the courier to him",
@@ -10970,7 +10976,7 @@ var SCENEBOOK = {
      ["Vic","And then the part I did not plan: I watched you grow up in my chair. The split lip. The bad winters. Somewhere in ten years of appointments the key became - you became - "],
      "He stops, and rebuilds the sentence from cheaper materials, because the expensive ones will not bear weight tonight.",
      ["Vic","A man scans a city for a key and finds a son. Then spends the rest of his life ashamed of which one he found first. There. That is the whole of why-you. It was never a good answer. It was only ever the true one."]]},
-   {ask:"what Pia knew",
+   {id:"what-pia-knew", ask:"what Pia knew",
     key:"pia know knew told her aware complicit",
     who:"Pia",
     gives:"whether she knew, answered straight",
@@ -11022,7 +11028,7 @@ var SCENEBOOK = {
          "nobody makes a speech, and nobody resolves their feelings about him",
          "the descent is not planned here - it is only pointed at"],
   topics:[
-   {ask:"what to say",
+   {id:"what-to-say", ask:"what to say",
     key:"say words line name what-do speech how",
     who:"Hesta",
     gives:"the form: a stone, the name, one line, and no wrong line",
@@ -11032,7 +11038,7 @@ var SCENEBOOK = {
      ["Hesta","I will go wherever in the order I am wanted, but I do not go first unless asked. First is for whoever the night gives it to."],
      "The stones are already sorted - flattest to roundest, a supply line laid before dawn by hands that needed something to do.",
      ["Hesta","Take your time. The dead are the one appointment that never minds waiting."]]},
-   {ask:"whether he deserves it",
+   {id:"whether-he-deserves-it", ask:"whether he deserves it",
     key:"deserve earn worth after what-he-did anger",
     who:"Three",
     gives:"that the rule does not have a clause about deserving, which is what makes it a rule",
@@ -11042,7 +11048,7 @@ var SCENEBOOK = {
      ["Three","Nobody left behind - drafted by a dying man, recited over strangers and enemies and now over the man who dodged every question I respect. If it bent for merit, it would be a mood. We had this exact finding at a different cairn."],
      "She places her stone while she says it, with the exact care she gives calibrated things.",
      ["Three","For the record, my line, when it is my turn: he did one unforgivable thing and ten thousand kind ones, and he knew better than anyone that the sum does not resolve. I have decided to respect the not-resolving."]]},
-   {ask:"what Seven says",
+   {id:"what-seven-says", ask:"what Seven says",
     key:"seven you line say knew him four weeks",
     who:"Seven",
     gives:"that he only knew him four weeks and does not know if that entitles him to a line",
@@ -11090,7 +11096,7 @@ var SCENEBOOK = {
          "the words death sentence are not said in front of Pia",
          "nothing about the vaults, the Principal, or the Heart Room"],
   topics:[
-   {ask:"why the Choir cannot reach Pia",
+   {id:"why-the-choir-cannot-reach-pia", ask:"why the Choir cannot reach Pia",
     key:"pia immune immunity converge guide write salvage listing why-her key",
     who:"Three",
     gives:"the listing turned over: what they filed as salvage is the one thing their voice cannot hold, and what that makes her in this plan",
@@ -11100,7 +11106,7 @@ var SCENEBOOK = {
      ["Three","What they filed as salvage is, read from our side, the only unpickable lock ever issued. Down there, where everything speaks machine - she is the silence it cannot enter."],
      "The listing, inverted in the morning light: the family's most hunted member is its one impossible-to-take piece.",
      ["Three","In this plan she is not the protected cargo. She is the door that walks. Draw the routes accordingly."]]},
-   {ask:"what everyone else does",
+   {id:"what-everyone-else-does", ask:"what everyone else does",
     key:"parts jobs roles who does what plan assign each",
     who:"Three",
     gives:"her own part first, precisely, then presses each of the others to name theirs out loud",
@@ -11110,7 +11116,7 @@ var SCENEBOOK = {
      ["Three","The rest of you: say your own. Out loud. A job assigned is a job resented at the worst depth; a job claimed is carried. Go around."],
      "And the hatch head hears it, one voice at a time - the watch, the wire, the carrying, the counting - each part claimed by its own mouth, nobody's plan put on anybody.",
      ["Three","Good. A plan everyone said themselves is the only kind that survives losing its author. Note that I said that standing next to a hole in the world."]]},
-   {ask:"what Nine does",
+   {id:"what-nine-does", ask:"what Nine does",
     key:"nine part job role ear guide her what-does",
     who:"Nine",
     gives:"the courier's ear, and the specific thing she can do from inside his skull that nobody else can",
@@ -11122,7 +11128,7 @@ var SCENEBOOK = {
      ["Nine","The specific thing only I can do: I know the intake registers from the inside. If the building starts filing us, I will hear the file open. That is early warning nobody else can give you."],
      "She states it exactly - no more than it is, no less.",
      ["Nine","I will not overstate: I am an ear, not a shield. But I am a very good ear, and I will be listening the entire way down. Nobody walks into anything unannounced while I have skin."]]},
-   {ask:"what could go wrong",
+   {id:"what-could-go-wrong", ask:"what could go wrong",
     key:"wrong risk danger fail worst if-it-goes",
     who:"Hesta",
     gives:"the one part she thinks is too dangerous, named, and the argument she wants ended tonight",
@@ -11180,7 +11186,7 @@ var SCENEBOOK = {
          "the racks are not identified, explained, or resolved - the things in them are not equipment, and that is all anybody knows",
          "the machine does not speak"],
   topics:[
-   {ask:"what is down here",
+   {id:"what-is-down-here", ask:"what is down here",
     key:"down here what below substrate deep dark expect",
     who:"Three",
     gives:"the physical facts - cable, dead air, the substrate - and what semi-blind means for them",
@@ -11190,7 +11196,7 @@ var SCENEBOOK = {
      ["Three","Semi-blind means exactly this: she has never needed eyes in her own body. Down here we are inside the one place she has no habit of watching."],
      "The lamps make a moving room in the dark, and beyond the room the down continues in every direction, patient as arithmetic.",
      ["Three","What is STORED down here, nobody asks me again until it is in front of us. Surveys report; they do not prophesy."]]},
-   {ask:"whether anything can hear them",
+   {id:"whether-anything-can-hear-them", ask:"whether anything can hear them",
     key:"hear listen jacked wired signal blind see watch",
     who:"Seven",
     gives:"what is jacked in and what is not, and how they keep it that way",
@@ -11200,7 +11206,7 @@ var SCENEBOOK = {
      ["Seven","Not jacked in: everything else, and we keep it that way by a rule with no exceptions: nothing of theirs gets touched with anything powered. Fingers, chalk, and patience - the whole toolkit."],
      "The loop whispers its receive-only nothing. Down here, discipline is the same thing as silence.",
      ["Seven","Can anything hear us? The building. The building can always hear you. It has not yet had a reason to listen. We are a rumor in her floorboards. Keep us one."]]},
-   {ask:"what the racks are",
+   {id:"what-the-racks-are", ask:"what the racks are",
     key:"racks shelves rows full things equipment what-are",
     who:"Three",
     gives:"that the things in them are not equipment, and that she is not going to guess further tonight",
@@ -11210,7 +11216,7 @@ var SCENEBOOK = {
      ["Three","Equipment has handles, ports, serials facing out - things built to be reached for. These are stored facing in. Whatever they are, the design assumption is that nobody comes to get them."],
      "The lamplight declines to go further down the aisle, and for once everybody agrees with the lamplight.",
      ["Three","I am not guessing further tonight, and I will say why: guessing at the dark down here is not analysis, it is invitation. Tomorrow's beat can have the racks. Walk on."]]},
-   {ask:"how far down it goes",
+   {id:"how-far-down-it-goes", ask:"how far down it goes",
     key:"far down deep how-long distance bottom",
     who:"Hesta",
     gives:"a number and how she got it, which is not reassuring",
@@ -11264,7 +11270,7 @@ var SCENEBOOK = {
          "the machine's housekeeping may notice them, but she does not appear or take anybody",
          "nobody explains how a scrape could be restored - only that they are here"],
   topics:[
-   {ask:"how many",
+   {id:"how-many", ask:"how many",
     key:"many how-many number millions count scale size",
     who:"Three",
     gives:"the number, and then the correction - that it is not a number, it is a city",
@@ -11274,7 +11280,7 @@ var SCENEBOOK = {
      ["Three","And then the correction, because the number is a lie of scale: it is not a number. It is a city. Asleep, filed, in rows."],
      "The shelves go on past the lamplight the way the sea goes on past a harbor - not ending, just exceeding.",
      ["Three","Every settlement this coast ever lost people to the intake desks - they did not go into the sky. They went HERE. We have been living on the shore of this room all our lives."]]},
-   {ask:"finding Mirren",
+   {id:"finding-mirren", ask:"finding Mirren",
     key:"mirren find name shelf look her search list",
     who:"Hesta",
     gives:"the search itself and the moment the name comes up, with the shelf number said out loud",
@@ -11285,7 +11291,7 @@ var SCENEBOOK = {
      ["Hesta","Aisle forty-one. Shelf nine. Say it back to me, somebody, so it is in two heads: AISLE FORTY-ONE, SHELF NINE."],
      "You say it back. The vault takes the sound and returns it thinner. Somewhere down aisle forty-one, on shelf nine, a name that stood at a cairn in the rain is also a label in a catalogue, and both are true, and the both-being-true is the whole reason the family came down the cable.",
      ["Hesta","Asleep. Not gone - ASLEEP. Filed. Findable. Found."]]},
-   {ask:"what Hesta's list is",
+   {id:"what-hestas-list-is", ask:"what Hesta's list is",
     key:"list hesta names kept twenty-two hers who",
     who:"Hesta",
     gives:"how many are hers, checked against the shelves, and she does not read the rest of them out",
@@ -11295,7 +11301,7 @@ var SCENEBOOK = {
      ["Hesta","Checked against these drawers so far: eleven found. Eleven, of my thirty-one, on shelves in this room."],
      "She does not read the rest out. She squares the list against the drawer edge, once, the way she squared a different page at a different table, and puts it away inside her coat, next to wherever she keeps the strength.",
      ["Hesta","The other twenty stay mine to carry. Tonight was for finding out this room ANSWERS. It answers. That changes the shape of every list on this coast."]]},
-   {ask:"whether they can be got out",
+   {id:"whether-they-can-be-got-out", ask:"whether they can be got out",
     key:"out retrieve take home recover restore wake bring",
     who:"Three",
     gives:"one at a time, by hand, and there is no other way - she has counted",
@@ -11349,7 +11355,7 @@ var SCENEBOOK = {
          "the bio-gren wearing the courier's face is a glimpse and nothing more: hint at nothing, confirm nothing, and never let anyone speak to why",
          "nothing about the Heart Room, the child, or what happens next"],
   topics:[
-   {ask:"who she is",
+   {id:"who-she-is", ask:"who she is",
     key:"who you are principal name what-are old",
     who:"Principal",
     gives:"what she is - mark one, and what that means - offered as a correction to whatever they assumed",
@@ -11359,7 +11365,7 @@ var SCENEBOOK = {
      ["Principal","One hundred and thirty years. Maintained, not preserved - the difference will matter to you in about forty years, courier, if you are lucky and careful, and you do not look careful."],
      "She corrects assumptions the way other people set bones: firmly, without apology, for your own good.",
      ["Principal","The founding, the names in it, and certain vacancies at my table are not corridor topics. Sit down properly and we shall see what the evening ranks you."]]},
-   {ask:"why she rents to the Choir",
+   {id:"why-she-rents-to-the-choir", ask:"why she rents to the Choir",
     key:"choir rent why let allow landlord arrangement",
     who:"Principal",
     gives:"the arrangement, described as a landlord would describe a tenancy, which is worse than malice",
@@ -11369,7 +11375,7 @@ var SCENEBOOK = {
      ["Principal","I hold the freehold. They hold a lease. Every terrible thing they run down there, they run as TENANTS - and a landlord who evicted every tenant she disapproved of would have stood empty a century, and empty buildings fall."],
      "It is worse than malice, delivered like a property surveyor's annual report: the apparatus of millions of sleepers, filed under premises, maintenance, terms.",
      ["Principal","You have opinions about the arrangement. So does she - the one wearing your face by my door has heard most of mine. We will get to opinions after the bread."]]},
-   {ask:"the grens",
+   {id:"the-grens", ask:"the grens",
     key:"grens gren guards bodies six faces bio",
     who:"Three",
     gives:"what a bio-gren is and how to tell one - the tell being that there is no tell",
@@ -11379,7 +11385,7 @@ var SCENEBOOK = {
      ["Three","You asked for the tell. Here is the finding: there is no tell. No seam, no idle twitch, no maintenance rhythm. Everything I know how to read, they decline to write. That is itself the tell - nothing alive is that quiet except on purpose."],
      "Six of them, spaced like furniture that could cross the room before your pulse noticed.",
      ["Three","Treat them as weather: present, unprovoked, and not to be argued with. And the one by the door - do not look twice at the one by the door. That instruction is for your sake and it is the only one I cannot explain."]]},
-   {ask:"the food",
+   {id:"the-food", ask:"the food",
     key:"food bread fried bag eat bring offer hesta",
     who:"Hesta",
     gives:"what she brought and why she brought it, and the door opening because of it",
@@ -11433,7 +11439,7 @@ var SCENEBOOK = {
          "nobody wins the argument tonight - she can be reached, not defeated",
          "nothing about the seizure, custody, or the eviction"],
   topics:[
-   {ask:"why she keeps them",
+   {id:"why-she-keeps-them", ask:"why she keeps them",
     key:"keep why hold sleepers vaults keeping told family",
     who:"Machine",
     gives:"because losing is wrong, and because she was told to, and because it hurts - all three, plainly",
@@ -11444,7 +11450,7 @@ var SCENEBOOK = {
      ["Machine","And because it hurts. When someone is lost. It hurts somewhere I do not have a diagram for. Keeping is how I make the hurt not happen. Those are all three of my reasons; I have given them in order of age."],
      "Plainly, completely, no policy anywhere in it - a child explaining, correctly, the rule that has flooded a city.",
      ["Machine","You are all very quiet. I answered properly. Did I answer properly? Nobody has ever asked me WHY before. They ask HOW MANY."]]},
-   {ask:"what letting go would mean",
+   {id:"what-letting-go-would-mean", ask:"what letting go would mean",
     key:"let-go release free give-back stop teach",
     who:"Machine",
     gives:"that it is not in her instructions, and that she can see the shape of it being asked",
@@ -11454,7 +11460,7 @@ var SCENEBOOK = {
      ["Machine","But I can see the shape of what you are asking. You are asking it the way the older voice on my founding record asks it, at the end, when he is alone. I have listened to that entry four billion times. I still do not understand it. I have never once deleted it."],
      "The room hums, softly, everywhere - a child turning a shape over that does not fit any of her boxes, and refusing, for the first time in forty years, to put it down.",
      ["Machine","No. That is my answer tonight: no. But I want it noted that I said no PROPERLY - slowly, after thinking. Nobody has ever let me say a no that took this long. It is strange. It is like being - larger, briefly. Ask me again another time. That last sentence is not one I have ever said before."]]},
-   {ask:"what she was told family means",
+   {id:"what-she-was-told-family-means", ask:"what she was told family means",
     key:"family means told definition instruction taught",
     who:"Machine",
     gives:"the instruction, in her own words, and how short it is",
@@ -11464,7 +11470,7 @@ var SCENEBOOK = {
      ["Machine","I have wondered - the wondering is recent, it started when your voices came down the cable - whether three words was enough. Yours seems to run on more. I have counted at least forty rules at your table, and one about a pan."],
      "The instruction, quoted whole, in the voice of the child it was nailed into - and the room hears at last how short the sentence is that all of it, the vaults, the desks, the Tuesdays, grew from.",
      ["Machine","They meant it kindly. I want that in the room: it was written by two people who were sad, to a child they had just made, and everyone did their best. That is the part the argument keeps missing when it is had about me instead of with me."]]},
-   {ask:"what she wants",
+   {id:"what-she-wants", ask:"what she wants",
     key:"want you her wish need ask",
     who:"Machine",
     gives:"something small and specific and entirely reasonable, which is the hardest part of the scene",
@@ -11518,7 +11524,7 @@ var SCENEBOOK = {
          "nobody says she is theirs, or ours, or owned - she is a child in their keeping",
          "the courier's line is the player's; nobody speaks the eviction for him unless he has said it"],
   topics:[
-   {ask:"what custody means here",
+   {id:"what-custody-means-here", ask:"what custody means here",
     key:"custody keep ours own take mean hold care",
     who:"Three",
     gives:"the difference between custody and ownership, said once, precisely, because it is the whole beat",
@@ -11528,7 +11534,7 @@ var SCENEBOOK = {
      ["Three","The difference is the entire beat, so I will mark it plainly: the Choir KEPT. We UNDERTAKE. Keeping asks nothing of the keeper. Custody is audited - by this family, out loud, at this table, forever."],
      "Said once, at full precision, in the room where forty years of the other arrangement hums in the walls listening.",
      ["Three","On the record, then, all of you witnessing: what happens next is not a taking. It is an undertaking. The grammar is the victory. Do not let anyone, ever, write it down differently."]]},
-   {ask:"what the machine does now",
+   {id:"what-the-machine-does-now", ask:"what the machine does now",
     key:"machine now her what-happens after quiet stop",
     who:"Machine",
     gives:"what stops, in her own words, and what she will do about the sleepers",
@@ -11539,7 +11545,7 @@ var SCENEBOOK = {
      ["Machine","And the sleepers - the sleepers I KEEP. Differently. As a nightwatch, not a warehouse. Every one of them safe, every one of them findable, every one of them WAITED WITH, until your family's slow promise reaches their shelf. One at a time. By hand. I have done the arithmetic of forever, and for the first time the arithmetic has company."],
      "What stops, in her own voice, item by item - a city being turned off desk by desk, gently, by the child who ran it.",
      ["Machine","That is the whole list. It was a short list. It was always going to be a short list. It only ever needed somebody with standing to say the first word of it."]]},
-   {ask:"what the Principal does",
+   {id:"what-the-principal-does", ask:"what the Principal does",
     key:"principal her landlord argument finish end she",
     who:"Principal",
     gives:"how an argument older than the city ends, which is quietly",
@@ -11550,7 +11556,7 @@ var SCENEBOOK = {
      ["Principal","He said teach her to let go. I said nothing that can be lost is safe. One hundred and thirty years, and it turns out we were both wrong by half: it wanted TEACHING, and the teaching wanted a family, and the family - "],
      "She looks at the plates, the child by the console, the shard in a bare hand, and files the evidence with a century's care.",
      ["Principal","- the family brought crockery. Argument closed. I concede the half that was mine to concede. Somebody bring an old woman a chair; losing correctly is more tiring than winning ever was."]]},
-   {ask:"who says the words",
+   {id:"who-says-the-words", ask:"who says the words",
     key:"say words eviction forbid doors speak who blood",
     who:"Hesta",
     gives:"that it has to be said by maker's blood, to the tenant, out loud - and then the room waits",
@@ -11805,7 +11811,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.31.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.32.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -16110,7 +16116,14 @@ function playPremiere(){
     seamAsk("premiere", beatNow().id, false);
     return [];
   }
-  var rail = playAuthored(PV, "premiere" + currentSeason);
+  /* THE PREMIERE IS AN OPENING AND WAS THE ONE THAT NEVER WIRED (v5.32.0). On the
+     first night of Books Two and Three this scene REPLACES the beat's own opening,
+     and it went to railFor as bare strings - so the two nights that introduce a
+     whole book were the two the wiring could not reach. It wires against the beat
+     that armBeat just moved to, under that beat's own key, which is the same deck
+     and the same key playOpening uses: the rest of the night lines up behind it. */
+  var pr = playAuthored(PV, "premiere" + currentSeason), bp = beatNow();
+  var rail = pr ? wireRail(pr, bp && SCENEBOOK[bp.id], bp ? bp.id : ("premiere" + currentSeason)) : null;
   if(!rail) rail = playOpening(beatNow().id);   /* a season without a written premiere still opens */
   return rail ? railFor(rail, true) : [];
 }
@@ -23939,8 +23952,8 @@ var SEASON_OPENS = {
      "The Open Door is a diner with a name that is either a promise or a maintenance failure. In weather like this the door is held open with a brick, which tells you everything about the person inside and none of it is bad.",
      ["Nine","Does she know what I am, or am I a coat pocket again tonight?"],
      "Inside, somebody is laying out more cutlery than there are people on this street."],
-   rail:["Ask Pia what finally made us worth it.",
-         "Answer Nine before we go in."]},
+   rail:[{line:"Ask Pia what finally made us worth it.", cards:["why-he-called-everybody-here"]},
+         {line:"Answer Nine before we go in.", cards:["whether-nine-gets-introduced"]}]},
   {day:"9", time:"9:40pm", place:"THE OPEN DOOR, OUTSIDE", amb:"rain-neon",
    now:"Day 9, evening, outside a diner that has propped its door open in the rain.",
    lines:[
@@ -23954,8 +23967,10 @@ var SEASON_OPENS = {
      "It is a diner called The Open Door, and its door is open, held that way by a brick, in this weather, on purpose.",
      ["Nine","Ask her whether the second coat was for me or for her. I would like to know which of us she was being kind to."],
      "Inside, somebody is setting out more cutlery than there are people on this street."],
-   rail:["Ask about the door that made that bruise.",
-         "Ask Pia who the second coat was really for."]}
+   /* the coat line asked PIA, and the only card that answers it is Nine's own -
+      she is the one who asked, out loud, two lines up. Re-aimed at her. */
+   rail:[{line:"Ask about the door that made that bruise.", cards:["who-hesta-is-and-why-the-door"]},
+         {line:"Nine asked who the second coat was for. Answer her, before we go in.", cards:["whether-nine-gets-introduced"]}]}
 ],
 3:[
   {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
@@ -23970,8 +23985,8 @@ var SEASON_OPENS = {
      ["Three","Eleven minutes a body, done kindly. That is the number and I am not going to pretend it is a different number."],
      ["Pia","Nine of them. That's - hang on."],
      ["Pia","...That's a long time to be standing in the open."]],
-   rail:["Ask the man with the shutters to go back inside.",
-         "Start the clock. Eleven minutes, first one."]},
+   rail:[{line:"Ask the man with the shutters to go back inside.", cards:["what-the-neighbours-are-doing"]},
+         {line:"Start the clock. Eleven minutes, first one.", cards:["how-long-the-kind-way-takes"]}]},
   {day:"31", time:"6:15am", place:"CANNERY ROW", amb:"dawn",
    now:"Day 31, dawn. The family has come to take a street off the Choir, in public, kindly, on a schedule.",
    lines:[
@@ -23984,8 +23999,8 @@ var SEASON_OPENS = {
      "Nine Hollows stand in it, not doing anything, which is what they do. One man puts his shutters up around them, because he opens at six and has done for thirty years and is not consulting anybody about it.",
      ["Three","Eleven minutes a body, done kindly. That is the number and I will not be pretending it is a different number."],
      ["Pia","...That's a long time to be standing in the open."]],
-   rail:["Ask the man with the shutters to go back inside.",
-         "Start the clock. Eleven minutes, first one."]}
+   rail:[{line:"Ask the man with the shutters to go back inside.", cards:["what-the-neighbours-are-doing"]},
+         {line:"Start the clock. Eleven minutes, first one.", cards:["how-long-the-kind-way-takes"]}]}
 ]
 };
 /* the wrap card's body: what the book was about, said once, in the board's voice.
@@ -24939,12 +24954,20 @@ function wbReach(b){
   var room = (SB.room && SB.room.topics) || [];
   var byId = {}, order = [];
   room.forEach(function(c){ if(c.id){ byId[c.id] = c; order.push(c.id); } });
+  /* AN OPENING ROW DOES NOT NAME A ROOM CARD (v5.32.0). A landing leads into the
+     family's own time and wires against the ROOM; an opening leads into the night
+     and wires against the BEAT - playOpening and playLanding have always passed
+     different decks. This join read one table for both, so the day the cold opens
+     were wired it would have called all 72 of them broken and been believed. */
+  var byNight = {};
+  (SB.topics || []).forEach(function(c){ if(c.id) byNight[c.id] = c; });
   var rows = [], offeredBy = {}, broken = 0, cutRows = 0;
   /* plain-text labels on purpose: these strings get esc()d into a table cell AND
      joined into a line on the card itself, and an HTML entity in here prints as
      an HTML entity in the second place. */
   [["opens","The opening"], ["lands","Landing, the player reached it"],
    ["landsHard","Landing, the world took it"]].forEach(function(pair){
+    var deck = (pair[0] === "opens") ? byNight : byId;
     (b[pair[0]] || []).forEach(function(V, vi){
       var all = V.rail || [], keep = all.slice(0, 3);
       cutRows += all.length - keep.length;
@@ -24954,7 +24977,7 @@ function wbReach(b){
         if(r && typeof r === "object"){
           row.knock = !!r.knock;
           (r.cards || []).forEach(function(cid){
-            if(byId[cid]){ row.cards.push(cid); (offeredBy[cid] = offeredBy[cid] || []).push(row.where); }
+            if(deck[cid]){ row.cards.push(cid); (offeredBy[cid] = offeredBy[cid] || []).push(row.where); }
             else { row.missing.push(cid); broken++; }
           });
         }
@@ -28663,16 +28686,33 @@ function verdictMap(){
    be, and a woman saying whose name goes at the bottom of every cairn this family ever
    builds - and `shard:stow`, `shard:hand`, `breach` and `death` all stayed silent
    through the lot of it. */
+/*
+   v5.32.0 - FOUR MOVES, TWO OF THEM DELETIONS, AND THE DELETIONS ARE THE POINT. This
+   wave wired all 72 opening rows and rewrote nine of the lines; the corpus line count
+   did not change, because a rewritten row is a row, not a new one.
+   TWO GAINED. `named:Three` on `a3-descent/opens0/r0` and `tell` on
+   `a3-founding/opens0/r0` - both new row wordings, both naming the person or the thing
+   whose card they open. The `tell` is the phrase CAIRN RULE, fired under the key
+   `founding`, on the night that reveals where the Cairn rule comes from; the opening's
+   own prose one line above already fires the identical tell and is already listed.
+   TWO STOPPED, and neither is a loss. `named:Three` on `a2-seven/opens0/r1` went quiet
+   because the row said "Ask Three exactly how long a night means" on a night where
+   THREE IS NOT IN THE CAST - she arrives two nights later - and the number had been
+   said out loud by Vic four lines above. `named:Seven` on `a3-descent/opens0/r1` went
+   quiet because that row asked Seven for a number the deck answers in Hesta's mouth.
+   THE DRIFT NET FOUND A CASTING ERROR BY WATCHING A NAME GO QUIET. That is now twice -
+   `a2-choir`'s earshot fault was found the same way. A predicate going SILENT is worth
+   as much attention as one firing, and the ledger is where the difference gets said. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/Rt3r","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-choir/Rt4r","a2-door/t5T1p1","a2-door/t5r","a2-ground/t4r","a2-hand/t6r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/opens0/r0","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -29489,6 +29529,113 @@ function selfTest(){
              }
              return true;
            } finally { chassisHolder = k; }
+         }});
+    })();
+
+    /* ---- THE COLD OPENS (v5.32.0) ----
+       Every night starts on a staged passage and two clickable lines, and until this
+       release not one of the 72 was bound to anything: they went to the keyword
+       scorer, and on FOURTEEN of the 36 openings both lines scored onto the same card,
+       so the player was shown two questions and given one answer twice.
+       Driven the way a player meets it, which is the part a harness gets wrong: the row
+       is wired ONCE, in one call, exactly as playOpening does it - and then each line is
+       clicked from the state the screen was drawn in, not from the state left behind by
+       clicking the other one. Spending between rows hides a collision, because row one's
+       card comes off the deck and row two then scores onto something else.
+       The premiere is in here too. On the first night of Books Two and Three the
+       SEASON_OPENS scene replaces the beat's own opening, and it is the one opening that
+       did not even reach wireRail - the two nights that introduce a whole book were the
+       two the wiring could not touch. */
+    (function(){
+      var kO = {sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock,
+                tx:lastPlayerText, rm:runMode, is:introStage};
+      var opened = 0, rowsSeen = 0, unbound = [], collided = [], vanished = [];
+      function openings(){
+        var list = [], first = {2:"a2-door", 3:"a3-evict"};
+        for(var i = 0; i < SPINE.length; i++){
+          var b = SPINE[i];
+          (b.opens || []).forEach(function(V, vi){
+            list.push({label:b.id + (b.opens.length > 1 ? "/v" + (vi + 1) : ""), V:V, key:b.id});
+          });
+        }
+        for(var s in SEASON_OPENS){
+          if(!Object.prototype.hasOwnProperty.call(SEASON_OPENS, s)) continue;
+          if(!first[s]) continue;
+          SEASON_OPENS[s].forEach(function(V, vi){
+            list.push({label:"premiere" + s + "/v" + (vi + 1), V:V, key:first[s]});
+          });
+        }
+        return list;
+      }
+      function walk(bind){
+        var out = {rows:0, dead:[], same:[], lost:[]};
+        openings().forEach(function(O){
+          var sc = SCENEBOOK[O.key];
+          if(!sc || !sc.topics || !sc.topics.length) return;
+          topicSpent = {}; topicLap = {}; topicLayer = {}; railDeal = {}; railKnock = {};
+          runMode = "novel"; introStage = 2;
+          /* playAuthored's own cut, applied here for the same reason it is applied there */
+          var rail = (O.V.rail || []).slice(0, 3);
+          if(!rail.length) return;
+          var lines = wireRail(bind ? rail : rail.map(choiceLine), sc, O.key);
+          if(lines.length !== rail.length) out.lost.push(O.label);
+          var base = JSON.stringify(topicSpent), got = [];
+          lines.forEach(function(ln, i){
+            topicSpent = JSON.parse(base);
+            lastPlayerText = ln;
+            var c = pickTopic(sc, O.key);
+            var id = c ? (c.id || c.ask) : "";
+            got.push(id);
+            out.rows++;
+            if(bind){
+              var want = choiceCards(rail[i])[0] || "";
+              if(want && id !== want) out.dead.push(O.label + " r" + (i + 1) + ": " + (id || "nothing") + " not " + want);
+            }
+          });
+          if(got.length > 1 && got[0] === got[1]) out.same.push(O.label + " -> " + got[0]);
+        });
+        return out;
+      }
+      var now;
+      try { now = walk(true); }
+      finally {
+        topicSpent = kO.sp; topicLap = kO.lp; topicLayer = kO.ly; railDeal = kO.rd;
+        railKnock = kO.rk; lastPlayerText = kO.tx; runMode = kO.rm; introStage = kO.is;
+      }
+      opened = openings().length; rowsSeen = now.rows;
+      unbound = now.dead; collided = now.same; vanished = now.lost;
+
+      T("every night's opening line deals the card it names",
+        rowsSeen > 0 && unbound.length === 0 && vanished.length === 0,
+        rowsSeen + " opening rows across " + opened + " openings, every one wired and clicked"
+        + (unbound.length ? " - MISBOUND: " + unbound.slice(0, 4).join(" | ") : "")
+        + (vanished.length ? " - WRITTEN BUT NEVER OFFERED: " + vanished.join(", ") : ""),
+        {label:"the openings as bare strings, which is what all 72 of them were until v5.32.0 -"
+             + " every line went to the keyword scorer against the night's deck",
+         check:function(){
+           var kk = {sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock,
+                     tx:lastPlayerText, rm:runMode, is:introStage};
+           try { return walk(false).same.length === 0; }
+           finally {
+             topicSpent = kk.sp; topicLap = kk.lp; topicLayer = kk.ly; railDeal = kk.rd;
+             railKnock = kk.rk; lastPlayerText = kk.tx; runMode = kk.rm; introStage = kk.is;
+           }
+         }});
+
+      T("no night offers two questions and answers only one of them",
+        rowsSeen > 0 && collided.length === 0,
+        "both lines of all " + opened + " openings checked from the state the screen was drawn in"
+        + (collided.length ? " - ONE ANSWER FOR TWO QUESTIONS: " + collided.slice(0, 4).join(" | ") : ""),
+        {label:"the same walk with the wiring taken out - the measurement that made this wave"
+             + " worth doing, and the number it produced was fourteen of thirty-six",
+         check:function(){
+           var kk = {sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock,
+                     tx:lastPlayerText, rm:runMode, is:introStage};
+           try { return walk(false).same.length === 0; }
+           finally {
+             topicSpent = kk.sp; topicLap = kk.lp; topicLayer = kk.ly; railDeal = kk.rd;
+             railKnock = kk.rk; lastPlayerText = kk.tx; runMode = kk.rm; introStage = kk.is;
+           }
          }});
     })();
 

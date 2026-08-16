@@ -99,7 +99,8 @@ that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2
 capture beat**, `a2-annul` (20) **done at v5.29.0**. **THEN THE ORDER CHANGED, ruled
 2026-08-16: sequence runs from the earliest UNFINISHED night, not forward from the last one
 written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; `a2-mirren`
-(13) **done at v5.31.0**; next is `a2-seven` (14), then `a2-law` (21) and `a2-turn` (22).
+(13) **done at v5.31.0**; the 33 cold opens **done at v5.32.0**; next is `a2-seven` (14),
+then `a2-law` (21) and `a2-turn` (22).
 *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
@@ -261,36 +262,53 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
-### THE NEXT WAVE IS THE 33 COLD OPENS — ruled 2026-08-16, and it is a compact-then-go
+### THE COLD OPENS ARE DONE (v5.32.0) — and there were 72 of them, not 64
 
-**Every night opens with a staged passage and clickable lines, and NOT ONE of the 64 is
-wired to a card.** They fall through to the keyword scorer against the beat deck, and the
-measurement is the argument: **on 13 of 33 nights BOTH opening lines score onto the same
-card**, so the player is shown two different questions and gets one answer twice. `a1-vic`,
-`a1-turn`, `a2-ground`, `a2-mirren`, `a2-housing`, `a2-manual`, `a2-law`, `a3-founding`,
-`a3-stone`, `a3-descent`, `a3-principal`, `a3-granny`, `a3-seize`.
+**Every night opens on a staged passage and two clickable lines. All 72 are now wired to a
+card by name, an `id` is on all 175 night cards, and the sweep drives every row every
+release.** Before: **14 of the 36 openings gave ONE answer to TWO different questions.**
+After: none, and every row deals the card it names — 72 of 72, driven, not read.
 
-**NO ENGINE WORK. Proved end to end, not reasoned:** `playOpening` already calls
-`wireRail(playAuthored(V, id), SCENEBOOK[id], id)` against the BEAT deck, and `sceneRails`
-and `pickTopicFresh` already read `railDeal` under the beat key. The whole path exists and
-is live. Giving a2-mirren's six beat cards ids in memory and wiring its two opening rows
-made both lines deal the card they name, first try. **It is a data gap, not a code gap.**
+**THE COUNT WAS WRONG IN THIS FILE AND THE MISCOUNT IS THE LESSON.** It said 64 rows across
+33 nights. It is 72 across 36 openings, because **`SEASON_OPENS` exists**: the PREMIERE,
+which on the first night of Books Two and Three *replaces* the beat's own opening. Two
+books, two variants each, four rows a book. And `playPremiere` did not call `wireRail` at
+all — it handed bare strings to `railFor` — so **the two openings that introduce a whole
+book were the two the wiring could not reach.** One line of engine work, and the previous
+brief's "NO ENGINE WORK" was wrong because it had only hunted one reader.
 
-**What it costs: `id:` on 175 beat cards (0 of 175 have one today) and `{line, cards:[...]}`
-on 64 opening rows.** Do it in two parts, and the first part is verifiable as a no-op:
+**It was found by the splice refusing to run.** The scripted wiring asserted one source
+anchor per row and found THREE for `a3-evict`'s — its opening row is written out again,
+word for word, in both premiere variants. **An assertion that the anchor is unique is worth
+more than any amount of reading.**
 
-1. **Ids on every beat card, behaviour unchanged.** Scriptable off each card's `ask`. Ship
-   it green with the board, the sweep and the fixture all reading identical before/after —
-   an id nothing points at changes nothing, and proving that is the whole first release.
-2. **Wire the 64 rows.** This half is NOT scriptable: choosing which card an opening line
-   should reach is an authorial call, 33 times, and it wants the same treatment every room
-   has had — read the opening, read the deck, and if a line names something the deck cannot
-   answer, either rewrite the line or admit the night is short of a card.
+**The other reader that had to learn the shape: `wbReach`.** It resolved every staged row —
+openings included — against the ROOM deck, because landings wire against the room. An
+opening wires against the BEAT. The day the openings were wired it would have called all 72
+of them broken and been believed. **`playOpening` and `playLanding` have always passed
+different decks; the one function that joined them up read one table for both.**
 
-**Watch for this on part 2:** `a2-mirren`'s own opening offers *"Ask Hesta what is in the
-basket"* and its evening deck is full at its ceiling (6 of 6, budget 4), so there is no room
-for a basket card and the line has to be re-aimed instead. **Expect more of those** — a
-night at `budget + 2` cannot absorb a new card, so the fix there is always the line.
+**Ten lines were re-aimed rather than answered with a new card**, because a night at
+`budget + 2` cannot absorb one. Three of those were real defects rather than taste:
+
+1. **`a2-seven`'s opening asked THREE a question on a night Three is not in the cast** —
+   she arrives two nights later — and the number it asked for had been said out loud by Vic
+   four lines above. Now it asks Vic.
+2. **`a2-mirren`'s opening asked what is in the basket**, which its full deck cannot
+   answer — while two lines above, Pia asks out loud whether there is a thing you say over
+   somebody, and nothing was offering to answer *her*. The row now does.
+3. **`a3-descent`'s opening offered to open Hesta's bag**, which is paid off two nights
+   later at the Principal's door. A row offering to open it there would have spent the seed
+   with nothing behind it.
+
+**AND THE DRIFT NET FOUND THE CASTING ERROR BY WATCHING A NAME GO QUIET.** `named:Three`
+stopped firing on `a2-seven/opens0/r1`; that silence *is* the fault being fixed. Second time
+in three waves (the first was `a2-choir`'s earshot fault). **A predicate going silent is
+worth as much attention as one firing.**
+
+**Two new sweep rows** drive the whole thing every release: *"every night's opening line
+deals the card it names"* and *"no night offers two questions and answers only one of
+them"*, both proved against the openings as bare strings. Sweep is **63 PROVED of 82**.
 
 ### `a2-mirren` IS DONE (v5.31.0) — and the night was short of three things it had already put on the page
 
