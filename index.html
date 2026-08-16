@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.14.0 "Which Line Deals Which Card"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.15.0 "The Row Tells The Truth"
+   sceneRails asks the fork now · a room never offers a card the deck will refuse
+   every card in every room is reachable by clicking alone, which the novel requires
    the board joins choices to cards: every rail row, the ids it names, in binding order
    a dead row and a row past the cut are both silent in the game and both visible here
    a2-three FINISHED: seven cards, a take on each, a third on the name she will not give
@@ -10089,7 +10091,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.14.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.15.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -11024,6 +11026,18 @@ function sceneRails(n){
   for(i = 0; i < list.length && out.length < n; i++){
     if(spent.indexOf(i) !== -1) continue;
     t = list[i];
+    /* THE FORK'S UNHUNTED READER (fixed v5.15.0). This walked the deck in raw index
+       order and never asked cardOnBranch, so in a forked room it offered the other
+       road's cards - which pickTopicFresh then refuses to deal. Off-branch cards are
+       never spent, so they sit at the head of the unspent list FOREVER: from the
+       moment the on-branch cards ahead of them ran out, the room showed the same two
+       dead lines every turn for the rest of the night, and every click dealt some
+       other card entirely. On a Nine run of a2-chassis that began at turn three and
+       ran to the end of the deepest room in the game - twenty-six clicks, one frozen
+       line, twenty-six cards the player never saw offered. wireRail and pickTopic
+       both learned the fork when it was built; this reader did not, and nothing was
+       looking at it. A form has readers: hunt all of them. */
+    if(!cardOnBranch(t)) continue;
     ln = t && t.rail;
     /* the per-run rotation: one wording per run, never two names for one card */
     if(ln && t.railAlt) ln = pickVariant([t.rail, t.railAlt], "ra|" + s.key + "|" + i) || ln;
@@ -23119,7 +23133,7 @@ function wbCard(t, offers){
   if(offers){
     h += offers.length
       ? '<div class="wb-rl" style="color:var(--gold)">Also dealt by: ' + esc(offers.join(" · ")) + "</div>"
-      : '<div class="wb-rl" style="color:var(--wb-slate)">No landing row names this card. It arrives by typing, or when the room runs out of asked-for cards and deals the next unplayed one.</div>';
+      : '<div class="wb-rl" style="color:var(--wb-slate)">Not on a landing row. The room offers it on its own rail &mdash; two unspent cards a turn, in deck order &mdash; once the cards above it have been spent.</div>';
   }
   h += '<span class="wb-lb">Who answers</span>'
     + '<div class="wb-pass" style="margin-bottom:7px;color:' + wbCol(t.who) + '">' + esc(t.who) + "</div>"
@@ -23290,9 +23304,15 @@ function wbDrawBeat(){
   if(RE.cutRows) h += '<div class="wb-note" style="color:#e08b8b"><b>' + RE.cutRows
     + " authored rail row(s) do not exist.</b> playAuthored cuts the rail to three before wireRail ever"
     + " sees it, so a fourth row is not spare &mdash; it is never dealt.</div>";
+  /* THE LANDING IS ONLY THE FIRST OFFER. I labelled these "reached only by typing"
+     in v5.14.0 and it was wrong - in the novel there is no typing at all, so that
+     would have meant unreachable. The room deals ITSELF: sceneRails puts the next
+     two unspent cards' own rail lines up every turn, so everything in the deck comes
+     round. Driven over five rooms before this line was rewritten. */
   if(SBk && SBk.room && RE.orphans.length) h += '<div class="wb-note">'
-    + "<b>Reached only by typing:</b> " + esc(RE.orphans.join(", ")) + ". No landing row names these, so a player"
-    + " gets them by asking in their own words, or when the room deals the next unplayed card.</div>";
+    + "<b>Not on a landing row:</b> " + esc(RE.orphans.join(", ")) + ". Still reachable by clicking &mdash;"
+    + " the room puts its next two unspent cards up every turn, in deck order, so these come round once"
+    + " the cards above them are spent. The landing rail is only the first offer, not the whole way in.</div>";
   if(SBk && (SBk.topics || []).length){
     h += '<p class="wb-p">The night&rsquo;s own cards are not on a landing row at all &mdash; each carries its own'
       + " offer line, printed while the night is live:</p>";
@@ -27101,13 +27121,17 @@ function selfTest(){
        laws must hold before the first forked card is authored, not after. */
     (function(){
       var kF = {ch:chassisHolder, sp:topicSpent, lp:topicLap, rd:railDeal, rk:railKnock, tx:lastPlayerText};
+      /* every card carries a `rail` line, because from v5.15.0 one of these rows
+         drives sceneRails, and sceneRails builds the row OUT OF the rail lines -
+         a fixture without them offers nothing and the row cannot fail. */
       var FX = {topics:[
-        {id:"fx-neutral-a", ask:"a", key:"alpha kettle", who:"Hesta", plays:["A"]},
-        {id:"fx-seven",     ask:"b", key:"beta recital", who:"Hesta", plays:["B"], fork:"Seven"},
-        {id:"fx-neutral-b", ask:"c", key:"gamma bread",  who:"Hesta", plays:["C"]},
-        {id:"fx-nine",      ask:"d", key:"delta senses", who:"Hesta", plays:["D"], fork:"Nine"}
+        {id:"fx-neutral-a", ask:"a", key:"alpha kettle", who:"Hesta", plays:["A"], rail:"fx ask about the kettle"},
+        {id:"fx-seven",     ask:"b", key:"beta recital", who:"Hesta", plays:["B"], fork:"Seven", rail:"fx let him do the recital"},
+        {id:"fx-neutral-b", ask:"c", key:"gamma bread",  who:"Hesta", plays:["C"], rail:"fx ask about the bread"},
+        {id:"fx-nine",      ask:"d", key:"delta senses", who:"Hesta", plays:["D"], fork:"Nine", rail:"fx ask her what she can feel"}
       ]};
       var KEY = "st-fork|room", seen = [], lapAt = -1, railOut = [], railBound = [], idxMoved = [];
+      var srOut = [], srOff = [];
       try{
         /* (i) ask for the SEVEN card by its own keywords, on the NINE branch, until
                the deck has been round twice. It must never once be dealt. */
@@ -27131,6 +27155,27 @@ function selfTest(){
                             {line:"fx falls through", cards:["fx-seven","fx-neutral-b"]}], FX, KEY);
         var d = railDeal[KEY] || {};
         for(var q in d){ if(Object.prototype.hasOwnProperty.call(d, q)) railBound.push(d[q]); }
+        /* (v) THE ROW THE PLAYER ACTUALLY SEES. Everything above proves the PICKER
+                honours the fork. sceneRails is what builds the choices, off the same
+                deck, and it is the reader of the fork nobody hunted: it walked raw
+                index order and never asked, so on a Nine run it offered the Seven
+                card - which the picker then refuses to deal. An off-branch card is
+                never spent, so it never leaves the head of the unspent list, and the
+                room shows that same dead line every turn for the rest of the night.
+                Driven here with nothing spent, which is the state a room opens in. */
+        (function(){
+          var kS = {sn:sceneNow, v5:V5SCENE, is:introStage, rm:runMode};
+          try{
+            chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {};
+            sceneNow = function(){ return {sc:FX, key:KEY}; };
+            V5SCENE = true; introStage = 2; runMode = "novel";
+            srOut = sceneRails(4) || [];
+            srOut.forEach(function(l){
+              var ix = (railDeal[KEY] || {})[normLine(l)];
+              if(typeof ix === "number" && !cardOnBranch(FX.topics[ix])) srOff.push(FX.topics[ix].id);
+            });
+          } finally { sceneNow = kS.sn; V5SCENE = kS.v5; introStage = kS.is; runMode = kS.rm; }
+        }());
         /* (iv) the save invariant, over the REAL book: a card's position is its
                 identity and the branch must not be able to move one. */
         ["Seven", "Nine", null].forEach(function(h){
@@ -27168,6 +27213,39 @@ function selfTest(){
          was:FX.topics.length,
          check:function(w){ var k = chassisHolder; try { chassisHolder = "Nine";
                             return w === branchLive(FX.topics).length; } finally { chassisHolder = k; } }});
+
+      T("the row the player sees never offers a card the deck will refuse to deal",
+        srOut.length === 3 && srOff.length === 0,
+        "sceneRails on the Nine branch offered " + srOut.length + " lines from a four-card deck"
+        + " and not one of them was the Seven-only card"
+        + (srOff.length ? " - OFFERS: " + srOff.join(", ") : ""),
+        {label:"sceneRails before v5.15.0 - it walked the deck in raw index order and never asked the"
+             + " fork, so it offered the other road's card. The picker refuses to deal it, so it is"
+             + " never spent, so it sits at the head of the unspent list for the rest of the room:"
+             + " one frozen line every turn, and every click dealing some other card instead. On a"
+             + " Nine run of a2-chassis that started at turn three and never stopped",
+         check:function(){
+           /* the before, faithfully: a reader that does not ask the fork. Neutering
+              cardOnBranch is exactly what the missing call amounted to, and the walk
+              itself is the shipped one - this enters sceneRails, it does not restate it. */
+           var kb = cardOnBranch, kc = chassisHolder, kd = railDeal, ks = topicSpent, kl = topicLap;
+           var kn = sceneNow, kv = V5SCENE, ki = introStage, km = runMode;
+           try{
+             cardOnBranch = function(){ return true; };
+             chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; railDeal = {};
+             sceneNow = function(){ return {sc:FX, key:KEY}; };
+             V5SCENE = true; introStage = 2; runMode = "novel";
+             var out = sceneRails(4) || [], off = 0;
+             out.forEach(function(l){
+               var ix = (railDeal[KEY] || {})[normLine(l)];
+               if(typeof ix === "number" && FX.topics[ix].fork === "Seven") off++;
+             });
+             return off === 0;           /* must come back FALSE: the old walk offers it */
+           } finally {
+             cardOnBranch = kb; chassisHolder = kc; railDeal = kd; topicSpent = ks; topicLap = kl;
+             sceneNow = kn; V5SCENE = kv; introStage = ki; runMode = km;
+           }
+         }});
 
       T("a landing never deals a card from the other branch",
         railOut.length === 2 && railOut.indexOf("fx the recital") === -1
