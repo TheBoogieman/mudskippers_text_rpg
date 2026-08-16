@@ -3,10 +3,23 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.7.0. Book One is finished and `a2-chassis` is FINISHED — 25 cards, an
-id on every one, a second take on every card live on either road, seven cards carrying a
-THIRD take, and both landings wired. It is the deepest room in the game by a distance.
-The next wave is a new room: `a2-law` ("the same pan"), which has 3 cards and no takes.**
+**Last updated: v5.12.0.**
+
+**Do not count the writing by hand any more.** Open the game, pry into THE WRITERS' BOARD,
+and the first page is THE BOOK: every night, its cards against `budget + 2`, its takes, its
+landing rows, its room, and one of `written` / `part` / `outline`. It is recounted off
+`SPINE` and `SCENEBOOK` every time the page opens and it keeps no copy of anything, so it
+cannot go stale the way this file can. **It is the answer to "what do we write next" and it
+is never a guess.** As of v5.12.0: **3 of 33 nights are finished**; 28 run out of cards
+before the night ends, 22 repeat themselves if asked twice, 22 land on nothing to click,
+21 rooms are still on their first three cards.
+
+Book One is finished and `a2-chassis` is FINISHED — 25 cards, an id on every one, a second
+take on every card live on either road, seven cards carrying a THIRD take, and both landings
+wired. It is the deepest room in the game by a distance.
+
+**Next is `a2-three` (night 16), in order** — see the order rule below. It has 6 beat cards
+(already at `budget + 2`), 3 room cards, **zero takes**, and no landing wired.
 
 ---
 
@@ -29,22 +42,49 @@ why that wave happened; it holds no rulings, because a second copy drifted withi
 author "the Architect" too, which buried the character under dozens of unrelated hits;
 comments now say "the author". Do not reintroduce the collision.
 
+*(And note the collision this file used to make itself: **the author is not "the Architect."**
+The Architect is a dead founder in the fiction. Say "the author".)*
+
 ## Also read THE-ANNULMENT-THREAD.md before touching Three, Five, Marek or Book Two's order
 
-Ruled 2026-08-16. The Architect halted the `a2-law` wave because the annulment thread does
+Ruled 2026-08-16. The author halted the `a2-law` wave because the annulment thread does
 not hold up: the same operation had two opposite outcomes, the family forcibly annulled a
 conscious being in a book about consent, the capture was never staged, and "taking turns"
 rhymes with fate one without the book noticing. **All of it is now settled and none of it is
 authored.** The brief is in `THE-ANNULMENT-THREAD.md`.
 
-**And beats get written IN ORDER from here.** `a2-law` was proposed next; it is beat 20 and
-we are at 14. This file used to say "next: a2-law" and that line was five beats stale. The
-order is `a2-three` (15), `a2-housing`, `a2-manual`, `a2-choir`, **the new capture beat**,
-`a2-annul`, `a2-law`.
+### The content sweep, v5.12.0 — driven over every authored string against the new bible
+
+**Every contradiction is in one night, `a2-annul`.** Nothing else in 33 nights fights the
+rulings. What must change there: `aim` and `exits[0]` say *hold Five still*; `walkLine` says
+*leave Five to Three*; `walks[0]` is *refuse to hold him*; `exits[2]` says *end Five properly*
+under the scene's own rule that Five is not destroyed. `goal` and the scene's `where` both
+assert a capture that no beat stages. **And `topics[0]` has Three explaining the method she
+spent years failing to find** — under the bible it comes out of Vic's file and neither she
+nor the file is enough alone.
+
+**Keep these — they already say the right thing.** Three: *"the second voice not being
+destroyed but ESCORTED out — rage tears tissue; procedure spares it."* Five: *"it will not
+beg... begging is simply not in the loadout."* The room's `never`: *"nobody is separated —
+they share the body now, by consent."* And Three listing *"annulment — assessment and
+execution"* as a skill is **not** a contradiction: she can do the Choir's version, the one
+that kills.
+
+**The absences are the longer list.** The book never once says a grown mind is grown from a
+copy of a real person — "grown" and "scrape" are all over it and never touch. Five is never
+asked. The fate-one rhyme is never said aloud. Five never becomes the way into the vault.
+And **Vic's file, installed on night 17, never appears again in the sixteen nights after it
+and is not a speaker anywhere in the book.**
+
+**And beats get written IN ORDER from here.** `a2-law` was proposed next; it is night 21 and
+the finished work stops at night 15 (`a2-chassis`). This file used to say "next: a2-law" and
+that line was five beats stale. The order is `a2-three` (night 16), `a2-housing` (17),
+`a2-manual` (18), `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law`
+(21 today). *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
 
-1. I bring the Architect a room's candidate subjects **as a pick-list question** (he
+1. I bring the author a room's candidate subjects **as a pick-list question** (he
    asked for pick-from-alternatives, never open questions).
 2. He picks. He rules the subjects; the scenes are mine.
 3. I write the room, verify, ship, report.
@@ -243,7 +283,7 @@ single card serves both roads. Only fork a card when it genuinely cannot exist o
 road. This is the pattern to copy for every remaining room.
 
 **"WHAT HE WAS ON THE LISTS" STAYS SEALED — RULED 2026-08-15, FINAL.** It was refused at
-v5.3.0, taken back to the Architect, and he ruled: **leave it sealed.** `a2-seven`'s never
+v5.3.0, taken back to the author, and he ruled: **leave it sealed.** `a2-seven`'s never
 still holds — the work he did for the Choir is never detailed, no names, no columns, no
 cases. *How he got out* is his to tell and he tells it; *what he did* is the hole in him
 that the family steps around, and it is stronger unspoken. **Do not re-open this in a later
@@ -253,7 +293,7 @@ wave.** The original refusal, for the record:
 still forbidden: `a2-seven`'s never seals **the work he did for the Choir** - names, columns,
 what a clerk of theirs actually does. v5.0.0 narrowed that never to unlock *how he got out*
 and left the work sealed on purpose. A ruled subject does not outrank a never; it goes back
-to the Architect. **Open question for him: unseal the work, or leave it sealed for good?**
+to the author. **Open question for him: unseal the work, or leave it sealed for good?**
 
 **Next wave, in order:**
 
@@ -384,7 +424,7 @@ later. Either way he has **no body at all** on that path, so he cannot smoke, an
 as briefed does not exist on it. (He is **not** in the courier's skull yet. See the
 `canonAlt` repair above — the file got this wrong in one place and it shipped for a while.)
 
-Asked directly, the Architect ruled **both branches fully written**: Seven's recital on
+Asked directly, the author ruled **both branches fully written**: Seven's recital on
 one path, and on the other, Nine's — the shard who spent the whole of `a2-door` being told
 what food tasted like, finally getting senses, all of them, at once. The two paths are a
 main road and a main road, not a road and a footnote.
@@ -521,7 +561,7 @@ not take.** `drive_room.js` walked `t.plays` and skipped `takes`. `drive_lap.js`
 **THE PRESSURE BLOCK: BUDGET + 2 CARDS — RULED 2026-08-16.** The beat's own deck is not
 the family room and does not lap: it has a budget and an ending. The forced close lands on
 `budget + 1`, so a player who stalls every turn needs `budget + 1` cards to reach the red
-without a repeat, and the Architect ruled **budget + 2** — one spare. For the usual
+without a repeat, and the author ruled **budget + 2** — one spare. For the usual
 `budget:4` beat that is **6 cards** where nearly all of them have 4. Keep them SMALL:
 these are working rooms, lingering has a cost, and the point is only that a stalling
 player always has something fresh to spend so the night closes on a red naturally rather
@@ -624,5 +664,5 @@ in Book One and the desk correctly called it summoning an off-stage person.
   because the wild table reads the guard and the novel reads the card.
 - **6 amber sweep rows**, all AI-side.
 - **The AI side**: the DM respecting family time, and the drift nudge ("the rain is
-  watching") pointing at `TAKE THE NIGHT ON`. Deferred by the Architect until the written
+  watching") pointing at `TAKE THE NIGHT ON`. Deferred by the author until the written
   side settles.
