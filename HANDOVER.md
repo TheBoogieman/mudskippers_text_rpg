@@ -10,6 +10,19 @@ The next wave is a new room: `a2-law` ("the same pan"), which has 3 cards and no
 
 ---
 
+## STOP — read THE-ANNULMENT-THREAD.md before touching Three, Five, Marek or Book Two's order
+
+Ruled 2026-08-16. The Architect halted the `a2-law` wave because the annulment thread does
+not hold up: the same operation had two opposite outcomes, the family forcibly annulled a
+conscious being in a book about consent, the capture was never staged, and "taking turns"
+rhymes with fate one without the book noticing. **All of it is now settled and none of it is
+authored.** The brief is in `THE-ANNULMENT-THREAD.md`.
+
+**And beats get written IN ORDER from here.** `a2-law` was proposed next; it is beat 20 and
+we are at 14. This file used to say "next: a2-law" and that line was five beats stale. The
+order is `a2-three` (15), `a2-housing`, `a2-manual`, `a2-choir`, **the new capture beat**,
+`a2-annul`, `a2-law`.
+
 ## The loop we are running
 
 1. I bring the Architect a room's candidate subjects **as a pick-list question** (he
