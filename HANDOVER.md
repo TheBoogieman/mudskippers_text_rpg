@@ -132,6 +132,37 @@ deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds
    notes between the data are the project's memory, and a read-into-objects-and-write-back
    editor deletes every one of them silently. A diff must show only what the author changed.
 
+### THE TITLE ART LOST ITS CITY AFTER A RUN (fixed v5.36.1) — one divide by zero
+
+**Reproduce:** refresh, see the art; start a new run; answer a couple of questions; click
+MENU. The skyline, the warehouses, the cranes and the cobbles are gone. The rain, the
+traffic, the neon and the seven figures are still there, which is why it reads as
+**mangled rather than blank** — and it never recovers without a reload.
+
+**The chain, measured end to end:**
+1. The mousemove listener is bound to **`window`**, not to the art.
+2. While a run plays, the game sets `#titlescreen` to `display:none`, so the canvas
+   `getBoundingClientRect()` is **0 wide**.
+3. `((e.clientX - r.left) / r.width - 0.5) * 2` divides by that zero → `tx = Infinity`.
+4. Next frame: `par.x += (Infinity - par.x) * 0.055` → `Infinity + -Infinity` = **NaN**.
+5. **NaN is absorbing.** `par.x` never recovers for the life of the page.
+6. Every pre-rendered layer blits through `drawImage(buf, Math.round(pr * p) - OFF, 0)`.
+   With `pr` NaN, `drawImage` **silently draws nothing** — no error, no warning.
+
+**The pre-rendered buffers were never damaged** — `bgC` still had 1,600 lit pixels while
+the screen showed no city. Setting `par.x = 0` by hand brought **55,087 skyline pixels**
+back instantly, which is what proved the mechanism rather than merely suggesting it.
+
+**Two guards, both in `veldt-menu.js`:** the listener returns early on a zero-width rect,
+and `draw()` resets `par.x`/`par.tx` to 0 if either is not finite. The second is the belt
+to the first's braces — any future non-finite frame would otherwise stick forever, and the
+failure mode is silent.
+
+**A NaN THAT REACHES A CANVAS COORDINATE IS INVISIBLE.** No exception, no console line,
+nothing on the sweep. The only symptom is that some things stop being drawn. **Guard every
+division by a measured DOM dimension** — an element that is `display:none` measures zero,
+and listeners bound to `window` keep firing while it is hidden.
+
 ### THE WRITERS' BOARD WAS DEAD FOR THREE RELEASES (fixed v5.36.0)
 
 **Clicking any night in the board did nothing from v5.32.0 to v5.35.0.** The cold-opens

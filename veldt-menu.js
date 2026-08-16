@@ -69,8 +69,21 @@ class Component extends DCLogic {
     this.low = low;
     if (low) this.setState({low:true});
     this.build();
+    /* A HIDDEN TITLE SCREEN HAS A ZERO-WIDTH CANVAS, AND THIS LISTENER IS ON WINDOW.
+       While a run is playing the game sets #titlescreen to display:none, so the rect
+       is 0x0 - and this divided by r.width. One mouse movement during a run made tx
+       Infinity; the next frame computed par.x = Infinity + (tx - Infinity) * 0.055,
+       which is NaN; and NaN is absorbing, so the parallax never recovered. Back at the
+       menu every pre-rendered layer blitted to drawImage(buf, NaN, 0) and silently drew
+       nothing - the city, the warehouses, the cranes and the cobbles all vanished while
+       the live-drawn rain, traffic and cast stayed, which is why it read as "mangled"
+       rather than "blank". Measured: 55,087 skyline pixels came back the instant par.x
+       was set to 0. */
     this.onMove = e => {
-      const r = this.cv.current.getBoundingClientRect();
+      const c = this.cv.current;
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      if (!r.width) return;          /* hidden: keep the last good parallax */
       this.par.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
     };
     window.addEventListener('mousemove', this.onMove);
@@ -829,6 +842,12 @@ class Component extends DCLogic {
     const w = this.wx();
     const P = this.px.bind(this, ctx);
 
+    /* ...and the belt to the guard's braces. The listener above cannot poison this any
+       more, but a single non-finite frame from ANY future source would stick forever,
+       and the failure is silent - no error, no blank screen, just a city that stops
+       being drawn. Cheap to check every frame, impossible to recover from without it. */
+    if (!isFinite(this.par.tx)) this.par.tx = 0;
+    if (!isFinite(this.par.x))  this.par.x  = 0;
     this.par.x += (this.par.tx - this.par.x) * 0.055;
     const pr = this.par.x;
 
