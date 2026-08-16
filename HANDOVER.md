@@ -132,6 +132,32 @@ deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds
    notes between the data are the project's memory, and a read-into-objects-and-write-back
    editor deletes every one of them silently. A diff must show only what the author changed.
 
+### THE CORPUS IS ITS OWN FILE (v5.39.0) — and half of index.html was your writing
+
+**`index.html` 35,158 lines → 24,795. `corpus.js` is 10,399**, and every byte of it is a
+byte-for-byte slice of what index.html held — asserted, not assumed.
+
+**What moved:** `BIBLE`, `BACKSTORY`, `OPENING`, `OPENING_CANON`, `OPENING2`, `REVEALS`,
+`WANTS`, `SPINE`, `SCENEBOOK`, `TEASES`. Ten declarations, no functions, no calls out —
+checked before the cut, not after.
+
+**IT IS A PLAIN `<script src>` LOADED BEFORE THE ENGINE.** No JSON, no fetch, no module.
+Those would break `file://`, complicate the offline shell and put a network hop in the boot
+path. Load order is document order, so nothing became asynchronous and nothing downstream
+of the cut knows the difference.
+
+**Three readers had to learn it**, which is the standing law paying out again: `sw.js`
+SHELL (and **corpus.js is the one entry whose absence is not cosmetic** — without it the
+game loads with no beats, no cards and no bible), the node `ctx.js` harness (which now
+concatenates corpus + inline body in the same order the page does), and the release ritual.
+
+**How the cut was made, because the method is the point:** anchors asserted unique or the
+script refuses; output built by slicing at recorded offsets and joining; byte accounting
+proved before writing; and afterwards the extracted corpus compared byte-for-byte against
+the region removed. Verified after: node harness loads 33 beats, sweep identical at **67
+PROVED of 86 with nothing failing**, drift **none moved**, the writers' board still draws
+night 21 at exactly 44,579 characters, and a real run plays from the split corpus.
+
 ### THE ENTRY TRANSITION, AND THE PANEL THAT ATE THE SCREEN (v5.38.0)
 
 **Three faults, all measured, all in the skin except the last.**
@@ -1309,6 +1335,10 @@ in Book One and the desk correctly called it summoning an off-stage person.
   **asserts the anchor appears exactly once** and refuses otherwise. Heredocs choke on
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
+- **THREE FILES ARE SYNTAX-CHECKED BEFORE A PUSH FROM v5.39.0**, not one:
+  `node --check corpus.js`, `node --check veldt-menu.js`, and the extracted inline body of
+  `index.html`. The corpus is where the writing goes, so it is the one most likely to be
+  broken by a splice and the one whose breakage is loudest.
 - **INDEX.HTML HAS TWO `<script>` TAGS FROM v5.34.0, so the extraction step changed.** The
   old recipe took `indexOf('<script>')` to `lastIndexOf('</script>')`, and the last close is
   now the Veldt skin's, not the game's — it swallowed the game's own closing tag and

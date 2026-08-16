@@ -3,13 +3,17 @@
 // BYTES changed, so a cache name left behind keeps serving the shell it was named
 // for: this said v4-36-0 while the game inside it was six releases further on, and
 // every offline player was reading the old build.
-var CACHE = "mudskippers-v5-38-0";
+var CACHE = "mudskippers-v5-39-0";
 /* THE SKIN IS PART OF THE SHELL (v5.34.0). The fetch handler below is cache-first
    then network and caches what it fetches, so these two would eventually cache
    themselves - but only after one successful online load. A fresh install that goes
    offline before that gets the game unskinned, which is a silent, confusing failure
    rather than a loud one. They are two shipped assets; they belong in addAll. */
-var SHELL = ["./", "./index.html", "./veldt-skin.css", "./veldt-menu.js",
+/* ...AND corpus.js IS NOT OPTIONAL (v5.39.0). The skin degrades gracefully if it is
+   missing; the corpus does not. Every authored word in the game is in it, and without
+   it index.html loads into a game with no beats, no cards and no bible. It is the one
+   entry here whose absence is not a cosmetic failure. */
+var SHELL = ["./", "./index.html", "./corpus.js", "./veldt-skin.css", "./veldt-menu.js",
              "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){
