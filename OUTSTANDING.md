@@ -1,11 +1,45 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.35.0. **Book One is closed. Season 2 has twelve of its thirteen nights finished — only the finale is left — and the book has its first landing row that serves both sides of the chassis fork.***
+*Written 2026-08-16, updated at v5.40.0. **Book One is closed. Season 2 has twelve of its thirteen nights finished — only the finale is left — and the book has its first landing row that serves both sides of the chassis fork.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
 opens. This document exists for the things a counter cannot hold: why the work is shaped
 the way it is, what has been ruled, and which of it is a trap.
+
+---
+
+## 0. The shape of the repo, as of v5.40.0
+
+**The game is four files, not one.** This changed during the tooling run and everything
+below assumes it.
+
+| file | what it is |
+|---|---|
+| `index.html` | engine, UI, the sweep — **24,800 lines** (was 35,158) |
+| `corpus.js` | **every authored word**: BIBLE, SPINE, SCENEBOOK, TEASES — 10,399 lines |
+| `veldt-menu.js`, `veldt-skin.css` | the skin |
+| `editor.html` | the card editor — not loaded by the game |
+
+**Writing goes in `corpus.js` now.** It is a plain script loaded before the engine: no JSON,
+no fetch, no modules, nothing asynchronous, so `file://` still works and the boot path has
+no network hop. `sw.js` SHELL lists every file, and **`corpus.js` is the one whose absence
+is not cosmetic** — without it the game loads with no beats, no cards and no bible.
+
+**`editor.html` is how you proofread.** Served, not `file://`. Every card in all 33 nights,
+both decks, every string in a box — 6,788 fields. **It edits `corpus.js` by character range
+and never re-serialises it**, because the authorial comments live between the data and a
+read-write-back tool would delete them all. A field it cannot locate unambiguously is
+**locked with the reason printed**, not guessed: 5 of 6,788, all genuine duplicates.
+
+**The release ritual grew.** Three files get `node --check`; `index.html` has THREE
+`<script>` tags so the inline-body extractor must anchor on the FIRST `</script>`; the node
+harness concatenates `corpus.js` + the inline body in that order.
+
+**Six things were fixed in the run** — see HANDOVER for each: the writers' board (dead for
+three releases), the title art losing its city to a NaN parallax, passages anchoring to
+their first line, a READING PACE setting, the entry transition, the option panel that was
+taking half the window, and the corpus split.
 
 ---
 

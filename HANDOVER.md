@@ -107,30 +107,69 @@ to the author first. Night 21's `the-knock-at-the-door` is its seed and delibera
 withholds the name.
 *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
-### AUTHORING IS PARKED AT v5.35.0 — TOOLING PROGRAMME RULED 2026-08-16
+### THE TOOLING RUN IS FINISHED (v5.36.0 → v5.40.0) — AUTHORING RESUMES AT NIGHT 22
 
-**21 of 33 written. Resume at `a2-turn` (22), and Pia's background must be ruled before a
-word of it** — that night puts her name on the Choir's paper and her background is
-deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds the name.
+**Everything ruled on 2026-08-16 is shipped.** Read the per-release sections below for the
+detail; this is the state to start from.
 
-**Five pieces of tooling, ruled in this order:**
-1. **The writers' board night pages — DONE at v5.36.0.** See below.
-2. **The scroll anchor and reveal pacing.** The feed jumps to `scrollHeight` after every
-   turn, so the choices land *under* the passage and the reader has to scroll back up to
-   see what they are choosing about. **Anchor to the top of the new passage instead.**
-   Plus a persisted reveal-speed control beside VISUALS.
-3. **`corpus.js`.** `SPINE` + `SCENEBOOK` + `BIBLE` — roughly **17,300 of index.html's
-   35,000 lines**, half the file — out to a plain `<script src>` loaded before the engine.
-   **No fetch and no JSON**: those break `file://`, break the offline shell and put a
-   network hop in the boot path. A second script tag is boring and already proven by the
-   skin. `sw.js` SHELL, the node `ctx.js` harness and the release ritual all learn it.
-4. **`editor.html`.** The writers' board and the rehearsal room (~4,000 lines) move out to
-   an authoring artefact that loads `corpus.js`. index.html lands around **14,000 lines**.
-5. **The card editor, EDITING TEXT IN PLACE.** Ruled: it must **never re-serialise the
-   corpus.** It finds a field's exact character range and replaces that string, so every
-   byte it does not touch is unchanged. **The reason is the comments** — the authorial
-   notes between the data are the project's memory, and a read-into-objects-and-write-back
-   editor deletes every one of them silently. A diff must show only what the author changed.
+**THE GAME IS FOUR FILES NOW, NOT ONE.**
+
+| file | what it is |
+|---|---|
+| `index.html` | engine, UI and the sweep — **24,800 lines**, down from 35,158 |
+| `corpus.js` | **every authored word** — BIBLE, SPINE, SCENEBOOK, TEASES. 10,399 lines |
+| `veldt-menu.js` + `veldt-skin.css` | the skin: title art, menu, feed styling |
+| `editor.html` | the card editor. Not loaded by the game; open it yourself |
+
+All classic scripts in document order — no JSON, no fetch, no modules, nothing async.
+**`sw.js` SHELL lists all of them**, and `corpus.js` is the one whose absence is not
+cosmetic. **Three files get `node --check` before a push**, and `index.html` now has THREE
+`<script>` tags, so the inline-body extractor must anchor on the FIRST `</script>`.
+
+**WHAT WAS FIXED, IN ONE LINE EACH:**
+1. **The writers' board had been dead for three releases** — `wbReach` returned only the
+   room deck and `wbDrawBeat` threw on every opening row, inside a click handler that
+   swallowed it. A sweep row draws all 33 night pages every release now.
+2. **The title art lost its city after a run** — a zero-width hidden canvas divided into the
+   parallax, made it NaN, and NaN is absorbing. Two guards in the skin.
+3. **Passages are read from their first line**, and READING PACE (slow/normal/brisk,
+   defaulting to slow) is in Settings.
+4. **The entry transition actually plays**, held 1300ms, and the menu no longer pops on
+   return. **The option panel is capped at 42vh** — it was taking 434px of an 800px window.
+5. **The corpus split**, byte-for-byte.
+6. **The card editor**, editing text in place.
+
+**THE BOARD MOVE WAS DROPPED ON MEASUREMENT, and the numbers are the lesson.** The pitch
+said the board and rehearsal room were ~4,000 lines; measured, they are **939**. The span I
+had measured was mostly the FX atmosphere system, the shard widget, the boot path and the
+sweep's corpus walkers. The board also reads live run state (`persistAll`, `currentChoices`)
+and the rehearsal room drives real runs. **Estimate by measuring the thing, not the gap
+between two landmarks.**
+
+### AUTHORING RESUMES HERE — 21 of 33, NIGHT 22 IS NEXT
+
+**Season 2 has one night left: `a2-turn` (22), the finale.** Then all eleven of Book Three.
+
+**BEFORE A WORD OF NIGHT 22 IS WRITTEN, ONE QUESTION GOES TO THE AUTHOR: Pia's background
+is ruled BLANK** — not "she has nobody", but unwritten and not to be assumed either way —
+**and night 22 puts her name on the Choir's paper as a salvage listing.** That night will
+want to know whether anybody outside this family would come looking. It is a blocking
+question, not a nice-to-have.
+
+**Night 22 is the expensive one:** seven in the room, both sides of the chassis fork, and
+**four staged landings rather than two** — count the variants, not the beats. Night 21's
+`the-knock-at-the-door` is its seed: an official on the step at half nine asking after a
+name, Hesta gives them four inches of door and nothing else, and refuses to say the name
+until tomorrow in daylight. **Planted, deliberately not spent.**
+
+**Other authoring debts:** the Mirren Doctrine goes on night 19, which is a REOPENING of a
+finished night · how Nine heard anything inside the farm is an OPEN WORLD FACT and must not
+be invented (night 29 needs it) · Nine has no card on night 21 and Marek's first ordinary
+evening is unwritten · 47 takes still have no choice line of their own · eighteen nights
+unaudited for the earshot fault · `a3-seize` has no authored closing and nobody has driven a
+run that far.
+
+**Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
 
 ### THE CARD EDITOR (v5.40.0) — `editor.html`, and it never re-serialises
 

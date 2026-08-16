@@ -16,7 +16,11 @@ Data shards do not hum.
 You get a desktop icon, a Start-menu entry, its own window with no browser chrome,
 and it works offline. Updates arrive automatically.
 
-**Offline file:** download `index.html` and double-click it. That single file IS the game.
+**Offline files:** download `index.html` **and `corpus.js`** — plus `veldt-skin.css` and
+`veldt-menu.js` if you want the skin — into the same folder and double-click the HTML.
+The corpus is not optional: it holds every authored word, and without it the game opens
+with no beats, no cards and no bible. (Until v5.39.0 this was one file; the writing was
+half of it, so it moved out.)
 
 First visit? A three-step **GUIDE** walks you through everything.
 
@@ -854,7 +858,7 @@ Then click **Use a local AI** in Settings — the game finds it by itself.
 ## Sharing
 
 Send people the link. They can install it as an app in two clicks. Or send the
-`index.html` file — it runs everywhere a browser does.
+`index.html` + `corpus.js` pair — it runs everywhere a browser does.
 
 ---
 
