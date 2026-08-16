@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, at v5.23.0. **Book One is closed.***
+*Written 2026-08-16, updated at v5.24.0. **Book One is closed. `a2-housing` is finished.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -20,20 +20,20 @@ the way it is, what has been ruled, and which of it is a trap.
 
 | | count |
 |---|---|
-| finished nights | **10 of 33** |
-| cards written | 353 |
-| second and third takes | 144 |
-| **takes with no choice line of their own** | **49 of 144** |
-| nights short of cards | 22 |
-| nights that land on nothing to click | 21 |
-| rooms still on their first three cards | 19 |
-| authored lines in the drift net | 6,313 |
+| finished nights | **11 of 33** |
+| cards written | 372 |
+| second and third takes | 156 |
+| **takes with no choice line of their own** | **49 of 156** |
+| nights short of cards | 21 |
+| nights that land on nothing to click | 20 |
+| rooms still on their first three cards | 18 |
+| authored lines in the drift net | 6,467 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
 **Books Two and Three are the whole job**: 23 nights, of which 2 are finished
-(`a2-chassis` partly, `a2-three` fully) and 19 rooms have never been opened.
+(`a2-three`, `a2-housing`) and 18 rooms have never been opened.
 
 ---
 
@@ -198,6 +198,8 @@ comma after a block that already ended in one. **The board counts holes now.**
 
 **Beats get written in order.** The order from here is `a2-housing` (17), `a2-manual` (18),
 `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law` (21 today).
+**`a2-housing` (17) is done as of v5.24.0** — next is `a2-manual`, which is the night the
+document on the table finally gets read.
 
 **What he protects, ruled:** the running jokes and callbacks; nothing that steals a later
 night; the quiet character work; and comedy, hard — he has said twice that a scene was too
