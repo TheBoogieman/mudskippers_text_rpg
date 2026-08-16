@@ -261,6 +261,37 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
+### THE NEXT WAVE IS THE 33 COLD OPENS — ruled 2026-08-16, and it is a compact-then-go
+
+**Every night opens with a staged passage and clickable lines, and NOT ONE of the 64 is
+wired to a card.** They fall through to the keyword scorer against the beat deck, and the
+measurement is the argument: **on 13 of 33 nights BOTH opening lines score onto the same
+card**, so the player is shown two different questions and gets one answer twice. `a1-vic`,
+`a1-turn`, `a2-ground`, `a2-mirren`, `a2-housing`, `a2-manual`, `a2-law`, `a3-founding`,
+`a3-stone`, `a3-descent`, `a3-principal`, `a3-granny`, `a3-seize`.
+
+**NO ENGINE WORK. Proved end to end, not reasoned:** `playOpening` already calls
+`wireRail(playAuthored(V, id), SCENEBOOK[id], id)` against the BEAT deck, and `sceneRails`
+and `pickTopicFresh` already read `railDeal` under the beat key. The whole path exists and
+is live. Giving a2-mirren's six beat cards ids in memory and wiring its two opening rows
+made both lines deal the card they name, first try. **It is a data gap, not a code gap.**
+
+**What it costs: `id:` on 175 beat cards (0 of 175 have one today) and `{line, cards:[...]}`
+on 64 opening rows.** Do it in two parts, and the first part is verifiable as a no-op:
+
+1. **Ids on every beat card, behaviour unchanged.** Scriptable off each card's `ask`. Ship
+   it green with the board, the sweep and the fixture all reading identical before/after —
+   an id nothing points at changes nothing, and proving that is the whole first release.
+2. **Wire the 64 rows.** This half is NOT scriptable: choosing which card an opening line
+   should reach is an authorial call, 33 times, and it wants the same treatment every room
+   has had — read the opening, read the deck, and if a line names something the deck cannot
+   answer, either rewrite the line or admit the night is short of a card.
+
+**Watch for this on part 2:** `a2-mirren`'s own opening offers *"Ask Hesta what is in the
+basket"* and its evening deck is full at its ceiling (6 of 6, budget 4), so there is no room
+for a basket card and the line has to be re-aimed instead. **Expect more of those** — a
+night at `budget + 2` cannot absorb a new card, so the fix there is always the line.
+
 ### `a2-mirren` IS DONE (v5.31.0) — and the night was short of three things it had already put on the page
 
 **One night per wave from here** (ruled 2026-08-16). Nights 11 and 12 were paired because
@@ -299,6 +330,16 @@ uncovered and is gone by teatime.
 heard — the wire has nothing on it. And `vow-in-practice`'s second take **notices that the
 vow as spoken has no boundary in it and refuses to put one in**, because whether it covers
 somebody who is not theirs is night 14's entire question.
+
+**AND THE SECOND LAW WITH HER NAME ON IT IS NOT IN THIS NIGHT — ruled 2026-08-16.** The
+bible lists the **Mirren Doctrine — *machines serve, never harvest*** among the laws the
+family may write, and says her grave is where it comes from. It is deliberately **not** at
+the cairn. **It belongs on night 19 (`a2-choir`), once they know what the harvesting
+actually is** — it reads as an answer there and as an invention at a graveside, and the
+morning of the burial already carries one law. *Night 19 is a FINISHED night, so this is a
+reopening, not a fresh room: it goes in as a follow-up edit when that wave comes round, and
+it must be written as the family reaching back to her grave for the name, not as somebody
+inventing a doctrine in Hesta's back room.*
 
 ## THE NEXT WAVE — and it is still a fork the author has to call
 

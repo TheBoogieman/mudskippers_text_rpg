@@ -50,6 +50,16 @@ where the budget wants 6**, room at 3. It is the one where a defector walks up t
 failing frame asking for nothing, and where the question `a2-mirren` deliberately left open
 gets answered — *does the vow cover somebody who is not ours?*
 
+**BUT THE NEXT WAVE IS NOT A NIGHT — ruled 2026-08-16.** The 33 cold opens come first: 64
+opening rail lines, none wired, and **13 of 33 nights show two questions that give the same
+answer**. See HANDOVER for the shape (two parts, the first verifiable as a no-op, no engine
+work — proved, not assumed).
+
+**AND WHEN `a2-seven` DOES COME ROUND, THE EVENING CARD IS A PITCH, NOT A WRITE-UP** (ruled
+the same day): audit the night, bring the author three or four options for what the missing
+evening conversation is about, he rules the subject, then I write it. Understudy mode, as
+with every room subject since v4.73.0.
+
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
 intake, filed and cultivated.** It comes from Seven, who filed them for eleven years. The
