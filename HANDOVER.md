@@ -228,6 +228,39 @@ first at the narrow door, nobody filing Pia under anything again, the canals reo
 two pilots who take turns, the Principal staying for the letting go. All written as canon.
 None of it dramatised.
 
+### → THE NEXT WAVE IS THE ENDING, AND IT WAS RULED ON 2026-08-16
+
+**Build night 33's closing BEFORE any other Book Three night**, so the ten nights in front
+of it can aim at it and plant for it. Ruled explicitly, against the earliest-unfinished
+order, because it is the biggest hole and the last thing anybody sees.
+
+**THREE LAYERS, IN THIS ORDER — all three, ruled:**
+1. **A staged landing**, like every other night in the book. `a3-seize` has neither `lands`
+   nor `landsHard` today.
+2. **The family's own time IS the epilogue.** Ten-plus room cards, one per person, each
+   their ending, read in whatever order the player wants and for as long as they want.
+   This is the part of the game the game is about and the book should finish inside it.
+3. **A written chronicle passage** that plays when the player finally closes the book, and
+   **it ends on THE CITY WAKING UP NOT KNOWING** — every Hollow still at once, every gentle
+   voice stopped mid-sentence, and a city that will never learn who did it or what it cost.
+   That is the ruled last image. Cold and wide, after a whole book of warm rooms.
+
+**THIS WAVE HAS ENGINE WORK IN IT AND A NEW FORM WITH READERS — plan for both:**
+- **The last beat cannot currently reach its own room.** The aftermath tick sees
+  `beatIdx === SPINE.length - 1`, advances the pointer and returns, before the branch that
+  sets `phase = "slack"` and calls `openSlackDoor()`. Layer 2 does not exist without fixing
+  that, and it must not break the season-break path beside it.
+- **The closing passage is a NEW SHAPE**, and the standing law says hunt every reader before
+  shipping it: the sweep's corpus walkers, the drift net, `wbReach`/the writers' board, the
+  editor, `sw.js` if anything new is served, and whatever decides that a run is over.
+- **`endCard("season")` must stop saying PAID IN FULL.** Those are Vic's dying words and it
+  is spending them as a completion stamp. Whatever replaces it, it is not that.
+- The epilogue must read the run's own record — the chassis fork, who was lost, what the
+  quests did — and **author nothing the record contradicts**, which is the beat's own
+  standing instruction.
+
+**Then Book Three runs in order from `a3-evict` (23).** Toller is standing in that street.
+
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
 
 ### THE CARD EDITOR (v5.40.0) — `editor.html`, and it never re-serialises
