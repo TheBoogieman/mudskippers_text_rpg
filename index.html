@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.19.0 "Every Line Is A Card"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.20.0 "Four Lanes"
+   family time is FOUR LANES: take one and its own follow-up takes its place, in place
+   the other three sit where they are · a lane that runs out goes, and the row shrinks
    one choice, one card · the two house stall lines are gone from the novel entirely
    a room row laps with its deck, and a second take is offered in its own words
    a beat deals its cards in a different order every run and the same order all through one
@@ -10472,7 +10474,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.19.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.20.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -11300,15 +11302,56 @@ var railKnock = {};  /* scene key -> offered wording -> this line reaches for th
    budget and an ending, and looping it would be the pressure block pretending to be
    the room. */
 var topicLap = {};   /* scene key -> how many times this deck has been round */
+/* THE LANES (v5.20.0). The family's own time is four lanes, not a deck that goes
+   round: each lane holds one card, its choice line is that card's NEXT layer, and
+   taking it advances THAT lane only - the other three sit where they are. When a
+   card has no layer left the lane is filled by the next unused card. So a player
+   sees four openings and can follow any one of them down to its last take without
+   walking the whole room first, which is what a follow-up is.
+   scene key -> {card id -> layers ALREADY PLAYED}. Keyed by id, not position,
+   because positions are a save-file contract and ids are the thing that means
+   something; a card with no id has no takes either, so it never needs a lane. */
+var topicLayer = {};
 function deckLap(key){ return topicLap[key] || 0; }
 function takesOf(t){
   var base = (t && t.plays) || [];
   var more = (t && Object.prototype.toString.call(t.takes) === "[object Array]") ? t.takes : [];
   return [base].concat(more);
 }
+/* how many layers of this card have been played, and therefore which one is next */
+function cardPlayed(t, key){
+  var m = topicLayer[key];
+  if(t && t.id && m && typeof m[t.id] === "number") return m[t.id];
+  return 0;
+}
+/* WHICH LAYER TO RENDER. A card's own count decides it in a lane; a deck without
+   lanes - every beat, and any card with no id - keeps the old deck-wide lap, which
+   is what it has always had and what its saves know. Clamps either way: a lingering
+   player is owed the deepest take, never a missing one. */
 function takeForLap(t, key){
-  var takes = takesOf(t), n = deckLap(key);
+  var takes = takesOf(t);
+  var n = (t && t.id && topicLayer[key] && typeof topicLayer[key][t.id] === "number")
+          ? Math.max(0, topicLayer[key][t.id] - 1) : deckLap(key);
   return takes[n < takes.length ? n : takes.length - 1] || takes[0] || [];
+}
+/* the lane's own line: the card offered at the layer it is ABOUT to play */
+function laneLine(t, key){ return railLineFor(t, cardPlayed(t, key)); }
+/* A LANE ADVANCES; A CARD RETIRES ONLY WHEN IT IS FINISHED (v5.20.0). Outside the
+   room this is unchanged - one deal, one spent card. Inside it, being dealt moves
+   that card to its next layer, and it joins the spent list only when it has no
+   layer left, which is what empties its lane and lets a new card have the slot.
+   ONE FUNCTION, because pickTopic can deal a card two ways - bound to a rail line,
+   or chosen by score - and a rule with two implementations is a rule with one. */
+function advanceCard(list, idx, key, spent){
+  var t = list[idx];
+  if(String(key).indexOf("|room") !== -1 && t && t.id){
+    var lm = topicLayer[key] || (topicLayer[key] = {});
+    var was = (typeof lm[t.id] === "number") ? lm[t.id] : 0;
+    lm[t.id] = was + 1;
+    if(was + 1 >= takesOf(t).length && spent.indexOf(idx) === -1) spent.push(idx);
+    return;
+  }
+  if(spent.indexOf(idx) === -1) spent.push(idx);
 }
 /* knockPending lived here until v5.8.0. It banked a knock rung during the aftermath so
    that the room would open its door early - and v4.82.0 made the door open on entry
@@ -11456,6 +11499,7 @@ function sceneRails(n){
   if(!list.length) return out;
   spent = topicSpent[s.key] || [];
   if(!railDeal[s.key]) railDeal[s.key] = {};
+  var q;
   /* THE ROW LAPS WITH THE DECK (v5.19.0). A fully spent ROOM used to return nothing
      here, and railFor filled the gap with two house lines that asked nothing - the
      dead stretch the author named, and the only thing bridging a lap. The row now
@@ -11463,15 +11507,29 @@ function sceneRails(n){
      take's own line. pickTopicFresh does the real roll-over when the player clicks,
      so the two stay in step. THE BEAT DOES NOT LAP - it has a budget and an ending,
      and a dry beat is honestly the door alone. */
-  var lap = deckLap(s.key), lv = branchLive(list), allSpent = false, z;
-  if(lv.length){
-    allSpent = true;
-    for(z = 0; z < lv.length; z++) if(spent.indexOf(lv[z]) === -1){ allSpent = false; break; }
+  var lap = deckLap(s.key), isRoom = String(s.key).indexOf("|room") !== -1;
+  /* THE ROOM IS LANES. Walk the deck in authored order and take the first n cards
+     that still have a layer left, each offered at the layer it is about to play.
+     A lane holds its card until the card is finished, because the card stays at the
+     front of that walk until it is - and then the next unused card takes the slot.
+     A lane that runs out with nothing left to fill it simply goes: four lanes become
+     three, then two, then none, and the way out has been up since the first turn. */
+  if(isRoom){
+    for(q = 0; q < list.length && out.length < n; q++){
+      t = list[q];
+      if(!cardOnBranch(t)) continue;
+      if(cardWaiting(s.sc, t, spent)) continue;
+      if(cardPlayed(t, s.key) >= takesOf(t).length) continue;      /* this card is finished */
+      ln = laneLine(t, s.key);
+      if(!ln || out.indexOf(ln) !== -1) continue;
+      railDeal[s.key][normLine(ln)] = q;
+      out.push(ln);
+    }
+    return out;
   }
-  if(allSpent && String(s.key).indexOf("|room") !== -1){ spent = []; lap = lap + 1; }
   /* the order is the run's, not the file's - see dealOrder. Rooms come back in
      authored order, so this loop is unchanged for them. */
-  var seq = dealOrder(list, s.key, spent, s.sc), q;
+  var seq = dealOrder(list, s.key, spent, s.sc);
   for(q = 0; q < seq.length && out.length < n; q++){
     i = seq[q];
     if(spent.indexOf(i) !== -1) continue;
@@ -11535,7 +11593,10 @@ function typedIsDoor(t){
    DM, not us, and it was quietly eating four authored opening lines. */
 function railFor(dm, trusted){
   dm = (Object.prototype.toString.call(dm) === "[object Array]") ? dm : [];
-  var deck = sceneRails(2);
+  /* FOUR LANES IN THE NOVEL'S FAMILY TIME, three at the wild table. In the novel
+     every line is a card and four are free; at the wild table the model is told
+     three and supplies some of them, and changing that contract is its own job. */
+  var deck = sceneRails((!wildRun() && !doorsLive()) ? 4 : 2);
   if(!doorsLive()){
     /* the aftermath and the family's own time have no pinned door, so a rail of
        dropped choices would leave the player with nothing to click at all */
@@ -11544,7 +11605,7 @@ function railFor(dm, trusted){
        the family's own time is ENTIRELY authored cards, and the row offered none of
        them. A room with cards left leads with them; a finished room falls back to
        the stalls, which is the deck saying so. */
-    if(deck.length) soft = deck.concat(soft).slice(0, 3);
+    if(deck.length) soft = deck.concat(soft).slice(0, wildRun() ? 3 : 4);
     /* THE HOUSE LINES ARE A BROKEN-MODEL REPAIR NOW, NOT A DESIGN (v5.19.0). In THE
        NOVEL every clickable line is a card, full stop - and the room's row laps with
        its deck, so there is no longer a turn where it has nothing. At the wild table
@@ -18412,7 +18473,11 @@ function pickTopic(sc, key){
      here gets a vote. Typed lines are unaffected: they were never dealt. */
   var bound = railDeal[key] && railDeal[key][normLine(lastPlayerText)];
   if(typeof bound === "number" && list[bound] && cardOnBranch(list[bound]) && spent.indexOf(bound) === -1){
-    spent.push(bound);
+    /* ...THROUGH THE SAME ADVANCE. This pushed straight to spent and returned, which
+       under lanes retired a card on its first layer and left its lane offering the
+       opening line for ever while the click dealt whatever was next in the deck.
+       Every way a card can be dealt goes through one advance now. */
+    advanceCard(list, bound, key, spent);
     return list[bound];
   }
   var t = String(lastPlayerText || "").toLowerCase().replace(/[^a-z0-9]+/g, " ");
@@ -18471,7 +18536,7 @@ function pickTopic(sc, key){
        run cannot make sense of. */
     if(best < 0) best = live[spent.length % live.length];
   }
-  if(spent.indexOf(best) === -1) spent.push(best);
+  advanceCard(list, best, key, spent);
   return list[best];
 }
 /* an ending that is a conversation cannot happen through a jacket */
@@ -20940,7 +21005,7 @@ function saveBlob(){
     agenda:agendaText, map:mapEdges, places:placeNotes, roster:roster, bits:bits,
     prevLoc:prevLocation, lastRoute:lastRoute, maint:maintIndex, arcDue:actCheckpointDue,
     beat:beatIdx, beatId:(beatDone() ? "" : beatNow().id), beatTurns:beatTurns,
-    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent, topicLap:topicLap, saidRoom:saidRoom,
+    beatText:beatText, gateNotes:gateNotes, boardStale:boardStale, topicSpent:topicSpent, topicLap:topicLap, topicLayer:topicLayer, saidRoom:saidRoom,
     shardWhere:shardWhere, storyMin:storyMin, storyDayShift:storyDayShift,
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
@@ -25614,7 +25679,7 @@ function newRun(confirmFirst, bare, mode){
   mapEdges = []; placeNotes = {}; roster = {family:[], fallen:[]}; bits = [];
   prevLocation = ""; lastRoute = ""; lastPresent = []; maintIndex = 0; actCheckpointDue = 0;
   beatIdx = 0; beatTurns = 0; forcingNow = false; boardStale = false;
-  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {}; saidRoom = {};
+  beatText = ""; beatSeen = {}; gateNotes = {}; gateRefusedNames = []; topicSpent = {}; topicLap = {}; topicLayer = {}; railDeal = {}; railKnock = {}; saidRoom = {};
   shardWhere = "jacket"; storyMin = -1; storyDayShift = 0;   /* she starts against his ribs, as the cold open says */
   beatJustCleared = null; lastTension = 0;
   introStage = 1;                                      /* the reveal turn is owed */
@@ -25787,6 +25852,25 @@ function restoreFromBlob(s){
      fresh conversation rather than a door it never earned - the counter is the
      only thing that opens it, and it costs the player nothing to talk more. */
   topicLap = (s.topicLap && typeof s.topicLap === "object") ? s.topicLap : {};
+  /* A SAVE FROM BEFORE THE LANES KNOWS ONLY spent AND lap, and there are live runs
+     carrying exactly that. Rebuild what each card has had: a card already played, in
+     a room that had been round L times, has had L+1 layers; one not yet played has
+     had L. Nobody re-reads a scene they have had and nobody loses one they have not. */
+  topicLayer = (s.topicLayer && typeof s.topicLayer === "object") ? s.topicLayer : {};
+  if(!s.topicLayer){
+    var okeys = Object.keys(topicSpent || {});
+    okeys.forEach(function(k2){
+      if(String(k2).indexOf("|room") === -1) return;
+      var bid = String(k2).split("|")[0], sbk = SCENEBOOK[bid];
+      var lst = (sbk && sbk.room && sbk.room.topics) || [];
+      if(!lst.length) return;
+      var L = topicLap[k2] || 0, sp = topicSpent[k2] || [], m2 = topicLayer[k2] = {};
+      lst.forEach(function(c, ci){
+        if(!c || !c.id) return;
+        m2[c.id] = (sp.indexOf(ci) !== -1) ? L + 1 : L;
+      });
+    });
+  }
   slackTurns = (typeof s.slackTurns === "number" && s.slackTurns > 0) ? s.slackTurns : 0;
   slackRoom = (phase === "slack")
     ? (typeof s.slackRoom === "string" && s.slackRoom ? s.slackRoom : ($("hud-loc").textContent || ""))
@@ -27718,7 +27802,7 @@ function selfTest(){
        deck rather than restating the rule. The fixture is synthetic on purpose: the
        laws must hold before the first forked card is authored, not after. */
     (function(){
-      var kF = {ch:chassisHolder, sp:topicSpent, lp:topicLap, rd:railDeal, rk:railKnock, tx:lastPlayerText};
+      var kF = {ch:chassisHolder, sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock, tx:lastPlayerText};
       /* every card carries a `rail` line, because from v5.15.0 one of these rows
          drives sceneRails, and sceneRails builds the row OUT OF the rail lines -
          a fixture without them offers nothing and the row cannot fail. */
@@ -27767,9 +27851,15 @@ function selfTest(){
                 room shows that same dead line every turn for the rest of the night.
                 Driven here with nothing spent, which is the state a room opens in. */
         (function(){
-          var kS = {sn:sceneNow, v5:V5SCENE, is:introStage, rm:runMode};
+          var kS = {sn:sceneNow, v5:V5SCENE, is:introStage, rm:runMode, tl:topicLayer};
           try{
-            chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {};
+            /* topicLayer TOO. Steps (i) and (ii) above play this fixture a dozen times
+               through pickTopicFresh, and KEY is a room key - so every card's lane was
+               already finished by the time this step ran, and sceneRails correctly
+               offered nothing. The row read zero and called it a failure. A harness
+               that resets half the state is testing a world nobody is in. */
+            chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; topicLayer = {};
+            railDeal = {}; railKnock = {};
             sceneNow = function(){ return {sc:FX, key:KEY}; };
             V5SCENE = true; introStage = 2; runMode = "novel";
             srOut = sceneRails(4) || [];
@@ -27777,7 +27867,8 @@ function selfTest(){
               var ix = (railDeal[KEY] || {})[normLine(l)];
               if(typeof ix === "number" && !cardOnBranch(FX.topics[ix])) srOff.push(FX.topics[ix].id);
             });
-          } finally { sceneNow = kS.sn; V5SCENE = kS.v5; introStage = kS.is; runMode = kS.rm; }
+          } finally { sceneNow = kS.sn; V5SCENE = kS.v5; introStage = kS.is; runMode = kS.rm;
+                      topicLayer = kS.tl; }
         }());
         /* (iv) the save invariant, over the REAL book: a card's position is its
                 identity and the branch must not be able to move one. */
@@ -27794,7 +27885,7 @@ function selfTest(){
           }
         });
       } finally {
-        chassisHolder = kF.ch; topicSpent = kF.sp; topicLap = kF.lp;
+        chassisHolder = kF.ch; topicSpent = kF.sp; topicLap = kF.lp; topicLayer = kF.ly;
         railDeal = kF.rd; railKnock = kF.rk; lastPlayerText = kF.tx;
       }
 
@@ -27831,11 +27922,11 @@ function selfTest(){
            /* the before, faithfully: a reader that does not ask the fork. Neutering
               cardOnBranch is exactly what the missing call amounted to, and the walk
               itself is the shipped one - this enters sceneRails, it does not restate it. */
-           var kb = cardOnBranch, kc = chassisHolder, kd = railDeal, ks = topicSpent, kl = topicLap;
+           var kb = cardOnBranch, kc = chassisHolder, kd = railDeal, ks = topicSpent, kl = topicLap, ky = topicLayer;
            var kn = sceneNow, kv = V5SCENE, ki = introStage, km = runMode;
            try{
              cardOnBranch = function(){ return true; };
-             chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; railDeal = {};
+             chassisHolder = "Nine"; topicSpent = {}; topicLap = {}; topicLayer = {}; railDeal = {};
              sceneNow = function(){ return {sc:FX, key:KEY}; };
              V5SCENE = true; introStage = 2; runMode = "novel";
              var out = sceneRails(4) || [], off = 0;
@@ -27845,7 +27936,7 @@ function selfTest(){
              });
              return off === 0;           /* must come back FALSE: the old walk offers it */
            } finally {
-             cardOnBranch = kb; chassisHolder = kc; railDeal = kd; topicSpent = ks; topicLap = kl;
+             cardOnBranch = kb; chassisHolder = kc; railDeal = kd; topicSpent = ks; topicLap = kl; topicLayer = ky;
              sceneNow = kn; V5SCENE = kv; introStage = ki; runMode = km;
            }
          }});
