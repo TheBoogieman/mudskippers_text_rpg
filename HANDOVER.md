@@ -113,6 +113,26 @@ v5.33.0**; next is `a2-law` (21), then `a2-turn` (22).
 
 **"Don't stop until we do this for every beat."** — his instruction, 2026-08-15.
 
+### A WAVE DOES NOT GET ITS OWN FILE — RULED 2026-08-16
+
+**Do not write `REPORT-vX.md`, `AUDIT-vX.md`, `BRIEF-X.md` or any other per-wave document.**
+The write-up goes in exactly two places, both of which he actually reads: **the commit
+message**, and **the standing sections of this file and `OUTSTANDING.md`**. Step 3 of the
+loop above says *report* and it means report **in chat** — spoken to him, not filed.
+
+**Why this is a rule and not a preference:** twenty-one such files had accumulated in the
+repo root — thirteen release reports, four one-off audits for a hand pass that finished
+months of waves ago, two status documents both superseded by `OUTSTANDING.md`, and two
+feature briefs whose features all shipped. Nothing in the repo referenced any of them
+except one dangling mention in an `index.html` comment. They were removed at v5.34.0; git
+has every one of them by path if a wave ever needs to be re-read.
+
+**The test before creating any new file in the repo root: will this be true in ten waves?**
+`HANDOVER.md`, `OUTSTANDING.md`, `THE-WORLD.md`, `THE-ANNULMENT-THREAD.md`, `AUTHORING.md`,
+`HOW-A-NIGHT-WORKS.md` and `README.md` pass it — they are rewritten in place and stay
+current. A document with a version number in its name fails it by construction.
+**Scratch work goes in the session scratchpad, never in the repo.**
+
 ## HOW TO SPLICE index.html WITHOUT BREAKING IT
 
 *Learned the hard way on 2026-08-16: three scripted splices in a row damaged the file in

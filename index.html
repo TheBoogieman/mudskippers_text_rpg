@@ -32305,8 +32305,10 @@ function selfTest(){
     /* ---- (6e) NO TOKEN WINS TWO CARDS IN ONE DECK (v4.72.5) ----
        AUTHORING.md law 4: a distinctive token used by two cards in one deck stops
        meaning either - a typed line using it scores both equally and authored order
-       breaks the tie. RAIL-AUDIT.md listed 17 of these off a static read of the key
-       lists; run through the game's OWN scorer, 47 of the 49 shared tokens turn out to
+       breaks the tie. The v4.71.10 rail audit listed 17 of these off a static read of
+       the key lists (that document is gone from the repo now - it was a one-off for the
+       hand pass and git has it); run through the game's OWN scorer, 47 of the 49 shared
+       tokens turn out to
        be handled already (stop-words score nothing, scenewideTerms suppresses anything
        in more than half a deck, and a short word needs two hits, at which point the
        rest of the line discriminates). Only an 8+ letter token wins a card alone.
