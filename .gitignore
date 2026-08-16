@@ -1,0 +1,7 @@
+# git bundle backups made by the launcher / by hand - artefacts, not source
+*.bundle
+# scratch drivers that live in the working directory, not in the repo
+_assemble.js
+_drive.js
+_play.js
+_proto.js
