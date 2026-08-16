@@ -3,16 +3,16 @@
 *Live state. Update after every finished room. A fresh session should be able to pick the
 loop up from this file alone.*
 
-**Last updated: v5.12.0.**
+**Last updated: v5.13.0.**
 
 **Do not count the writing by hand any more.** Open the game, pry into THE WRITERS' BOARD,
 and the first page is THE BOOK: every night, its cards against `budget + 2`, its takes, its
 landing rows, its room, and one of `written` / `part` / `outline`. It is recounted off
 `SPINE` and `SCENEBOOK` every time the page opens and it keeps no copy of anything, so it
 cannot go stale the way this file can. **It is the answer to "what do we write next" and it
-is never a guess.** As of v5.12.0: **3 of 33 nights are finished**; 28 run out of cards
-before the night ends, 22 repeat themselves if asked twice, 22 land on nothing to click,
-21 rooms are still on their first three cards.
+is never a guess.** As of v5.13.0: **4 of 33 nights are finished**; 28 run out of cards
+before the night ends, 21 repeat themselves if asked twice, 21 land on nothing to click,
+20 rooms are still on their first three cards.
 
 Book One is finished and `a2-chassis` is FINISHED — 25 cards, an id on every one, a second
 take on every card live on either road, seven cards carrying a THIRD take, and both landings
