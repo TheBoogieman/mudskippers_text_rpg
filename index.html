@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.13.0 "You Were Asked"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.14.0 "Which Line Deals Which Card"
+   the board joins choices to cards: every rail row, the ids it names, in binding order
+   a dead row and a row past the cut are both silent in the game and both visible here
    a2-three FINISHED: seven cards, a take on each, a third on the name she will not give
    she refuses it on purpose, so that one person at the table is a standing reminder
    the writers' board is two pages and both are generated · it keeps no copy of anything
@@ -10087,7 +10089,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.13.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.14.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -22985,7 +22987,8 @@ var wbStatCache = null;
 function wbStats(){
   if(wbStatCache) return wbStatCache;
   var rows = [], t = {cards:0, room:0, takes:0, forks:0, lines:0, pass:0, doors:0, walks:0,
-                      wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0};
+                      wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0,
+                      broken:0, cutRows:0};
   SPINE.forEach(function(b, i){
     var sb = SCENEBOOK[b.id] || {};
     var tp = sb.topics || [], rp = (sb.room && sb.room.topics) || [];
@@ -23012,6 +23015,11 @@ function wbStats(){
     t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
     t.live += (b.budget || 4);
     t.slack += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
+    /* a rail row naming a card that is not in the deck is dropped in silence, and
+       an authored fourth row is never dealt at all. Both are counted across the
+       whole book so neither can hide on a night nobody happens to open. */
+    var re = wbReach(b);
+    t.broken += re.broken; t.cutRows += re.cutRows;
     if(wired) t.wired++; else t.dark++;
     if(tp.length < need) t.short++;
     if(!takes) t.noTakes++;
@@ -23027,6 +23035,49 @@ function wbNext(){
   var r = wbStats().rows, i;
   for(i = 0; i < r.length; i++) if(r[i].state !== "written") return r[i];
   return null;
+}
+
+/* ---- WHAT LEADS TO WHAT ----
+   There are exactly two ways a written card reaches a player, and this page used
+   to show both of them separately and never joined up:
+     - its OWN rail line, which is the offer printed while that deck is live
+     - a landing row naming it by id. The row binds the FIRST id the run has not
+       spent, so the order in that array is the wiring, not a preference list.
+   Two things only a join can see, and both are silent failures in the game:
+   a row naming an id that is not in the deck (wireRail drops the row and nobody
+   is told), and a card no row can ever reach (it exists, and only typing finds
+   it). The slice(0,3) is applied here for the same reason it is applied in
+   playAuthored - a fourth authored row is not spare, it does not exist. */
+function wbReach(b){
+  var SB = SCENEBOOK[b.id] || {};
+  var room = (SB.room && SB.room.topics) || [];
+  var byId = {}, order = [];
+  room.forEach(function(c){ if(c.id){ byId[c.id] = c; order.push(c.id); } });
+  var rows = [], offeredBy = {}, broken = 0, cutRows = 0;
+  /* plain-text labels on purpose: these strings get esc()d into a table cell AND
+     joined into a line on the card itself, and an HTML entity in here prints as
+     an HTML entity in the second place. */
+  [["opens","The opening"], ["lands","Landing, the player reached it"],
+   ["landsHard","Landing, the world took it"]].forEach(function(pair){
+    (b[pair[0]] || []).forEach(function(V, vi){
+      var all = V.rail || [], keep = all.slice(0, 3);
+      cutRows += all.length - keep.length;
+      keep.forEach(function(r){
+        var row = {where:pair[1] + (((b[pair[0]] || []).length > 1) ? " " + (vi + 1) : ""),
+                   line:choiceLine(r), cards:[], knock:false, missing:[]};
+        if(r && typeof r === "object"){
+          row.knock = !!r.knock;
+          (r.cards || []).forEach(function(cid){
+            if(byId[cid]){ row.cards.push(cid); (offeredBy[cid] = offeredBy[cid] || []).push(row.where); }
+            else { row.missing.push(cid); broken++; }
+          });
+        }
+        rows.push(row);
+      });
+    });
+  });
+  return {rows:rows, offeredBy:offeredBy, byId:byId, roomIds:order, broken:broken, cutRows:cutRows,
+          orphans:order.filter(function(cid){ return !offeredBy[cid]; })};
 }
 
 /* ---- rendering helpers ---- */
@@ -23057,11 +23108,19 @@ function wbPassage(V){
 }
 /* a scene book card, whole: this one is already in the game, and every layer of it
    is printed, because a take nobody reads is a take nobody checks */
-function wbCard(t){
+function wbCard(t, offers){
   var keys = String(t.key || "").split(" ").map(function(w){ return w.replace(/-/g, " "); });
-  var h = '<div class="wb-c gold"><span class="wb-t gold">' + esc(t.ask) + "</span>";
+  var h = '<div class="wb-c gold"><span class="wb-t gold">' + esc(t.ask)
+        + (t.id ? ' <span style="color:var(--wb-slate);font-weight:400">' + esc(t.id) + "</span>" : "") + "</span>";
   if(t.fork) h += '<div class="wb-rl" style="color:var(--wb-slate)">Forked &mdash; dealt only on the '
     + esc(t.fork) + " side of the chassis choice.</div>";
+  h += '<span class="wb-lb">The choice that offers it</span>'
+    + '<div class="wb-rl">' + (t.rail ? esc(t.rail) : '<span style="color:#e08b8b">no rail line &mdash; only typing finds this</span>') + "</div>";
+  if(offers){
+    h += offers.length
+      ? '<div class="wb-rl" style="color:var(--gold)">Also dealt by: ' + esc(offers.join(" · ")) + "</div>"
+      : '<div class="wb-rl" style="color:var(--wb-slate)">No landing row names this card. It arrives by typing, or when the room runs out of asked-for cards and deals the next unplayed one.</div>';
+  }
   h += '<span class="wb-lb">Who answers</span>'
     + '<div class="wb-pass" style="margin-bottom:7px;color:' + wbCol(t.who) + '">' + esc(t.who) + "</div>"
     + '<span class="wb-lb">What they give up</span>'
@@ -23136,6 +23195,15 @@ function wbDrawBook(){
     + '<div class="wb-stat"><b class="s">' + t.noTakes + "</b><span>nights repeat themselves if asked twice</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.dark + "</b><span>nights land on nothing to click</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div></div>";
+  if(t.broken || t.cutRows){
+    h += '<div class="wb-note" style="color:#e08b8b"><b>Wiring faults: ' + t.broken
+      + " rail row(s) name a card that is not in the deck"
+      + (t.cutRows ? ", and " + t.cutRows + " authored row(s) are past the cut to three and never dealt" : "")
+      + ".</b> Both fail in silence in the game. Open the night to see which.</div>";
+  } else {
+    h += '<div class="wb-note"><b>Wiring clean.</b> Every rail row names a card that exists, and no night'
+      + " authors a fourth row for a rail that only has three.</div>";
+  }
   h += '<div class="wb-note"><b>Why the card count is budget plus two.</b> A night gives the player '
     + " a set number of turns before the world closes it. If the cards run out first the player spends"
     + " the last turns being told the same things again, so every night wants two more cards than it has"
@@ -23195,6 +23263,47 @@ function wbDrawBeat(){
     + '<div class="wb-stat"><b' + (r.room <= 3 ? ' class="s"' : "") + ">" + r.room + "</b><span>cards in the room after</span></div>"
     + '<div class="wb-stat"><b>' + r.budget + "</b><span>turns before the world acts</span></div>"
     + '<div class="wb-stat"><b>' + r.pass + "</b><span>passages written</span></div></div>";
+
+  /* ---- the wiring, joined up ---- */
+  var RE = wbReach(b), SBk = SCENEBOOK[b.id];
+  h += '<div class="wb-sh">Every choice, and the card it deals</div>';
+  h += '<p class="wb-p">A landing row does not open one card &mdash; it names several, in order, and hands over'
+    + " the first the run has not already spent. That order is the wiring. Rows are shown exactly as the game"
+    + " sees them, after the cut to three.</p>";
+  h += '<div class="wb-scroll"><table class="wb-tb"><thead><tr>'
+    + "<th>Where</th><th>The line the player sees</th><th>What it deals, in order</th></tr></thead><tbody>";
+  if(!RE.rows.length) h += '<tr><td colspan="3">This night offers no authored rail at all.</td></tr>';
+  RE.rows.forEach(function(r){
+    var what;
+    if(r.knock) what = '<span style="color:var(--gold)">A way forward. No cards, and it can never be dropped &mdash;'
+      + " it is the row that stops a spent room stranding anybody.</span>";
+    else if(r.cards.length || r.missing.length){
+      what = r.cards.map(function(cid){
+        return '<b>' + esc(cid) + "</b> <span style=\"color:var(--wb-slate)\">" + esc(RE.byId[cid].ask) + "</span>";
+      }).join(" &rarr; ");
+      if(r.missing.length) what += (what ? " &rarr; " : "") + '<span style="color:#e08b8b">'
+        + esc(r.missing.join(", ")) + " &mdash; NOT IN THIS DECK, the row is dead</span>";
+    } else what = '<span style="color:var(--wb-slate)">Not wired. The storyteller answers this one.</span>';
+    h += "<tr><td>" + esc(r.where) + "</td><td>" + esc(r.line) + "</td><td>" + what + "</td></tr>";
+  });
+  h += "</tbody></table></div>";
+  if(RE.cutRows) h += '<div class="wb-note" style="color:#e08b8b"><b>' + RE.cutRows
+    + " authored rail row(s) do not exist.</b> playAuthored cuts the rail to three before wireRail ever"
+    + " sees it, so a fourth row is not spare &mdash; it is never dealt.</div>";
+  if(SBk && SBk.room && RE.orphans.length) h += '<div class="wb-note">'
+    + "<b>Reached only by typing:</b> " + esc(RE.orphans.join(", ")) + ". No landing row names these, so a player"
+    + " gets them by asking in their own words, or when the room deals the next unplayed card.</div>";
+  if(SBk && (SBk.topics || []).length){
+    h += '<p class="wb-p">The night&rsquo;s own cards are not on a landing row at all &mdash; each carries its own'
+      + " offer line, printed while the night is live:</p>";
+    h += '<div class="wb-scroll"><table class="wb-tb"><thead><tr>'
+      + "<th>Card</th><th>The line that offers it</th><th>Or type</th></tr></thead><tbody>";
+    (SBk.topics || []).forEach(function(c){
+      h += "<tr><td>" + esc(c.id || c.ask) + "</td><td>" + esc(c.rail || "—") + "</td>"
+        + '<td style="color:var(--wb-slate)">' + esc(String(c.key || "").split(" ").slice(0, 6).join(" · ")) + "</td></tr>";
+    });
+    h += "</tbody></table></div>";
+  }
 
   h += '<div class="wb-sh">The question, and the line that answers it</div>';
   h += '<div class="wb-c gold"><span class="wb-t gold">The gate &mdash; what must become true</span><div class="wb-pass">' + esc(b.exit) + "</div></div>";
@@ -23288,7 +23397,9 @@ function wbDrawBeat(){
       h += '<div class="wb-rl" style="color:var(--wb-slate)">This room forks. ' + forked.length + " of its "
          + SB.room.topics.length + " cards belong to one side of the chassis choice and are never dealt on the other.</div>";
     }
-    (SB.room.topics || []).forEach(function(c){ h += wbCard(c); });
+    /* room cards get their landing rows passed in - these are the only cards a
+       rail can name, so these are the only ones with a second way in */
+    (SB.room.topics || []).forEach(function(c){ h += wbCard(c, RE.offeredBy[c.id] || []); });
   }
 
   h += '<div class="wb-sh">What the run will remember either way</div><div class="wb-c">';
