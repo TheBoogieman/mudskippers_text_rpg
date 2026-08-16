@@ -132,6 +132,42 @@ deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds
    notes between the data are the project's memory, and a read-into-objects-and-write-back
    editor deletes every one of them silently. A diff must show only what the author changed.
 
+### THE CARD EDITOR (v5.40.0) — `editor.html`, and it never re-serialises
+
+**Open `editor.html` from a served copy** (`http://localhost:8124/editor.html`, or the
+deployed site). It lists all 33 nights and every card in both decks, with every string in a
+text box: `ask`, `rail`, `who`, `gives`, `holds`, `key`, the second-take lines, and every
+line of `plays` and `takes`.
+
+**IT HOLDS THE CORPUS TWICE ON PURPOSE** — parsed (from the same `<script src="corpus.js">`
+the game uses) and as RAW TEXT (fetched). An edit finds that field's exact character range
+in the raw text and replaces only those characters. **It never builds a file from objects.**
+The comments in `corpus.js` are the project's memory and live *between* the data; a
+read-into-objects-and-write-back tool would delete every one of them silently.
+
+**PROVEN, NOT ASSERTED.** Editing one line of night 21 produced a file with **952,103
+identical bytes before the change and 153,467 after**, one 209-byte range replaced, the same
+line count, and it parses. A deliberately hostile value — quotes, backslashes, newlines,
+tabs, an em-dash and a fake `"},{id:\"fake\""` terminator — round-tripped **byte-exact**
+through the game's own object graph.
+
+**A FIELD IT CANNOT LOCATE UNAMBIGUOUSLY IS LOCKED, NOT GUESSED.** Greyed, with the reason
+printed. **5 of 6,788 fields** are locked, all genuine duplicates — the same short line
+written twice in one card ("Minuted.", "You are keeping it."). The first cut locked **422**,
+every one a `who`, because `who:"Pia"` also matches that card's own nameplates; anchoring on
+the field name and on the speaker fixed it. **Anchor on as much as you know.**
+
+**Saving:** DOWNLOAD writes a new `corpus.js` you drop over the old one. On Chromium, PICK
+`corpus.js` TO SAVE IN PLACE gives it a file handle and it writes straight to disk. **Both
+paths refuse if the result would not parse**, and refuse if a field has moved under the
+editor since load.
+
+**It does not touch the game.** No engine, no board, no rehearsal room, no run state — it
+reads and writes one file. That is why moving the writers' board out was dropped: measured,
+the board and rehearsal room are **939 lines, not the ~4,000 the pitch claimed**, they are
+threaded through the FX system, the shard widget and the boot path, and the board calls live
+run state (`persistAll`, `currentChoices`). The editor needed none of it.
+
 ### THE CORPUS IS ITS OWN FILE (v5.39.0) — and half of index.html was your writing
 
 **`index.html` 35,158 lines → 24,795. `corpus.js` is 10,399**, and every byte of it is a

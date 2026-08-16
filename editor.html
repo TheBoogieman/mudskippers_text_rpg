@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MUDSKIPPERS — the card editor</title>
+<style>
+:root{
+  --bg:#0b0e14; --panel:#131a25; --panel-2:#19222f; --ink:#e9ecf2; --ink-dim:#9aa6b6;
+  --line:#232c3a; --gold:#f2c14e; --sodium:#e8a13c; --green:#8fc98a; --red:#e08b8b;
+  --mono:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg); color:var(--ink); display:grid; grid-template-columns:268px 1fr;
+  font:15px/1.6 Georgia,'Iowan Old Style',serif; overflow:hidden;
+}
+button{font-family:var(--mono);cursor:pointer}
+
+/* ---- the rail ---- */
+nav{border-right:1px solid var(--line);overflow-y:auto;height:100vh;background:#0e131c}
+.brand{padding:16px 16px 10px;border-bottom:1px solid var(--line)}
+.brand b{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);display:block}
+.brand span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--ink-dim)}
+.season{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:#6b7688;padding:16px 16px 5px}
+.nb{
+  display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;
+  color:var(--ink-dim);font-family:var(--mono);font-size:11px;padding:7px 16px;line-height:1.45;
+}
+.nb:hover{background:rgba(232,161,60,.07);color:var(--ink)}
+.nb[aria-current="true"]{border-left-color:var(--gold);background:rgba(242,193,78,.11);color:var(--ink)}
+.nb i{color:#6b7688;font-style:normal;margin-right:7px}
+.nb u{text-decoration:none;color:var(--green);margin-left:6px}
+
+/* ---- the page ---- */
+main{overflow-y:auto;height:100vh;padding:0 0 120px}
+.head{
+  position:sticky;top:0;z-index:5;background:linear-gradient(180deg,#0f1620 78%,rgba(15,22,32,0));
+  padding:18px 30px 16px;border-bottom:1px solid var(--line);
+}
+h1{margin:0;font-size:23px;font-weight:400}
+.sub{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-dim);margin-top:5px}
+.wrap{padding:22px 30px 0;max-width:1080px}
+
+.deck{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--sodium);
+  margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:15px 17px;margin-bottom:14px}
+.card.dirty{border-color:var(--gold);box-shadow:0 0 0 1px rgba(242,193,78,.25)}
+.cid{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#7f8b9c;margin-bottom:11px}
+.cid b{color:var(--green)}
+.cid em{color:#5d6673;font-style:normal}
+
+.f{margin:9px 0}
+.f label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:#7f8b9c;margin-bottom:3px}
+textarea{
+  width:100%;background:#0f1620;color:var(--ink);border:1px solid var(--line);border-radius:3px;
+  padding:8px 10px;font:15px/1.55 Georgia,serif;resize:vertical;overflow:hidden;min-height:38px;
+}
+textarea:focus{outline:none;border-color:var(--sodium);background:#111925}
+textarea.changed{border-color:var(--gold);background:#151a12}
+textarea.locked{background:#0c1017;color:#6b7688;border-style:dashed}
+.who{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--sodium)}
+.lockmsg{font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:.05em;margin-top:3px}
+
+/* ---- the bar ---- */
+.bar{
+  position:fixed;left:268px;right:0;bottom:0;z-index:9;background:linear-gradient(180deg,#0f1620,#0a0e15);
+  border-top:1px solid #1d2634;padding:11px 30px;display:flex;gap:11px;align-items:center;
+  box-shadow:0 -1px 26px rgba(0,0,0,.6);
+}
+.bar .count{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-dim);flex:1}
+.bar .count b{color:var(--gold)}
+.btn{
+  background:#18222b;border:1px solid #2f7f8a;color:#6fd3e0;border-radius:3px;
+  font-size:10.5px;letter-spacing:.16em;padding:9px 15px;
+}
+.btn:hover{border-color:#6fd3e0;box-shadow:0 0 18px rgba(111,211,224,.18)}
+.btn.gold{border-color:var(--sodium);color:var(--gold)}
+.btn.gold:hover{border-color:var(--gold);box-shadow:0 0 18px rgba(232,161,60,.22)}
+.btn[disabled]{opacity:.38;cursor:default;box-shadow:none;border-color:#2c3444;color:#6d7789}
+.msg{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--green);min-width:220px;text-align:right}
+.msg.bad{color:var(--red)}
+
+.boot{padding:60px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-dim);line-height:2}
+.boot b{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav id="rail">
+  <div class="brand"><b>THE CARD EDITOR</b><span id="brandsub">loading corpus.js…</span></div>
+  <div id="nights"></div>
+</nav>
+
+<main>
+  <div id="page" class="boot">Reading <b>corpus.js</b>…</div>
+</main>
+
+<div class="bar">
+  <div class="count" id="count">no edits</div>
+  <div class="msg" id="msg"></div>
+  <button class="btn" id="revert" disabled>REVERT ALL</button>
+  <button class="btn gold" id="save" disabled>DOWNLOAD corpus.js</button>
+  <button class="btn gold" id="write" disabled style="display:none">SAVE TO FILE</button>
+</div>
+
+<script src="corpus.js"></script>
+<script>
+"use strict";
+/* =====================================================================
+   MUDSKIPPERS — THE CARD EDITOR
+
+   IT EDITS TEXT IN PLACE AND NEVER RE-SERIALISES. That is the whole design and
+   it is a ruling, not a preference. corpus.js is full of authorial comments -
+   why a card exists, what a `never` protects, which detector trap a line once
+   walked into - and they live BETWEEN the data. Any tool that reads the corpus
+   into objects and writes those objects back out deletes every one of them,
+   silently, and the diff would be forty thousand lines wide.
+
+   So this tool holds two things at once: the PARSED corpus (from the script tag
+   above, which is the same file the game loads) and the RAW TEXT of that same
+   file. Editing a field finds that field's exact character range in the raw text
+   and replaces only those characters. Every byte it does not touch is unchanged,
+   and a diff shows only what you changed.
+
+   A FIELD IT CANNOT LOCATE UNAMBIGUOUSLY IS NOT EDITABLE. It is shown, greyed,
+   with the reason. Refusing is always correct here; guessing is never.
+   ===================================================================== */
+
+var RAW = "";          /* the exact text of corpus.js */
+var EDITS = {};        /* key -> {start, end, was, now} */
+var CUR = null;        /* the beat id on screen */
+var FSHANDLE = null;   /* a file handle, if the browser will give us one */
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+/* ---- locating a value in the raw text -------------------------------
+   A JS string literal in the corpus may be written with escapes, so we cannot
+   search for the runtime value directly. We re-encode the value the way the file
+   would have written it and search for THAT. If the file used a different but
+   equivalent encoding the search simply misses, and the field is locked rather
+   than mis-edited - which is the safe direction. */
+function enc(v){
+  return String(v)
+    .replace(/\\/g, "\\\\")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r")
+    .replace(/\t/g, "\\t");
+}
+/* find the ONE occurrence of a needle inside [from,to). `lead` is how many
+   characters of the needle come before the literal's contents. Returns the range
+   of the CONTENTS. Null if absent, {ambiguous} if the file says it twice.
+
+   ANCHOR ON AS MUCH AS YOU KNOW. The first cut searched only for the value, and
+   locked 422 fields - every one of them a `who`, because who:"Pia" also matches
+   the nameplate on six of that card's own lines. A keyed field knows its key and
+   a spoken line knows its speaker; using them makes the needle unique by
+   construction rather than by luck. */
+function hunt(needle, lead, from, to){
+  var i = RAW.indexOf(needle, from);
+  if (i < 0 || i >= to) return null;
+  var j = RAW.indexOf(needle, i + 1);
+  if (j !== -1 && j < to) return {ambiguous:true};
+  return {start: i + lead, end: i + needle.length - 1};
+}
+function locate(v, from, to){ return hunt('"' + enc(v) + '"', 1, from, to); }
+function locateKeyed(field, v, from, to){
+  var pre = field + ':"';
+  return hunt(pre + enc(v) + '"', pre.length, from, to);
+}
+function locateSaid(speaker, v, from, to){
+  var pre = '"' + enc(speaker) + '","';
+  return hunt(pre + enc(v) + '"', pre.length, from, to);
+}
+
+/* the region of one beat's SCENEBOOK entry, by its own key */
+function beatRegion(id){
+  var key = '\n"' + id + '": {';
+  var a = RAW.indexOf(key);
+  if (a < 0) return null;
+  if (RAW.indexOf(key, a + 1) !== -1) return null;          /* two entries, same id */
+  var ids = Object.keys(SCENEBOOK), n = ids.indexOf(id);
+  var b = RAW.length;
+  if (n >= 0 && n + 1 < ids.length){
+    var nk = '\n"' + ids[n + 1] + '": {';
+    var j = RAW.indexOf(nk, a);
+    if (j > a) b = j;
+  }
+  return {start: a, end: b};
+}
+/* ...and the region of one card inside it, bounded by the next card's anchor */
+function cardRegions(beatId, list, deckStart, deckEnd){
+  var out = [], i;
+  for (i = 0; i < list.length; i++){
+    var t = list[i];
+    var anchor = t.id ? ('id:"' + enc(t.id) + '"') : ('ask:"' + enc(t.ask) + '"');
+    var at = RAW.indexOf(anchor, deckStart);
+    out.push((at >= 0 && at < deckEnd) ? at : -1);
+  }
+  for (i = 0; i < out.length; i++){
+    var s = out[i];
+    var e = (i + 1 < out.length && out[i + 1] > s) ? out[i + 1] : deckEnd;
+    out[i] = (s < 0) ? null : {start: s, end: e};
+  }
+  return out;
+}
+
+/* ---- the model: every editable string on a night -------------------- */
+function fieldsFor(beatId){
+  var SB = SCENEBOOK[beatId], reg = beatRegion(beatId), out = [];
+  if (!SB || !reg) return out;
+  var roomAt = RAW.indexOf("\n  room:{", reg.start);
+  if (roomAt < 0 || roomAt > reg.end) roomAt = reg.end;
+
+  function deck(list, label, dStart, dEnd){
+    var regs = cardRegions(beatId, list || [], dStart, dEnd);
+    (list || []).forEach(function(t, i){
+      var r = regs[i], rows = [];
+      function add(path, label2, value, kind, anchor){
+        var loc = null;
+        if (r){
+          if (kind === "meta" || kind === "who") loc = locateKeyed(anchor || path, value, r.start, r.end);
+          else if (kind === "said")               loc = locateSaid(label2, value, r.start, r.end);
+          else                                    loc = locate(value, r.start, r.end);
+          /* a keyed field written some other way still gets the plain search */
+          if (!loc) loc = locate(value, r.start, r.end);
+        }
+        rows.push({key: beatId + "|" + label + "|" + i + "|" + path,
+                   label: label2, value: value, kind: kind || "line",
+                   start: loc && !loc.ambiguous ? loc.start : -1,
+                   end:   loc && !loc.ambiguous ? loc.end   : -1,
+                   why: !r ? "this card could not be found in the file"
+                        : !loc ? "this exact text is not in the card's own region"
+                        : loc.ambiguous ? "this text appears more than once in the card" : ""});
+      }
+      ["ask","rail","who","gives","holds","key"].forEach(function(f){
+        if (typeof t[f] === "string") add(f, f.toUpperCase(), t[f], f === "who" ? "who" : "meta");
+      });
+      (t.railTakes || []).forEach(function(v, n){ add("railTakes." + n, "SECOND LINE " + (n + 1), v, "line"); });
+      (t.plays || []).forEach(function(l, n){
+        if (typeof l === "string") add("plays." + n, "", l, "narr");
+        else if (l && l.length >= 2) add("plays." + n, String(l[0]), l[1], "said");
+      });
+      (t.takes || []).forEach(function(tk, k){
+        (tk || []).forEach(function(l, n){
+          if (typeof l === "string") add("takes." + k + "." + n, "", l, "narr");
+          else if (l && l.length >= 2) add("takes." + k + "." + n, String(l[0]), l[1], "said");
+        });
+      });
+      out.push({card: t, deck: label, idx: i, rows: rows, found: !!r});
+    });
+  }
+  deck(SB.topics, "the night", reg.start, roomAt);
+  deck(SB.room && SB.room.topics, "the room", roomAt, reg.end);
+  return out;
+}
+
+/* ---- rendering ------------------------------------------------------ */
+function grow(ta){ ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 2) + "px"; }
+
+function drawRail(){
+  var h = "", season = 0;
+  SPINE.forEach(function(b, i){
+    if (b.season !== season){ season = b.season; h += '<div class="season">SEASON ' + season + '</div>'; }
+    var n = ((SCENEBOOK[b.id] && SCENEBOOK[b.id].topics) || []).length
+          + ((SCENEBOOK[b.id] && SCENEBOOK[b.id].room && SCENEBOOK[b.id].room.topics) || []).length;
+    var mine = Object.keys(EDITS).filter(function(k){ return k.indexOf(b.id + "|") === 0; }).length;
+    h += '<button class="nb" data-beat="' + esc(b.id) + '" aria-current="' + (b.id === CUR) + '">'
+       + '<i>' + (i + 1) + '</i>' + esc(b.title) + '<u>' + (mine ? "● " + mine : "") + '</u>'
+       + '<br><i style="margin-left:22px">' + n + ' cards</i></button>';
+  });
+  $("nights").innerHTML = h;
+}
+
+function drawPage(){
+  var b = null; SPINE.forEach(function(x){ if (x.id === CUR) b = x; });
+  if (!b){ $("page").innerHTML = ""; return; }
+  var groups = fieldsFor(CUR), lastDeck = "";
+  var h = '<div class="head"><h1>' + esc(b.title) + '</h1><div class="sub">'
+        + esc(CUR) + ' &middot; night ' + (SPINE.indexOf(b) + 1) + ' of ' + SPINE.length
+        + ' &middot; season ' + b.season + ' &middot; act ' + b.act + '</div></div><div class="wrap">';
+  groups.forEach(function(g){
+    if (g.deck !== lastDeck){ lastDeck = g.deck; h += '<div class="deck">' + esc(g.deck.toUpperCase()) + '</div>'; }
+    var dirty = g.rows.some(function(r){ return EDITS[r.key]; });
+    h += '<div class="card' + (dirty ? " dirty" : "") + '">'
+       + '<div class="cid">' + (g.card.id ? '<b>' + esc(g.card.id) + '</b>' : '<em>(no id)</em>')
+       + ' &middot; ' + esc(g.card.ask || "") + '</div>';
+    g.rows.forEach(function(r){
+      var v = EDITS[r.key] ? EDITS[r.key].now : r.value;
+      var locked = r.start < 0;
+      h += '<div class="f">';
+      if (r.label) h += '<label class="' + (r.kind === "said" ? "who" : "") + '">' + esc(r.label) + '</label>';
+      h += '<textarea data-k="' + esc(r.key) + '"' + (locked ? " readonly class=locked" : "")
+         + (EDITS[r.key] ? ' class="changed"' : "") + '>' + esc(v) + '</textarea>';
+      if (locked) h += '<div class="lockmsg">LOCKED — ' + esc(r.why) + '</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  });
+  $("page").className = ""; $("page").innerHTML = h + '</div>';
+  [].forEach.call(document.querySelectorAll("#page textarea"), function(ta){
+    grow(ta);
+    ta.addEventListener("input", function(){ grow(ta); onEdit(ta); });
+  });
+}
+
+/* ---- editing -------------------------------------------------------- */
+function onEdit(ta){
+  var key = ta.getAttribute("data-k"), groups = fieldsFor(CUR), row = null;
+  groups.forEach(function(g){ g.rows.forEach(function(r){ if (r.key === key) row = r; }); });
+  if (!row || row.start < 0) return;
+  if (ta.value === row.value){ delete EDITS[key]; ta.className = ""; }
+  else { EDITS[key] = {start: row.start, end: row.end, was: row.value, now: ta.value}; ta.className = "changed"; }
+  refreshBar();
+}
+
+/* APPLY DESCENDING. Every edit is a character range in the ORIGINAL text, so
+   writing them back from the end means no earlier offset is ever disturbed.
+   This is the same discipline the game's own splices use, and the reason the
+   result is provably "the old file, with named ranges replaced". */
+function applyEdits(){
+  var list = Object.keys(EDITS).map(function(k){ return EDITS[k]; });
+  list.sort(function(a, b){ return b.start - a.start; });
+  var out = RAW, i;
+  for (i = 0; i < list.length; i++){
+    var e = list[i];
+    if (RAW.slice(e.start, e.end) !== enc(e.was)) throw new Error("a field moved under the editor - reload before saving");
+    out = out.slice(0, e.start) + enc(e.now) + out.slice(e.end);
+  }
+  return out;
+}
+
+function refreshBar(){
+  var n = Object.keys(EDITS).length;
+  $("count").innerHTML = n ? "<b>" + n + "</b> field" + (n === 1 ? "" : "s") + " changed, not yet saved" : "no edits";
+  $("save").disabled = !n; $("revert").disabled = !n;
+  if (FSHANDLE) $("write").disabled = !n;
+  drawRail();
+}
+function say(t, bad){ var m = $("msg"); m.textContent = t; m.className = "msg" + (bad ? " bad" : ""); }
+
+/* ---- boot ----------------------------------------------------------- */
+$("rail").addEventListener("click", function(e){
+  var b = e.target.closest && e.target.closest("[data-beat]");
+  if (!b) return;
+  CUR = b.getAttribute("data-beat"); drawRail(); drawPage(); window.scrollTo(0, 0);
+});
+$("revert").onclick = function(){
+  if (!confirm("Throw away every unsaved edit?")) return;
+  EDITS = {}; refreshBar(); drawPage(); say("reverted");
+};
+$("save").onclick = function(){
+  var text;
+  try { text = applyEdits(); } catch (err){ say(err.message, true); return; }
+  try { new Function(text); } catch (err){ say("REFUSED: the result would not parse — " + err.message, true); return; }
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], {type: "text/javascript"}));
+  a.download = "corpus.js"; a.click();
+  say("downloaded — " + Object.keys(EDITS).length + " field(s). Replace corpus.js and reload.");
+};
+$("write").onclick = function(){
+  var text;
+  try { text = applyEdits(); } catch (err){ say(err.message, true); return; }
+  try { new Function(text); } catch (err){ say("REFUSED: the result would not parse — " + err.message, true); return; }
+  FSHANDLE.createWritable().then(function(w){
+    return w.write(text).then(function(){ return w.close(); });
+  }).then(function(){
+    RAW = text; EDITS = {}; refreshBar(); drawPage(); say("written to corpus.js");
+  }).catch(function(err){ say("write failed: " + err.message, true); });
+};
+
+fetch("corpus.js", {cache: "no-store"}).then(function(r){
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.text();
+}).then(function(t){
+  RAW = t;
+  if (typeof SPINE === "undefined" || typeof SCENEBOOK === "undefined")
+    throw new Error("corpus.js loaded as text but not as script");
+  $("brandsub").textContent = SPINE.length + " nights · " + t.split("\n").length + " lines";
+  CUR = SPINE[0].id;
+  drawRail(); drawPage(); refreshBar();
+  /* the nicer save path, where the browser allows it */
+  if (window.showOpenFilePicker){
+    var w = $("write"); w.style.display = "";
+    w.textContent = "PICK corpus.js TO SAVE IN PLACE";
+    w.disabled = false;
+    w.onclick = function(){
+      window.showOpenFilePicker({types: [{description: "corpus", accept: {"text/javascript": [".js"]}}]})
+        .then(function(hs){
+          FSHANDLE = hs[0];
+          w.textContent = "SAVE TO FILE"; w.disabled = !Object.keys(EDITS).length;
+          w.onclick = null; say("will write straight to " + FSHANDLE.name);
+          w.addEventListener("click", function(){ $("write").onclick(); });
+        }).catch(function(){});
+    };
+  }
+}).catch(function(err){
+  $("page").innerHTML = '<div class="boot">Could not read <b>corpus.js</b>: ' + esc(err.message)
+    + '<br><br>This tool reads the file over HTTP so it can edit the exact bytes on disk.'
+    + '<br>Open it from a served copy — <b>http://localhost:8124/editor.html</b> — rather than from file://.</div>';
+});
+</script>
+</body>
+</html>
