@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.15.0 "The Row Tells The Truth"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.16.0 "Nobody Does It Alone"
+   the tin is the whole kit and it is on the page: rolled, lit, and passed the long way
+   introduced at a2-door, paid off at a2-law, and the twelve-year-old keeps the minutes
    sceneRails asks the fork now · a room never offers a card the deck will refuse
    every card in every room is reachable by clicking alone, which the novel requires
    the board joins choices to cards: every rail row, the ids it names, in binding order
@@ -6601,16 +6603,118 @@ var SCENEBOOK = {
       ["Hesta","...The GOOD kind. He said the good kind."],
       ["Vic","He has been in this city ten minutes."],
       ["Hesta","He has MANNERS. You have never asked properly in thirty years, you just stand there looking at the shelf until I get bored of you."],
-      "She goes and comes back with a tin that is older than the stove, and sets it down in the middle of the table like a dish, which is what it is."],
+      "She goes and comes back with a tin that is older than the stove, and sets it down in the middle of the table like a dish, which is what it is.",
+      "It is a big flat biscuit tin with a harbour painted on the lid. Half the harbour has worn away under thirty years of thumbs, so what is left is three boats and a quantity of sky, and there is no paint left at all at the four points where a thumb goes to lever it off.",
+      ["Hesta","Go on then. You asked properly. You get to do the lid."],
+      "The lid comes off with a noise like a small door in another room. Inside, laid out in an order somebody keeps on purpose: a folded square of waxed paper, and in the waxed paper the green - dry, pale, broken up small, smelling like a hedge in August and the inside of a church at the same time. Beside it a block of papers, the proper thin ones, held shut with an elastic band gone flat and shiny with age. A stub of card with one corner torn off it, and then another, and then another, going back years. And a lighter that does not work.",
+      ["Vic","The lighter doesn't work."],
+      ["Hesta","The lighter is IN THE TIN, Victor. Those are two different sentences and only one of them is mine."],
+      ["Pia","...It's weed. All that, and everyone doing the VOICES, and it's weed."],
+      ["Hesta","It is very good weed, it is older than you are, and it is the one thing in this building I have never once traded. Sit down."],
+      "So that is what it is. Not a stash and not a treat: a kit, kept whole and kept in order, the way a person keeps a kit when the thing it is for is the one reliably good hour in a month."],
+     /* THE ETIQUETTE IS THREE RULES NOW, not two - rule two is the one the author
+        added, and it is the one the rest of the scene runs on: everybody makes
+        their own. It is also, quietly, the same law as the rest of the book. */
      takes:[[
       ["Hesta","Asked twice in one evening. You are going to be expensive and I have decided I do not mind."],
-      ["Hesta","Then you get the etiquette, which nobody has needed in years and which I am going to enjoy delivering. The tin is passed. It is never taken. Whoever opens it says what it is for, out loud, even if what it is for is nothing."],
+      ["Hesta","Then you get the etiquette, which nobody has needed in years and which I intend to enjoy delivering. There are three rules and I did not invent one word of them."],
+      ["Hesta","One. The tin is passed, never taken. It goes hand to hand the long way round the table, it does not cross the middle, and it does not sit in front of any one person longer than it takes them to do the thing."],
+      ["Hesta","Two. Everybody makes their own. Nobody rolls for anybody else, nobody gets handed one ready-made, and nobody is talked into one. If your hands are bad that night you get help, and you still do it yourself."],
       ["Vic","Say the third one."],
-      ["Hesta","Nobody does it alone in this building. Not ever, not once, not on a bad night, and especially not on a bad night."],
+      ["Hesta","And the last one, which is the only one of the three that matters. Nobody does it alone in this building. Not ever, not once, not on a bad night, and especially not on a bad night."],
       ["Pia","Why not?"],
-      ["Hesta","Because it is not for the effect, child. Anybody can have the effect on their own and plenty do. It is for the hour it buys, and an hour is no use to a person by themselves. That is the entire ceremony and I did not invent one word of it."],
-      "The tin goes round the table the long way, hand to hand, and each person who takes it says what it is for, and one of the four answers is just the word tonight.",
-      ["Hesta","Right. That is the ceremony done. Now somebody talk about something enormously stupid, that is the next part and it is not optional."]
+      ["Hesta","Because it is not for the effect, child. Anybody can have the effect on their own, and plenty do, and you can tell which ones by looking at them. It is for the hour it buys, and an hour is no use to a person by themselves."],
+      "She puts the lid back on and leaves the tin closed in the middle of the table, which is somehow more of an invitation than open was.",
+      ["Hesta","That is the ceremony. Now somebody talk about something enormously stupid, because that is the next part and it is not optional."]
+     ]]},
+    /* THE RITUAL DONE RATHER THAN DESCRIBED (v5.16.0). The tin had a ceremony and
+       nobody had ever smoked anything on the page. Ruled by the author: the tin is
+       the whole kit, it goes round, everybody rolls their own, and Pia is refused -
+       Vic wants somebody still counting at midnight. She sulks, and then discovers
+       she is the only sharp thing left in a room of slowed-down adults.
+       THE TWO WHO ARE NOT HAVING ANY BECOME THE DOUBLE ACT, which is what the
+       vessel ladder hands you for free: Nine cannot smoke because a shard has no
+       lungs and no hands, and that fact is played for comedy here on purpose,
+       because nine-at-the-table in this same room already plays it for grief. */
+    {id:"the-rolling", ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
+     who:"Hesta", gives:"the ritual performed rather than explained - the long way round, everybody making their own, and the one person who is refused",
+     holds:"nothing. Free.",
+     rail:"Take the tin when it reaches you, and watch what everybody does with it.",
+     plays:["The tin goes the long way, as advertised. It does not cross the middle of the table once, which makes it take about four times as long as it needs to, which is transparently the point.",
+      "Hesta goes first and does it without looking, talking the entire time about a delivery of onions that arrived wrong in a way she is still angry about, and what comes out of her hands at the end of it is so neat it looks manufactured. She does not appear to have noticed doing it.",
+      "Vic goes second. Vic takes a very long time. Vic holds the paper up to the lamp twice, at two different angles, like a man reading a contract drawn up by somebody he likes.",
+      ["Hesta","It is not a suture."],
+      ["Vic","Everything is a suture."],
+      ["Hesta","That is the single most Victor sentence you have ever produced, and you have produced some."],
+      "Then the tin is in front of you, and the etiquette turns out to be easier than it sounded, because every person at this table is politely looking at something else while you work it out.",
+      ["Pia","I'll have one."],
+      "Vic's hand gets to the lid half a second before hers does. Not fast. Not unkind. Extremely final.",
+      ["Vic","No."],
+      ["Pia","I have SEEN people my age - "],
+      ["Vic","Somebody in this room has to still be counting at midnight, and tonight that is you, because every other person at this table is about to stop. It is not a punishment. It is the job, it is the important one, and you are getting it because you are the only one here I would hand it to."],
+      ["Pia","That is a job you invented four seconds ago."],
+      ["Vic","Yes. It is still the job."],
+      "She sits back down with her arms folded in the specific way that twelve does it, where the folding IS the argument. She keeps them folded. She intends to keep them folded for some considerable time."],
+     takes:[[
+      "She holds the sulk for nineteen minutes. You know it is nineteen because she announces the figure at minute nine and again at minute nineteen.",
+      "What breaks it is not an apology. What breaks it is the room slowing down around her all at once, the way a boat stops fighting the current - and her being the only thing in it still moving at full speed.",
+      ["Pia","...Oh."],
+      ["Pia","Oh, you're all IDIOTS now."],
+      ["Nine","She has got it."],
+      ["Pia","You have been laughing at the WINDOW, Hesta. For a minute and a half. It is a window. It has not done anything."],
+      ["Hesta","It is raining on it in a funny order."],
+      ["Pia","In a FUNNY ORDER."],
+      ["Hesta","Yes."],
+      ["Pia","Say what the order IS, then."],
+      "Hesta looks at the window for a long time. The rain continues in whatever order it is in.",
+      ["Hesta","...It has changed."],
+      ["Pia","IT HAS CHANGED."],
+      ["Vic","She is right, though. It does that. Rain comes off a roof in - it is a queue. It is a queue that has to decide."],
+      ["Pia","Rain is NOT a queue."],
+      ["Vic","Everything is a queue."],
+      ["Pia","An hour ago everything was a SUTURE."],
+      ["Vic","...And a suture is a queue for the edges of a - "],
+      ["Pia","NO."],
+      "It takes her four more minutes to work out that she is the only sharp thing left in a room full of slowed-down adults, and that she has been handed, free of charge, a target-rich environment.",
+      ["Nine","I have no lungs and nothing to hold it with, and I am having a better evening than any of you. I would like that in the record. I am the one keeping the record."],
+      "The two of them who are not having any turn out to be the double act. By the end of the hour they have been round the whole table twice, and the job Vic invented four seconds ago has quietly become the best seat in the house."
+     ],
+     /* TAKE 3 - the stupid hour, written from inside it rather than described from
+        outside, and then the irony landing on the table where it has been sitting
+        all evening: four adults have put a twelve-year-old in charge of a building
+        with a shotgun in it. The napkin starts here and comes back at a2-law. */
+     [
+      "Somewhere past the second hour the conversation stops having a subject and simply continues.",
+      ["Vic","No - no, but LISTEN. If I stitch a thing, right, and the thing heals. The stitch did not heal it. The BODY healed it. I held two edges near each other for a week and then I took the money."],
+      ["Hesta","That is what I have been telling you about soup for thirty years."],
+      ["Vic","That is EXACTLY soup."],
+      ["Pia","It is not exactly soup."],
+      ["Vic","Pia. Pia. Look at me. It is exactly soup."],
+      ["Pia","You are a MEDICAL PROFESSIONAL."],
+      ["Vic","And soup is my strongest field."],
+      ["Nine","I want to formally object to this conversation and also for it to continue."],
+      "Then Hesta asks a question with the delivery of a woman who has temporarily lost track of which thoughts are for out loud.",
+      ["Hesta","Do you get any of it? Any of it at all, through him?"],
+      ["Nine","...No."],
+      ["Nine","But I can hear all four of you breathing differently and I have been listening to it for an hour, and I would like to say, warmly, that you sound like a shed learning to sing."],
+      ["Pia","A SHED LEARNING TO SING."],
+      ["Vic","That is the best thing anybody has ever said in this building."],
+      ["Hesta","In this DISTRICT."],
+      ["Vic","In the - yes. Yes, district."],
+      "And then, quite a long way after that, the thing that has been sitting under the whole evening finally gets up onto the table.",
+      ["Hesta","...We have left the twelve-year-old on watch."],
+      "A silence with four people in it, three of whom are doing arithmetic very slowly.",
+      ["Vic","We have, yeah."],
+      ["Hesta","In a building I keep a shotgun in."],
+      ["Vic","She knows where it is."],
+      ["Hesta","She KNOWS WHERE IT IS, Victor, that is not the sentence you think it is - "],
+      ["Pia","I have been taking MINUTES."],
+      "She has. There is a napkin. It is full, on both sides, in joined-up letters.",
+      ["Pia","Twenty past nine, Vic says everything is a suture. Quarter to ten, Vic says soup is a suture. Ten oh-five, Hesta laughs at a window for ninety seconds and cannot say why. Ten oh-nine, Hesta laughs at the SAME WINDOW - "],
+      ["Vic","Burn the napkin."],
+      ["Pia","THE NAPKIN IS THE RECORD."],
+      ["Nine","I am also the record, and I concur with the napkin."],
+      "Nobody burns the napkin. In the morning it is on the shelf behind the counter, held down by the good knife, and it stays there."
      ]]},
     {id:"under-the-floor", ask:"where the tin came from", key:"where tin from floor keep store stash cellar cold",
      who:"Hesta", gives:"two words, and no more than two words, and the whole table notices",
@@ -8827,7 +8931,7 @@ var SCENEBOOK = {
    here:["Pia","Vic","Nine","Hesta","Seven","Three","Marek"],
    never:["the law is not amended","nobody arrives"],
    topics:[
-    {ask:"where to write it", key:"write wall paper where put record keep",
+    {id:"where-to-write-it", ask:"where to write it", key:"write wall paper where put record keep",
      who:"Pia", gives:"where, and who has the pen, and an argument about handwriting",
      holds:"nothing. Free.",
      rail:"Ask where a family law even gets written.",
@@ -8836,7 +8940,7 @@ var SCENEBOOK = {
       ["Pia","You label KETTLES with the good marker. This needs the child. My handwriting has JOINED-UP letters, Vic, it looks official."],
       ["Hesta","The child writes it. The man seals it. The frame carries it. Motion carried by the only person here who has fed a parliament."],
       "The pen goes to Pia with full honors. The kitchen, briefly, has a civil service."]},
-    {ask:"whether Three will keep it", key:"three keep follow agree bound rule you",
+    {id:"will-three-keep-it", ask:"whether Three will keep it", key:"three keep follow agree bound rule you",
      who:"Three", gives:"a conditional yes, with the condition named exactly",
      holds:"nothing",
      rail:"Ask Three directly: will she keep it.",
@@ -8844,14 +8948,96 @@ var SCENEBOOK = {
       ["Three","If the table votes it symmetric, I will keep it on the expensive nights, which are the only nights I count."],
       "It is - by a wide margin - the most anyone has ever heard Three promise.",
       ["Hesta","Symmetric. Obviously. It was always going to be symmetric - but thank you for making us say it out loud. That one goes on the frame too."]]},
-    {ask:"what the meal is like", key:"meal eat food together first sit table",
+    {id:"what-the-meal-is-like", ask:"what the meal is like", key:"meal eat food together first sit table",
      who:"Hesta", gives:"the small physical facts of a table with everybody at it",
      holds:"nothing. Free.",
      rail:"Stop arguing a moment. Just look at the table.",
      plays:["Too many people, exactly enough chairs if two of them are a bench and one is a crate. Steam. Elbows. The salt doing four lengths of the table without once touching down.",
       "Seven has the mug Hesta issued him and is holding it with both hands, per doctrine. The shard sits by the bread board, humming at the warm, plate set as always. Three eats like an audit and has seconds like a person.",
       ["Hesta","Note it, all of you. Whatever gets written on that doorframe tonight - THIS is what it is FOR. Rules are just the fence. This is the field."],
-      "The pan, empty, soaks in the sink with the satisfaction of a law fulfilled."]}
+      "The pan, empty, soaks in the sink with the satisfaction of a law fulfilled."]},
+    /* THE PAYOFF (v5.16.0). a2-door introduced the tin and the courier had to ask
+       for it properly. Eleven nights later it is simply on the table, which is the
+       whole point of the callback: the ceremony has become a habit, and a habit is
+       what this beat is about - a law nobody wrote down, on the night they finally
+       write one down. Same shape as a2-door by the author's ruling: everybody rolls
+       their own, Pia asks, Vic refuses, she sulks and then goes hunting.
+       THE VESSEL LADDER DOES THE REST. Seven has a chassis, so he gets a token
+       through the sample chamber and nothing else - that is the rung, not a
+       kindness. Nine cannot at all. FIVE IS NOT A SPEAKER HERE and is not in here[]:
+       Marek reports the other one, which is his line to have and not its own. */
+    {id:"the-tin-at-the-full-table", ask:"the tin, now that there are seven of them",
+     key:"tin roll smoke pass round kit joint light after plates",
+     who:"Hesta", gives:"the ritual as a habit rather than a ceremony, and what a table of seven does with it",
+     holds:"nothing. Free.",
+     rail:"The tin is already on the table. Take it when it comes round.",
+     plays:["Nobody asks for it. That is the first thing, and it goes past almost everybody: the tin is simply on the table when the plates go down, between the salt and the crate somebody is using as a chair, and it has been there since before the argument about handwriting started.",
+      "Hesta does not announce it. The harbour on the lid has lost another boat to another decade of thumbs. It goes the long way round, as it has always gone the long way round, and it takes most of an hour to get everywhere because there are seven of them now and every single one of them has something to say on the way past.",
+      "Hesta rolls without looking, mid-sentence, about a supplier. Vic holds his paper up to the lamp at two angles and is told, by three separate people in an unrehearsed chorus, that it is not a suture.",
+      ["Three","Give it here."],
+      "Three does it in about nine seconds. It is the most frightening thing you have ever watched anybody do with their hands and there is nothing frightening about it at all - it is just a woman who has been very good at small precise work for a long time, doing a small precise thing at a table for once.",
+      ["Pia","...That was HORRIBLE. Do it again."],
+      ["Three","No."],
+      "The body that Marek is currently driving takes the tin next, and pauses, and puts it down again, and picks it up, and the pause has an argument in it that nobody at this table can hear.",
+      ["Marek","Hold on. We are - negotiating."],
+      ["Pia","Is he saying no?"],
+      ["Marek","He has never had one. He has strong opinions about a thing he has never had, which will surprise nobody who has met him."],
+      "He rolls it eventually, badly, laughing at something that has not been said out loud in the room.",
+      ["Marek","He wants it on record that this is not consent to a precedent."],
+      ["Hesta","Noted. Precedent set."],
+      "And the one of them who is wearing the chassis tonight watches the whole circuit of it the way they watch everything now, which is like somebody at the window of a train, and takes a token off the end of it - one breath, about a thousandth of what anybody else is having, purely so as to have been at the table properly once."],
+     takes:[[
+      ["Pia","Right. I am thirteen in five weeks."],
+      ["Vic","No."],
+      ["Pia","You did not even let me finish the SENTENCE - "],
+      ["Vic","I did not need the sentence. Somebody counts at midnight. It has been you since the diner and you have never once been bad at it."],
+      ["Pia","It is the same job every time!"],
+      ["Vic","It is the same job every time."],
+      "She folds her arms in the way that twelve does it and, this time, holds it for four minutes rather than nineteen, because she has done this before and she knows exactly how long it takes before the room becomes funny.",
+      "It becomes funny.",
+      ["Pia","Three. THREE. You have been staring at the pan."],
+      ["Three","I am considering the pan."],
+      ["Pia","You have considered it for a QUARTER OF AN HOUR. It is a pan. It has one job and it has already done it."],
+      ["Three","There is a repair on the handle that was done by somebody who cared. I am considering that."],
+      "The room goes quiet for about a second and a half, in the way rooms do when somebody slowed all the way down accidentally says the true thing.",
+      ["Marek","...Write that on the doorframe instead."],
+      ["Hesta","We are NOT rewriting the doorframe at this hour."],
+      ["Pia","THE CHILD HAS THE PEN AND THE CHILD IS SOBER."],
+      "The child has the pen and the child is sober. It goes on the doorframe, underneath the law, in joined-up letters, slightly crooked, where it has stayed ever since."
+     ],
+     /* TAKE 3 - the stupid hour at a full table, and the irony said out loud by the
+        people it is about. The napkin is the a2-door callback and it is load-bearing:
+        this family's entire security posture, twice now, has been one child and a
+        piece of stationery, and they know it, and they have decided to find it funny
+        rather than fix it. Marek reports the other one; it never speaks here. */
+     [
+      "By the second hour the table has produced four theories and no subjects at all.",
+      ["Marek","Right. RIGHT. Here is one. He has just pointed out - and I want to be clear that I did not think of this, he thought of this - that the pan is older than the law. We wrote a law tonight. The pan predates it. The pan has SENIORITY."],
+      ["Three","The pan should have been consulted."],
+      ["Pia","THREE IS DOING BITS. THREE IS DOING BITS AT THE TABLE."],
+      ["Three","I am not doing bits. I am identifying a procedural failure."],
+      ["Marek","He says that is the funniest thing he has heard in nine years and he would like everyone to know he is not currently able to laugh at it properly."],
+      ["Marek","I have had one breath of this - ONE - and I understand the pan argument completely and I am frightened by how completely."],
+      ["Hesta","Welcome."],
+      ["Marek","Is it always like this?"],
+      ["Vic","No. Sometimes it is about doors."],
+      "Some way into all of that, Vic puts his glass down with the extreme care of a man who has recently discovered that glasses have edges.",
+      ["Vic","...Does it strike anybody else as funny that the sober one is the twelve-year-old."],
+      ["Three","I have found it funny for an hour. I have been waiting for one of you to arrive."],
+      ["Marek","Two hours."],
+      ["Hesta","Let us be accurate about the household. We are - what are we. Six adults."],
+      ["Marek","Six and a half."],
+      ["Hesta","Six and a half adults, one of whom is two people, one of whom is a stone on my bread board and cannot be argued with from here - "],
+      ["Pia","She would concur. I am authorised to speak for her and I am NOT going to check."],
+      ["Hesta"," - and the entire security of this building is a child with a pen."],
+      ["Pia","And a napkin."],
+      ["Vic","Oh God, the napkin is still - "],
+      ["Pia","The napkin has been in continuous service since the diner. It is behind the counter under the good knife. I have added a SECOND napkin. Tonight is going on the second napkin and tonight is a RICH SEAM."],
+      ["Three","I would like a copy."],
+      ["Pia","You cannot have a copy, you are ON it, that is a conflict of - "],
+      ["Three","I would like a copy BECAUSE I am on it."],
+      "Nobody rewrites the doorframe. Somebody does, at some point, quietly put a second napkin behind the counter, under the good knife, next to the first one."
+     ]]}
    ]}
 },
 
@@ -10091,7 +10277,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.15.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.16.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -26466,14 +26652,40 @@ function verdictMap(){
    in this room: she speaks in the family's own time in FOURTEEN other nights, three of
    them in this same act. The convention is the sealed room's, not this room's, and it
    predates me by a book. The corpus is 5787 -> 5871 lines; the other seven predicates
-   held still across all eighty-four new ones. */
+   held still across all eighty-four new ones.
+
+   v5.16.0 - THE DRIFT: THREE ENTRIES, ALL a2-law, ALL THREE HERSELF IN A ROOM SHE
+   IS CAST IN - "Three does it in about nine seconds", Pia shouting THREE IS DOING
+   BITS, and Pia identifying a procedural failure at her. The tin scene put her at
+   a table with six other people and she is named at it, which is the point of her
+   being there.
+   FIVE MORE THE NET AND THE DESK CAUGHT FIRST, all mine, all fixed in the prose:
+   - death on "the paint is gone entirely" - `gone` is a death verb, in a sentence
+     about a biscuit tin.
+   - named:Three on Hesta numbering her own etiquette: "Three. Nobody does it alone
+     in this building." A bare numeral at a sentence head IS the character. The
+     rules are numbered One, Two, and then "the last one" for exactly this reason.
+   - breachMore/summon on "Vic's hand ARRIVES on the lid", in a room whose own
+     never-list is "nobody arrives".
+   - named:Nine on Pia reading her minutes aloud: "Nine twenty-two, Vic says
+     everything is a suture." A clock reading. It is twenty past nine now.
+   - shard:stow on "Sat there in his pocket", said TO her while she was talking -
+     a line that told the game she was stowed and audible at the same time.
+   AND THE PHYSICS DESK CAUGHT THE ONE I WOULD HAVE SHIPPED. On the NINE road it is
+   SEVEN who is seated in the courier's skull, so Vic answering his question out
+   loud is the room replying to a voice only the courier can hear. The whole
+   chassis-token beat is fork-dependent - only one of them wears the chassis on any
+   given road - so it cannot live in an unforked card. It is narration now, naming
+   neither of them. a2-law is not fork-aware at all and never was: its own meal card
+   says "the shard sits by the bread board", which is only true on one road. That is
+   a debt of the beat, not of this scene. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-choir/Rt0p3","a2-choir/Rt0r","a2-housing/Rt1r","a2-law/Rt2p1","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/lands0/l4","a2-housing/lands0/r1","a2-housing/landsHard0/l4","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/t1p2","a2-manual/t1r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
