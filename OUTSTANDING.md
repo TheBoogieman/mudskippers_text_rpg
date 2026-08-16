@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.26.0. **Book One is closed. `a2-housing`, `a2-manual` and `a2-choir` are finished.***
+*Written 2026-08-16, updated at v5.27.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door` and `a2-chassis` are finished.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,31 +11,32 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**13 of 33 nights finished.** A night is finished on four counts and not before:
+**15 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.26.0, not carried forward.*
+*Every figure below was read off the board at v5.27.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **13 of 33** |
-| cards across both decks | 378 |
-| second and third takes | 176 |
-| **takes with no choice line of their own** | **49 of 176** |
-| nights short of cards | 18 |
+| finished nights | **15 of 33** |
+| cards across both decks | 382 |
+| second and third takes | 180 |
+| **takes with no choice line of their own** | **49 of 180** |
+| nights short of cards | 16 |
 | nights that land on nothing to click | 18 |
 | rooms still on their first three cards | 16 |
-| authored lines in the drift net | 6,726 |
+| authored lines in the drift net | 6,781 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
-**Books Two and Three are the whole job**: 23 nights, of which 4 are finished
-(`a2-three`, `a2-housing`, `a2-manual`, `a2-choir`) and 16 rooms have never been opened.
+**Books Two and Three are the whole job**: 23 nights, of which 6 are finished
+(`a2-door`, `a2-chassis`, `a2-three`, `a2-housing`, `a2-manual`, `a2-choir`) and 16 rooms have
+never been opened.
 
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
@@ -82,9 +83,9 @@ she brings the failed practice; neither is enough alone.
 
 ### The absences, which are longer than the contradictions
 
-- **The book never says why a grown mind is a person.** "Grown" is everywhere. "Scrape" is
-  everywhere. They never touch. The sentence the whole story rests on is not on the page.
-  **Ruled: it lands at `a2-choir`, night 19, from Seven.**
+- ~~**The book never says why a grown mind is a person.**~~ **DONE at v5.26.0.** It is
+  Seven's card on night 19, and `a2-choir`'s `canon[6]` besides, so it is true of the run
+  whether or not the card was drawn. The sentence the whole story rests on is on the page.
 - **Five is never asked.** Marek consents afterwards — *"it was offered instead of an
   execution, and I said yes"* — but that is the host. The overlay is never given the
   question, and the whole book is about being asked.

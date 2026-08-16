@@ -263,6 +263,16 @@ at seven cards.
 | `a2-manual` | 10 | The long table, night 18. Being a key, the mug on page four, standing up on purpose |
 | `a2-choir` | 7 | The long table at four in the morning, night 19. The name of the one they took out of Three, the handwriting on the forms, the page Vic will not put down |
 
+**And at v5.27.0 the two richest nights in the book finally counted as finished.**
+`a2-door` (16 family cards) and `a2-chassis` (25) had been sitting one count short for
+weeks, both for the same reason: their MAIN EVENING was four cards where the budget wants
+six. Two cards each closed them — and both holes turned out to be real rather than
+arithmetic. `a2-door`'s opening has Nine ask out loud *"am I a coat pocket again tonight?"*
+and its own rail offers to answer her, and until now there was nothing for that line to
+reach. `a2-chassis` had **no card for Seven at all** on the night his own life is on the
+table. **When a night is short on cards, look for what it is short OF before topping it
+up: twice out of two, the missing card was the one the night was already asking for.**
+
 ## Book One is CLOSED
 
 Nine rooms, 84 cards, every one with an id and a second take, every landing in the book
