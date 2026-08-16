@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.33.0. **Book One is closed. Season 2 has eleven of its thirteen nights finished, the hole in its middle is gone, and no landing anywhere in the book answers two of its rows with one card.***
+*Written 2026-08-16, updated at v5.35.0. **Book One is closed. Season 2 has twelve of its thirteen nights finished — only the finale is left — and the book has its first landing row that serves both sides of the chassis fork.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,25 +11,25 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**20 of 33 nights finished.** A night is finished on four counts and not before:
+**21 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.33.0, not carried forward.*
+*Every figure below was read off the board at v5.35.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **20 of 33** |
-| cards across both decks | 410 |
-| second and third takes | 216 |
-| **takes with no choice line of their own** | **49 of 216** |
-| nights short of cards | 12 |
+| finished nights | **21 of 33** |
+| cards across both decks | 417 |
+| second and third takes | 224 |
+| **takes with no choice line of their own** | **47 of 224** |
+| nights short of cards | 11 |
 | nights with no wired row at all | **0** |
 | rooms still on their first three cards | 11 |
-| authored lines in the drift net | 7,293 |
+| authored lines in the drift net | 7,458 |
 
 **The opening rows are all wired as of v5.32.0** — 72 of them, across 36 openings, every
 one dealing the card it names, driven every release by two sweep rows. Fourteen openings
@@ -59,12 +59,12 @@ wired, every take carrying its own line. Nothing in Book One is outstanding.
 **Books Two and Three are the whole job**: 23 nights, of which 10 are finished and 12 rooms
 have never been opened.
 
-**Season 2 stands at eleven of thirteen (v5.33.0).** The writing had jumped from night 10 to
-night 15 and left four nights behind it; `a2-ground` (11), `a2-hand` (12), `a2-mirren` (13)
-and now `a2-seven` (14) are written, **and the hole in the middle of the season is gone**.
-What is left of Season 2 is its own ending — **`a2-law` (21)** and **`a2-turn` (22)** — and
-those two are the expensive ones: seven in the room, both sides of the chassis fork, and
-`a2-law` is not fork-aware at all.
+**Season 2 stands at TWELVE of thirteen (v5.35.0), and the only night left in it is the
+finale.** The writing had jumped from night 10 to night 15 and left four behind it;
+`a2-ground` (11), `a2-hand` (12), `a2-mirren` (13) and `a2-seven` (14) closed the hole in
+the middle, and `a2-law` (21) closed the ending's first half. **What is left is
+`a2-turn` (22)**, and it is the expensive one: seven in the room, both sides of the chassis
+fork, four staged landings rather than two, and Pia's name on the Choir's paper.
 
 **`a2-seven` (14) IS DONE (v5.33.0)** — the vow's first trial, and it was the last night in
 the season short on its EVENING deck as well as its room. Six evening cards, seven room
@@ -78,17 +78,23 @@ by hesitating — and **`a1-turn` has FOUR landings, not two**, six of whose row
 reached the wiring in nine waves. Both are fixed and both now have a sweep row standing over
 them. See HANDOVER for the full account.
 
-**`a2-law` (21) IS NEXT AND ITS SUBJECTS ARE RULED (2026-08-16).** The law night: seven at
-Hesta's table, a week-old argument hardening into a rule that gets quoted back in Book
-Three. Evening takes **Seven on what a written rule actually does** and **what the week-old
-argument was** — the beat's own goal names that argument and nothing in the book says what
-it was. The room takes **what happens the first time the law costs something**, **Seven
-under a rule by choice**, and **whoever is in the courier's skull**, which is the card that
-finally makes night 21 fork-aware. **Nine and Marek were offered and not taken**, so
-Marek's first ordinary evening — two souls in one chair at a table arguing about whose turn
-it is to touch the pan — stays unwritten; do not smuggle it in. **And the week-old argument
-is a story fact that does not exist: the subject is ruled, the content is not, so pitch it
-before writing it.**
+**`a2-law` (21) IS DONE (v5.35.0)** — the night the family writes its first law and eats
+under it. Two evening cards, five room cards, a second take on every card in the room,
+both landings wired. **The card that was ruled for it was already in the book**: Pia's
+existing card tells the week-old argument in full, so the slot went to **Vic's side of
+Tuesday** — why he walked to the wall alone, which is worse than the room's guess.
+
+**IT CARRIES THE BOOK'S FIRST LANDING FORK.** Whoever is in the courier's skull is Nine on
+one road and Seven on the other, and a nameplate cannot be body-neutral — so the subject is
+two cards in two voices, and **one landing row names both ids** and lets `wireRail` pick the
+one that is on branch. **A row of only forked cards can vanish**, though: `chassisHolder` is
+null until night 15 is played, so a wired row needs one unforked id to fall back to. The
+landing sweep row added at v5.33.0 caught that within a minute of it being written.
+
+**Nine and Marek were offered for this night and not taken.** Marek got `when-it-first-costs`
+anyway — the ruled subject, in the mouth that makes it land, since he did nine years under an
+institution whose beautiful laws cost its officers nothing. **Speakers are mine; subjects are
+the author's.** Nine still has no card of her own on night 21.
 
 **THE COLD OPENS CAME FIRST, AND THEY ARE DONE (v5.32.0).** All 72 opening rows wired —
 not 64, because the PREMIERE that opens Books Two and Three is a second set of openings
@@ -318,6 +324,23 @@ audit is, run it on the hesitation road too.**
 gone stiff"* and `death` certified a killing on it — `DEATH_VERBS` carries a bare "gone" and
 `GONE_SOFT` forgives gone quiet/still/cold and not gone stiff. Widening a detector to admit
 one sentence is the move the corpus has already overruled three times. The sentence changed.
+
+**A NUMBER-NAME AT A SENTENCE HEAD IS A NAME, AND THAT IS FIVE COSTUMES NOW** *(v5.35.0)*.
+"Seven. Eight if you count the one on the bread board" — Hesta doing a headcount at a full
+table — certified as somebody answering a voice only the courier can hear. The rule above
+about capitals has now been rediscovered by a shouted count, a clock reading, a numbered
+list, a plural, and a headcount. **Do not start a sentence with a cast number.**
+
+**THE ROOM CANNOT ANSWER WHAT IT CANNOT HEAR** *(v5.35.0)*. A card built on the housed one
+addressing the table has to route through the courier: narration saying he said it aloud,
+and then a reply that opens on neither an agreement word nor the resident's name — those two
+are exactly what `earshot` watches for. Three saying *"...She is right"* after the housed one
+speaks is the fault, and it is the same one `a2-choir` had.
+
+**A WIRED ROW OF ONLY FORKED CARDS CAN VANISH** *(v5.35.0)*. `cardOnBranch` compares a card's
+fork to `chassisHolder`, which is **null** until a2-chassis is played — so on an unsettled run
+every forked id is off branch, `wireRail` drops the row, and the landing goes up with two
+choices where three were written, silently. **Every wired row needs one unforked id.**
 
 **Rooms are lanes; beats are shuffled.** Four lanes in the novel's family time, three at the
 wild table. Taking a lane advances that lane only. Beats deal in a run-seeded order and do

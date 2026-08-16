@@ -100,7 +100,11 @@ capture beat**, `a2-annul` (20) **done at v5.29.0**. **THEN THE ORDER CHANGED, r
 2026-08-16: sequence runs from the earliest UNFINISHED night, not forward from the last one
 written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; `a2-mirren`
 (13) **done at v5.31.0**; the 33 cold opens **done at v5.32.0**; `a2-seven` (14) **done at
-v5.33.0**; next is `a2-law` (21), then `a2-turn` (22).
+v5.33.0**; `a2-law` (21) **done at v5.35.0**; next is **`a2-turn` (22), the season
+finale and the last night of Season 2**. Before writing it: **Pia's background is ruled
+blank and that night puts her name on the Choir's paper as a salvage listing** — take it
+to the author first. Night 21's `the-knock-at-the-door` is its seed and deliberately
+withholds the name.
 *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
@@ -282,7 +286,58 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
-### `a2-law` (21) IS THE NEXT WAVE, AND ITS SUBJECTS ARE RULED — 2026-08-16
+### `a2-law` IS DONE (v5.35.0) — and the card you ruled was already written
+
+**21 of 33 finished. Season 2 has ONE night left in it: `a2-turn` (22), the finale.**
+Two evening cards, five room cards, a second take on every card in the room, both
+landings wired. Corpus 7,293 → **7,458**. Browser sweep **66 PROVED of 85, nothing
+failing**.
+
+**THE RULED CARD WAS ALREADY IN THE BOOK.** *"What the week-old argument was"* — the
+brief said nothing anywhere told it. `what-the-rule-should-be` tells it in full: Tuesday,
+the chandler's errand, somebody walked to the wall alone at night, *"it rhymes with
+brick"*, two hours of not knowing. **What was missing was VIC'S SIDE**, and the author
+re-ruled it on the spot. He gets one line in the existing card — *"fine. Yes. It was me."*
+— and his own card `whether-a-rule-is-a-good-idea` explicitly holds back *which of his own
+improvisations he is looking at.* This is which, and the answer is worse than the room's
+guess: no emergency, no clock, he could have gone Wednesday with company. **Telling them
+would have cost forty minutes, and he priced forty minutes of his family against an hour
+of nobody knowing where he was, and picked the one that was cheaper for him.**
+
+**THE BOOK'S FIRST LANDING FORK.** `the-one-in-his-head` / `-seven` is one subject in two
+voices, because a nameplate cannot be body-neutral: whoever is in the courier's skull is
+Nine on one road and Seven on the other. **One landing row names both ids** and `wireRail`
+takes the first on-branch one, so a single row serves both roads. Its content is the card
+`will-three-keep-it` was asking for all along — Three made symmetry her condition and got
+it in nine seconds, and there is exactly one seat at that table where symmetry is not
+available, and it belongs to the person living inside the man who could switch them off.
+
+**THREE THINGS THE DESK CAUGHT THAT READING NEVER WOULD HAVE:**
+1. **`earshot` certified three passages.** The room was answering a voice only the courier
+   can hear — Three opening on *"...She is right"* straight after the housed one speaks.
+   The fix is the law's other half: **the courier says it aloud first**, and the reply must
+   not open on an agreement or on the resident's name. Same fault as `a2-choir`'s.
+2. **"Seven. Eight if you count the one on the bread board" certified a NAME.** A
+   number-name at a sentence head beats every detector in the file. **That trap has now
+   arrived in five consecutive costumes** — a shouted count, a clock reading, a numbered
+   list, a plural, and now a headcount at a full table. Rewritten as *"There are seven of
+   us."*
+3. **A row of only forked cards can vanish.** `chassisHolder` is null until night 15 is
+   played, and `cardOnBranch` compares against it — so on an unsettled run BOTH fork ids
+   are off-branch, `wireRail` drops the row, and the landing goes up with two choices where
+   three were written. **A wired row needs one unforked id to fall back to.** Caught by the
+   landing sweep row added last wave, within a minute of the row being written.
+
+**Plus the fork leak, and the landings.** `what-the-meal-is-like` said *"Seven has the mug
+Hesta issued him"* on both roads; `housingResident()` says whichever one did not take the
+chassis has been in the courier's head since night 18. Now *"the one of them with hands
+tonight"* — **write the one with the hands, not the name.** And all six landing rows dealt
+the same card, the handwriting argument, because it is simply the deck's first; *"Answer
+the door"* was a bare string on a landing that ends on a knock, where `a2-chassis` writes
+the identical sentence as `knock:true`; and *"Everyone away from the windows. Now."* was
+written into **both** landings with nothing behind it on either, so it is cut.
+
+### `a2-law` (21) WAS THE NEXT WAVE, AND ITS SUBJECTS WERE RULED — 2026-08-16
 
 The law night. Hesta's kitchen, **seven at the table** — Pia, Vic, Nine, Hesta, Seven, Three
 and **Marek**, who is nine years under an overlay and is now two souls in one chair learning
