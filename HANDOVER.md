@@ -96,7 +96,7 @@ and is not a speaker anywhere in the book.**
 the finished work stops at night 15 (`a2-chassis`). This file used to say "next: a2-law" and
 that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2-housing`
 (17) **done**, `a2-manual` (18) **done**, `a2-choir` (19) **done at v5.26.0**, **the new
-capture beat**, `a2-annul` (20 today), `a2-law` (21 today). *Night numbers are the board's
+capture beat**, `a2-annul` (20) **done at v5.29.0**, `a2-law` (21 next). *Night numbers are the board's
 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
@@ -176,10 +176,42 @@ Three things came out of it that outlive the night:
    recorded a predicate going quiet on purpose. **Every pre-fork night is suspect the same
    way** — anything written before a2-chassis that has Nine or Seven in the room.
 
-## THE NEXT WAVE — and it is a fork the author has to call
+## `a2-annul` IS DONE (v5.28.0 + v5.29.0) — and it took two waves
+
+Night 20 was the last night in Book Two that argued with its own bible. v5.28.0 repaired
+the evening; v5.29.0 wrote the morning. It now scores 4 of 4: 6 evening cards, **7 room
+cards, 8 second takes, both landings wired, 0 mute lines added.**
+
+**What the room is for.** The evening asks Five and gets a yes given under a false belief.
+The room is the morning after that yes turned out to be wrong — and that is the payoff the
+night had no card for. `still-here` is Five in the world on the far side of the last form
+it knows, correcting the tense on its own obituary. `three-after` takes two takes and the
+second is the payoff of `a2-three`: not her hands, but a document in another man's head and
+a question asked out loud — *"mine came apart on the way… I was present for the better
+one."* `being-asked` is Nine on watching somebody get asked, built road-neutral by
+construction. `the-file` gives Vic the morning after the thing in his skull worked, and
+**the file still does not SPEAK** — that stays the author's open question, not a room card's.
+
+**Three things this wave proves about the process, all of them found by machine:**
+
+1. **`playAuthored` returns `V.rail.slice(0, 3)`.** A landing shows three rows and no more.
+   A fourth row is written, counted by the board as a cut row, and never seen by anybody.
+   A knock row was drafted for the soft landing and removed for exactly that reason.
+2. **`boardleak` catches a later night's TITLE said out loud in the prose.** Hesta's pan
+   card said *"bread after, in the same pan"* — and `the same pan` is the title of night 22.
+   Three red rows for a doctrine everybody in that kitchen holds. The wording, not the rule,
+   was the problem.
+3. **The capitals trap has a fifth costume, and this one is not a name.** *"a man came back
+   up out of nine years"* reads to the net as BACK UP with a number-name inside twenty-four
+   characters — a mind being copied through the air. It is a QUANTITY that got read as a
+   character. Add that to the list: a shouted count, a clock reading, a numbered list, a
+   plural, and now a duration.
+
+## THE NEXT WAVE — and it is still a fork the author has to call
 
 The nights get written in order, and the order says the next thing is **the capture**.
-Two candidates, and they are not the same size of job.
+Two candidates, and they are not the same size of job. **(B) below is now DONE** — it was
+taken at v5.28.0 and finished at v5.29.0 — so the live question is (A) against `a2-law`.
 
 **(A) THE CAPTURE BEAT — a whole new night that does not exist.** The bible: *"THE CAPTURE
 IS ITS OWN BEAT, between a2-choir and a2-annul: the ambush, what it costs, and a Choir
@@ -193,7 +225,8 @@ night. Appending at the end is free; inserting in the middle is not. It needs ei
 save migration keyed on beat id, or the beat appended and the ORDER held somewhere other
 than the array index. That is engine work before a word gets written.
 
-**(B) `a2-annul` REPAIRS — night 20, and it contradicts the bible in eight places.** No new
+**(B) `a2-annul` REPAIRS — DONE at v5.28.0, and its room DONE at v5.29.0.** Kept here
+because the reasoning is still the model for the next one of these. No new
 structure, all rewriting: `aim`, `exits[0]`, `exits[2]`, `walkLine`, `walks[0]`, `goal`,
 `where` and `topics[0]` are all built around **holding a body still**, and the bible says
 the family does not perform a forced removal — that is the one thing that would make them
@@ -240,6 +273,9 @@ at seven cards.
 - **an `id` on every card** — kebab-case, unique within its deck
 - **both landing rows wired** — `rail:[{line:"...", cards:["id","id","id"]}]` on the
   beat's `lands` and `landsHard`. Order is preference; the row binds the first unspent.
+  **A LANDING RAIL IS THREE ROWS AND NO MORE**: `playAuthored` ends on
+  `V.rail.slice(0, 3)`, so a fourth row is written, counted by the board as a cut row,
+  and never once seen. Spend all three on cards, or spend one on a knock — not both.
 - **`knock:true`** on any "way forward" line (marks it as not-a-question; no longer opens
   anything, since the room's door is always up)
 
@@ -262,6 +298,7 @@ at seven cards.
 | `a2-housing` | 10 | The long table, night 17. The document nobody opens all evening |
 | `a2-manual` | 10 | The long table, night 18. Being a key, the mug on page four, standing up on purpose |
 | `a2-choir` | 7 | The long table at four in the morning, night 19. The name of the one they took out of Three, the handwriting on the forms, the page Vic will not put down |
+| `a2-annul` | 7 | The shack step at dawn, night 20. Five still in the world with no form for it, agreed-or-settled, the one thing she never learned, eleven pages carried for years |
 
 **And at v5.27.0 the two richest nights in the book finally counted as finished.**
 `a2-door` (16 family cards) and `a2-chassis` (25) had been sitting one count short for
@@ -742,6 +779,10 @@ sweep finds them:
    Seven, Nine are all people. *"Three places, two noes and a yes"*, *"Five: decide
    before you are tired"*, *"Dead. So: three."* all fired. **Write numbers as words that
    are not names** ("the fifth is", "two noes and a yes", "So: us").
+   **A DURATION IS A NUMBER TOO (v5.29.0).** *"a man came back up out of nine years"* fired
+   `breach`, because the net reads BACK UP with a number-name inside twenty-four characters
+   as a mind being copied through the air. Nothing was being copied; a man was surfacing.
+   Nine years, five minutes, three weeks — the trap does not care that it is a quantity.
 2. **Violence that is NOT happening.** `breachIn` matched "arson" on *"will not burn a
    laundry down"* — a sentence denying it. **Avoid the verb entirely**; rewrite to "take a
    building apart".

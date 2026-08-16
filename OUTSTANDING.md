@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.28.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door` and `a2-chassis` are finished.***
+*Written 2026-08-16, updated at v5.29.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door`, `a2-chassis` and `a2-annul` are finished.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,32 +11,32 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**15 of 33 nights finished.** A night is finished on four counts and not before:
+**16 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.27.0, not carried forward.*
+*Every figure below was read off the board at v5.29.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **15 of 33** |
-| cards across both decks | 382 |
-| second and third takes | 180 |
-| **takes with no choice line of their own** | **49 of 180** |
-| nights short of cards | 16 |
-| nights that land on nothing to click | 18 |
-| rooms still on their first three cards | 16 |
-| authored lines in the drift net | 6,781 |
+| finished nights | **16 of 33** |
+| cards across both decks | 388 |
+| second and third takes | 188 |
+| **takes with no choice line of their own** | **49 of 188** |
+| nights short of cards | 15 |
+| nights that land on nothing to click | 17 |
+| rooms still on their first three cards | 15 |
+| authored lines in the drift net | 6,887 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
-**Books Two and Three are the whole job**: 23 nights, of which 6 are finished
-(`a2-door`, `a2-chassis`, `a2-three`, `a2-housing`, `a2-manual`, `a2-choir`) and 16 rooms have
-never been opened.
+**Books Two and Three are the whole job**: 23 nights, of which 7 are finished
+(`a2-door`, `a2-chassis`, `a2-three`, `a2-housing`, `a2-manual`, `a2-choir`, `a2-annul`) and
+15 rooms have never been opened.
 
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
@@ -54,7 +54,7 @@ This is the biggest single piece of unpaid work and it is **story**, not engine.
 rulings are in `var BIBLE` under `THE ANNULMENT`, mirrored into `THE-WORLD.md`. None of
 them are on the page yet.
 
-### The one night that contradicted the bible — REPAIRED at v5.28.0
+### The one night that contradicted the bible — REPAIRED at v5.28.0, FINISHED at v5.29.0
 
 **`a2-annul`, night 20.** Every door, the aim, the walk line and one walk-out were built
 around **holding a body still**, and the bible says the family does not perform a forced
@@ -76,9 +76,27 @@ file, documented by a man who never understood them, and the mind in the housing
 them out. She says so out loud now, before they start, in front of everybody — *"neither
 of us could have done this alone and I am not going to pretend otherwise afterwards."*
 
-**Still outstanding on that night: its room.** Three cards, no ids, no second takes, and
-both landings still guessing which card a line means. That is the second half, and it is
-the same split `a2-door` was built across.
+**And its room is written too, at v5.29.0** — the second half of the night, the shack step
+toward dawn. Three cards became **seven, with eight second takes and both landings wired**,
+and it scores 4 of 4. The room is the morning after a yes that turned out to be wrong:
+
+- **Five is still in the world**, and has no form for that. It corrects the tense on its
+  own obituary (*"He said it HAD opinions about music. Has."*), does not thank anybody
+  because there is no procedure for it, and asks for the canals.
+- **Marek answers agreed-or-settled honestly.** Settled, at the time — *"I would have said
+  yes to almost anything with a door in it"* — and what he has got to by five in the
+  morning is that neither of them is a saint and both of them are still here.
+- **Three's second take is the payoff of `a2-three`.** What was different was not her
+  hands: it was steps written by a man who never understood them, and a question asked out
+  loud. *"Mine came apart on the way… I did not achieve it. I was present for the better
+  one."* Her first take answers the one-thing question and does NOT add a fourth line to
+  the three she has about the one who did not survive — that hole has to stay a hole.
+- **Nine watches somebody get asked**, from the position of the one who mostly gets
+  decided about, and the card is road-neutral by construction: nobody answers her by name
+  or by agreement, and nothing in it needs her to have hands or a seat on the step.
+- **Vic gets the morning after the thing in his skull worked** — eleven pages carried for
+  years as a keepsake — and he will not take credit for it.
+- **Hesta has the pan on at five in the morning**, which this room needed badly.
 
 ### Keep these — a rewrite would destroy them
 
@@ -101,10 +119,12 @@ the same split `a2-door` was built across.
   I said yes"* now has the overlay's own yes standing beside it.
 - **The capture has no beat.** Night 19 is a knowledge night; night 20 opens with a
   commander already in a chair. A new beat belongs between them.
-- **The fate-one rhyme is never said aloud.** Taking turns and fate one look identical from
-  outside; the only difference is that one of them was asked.
 - **Five never becomes the way into the vault.** After night 20 he appears twice, in a
   graze and a kitchen line. The vault descent has Marek and not him.
+- **The fate-one rhyme is STILL never said aloud.** Night 20's room walks close to it —
+  Nine's card is entirely about the asking being the thing that made it a question — but
+  nobody in the book has yet put the two side by side and named the resemblance. The bible
+  says a character does it, probably Three, possibly Five. It is still nobody.
 - **Vic's file still never SPEAKS**, but it is at least load-bearing now: from v5.28.0
   night 20 turns on its steps being read out, and Three says out loud that without them
   she had eleven years of the wrong hands. It is a document in the scene rather than a
@@ -211,6 +231,17 @@ biscuit tin); `arrives` is a summon word (it fired in a room whose own rule is *
 arrives*); `beat` is a mechanics word and reads as meta inside prose; `in his pocket` said
 to a shard who is talking tells the game she is stowed and audible at once.
 
+**A LANDING RAIL IS THREE ROWS AND NO MORE.** `playAuthored` ends on `V.rail.slice(0, 3)`,
+so a fourth row is written, counted by the board as a cut row, and never once seen by a
+player. Spend all three on cards, or spend one of them on a knock — not both. Found at
+v5.29.0 by the board, on a knock row that had just been drafted for night 20's landing.
+
+**A LATER NIGHT'S TITLE MAY NOT BE SAID OUT LOUD IN THE PROSE.** `boardleak` scans every
+line against the titles of every beat still to come. Night 20's kitchen card said *"bread
+after, in the same pan"* — and `the same pan` is the title of night 22. Three red rows for
+a doctrine everybody in that kitchen actually holds. The rule survives; the wording that
+happened to be a night's name does not.
+
 **A hole in a deck is legal JavaScript.** `[{...},,{...}]` passes `node --check` and leaves
 an undefined card every walker steps over. One got in this session from a splice that put a
 comma after a block that already ended in one. **The board counts holes now.**
@@ -227,8 +258,10 @@ comma after a block that already ended in one. **The board counts holes now.**
 
 **Beats get written in order.** The order from here is `a2-housing` (17), `a2-manual` (18),
 `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law` (21 today).
-**`a2-housing` (17) and `a2-manual` (18) are done.** Next is `a2-choir` (19) — the knowledge
-night, and the one the author ruled must carry WHY A GROWN MIND IS A PERSON, from Seven.
+**Nights 16 through 20 are all done.** The next written thing is either **the capture beat**
+— which is blocked on an engine call, because inserting into `SPINE` moves `beatIdx` and
+live save files hold that as a position — or **`a2-law` (21)**, which is pure writing and
+is not fork-aware at all.
 
 **What he protects, ruled:** the running jokes and callbacks; nothing that steals a later
 night; the quiet character work; and comedy, hard — he has said twice that a scene was too
