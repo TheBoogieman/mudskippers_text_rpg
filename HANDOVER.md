@@ -108,6 +108,73 @@ that line was five beats stale. The order is `a2-three` (night 16), `a2-housing`
 
 **"Don't stop until we do this for every beat."** — his instruction, 2026-08-15.
 
+## HOW TO SPLICE index.html WITHOUT BREAKING IT
+
+*Learned the hard way on 2026-08-16: three scripted splices in a row damaged the file in
+one session. Every one of them passed my own eyes and failed `node --check`.*
+
+**The rule: PRINT THE EXACT TEXT FIRST, then edit against what you printed.** Not against
+what you remember writing, and not against what the pattern "should" be.
+
+The three ways it went wrong, all of which will happen again:
+
+1. **A comma after a block that already ended in one.** `[{...},,{...}]` is legal
+   JavaScript, passes `node --check`, and leaves an undefined card that every walker steps
+   over. The deck reports one more card than it has. Check the character before your
+   insertion point.
+2. **Consuming a bracket that belonged to the enclosing array.** Appending `takes:` by
+   anchoring on a card's last dialogue line eats the `]` that closed `plays:`. Anchor on
+   the closer itself, not on the last line before it.
+3. **A segment scan that stops finding its own anchor after the first insert.** A script
+   that inserts twice into the same block recomputes its bounds between inserts and lands
+   somewhere else. Do one insert per run, or insert the LAST deck first.
+
+**Count the closers by what the last element is.** A `takes:[[...]]` whose final element is
+a dialogue array needs `"]]]}`; one ending on a narration string needs `"]]}`. This is the
+single commonest failure and it has happened in every authoring wave so far.
+
+**And prefer the Edit tool over a script for anything under about six insertions.** The
+scripts were faster and wrong three times running; the slow way was the only one that
+landed.
+
+## WHEN TO COMPACT
+
+**Compact at the end of a shipped wave, never in the middle of one.** The work gets
+measurably sloppier as the context fills - the three splice failures above all happened in
+the last third of a long session, on a task that had gone cleanly twice before.
+
+A good moment: a release is pushed, the sweep is green, HANDOVER and OUTSTANDING are
+current, and the next wave's brief is written down. That is the state this file is in
+whenever you read this sentence, because it is the only state a wave is allowed to end in.
+
+**I will say so explicitly when I think it is time.** If a wave is going to involve more
+than about six splices, or a new field with readers to hunt, and the context is already
+long - say so before starting rather than after failing.
+
+## THE NEXT WAVE: `a2-choir`, night 19
+
+Everything needed to run it cold:
+
+- **budget 4, needs 6 beat cards; has 4.** Room has 3 cards, no ids, no takes, no landings
+  wired. Both landings currently carry plain-string rails and need the three-row shape.
+- **Cast, both decks:** Pia, Vic, Nine, Hesta, Seven, Three.
+- **This is the night the author ruled must carry WHY A GROWN MIND IS A PERSON, and it
+  comes from SEVEN.** A grown mind is grown FROM A HOSTED SCRAPE - a real person copied at
+  intake, filed, and cultivated. Not software that resembles a person: a person who was
+  copied and farmed. It makes the vow's second clause literal. This is the single most
+  load-bearing card left in Book Two and the whole annulment thread rests on it.
+- **The beat's `never` is unusually strict and correct:** the three fates are convergence,
+  fate two, and Hollowing. **ANNULMENT IS THE CURE, NOT A FATE.** Do not name it as one.
+  Nobody meets the machine or learns she exists. Nobody walks through a door.
+- **The room's `never`:** nobody goes to a Choir building; the vaults are not mentioned.
+- **Existing room cards** (need ids, takes, take lines): whether anyone joins willingly
+  [Seven]; what Seven was, exactly [Seven]; what to do with the paper [Hesta].
+- **Watch the earshot law.** From night 17 one of Nine and Seven is in the courier's skull,
+  so any line ANSWERING either of them must survive both roads. Seven carries most of this
+  night, so the risk is high: check every reply to him.
+- **Watch the fork.** `what Seven was, exactly` is road-neutral as written; a new card about
+  who has a body is not.
+
 ## Two laws that arrived with the shuffle (v5.18.0)
 
 **A BEAT DEALS ITS CARDS IN A DIFFERENT ORDER EVERY RUN.** Same order all through one run,
