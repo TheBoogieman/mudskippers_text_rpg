@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.18.0 "A Different Four"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.19.0 "Every Line Is A Card"
+   one choice, one card · the two house stall lines are gone from the novel entirely
+   a room row laps with its deck, and a second take is offered in its own words
    a beat deals its cards in a different order every run and the same order all through one
    a card may wait for another with after: - the tin is opened before it goes round
    the board shows both closings, the stone, the teeth and who does not come out
@@ -2105,9 +2107,9 @@ var SPINE = [
           has not spent. "Move." carries no cards: it is a WAY FORWARD rather than a
           question, and until those get their own handling it keeps the old behaviour. */
        rail:[{line:"Tell her the rain is usually worse than this. Start her file of good nights.",
-              cards:["nine-wants", "nine-misses", "nine-sleeps"]},
+              cards:["nine-wants"]},
              {line:"Ask Pia what she is looking at.",
-              cards:["mud-what", "pia-twelve", "wire-calls"]},
+              cards:["mud-what"]},
              {line:"Move. The marsh road is hours out and the rain is winning.", knock:true}]}],
  landsHard:[{day:"1", time:"12:26am", place:"VELDT UNDERPASS", amb:"rain-neon", shard:"jacket",
        now:"Day 1, past midnight, under the overpass. Nine is in the courier's jacket. The conversation happened at a jog, half-heard, and she has gone quiet.",
@@ -2117,9 +2119,9 @@ var SPINE = [
               "Pia does not make the joke about the pocket. That is how you know it went badly.",
               "Whatever Nine noticed about being carried a little longer, she keeps to herself, and the rain fills in the gap."],
        rail:[{line:"Take her out properly and start again.",
-              cards:["nine-afraid", "nine-wants", "nine-misses"]},
+              cards:["nine-afraid"]},
              {line:"Ask Pia what she thinks Nine heard.",
-              cards:["pia-twelve", "mud-what", "me-outside"]},
+              cards:["pia-twelve"]},
              {line:"Move. We can be sorry on the marsh road.", knock:true}]}],
  /* NO ANCHOR HERE, AND THE REASON IS THE BEAT ITSELF (v4.72.6). An anchor is a name
     that must reach the played prose before the door gives a clean close. This beat's
@@ -2166,9 +2168,9 @@ var SPINE = [
      "You do not pass that one on. It was not addressed to anybody else.",
               "Pia walks the next mile without a single opinion, which from her is a eulogy."],
        /* wired v4.93.0 */
-       rail:[{line:"Tell Nine that saying it did not make it true; finding it shut did.", cards:["the-name","nine-outside","what-i-am-now"]},
-             {line:"Ask Pia what Vic will be like when he opens that door.", cards:["door-face","vic-the-man","pia-scared"]},
-             {line:"Walk. Save every question for the man himself.", cards:["the-coat","nine-outside","who-dies"]}]}],
+       rail:[{line:"Tell Nine that saying it did not make it true; finding it shut did.", cards:["the-name"]},
+             {line:"Ask Pia what Vic will be like when he opens that door.", cards:["door-face"]},
+             {line:"Walk. Save every question for the man himself.", cards:["the-coat"]}]}],
  landsHard:[{day:"1", time:"1:40am", place:"THE MARSH ROAD", amb:"storm",
        now:"Day 1, deep night, on the causeway. Nobody said it out loud; the courier found the door shut and the Choir chose the moment.",
        /* NOVEL GRADE, HARD. A failure close is colder in the same voice, never a
@@ -2184,9 +2186,9 @@ var SPINE = [
               ["Pia","My da used to say you're not homeless if somebody's holding your dinner. He was wrong about nearly everything else."],
               "Against your ribs the shard hums small — a passenger's hum, a sorry-about-your-room hum — and you catch yourself patting the jacket the way you'd pat a shoulder, and you decide not to examine that either.",
               "Out on the marsh there is one light that has not moved, and for once that is the good kind of stillness. You aim yourselves at it. Behind you, the city keeps filing."],
-       rail:[{line:"Ask where she even keeps buns.", cards:["the-coat","vic-the-man","pia-scared"]},
-             {line:"Say it now. Late is not the same as never.", cards:["what-i-am-now","who-dies","door-face"]},
-             {line:"Walk. The light is not getting closer on its own.", cards:["nine-outside","the-name","the-coat"]}]}],
+       rail:[{line:"Ask where she even keeps buns.", cards:["the-coat"]},
+             {line:"Say it now. Late is not the same as never.", cards:["what-i-am-now"]},
+             {line:"Walk. The light is not getting closer on its own.", cards:["nine-outside"]}]}],
  budget:4, reveals:[],
  press:["They reach somewhere he thought was safe and find it already visited.",
         "A Hollow gets close enough that cutting the signal, not the throat, is the only move that works."],
@@ -2280,9 +2282,9 @@ var SPINE = [
               ["Pia","He means anything except the one you actually want."],
               "Out past the marsh the city is still going without you, and your wire has not made a sound all night. That is not normal."],
        /* wired v4.92.0 */
-       rail:[{line:"Check the wire. If the pack has been trying to reach me, I want to know.", cards:["found-here","pia-staying","the-shop"]},
-             {line:"Ask him who he thought was going to steal the kettle.", cards:["the-shop","patched-free","robbed-him"]},
-             {line:"Say nothing. Let the kettle be the whole conversation for a minute.", cards:["three-am-food","nine-now","pia-staying"]}]}],
+       rail:[{line:"Check the wire. If the pack has been trying to reach me, I want to know.", cards:["found-here"]},
+             {line:"Ask him who he thought was going to steal the kettle.", cards:["the-shop"]},
+             {line:"Say nothing. Let the kettle be the whole conversation for a minute.", cards:["three-am-food"]}]}],
  landsHard:[{day:"1", time:"3:10am", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 1, small hours, in the kitchen. Vic's story came out ragged and interrupted; parts of it the courier still owes himself.",
        lines:["It comes out in pieces, and every piece arrives with something else on top of it — the kettle, the shutters, a noise off the marsh that turns out to be nothing twice.",
@@ -2290,9 +2292,9 @@ var SPINE = [
               ["Vic","We'll do the rest tomorrow. I'm not hiding it, I'm just — tomorrow."],
               ["Pia","He said that about the shop, too."],
               "She says it into her mug, not to him, and Vic hears it anyway and does not answer."],
-       rail:[{line:"Ask him the part he walked around.", cards:["is-he-sorry","patched-free","the-shop"]},
-             {line:"Let it stand. Tonight, only tonight.", cards:["three-am-food","nine-now","robbed-him"]},
-             {line:"Check the wire. The pack has been quiet all night.", cards:["found-here","pia-staying","is-he-sorry"]}]}],
+       rail:[{line:"Ask him the part he walked around.", cards:["is-he-sorry"]},
+             {line:"Let it stand. Tonight, only tonight.", cards:["three-am-food"]},
+             {line:"Check the wire. The pack has been quiet all night.", cards:["found-here"]}]}],
  budget:4, reveals:[], anchors:["Vic"],
  press:["Vic starts working on something with his hands so he does not have to look up.",
         "Pia says the thing Vic did not want said in front of the courier."],
@@ -2330,8 +2332,8 @@ var SPINE = [
               ["Nine","That one has a date on it. Is a date a promise, up here?"]],
        /* wired v4.85.0 - each line names the cards it may reach, in the order it
           prefers them, and drops out of the row once they are all spent */
-       rail:[{line:"Read the job properly.", cards:["pack-ordinary","shack-what","pack-history"]},
-             {line:"Tell Pia to do it kindly.", cards:["old-life","pack-history","pack-food"]},
+       rail:[{line:"Read the job properly.", cards:["pack-ordinary"]},
+             {line:"Tell Pia to do it kindly.", cards:["old-life"]},
              {line:"Answer Nine. Explain what a due date is to something that has never been late.", cards:["marsh-to-her"]}]}],
  landsHard:[{day:"2", time:"9:20am", place:"THE CABLE SHACK", amb:"marsh-fog",
        now:"Day 2, morning, in the shack. The pack decided at a distance and the courier heard where he stands secondhand.",
@@ -2340,9 +2342,9 @@ var SPINE = [
               ["Pia","That's rude. That's actually rude, and I'm allowed to say so, I'm twelve."],
               "She puts the kettle on for the second time in an hour, which for her is a rampage.",
               "The job on the board is still there. Small, legal, half a day, and it does not care what a routing table says about you."],
-       rail:[{line:"Ask her who did the routing.", cards:["who-knows","pack-history"]},
-             {line:"Read the job properly.", cards:["pack-ordinary","old-life"]},
-             {line:"Say nothing and let the kettle do its work.", cards:["pack-food","shack-what"]}]}],
+       rail:[{line:"Ask her who did the routing.", cards:["who-knows"]},
+             {line:"Read the job properly.", cards:["pack-ordinary"]},
+             {line:"Say nothing and let the kettle do its work.", cards:["pack-food"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Pia"],
  press:["Word arrives that the Choir is asking the stalls about a courier by description. The pack hears it in real time.",
         "A packmate the courier owes money picks exactly now to collect - loyalty and the ledger, both at once."],
@@ -2379,9 +2381,9 @@ var SPINE = [
               "The route home goes past the Copper Eel, the way it always has.",
               "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
        /* wired v4.87.0 */
-       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks","work-was","double-rate"]},
-             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address","why-here","from-down-here"]},
-             {line:"Off the street. Anywhere with a door.", cards:["properly-warm","fare-rain","coat-sound"]}]}],
+       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks"]},
+             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address"]},
+             {line:"Off the street. Anywhere with a door.", cards:["properly-warm"]}]}],
  landsHard:[{day:"2", time:"4:55pm", place:"OPPOSITE THE COPPER EEL", amb:"neon-dry",
        now:"Day 2, late afternoon, opposite the Eel. The fare finished itself without him and the tip was pity.",
        lines:["The box gets where it was going without you having much to do with it, which after everything is almost funny, and nobody laughs.",
@@ -2390,9 +2392,9 @@ var SPINE = [
               "The route home goes past the Copper Eel, the way it always has.",
               "There is a woman on the stool by the window who has been dead since Tuesday, and she is looking at the street like she is waiting for a delivery."],
        /* wired v4.87.0 */
-       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks","work-was","double-rate"]},
-             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address","why-here","from-down-here"]},
-             {line:"Off the street. Anywhere with a door.", cards:["properly-warm","fare-rain","coat-sound"]}]}],
+       rail:[{line:"Keep walking. Do not look twice.", cards:["who-asks"]},
+             {line:"Ask Pia if she is seeing what I am seeing.", cards:["the-address"]},
+             {line:"Off the street. Anywhere with a door.", cards:["properly-warm"]}]}],
  budget:4, floor:2, reveals:[], anchors:[],
  press:["The recipient recognizes his face from somewhere they will not name, and the handoff curdles.",
         "Mid-route, a checkpoint that was never there before. His old shortcuts belong to someone else now."],
@@ -2428,9 +2430,9 @@ var SPINE = [
               ["Nine","She used my name. Not the shard. My name."],
               "You say it to the room, because it needs saying and she cannot. Nobody has anything to say back, and the three of you sit in a dead building listening to a district that has stopped looking for you."],
        /* wired v4.87.0 */
-       rail:[{line:"Ask Nine what it means that she used the name.", cards:["nine-heard","worth-it","nine-ran"]},
-             {line:"Ask Pia what she counted.", cards:["what-she-wants","job-wrong","what-that-was"]},
-             {line:"Wait. Let the street get bored of us first.", cards:["how-long","go-home","pia-afraid"]}]}],
+       rail:[{line:"Ask Nine what it means that she used the name.", cards:["nine-heard"]},
+             {line:"Ask Pia what she counted.", cards:["what-she-wants"]},
+             {line:"Wait. Let the street get bored of us first.", cards:["how-long"]}]}],
  landsHard:[{day:"2", time:"7:30pm", place:"A SHUT LAUNDRY, VELDT EAST", amb:"dead-signal",
        now:"Day 2, evening, in a shut laundry. The hunter chose the meeting and the family got out on luck they did not earn.",
        lines:["You get out. The honest version is that she let go of the thread and you fell over backwards, and everyone in this room watched it happen.",
@@ -2439,9 +2441,9 @@ var SPINE = [
               ["Nine","She was not in a hurry. That is the part I keep going back to."],
      "You repeat it for the room. It does not improve on the second telling.",
               "The district outside has stopped looking for you. That is not the same as having lost you."],
-       rail:[{line:"Ask Nine why the lack of hurry frightens her.", cards:["nine-ran","nine-heard","worth-it"]},
-             {line:"Agree with Pia, out loud, that we got lucky.", cards:["pia-afraid","what-she-wants","go-home"]},
-             {line:"Wait. Let the street get bored of us first.", cards:["how-long","job-wrong","what-that-was"]}]}],
+       rail:[{line:"Ask Nine why the lack of hurry frightens her.", cards:["nine-ran"]},
+             {line:"Agree with Pia, out loud, that we got lucky.", cards:["pia-afraid"]},
+             {line:"Wait. Let the street get bored of us first.", cards:["how-long"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren"],
  press:["She does not chase. She is simply at the next corner too, asking again.",
         "Cutting her signal does nothing. Someone kind tries it, and the family watches the kind option fail."],
@@ -2479,9 +2481,9 @@ var SPINE = [
               "He looks at the road instead of at you for a length of time that stops being accidental.",
               "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
        /* wired v4.88.0 */
-       rail:[{line:"Ask him what is on the road.", cards:["road-lights","why-looking","would-have-driven"]},
-             {line:"Ask him why he keeps looking at it.", cards:["why-looking","road-lights","papers-now"]},
-             {line:"Go in and check the shutters.", cards:["shutters","nine-alright","marsh-noise"]}]}],
+       rail:[{line:"Ask him what is on the road.", cards:["road-lights"]},
+             {line:"Ask him why he keeps looking at it.", cards:["why-looking"]},
+             {line:"Go in and check the shutters.", cards:["shutters"]}]}],
  landsHard:[{day:"2", time:"11:05pm", place:"THE SAFEHOUSE PORCH", amb:"storm",
        now:"Day 2, late, on the porch. The offer expired unanswered. That is an answer, and the house is being very normal about it.",
        lines:["Nobody answers it. At some point it stops being an offer and becomes a thing that happened, and the papers go back in the envelope without ceremony.",
@@ -2489,9 +2491,9 @@ var SPINE = [
               ["Pia","For the record, not answering is answering. I read that somewhere."],
               ["Vic","She reads too much."],
               "Out past the causeway something is moving along the far bank with lights that go on in order, the way they did on the stairs."],
-       rail:[{line:"Ask what is on the road.", cards:["road-lights","why-looking","shutters"]},
-             {line:"Ask her the thing nobody answered in there.", cards:["missing-noun","clean-life","nine-alright"]},
-             {line:"Go in and check the shutters.", cards:["shutters","papers-now","marsh-noise"]}]}],
+       rail:[{line:"Ask what is on the road.", cards:["road-lights"]},
+             {line:"Ask her the thing nobody answered in there.", cards:["missing-noun"]},
+             {line:"Go in and check the shutters.", cards:["shutters"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Nine"],
  press:["The offer improves. Whoever is making it wants him gone more than they want her found, and that fact means something.",
         "Nine hears all of it through his ribs, and says nothing, which is worse."],
@@ -2537,9 +2539,9 @@ var SPINE = [
               ["Pia","She's allowed to be good at something. Tell her she's allowed."],
               ["Nine","...You left a piece out. I felt you leave it out. I will allow it this once."]],
        /* wired v4.89.0 */
-       rail:[{line:"Say thank you. Out loud, properly.", cards:["what-it-cost","do-it-again","teach-counting"]},
-             {line:"Ask her what the other side of the timings was like.", cards:["second-lamp","if-caught","do-it-again"]},
-             {line:"Get up. We are not sleeping here.", cards:["cannot-sleep","vic-inside","marsh-finished"]}]}],
+       rail:[{line:"Say thank you. Out loud, properly.", cards:["what-it-cost"]},
+             {line:"Ask her what the other side of the timings was like.", cards:["second-lamp"]},
+             {line:"Get up. We are not sleeping here.", cards:["cannot-sleep"]}]}],
  landsHard:[{day:"3", time:"2:15am", place:"THE SAFEHOUSE, BACK ROOM", amb:"marsh-fog",
        now:"Day 3, small hours, in the safehouse back room. The ring passed over them more than they beat it, and Nine spent what she knew unthanked.",
        lines:["You get through it on a wall, a bin, and the kind of luck that does not come round twice.",
@@ -2547,9 +2549,9 @@ var SPINE = [
               "The back room smells of wet coats and the marsh going about its business outside. You sit down in it because standing has stopped being an option, and out on the water the ring is still standing there being patient.",
               ["Nine","Did you hear any of it? At the second corner. Did you hear me."],
               "It is not a question so much as a receipt."],
-       rail:[{line:"Tell her the truth.", cards:["if-caught","what-it-cost","do-it-again"]},
-             {line:"Say thank you now, late, and mean it.", cards:["what-it-cost","teach-counting","second-lamp"]},
-             {line:"Get up. We are not sleeping here.", cards:["cannot-sleep","pia-channel","vic-inside"]}]}],
+       rail:[{line:"Tell her the truth.", cards:["if-caught"]},
+             {line:"Say thank you now, late, and mean it.", cards:["what-it-cost"]},
+             {line:"Get up. We are not sleeping here.", cards:["cannot-sleep"]}]}],
  budget:4, reveals:[], anchors:["Nine"],
  press:["The sweep tightens a street early - her map of their habits is a season stale, and she says so mid-turn.",
         "A Hollow stops where her choreography says it cannot. Something has changed since she left, and the gap has to be crossed anyway."],
@@ -2624,9 +2626,9 @@ var SPINE = [
               "Later, on the edge of sleep, you will try to name the exact moment the job died and the family started, and you will get it wrong on purpose, because the true answer is embarrassing. It was the plate. It was somebody laying a plate for a rock.",
               "And three districts east, on a stool by a window, something wearing patience instead of a face begins to wonder — in the machine's own tidy handwriting — where its delivery has got to."],
        /* wired v4.90.0 */
-       rail:[{line:"Ask what happens to the delivery now that nobody is delivering it.", cards:["the-delivery","cover-story","house-rules"]},
-             {line:"Tell Nine the record is not a wall and not a kid. It is me.", cards:["chose-not-kept","being-asked","what-to-call-her"]},
-             {line:"Eat. The plate that matters is the cold one, and you cannot fix that tonight.", cards:["nine-cannot-eat","the-food","tomorrow-gutter"]}]},
+       rail:[{line:"Ask what happens to the delivery now that nobody is delivering it.", cards:["the-delivery"]},
+             {line:"Tell Nine the record is not a wall and not a kid. It is me.", cards:["chose-not-kept"]},
+             {line:"Eat. The plate that matters is the cold one, and you cannot fix that tonight.", cards:["nine-cannot-eat"]}]},
       {day:"3", time:"9:55pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 3, evening, in the safehouse kitchen, after the thing that could not be unsaid was said.",
        lines:["It comes out of you flatter than it deserved to, and it lands anyway.",
@@ -2650,9 +2652,9 @@ var SPINE = [
               "The fifth plate is cleared with the rest, washed with the rest, put away with the rest. Depending on who you ask that is either the kindest thing that happened tonight or the worst, and nobody asks her.",
               ["Nine","It's fine. I'm - it's fine. I know what I am in a room."],
               "That is a sentence somebody taught her. You are the only one who hears it, and you do not pass it on, because there is nobody in the kitchen it would improve."],
-       rail:[{line:"Ask her how it feels, being the only one nobody asked.", cards:["chose-not-kept","being-asked","nine-cannot-eat"]},
-             {line:"Ask her who taught her that sentence.", cards:["what-to-call-her","what-pia-is","cover-story"]},
-             {line:"Let it go tonight. Pick it up in the morning, if morning bothers.", cards:["tomorrow-gutter","vic-responsibility","the-food"]}]},
+       rail:[{line:"Ask her how it feels, being the only one nobody asked.", cards:["chose-not-kept"]},
+             {line:"Ask her who taught her that sentence.", cards:["what-to-call-her"]},
+             {line:"Let it go tonight. Pick it up in the morning, if morning bothers.", cards:["tomorrow-gutter"]}]},
       {day:"3", time:"10:20pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 3, late evening. The keeping happened without being spoken, and the whole of it happened in the passive voice.",
        lines:["The decision gets made the way weather gets made: no announcement, and then it is simply the conditions.",
@@ -2704,9 +2706,9 @@ var SPINE = [
               ["Pia","She's noticed everything."],
               "The booth is warm and the window is cold, and out past it somebody is going door to door in the rain with a list."],
        /* wired v4.95.0 */
-       rail:[{line:"Watch the window a while longer.", cards:["the-street","this-booth-before","wet-coat-rule"]},
-             {line:"Ask Hesta who has been asking after us.", cards:["hesta-reads-us","the-shotgun","the-street"]},
-             {line:"Stay in the warm. It will keep till morning.", cards:["asking-for-it","stops-being-a-meal","nine-at-the-table"]}]}],
+       rail:[{line:"Watch the window a while longer.", cards:["the-street"]},
+             {line:"Ask Hesta who has been asking after us.", cards:["hesta-reads-us"]},
+             {line:"Stay in the warm. It will keep till morning.", cards:["asking-for-it"]}]}],
  landsHard:[{day:"9", time:"11:20pm", place:"THE OPEN DOOR, BACK BOOTH", amb:"interior-warm",
        now:"Late evening, in the back booth. They came in late and ate standing; the room offered more than they took.",
        lines:["You get fed. Standing, mostly, and an hour after the food was ready, because the street would not let go of you until it had.",
@@ -2714,9 +2716,9 @@ var SPINE = [
               "Nobody sits. She watches that happen and does not say the second thing.",
               ["Pia","Next time. We'll do it properly next time."],
               "Out past the window somebody is going door to door in the rain with a list, and the pot goes back on the stove barely touched."],
-       rail:[{line:"Sit down. Late is not nothing.", cards:["what-she-cooked","put-to-work","what-she-pours"]},
-             {line:"Ask Hesta who has been asking after us.", cards:["the-street","hesta-reads-us","the-shotgun"]},
-             {line:"Apologise to her properly.", cards:["wet-coat-rule","vic-and-hesta","this-booth-before"]}]}],
+       rail:[{line:"Sit down. Late is not nothing.", cards:["what-she-cooked"]},
+             {line:"Ask Hesta who has been asking after us.", cards:["the-street"]},
+             {line:"Apologise to her properly.", cards:["wet-coat-rule"]}]}],
  budget:4, reveals:[], anchors:["Hesta"],
  press:["Hesta puts food down and asks the question nobody wants to answer.",
         "Someone knocks who should not know this address."],
@@ -3049,9 +3051,9 @@ var SPINE = [
           and why a1-hum was the only finished room that kept a row when its deck ran out.
           Primary ids are unforked cards, live on both roads; alternates cover the fork. */
        rail:[{line:"Ask what having hands is actually like. Somebody at this table would know.",
-              cards:["having-hands","the-recital","nine-first-hour"]},
+              cards:["having-hands"]},
              {line:"Ask Hesta why there is a plate at the setting where nobody is sitting.",
-              cards:["the-empty-plate","hesta-sits-down","does-anybody-owe"]},
+              cards:["the-empty-plate"]},
              {line:"Get to a window. Something went past that knew the way.", knock:true}]}],
  landsHard:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
        now:"The small hours, in Hesta's back room with the floorboards still up. The chassis went in rushed; something about Seven came back different and nobody had time to ask.",
@@ -3062,10 +3064,14 @@ var SPINE = [
               "There is a knock at the outer door at half past two in the morning, and the entire point of this building is that nobody knocks."],
        /* Same shape, same reason. "Ask him now anyway" keeps its text - it is the line
           Three just told you not to use, and the room answers it either way. */
-       rail:[{line:"Ask him now anyway. Do not wait for tomorrow.",
-              cards:["how-the-other-one","how-the-other-one-nine","having-hands"]},
+       rail:[/* ROAD-NEUTRAL (v5.19.0). This named how-the-other-one, which exists only on
+                 the Seven road, and said "him", which is only true there too - so on a
+                 Nine run the row simply vanished. One card per row means a landing row
+                 in a FORKED room must name a card both roads carry. */
+              {line:"Ask now, tonight, while it is still the first night of it.",
+               cards:["having-hands"]},
              {line:"Ask about the thing in the corner, under the sheet.",
-              cards:["the-frame-in-the-corner","the-boards-still-up","vic-after"]},
+              cards:["the-frame-in-the-corner"]},
              {line:"Answer the door.", knock:true}]}],
  budget:4, reveals:[], anchors:["Seven","Nine"],
  press:["The chassis is one part short and the part is somewhere dangerous.",
@@ -3115,9 +3121,9 @@ var SPINE = [
           cut: it points at the skull, and the skull is the next night's whole
           reveal. A landing must not sell the beat above it or the one after. */
        rail:[{line:"Ask for the speech. She said she had a whole one.",
-              cards:["the-years", "the-other-one", "three-trade"]},
+              cards:["the-years"]},
              {line:"Ask her what her actual name is.",
-              cards:["her-name", "two-voices", "nine-and-seven"]},
+              cards:["her-name"]},
              {line:"Let the morning start. Half the chairs are still up on the table.", knock:true}]}],
  landsHard:[{day:"16", time:"9:05am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
        now:"Morning. Three stayed without being given a reason, and she keeps the ledger of that.",
@@ -3130,9 +3136,9 @@ var SPINE = [
           landing IS her having stayed unasked, so a rail offering to ask her to
           stay is the rail redoing the scene it hangs under. */
        rail:[{line:"Ask her the thing nobody asked her all morning.",
-              cards:["her-name", "the-other-one", "the-years"]},
+              cards:["her-name"]},
              {line:"Ask her about the two voices. Carefully.",
-              cards:["two-voices", "three-trade", "nine-and-seven"]},
+              cards:["two-voices"]},
              {line:"Let it go and get on with the morning. Half the chairs are still up.", knock:true}]}],
  budget:4, reveals:[], anchors:["Three"],
  press:["Three tells them exactly what they are doing wrong, and is right.",
@@ -6753,7 +6759,7 @@ var SCENEBOOK = {
       ["Pia","That's the saddest thing I've ever -"],
       ["Hesta","It is not sad, child, it is SETTLED, and there is a great deal of difference. I know where my stove is from. Most people do not know where anything is from."]
      ]]},
-    {id:"asking-for-it", ask:"whether there is anything for after the plates go back", key:"smoke lettuce green tin roll after plates something",
+    {id:"asking-for-it", railTakes:["Ask her for the etiquette. There is obviously an etiquette."], ask:"whether there is anything for after the plates go back", key:"smoke lettuce green tin roll after plates something",
      who:"Hesta", gives:"the tin, and the price of it, which is saying the whole name properly out loud",
      holds:"nothing. Free.",
      rail:"Ask her, carefully, if there is anything in this place for after the plates go back.",
@@ -6797,7 +6803,7 @@ var SCENEBOOK = {
        vessel ladder hands you for free: Nine cannot smoke because a shard has no
        lungs and no hands, and that fact is played for comedy here on purpose,
        because nine-at-the-table in this same room already plays it for grief. */
-    {id:"the-rolling", after:"asking-for-it", ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
+    {id:"the-rolling", after:"asking-for-it", railTakes:["Stay with it. Watch what happens to the room, and to the one who was refused."], ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
      who:"Hesta", gives:"the ritual performed rather than explained - the long way round, everybody making their own, and the one person who is refused",
      holds:"nothing. Free.",
      rail:"Take the tin when it reaches you, and watch what everybody does with it.",
@@ -8581,7 +8587,7 @@ var SCENEBOOK = {
    never:["she does not become friendly","nobody arrives",
           "the name is never given, at any depth of asking"],
    topics:[
-    {id:"two-voices", ask:"what the two voices are", key:"voice voices two sound frequency out-of-sync why",
+    {id:"two-voices", railTakes:["Ask about the voices again. She gave you the mechanism; there is a bill."], ask:"what the two voices are", key:"voice voices two sound frequency out-of-sync why",
      who:"Three", gives:"the mechanical account, flat, and her opinion of people who ask",
      holds:"how it felt",
      rail:"Ask her about the two voices. Carefully.",
@@ -8598,7 +8604,7 @@ var SCENEBOOK = {
        ["Three","The one that does not want to be in the room. Every time. I have had years to make it the other way round and I have not managed it."],
        "That is the bill, itemised, paid monthly. How it felt is still not on offer, and the flatness closes over the top of it like water."]]},
 
-    {id:"three-trade", ask:"what she does", key:"do work skill hands procedure use good-at trade",
+    {id:"three-trade", railTakes:["Go back to the eleven hours. Nobody in the room asked about the eleven hours."], ask:"what she does", key:"do work skill hands procedure use good-at trade",
      who:"Three", gives:"a precise and slightly alarming list",
      holds:"where she learned it",
      rail:"Ask her what she actually does.",
@@ -8617,7 +8623,7 @@ var SCENEBOOK = {
        "A pause of precisely the wrong length. The kettle fills it, badly.",
        ["Three","That is the better question. Some of them. Which is why I measure the eleven and not the outcome - of those two numbers, exactly one of them is mine to be proud of."]]]},
 
-    {id:"nine-and-seven", ask:"what she makes of Nine and Seven", key:"nine seven shards think them keeping",
+    {id:"nine-and-seven", railTakes:["Ask her for the instance, not the position. Make her point at something."], ask:"what she makes of Nine and Seven", key:"nine seven shards think them keeping",
      who:"Three", gives:"the uncomfortable version of the family's own arrangement, said kindly for once",
      holds:"she does not exempt anybody",
      rail:"Ask her what she makes of the two shards in this family.",
@@ -8635,7 +8641,7 @@ var SCENEBOOK = {
        "Nobody defends themselves. It is the first thing all morning that has landed on the table instead of beside it.",
        ["Three","It costs nothing to say wait. Say wait. That is the finding again, smaller, so it fits in a pocket as well."]]]},
 
-    {id:"the-years", ask:"whether she ever worked out how it should have been done",
+    {id:"the-years", railTakes:["Ask her what is actually missing. Be precise about it; she will be."], ask:"whether she ever worked out how it should have been done",
      key:"how should done properly right way research study find fix better learn answer",
      who:"Three", gives:"that she went looking for years and did not find it - a completed audit of her own failure, delivered like any other finding",
      holds:"that she is still looking",
@@ -8657,7 +8663,7 @@ var SCENEBOOK = {
        "Vic looks at the table for slightly too long, and then asks whether anybody wants more tea. Hesta says yes in a voice that means she noticed.",
        ["Three","I am aware I have just described a hope. I do not deal in them. Log it as a requisition."]]]},
 
-    {id:"her-name", ask:"what her actual name is",
+    {id:"her-name", railTakes:["Ask again, and offer to call her anything she likes.","Ask a third time, and take whatever she does to you for it."], ask:"what her actual name is",
      key:"name actual real called own proper birth what-were-you before letters",
      who:"Three", gives:"a refusal, and the reason for it, which is worse to hear than the name would have been",
      holds:"THE NAME. Not tonight, not in this book, not in the next one",
@@ -8686,7 +8692,7 @@ var SCENEBOOK = {
        ["Three","Yes. Write it down anyway."],
        ["Three","You keep a rule about the dead coming out and their names being said. I have read it. It is a good rule and it is the only door I am leaving open in this. Use it late."]]]},
 
-    {id:"the-other-one", ask:"who the other one was",
+    {id:"the-other-one", railTakes:["Ask again. Three lines is not a person and she knows it."], ask:"who the other one was",
      key:"other one she who overlay second mind died lost inside her name-of",
      who:"Three", gives:"the three things she knows about the mind that did not survive coming out of her - and how few three is",
      holds:"nothing. She has almost nothing, and the nothing is the point",
@@ -8707,7 +8713,7 @@ var SCENEBOOK = {
        ["Three","She was a person. Thank you. You are the first one in this room to use the word without checking my face first, and I will note that you are also the one with the most to lose by using it."],
        ["Three","Which is why I do not exempt you, and why I stayed. Both of those. Neither cancels the other and I would rather nobody tried."]]]},
 
-    {id:"the-chair", ask:"the chair by the window", key:"chair window seat sit light spot pia hers",
+    {id:"the-chair", railTakes:["Reopen the chair question. Pia has visibly been drafting."], ask:"the chair by the window", key:"chair window seat sit light spot pia hers",
      who:"Pia", gives:"a bit, and the fact that she conceded the chair an hour ago and would like that recognised",
      holds:"nothing. Free.",
      rail:"Ask Pia about the chair, since she has not stopped looking at it.",
@@ -10466,7 +10472,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.18.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.19.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -11325,7 +11331,7 @@ function choiceKnocks(text){
    Novel runs have no typing box at all, so on this side of the file every player act
    is a click - which means the scorer was never needed here, only inherited.
    So a choice may now be written as data:
-       {line:"Ask Vic why he has been so quiet.", cards:["vic-quiet", "vic-deflects"]}
+       {line:"Ask Vic why he has been so quiet.", cards:["vic-quiet"]}
    ONE-TO-MANY, because a question can have more than one answer left in the deck: the
    row binds the line to the FIRST card in that list this run has not spent. A choice
    whose cards are ALL spent is dropped from the row, which is the slack repeating
@@ -11374,6 +11380,19 @@ function cardWaiting(sc, t, spent){
    across a reload and different next time. Rooms are NOT shuffled: they have no
    clock, a player who stays gets the whole deck anyway, and their authored order is
    doing real work. */
+/* THE LINE THAT OFFERS A TAKE IS NOT THE LINE THAT OFFERED THE FIRST ANSWER (v5.19.0).
+   A card's `rail` opens it; `railTakes[0]` opens its second take, `railTakes[1]` its
+   third. Asking again is a different conversation and the row has to say so - one
+   line reused across every layer is the row lying about which conversation it opens.
+   Where a take has no line of its own the first line stands in, and THE BOARD COUNTS
+   that as unwritten rather than the game pretending it is fine. Clamps like takeForLap
+   does, because a lingering player is still owed the deepest line, not a missing one. */
+function railLineFor(t, lap){
+  if(!t) return "";
+  var alts = t.railTakes || [];
+  if(lap > 0 && alts.length) return alts[Math.min(lap, alts.length) - 1] || t.rail;
+  return t.rail;
+}
 function dealOrder(list, key, spent, sc){
   var idx = [], i;
   for(i = 0; i < list.length; i++) idx.push(i);
@@ -11437,6 +11456,19 @@ function sceneRails(n){
   if(!list.length) return out;
   spent = topicSpent[s.key] || [];
   if(!railDeal[s.key]) railDeal[s.key] = {};
+  /* THE ROW LAPS WITH THE DECK (v5.19.0). A fully spent ROOM used to return nothing
+     here, and railFor filled the gap with two house lines that asked nothing - the
+     dead stretch the author named, and the only thing bridging a lap. The row now
+     goes round with the deck instead: the same cards, offered under their NEXT
+     take's own line. pickTopicFresh does the real roll-over when the player clicks,
+     so the two stay in step. THE BEAT DOES NOT LAP - it has a budget and an ending,
+     and a dry beat is honestly the door alone. */
+  var lap = deckLap(s.key), lv = branchLive(list), allSpent = false, z;
+  if(lv.length){
+    allSpent = true;
+    for(z = 0; z < lv.length; z++) if(spent.indexOf(lv[z]) === -1){ allSpent = false; break; }
+  }
+  if(allSpent && String(s.key).indexOf("|room") !== -1){ spent = []; lap = lap + 1; }
   /* the order is the run's, not the file's - see dealOrder. Rooms come back in
      authored order, so this loop is unchanged for them. */
   var seq = dealOrder(list, s.key, spent, s.sc), q;
@@ -11458,9 +11490,10 @@ function sceneRails(n){
        both learned the fork when it was built; this reader did not, and nothing was
        looking at it. A form has readers: hunt all of them. */
     if(!cardOnBranch(t)) continue;
-    ln = t && t.rail;
-    /* the per-run rotation: one wording per run, never two names for one card */
-    if(ln && t.railAlt) ln = pickVariant([t.rail, t.railAlt], "ra|" + s.key + "|" + i) || ln;
+    ln = railLineFor(t, lap);
+    /* the per-run rotation: one wording per run, never two names for one card. It
+       applies to the card's own line only - a take's line is the take's. */
+    if(ln === t.rail && t.railAlt) ln = pickVariant([t.rail, t.railAlt], "ra|" + s.key + "|" + i) || ln;
     if(!ln || out.indexOf(ln) !== -1) continue;
     railDeal[s.key][normLine(ln)] = i;
     out.push(ln);
@@ -11512,7 +11545,12 @@ function railFor(dm, trusted){
        them. A room with cards left leads with them; a finished room falls back to
        the stalls, which is the deck saying so. */
     if(deck.length) soft = deck.concat(soft).slice(0, 3);
-    if(!soft.length) soft = PIN_STALLS.slice(0, 2);
+    /* THE HOUSE LINES ARE A BROKEN-MODEL REPAIR NOW, NOT A DESIGN (v5.19.0). In THE
+       NOVEL every clickable line is a card, full stop - and the room's row laps with
+       its deck, so there is no longer a turn where it has nothing. At the wild table
+       a model that returns no choices at all would otherwise leave a dead row, and
+       that is a different problem with the same shape. Fenced to it. */
+    if(!soft.length && wildRun()) soft = PIN_STALLS.slice(0, 2);
     return soft;
   }
   /* the fork beat opens both of its doors at once; every other beat rotates one */
@@ -23434,12 +23472,17 @@ function wbStats(){
   if(wbStatCache) return wbStatCache;
   var rows = [], t = {cards:0, room:0, takes:0, forks:0, lines:0, pass:0, doors:0, walks:0,
                       wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0,
-                      broken:0, cutRows:0, badAfter:0, turns:0, folds:0};
+                      broken:0, cutRows:0, badAfter:0, turns:0, folds:0, mute:0};
   SPINE.forEach(function(b, i){
     var sb = SCENEBOOK[b.id] || {};
     var tp = sb.topics || [], rp = (sb.room && sb.room.topics) || [];
-    var need = (b.budget || 4) + 2, takes = 0, forks = 0;
-    tp.concat(rp).forEach(function(c){ takes += (c.takes || []).length; if(c.fork) forks++; });
+    var need = (b.budget || 4) + 2, takes = 0, forks = 0, mute = 0;
+    tp.concat(rp).forEach(function(c){
+      takes += (c.takes || []).length; if(c.fork) forks++;
+      /* a take with no line of its own reuses the card's first line, which means the
+         row opens a different conversation under the same words. Counted, not hidden. */
+      mute += Math.max(0, (c.takes || []).length - ((c.railTakes || []).length));
+    });
     var wired = 0, pass = 0, lines = 0;
     ["opens","lands","landsHard"].forEach(function(k){
       (b[k] || []).forEach(function(V){
@@ -23455,7 +23498,7 @@ function wbStats(){
       budget:(b.budget || 4), need:need, cards:tp.length, room:rp.length,
       takes:takes, forks:forks, wired:wired, pass:pass, lines:lines, score:score,
       state:(score === 4 ? "written" : (score ? "part" : "outline"))});
-    t.cards += tp.length; t.room += rp.length; t.takes += takes; t.forks += forks;
+    t.cards += tp.length; t.room += rp.length; t.takes += takes; t.forks += forks; t.mute += mute;
     t.lines += lines; t.pass += pass;
     t.doors += (b.exits || []).length;
     t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
@@ -23593,7 +23636,12 @@ function wbCard(t, offers){
     + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.holds) + "</div>"
     + '<span class="wb-lb">Asked once</span>' + wbLines(t.plays);
   (t.takes || []).forEach(function(L, k){
-    h += '<span class="wb-lb">Asked again &mdash; take ' + (k + 2) + "</span>" + wbLines(L);
+    var rl = (t.railTakes || [])[k];
+    h += '<span class="wb-lb">Asked again &mdash; take ' + (k + 2) + "</span>"
+       + '<div class="wb-rl"' + (rl ? "" : ' style="color:#e08b8b"') + ">"
+       + (rl ? "Offered as: " + esc(rl)
+             : "No line of its own &mdash; the row still says &ldquo;" + esc(t.rail || "") + "&rdquo;")
+       + "</div>" + wbLines(L);
   });
   if(!(t.takes || []).length) h += '<div class="wb-rl" style="color:var(--wb-slate)">'
     + "No second take. Asked twice, this card says the same thing again.</div>";
@@ -23658,7 +23706,8 @@ function wbDrawBook(){
     + '<div class="wb-stat"><b class="s">' + t.short + "</b><span>nights run out of cards before the night ends</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.noTakes + "</b><span>nights repeat themselves if asked twice</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.dark + "</b><span>nights land on nothing to click</span></div>"
-    + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div></div>";
+    + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div>"
+    + '<div class="wb-stat"><b class="s">' + t.mute + "</b><span>takes with no choice line of their own</span></div></div>";
   if(t.broken || t.cutRows || t.badAfter){
     h += '<div class="wb-note" style="color:#e08b8b"><b>Wiring faults: ' + t.broken
       + " rail row(s) name a card that is not in the deck"
@@ -27699,9 +27748,14 @@ function selfTest(){
         /* (iii) a row naming only the other branch's card must drop; a row that
                  PREFERS it must fall through to something this branch can answer. */
         topicSpent = {}; railDeal = {}; railKnock = {};
+        /* ONE ROW, ONE CARD (v5.19.0) - the third row used to name two cards and the
+           assertion was that it FELL THROUGH to the second. A row names one card now,
+           so an off-branch row has nothing to fall through to and is simply dropped,
+           which is the property worth holding: the Nine branch is left with its own
+           row and nothing of the other road's. */
         railOut = wireRail([{line:"fx the recital", cards:["fx-seven"]},
                             {line:"fx her senses",  cards:["fx-nine"]},
-                            {line:"fx falls through", cards:["fx-seven","fx-neutral-b"]}], FX, KEY);
+                            {line:"fx also seven",  cards:["fx-seven"]}], FX, KEY);
         var d = railDeal[KEY] || {};
         for(var q in d){ if(Object.prototype.hasOwnProperty.call(d, q)) railBound.push(d[q]); }
         /* (v) THE ROW THE PLAYER ACTUALLY SEES. Everything above proves the PICKER
@@ -27797,9 +27851,10 @@ function selfTest(){
          }});
 
       T("a landing never deals a card from the other branch",
-        railOut.length === 2 && railOut.indexOf("fx the recital") === -1
-          && railOut.indexOf("fx falls through") !== -1 && railBound.indexOf(1) === -1,
-        "on the Nine branch: the Seven-only row dropped, the row that merely PREFERS it fell through - "
+        railOut.length === 1 && railOut.indexOf("fx her senses") !== -1
+          && railOut.indexOf("fx the recital") === -1 && railOut.indexOf("fx also seven") === -1
+          && railBound.indexOf(1) === -1,
+        "on the Nine branch: both Seven-only rows dropped and the branch kept its own - "
         + JSON.stringify(railOut),
         {label:"the rail before the fork existed, which bound the first unspent card its row named",
          was:{line:"fx the recital", cards:["fx-seven"]},
