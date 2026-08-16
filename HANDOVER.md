@@ -18,20 +18,18 @@ Book One is finished and `a2-chassis` is FINISHED — 25 cards, an id on every o
 take on every card live on either road, seven cards carrying a THIRD take, and both landings
 wired. It is the deepest room in the game by a distance.
 
-**`a2-three` (night 16) is FINISHED** — seven room cards, a take on each, a third on the
-name, both landings wired. **9 of 33 nights now have all four counts.**
+## BOOK ONE IS CLOSED (v5.23.0)
 
-**BOOK ONE IS ONE CARD FROM CLOSED.** Eight of its nine nights are finished; `a1-turn`
-sits at 6 beat cards and needs 7 (its budget is 5). The author picked two of the four
-candidates offered for it, so it is short by design, not by oversight — bring the
-remaining candidates back.
+Nine nights, all four counts, nothing outstanding in any of them: pressure blocks at
+`budget + 2`, a room of 7–11 cards, a take on every card, every take carrying its own
+choice line, and both landings wired. **10 of 33 nights are finished.**
 
-**And the biggest live gap is now the take lines.** Family time is FOUR LANES from
-v5.20.0: taking a lane puts that card's next take in the same slot. So a second take is
-the thing a player reaches constantly, and **133 of 143 takes are still offered under
-the first take's words**. `railTakes:[]` on the card, one line per take; the board counts
-the gap on the dashboard and marks each mute take red on its own card. This is the next
-wave, ruled 2026-08-16.
+### → READ `OUTSTANDING.md` FOR EVERYTHING THAT IS LEFT
+
+It carries the annulment thread's unwritten half, the chassis-road policy and its known
+damage, the 49 take lines still mute, the unverified finale, and every standing law that
+was learned by something going wrong. This file stays the loop and the working rules;
+that file is the map of the debt.
 
 **Read this before picking the next wave.** The board points at `a1-pack` (night 4), not at
 `a2-housing`, and it is right to. **Book One's ROOMS are all finished, but every one of its
