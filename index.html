@@ -1110,6 +1110,11 @@
   #wbmodal #wbgate{display:none;grid-column:1/-1;padding:38px 18px;overflow-y:auto;height:100vh}
 
 </style>
+<!-- THE VELDT SKIN (v5.34.0). An override sheet loaded after the base styles, so it
+     wins by cascade order and nothing above this line had to change. Every colour,
+     size and timing in it is authoritative; the block above is untouched. Delete this
+     tag and the one before </body> and the game is exactly as it was. -->
+<link rel="stylesheet" href="veldt-skin.css">
 </head>
 <body>
 
@@ -1710,6 +1715,12 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.34.0 "The Ground Goes Cold"
+   THE VELDT SKIN, in two tags — a stylesheet in the head and a script before </body>
+   the game's own <style> block is untouched; delete the two tags and nothing else moved
+   the ground goes from warm brown to cold blue-black, so sodium and neon read as LIGHT
+   a run of lines from one speaker is now one box, named once, with · · · between them
+   index.html has TWO script tags from here on, and the release ritual's extractor knew one
    MUDSKIPPERS — THE COURIER'S RUN · v5.33.0 "Nobody Else In The Room Can Hear It"
    a2-seven FINISHED: a sixth evening card, four room cards, seven second takes — 20 of 33
    Nine knows his voice from inside the farm, and until tonight only one road ever said so
@@ -12038,7 +12049,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.33.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.34.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -34697,5 +34708,10 @@ function stampVersion(){
   });
 })();
 </script>
+<!-- ...and the skin's script half: the pixel-art title canvas, the menu relayout, and
+     the feed's speaker-run grouper. It attaches to elements the game already built -
+     it moves menu buttons and sets a data-run attribute on feed blocks. renderBlock
+     and every other builder are untouched. Loads last, on purpose. -->
+<script src="veldt-menu.js"></script>
 </body>
 </html>

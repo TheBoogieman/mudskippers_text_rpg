@@ -3,8 +3,14 @@
 // BYTES changed, so a cache name left behind keeps serving the shell it was named
 // for: this said v4-36-0 while the game inside it was six releases further on, and
 // every offline player was reading the old build.
-var CACHE = "mudskippers-v5-33-0";
-var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
+var CACHE = "mudskippers-v5-34-0";
+/* THE SKIN IS PART OF THE SHELL (v5.34.0). The fetch handler below is cache-first
+   then network and caches what it fetches, so these two would eventually cache
+   themselves - but only after one successful online load. A fresh install that goes
+   offline before that gets the game unskinned, which is a silent, confusing failure
+   rather than a loud one. They are two shipped assets; they belong in addAll. */
+var SHELL = ["./", "./index.html", "./veldt-skin.css", "./veldt-menu.js",
+             "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){
   e.waitUntil(

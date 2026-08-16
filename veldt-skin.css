@@ -1,0 +1,275 @@
+/* VELDT SKIN — an override sheet loaded after the base styles.
+   Rule: change colour, type and depth only. Every mechanic keeps the
+   meaning it already has — the exit stays unlabelled, the turn bar stays
+   variable-length, held stays dim, walk stays red. */
+
+:root{
+  /* the ground goes cold and wet. Sodium and neon cannot read as LIGHT
+     while they sit on a warm brown field — this is the whole fix. */
+  --bg:#0b0e14;
+  --panel:#131a25;
+  --panel-2:#19222f;
+  --ink:#e9ecf2;
+  --ink-dim:#9aa6b6;
+  --line:#232c3a;
+  /* accents unchanged: sodium, gold and the cast keep their identities */
+}
+
+body{
+  background-image:radial-gradient(ellipse 120% 70% at 50% -10%, #16202e 0%, var(--bg) 62%);
+}
+
+/* ---- header: quieter, colder, one hairline of light ---- */
+header{
+  background:linear-gradient(180deg,#111823,#0c1018);
+  border-bottom-color:#1d2634;
+  box-shadow:0 1px 0 rgba(255,255,255,.03);
+  padding:11px 18px 10px;
+}
+.title{text-shadow:0 0 20px rgba(232,161,60,.45)}
+.meta{font-size:10.5px;letter-spacing:.14em}
+button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
+
+/* ---- the feed: this is a text game, so reading is the product ---- */
+#feed{padding:26px 0 34px}
+.inner{max-width:730px;padding:0 24px}
+.block{font-size:16.5px;line-height:1.72;margin-bottom:18px;text-wrap:pretty}
+.narr{color:#b6c0cf;font-size:18px;line-height:1.68}
+.sys{font-size:13.5px;line-height:1.75;color:#9aa6b6}
+.divider{color:#39465a;margin:30px 0}
+
+/* the premise line. It is the one green thing on the screen; give it a
+   surface so it reads as a card rather than a coloured sentence. */
+.block.beatcard{
+  border-left:2px solid #4f7a4a;
+  background:linear-gradient(90deg,rgba(143,201,138,.07),transparent 70%);
+  padding:11px 16px;border-radius:0 3px 3px 0;
+}
+.block.beatcard .tag{display:block;margin-bottom:5px;color:#8fc98a;font-size:9.5px;letter-spacing:.22em;text-shadow:0 0 10px rgba(143,201,138,.35)}
+.block.beatcard .sum{color:#cfe0cb}
+
+/* the DM's asides: amber, with a lamp instead of a border */
+.block.dmaside{
+  border:1px solid #5c4a1e;border-radius:3px;padding:11px 14px 11px 30px;
+  background:linear-gradient(90deg,rgba(242,193,78,.06),rgba(242,193,78,.015));
+  position:relative;font-size:14.5px;line-height:1.62;
+}
+.block.dmaside:before{
+  content:"";position:absolute;left:13px;top:18px;width:6px;height:6px;border-radius:50%;
+  background:#f2c14e;box-shadow:0 0 9px #f2c14e;
+}
+.block.dmaside .tag{display:block;margin-bottom:4px;color:#e3c684;font-size:9.5px;letter-spacing:.2em}
+
+/* ---- speech: the cast colours already exist, the feed just wasn't using
+   them structurally. Name onto its own line, coloured rule down the block. */
+.block:has(> .tag + span){
+  border:1px solid rgba(255,255,255,.07);border-left:2px solid #3a4557;
+  background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.012));
+  border-radius:0 4px 4px 0;padding:14px 22px 15px 22px;
+}
+.block > .tag + span{display:block;color:#e2ebf2}
+.block:has(> .tag + span) > .tag{
+  display:block;margin:0 0 5px;font-size:10.5px;letter-spacing:.2em;
+}
+.block:has(> .tag[style*="--nine"]){border-left-color:var(--nine)}
+.block:has(> .tag[style*="--pia"]){border-left-color:var(--pia)}
+.block:has(> .tag[style*="--vic"]){border-left-color:var(--vic)}
+.block:has(> .tag[style*="--seven"]){border-left-color:var(--seven)}
+.block:has(> .tag[style*="--three"]){border-left-color:var(--three)}
+.block:has(> .tag[style*="--granny"]){border-left-color:var(--granny)}
+.block:has(> .tag[style*="--marek"]){border-left-color:var(--marek)}
+.block:has(> .tag[style*="--hesta"]){border-left-color:var(--hesta)}
+.block:has(> .tag[style*="--principal"]){border-left-color:var(--principal)}
+
+/* a run of lines from one speaker: one box, name stated once.
+   These repeat the :has() so they outrank the base speaker-block rule. */
+.block:has(> .tag + span)[data-run="first"]{padding-bottom:0;margin-bottom:0;border-bottom:0;border-bottom-right-radius:0}
+.block:has(> .tag + span)[data-run="mid"]{padding:11px 22px 0;margin-bottom:0;border-top:0;border-bottom:0;border-radius:0;position:relative}
+.block:has(> .tag + span)[data-run="last"]{padding-top:11px;border-top:0;border-top-right-radius:0;position:relative}
+/* inside a run, one line gives way to the next with the same three-dot mark
+   the feed already uses between cards, instead of a rule */
+.block:has(> .tag + span)[data-run="mid"]:before,
+.block:has(> .tag + span)[data-run="last"]:before{
+  content:"\00b7 \00b7 \00b7";display:block;text-align:center;
+  color:#4a5566;font-size:12px;letter-spacing:.3em;line-height:1;
+  margin:0 0 12px;
+}
+.block:has(> .tag + span)[data-run="mid"] > .tag,
+.block:has(> .tag + span)[data-run="last"] > .tag{display:none}
+
+/* what you said: set apart, neutral, no colour competing with the cast */
+.you-said{
+  border-left:2px solid #6b7688;padding:8px 0 8px 15px;margin:24px 0;
+  background:linear-gradient(90deg,rgba(255,255,255,.025),transparent 60%);
+}
+.you-said .tag{display:block;margin-bottom:5px;color:#8d99aa;letter-spacing:.2em;font-size:10px}
+
+/* ---- controls ---- */
+#controls{
+  border-top-color:#1d2634;
+  background:linear-gradient(180deg,#0f1620,#0a0e15);
+  box-shadow:0 -1px 26px rgba(0,0,0,.6);
+  padding:13px 0 17px;
+}
+#nowstrip{border-left-color:#2c3648;color:#8d99aa;font-size:11.5px}
+
+/* the bar keeps its length, its tick count and its four escalation states.
+   Only the substrate changes, so the amber is emissive instead of muddy. */
+#pressure{border-radius:3px}
+#pressure.t0{color:#8b97a8;border-color:#2a3444;background:#111823}
+#pressure.t1{color:var(--gold);border-color:#6b5326;background:#1d1708}
+#pressure.t2{color:#f5a862;border-color:#8a5228;background:#2a1809}
+#pressure.t3{color:#f09a9a;border-color:#8d3a3a;background:#2b1111}
+
+#choices{gap:7px}
+.choice{
+  background:#131a25;border-color:#26303f;border-radius:3px;
+  font-size:15.5px;line-height:1.5;padding:11px 15px;
+}
+.choice:hover{background:#19222f;border-color:var(--sodium)}
+.choice .n{
+  color:var(--sodium);border:1px solid #3c3320;background:#191510;
+  border-radius:2px;padding:2px 6px;margin-right:11px;font-size:11px;
+}
+/* stall: the house style, deliberately the quietest of the three */
+.choice.stall{box-shadow:inset 2px 0 0 #33404f}
+/* exit: still unlabelled — the light is the whole tell */
+.choice.exit{border-color:#6a5a2a;box-shadow:inset 2px 0 0 var(--sodium),0 0 18px rgba(232,161,60,.07)}
+.choice.exit:hover{background:#1b1508}
+.choice.exit.notyet{border-color:#2c3444;color:#6d7789;box-shadow:inset 2px 0 0 #3c4657}
+.choice.exit.notyet .n{color:#6d7789;border-color:#2c3444;background:#101620}
+.choice.exit.armed{background:#1b1508;box-shadow:inset 2px 0 0 var(--sodium),0 0 22px rgba(232,161,60,.22)}
+/* walk: unchanged in meaning, cooled around it so the red still reads hot */
+.choice.walk{border-color:#5a2f2f;background:#161a22}
+.choice.walk:hover{background:#1c1113}
+.choice-hint{border-radius:3px;font-size:11px}
+.choice-hint.exithint{color:#7d879a;border-color:#2c3444}
+
+/* free speech is a different channel from picking a line — olive, the
+   courier's jacket, so a disabled rail state is unmistakably not a choice */
+#mudinput{
+  background:#12180f;border-color:#4f5c34;color:#d7e05c;border-radius:3px;
+}
+#mudinput::placeholder{color:#6f7c58}
+#mudinput:disabled{background:#0f131a;border-color:#232c3a;color:#5c6675}
+#mudinput:focus{border-color:#a3ad2e;box-shadow:0 0 14px rgba(198,210,34,.18)}
+#mudbtn{
+  background:linear-gradient(180deg,#2f3a17,#212910);border-color:#a3ad2e;color:#d7e05c;
+  text-shadow:0 0 10px rgba(198,210,34,.4);
+}
+#mudbtn:hover{background:#3a4720;box-shadow:0 0 18px rgba(198,210,34,.28)}
+
+#feed::-webkit-scrollbar-thumb{background:#232c3a}
+
+/* modals sit on the same cold ground */
+.card{background:var(--panel);border-color:var(--line)}
+.fld input,.fld select,.runrow,.tile{background:#0f1620;border-color:var(--line)}
+
+
+/* ================= TITLE SCREEN =================
+   The old sketch skyline and CSS rain come off; the pixel-art waterfront
+   goes in as a full-bleed banner with the wordmark over it. The menu keeps
+   every real button — only the art above it changes. */
+#titlescreen{
+  background:#080b11;
+  /* the game's warm radial fought the art — sodium can't read as light on a
+     brown field. Cold blue-black, faintly lit from where the city sits. */
+  background-image:radial-gradient(ellipse at 50% 0%, #13202c 0%, #080b11 62%) !important;
+  justify-content:flex-start !important;
+  padding:0 0 44px !important;
+}
+#titlescreen .rain,
+#titlescreen .t-sky,
+#titlescreen .t-wordmark,
+#titlescreen .t-h1,
+#titlescreen .t-tag{display:none !important}
+
+.veldt-art{
+  position:relative;width:100%;aspect-ratio:720/280;overflow:hidden;
+  background:#090c14;border-bottom:1px solid #1b2330;flex:none;
+  margin-bottom:30px;
+}
+.veldt-cv{display:block;width:100%;height:100%;object-fit:fill;image-rendering:pixelated}
+.veldt-vig{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 42%, transparent 42%, rgba(6,8,13,.55) 100%);
+}
+.veldt-mark{position:absolute;left:0;right:0;top:9%;text-align:center;pointer-events:none}
+.veldt-wordmark{
+  font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+  font-size:clamp(19px,4.2vw,40px);font-weight:700;letter-spacing:.44em;padding-left:.44em;
+  color:#f2c14e;
+  text-shadow:0 0 34px rgba(242,193,78,.5),0 0 90px rgba(232,161,60,.28),0 2px 0 rgba(0,0,0,.6);
+}
+.veldt-tag{
+  margin-top:12px;font-family:Georgia,'Iowan Old Style',serif;font-style:italic;
+  font-size:clamp(11px,1.5vw,14px);color:#a8b0bd;letter-spacing:.02em;
+  text-shadow:0 1px 6px rgba(0,0,0,.9);
+}
+.veldt-readout{
+  position:absolute;left:14px;bottom:11px;font-family:ui-monospace,Menlo,monospace;
+  font-size:9.5px;letter-spacing:.19em;color:#7f8794;text-shadow:0 1px 4px #000;white-space:nowrap;
+}
+.veldt-low{
+  position:absolute;right:14px;bottom:10px;background:rgba(9,12,20,.68);border:1px solid #232c39;
+  color:#7f8794;font-family:ui-monospace,Menlo,monospace;font-size:9px;letter-spacing:.18em;
+  padding:5px 9px;border-radius:2px;cursor:pointer;backdrop-filter:blur(2px);
+}
+.veldt-low:hover{border-color:#6fd3e0;color:#6fd3e0}
+
+/* ---- the menu: two doors, then a rack of chips ----
+   The column of ten equal buttons made every destination look equally
+   important. CONTINUE and NEW GAME are the only two anyone needs at the
+   title; everything else is a place you go once. */
+#titlescreen .t-menu{
+  width:100%;max-width:900px;padding:64px 20px 0;gap:20px;
+  transition:opacity .5s ease;
+}
+.veldt-doors{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;width:100%}
+.veldt-chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;width:100%}
+
+#titlescreen .menu-btn.veldt-door{
+  flex:1 1 240px;margin:0;
+  background:linear-gradient(180deg,#18222b,#101820);
+  border:1px solid #2f7f8a;color:#6fd3e0;border-radius:3px;
+  font-size:13px;letter-spacing:.24em;padding:19px 22px;text-align:center;
+  box-shadow:0 0 22px rgba(111,211,224,.1),inset 0 1px 0 rgba(255,255,255,.04);
+  transition:all .14s;
+}
+#titlescreen .menu-btn.veldt-door:hover{
+  transform:translateY(-1px);border-color:#6fd3e0;
+  box-shadow:0 0 32px rgba(111,211,224,.24);color:#6fd3e0;
+}
+/* CONTINUE is sodium — the run that already exists is the warm one */
+#titlescreen .menu-btn.veldt-door.primary{
+  background:linear-gradient(180deg,#1e2634,#121a25);
+  border-color:#e8a13c;color:#f2c14e;
+  box-shadow:0 0 24px rgba(232,161,60,.14),inset 0 1px 0 rgba(255,255,255,.05);
+}
+#titlescreen .menu-btn.veldt-door.primary:hover{
+  border-color:#f2c14e;color:#f2c14e;
+  box-shadow:0 0 34px rgba(232,161,60,.3),inset 0 1px 0 rgba(255,255,255,.08);
+}
+#titlescreen .menu-btn.veldt-door small{
+  display:block;font-family:Georgia,serif;font-style:italic;font-size:11px;
+  letter-spacing:.02em;color:#9a8f7d;margin-top:6px;text-transform:none;
+}
+#titlescreen .menu-btn.veldt-door:not(.primary) small{color:#7f909a}
+
+#titlescreen .menu-btn.veldt-chip{
+  margin:0;background:none;border:1px solid #232c39;color:#8a929e;
+  font-size:9px;letter-spacing:.15em;padding:8px 10px;border-radius:2px;
+  white-space:nowrap;transition:all .12s;
+}
+#titlescreen .menu-btn.veldt-chip:hover{border-color:#e8a13c;color:#e8a13c;transform:none}
+#titlescreen .menu-btn.veldt-chip.gold{border-color:#3a3020;color:#a08a5c}
+#titlescreen .menu-btn.veldt-chip.gold:hover{border-color:#f2c14e;color:#f2c14e}
+/* the author's tools: dashed, dimmer, green on hover — not player business */
+#titlescreen .menu-btn.veldt-chip.veldt-tool{border-style:dashed;border-color:#1f2733;color:#5d6673}
+#titlescreen .menu-btn.veldt-chip.veldt-tool:hover{border-color:#8fc98a;color:#8fc98a}
+.veldt-rule{width:1px;align-self:stretch;background:#1c242f;margin:0 4px}
+
+#titlescreen .t-foot{
+  color:#4e5766;font-size:9px;letter-spacing:.22em;line-height:2.1;margin-top:6px;
+}
+.veldt-ded{opacity:.6}

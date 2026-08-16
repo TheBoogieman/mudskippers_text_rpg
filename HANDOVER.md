@@ -1086,6 +1086,12 @@ in Book One and the desk correctly called it summoning an off-stage person.
   **asserts the anchor appears exactly once** and refuses otherwise. Heredocs choke on
   this prose; use files.
 - After splicing: `node --check` the script body, then `?selftest`.
+- **INDEX.HTML HAS TWO `<script>` TAGS FROM v5.34.0, so the extraction step changed.** The
+  old recipe took `indexOf('<script>')` to `lastIndexOf('</script>')`, and the last close is
+  now the Veldt skin's, not the game's — it swallowed the game's own closing tag and
+  `node --check` died on `Unexpected token '<'`. Anchor on the **first** close instead:
+  `var start = s.indexOf('>', s.indexOf('<script>')) + 1; var end = s.indexOf('</script>', start);`
+  It fails loudly rather than silently, but it fails.
 - Expect **zero to two** fixture drifts per room, and expect **zero** if you do the one
   thing that works. `a1-turn` came back with one honest fire and no false positive;
   `a1-vic` and `a1-chase` came back byte-identical. `a1-hum` came back with two false
