@@ -1710,7 +1710,9 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.27.0 "The Question Was Only Ever Who"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.28.0 "One Does Not Apologise For Being Issued"
+   a2-annul REPAIRED: Five is ASKED, and nothing in that night holds a body still now
+   a2-annul: the method is not Three's - the steps come out of the file, and she says so
    a2-door and a2-chassis FINISHED: two cards each, and both nights had a hole in them
    a2-chassis: Seven had no card on the night his own life was on the table
    a2-door: the opening asks whether Nine is a coat pocket, and nothing could answer it
@@ -3358,14 +3360,24 @@ var SPINE = [
   surviveCanon:"The family read at the channel's pace and never once touched the door."}},
 
 {id:"a2-annul", season:2, act:3, title:"taking turns",
- goal:"The family takes a fate-two officer alive - Five, a convoy commander - and Three midwifes the unmaking she survived herself. The annulment scars, as it always does, and what walks out is not a rescue and not a prisoner: Five and Marek, two souls in one body, learning to take turns. Three's whole want - no one kept, ever again - done with her own hands instead of said across a table.",
+ /* REPAIRED v5.28.0. Every field in this block used to describe a FORCED REMOVAL -
+    hold Five still, end Five properly, refuse to hold him - and the bible rules the
+    opposite in the strongest terms it uses anywhere: the family does not perform a
+    forced removal, because that is the one thing that would make them the Choir.
+    Five is ASKED. It consents believing it is about to die, because the only
+    annulment it has ever seen is the Choir's, and the Choir's kills.
+    AND THE METHOD IS NOT HERS. Three spent years looking for how it should be done
+    and could not find it; the steps are in the file in the courier's head, written
+    by a man running a dead friend's instructions on faith. She brings the practice,
+    the file brings the procedure, and neither is enough alone. */
+ goal:"A fate-two officer - Five, a convoy commander - is in the shack, with Marek Osei nine years under it and still there. FIVE IS ASKED, out loud, and consents believing that what happens to an overlay at the end of this is that it stops - because the only version an officer is ever shown is the Choir's, and the Choir's does not give anything back. Three has the years of failed practice; the steps come out of the file the courier is carrying; neither is enough alone. The annulment scars, as it always does, and what walks out is not a rescue and not a prisoner: two souls in one body, learning to take turns. Three's whole want - no one kept, ever again - done with her own hands instead of said across a table.",
  exit:"Five has been annulled with Marek surviving it, and the two of them have spoken - each in their own turn",
- aim:"hold Five still, let Three run the unmaking, and let Marek speak in his own turn",
- walkLine:"Leave Five to Three and walk out of the field.",
- exits:["Hold Five still and let Three do the unmaking — then let Marek speak.",
-        "Run the annulment now, and give each of them their turn afterwards.",
-        "End Five properly, and make sure Marek is still standing when it is done."],
- walks:["Refuse to hold him. Find somebody else's hands.",
+ aim:"get the question asked out loud, take Five's own answer, run the unmaking with the file's steps read out, and let Marek speak in his own turn",
+ walkLine:"Do not ask it anything. Put it out of the shack and walk.",
+ exits:["Ask Five first. Out loud, properly, and honour whatever it answers.",
+        "Get the steps read out of my head and let Three work, with Five's own yes behind it.",
+        "By consent or not at all — ask it, then give Marek his turn."],
+ walks:["Refuse to be in the room when it is asked. Find somebody else.",
         "Leave. I will not be in the room for this one.",
         "Walk out before Three lays the last tool down."],
  opens:[{day:"20", time:"3:30am", place:"THE SHACK", amb:"danger",
@@ -3402,7 +3414,9 @@ var SPINE = [
         "Choir recovery is inbound for their missing officer. Finish it in the field or lose them both."],
  canon:["Five was a fate-two commander; Marek Osei was the host underneath, nine years suppressed and still there.",
         "Annulment is possible and it always scars - nobody pretended otherwise.",
-        "Five and Marek share the body now, by consent, taking turns. Neither was thrown away."],
+        "Five and Marek share the body now, by consent, taking turns. Neither was thrown away.",
+        "Five was ASKED, out loud, and said yes under the belief the Choir taught it: that an overlay does not come out of this at all. Nobody held it still.",
+        "Three did not author the method. She had the years of failed practice; the steps came out of the file the courier carries, written by a man following a dead friend's instructions on faith. Neither was enough alone."],
  stone:"A keeping was unmade: Five and Marek take turns now.",
  scar:"The annulment finished in the field, ugly - Five and Marek take turns now, and both remember the rush."},
 
@@ -9668,12 +9682,24 @@ var SCENEBOOK = {
    {ask:"what annulment actually does",
     key:"annul annulment do procedure how work take-out unmaking",
     who:"Three",
-    gives:"the mechanical account, and the fact that it scars every time, without exception",
+    gives:"the mechanical account, that it scars every time - and that the steps are not hers and never were",
     holds:"what it was like when it was done to her",
     rail:"Ask Three what annulment actually does. The mechanics.",
-    plays:[["Three","The overlay and the original hold the body on different frequencies. Annulment finds the seam between them and persuades the second signal to let go of the tissue. Hours, not minutes. Hands, not magic."],
+    /* REPAIRED v5.28.0. This card used to have her explain the whole procedure start to
+       finish, which is the single deepest contradiction in Book Two: the bible says she
+       spent years looking for how it should be done and COULD NOT FIND IT, and that she
+       is not the author of her own cure. The method is steps in Vic's file, documented by
+       a man who never understood them, read out by the mind seated in the courier's
+       housing - the same way the manual was decoded on night 18. She brings the practice.
+       The file brings the procedure. Neither is enough alone, and saying so out loud is
+       what this card is now for. THE RESIDENT IS NOT NAMED and does not speak here: from
+       night 17 it is either Nine or Seven depending on the road, and the courier relays,
+       which is the only way a housed voice reaches a room. */
+    plays:[["Three","The overlay and the original hold the body on different frequencies. The seam between them is real and I can find it in about four minutes. That part has never been the problem."],
+     ["Three","Persuading the second signal to let go of the tissue without tearing it - that is the problem, and I have been at it for eleven years, and I could not find it. I want that said in front of everybody before we start, once, properly."],
+     "Then the reading, second-hand: the voice in your head goes through the file a page at a time and you say it out loud for the room, and it is not procedure the way a manual is procedure. It is a man writing down what a friend told him to do, in order, without ever once understanding why any of it works.",
+     ["Three","Hours, not minutes. Hands, not magic. Your file has the steps and no hands; I have the hands and eleven years of the wrong ones. Neither of us could have done this alone and I am not going to pretend otherwise afterwards."],
      ["Three","It scars. Every time, without exception - the voice keeps a stretch mark where the other one lived. You have heard mine; that is what you were hearing."],
-     "The tools on the cloth are small, exact, and unhurried-looking, which is somehow worse.",
      ["Three","What it was like from the chair - next question. That page of my file is load-bearing and does not open."]]},
    {ask:"whether Marek will survive it",
     key:"marek survive live make-it risk odds die",
@@ -9706,7 +9732,40 @@ var SCENEBOOK = {
      ["Marek","Out. Please. It is polite and it is HEAVY - "],
      ["Marek","Osei. My name is - tell them the name is Osei, it keeps filing me under FIVE - "],
      "Short, exhausted, specific: a name, a please, a correction to the paperwork. Then the surface closes.",
-     ["Five","- The host is active tonight. Noted. He does that. I have never minded it, whatever that is worth to the room."]]}
+     ["Five","- The host is active tonight. Noted. He does that. I have never minded it, whatever that is worth to the room."]]},
+   /* THE TWO CARDS THIS NIGHT WAS BUILT WITHOUT (v5.28.0), and the first of them is the
+      whole book. FIVE IS ASKED. It consents believing it is about to die, because the
+      only annulment an officer has ever been shown is the Choir's and the Choir's kills.
+      A yes given under that belief is the largest yes anybody gives in this story, and
+      until now no card anywhere let the question be put. SEVEN'S CARD EXISTS TO MAKE IT
+      LAND: without knowing what Five thinks is coming, the asking reads as a formality.
+      Both are unforked - Seven speaks in the room here whichever road the season took,
+      and nothing in either card is answered by name. */
+   {ask:"asking Five, and what it answers",
+    key:"ask five consent yes agree permission offer choose willing question",
+    who:"Five",
+    gives:"the question put out loud, and a commander consenting to what it believes is its own execution",
+    holds:"it does not ask for anything in return, and nobody offers",
+    rail:"Ask Five. Out loud, properly, in front of everybody: does it consent.",
+    plays:["Three puts the tools down, which she did not have to do, and steps back from the chair, which she did not have to do either. She does both anyway, and then she nods at you rather than at it.",
+     ["Five","...Say again."],
+     "You say it again. The room is extremely quiet and the marsh outside is not.",
+     ["Five","You are asking. I have been present at four hundred and six of these and I have never once heard the question, so I want to be certain of the procedure before I answer it."],
+     ["Five","Very well. Statement of position, final. I understand what is about to happen and I decline to be dishonest about it: what happens to an overlay at the end of this is that it stops. Yes. Proceed."],
+     "It does not know. Nobody in the room corrects it, because nobody in the room is certain enough to, and that is not a mercy withheld - it is the truth as the room has it.",
+     ["Three","Note the time and note the words. He was asked and he answered. If anybody ever tells this differently I will be extremely available to correct them."]]},
+   {ask:"what Five thinks is about to happen to it",
+    key:"seven officer taught believe think death end training what-they-are-told",
+    who:"Seven",
+    gives:"what an officer is taught annulment is, which is why the yes costs what it costs",
+    holds:"his own. He gets close and puts it down",
+    rail:"Ask Seven what Five thinks is coming. He was one of them.",
+    plays:[["Seven","It thinks it is going to stop. Not be moved, not be filed - stop. That is what we were told annulment is, in the induction, in one line, in the same font as the fire regulations."],
+     ["Seven","Nobody lied to us. They simply told us the only version they had ever managed, and the only version they had ever managed kills the overlay."],
+     "He is looking at the chair, and it is not a comfortable thing for anybody to watch, and everybody watches it.",
+     ["Seven","So when you put the question to that thing, understand what you are actually asking. You are asking it to agree to end. And it is going to say yes, and it is going to say yes briskly, because briskly is how it does everything."],
+     ["Seven","Mine was - "],
+     "He stops, decides against it, and puts it down where everyone can see him put it down."]}
   ],
   room:{
    where:"the shack step toward dawn, one body sitting on it, learning to take turns",
@@ -11143,7 +11202,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.27.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.28.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -27932,14 +27991,28 @@ function verdictMap(){
    the rails that open the new Seven and Nine cards, the line where Nine dictates her own
    introduction ("This is Nine. She is with us."), and Pia's card telling the storyteller
    what the room is doing to Nine by being careful at her. Nothing moved that was not
-   written this wave, which is what a top-up is supposed to look like. */
+   written this wave, which is what a top-up is supposed to look like.
+
+   v5.28.0 - EIGHT ADDED AND FIVE DELETED, all a2-annul, and the deletions are the point
+   of the wave: named:Three left `aim`, `exits0` and `walk`, and named:Five left `exits2`
+   and `walk`, because every one of those lines said HOLD FIVE STILL or END FIVE PROPERLY
+   and the bible says the family does not perform a forced removal. The doors ask now.
+   The additions are the repair arriving: the new consent canon, the door that names the
+   steps rather than the restraint, and the rails on the two cards this night was built
+   without.
+   AND ONE THE DESK STOPPED, WHICH IS WHY THE DESK EXISTS. My first `goal` said Five
+   consents "believing it is about to die", and `death` fired on it - a beat's goal
+   certifying a death that does not happen, on the one night in the book whose entire
+   subject is that nobody is thrown away. Two rows went red, not one. The line now says
+   what Five itself says on its own card: that what happens to an overlay at the end of
+   this is that it stops. Same belief, same cost, and no certificate. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
-  "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/exits0","a2-annul/exits2","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/walk","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
+  "named:Five":["a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-choir/Rt4r","a2-door/t5T1p1","a2-door/t5r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a2-annul/Rt1r","a2-annul/aim","a2-annul/exits0","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/walk","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]

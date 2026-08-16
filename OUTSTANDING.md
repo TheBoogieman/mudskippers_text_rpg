@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.27.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door` and `a2-chassis` are finished.***
+*Written 2026-08-16, updated at v5.28.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door` and `a2-chassis` are finished.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -54,22 +54,31 @@ This is the biggest single piece of unpaid work and it is **story**, not engine.
 rulings are in `var BIBLE` under `THE ANNULMENT`, mirrored into `THE-WORLD.md`. None of
 them are on the page yet.
 
-### The one night that contradicts the bible
+### The one night that contradicted the bible — REPAIRED at v5.28.0
 
-**`a2-annul`, night 20.** Its `aim`, two of its three doors, its walk line and one of its
-walk-outs are all built around **holding a body still**. The bible says the family does
-not perform a forced removal — that is the one thing that would make them the Choir.
+**`a2-annul`, night 20.** Every door, the aim, the walk line and one walk-out were built
+around **holding a body still**, and the bible says the family does not perform a forced
+removal — that is the one thing that would make them the Choir. All of it is rewritten.
 
-- `aim` — *hold Five still, let Three run the unmaking*
-- `exits[0]` — *Hold Five still and let Three do the unmaking*
-- `exits[2]` — *End Five properly* — which also contradicts the scene's **own** rule that
-  Five is not destroyed
-- `walkLine` / `walks[0]` — *Leave Five to Three* / *Refuse to hold him*
-- `goal` and the scene's `where` both assert a capture **that no beat stages**
+- `aim` and `exits[0]` now ask Five instead of holding it
+- `exits[2]` — *End Five properly* — is gone; it contradicted the scene's own rule
+- `walkLine` / `walks[0]` are refusals to be in the room for the asking, not refusals to
+  hold somebody down
+- `goal` says plainly that Five is **asked**, and consents under the belief the Choir
+  taught it: that an overlay does not come out of this at all
+- **the asking is a card now**, and so is Seven explaining what Five thinks is coming —
+  without which the question reads as a formality
+- `canon` gained both facts, so they are true of the run whether or not the cards are drawn
 
-**And the deep one:** `topics[0]` has Three explaining the method start to finish. Under
-the bible she spent years and *could not find it*. The method is steps in Vic's file;
-she brings the failed practice; neither is enough alone.
+**And the deep one is fixed too.** `topics[0]` used to have Three explain the method start
+to finish. Under the bible she spent years and *could not find it*: the steps are in Vic's
+file, documented by a man who never understood them, and the mind in the housing reads
+them out. She says so out loud now, before they start, in front of everybody — *"neither
+of us could have done this alone and I am not going to pretend otherwise afterwards."*
+
+**Still outstanding on that night: its room.** Three cards, no ids, no second takes, and
+both landings still guessing which card a line means. That is the second half, and it is
+the same split `a2-door` was built across.
 
 ### Keep these — a rewrite would destroy them
 
@@ -86,17 +95,21 @@ she brings the failed practice; neither is enough alone.
 - ~~**The book never says why a grown mind is a person.**~~ **DONE at v5.26.0.** It is
   Seven's card on night 19, and `a2-choir`'s `canon[6]` besides, so it is true of the run
   whether or not the card was drawn. The sentence the whole story rests on is on the page.
-- **Five is never asked.** Marek consents afterwards — *"it was offered instead of an
-  execution, and I said yes"* — but that is the host. The overlay is never given the
-  question, and the whole book is about being asked.
+- ~~**Five is never asked.**~~ **DONE at v5.28.0.** The question is a card now, put out
+  loud with the tools down and Three stepped back from the chair, and Five answers it
+  believing it is agreeing to stop. Marek's *"it was offered instead of an execution, and
+  I said yes"* now has the overlay's own yes standing beside it.
 - **The capture has no beat.** Night 19 is a knowledge night; night 20 opens with a
   commander already in a chair. A new beat belongs between them.
 - **The fate-one rhyme is never said aloud.** Taking turns and fate one look identical from
   outside; the only difference is that one of them was asked.
 - **Five never becomes the way into the vault.** After night 20 he appears twice, in a
   graze and a kitchen line. The vault descent has Marek and not him.
-- **Vic's file never speaks.** It is installed on night 17 and does not appear again in the
-  sixteen nights that follow. It is not a speaker anywhere in the book.
+- **Vic's file still never SPEAKS**, but it is at least load-bearing now: from v5.28.0
+  night 20 turns on its steps being read out, and Three says out loud that without them
+  she had eleven years of the wrong hands. It is a document in the scene rather than a
+  voice in it. Whether it ever gets a nameplate of its own — all caps, out loud, through
+  the wrist — is an open question for the author.
 
 ---
 
