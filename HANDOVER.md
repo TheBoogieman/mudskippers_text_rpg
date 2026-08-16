@@ -10,7 +10,22 @@ The next wave is a new room: `a2-law` ("the same pan"), which has 3 cards and no
 
 ---
 
-## STOP — read THE-ANNULMENT-THREAD.md before touching Three, Five, Marek or Book Two's order
+## STOP — read THE-WORLD.md first, every session, before authoring anything
+
+`THE-WORLD.md` is the story bible. It did not exist until 2026-08-16 and its absence cost a
+wave: a whole thread was designed on air because the history lived in the author's head and
+in compacted conversations, while the repo held only process docs and 170 `canon:` lines
+buried in a 2MB HTML file. **The author had already established that Vic was the Architect's
+understudy. It was written down nowhere.** Every line in the bible is tagged **[CANON]**
+(in the file now, cannot be contradicted), **[RULED]** (decided, not yet authored) or
+**[OPEN]** (do not invent — ask). `THE-ANNULMENT-THREAD.md` is the working brief that sits
+under it.
+
+**The in-world Architect is a founder, not the author.** Code comments used to call the
+author "the Architect" too, which buried the character under dozens of unrelated hits;
+comments now say "the author". Do not reintroduce the collision.
+
+## Also read THE-ANNULMENT-THREAD.md before touching Three, Five, Marek or Book Two's order
 
 Ruled 2026-08-16. The Architect halted the `a2-law` wave because the annulment thread does
 not hold up: the same operation had two opposite outcomes, the family forcibly annulled a

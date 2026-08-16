@@ -1717,7 +1717,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.9.0 "Only Three Rows Exist"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.10.0 "The World, Written Down"
    the door never books thin · a night the player closed is never a night that failed
    the novel is a rail game · its typing bar is dark and its repair tools are gone
    above a temperature of 1 the DM writes the seams · the client still keeps the books
@@ -9933,7 +9933,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.9.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.10.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -10724,7 +10724,7 @@ function sameAsDoor(b, t){
 /* F5(a): THE ROW IS DEALT FROM THE DECK, AND A SPENT CARD RETIRES FROM IT.
    Wave 2 wrote a rail line for all 251 cards - "nothing reads these yet; Phase B
    does" - and Phase B shipped without ever reading them. So the deterministic row
-   was the door plus two HOUSE STALLS, for ever: the Architect clicked "Ask what they
+   was the door plus two HOUSE STALLS, for ever: the author clicked "Ask what they
    are not saying" and "Say nothing" over and over because they were the only things
    on offer, and the deck answered him by re-dealing. Both faces of F5 are the same
    missing fact, and this is the half that stops the game INVITING the repetition.
@@ -10881,7 +10881,7 @@ function sceneRails(n){
    every turn and only ONE of a beat's authored doors is on the rail at a time - so a
    player who read "Skin on the shard, and I say the name out loud. Nine. Let her
    answer that" on turn one and typed it on turn two was reaching for a door the rail
-   had moved. The Architect did exactly that: the beat closed underneath a topic scene
+   had moved. The author did exactly that: the beat closed underneath a topic scene
    about streetlights, with the gate silent under it.
    This is the STRICT half of sameAsDoor and only the strict half. The gram fallback
    exists to police the DM's choices, where a false positive costs one dropped line;
@@ -13059,7 +13059,7 @@ var V5SCENE = true;          /* Phase B is live. Its bar was met first - see the
 /* ==================== PHASE C: THE LEDGER CLOSES ====================
    Declared at v4.71.0 - the auditor's sign-off, pre-granted on these rows in the
    v5.14 audit, exercised here - against the definition of done that has stood in
-   the program's header since the day the Architect set it: a stranger plays all
+   the program's header since the day the author set it: a stranger plays all
    thirty-three nights with the model OFF and gets a complete, coherent, funny,
    occasionally lethal novel of a game - no template seams at emotional peaks.
    With a model on, the only difference is warmer paint between turns.
@@ -13134,7 +13134,7 @@ function callSceneTurn(){
 }
 /* F7: THE DOOR OWNS ITS OWN TURN. A press on the exit was still going through the
    topic deck, so the player reached for the ending and got a card about something
-   else with the beat's close silently underneath it - the Architect watched a night
+   else with the beat's close silently underneath it - the author watched a night
    end under a scene about streetlights. The close IS the turn: the beat card and the
    authored landing carry it, exactly as they do when a peril resolves, and no topic
    is spent on a night that is over.
@@ -13170,7 +13170,7 @@ function doorSkeletonNow(){
    doctrine, "the door costs the player nothing", fourth pass, do not fix it a
    fifth time - but under V5SCENE the held press was still walking the scene
    path: a topic card dealt as if the door were a question, the clock ticked,
-   the toll arithmetic run, and THEN the yellow box. The Architect named it:
+   the toll arithmetic run, and THEN the yellow box. The author named it:
    we were punishing players for reaching for the ending early. A door that
    cannot close tonight answers as information, not as a turn - the aside, the
    shard given back, the rail intact, nothing spent. The row greys the door to
@@ -14676,7 +14676,7 @@ function closeBeat(mode, note){
      night keeps the jog-and-jacket close, because the good landing shows a scene
      the night never printed. `world` is the BANNER's truth alone: THE WORLD MOVED
      ON belongs to the world's own arm, and a player who walked through the door -
-     even thin - closed the beat himself. The Architect took a legal door and read
+     even thin - closed the beat himself. The author took a legal door and read
      the world's banner over it as a toll; the card now says CLOSED, and the scar
      line under it carries the cost without misattributing the agency. */
   beatJustCleared = {title:b.title, forced:hard, world:forced, arcturn:turned, sum:rec, toll:tollMsg,
@@ -15550,7 +15550,7 @@ function pickLines(V, salt){
    it did, or the next turn opens with the model quietly missing a scene the
    player has already read, which is exactly the amnesia this whole file fights. */
 /* ==================== THE SEAMS (v4.72.2) ====================
-   RULED by the Architect: at the wild table, above a temperature of 1, the DM writes
+   RULED by the author: at the wild table, above a temperature of 1, the DM writes
    the seams too - the scene that opens a night and the passage that lands it - and
    below that line the client plays the authored ones exactly as it always has.
 
@@ -17716,7 +17716,7 @@ function deckHandled(text){
   return !!(s && railDeal[s.key] && typeof railDeal[s.key][nl] === "number");
 }
 /* F5: ASKED AND ANSWERED. Players repeat themselves - that is the finding, and it is
-   the last law in the book. The Architect clicked one rail four times and got four
+   the last law in the book. The author clicked one rail four times and got four
    different scenes, three of them about something else; in the room he asked one
    question six times and got the same authored scene six times, word for word. Two
    faces, one missing fact: the deck did not remember what it had already put in front
@@ -17749,7 +17749,7 @@ function pickTopicFresh(sc, key){
   if(!list.length || !branchLive(list).length) return null;
   for(i = 0; i < list.length; i++){ if(cardOnBranch(list[i]) && spent.indexOf(i) === -1) return pickTopic(sc, key); }
   /* THE ROOM GOES ROUND AGAIN. A dry room used to answer "you asked that already" and
-     then fall to two house stalls that asked nothing - the dead stretch the Architect
+     then fall to two house stalls that asked nothing - the dead stretch the author
      named. The family's own time now starts a new lap instead, and the lap advances
      every card to its next take. Only the room laps; the beat keeps its dry answer,
      because the beat has a budget and an ending and is not the part you live in. */
@@ -18524,7 +18524,7 @@ function parseScene(raw){
    a control by deleting it and a codebase that assumes the control exists is one
    TypeError away from a dead rail. */
 var mudBtnHeld = null;       /* the button while it is out of the tray */
-/* ==== THE BAR IS THE WILD TABLE'S (v4.72.2, the Architect's call) ====
+/* ==== THE BAR IS THE WILD TABLE'S (v4.72.2, the author's call) ====
    The novel took the button in v4.72.0 and kept the box, which left one channel open
    into a game that has no channel: every line typed there went to the pool, answered
    in house voices, and - as the class sweep then proved - was the single commonest
@@ -19101,7 +19101,7 @@ function takeAction(text, isMud){
   if(busy || runOver || !text || !text.trim()) return;
   /* TYPED FASTER THAN THE CEREMONY (v4.71.9). A line entered while a scene was
      still revealing took its turn UNDER the reveal - two staged renders
-     interleaved and the opening broke visibly, which is exactly how the Architect
+     interleaved and the opening broke visibly, which is exactly how the author
      met it: type fast into the bar on the cold open and the scene bugs out. The
      feed has always answered a click mid-reveal by fast-forwarding; the keyboard
      gets the same courtesy - finish the print instantly, then take the turn
@@ -25758,7 +25758,7 @@ function verdictMap(){
    pass above took Nine's NAME out of both pre-door walk scenes - shape, not words,
    applied one word too far - and since the opening is barred from witnessing, the
    beat's "Nine" anchor became unmeetable by any played turn: every door close at
-   a1-hum recorded the scar under the world's banner, which is how the Architect
+   a1-hum recorded the scar under the world's banner, which is how the author
    met it. named:Nine now fires on a1-hum/t1p4 ("Nine can talk to you...") and
    a1-hum/t2p1 (Pia's "Nine has better ears than us...") - the name restored where
    the courier would in truth be using it, he has known it since the reveal. */
@@ -25875,7 +25875,7 @@ function verdictMap(){
    That is the drift net doing the job it was built for on brand-new prose, twice, in the
    first room written under the new shape. */
 /* v4.86.0, a1-fare: ONE ENTRY GAINED AND IT IS THE SAME TRUE FIRE AS LAST TIME.
-   Eleven cards where there were three - the Architect took all eight candidates - and a
+   Eleven cards where there were three - the author took all eight candidates - and a
    second take on every one. Corpus 3,916 -> 4,036, the largest single room in the book.
    shard:hand GAINED a1-fare/Rt7T1p2: "Against your palm the hum is doing something small
    and fast, like a held note that has been held too long." The coat card opens with a
@@ -26066,7 +26066,7 @@ function verdictMap(){
      changing what the card is about rather than by hedging what it says.
    - asking-for-it. The tin goes hand to hand round a whole table, in a book where every
      put-away reads as her. It is passed, never taken; it is set down, never put back.
-   ONE DELIBERATE RELAXATION, RULED AND THEN RECONCILED. The Architect chose a card that
+   ONE DELIBERATE RELAXATION, RULED AND THEN RECONCILED. The author chose a card that
    spends a little of the undercroft tease early: asked a second time, Hesta trades one
    true sentence a year about what is under her floor, and this year's is "It is not
    mine." The beat's own never-line said nothing under that floor may be "explained,
@@ -26100,7 +26100,7 @@ function verdictMap(){
    counters were hunted rather than one. */
 /* v4.97.0, THE CHASSIS MOVES UNDER HESTA'S FLOOR: NOTHING GAINED, NOTHING LOST,
    NOTHING MOVED, across 8 new lines and fourteen edits to authored fact.
-   The Architect asked whether Vic had not kept the chassis under Hesta's floor all
+   The author asked whether Vic had not kept the chassis under Hesta's floor all
    along. He had not - the bible said "built and kept in Vic's kit" and said it four
    times - but the book had an empty slot sitting next to it that nobody had filled:
    a2-door's canon, "There is something under its floor Hesta has not mentioned."
@@ -26126,7 +26126,7 @@ function verdictMap(){
    come out to him. A relocation is not a find-and-replace; it is a hunt for every
    sentence that quietly knew where it was. */
 /* v4.98.0, WHY THEY GO TO HESTA'S AT ALL: ONE NEW ENTRY, NOTHING LOST, NOTHING MOVED.
-   The Architect asked the question the book could not answer. Book One closes on day
+   The author asked the question the book could not answer. Book One closes on day
    3 in the safehouse kitchen; The Open Door opens on day 9 outside a diner with the
    family already at the door - and in between there was no bridging line anywhere,
    and a2-door was one of the few beats in the game carrying NO `before` field at all.
@@ -26152,7 +26152,7 @@ function verdictMap(){
    filling is whatever sounded plausible to whoever got there first. */
 /* v4.99.0, SEASON TWO MOVES INTO THE OPEN DOOR: ONE ENTRY GAINED, NOTHING LOST,
    NOTHING MOVED, across seven relocated beats and twelve repaired sentences.
-   The Architect asked why the family keeps going back to the marsh. The honest answer
+   The author asked why the family keeps going back to the marsh. The honest answer
    was that nobody had ever decided to: Book One ends at Vic's safehouse, and Book Two
    inherited it as home base without a line of prose anywhere choosing it. Seven of its
    thirteen nights - including the season finale - happened in a shack on a marsh
@@ -26215,7 +26215,7 @@ function verdictMap(){
    knows the answer is not a licence to print it early. */
 /* v5.1.0, THE RECITAL: ONE ENTRY GAINED, NOTHING LOST, NOTHING MOVED - and one line
    caught by a fence nobody was thinking about. Corpus 5,008 -> 5,081. Seventy-three new
-   lines, the first forked cards in the game, and the scene the Architect named as the
+   lines, the first forked cards in the game, and the scene the author named as the
    story's peak.
    named:Seven GAINS a2-chassis/Rt3r, which is a rail line with his name in it. Honest,
    dull, and the only thing the pass produced.
@@ -26262,7 +26262,7 @@ function verdictMap(){
    participle, four traps into a list that already has five. The rail was reworded and
    the detector was not touched. The rule holds whoever trips it: fix the sentence. */
 /* v5.3.0, THE LONG EVENING. Twelve cards into a2-chassis - the high cluster the
-   Architect asked to be the biggest part of the room, plus the subjects he ruled.
+   author asked to be the biggest part of the room, plus the subjects he ruled.
    The room is 24 cards: 19 live on Seven's road, 16 on Nine's, 11 shared.
    Corpus 5,169 -> 5,348: 179 lines, 289 blocks, and TWO drift entries.
 
@@ -26283,7 +26283,7 @@ function verdictMap(){
    not here. a2-seven's never still reads: the WORK he did for them stays undetailed
    - names, columns, what a clerk of theirs actually does. v5.0.0 narrowed that never
    to unlock HOW HE GOT OUT and deliberately left the work sealed. A ruled subject
-   does not outrank a never; it gets taken back to the Architect instead.
+   does not outrank a never; it gets taken back to the author instead.
 
    A HARNESS THAT CRIED WOLF. The driver's own "nobody unmet is named" check flagged
    "Three people are talking at once" AND a pre-existing line, "Three ways at once".
@@ -26335,7 +26335,7 @@ function verdictMap(){
 
    ONE SUBJECT STAYS SEALED, RULED. "What he was on the lists" was refused at v5.3.0
    because a2-seven's never seals the work he did for the Choir. Taken back to the
-   Architect; he ruled LEAVE IT SEALED. The hole in him is the character. Recorded in
+   author; he ruled LEAVE IT SEALED. The hole in him is the character. Recorded in
    HANDOVER so no later wave re-opens it by accident. */
 /* v5.6.0, ASKED AGAIN. Every card in a2-chassis that plays on BOTH roads now has a
    second take: asked twice, the family goes further instead of repeating itself. The
@@ -26382,7 +26382,7 @@ function verdictMap(){
 /* v5.7.0, THE ROOM IS FINISHED. a2-chassis now meets every clause of the standard in
    HANDOVER: 25 cards, an id on every one, a second take on every card live on either
    road, and BOTH LANDINGS WIRED. Corpus 5,487 -> 5,791, three hundred and four new lines.
-   Seven cards carry a THIRD take as well, ruled by the Architect this wave.
+   Seven cards carry a THIRD take as well, ruled by the author this wave.
 
    THE RECITAL'S SECOND TAKE WAS RULED: he does it again, worse, and they let him. The
    first take is the family being ambushed by him. The second is the family having
