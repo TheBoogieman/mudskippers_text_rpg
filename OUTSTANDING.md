@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.40.0. **Book One is closed. Season 2 has twelve of its thirteen nights finished — only the finale is left — and the book has its first landing row that serves both sides of the chassis fork.***
+*Written 2026-08-16, updated at v5.41.0. **BOOKS ONE AND TWO ARE CLOSED. 22 of 33 nights are finished and Book Three is the whole of what is left — eleven nights, the lore-heavy ones, and an ending the novel does not currently have.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -9,7 +9,7 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ---
 
-## 0. The shape of the repo, as of v5.40.0
+## 0. The shape of the repo, as of v5.41.0
 
 **The game is four files, not one.** This changed during the tooling run and everything
 below assumes it.
@@ -45,7 +45,7 @@ taking half the window, and the corpus split.
 
 ## 1. Where the book actually stands
 
-**21 of 33 nights finished.** A night is finished on four counts and not before:
+**22 of 33 nights finished — every night of Books One and Two.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
@@ -56,7 +56,7 @@ taking half the window, and the corpus split.
 
 | | count |
 |---|---|
-| finished nights | **21 of 33** |
+| finished nights | **22 of 33** |
 | cards across both decks | 417 |
 | second and third takes | 224 |
 | **takes with no choice line of their own** | **47 of 224** |
@@ -274,16 +274,28 @@ three-layer cards.
 
 ---
 
-## 5. Unverified, and it is the last thing a player ever sees
+## 5. VERIFIED AT v5.41.0, AND IT IS WORSE THAN "UNVERIFIED": THE NOVEL HAS NO ENDING
 
 **`a3-seize`, night 33, has no authored closing.** No `lands`, no `landsHard`. That is
 deliberate for the wild table: its goal says *"Epilogue in chronicle voice, then set
-the_end true"*, written per run against that run's own record.
+the_end true"*, written per run against that run's own record. **The novel has no
+storyteller, and this was driven rather than reasoned about.**
 
-**But the novel has no storyteller.** Nobody has driven a novel run to the finale, so what
-it actually prints is unknown. Do not assume `endCard` covers it — that is DOM-only and
-fires for death, walking out, a broken run and a lost season, which is not the same path
-as a finale gate.
+**Every word a player gets after thirty-three nights:** the head **PAID IN FULL**, the line
+*"Season complete. The chronicle survives the courier."*, and two buttons.
+
+**And the last night's family time never opens.** The aftermath tick sees
+`beatIdx === SPINE.length - 1`, advances the pointer and returns before the branch that
+enters `slack` — so `a3-seize`'s three room cards have never been reachable by anybody.
+
+**Three things make this the most valuable hour left in the project:**
+1. **The headline is Vic's dying words**, spent as a generic completion stamp four nights
+   after the scene that earns them.
+2. **`a3-seize`'s canon already promises ten specific things** and dramatises none of them:
+   Mirren's name called first at the narrow door · nobody filing Pia under anything ever
+   again · the canals reopening under two pilots who take turns · every keeping left
+   sleeping now having Three to answer to · the Principal staying for the letting go.
+3. **It is the last thing a player ever sees.**
 
 `a1-hum` also has no `opens`, and that one **is** correct: it comes straight out of the
 hardcoded cold open, and the board says so.

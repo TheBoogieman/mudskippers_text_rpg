@@ -146,28 +146,87 @@ sweep's corpus walkers. The board also reads live run state (`persistAll`, `curr
 and the rehearsal room drives real runs. **Estimate by measuring the thing, not the gap
 between two landmarks.**
 
-### AUTHORING RESUMES HERE — 21 of 33, NIGHT 22 IS NEXT
+### SEASON TWO IS CLOSED (v5.41.0) — 22 of 33, AND BOOK THREE IS THE WHOLE OF WHAT IS LEFT
 
-**Season 2 has one night left: `a2-turn` (22), the finale.** Then all eleven of Book Three.
+`a2-turn` is finished and the board says so itself: **7 evening cards (budget 5 + 2), 11 in
+the room, a second take AND its own choice line on every one of them, 14 wired rows.**
+Nothing outstanding in it. **Every night of Books One and Two is written.**
 
-**BEFORE A WORD OF NIGHT 22 IS WRITTEN, ONE QUESTION GOES TO THE AUTHOR: Pia's background
-is ruled BLANK** — not "she has nobody", but unwritten and not to be assumed either way —
-**and night 22 puts her name on the Choir's paper as a salvage listing.** That night will
-want to know whether anybody outside this family would come looking. It is a blocking
-question, not a nice-to-have.
+**THE CRAFT RULING OF 2026-08-16 LANDS WITH IT, and it is not a preference — it came from
+readers.** Three laws, all of which apply to everything written from here:
 
-**Night 22 is the expensive one:** seven in the room, both sides of the chassis fork, and
-**four staged landings rather than two** — count the variants, not the beats. Night 21's
-`the-knock-at-the-door` is its seed: an official on the step at half nine asking after a
-name, Hesta gives them four inches of door and nothing else, and refuses to say the name
-until tomorrow in daylight. **Planted, deliberately not spent.**
+1. **SHORT BLOCKS.** A speech is several blocks, not one paragraph. Night 22's longest
+   spoken line is **194 characters against the book's 397, and its median is 85 against the
+   book's 113** — measured, not asserted. **The mechanism for this already existed and I
+   nearly rebuilt it:** `groupRuns` in `veldt-menu.js` tags consecutive blocks from one
+   mouth `solo/first/mid/last` and `veldt-skin.css` collapses them into ONE speech box with
+   the name said once and a `· · ·` between lines. **838 of the book's 4,701 blocks already
+   qualify.** It keys on `.tag` being the block's first element child — **so never stop
+   emitting the nameplate to save a repeat; that drops the block out of speech styling
+   altogether.** Look in the SKIN before adding a presentation form to `index.html`.
+2. **NO AI TICS.** The banned move is the contrast — *"it is not a thing, it is another
+   thing"* — plus *"which is the whole…"*, *"and that is the point"*, and **"load-bearing"**.
+   Measured across the corpus at the time of the ruling: **42, 23, 24 and 16 instances.**
+   Those ~105 are a debt in the FINISHED nights and were deliberately not touched this wave.
+3. **MORE NARRATION, and it goes BETWEEN the lines.** The book was at **23.6% narration
+   blocks**. Every passage on night 22 carries at least two, most carry three or four.
+   Poetic, cyberpunk, sharp, witty — trams considering derailment, lamps thinking better of
+   leaving, water finding a lower opinion.
 
-**Other authoring debts:** the Mirren Doctrine goes on night 19, which is a REOPENING of a
-finished night · how Nine heard anything inside the farm is an OPEN WORLD FACT and must not
-be invented (night 29 needs it) · Nine has no card on night 21 and Marek's first ordinary
-evening is unwritten · 47 takes still have no choice line of their own · eighteen nights
-unaudited for the earshot fault · `a3-seize` has no authored closing and nobody has driven a
-run that far.
+**TEN CARDS A NIGHT IS THE STANDARD FROM BOOK THREE ON, and the arithmetic matters.** The
+EVENING deck cannot reach ten: `railFor` offers exactly **two** unspent cards a turn under
+the door, and the world takes the night one turn past budget, so a beat can only ever show
+**budget + 1** cards. The FAMILY ROOM has no such ceiling — it laps, the way out is up from
+turn one, and every card is reachable. **Ruled: rooms to 10+ everywhere in Book Three, plus
+a raised turn clock on the four heaviest lore nights only** (`a3-founding`, `a3-principal`,
+`a3-granny`, `a3-dreamers`), so their evenings carry 8 rather than 5.
+
+**TWO STORY FACTS WERE RULED ON 2026-08-16 AND BOTH ARE NOW ON THE PAGE:**
+- **PIA IS ADMINISTRATIVELY ALONE.** No guardian, no record, nobody who would come looking
+  — *and that is precisely why her name could be written down.* Her own card says it: *"No
+  card. No entry. Nobody wrote me down when I turned up and nobody has since. I'm not on one
+  single list anywhere in this city. Except theirs."* Her second take turns it into a plan:
+  when it is over she walks into an intake desk in daylight and stands there until somebody
+  files a correction in front of her. **That is the seed of `a3-seize`'s canon line "Nobody
+  files Pia under anything, ever again."**
+- **THE SEASON'S BILL IS THE CHANDLER.** Not a family member — all seven are alive at the
+  top of Book Three, so it could never have been. **Emrys Toller, the chandler on the
+  corner**, the coward with good hearing who owes Hesta and watches the family through his
+  own candle stock. He probably did talk. They took him regardless, because he was standing
+  nearest and he was on their list. **HE IS A PLANT, NOT A CLOSED SCENE: night 22 is day
+  23–24 and `a3-evict` is day 31, so he can be one of the nine standing very still on
+  Cannery Row when the family takes that street back and stills them the kind way.** Hesta
+  is keeping his shop, and has put his name on the shelf under her floor **in pencil,
+  because pencil comes off** — which is also a plant for `a3-dreamers`, whose canon already
+  says her kept names get checked against the shelves.
+
+**Other authoring debts, unchanged:** the Mirren Doctrine goes on night 19, which is a
+REOPENING of a finished night · how Nine heard anything inside the farm is an OPEN WORLD
+FACT and must not be invented (night 29 needs it) · the ~105 AI tics in the finished nights
+· eighteen nights unaudited for the earshot fault.
+
+### THE NOVEL HAS NO ENDING, AND THIS IS THE NEXT THING WORTH DOING
+
+**Driven, not read, on 2026-08-16.** `a3-seize` (night 33) is the only beat in the book with
+**no `lands` and no `landsHard`**. That was deliberate for the wild table, where a model
+writes the epilogue against the run's own record. The novel has no model.
+
+**So this is every word a player currently gets after thirty-three nights:**
+
+> **PAID IN FULL** — Season complete. The chronicle survives the courier.
+
+Two buttons. And **the family's own time on the last night never opens**: the aftermath tick
+at `index.html` sees `beatIdx === SPINE.length - 1`, advances the pointer and returns, so
+the run goes straight to `endCard("season")` and `a3-seize`'s three room cards have never
+been reachable by anybody.
+
+**Worse, that headline is Vic's dying words**, spent as a generic completion stamp four
+nights after the scene that earns them.
+
+**And `a3-seize`'s own canon promises ten things nobody ever sees** — Mirren's name called
+first at the narrow door, nobody filing Pia under anything again, the canals reopening under
+two pilots who take turns, the Principal staying for the letting go. All written as canon.
+None of it dramatised.
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
 
