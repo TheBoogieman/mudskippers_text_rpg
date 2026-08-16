@@ -18,8 +18,14 @@ Book One is finished and `a2-chassis` is FINISHED — 25 cards, an id on every o
 take on every card live on either road, seven cards carrying a THIRD take, and both landings
 wired. It is the deepest room in the game by a distance.
 
-**Next is `a2-three` (night 16), in order** — see the order rule below. It has 6 beat cards
-(already at `budget + 2`), 3 room cards, **zero takes**, and no landing wired.
+**`a2-three` (night 16) is FINISHED at v5.13.0** — seven room cards, a take on each, a
+third on the name, both landings wired. **4 of 33 nights now have all four counts.**
+
+**Read this before picking the next wave.** The board points at `a1-pack` (night 4), not at
+`a2-housing`, and it is right to. **Book One's ROOMS are all finished, but every one of its
+nights is short of beat cards for its own pressure block.** Those are two different
+programmes and only the room one has been running. The author has not ruled which goes
+next — ask, do not assume.
 
 ---
 
@@ -120,6 +126,7 @@ that line was five beats stale. The order is `a2-three` (night 16), `a2-housing`
 | `a1-chase` | 8 | The causeway. The labels, the tobacco tin, the night that turns convenient |
 | `a2-door` | 15 | The Open Door. The tin, the thimble, one true sentence a year |
 | `a2-chassis` | 25 | **Deepest room in the game.** The fork, the high cluster, the recital, the proceeding. 7 cards go three layers deep |
+| `a2-three` | 7 | The long table, morning. The years she could not find it, the name she refuses, the one who did not survive, the treaty over the chair |
 
 ## Book One is CLOSED
 
