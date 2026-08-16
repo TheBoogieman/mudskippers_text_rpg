@@ -1710,7 +1710,10 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.17.0 "Mudskipper Moment"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.18.0 "A Different Four"
+   a beat deals its cards in a different order every run and the same order all through one
+   a card may wait for another with after: - the tin is opened before it goes round
+   the board shows both closings, the stone, the teeth and who does not come out
    Book One act two closed: ten beat cards, so a stalling player never runs the night dry
    the war cry has an origin now, and it is a fish on a radiator cover in Vic's waiting room
    the tin is the whole kit and it is on the page: rolled, lit, and passed the long way
@@ -6794,7 +6797,7 @@ var SCENEBOOK = {
        vessel ladder hands you for free: Nine cannot smoke because a shard has no
        lungs and no hands, and that fact is played for comedy here on purpose,
        because nine-at-the-table in this same room already plays it for grief. */
-    {id:"the-rolling", ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
+    {id:"the-rolling", after:"asking-for-it", ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
      who:"Hesta", gives:"the ritual performed rather than explained - the long way round, everybody making their own, and the one person who is refused",
      holds:"nothing. Free.",
      rail:"Take the tin when it reaches you, and watch what everybody does with it.",
@@ -6874,7 +6877,7 @@ var SCENEBOOK = {
       ["Nine","I am also the record, and I concur with the napkin."],
       "Nobody burns the napkin. In the morning it is on the shelf behind the counter, held down by the good knife, and it stays there."
      ]]},
-    {id:"under-the-floor", ask:"where the tin came from", key:"where tin from floor keep store stash cellar cold",
+    {id:"under-the-floor", after:"asking-for-it", ask:"where the tin came from", key:"where tin from floor keep store stash cellar cold",
      who:"Hesta", gives:"two words, and no more than two words, and the whole table notices",
      holds:"everything. What else is down there is not confirmed, gestured at, or discussed",
      rail:"Ask her where a tin like that lives.",
@@ -7267,7 +7270,35 @@ var SCENEBOOK = {
     plays:[["Pia","Twice. Once for a stranger, once for not-a-stranger. This is the third and it is the middle kind - I knew her Tuesdays."],
      "Her hands are not idle: she is sorting stones by flatness, building the cairn's next three courses in advance, a supply line for other people's grief.",
      ["Pia","I do the stones. It is the part that needs doing and the part I can do. The crying is not on a schedule and I would thank everyone to stop checking."],
-     "The stack beside her grows, flattest to roundest, ready."]}
+     "The stack beside her grows, flattest to roundest, ready."]},
+    {ask:"what Vic owes her",
+     key:"vic owes fault blame route through his why-her guilt sent",
+     who:"Vic",
+     gives:"the shape of what he did, said plainly and without asking anybody to argue him out of it",
+     holds:"what he was actually moving, and who else knew - that is not this morning's business",
+     rail:"Ask Vic what he owes her, since nobody else is going to ask it.",
+     plays:[["Vic","I will say it once, standing up, and then I will dig."],
+      ["Vic","The route ran through Mirren because Mirren was the safest thing I had. Twenty years of that. I did not put her in front of anything - I put her BEHIND everything, which is what you do with what you cannot afford to lose, and it turns out behind everything is exactly where they look."],
+      "He is not performing it. He is reciting something he worked out days ago and has been carrying since, the way you carry a stone in a boot rather than put it down.",
+      ["Vic","She said yes, and she said it knowing the arithmetic, and I have gone round that a great many times looking for the bit where it makes this lighter. There is no such bit."],
+      ["Pia","Nobody here is blaming you."],
+      ["Vic","I know. That is not the same as it not being mine, and I would rather you all let me have it than take it off me kindly."],
+      "Nobody takes it off him. The marsh does its early grey thing over the reeds, and Hesta hands him the second spade without a word, which is the only answer this family has that would land."]},
+    {ask:"where you even bury somebody in a city like this",
+     key:"where bury ground grave dig plot spot place put her marsh",
+     who:"Hesta",
+     gives:"the practical answer, which is grim, and then the reason this particular ground and not the ordinary one",
+     holds:"how many times she has done this before, and for whom",
+     rail:"Ask Hesta where you even bury somebody here.",
+     plays:[["Hesta","Properly? You do not. There is a form, and a fee, and a number, and at the end of it Mirren is a line in a register kept by the people who emptied her."],
+      ["Hesta","So you do it improperly. You come out to the edge where the ground is honest and nobody has got round to owning it, and you do it at first light because first light is when nobody is looking and also because it is the only decent hour for it."],
+      "She says the second half more gently than the first, and puts a boot on the spade.",
+      ["Pia","Is that allowed?"],
+      ["Hesta","No."],
+      ["Hesta","It has never once been allowed and I have never once asked. The ground does not check paperwork, child. That is the single best thing about the ground."],
+      ["Nine","...Will anybody be able to find it? After."],
+      "It is a practical question from the only person here who has never been able to walk anywhere, and it lands harder than it was meant to.",
+      ["Hesta","We are going to put a cairn on it. Stones, stacked, in the open, where anybody can see them and nobody can read them but us. Mirren gets the first one. That is how you find it - you come back and you count."]]},
   ],
   room:{
    where:"the walk back from the cairn, the light coming up, nobody in a hurry",
@@ -10435,7 +10466,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.17.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.18.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -11317,6 +11348,45 @@ function cardIndexById(sc, id){
   for(i = 0; i < list.length; i++){ if(list[i] && list[i].id === id) return i; }
   return -1;
 }
+/* A CARD MAY WAIT FOR ANOTHER (v5.18.0). `after:"id"` or `after:["id","id"]` means
+   this card is not offered until those have been played - the tin has to be opened
+   before it can go round. It names ids, not positions, so it survives the append-only
+   law. A name this deck does not carry is not a gate: an `after` pointing at a card
+   that was never written would silence its own card forever, in silence, which is the
+   one failure mode this whole mechanism must not have. The lint reports those. */
+function cardWaiting(sc, t, spent){
+  var need = t && t.after;
+  if(!need) return false;
+  if(typeof need === "string") need = [need];
+  for(var i = 0; i < need.length; i++){
+    var ix = cardIndexById(sc, need[i]);
+    if(ix < 0) continue;
+    if(spent.indexOf(ix) === -1) return true;
+  }
+  return false;
+}
+/* THE BEAT DEALS IN A DIFFERENT ORDER EVERY RUN, and the same order all through one.
+   A beat has a hard turn limit, so the row only ever reaches the front of the deck:
+   with six cards and four turns the player SEES six and PLAYS the first four, every
+   run, in the same order, for ever. Shuffling the offer order changes which four a
+   run plays without touching a single index - and indices are what save files hold,
+   so this is free. Keyed on the run slug exactly as pickVariant is, so it is stable
+   across a reload and different next time. Rooms are NOT shuffled: they have no
+   clock, a player who stays gets the whole deck anyway, and their authored order is
+   doing real work. */
+function dealOrder(list, key, spent, sc){
+  var idx = [], i;
+  for(i = 0; i < list.length; i++) idx.push(i);
+  if(String(key).indexOf("|room") !== -1) return idx;      /* the room deals as written */
+  var s = String(runSlug || "seed") + "|deal|" + key, h = 0;
+  for(i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0x7fffffff;
+  /* Fisher-Yates off one seeded counter: deterministic, and it visits every position */
+  for(i = idx.length - 1; i > 0; i--){
+    h = (h * 1103515245 + 12345) & 0x7fffffff;
+    var j = h % (i + 1), t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+  }
+  return idx;
+}
 function wireRail(rails, sc, key){
   if(!rails || !rails.length) return [];
   if(!sc || !sc.topics) return rails.map(choiceLine).filter(function(x){ return !!x; });
@@ -11367,9 +11437,15 @@ function sceneRails(n){
   if(!list.length) return out;
   spent = topicSpent[s.key] || [];
   if(!railDeal[s.key]) railDeal[s.key] = {};
-  for(i = 0; i < list.length && out.length < n; i++){
+  /* the order is the run's, not the file's - see dealOrder. Rooms come back in
+     authored order, so this loop is unchanged for them. */
+  var seq = dealOrder(list, s.key, spent, s.sc), q;
+  for(q = 0; q < seq.length && out.length < n; q++){
+    i = seq[q];
     if(spent.indexOf(i) !== -1) continue;
     t = list[i];
+    /* a card that is waiting on another one is not offered yet */
+    if(cardWaiting(s.sc, t, spent)) continue;
     /* THE FORK'S UNHUNTED READER (fixed v5.15.0). This walked the deck in raw index
        order and never asked cardOnBranch, so in a forked room it offered the other
        road's cards - which pickTopicFresh then refuses to deal. Off-branch cards are
@@ -18330,11 +18406,23 @@ function pickTopic(sc, key){
      to prevent. The README's "never deals the same card twice in a run" was false
      in the common case; it is true now until the deck is genuinely empty. */
   var best = -1, bestHits = 0;
+  /* A CARD THAT IS WAITING ON ANOTHER DOES NOT ANSWER, however well it scores - the
+     tin cannot go round before it has been opened. The row already refuses to offer
+     one (sceneRails); this is the other two ways in, the keyword match and the
+     next-unplayed fallback. The bound path above is deliberately NOT gated: a rail
+     that names a card by id is the author saying so out loud, and silently refusing
+     an explicit instruction is the failure this whole mechanism must not have. */
   for(i = 0; i < list.length; i++){
     if(!cardOnBranch(list[i]) || spent.indexOf(i) !== -1) continue;
+    if(cardWaiting(sc, list[i], spent)) continue;
     if(score[i] > bestHits){ bestHits = score[i]; best = i; }
   }
   if(best < 0){                       /* nothing unspent matched: authored order */
+    for(i = 0; i < list.length; i++){
+      if(cardOnBranch(list[i]) && spent.indexOf(i) === -1 && !cardWaiting(sc, list[i], spent)){ best = i; break; }
+    }
+  }
+  if(best < 0){                       /* everything left is waiting on something: let the gates through */
     for(i = 0; i < list.length; i++){ if(cardOnBranch(list[i]) && spent.indexOf(i) === -1){ best = i; break; } }
   }
   if(best < 0){                       /* every card is spent - the score decides which to replay */
@@ -23346,7 +23434,7 @@ function wbStats(){
   if(wbStatCache) return wbStatCache;
   var rows = [], t = {cards:0, room:0, takes:0, forks:0, lines:0, pass:0, doors:0, walks:0,
                       wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0,
-                      broken:0, cutRows:0};
+                      broken:0, cutRows:0, badAfter:0, turns:0, folds:0};
   SPINE.forEach(function(b, i){
     var sb = SCENEBOOK[b.id] || {};
     var tp = sb.topics || [], rp = (sb.room && sb.room.topics) || [];
@@ -23377,7 +23465,7 @@ function wbStats(){
        an authored fourth row is never dealt at all. Both are counted across the
        whole book so neither can hide on a night nobody happens to open. */
     var re = wbReach(b);
-    t.broken += re.broken; t.cutRows += re.cutRows;
+    t.broken += re.broken; t.cutRows += re.cutRows; t.badAfter += re.badAfter.length;
     if(wired) t.wired++; else t.dark++;
     if(tp.length < need) t.short++;
     if(!takes) t.noTakes++;
@@ -23434,7 +23522,23 @@ function wbReach(b){
       });
     });
   });
+  /* an `after:` naming a card this deck does not carry is a gate that never opens
+     for a card nobody sees - the one silent failure the waiting mechanism could
+     have. Both decks are checked, because after: is not a room-only idea. */
+  var badAfter = [];
+  [["the night", SB.topics || []], ["the room", room]].forEach(function(pair){
+    (pair[1] || []).forEach(function(c){
+      var need = c && c.after;
+      if(!need) return;
+      if(typeof need === "string") need = [need];
+      need.forEach(function(nid){
+        if(cardIndexById({topics:pair[1]}, nid) < 0)
+          badAfter.push((c.id || c.ask) + " waits for " + nid + ", which is not in " + pair[0]);
+      });
+    });
+  });
   return {rows:rows, offeredBy:offeredBy, byId:byId, roomIds:order, broken:broken, cutRows:cutRows,
+          badAfter:badAfter,
           orphans:order.filter(function(cid){ return !offeredBy[cid]; })};
 }
 
@@ -23472,6 +23576,8 @@ function wbCard(t, offers){
         + (t.id ? ' <span style="color:var(--wb-slate);font-weight:400">' + esc(t.id) + "</span>" : "") + "</span>";
   if(t.fork) h += '<div class="wb-rl" style="color:var(--wb-slate)">Forked &mdash; dealt only on the '
     + esc(t.fork) + " side of the chassis choice.</div>";
+  if(t.after) h += '<div class="wb-rl" style="color:var(--gold)">Waits for '
+    + esc([].concat(t.after).join(" and ")) + " &mdash; not offered, and not dealt, until that has played.</div>";
   h += '<span class="wb-lb">The choice that offers it</span>'
     + '<div class="wb-rl">' + (t.rail ? esc(t.rail) : '<span style="color:#e08b8b">no rail line &mdash; only typing finds this</span>') + "</div>";
   if(offers){
@@ -23553,15 +23659,41 @@ function wbDrawBook(){
     + '<div class="wb-stat"><b class="s">' + t.noTakes + "</b><span>nights repeat themselves if asked twice</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.dark + "</b><span>nights land on nothing to click</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div></div>";
-  if(t.broken || t.cutRows){
+  if(t.broken || t.cutRows || t.badAfter){
     h += '<div class="wb-note" style="color:#e08b8b"><b>Wiring faults: ' + t.broken
       + " rail row(s) name a card that is not in the deck"
-      + (t.cutRows ? ", and " + t.cutRows + " authored row(s) are past the cut to three and never dealt" : "")
-      + ".</b> Both fail in silence in the game. Open the night to see which.</div>";
+      + (t.cutRows ? ", " + t.cutRows + " authored row(s) are past the cut to three and never dealt" : "")
+      + (t.badAfter ? ", " + t.badAfter + " card(s) wait for a card that does not exist" : "")
+      + ".</b> All of these fail in silence in the game. Open the night to see which.</div>";
   } else {
-    h += '<div class="wb-note"><b>Wiring clean.</b> Every rail row names a card that exists, and no night'
-      + " authors a fourth row for a rail that only has three.</div>";
+    h += '<div class="wb-note"><b>Wiring clean.</b> Every rail row names a card that exists, no night'
+      + " authors a fourth row for a rail that only has three, and every card that waits for another"
+      + " waits for one that is really there.</div>";
   }
+
+  /* ---- the closings: where an act turns, where a season folds ---- */
+  h += '<div class="wb-sh">Closings</div>';
+  h += '<p class="wb-p">Every night has two endings written for it: the one the player reached, and the one'
+    + " the world took when the turns ran out. Both are authored for all " + SPINE.length + " nights &mdash; "
+    + t.pass + " passages between them. The nights below carry something further: a <b>stone</b>, which is what"
+    + " the run remembers of that night for the rest of the season, and the act and season it closes.</p>";
+  h += '<div class="wb-scroll"><table class="wb-tb"><thead><tr>'
+    + "<th>#</th><th>Night</th><th>Closes</th><th>The stone</th></tr></thead><tbody>";
+  var anyStone = 0;
+  SPINE.forEach(function(b, i){
+    if(!b.stone) return;
+    anyStone++;
+    var nxt = SPINE[i + 1];
+    var closes = !nxt ? "the season, and the book"
+      : (nxt.season !== b.season ? "Season " + b.season + " &mdash; " + esc(SEASON_NAMES[b.season])
+      : (nxt.act !== b.act ? "Act " + b.act + " &mdash; " + esc(ACT_NAMES[b.season][b.act]) : "its own night"));
+    h += '<tr><td class="n">' + (i + 1) + "</td>"
+      + '<td><button class="wb-link" data-wbjump="' + esc(b.id) + '">' + esc(b.title) + "</button></td>"
+      + "<td>" + closes + "</td><td>" + esc(b.stone) + "</td></tr>";
+  });
+  h += "</tbody></table></div>";
+  h += '<p class="wb-p">' + anyStone + " of " + SPINE.length + " nights leave a stone. The rest close and are"
+    + " remembered only through their canon lines.</p>";
   h += '<div class="wb-note"><b>Why the card count is budget plus two.</b> A night gives the player '
     + " a set number of turns before the world closes it. If the cards run out first the player spends"
     + " the last turns being told the same things again, so every night wants two more cards than it has"
@@ -23743,14 +23875,32 @@ function wbDrawBeat(){
       + "This night has no scene book, so the storyteller invents its whole middle.</p></div>";
   }
 
-  h += '<div class="wb-sh">The landing</div>';
+  h += '<div class="wb-sh">The two closings</div>';
+  h += '<p class="wb-p">Every night is written twice at the end: the <b>green</b> close, which the player'
+    + " reached, and the <b>red</b> one, which the world took when the turns ran out. Both are authored for"
+    + " every night in the book. The red one is not a failure screen &mdash; it is the same night, closed by"
+    + " somebody else, and it leaves a scar the run keeps.</p>";
+  if(!(b.lands || []).length && !(b.landsHard || []).length)
+    h += '<div class="wb-c red"><span class="wb-t red">No closing written</span><p class="wb-p" style="margin:0">This night has neither.</p></div>';
   (b.lands || []).forEach(function(V, n){
-    h += '<div class="wb-c gold"><span class="wb-t gold">Landing ' + (n + 1) + " &mdash; the player finished it</span>" + wbPassage(V) + "</div>";
+    h += '<div class="wb-c gold"><span class="wb-t gold">GREEN &mdash; the player reached it'
+       + ((b.lands.length > 1) ? ", version " + (n + 1) : "") + "</span>" + wbPassage(V) + "</div>";
   });
   (b.landsHard || []).forEach(function(V, n){
-    h += '<div class="wb-c red"><span class="wb-t red">Landing ' + (n + 1) + " &mdash; the world took it, and it cost</span>" + wbPassage(V) + "</div>";
+    h += '<div class="wb-c red"><span class="wb-t red">RED &mdash; the world took it, and it cost'
+       + ((b.landsHard.length > 1) ? ", version " + (n + 1) : "") + "</span>" + wbPassage(V) + "</div>";
   });
-  if(b.scar) h += '<div class="wb-c red"><span class="wb-t red">The scar</span><div class="wb-pass">' + esc(b.scar) + "</div></div>";
+  if(b.scar) h += '<div class="wb-c red"><span class="wb-t red">The scar &mdash; what the red close leaves behind</span><div class="wb-pass">' + esc(b.scar) + "</div></div>";
+  if(b.teeth){
+    h += '<div class="wb-c red"><span class="wb-t red">The teeth &mdash; this night can kill him</span>'
+      + '<div class="wb-pass">' + esc(b.teeth.threat || "a lethal stage") + "</div>"
+      + (b.teeth.death ? '<span class="wb-lb">If he walks into it</span><div class="wb-pass">' + esc(b.teeth.death) + "</div>" : "")
+      + (b.teeth.grazeCanon ? '<span class="wb-lb">If it only grazes him</span><div class="wb-pass">' + esc(b.teeth.grazeCanon) + "</div>" : "")
+      + "</div>";
+  }
+  if((b.falls || []).length)
+    h += '<div class="wb-c red"><span class="wb-t red">Who does not come out of this night</span><div class="wb-rl">'
+       + b.falls.map(esc).join(" &middot; ") + "</div></div>";
 
   if(SB && SB.room){
     h += '<div class="wb-sh">The room afterwards &mdash; ' + ((SB.room.topics || []).length) + " cards</div>";
@@ -23768,8 +23918,26 @@ function wbDrawBeat(){
 
   h += '<div class="wb-sh">What the run will remember either way</div><div class="wb-c">';
   (b.canon || []).forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
-  if(b.stone) h += '<div class="wb-rl" style="color:var(--gold)">' + esc(b.stone) + "</div>";
   h += "</div>";
+  [["canonAlt","...and instead, if the night went the other way"],
+   ["canonA","...and only if the choice went one way"],
+   ["canonB","...and only if it went the other"],
+   ["canonSoft","...and softly, if nobody pushed"]].forEach(function(pair){
+    if(!(b[pair[0]] || []).length) return;
+    h += '<div class="wb-c"><span class="wb-t">' + pair[1] + "</span>";
+    b[pair[0]].forEach(function(c){ h += '<div class="wb-rl">' + esc(c) + "</div>"; });
+    h += "</div>";
+  });
+  if(b.stone){
+    var nx2 = SPINE[i + 1];
+    var what = !nx2 ? "closes the season and the book"
+      : (nx2.season !== b.season ? "closes Season " + b.season
+      : (nx2.act !== b.act ? "closes Act " + b.act : "stands on its own"));
+    h += '<div class="wb-c gold"><span class="wb-t gold">THE STONE &mdash; ' + what
+       + '</span><div class="wb-pass">' + esc(b.stone) + "</div>"
+       + '<div class="wb-rl" style="color:var(--wb-slate)">A stone is what the run carries out of this night'
+       + " for the rest of the season, whichever way it closed.</div></div>";
+  }
 
   if((b.press || []).length){
     h += '<div class="wb-sh">Pressure &mdash; offered when the night runs short</div>';
@@ -30561,20 +30729,35 @@ function selfTest(){
            either authored line is the deck's own. The binding assert below still runs
            on whichever wording was actually dealt, which is the half that matters. */
         var wordOf = function(t, ln){ return !!t && (ln === t.rail || (!!t.railAlt && ln === t.railAlt)); };
+        /* ORDER IS NOT THE CONTRACT ANY MORE (v5.18.0). This asserted that the row
+           showed topics[0] and topics[1], which was only ever true because the deal
+           walked the deck in file order - and from v5.18.0 a BEAT deals in an order
+           seeded off the run, so that a night with more cards than turns plays a
+           different four each time. What has to hold is the same as it always was
+           and is now stated as itself: every line under the door belongs to some
+           unspent card of THIS deck, and clicking a line deals THAT card. */
         var sc = sceneNow(), list = sc.sc.topics, row = railFor([]);
-        if(!wordOf(list[0], row[1]) || !wordOf(list[1], row[2])){
+        var cardFor = function(ln){
+          for(var q = 0; q < list.length; q++) if(wordOf(list[q], ln)) return list[q];
+          return null;
+        };
+        var offered = [row[1], row[2]].map(cardFor);
+        if(!offered[0] || !offered[1] || offered[0] === offered[1]){
           rwBad.push("the row under the door is not the deck: " + row.slice(1).join(" // "));
         }
         /* the binding: the line the row offered deals the card it was offered FROM */
         lastPlayerText = row[1];
-        if(pickTopic(sc.sc, sc.key) !== list[0]) rwBad.push("clicking a rail dealt a different card");
+        var got = pickTopic(sc.sc, sc.key);
+        if(got !== offered[0]) rwBad.push("clicking a rail dealt a different card: offered "
+          + (offered[0] && offered[0].id) + ", dealt " + (got && got.id));
         /* ...and that card has now retired from the row - under either of its names */
         var row2 = railFor([]);
-        if(row2.indexOf(list[0].rail) !== -1 || (list[0].railAlt && row2.indexOf(list[0].railAlt) !== -1)){
+        if(offered[0] && (row2.indexOf(offered[0].rail) !== -1
+           || (offered[0].railAlt && row2.indexOf(offered[0].railAlt) !== -1))){
           rwBad.push("a spent card is still on the row");
         }
-        if(!wordOf(list[1], row2[1])) rwBad.push("the row did not walk on: " + row2[1]);
-        rwSaw.push("the row deals " + list.length + " cards in order and each retires as it is spent");
+        if(!cardFor(row2[1])) rwBad.push("the row did not walk on: " + row2[1]);
+        rwSaw.push("the row deals from the deck in the run's own order, and each card retires as it is spent");
         /* the deck run dry: the row is the door and the house stalls, which is the
            deck telling the player this room is finished */
         var kk = 0;

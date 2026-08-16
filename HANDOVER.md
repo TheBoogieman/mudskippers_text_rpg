@@ -98,6 +98,30 @@ that line was five beats stale. The order is `a2-three` (night 16), `a2-housing`
 
 **"Don't stop until we do this for every beat."** — his instruction, 2026-08-15.
 
+## Two laws that arrived with the shuffle (v5.18.0)
+
+**A BEAT DEALS ITS CARDS IN A DIFFERENT ORDER EVERY RUN.** Same order all through one run,
+seeded off the run slug exactly as `pickVariant` is. Rooms are NOT shuffled — they have no
+clock, so a player who stays gets the whole deck anyway, and their authored order is doing
+real work. Two consequences you must write for:
+
+1. **A beat's anchor must be named by MORE THAN ONE card.** An anchor is a name that has to
+   reach the screen before the gate counts. Under the old fixed order, a single card naming
+   it was guaranteed to be dealt; now it is luck. `a2-mirren` failed this the moment the
+   shuffle went in — one card named her, and it was the night whose entire subject is
+   saying her name aloud. The sweep row "every beat's anchors can be earned" catches it.
+2. **Order is not a way to sequence a scene.** If card B only makes sense after card A, say
+   so: `after:"card-a"` on B. It names ids, not positions, so it survives the append-only
+   law, and B is neither offered nor dealt until A has played — asking for B by name deals
+   A instead, which is usually the right scene anyway. A landing rail naming a card by id is
+   NOT gated: an explicit instruction from the author is obeyed.
+
+**And the ceiling this exposed: `budget + 2` is exactly the most cards a beat can carry and
+still show all of them.** A beat gives `budget` turns and the row shows two unspent at a
+time, so at `budget + 3` cards start being unreachable outright. Measured, not reasoned:
+148 of 151 beat cards are offerable, and the three that are not are the three nights sitting
+at seven cards.
+
 ## What a FINISHED room means
 
 - **7+ cards** in the beat's `room.topics` (three was the old default; more is better —
