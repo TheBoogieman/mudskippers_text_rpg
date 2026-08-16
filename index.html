@@ -1715,6 +1715,11 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.36.0 "It Did Not Break, It Stopped Answering"
+   THE WRITERS' BOARD IS FIXED: every night page has thrown since v5.32.0 and nothing said so
+   wbReach learned that an opening wires against the night deck; the page drawing it did not
+   the throw happened inside a delegated click handler, which swallows it — so it looked inert
+   a sweep row now draws all 33 night pages, the dashboard and the bible, every release
    MUDSKIPPERS — THE COURIER'S RUN · v5.35.0 "A Named Asymmetry Is Survivable"
    a2-law FINISHED: two evening cards, five room cards, a take on every one — 21 of 33
    the night the family writes its first law, and Season 2 has one night left in it
@@ -12340,7 +12345,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.35.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.36.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -25501,7 +25506,12 @@ function wbReach(b){
       var all = V.rail || [], keep = all.slice(0, 3);
       cutRows += all.length - keep.length;
       keep.forEach(function(r){
+        /* THE ROW CARRIES ITS OWN DECK (v5.36.0). Knowing WHICH table an id belongs to
+           was local to this function and every caller had to guess - and wbDrawBeat
+           guessed `byId` for all of them, which is the bug below. A row that knows its
+           own deck cannot be looked up in the wrong one. */
         var row = {where:pair[1] + (((b[pair[0]] || []).length > 1) ? " " + (vi + 1) : ""),
+                   deck:(pair[0] === "opens") ? "night" : "room",
                    line:choiceLine(r), cards:[], knock:false, missing:[]};
         if(r && typeof r === "object"){
           row.knock = !!r.knock;
@@ -25537,7 +25547,10 @@ function wbReach(b){
       });
     });
   });
-  return {rows:rows, offeredBy:offeredBy, byId:byId, roomIds:order, broken:broken, cutRows:cutRows,
+  /* ...AND BOTH TABLES COME OUT. Returning only `byId` was the whole of the writers'
+     board fault: the night deck existed in here, did its job, and then went out of
+     scope, so the one caller that needed it indexed the room deck instead. */
+  return {rows:rows, offeredBy:offeredBy, byId:byId, byNight:byNight, roomIds:order, broken:broken, cutRows:cutRows,
           badAfter:badAfter, holes:holes,
           orphans:order.filter(function(cid){ return !offeredBy[cid]; })};
 }
@@ -25775,8 +25788,17 @@ function wbDrawBeat(){
     if(r.knock) what = '<span style="color:var(--gold)">A way forward. No cards, and it can never be dropped &mdash;'
       + " it is the row that stops a spent room stranding anybody.</span>";
     else if(r.cards.length || r.missing.length){
+      /* AN OPENING ROW'S CARDS ARE NOT IN THE ROOM DECK (fixed v5.36.0, broken since
+         v5.32.0). wbReach learned that an opening wires against the NIGHT deck the day
+         the cold opens were wired; this line did not, and indexed `byId` for every row.
+         Every night in the book has wired opening rows, so `RE.byId[cid]` came back
+         undefined and `.ask` threw - inside a delegated click handler, where the
+         exception dies silently. For three releases, clicking any night in the writers'
+         board did nothing at all and nothing anywhere reported a fault. */
       what = r.cards.map(function(cid){
-        return '<b>' + esc(cid) + "</b> <span style=\"color:var(--wb-slate)\">" + esc(RE.byId[cid].ask) + "</span>";
+        var deck = (r.deck === "night") ? RE.byNight : RE.byId, c = deck[cid];
+        return '<b>' + esc(cid) + "</b> <span style=\"color:var(--wb-slate)\">"
+          + esc(c ? c.ask : "(not in this deck)") + "</span>";
       }).join(" &rarr; ");
       if(r.missing.length) what += (what ? " &rarr; " : "") + '<span style="color:#e08b8b">'
         + esc(r.missing.join(", ")) + " &mdash; NOT IN THIS DECK, the row is dead</span>";
@@ -30322,6 +30344,49 @@ function selfTest(){
              b.cards = choiceCards(a).slice();
              return function(){ b.cards = keep; };
            }).same.length === 0;
+         }});
+    })();
+
+    /* EVERY NIGHT'S PAGE IN THE WRITERS' BOARD ACTUALLY RENDERS (v5.36.0).
+       This row exists because the board's night pages were dead for THREE RELEASES and
+       nothing said so. wbReach was taught at v5.32.0 that an opening wires against the
+       night deck and a landing against the room - and it returned only the room table,
+       so wbDrawBeat indexed the wrong one and threw on the first opening row of every
+       beat. The throw happened inside a delegated click handler, which swallows it: the
+       board did not break, it just stopped responding, and no sweep asked it anything.
+       The row calls the real drawing function for all 33 nights and both tabs. It is
+       slow by the standards of the rest of this desk and it is worth it. */
+    (function(){
+      var kB = {tab:wbTab, beat:wbBeat};
+      function drawAll(){
+        var bad = [];
+        SPINE.forEach(function(b){
+          wbBeat = b.id; wbTab = "book";
+          try { wbDrawBeat(); }
+          catch(e){ bad.push(b.id + ": " + e.message); }
+        });
+        wbBeat = "";
+        try { wbDrawBook(); } catch(e){ bad.push("the whole book: " + e.message); }
+        try { wbDrawBible(); } catch(e){ bad.push("the bible: " + e.message); }
+        return bad;
+      }
+      var broke;
+      try { broke = drawAll(); }
+      finally { wbTab = kB.tab; wbBeat = kB.beat; }
+      T("every night's page in the writers' board draws",
+        broke.length === 0,
+        SPINE.length + " night pages drawn through wbDrawBeat, plus the dashboard and the bible"
+        + (broke.length ? " - THREW: " + broke.slice(0, 3).join(" | ") : ""),
+        {label:"wbReach returning only the room deck, which is how it shipped from v5.32.0"
+             + " to v5.35.0 - wbDrawBeat then indexed byId for an opening row's cards, got"
+             + " undefined, and threw on .ask inside a click handler that swallowed it",
+         check:function(){
+           var kk = {tab:wbTab, beat:wbBeat}, real = wbReach;
+           try {
+             /* the shipped shape: the night deck goes out of scope on the way out */
+             wbReach = function(b){ var R = real(b); delete R.byNight; return R; };
+             return drawAll().length === 0;
+           } finally { wbReach = real; wbTab = kk.tab; wbBeat = kk.beat; }
          }});
     })();
 

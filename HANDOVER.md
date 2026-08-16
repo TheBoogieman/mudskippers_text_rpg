@@ -107,6 +107,56 @@ to the author first. Night 21's `the-knock-at-the-door` is its seed and delibera
 withholds the name.
 *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
+### AUTHORING IS PARKED AT v5.35.0 — TOOLING PROGRAMME RULED 2026-08-16
+
+**21 of 33 written. Resume at `a2-turn` (22), and Pia's background must be ruled before a
+word of it** — that night puts her name on the Choir's paper and her background is
+deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds the name.
+
+**Five pieces of tooling, ruled in this order:**
+1. **The writers' board night pages — DONE at v5.36.0.** See below.
+2. **The scroll anchor and reveal pacing.** The feed jumps to `scrollHeight` after every
+   turn, so the choices land *under* the passage and the reader has to scroll back up to
+   see what they are choosing about. **Anchor to the top of the new passage instead.**
+   Plus a persisted reveal-speed control beside VISUALS.
+3. **`corpus.js`.** `SPINE` + `SCENEBOOK` + `BIBLE` — roughly **17,300 of index.html's
+   35,000 lines**, half the file — out to a plain `<script src>` loaded before the engine.
+   **No fetch and no JSON**: those break `file://`, break the offline shell and put a
+   network hop in the boot path. A second script tag is boring and already proven by the
+   skin. `sw.js` SHELL, the node `ctx.js` harness and the release ritual all learn it.
+4. **`editor.html`.** The writers' board and the rehearsal room (~4,000 lines) move out to
+   an authoring artefact that loads `corpus.js`. index.html lands around **14,000 lines**.
+5. **The card editor, EDITING TEXT IN PLACE.** Ruled: it must **never re-serialise the
+   corpus.** It finds a field's exact character range and replaces that string, so every
+   byte it does not touch is unchanged. **The reason is the comments** — the authorial
+   notes between the data are the project's memory, and a read-into-objects-and-write-back
+   editor deletes every one of them silently. A diff must show only what the author changed.
+
+### THE WRITERS' BOARD WAS DEAD FOR THREE RELEASES (fixed v5.36.0)
+
+**Clicking any night in the board did nothing from v5.32.0 to v5.35.0.** The cold-opens
+wave taught `wbReach` that an opening row wires against the NIGHT deck and a landing
+against the ROOM deck — and then returned only the room table. `wbDrawBeat` indexes
+`RE.byId[cid].ask` for **every** row, so the first opening row of every beat came back
+undefined and threw.
+
+**IT THREW INSIDE A DELEGATED CLICK HANDLER, WHICH SWALLOWS THE EXCEPTION.** The board did
+not break, crash, or blank. It stopped answering. That is the failure mode to fear: the
+state updated (`wbBeat` was set correctly every time), and only the redraw was missing.
+
+**THE FIX IS THE ONE FROM v5.32.0, APPLIED TO THE READER THAT WAS MISSED**: the row now
+carries its own `deck`, `wbReach` returns `byNight` alongside `byId`, and the renderer asks
+the row which table it belongs to. **A fix is itself a new form, and it has readers.**
+
+**And a sweep row now draws all 33 night pages, the dashboard and the bible every release**,
+with the shipped shape as its known break. Nothing was watching this surface at all before.
+
+**I BLAMED THE VELDT SKIN FIRST AND WAS WRONG.** The same click is dead on the pre-skin
+build. Two of my own measurements were also wrong before the real one landed — comparing
+the first 120 characters of a pane whose header is identical on every page, and clicking
+rail buttons cached before `wbGo` re-rendered the rail and detached them. **Re-query after
+a redraw, and diff the part of the page that actually differs.**
+
 ## The loop we are running
 
 1. I bring the author a room's candidate subjects **as a pick-list question** (he
