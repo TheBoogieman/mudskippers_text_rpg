@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.32.0. **Book One is closed. Season 2 has ten of its thirteen nights finished, the hole in its middle is down to one, and every night in the book now opens on two questions that get two different answers.***
+*Written 2026-08-16, updated at v5.33.0. **Book One is closed. Season 2 has eleven of its thirteen nights finished, the hole in its middle is gone, and no landing anywhere in the book answers two of its rows with one card.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,25 +11,25 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**19 of 33 nights finished.** A night is finished on four counts and not before:
+**20 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.32.0, not carried forward.*
+*Every figure below was read off the board at v5.33.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **19 of 33** |
-| cards across both decks | 405 |
-| second and third takes | 209 |
-| **takes with no choice line of their own** | **49 of 209** |
-| nights short of cards | 13 |
-| nights with no wired row at all | **0** (was 14) |
-| rooms still on their first three cards | 12 |
-| authored lines in the drift net | 7,177 |
+| finished nights | **20 of 33** |
+| cards across both decks | 410 |
+| second and third takes | 216 |
+| **takes with no choice line of their own** | **49 of 216** |
+| nights short of cards | 12 |
+| nights with no wired row at all | **0** |
+| rooms still on their first three cards | 11 |
+| authored lines in the drift net | 7,293 |
 
 **The opening rows are all wired as of v5.32.0** — 72 of them, across 36 openings, every
 one dealing the card it names, driven every release by two sweep rows. Fourteen openings
@@ -37,37 +37,51 @@ used to give one answer to two different questions. **This did not finish a sing
 a night is finished on the four counts above and an opening is not one of them. What it
 changed is that every night now *starts* honestly.
 
+**And the landings are driven every release as of v5.33.0** — every landing that has been
+aimed, clicked row by row, each from the state the screen was drawn in. Two rows: *every
+card a landing row names is really in that night's room* and *no landing answers two of its
+rows with one card*. **A bare row is not judged**, so the thirteen unwritten nights join the
+sweep on the day they are written and not before. Finding this took counting the VARIANTS
+rather than the beats — `a1-turn` has two `lands` and two `landsHard`, and six of its rows
+had never reached the wiring at all.
+
+**Nothing in the book now has somebody speaking in a room they are not in.** A third row,
+`nobody speaks in a scene they are not in`, reads 3,287 nameplates through `playSpeaker`
+against the cast of the scene they are spoken in — every staged passage and both decks of
+all 33 beats. It was added because **Three had a line in the hard landing of night 14 and
+the hard landing of night 15**, two beats before she arrives, on the road you only reach by
+hesitating. **The drift net cannot do this job**: every predicate reads what is SAID, never
+who says it.
+
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
 **Books Two and Three are the whole job**: 23 nights, of which 10 are finished and 12 rooms
 have never been opened.
 
-**Season 2 stands at ten of thirteen (v5.31.0).** The writing had jumped from night 10 to
-night 15 and left four nights behind it; `a2-ground` (11), `a2-hand` (12) and `a2-mirren`
-(13) are now written, and the hole in the middle is down to **`a2-seven` (14)**. The
-season's own ending — **`a2-law` (21)** and **`a2-turn` (22)** — is still open, and those
-two are the expensive ones: seven in the room, both sides of the chassis fork, and `a2-law`
-is not fork-aware at all.
+**Season 2 stands at eleven of thirteen (v5.33.0).** The writing had jumped from night 10 to
+night 15 and left four nights behind it; `a2-ground` (11), `a2-hand` (12), `a2-mirren` (13)
+and now `a2-seven` (14) are written, **and the hole in the middle of the season is gone**.
+What is left of Season 2 is its own ending — **`a2-law` (21)** and **`a2-turn` (22)** — and
+those two are the expensive ones: seven in the room, both sides of the chassis fork, and
+`a2-law` is not fork-aware at all.
 
-**In sequence, the next night is `a2-seven` (14)** — the vow's first trial, and the only
-night left in the season that is short on its EVENING deck as well as its room: **5 cards
-where the budget wants 6**, room at 3. It is the one where a defector walks up the row in a
-failing frame asking for nothing, and where the question `a2-mirren` deliberately left open
-gets answered — *does the vow cover somebody who is not ours?*
+**`a2-seven` (14) IS DONE (v5.33.0)** — the vow's first trial, and it was the last night in
+the season short on its EVENING deck as well as its room. Six evening cards, seven room
+cards, a second take on every one, both landings wired. The question `a2-mirren`
+deliberately left open is answered in it: *the vow covers somebody who is not ours, and it
+costs.*
+
+**IT ALSO TURNED UP TWO FAULTS THAT WERE NOT NIGHT 14'S.** Three had a speaking line in the
+hard landings of **nights 14 and 15**, two beats before she arrives, on a road only reached
+by hesitating — and **`a1-turn` has FOUR landings, not two**, six of whose rows had never
+reached the wiring in nine waves. Both are fixed and both now have a sweep row standing over
+them. See HANDOVER for the full account.
 
 **THE COLD OPENS CAME FIRST, AND THEY ARE DONE (v5.32.0).** All 72 opening rows wired —
 not 64, because the PREMIERE that opens Books Two and Three is a second set of openings
 nobody had counted, and it was the one that never reached the wiring at all. See HANDOVER
-for what it cost and the three readers that had to be hunted. **So the next wave IS a
-night, and it is `a2-seven`.**
-
-**`a2-seven`'S SUBJECTS ARE RULED (2026-08-16), so the next wave starts with writing.** The
-evening card is **Nine knowing his voice from inside the farm** — canon on the beat, staged
-nowhere — and by the bible's own physics it is private to whoever is holding her, so the
-family argues loudly about a stranger while the courier holds the one person who knows who
-he is. The room takes all four offered subjects (Vic and the dead frame · Hesta and the
-brick · Nine and the list · Pia's assessment), which with its three makes seven.
+for what it cost and the three readers that had to be hunted.
 
 **ONE WORLD FACT IS OPEN AND MUST NOT BE INVENTED: how Nine heard anything inside the
 farm.** A shard is a stone unless somebody is holding it, and she was in nobody's hand
@@ -268,6 +282,31 @@ exactly why the wiring exists. **A harness that calls `pickTopic` without `scene
 first is measuring the scorer, not the game**, and will report misbindings that no player
 can ever reach. It cost half an hour of chasing a defect that was in the harness.
 
+**COUNT THE VARIANTS, NOT THE BEATS** *(v5.33.0)*. A beat may carry more than one `opens`,
+`lands` or `landsHard` scene, and `playAuthored` picks one at run time. **This has now hidden
+whole scenes from a wiring wave twice running**: `SEASON_OPENS` in v5.32.0 (the premiere that
+opens Books Two and Three), and `a1-turn` in v5.33.0, which has two `lands` AND two
+`landsHard` and had six unwired rows nine waves after shipping as finished. A per-beat count
+— *three rows per landing, two landings a night* — is the shape of the error both times.
+
+**THE DRIFT NET READS WHAT IS SAID, NEVER WHO SAYS IT** *(v5.33.0)*. Every predicate in
+`VERDICT_FIXTURE` takes the TEXT of a line. A wrong nameplate is invisible to it, and stays
+invisible however many predicates get added. **Three had a speaking line in the hard landings
+of nights 14 and 15**, two beats before she arrives, on beats whose cast lists do not contain
+her — one of whose `never` says *"Three is not here"* in those words. `nobody speaks in a
+scene they are not in` is a sweep row now, reading nameplates through `playSpeaker` against
+the scene's own `here`.
+
+**A HARD LANDING IS THE ROAD NOBODY AUDITS** *(v5.33.0)*. Both of the above lived in
+`landsHard`, which a player only reaches by hesitating until the choice nearly closes. When
+a night is checked by hand it gets checked on the road it is written for. **Whatever the
+audit is, run it on the hesitation road too.**
+
+**FIX THE SENTENCE, NOT THE RULE** *(v5.33.0)*. A new narration line ran *"your hand has
+gone stiff"* and `death` certified a killing on it — `DEATH_VERBS` carries a bare "gone" and
+`GONE_SOFT` forgives gone quiet/still/cold and not gone stiff. Widening a detector to admit
+one sentence is the move the corpus has already overruled three times. The sentence changed.
+
 **Rooms are lanes; beats are shuffled.** Four lanes in the novel's family time, three at the
 wild table. Taking a lane advances that lane only. Beats deal in a run-seeded order and do
 not lap — a dry beat is the door alone.
@@ -351,8 +390,9 @@ called all 72 broken. Repaired at v5.32.0. **A form has readers: hunt all of the
 **Beats get written in order.** The order from here is `a2-housing` (17), `a2-manual` (18),
 `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law` (21 today).
 **Ruled 2026-08-16: go in sequence from the earliest unfinished night, not forward from the
-last one written.** That makes the order `a2-mirren` (13), `a2-seven` (14), then `a2-law`
-(21) and `a2-turn` (22). Nights 16 through 20 are all done. **The capture beat is still
+last one written.** `a2-mirren` (13) and `a2-seven` (14) are done, so the order from here is
+**`a2-law` (21) then `a2-turn` (22)**. Nights 16 through 20 are all done. **The capture beat
+is still
 blocked on an engine call** — inserting into `SPINE` moves `beatIdx`, and live save files
 hold that as a position.
 

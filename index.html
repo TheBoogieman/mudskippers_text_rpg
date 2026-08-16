@@ -1710,6 +1710,11 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.33.0 "Nobody Else In The Room Can Hear It"
+   a2-seven FINISHED: a sixth evening card, four room cards, seven second takes — 20 of 33
+   Nine knows his voice from inside the farm, and until tonight only one road ever said so
+   THREE HAD A LINE ON TWO NIGHTS SHE IS NOT IN — both on the road you only get by hesitating
+   a1-turn has FOUR landings, not two, and no wiring wave had ever seen the other two
    MUDSKIPPERS — THE COURIER'S RUN · v5.32.0 "Two Questions, And Now Two Answers"
    THE COLD OPENS: every night's opening row is wired — 72 rows, an id on all 175 cards
    (the finished-room count is unmoved at 19 of 33; this wave is the openings, not a room)
@@ -2671,9 +2676,15 @@ var SPINE = [
               ["Nine","Say the actual thing to me, not to the room. The room already agrees with you."],
               "So you say it again, smaller, in her direction, and this time nobody in the kitchen has a joke ready.",
               "The rain finds a new gap in the roof, celebrates, and moves in."],
-       rail:["Say it again, smaller, and let that be the last thing tonight.",
-             "Ask Vic what happens to us now that nobody is getting paid.",
-             "Go and put a bucket under the new leak."]}],
+       /* A SECOND VARIANT IS A SECOND SCENE, AND THE WIRING NEVER SAW EITHER OF THIS
+          BEAT'S (v5.33.0). a1-turn is the one night in Book One with TWO lands and TWO
+          landsHard; playAuthored picks one at run time, and every wiring wave counted
+          three rows per landing and stopped. Six rows here went to the keyword scorer,
+          and on landsHard1 two of the three then scored onto the same card. Same shape
+          exactly as SEASON_OPENS in v5.32.0: a count that assumed one scene. */
+       rail:[{line:"Say it again, smaller, and let that be the last thing tonight.", cards:["being-asked"]},
+             {line:"Ask Vic what happens to us now that nobody is getting paid.", cards:["the-delivery"]},
+             {line:"Go and put a bucket under the new leak.", cards:["house-rules"]}]}],
  landsHard:[{day:"3", time:"10:20pm", place:"THE SAFEHOUSE KITCHEN", amb:"interior-warm",
        now:"Day 3, late evening. She was kept, and nobody ever said so out loud, and she noticed.",
        lines:["Nobody ever says it. That is the part you will keep coming back to.",
@@ -2697,9 +2708,14 @@ var SPINE = [
               ["Vic","Pack for three, Pia."],
               "Nine says nothing at all. She is very good at it, and it is not the same as agreeing.",
               "Later you will remember that the largest thing you ever did was conducted entirely in the passive voice."],
-       rail:["Say the thing that was never said.",
-             "Ask Nine what she would have wanted to hear.",
-             "Pack. We can talk on the road."]}],
+       /* THE ONE THAT WAS ACTUALLY BROKEN. "Say the thing that was never said" and
+          "Pack. We can talk on the road" both scored onto `tomorrow-gutter`, so this
+          landing offered two questions and answered one of them twice - on a night
+          shipped as finished nine waves ago. The first row is this whole variant's
+          subject and it now says so by name. */
+       rail:[{line:"Say the thing that was never said.", cards:["chose-not-kept"]},
+             {line:"Ask Nine what she would have wanted to hear.", cards:["being-asked"]},
+             {line:"Pack. We can talk on the road.", cards:["tomorrow-gutter"]}]}],
  budget:5, floor:3, reveals:[], anchors:["Nine"],
  press:[],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
@@ -3013,19 +3029,39 @@ var SPINE = [
               ["Nine","I know that voice. Not from out here. From in there, reading a list, and I was on the list. He will not remember me, because I was a number he said out loud on an ordinary afternoon. I remember it because it was my number."],
               "You look at the shard in one hand and the shard in the other, and nobody in the room knows what has just happened except two people who have no way of seeing each other.",
               "There is a body-shaped problem in the corner under a sheet, and everyone in this room has looked at it and away from it at least twice."],
-       rail:["Pull the sheet off. Let us all look at it properly.",
-             "Ask Vic where a chassis like that even comes from.",
-             "Tell Seven he is allowed to keep saying it."]}],
+       /* "ASK VIC WHERE A CHASSIS LIKE THAT EVEN COMES FROM" IS CUT, AND THE WORD IS
+          THE REASON. This room's own never says "the chassis is not mentioned", and
+          night 15 is the night a chassis comes up through Hesta's floor - so a row
+          using that word here reads as the reveal arriving a night early. There was
+          no card behind it either way. Measured before the fix: this landing answered
+          two of its three rows with the same card, and so did the hard one. The other
+          two rows are re-aimed, not lost: "he is allowed to keep saying it" is now
+          Pia's, in `pias-verdict`, where somebody actually says it to him. */
+       rail:[{line:"Pull the sheet off the thing in the corner. Let Vic look at it properly.", cards:["the-dead-frame"]},
+             {line:"Ask Hesta how a man in another city knew about her door.", cards:["hestas-door"]},
+             {line:"Palm on the shard. Ask her what she meant about the list.", cards:["the-list"]}]}],
  landsHard:[{day:"14", time:"11:50pm", place:"THE OPEN DOOR, BACK ROOM", amb:"dead-signal",
        now:"Late, in the back room. The family committed after the choice had nearly closed, and Seven heard the hesitation.",
        lines:["He comes out. It takes longer to decide than it takes to do, and everyone in the room can do that arithmetic.",
               ["Seven","It's fine. It is — I'd have hesitated. I'd have hesitated longer, probably, that's not modesty, that's just true."],
               "Vic works the bench with the specific silence of a man doing sums he does not want the answer to.",
-              ["Three","He heard it. I am telling you because nobody else will, and because he will never bring it up again."],
+              /* THREE SAID THIS LINE UNTIL v5.33.0, ON A NIGHT WHOSE OWN never SAYS
+                 "Three is not here and her two voices are not mentioned - she arrives
+                 two beats from now and that is her scene", and whose cast list does
+                 not contain her. It was only ever reachable on the hesitation road,
+                 which is why it survived. It is Nine's line and always should have
+                 been: it is private, it is precise, and she is the one holding the
+                 whole of tonight in her teeth. The drift net could never have caught
+                 it - every predicate reads what is SAID, never who says it. */
+              ["Nine","He heard it. I am telling you because nobody else will, and because he will never bring it up again."],
+              ["Nine","And you can have the other thing now, since the night has gone the way it went and there is no good hour left in it to save it for. I know that voice. He read out a list once and I was on it. That is the whole of it. Do not do anything with it."],
               "There is a body-shaped problem in the corner under a sheet, and everyone has now looked at it more than twice."],
-       rail:["Say the thing to Seven that should have been said an hour ago.",
-             "Pull the sheet off. Let us all look at it properly.",
-             "Ask Vic where a chassis like that even comes from."]}],
+       /* Same cut as the other road, same reason. "Say the thing that should have been
+          said an hour ago" keeps its text and gets a card: Pia gets there first, which
+          is the only good thing that happens on this version of the night. */
+       rail:[{line:"Say the thing to Seven that should have been said an hour ago.", cards:["pias-verdict"]},
+             {line:"Pull the sheet off the thing in the corner. Let Vic look at it properly.", cards:["the-dead-frame"]},
+             {line:"Palm on the shard. Ask her what she meant about the list.", cards:["the-list"]}]}],
  budget:4, reveals:[], anchors:["Seven"],
  press:["Seven's vessel starts failing on the clock, out loud.",
         "He asks them to stop and let him go. Someone refuses."],
@@ -3108,7 +3144,14 @@ var SPINE = [
        lines:["It gets done fast, because fast was what there was, and the part where somebody asks how it feels gets postponed to a later that has not arrived.",
               ["Seven","I'm — yes. Fine. That's the word, isn't it. Fine."],
               "He says it a half-beat late, the way you do when you have looked the word up first.",
-              ["Three","Ask him again tomorrow. Not tonight. Tomorrow, and properly."],
+              /* AND THE SAME FAULT ONE NIGHT LATER (v5.33.0). Three is not in this
+                 cast either - she arrives on night 16 - and she was speaking here on
+                 the hesitation road, which is why two waves of sweeps walked past it.
+                 Hesta takes it: it is her register exactly ("I'll do it again
+                 tomorrow. Same time. And you'll all sit down for it"), she is in the
+                 room on both roads of the fork, and unlike Nine she carries no shard
+                 physics into a scene where who is holding what is the whole question. */
+              ["Hesta","Ask him again tomorrow. Not tonight. Tomorrow, and properly."],
               "There is a knock at the outer door at half past two in the morning, and the entire point of this building is that nobody knocks."],
        /* Same shape, same reason. "Ask him now anyway" keeps its text - it is the line
           Three just told you not to use, and the room answers it either way. */
@@ -8035,22 +8078,62 @@ var SCENEBOOK = {
      "He says it the way a man reads out a shopping list he is ashamed of.",
      ["Seven","I got it. I also got a great deal that was not it. That is the noise you can hear, and the smell, and the reason the cell is going: it has been paying for my surgery every hour since I left."],
      ["Pia","So it's not dying. You're spending it. And you've been very quiet about that."],
-     ["Seven","...That is the more accurate sentence. I did wonder whether anybody would get there."]]}
+     ["Seven","...That is the more accurate sentence. I did wonder whether anybody would get there."]]},
+   /* THE PRIVATE ONE, AND IT IS PRIVATE BY PHYSICS (v5.33.0). The bible: a shard
+      "speaks ONLY as a private bone-hum to a carrier in sustained skin contact" and
+      "can never address a room". So the whole card happens inside one closed hand
+      while the family argues two feet away about whether to save a stranger, and the
+      courier is the only person alive who knows she reacted at all.
+      THE NIGHT'S OWN CANON HAS SAID THIS SINCE IT WAS WRITTEN - "Nine knew his voice
+      from inside the farm: he read the lists, and she was a number on one. He does not
+      remember her" - and the only place it existed was the SOFT landing. A player who
+      hesitated got the hard landing and never learned it at all, on a night whose canon
+      says it happened. It is on a card now, so both roads can reach it.
+      SHE DOES NOT FINISH IT HERE. The landing is where she finishes it, which is what
+      keeps this from being the same scene twice: here she stops herself with the clock
+      running, and two hours later, with him out of the frame, she says the rest. */
+   {id:"she-knows-his-voice", ask:"why Nine has gone quiet",
+    key:"nine quiet silent still shard palm hand hers recognise recognised knows-him heard-before",
+    who:"Nine",
+    gives:"that she knows the voice, from inside - and an instruction, first, about what it must not be used for",
+    holds:"the number, and the rest of it. She will say it after, if there is an after",
+    rail:"Palm on the shard. She has gone quiet, and she is never quiet.",
+    plays:[["Nine","Do not repeat any of this. Not a word of it out loud. I will know if you do, because I will hear the room change."],
+     ["Nine","And before anything else - save him anyway. Whatever I say next does not go into the arithmetic. I will not be the reason. I want that settled before I say it, not after."],
+     "You cannot say it back to her without the room hearing you, so you close your hand a little instead, and she takes that.",
+     ["Nine","I know that voice. Not from out here. From in there, reading out a list, and I was on the list."],
+     ["Nine","He will not remember. I was a number he said out loud on an ordinary afternoon, between two other numbers, and then he went and had his dinner."],
+     "Two feet away Hesta is halfway through a sentence about the vow and Vic is halfway through a sentence about the cell, and neither of them can hear a thing.",
+     ["Nine","That is all you get tonight. The clock is running and I would rather he lived than that I was interesting. Ask me after."],
+     ["Nine","...If there is an after."]]}
   ],
   room:{
    where:"the back room afterwards, a shard on a cloth, a dead frame in the corner and nobody willing to be the one who moves it",
    here:["Pia","Vic","Nine","Hesta","Seven"],
    never:["the chassis is not mentioned","nobody arrives"],
    topics:[
-    {ask:"what Seven was", key:"seven was choir before defect officer job role",
+    {id:"what-seven-was", railTakes:["Ask him what the four years actually looked like."],
+     ask:"what Seven was", key:"seven was choir before defect officer job role",
      who:"Seven", gives:"a dry, undramatic account of a job he was good at and stopped doing",
      holds:"the names of anyone still inside",
      rail:"Ask him what he was, in there.",
      plays:[["Seven","Logistics. Intake scheduling, latterly. I moved names between columns and was commended for the neatness of my columns."],
       ["Seven","I was good at it, which took me a shameful number of years to stop being proud of. One day the names acquired faces - a clerical error on my part - and the job stopped being possible."],
       "Dry, undramatic, a man reading his own file aloud. The names of anyone still inside those columns stay inside him, and the water gets none of them tonight.",
-      ["Seven","So I stopped. Stopping took four years and everything I had. I recommend it anyway."]]},
-    {ask:"what being out of the frame is like", key:"feel like now shard body senses what-is",
+      ["Seven","So I stopped. Stopping took four years and everything I had. I recommend it anyway."]],
+     /* THE SEAL HOLDS. What he DID is ruled shut for good - no names, no cases, nothing
+        about what a clerk of theirs actually does. So the second take goes at the four
+        years from the only side that is open: the inside of the man, where the whole of
+        it happened and nothing showed. */
+     takes:[[["Seven","What they looked like. From outside? Nothing. Not one thing. That is the answer and it is the part I would skip if I were being kind to myself."],
+       ["Seven","I did the work. I did it as well as I had ever done it. I was commended twice more during the four years, which I would like entered somewhere, because it is the single most damning fact about me and nobody ever asks for it."],
+       "He says it into the middle distance, in the voice of a man who has rehearsed this and has still not got it to come out any better.",
+       ["Seven","People imagine there is a morning. A morning when you sit up and know. There was no morning. There were fourteen hundred ordinary days in which I got very slightly worse at not knowing, and then I was out of ways not to know, and then I left."],
+       ["Hesta","Four years is not slow. Four years is a man carrying something up a hill."],
+       ["Seven","...That is a much better sentence than mine. May I have it."],
+       ["Hesta","It's yours. It was always yours, I only said it out loud."]]]},
+    {id:"out-of-the-frame", railTakes:["Ask him what he is actually afraid of about it."],
+     ask:"what being out of the frame is like", key:"feel like now shard body senses what-is",
      who:"Seven", gives:"a comparison that is funnier than it should be and lands badly on Nine",
      holds:"nothing",
      rail:"Ask him what it will be like. Out of the frame.",
@@ -8060,15 +8143,159 @@ var SCENEBOOK = {
       "You relay it. You get the words right and the weight wrong, which is somehow worse.",
       ["Seven","...Ah. Present company has been out of a frame rather longer, and did not choose it, and I have just made the dressing-gown joke to a veteran. My apologies to the shard in the good seat."],
       ["Nine","Accepted. And he does not have to send it through you - he can simply say it and I will hear it. That is the one direction that works."],
-      "Which is the entire arrangement in a sentence, and nobody at the table quite laughs."]},
-    {ask:"what Nine thinks of him", key:"nine seven think another shard like-you",
+      "Which is the entire arrangement in a sentence, and nobody at the table quite laughs."],
+     /* THE SECOND TAKE NAMES THE WHOLE COST OF BEING A SHARD, and it has to come from
+        him rather than from her, because she has had four years of it and has stopped
+        being able to see it. What he is afraid of is not the dark. It is being an object
+        with opinions that somebody has to remember to bring. */
+     takes:[[["Seven","Afraid of. Yes. Not the dark - I have read what people expect me to say about the dark and I do not think I shall be having that."],
+       ["Seven","Portable. That is the word I have been avoiding all evening. I will be portable. A thing that is brought. Somebody will pick me up on the way out of a room and somebody, one day, will not, and it will not be malice, it will be a Tuesday."],
+       "Nobody in the room says anything, because two of the people in it have already worked out that there is no answer to this and one of them has worked it out the hard way.",
+       ["Seven","And the honest part, which is worse: I already know exactly how I will handle it. I will be marvellous about it. I will be so easy to carry that nobody ever has to think about it, and that is the most cowardly plan I have ever made and I made it this afternoon, on the road."],
+       ["Nine","Stop making the plan."],
+       ["Seven","...I beg your pardon?"],
+       ["Nine","Tell him what I said. Word for word, and do not soften it, he can take it."],
+       "So you say it: stop making the plan. Be difficult. Be inconvenient the first week, deliberately, while everybody still has the energy for it - because the ones who start easy stay easy, and nobody ever finds out they were carrying you.",
+       ["Seven","...Ah. That is not advice. That is a report."],
+       ["Nine","It is a report. Take the week."]]]},
+    {id:"what-nine-makes-of-him", railTakes:["Ask her whether she is glad there are two of them now."],
+     ask:"what Nine thinks of him", key:"nine seven think another shard like-you",
      who:"Nine", gives:"careful, unsentimental curiosity about somebody in the same condition",
      holds:"she does not say she is relieved",
      rail:"Palm on the shard: what does she make of him.",
      plays:[["Nine","He is what I am. That is not the same as being what I like - I am still deciding that."],
       ["Nine","He reads his worse column first. I do that. He asks for nothing so it cannot be taken. I invented that, I thought. It is strange to meet your own habits wearing a bad speaker."],
       "Careful, unsentimental, a scientist of her own kind - and underneath it, unsaid, the thing she does not say: that the hand under her is steady, and his has water rising in it.",
-      ["Nine","We should take him out of there. Not because he is nice. Because the columns should lose one more name."]]}
+      ["Nine","We should take him out of there. Not because he is nice. Because the columns should lose one more name."]],
+     /* HER `holds` SAYS SHE DOES NOT SAY SHE IS RELIEVED, AND SHE STILL DOESN'T. The
+        second take is the harder thing that was underneath the curiosity: he CHOSE it
+        and she did not, and the first thing she felt on meeting her own kind was not
+        company. She takes most of it back, which is the card. */
+     takes:[[["Nine","Glad. You are going to have to give me a moment with that word, because the honest answer is not the one you want and I would rather give you the honest one."],
+       ["Nine","I thought what I wanted was somebody who understood. I have now met one, at last, after four years, and the first thing I felt was not company. It was something much smaller and much uglier and it took me most of an hour to look at it properly."],
+       "She is choosing every word, which is what she does instead of hesitating.",
+       ["Nine","He chose. He walked out of that place on his own borrowed legs because he decided to. He gets to be a defector. I get to be a theft. Nobody will ever say the word about me that they are all going to say about him, and for about an hour tonight I resented a dying man for it."],
+       ["Nine","Which is contemptible, and I am telling you because you asked and because saying it out loud is how I stop it."],
+       "You do not pass it on. You were not going to.",
+       ["Nine","So: not glad. Not yet. But I would like there to be a version of tonight where he is still here in a week and I have had time to be better about it. Make that the version. That is the only thing I want out of this evening."]]]},
+
+    /* THE FOUR THIS ROOM WAS BUILT WITHOUT (v5.33.0). Three cards for a night with
+       five people in it, and every one of the three was about SEVEN - so the room was
+       a stranger being examined by an audience with no lines. Each of the four is the
+       person the night has already put on the page and never let speak:
+       (1) `the-dead-frame` - the room's own `where` says a dead frame is in the corner
+           and nobody will move it, both landings offered to pull the sheet off it, and
+           there was nothing behind either offer. Vic builds bodies; this is what one
+           looks like when somebody had to do it to themselves, alone.
+       (2) `hestas-door` - the beat's whole premise is that a man in ANOTHER CITY heard
+           there is a door here held open with a brick. Nobody has ever asked her how
+           that happened, or what she thinks about her own door having a reputation.
+       (3) `the-list` - the payoff of `she-knows-his-voice`. Both landings now say she
+           knew the voice; this is where she says what a list actually was.
+       (4) `pias-verdict` - the only person in the building who has decided, and the
+           landings both offered to say the thing to Seven that should have been said
+           an hour ago with nothing behind it. She gets there first.
+       THE ROOM'S never STILL HOLDS: the chassis is not mentioned by anybody, on any of
+       these, and nobody arrives. And the seal on his WORK holds - `the-dead-frame` is
+       about the surgery he did on himself, which is his to tell and he told it. */
+    {id:"the-dead-frame", railTakes:["Ask what he would have needed, to have done it properly."],
+     ask:"the dead frame in the corner", key:"frame corner sheet body plating dead rig chassis-like housing look under",
+     who:"Vic", gives:"a ripperdoc's post-mortem on a self-extraction, and the thing in it that actually frightens him",
+     holds:"anything at all about what is under the floor of the building he is standing in",
+     rail:"Pull the sheet off the thing in the corner. Let Vic look at it properly.",
+     plays:[["Vic","Right. Sheet off. If it stops being a shape under a cloth it stops being a thing everybody in this room is walking around."],
+      "He does it himself, and he does it the way he does everything, which is unhurried and slightly too gentle for the object.",
+      ["Vic","Choir labour frame. Yard stock. Built to lift things and be replaced, and somebody has been living in it for two days on a cell that stopped being a cell about a hundred miles back."],
+      ["Vic","And here. Back of the neck. That is the tracker seat, and that is a hole, and the hole was made from the front by somebody who could not see it, with a tool that was not for it."],
+      "He does not say it like a diagnosis. He says it the way a man says a thing he has been holding in his mouth for four hours.",
+      ["Vic","Four ways that should have killed him on the road. I can name all four. He got the fourth one wrong and it is only luck that it was the fourth."],
+      ["Pia","Are you angry with him?"],
+      ["Vic","No. I am angry that it was possible. Thirty years I have made sure nobody in this city has to do that to themselves, and a man walked in from somewhere else having done it, and my thirty years stop at the water like everything else does."]],
+     takes:[[["Vic","What he'd have needed. That is the question, isn't it, and I have been not-asking it since the sheet went on."],
+       ["Vic","A bench. An hour. Decent light. And one other person - not a surgeon, mind, not me, anybody - stood there to hold the light steady and tell him when he was going the wrong way."],
+       ["Vic","That is the list. That is the entire list. Bench, hour, lamp, person."],
+       "Nobody says anything for a moment, because everybody in the room has arrived at the same place by a different road and got there at the same time.",
+       ["Hesta","So the thing that would have saved him was somebody else being in the room."],
+       ["Vic","Yes."],
+       ["Hesta","Then say that at the next burial and see if anyone still thinks the vow is decorating."],
+       ["Vic","...I am going to put the sheet back on now, if nobody minds, and then I am going to want a sit down."]]]},
+
+    {id:"hestas-door", railTakes:["Ask whether she is going to take the brick out."],
+     ask:"how he even heard about the door", key:"door brick heard rumour word story reputation how-far another city travelled who-told",
+     who:"Hesta", gives:"how far a story about a brick has walked, and what she makes of her door having a reputation",
+     holds:"that it frightens her - she never says it, and everybody watches her not say it",
+     rail:"Ask Hesta how a man in another city knew about her door.",
+     plays:[["Hesta","I have been chewing on that since he came up the row and I have not enjoyed a single bite of it."],
+      ["Hesta","I never told anybody. There was no telling. There was a door that stuck, and a brick that was the right size, and about eleven years."],
+      ["Hesta","Somebody put a story on it. Not me. You do not get to choose whether people make you into a story - you only get to find out afterwards, off a stranger, on your own step."],
+      "She wipes the same bit of counter she has wiped twice already, which is what she does instead of sitting down.",
+      ["Pia","But it's a good story."],
+      ["Hesta","It is a lovely story, and a story is a map, and a map does not care who is reading it. That man walked a hundred miles on it. Whoever else has been handed it walked nowhere, and I do not know their names, and I will not until one of them is on the step too."],
+      ["Hesta","Which is the job. I know it is the job. I would only have liked to have been asked."]],
+     /* SHE WILL NOT TAKE IT OUT, AND THE REASON IS THE BEST THING IN THE CARD: the
+        story is already out there, so closing the door does not unmake the map - it
+        turns the map into a lie, and somebody walks a hundred miles to a lie. */
+     takes:[[["Hesta","Take it out. I have taken it out four times tonight in my head and put it back four times, so you may as well have the working."],
+       ["Hesta","Here is why it stays. The story is already gone. It is out there in whatever city he came from and in three more I have never seen, and taking the brick out does not call it back."],
+       ["Hesta","It only makes it wrong. And then it is not a door any more, it is a lie somebody walks a hundred miles to, and gets to at four in the morning, and stands in front of."],
+       "Nobody argues. Nobody was going to.",
+       ["Hesta","So it stays in. And I will be frightened about it on my own time, thank you, and none of you are to be kind to me about it this evening or I shall go to pieces and there is a man in the corner who needs the room more."],
+       ["Vic","Understood."],
+       ["Hesta","...You could have taken a LITTLE longer to understand, Vic."]]]},
+
+    {id:"the-list", railTakes:["Ask her whether she wants him to know."],
+     ask:"what she meant about the list", key:"list read out number farm inside name column knew voice read-aloud",
+     who:"Nine", gives:"what a list being read out actually was, from inside the room it was read in",
+     holds:"her number, which she will not say out loud to anybody, tonight or ever",
+     rail:"Palm on the shard. Ask her what she meant about the list.",
+     plays:[["Nine","You want the mechanics. Good. The mechanics I can do."],
+      ["Nine","A man comes in with the day's sheet and reads names out. Except they are not names, they are numbers, because a name is a thing you would have to have given somebody. He reads twelve, or forty. He reads them at the speed you read a delivery docket, because that is what it is."],
+      ["Nine","And you learn very fast that being read out is either the best thing that can happen to you that week or the worst, and there is no way to tell which from the reading, because the reading sounds the same either way."],
+      /* WRITTEN "gone stiff" FIRST, AND THE DRIFT NET CERTIFIED A DEATH ON IT. DEATH_VERBS
+         carries a bare "gone" and GONE_SOFT forgives gone quiet, gone still, gone cold -
+         but not gone stiff, and the line has "her" and "she" inside the proximity window.
+         The rule is not widened for one sentence: the sentence is rewritten. */
+      "You are holding her in a warm back room three cities and four years away from all of that, and your hand has closed without asking you, and she can feel that too.",
+      ["Nine","That is what I meant. And the part I did not say out loud in front of everybody: he was not cruel. Not once. He was BORED. It was an ordinary afternoon at work and he wanted his tea."],
+      ["Nine","I have had four years to decide which of those two I would have preferred and I have not got anywhere with it."]],
+     /* AND SHE RULES THE THREAD SHUT, WHICH THE BEAT'S OWN CANON ALREADY DID - "he
+        does not remember her" is written in the canon list, so the book has always
+        said she never told him. This is WHY, and the why is not shame. */
+     takes:[[["Nine","No. And I want to give you the reason rather than the answer, because the answer on its own sounds like fear and it is not fear."],
+       ["Nine","He has been in that corner four hours and he has apologised for the noise, for the smell, for the room, for the mud, and for apologising. That is a man with a debt he is trying to pay in instalments of nothing."],
+       ["Nine","If I tell him, I hand him one he can never pay. He would spend whatever he has left saying sorry to a stone in somebody's hand. And I would have to sit in it and be gracious about it, which I would be, which is the worst part."],
+       "It is the coldest and most generous sentence anybody says all night and only one person in the room hears it.",
+       ["Nine","So he does not get to know. Not tonight, and probably not ever, and that is mine to decide because it happened to me."],
+       ["Nine","...And if I change my mind in ten years, I will tell him myself, and you will not be involved, and you will hear about it afterwards like everybody else."]]]},
+
+    {id:"pias-verdict", railTakes:["Ask her what she was doing while everybody argued."],
+     ask:"what Pia makes of him", key:"pia thinks makes-of verdict houseguest stranger staying kid twelve says",
+     who:"Pia", gives:"a twelve-year-old's inventory of a houseguest, delivered as a welcome",
+     holds:"nothing. Free. She has been ready with this for an hour",
+     rail:"Ask Pia what she makes of him, out loud, in front of him.",
+     plays:[["Pia","He can't eat, he can't sleep, he can't leave, he takes up the whole corner, and he's said sorry - I've been counting - forty-one times."],
+      ["Seven","Forty-one. That is - I would have guessed high twenties. That is genuinely alarming."],
+      ["Pia","Forty-two."],
+      "Vic makes a sound into his tea that he will deny later.",
+      ["Pia","So he's staying. Obviously. That's not the bit anyone should be arguing about."],
+      ["Pia","And you're allowed to keep saying it. I've decided. I'm keeping the count and nobody's allowed to be annoyed about it because it's my count and I'm not annoyed."],
+      ["Seven","...Thank y-"],
+      ["Pia","Forty-three."],
+      "It is the first time all night that anything in the room has been easy, and every adult in it noticed which one of them did that."],
+     /* WHAT IS UNDER THE JOKE. She was doing arithmetic - the same arithmetic Vic did
+        out loud on the row, privately, on how long the argument could run before it
+        stopped mattering. This is what her fear looks like and it looks like a number,
+        which is the voice she has had since night 12's `the-fog`. */
+     takes:[[["Pia","While you were all arguing. Right. I was counting, but not the sorries. That started after."],
+       ["Pia","Vic said eight hours if the cell holds and five if it doesn't, and he said it at half nine, and I know what time it is because I keep looking. So I was working out how long you could all go on being careful for before careful stopped being the point."],
+       ["Pia","I had a number. Twenty past eleven. That was mine. I wasn't going to say anything before twenty past eleven because you were all getting there anyway and I didn't want to be the kid who made everyone rush."],
+       "She says the whole thing at the sink with her back to the room, which is not an accident.",
+       ["Hesta","And if it had got to twenty past eleven?"],
+       ["Pia","Then I'd have said it. Loudly. And I'd have been horrible about it, and I had the horrible bit ready, and I'd worked out which one of you to be horrible AT."],
+       ["Hesta","...Which one."],
+       ["Pia","Doesn't matter now, does it."],
+       ["Vic","It was me."],
+       ["Pia","It was you."]]]}
    ]}
 },
 
@@ -11811,7 +12038,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.32.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.33.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -28703,12 +28930,32 @@ function verdictMap(){
    THE DRIFT NET FOUND A CASTING ERROR BY WATCHING A NAME GO QUIET. That is now twice -
    `a2-choir`'s earshot fault was found the same way. A predicate going SILENT is worth
    as much attention as one firing, and the ledger is where the difference gets said. */
+/*
+   v5.33.0 - TWO MOVES ACROSS 116 NEW LINES, AND A THIRD THAT WAS CAUGHT AND UNWRITTEN.
+   Night 14 got a sixth evening card, four room cards, a second take on all seven and
+   both landings wired. Corpus 7,177 -> 7,293.
+   ONE GAINED. `breach` on `a2-seven/Rt4T1p1` - Hesta, on why the brick stays in the
+   door: "The story is already gone. It is out there in whatever city he came from and
+   in three more I have never seen." That is a breach in substance and not only in
+   wording: the beat's entire premise is that a dying stranger in another city knew the
+   way here, and this is the first line in the book where somebody says out loud what
+   that means. It fires correctly and it is listed.
+   ONE STOPPED. `named:Seven` on `a2-seven/lands0/r2`. The row used to read "Tell Seven
+   he is allowed to keep saying it" and had no card behind it; the sentiment moved into
+   `pias-verdict`, where a twelve-year-old says it to his face and keeps the count.
+   AND ONE FIRE WAS A FALSE ONE, SO THE SENTENCE CHANGED RATHER THAN THE RULE. A new
+   narration line in `the-list` ran "your hand has gone stiff", and `death` certified a
+   killing on it: DEATH_VERBS carries a bare "gone", GONE_SOFT forgives gone quiet, gone
+   still, gone cold - and not gone stiff - and "her" and "she" sit inside the proximity
+   window. Widening GONE_SOFT for one sentence is exactly the move the corpus has
+   overruled three times. The line is now "your hand has closed without asking you", the
+   fire is gone, and the rule is untouched. */
 var VERDICT_FIXTURE = {
-  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
+  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/Rt3r","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
   "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-choir/Rt4r","a2-door/t5T1p1","a2-door/t5r","a2-ground/t4r","a2-hand/t6r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
+  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
@@ -29636,6 +29883,185 @@ function selfTest(){
              topicSpent = kk.sp; topicLap = kk.lp; topicLayer = kk.ly; railDeal = kk.rd;
              railKnock = kk.rk; lastPlayerText = kk.tx; runMode = kk.rm; introStage = kk.is;
            }
+         }});
+    })();
+
+    /* THE LANDINGS, DRIVEN THE SAME WAY AS THE OPENINGS (v5.33.0). A landing is the last
+       thing a night puts on screen, and its rows lead into the family's own time - so
+       playLanding wires them against the ROOM deck, a different table from the opening's.
+       A LANDING IS NOT ONE SCENE PER ROAD. a1-turn has TWO lands and TWO landsHard, and
+       playAuthored picks one at run time. Every wiring wave counted three rows per landing
+       and stopped, so six rows of a night shipped nine waves ago never reached wireRail at
+       all - and on landsHard1 two of the three then scored onto tomorrow-gutter, which is a
+       night offering two questions and answering one of them twice. Exactly the shape of
+       SEASON_OPENS in v5.32.0: a count that assumed one scene where there were two.
+       A BARE ROW IS NOT JUDGED HERE. Thirteen nights are unwritten and their landings are
+       bare on purpose; both rows judge what has been AIMED, so Book Three joins the sweep
+       the day it is written and not before. */
+    (function(){
+      var kL = {sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock,
+                tx:lastPlayerText, rm:runMode, is:introStage};
+      var seenRows = 0, aimedRows = 0, gone = [], twice = [];
+      function landings(){
+        var list = [], i;
+        for(i = 0; i < SPINE.length; i++){
+          (function(b){
+            var room = SCENEBOOK[b.id] && SCENEBOOK[b.id].room;
+            if(!room || !room.topics || !room.topics.length) return;
+            ["lands", "landsHard"].forEach(function(k){
+              (b[k] || []).forEach(function(V, vi){
+                list.push({label:b.id + "/" + k + vi, V:V, key:b.id + "|room", room:room});
+              });
+            });
+          })(SPINE[i]);
+        }
+        return list;
+      }
+      function walk(){
+        var out = {rows:0, aimed:0, lost:[], same:[]};
+        landings().forEach(function(L){
+          topicSpent = {}; topicLap = {}; topicLayer = {}; railDeal = {}; railKnock = {};
+          runMode = "novel"; introStage = 2;
+          var rail = (L.V.rail || []).slice(0, 3), aimed = 0, i;
+          if(!rail.length) return;
+          for(i = 0; i < rail.length; i++) if(choiceCards(rail[i]).length) aimed++;
+          if(!aimed) return;                    /* an unwritten night's landing: not aimed yet */
+          out.aimed += aimed;
+          var lines = wireRail(rail, L.room, L.key);
+          if(lines.length !== rail.length) out.lost.push(L.label);
+          var base = JSON.stringify(topicSpent), got = {}, dup = false;
+          lines.forEach(function(ln, n){
+            topicSpent = JSON.parse(base);
+            lastPlayerText = ln;
+            var c = pickTopic(L.room, L.key), id = c ? (c.id || c.ask) : "";
+            out.rows++;
+            /* a knock row is an arrival, not a card: whatever the scorer would have
+               dealt it is never reached, and counting it collided nine landings that
+               are correct as written */
+            if(rail[n] && rail[n].knock === true) return;
+            if(got[id]) dup = true;
+            got[id] = 1;
+          });
+          if(dup) out.same.push(L.label);
+        });
+        return out;
+      }
+      var nowL;
+      try { nowL = walk(); }
+      finally {
+        topicSpent = kL.sp; topicLap = kL.lp; topicLayer = kL.ly; railDeal = kL.rd;
+        railKnock = kL.rk; lastPlayerText = kL.tx; runMode = kL.rm; introStage = kL.is;
+      }
+      seenRows = nowL.rows; aimedRows = nowL.aimed; gone = nowL.lost; twice = nowL.same;
+
+      function underBreak(mut){
+        var kk = {sp:topicSpent, lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock,
+                  tx:lastPlayerText, rm:runMode, is:introStage};
+        var undo = mut(), r;
+        try { r = walk(); }
+        finally {
+          undo();
+          topicSpent = kk.sp; topicLap = kk.lp; topicLayer = kk.ly; railDeal = kk.rd;
+          railKnock = kk.rk; lastPlayerText = kk.tx; runMode = kk.rm; introStage = kk.is;
+        }
+        return r;
+      }
+      function rowOf(id, pool, vi, ri){ return SPINE[beatById(id)][pool][vi].rail[ri]; }
+
+      T("every card a landing row names is really in that night's room",
+        aimedRows > 0 && gone.length === 0,
+        aimedRows + " aimed landing rows, " + seenRows + " rows driven, every one offered"
+        + (gone.length ? " - WRITTEN BUT NEVER OFFERED: " + gone.join(", ") : ""),
+        {label:"a landing row pointing at a card id the room does not have. wireRail drops"
+             + " such a row without a word, so the night goes up with two choices where the"
+             + " writer wrote three and nothing anywhere says so",
+         check:function(){
+           return underBreak(function(){
+             var r = rowOf("a2-seven", "lands", 0, 1), keep = r.cards;
+             r.cards = ["no-such-card-in-this-room"];
+             return function(){ r.cards = keep; };
+           }).lost.length === 0;
+         }});
+
+      T("no landing answers two of its rows with one card",
+        aimedRows > 0 && twice.length === 0,
+        "every aimed landing in the book clicked row by row, each from the state the screen"
+        + " was drawn in"
+        + (twice.length ? " - ONE ANSWER FOR TWO QUESTIONS: " + twice.slice(0, 4).join(" | ") : ""),
+        {label:"a1-turn's second hard landing, which shipped nine waves ago with three bare"
+             + " rows - “Say the thing that was never said” and “Pack. We can"
+             + " talk on the road” both scored onto tomorrow-gutter. The break points one"
+             + " row at its neighbour's card: the same fault written down instead of arrived at",
+         check:function(){
+           return underBreak(function(){
+             var a = rowOf("a1-turn", "landsHard", 1, 0), b = rowOf("a1-turn", "landsHard", 1, 1);
+             var keep = b.cards;
+             b.cards = choiceCards(a).slice();
+             return function(){ b.cards = keep; };
+           }).same.length === 0;
+         }});
+    })();
+
+    /* NOBODY SPEAKS IN A SCENE THEY ARE NOT IN (v5.33.0). Every scene carries `here` and
+       every line may carry a nameplate, and until this row nothing in the file compared
+       the two. THREE, who arrives on night 16, had a line in the hard landing of night 14
+       AND the hard landing of night 15 - on two beats whose casts do not contain her and
+       one of whose nevers says in words that she is not there. Both were reachable only by
+       hesitating, which is how they survived every sweep the book has ever had.
+       AND THE DRIFT NET COULD NEVER HAVE CAUGHT IT. Every predicate in VERDICT_FIXTURE
+       reads the TEXT of a line; not one reads the speaker. A name in the wrong mouth is
+       invisible to it and stays invisible however many predicates get added. */
+    (function(){
+      /* the book's one walk-on. `here` is the FAMILY, and a1-fare's counter clerk is a
+         single scene's voice with no seat at any table - named here rather than smuggled
+         into a cast list she does not belong in. */
+      var WALKONS = {"a1-fare":["The Clerk"]};
+      function look(lines, where, here, id, into){
+        (lines || []).forEach(function(l, i){
+          var who = String(playSpeaker(l) || "").trim();
+          if(!who || who === "Narration") return;
+          into.tags++;
+          if(here.indexOf(who) === -1) into.wrong.push(id + " " + where + "/l" + i + ": " + who);
+        });
+      }
+      function walk(){
+        var out = {tags:0, wrong:[]};
+        SPINE.forEach(function(b){
+          var SB = SCENEBOOK[b.id];
+          if(!SB) return;
+          var walkons = WALKONS[b.id] || [], here = (SB.here || []).concat(walkons);
+          ["opens", "lands", "landsHard"].forEach(function(k){
+            (b[k] || []).forEach(function(V, vi){ look(V.lines, k + vi, here, b.id, out); });
+          });
+          (SB.topics || []).forEach(function(t, ti){
+            look(t.plays, "t" + ti, here, b.id, out);
+            (t.takes || []).forEach(function(tk, n){ look(tk, "t" + ti + "take" + n, here, b.id, out); });
+          });
+          if(SB.room){
+            var rh = ((SB.room.here || SB.here) || []).concat(walkons);
+            (SB.room.topics || []).forEach(function(t, ti){
+              look(t.plays, "R" + ti, rh, b.id, out);
+              (t.takes || []).forEach(function(tk, n){ look(tk, "R" + ti + "take" + n, rh, b.id, out); });
+            });
+          }
+        });
+        return out;
+      }
+      var nowC = walk();
+      T("nobody speaks in a scene they are not in",
+        nowC.tags > 0 && nowC.wrong.length === 0,
+        nowC.tags + " nameplates read through playSpeaker and checked against the cast of the"
+        + " scene they are spoken in, across every staged passage and both decks of all "
+        + SPINE.length + " beats"
+        + (nowC.wrong.length ? " - NOT IN THE ROOM: " + nowC.wrong.slice(0, 4).join(" | ") : ""),
+        {label:"Three speaking in the hard landing of night 14, two nights before she arrives,"
+             + " on a beat whose never says “Three is not here” in those words",
+         check:function(){
+           var V = SPINE[beatById("a2-seven")].landsHard[0], keep = V.lines;
+           try {
+             V.lines = keep.concat([["Three", "He heard it."]]);
+             return walk().wrong.length === 0;
+           } finally { V.lines = keep; }
          }});
     })();
 

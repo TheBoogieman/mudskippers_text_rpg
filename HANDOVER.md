@@ -99,8 +99,8 @@ that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2
 capture beat**, `a2-annul` (20) **done at v5.29.0**. **THEN THE ORDER CHANGED, ruled
 2026-08-16: sequence runs from the earliest UNFINISHED night, not forward from the last one
 written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; `a2-mirren`
-(13) **done at v5.31.0**; the 33 cold opens **done at v5.32.0**; next is `a2-seven` (14),
-then `a2-law` (21) and `a2-turn` (22).
+(13) **done at v5.31.0**; the 33 cold opens **done at v5.32.0**; `a2-seven` (14) **done at
+v5.33.0**; next is `a2-law` (21), then `a2-turn` (22).
 *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
@@ -262,34 +262,70 @@ the nights are written a wave apart.
    not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
    first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
-### `a2-seven` (14) IS THE NEXT WAVE, AND ITS SUBJECTS ARE RULED — 2026-08-16
+### `a2-seven` IS DONE (v5.33.0) — and a character had a line on two nights she is not in
 
-**The evening card: NINE KNOWS HIS VOICE.** The night's own canon already says it — *"Nine
-knew his voice from inside the farm: he read the lists, and she was a number on one. He does
-not remember her"* — and nothing anywhere in the book stages it. Ruled by the author after
-he asked, correctly, how a shard hears anybody at all. **It is a PRIVATE scene by physics:**
-the bible says a shard *"speaks ONLY as a private bone-hum to a carrier in sustained skin
-contact"* and *"can never address a room"*, so the courier must be holding her bare-handed,
-and he is the only person who knows she reacted. The family is loudly deciding whether to
-save a stranger while the courier holds the one person in the room who knows exactly who he
-is. Takes the evening from 5 to 6, which is its budget + 2.
+Night 14 was written to the ruling of 2026-08-16: a sixth evening card, all four room
+subjects taken, a second take on all seven, both landings wired. **20 of 33 finished.**
+Corpus 7,177 → **7,293**. Browser sweep **66 PROVED of 85, nothing failing**.
 
-**The room: ALL FOUR TAKEN**, which with the three already written makes seven.
-1. **Vic and the dead frame** — the man who builds bodies looking at what a botched
-   self-extraction does to somebody, while a chassis he has never mentioned sits under the
-   floor of the building he is standing in. (The room's `never` still forbids naming it.)
-2. **Hesta and the brick** — he came because of a rumour about her door, from another city,
-   on his last legs. Finding out your reputation walked further than you have.
-3. **Nine and the list** — the payoff of the evening card. Her existing room card is careful
-   unsentimental curiosity and does not touch this.
-4. **Pia's assessment** — twelve-year-old sizing up a houseguest who cannot eat, cannot
-   leave, and keeps apologising.
+**THE HEADLINE IS NOT THE NIGHT. THREE HAD A SPEAKING LINE IN THE HARD LANDING OF NIGHT 14
+AND THE HARD LANDING OF NIGHT 15** — two beats whose cast lists do not contain her, one of
+whose `never` says *"Three is not here and her two voices are not mentioned — she arrives
+two beats from now and that is her scene"* in those exact words. She arrives on night 16.
+Both lines were reachable **only on the hesitation road**, which is how they survived every
+sweep the book has ever run. Night 14's is Nine's now — private, precise, and it pays the
+new evening card. Night 15's is Hesta's.
 
-**AND ONE WORLD QUESTION IS OPEN, DELIBERATELY NOT INVENTED.** The book never says **how
-Nine heard anything inside the farm.** She was in nobody's hand there, and a shard across a
-room is a stone. Tonight's card does not need the answer — she can simply know the voice —
-but **`a3-dreamers` (29) walks the family into a room full of shelved people and will need
-it.** Take it to the author as its own question; do not fill it in while writing night 14.
+**AND THE DRIFT NET COULD NEVER HAVE FOUND IT.** Every predicate in `VERDICT_FIXTURE` reads
+the TEXT of a line; not one reads the speaker. A name in the wrong mouth is invisible to it
+and stays invisible however many predicates get added. **`nobody speaks in a scene they are
+not in`** is a sweep row now — 3,287 nameplates read through `playSpeaker` against the cast
+of the scene they are spoken in, every staged passage and both decks of all 33 beats.
+
+**AND `a1-turn` HAS FOUR LANDINGS, NOT TWO.** It is the one night in Book One with two
+`lands` AND two `landsHard`; `playAuthored` picks one at run time. Every wiring wave counted
+three rows per landing and stopped, so **six rows of a night shipped nine waves ago had
+never reached `wireRail`** — and on `landsHard1` two of the three then scored onto
+`tomorrow-gutter`, so the night offered two questions and answered one of them twice. This
+is the SAME SHAPE as `SEASON_OPENS` in v5.32.0: a count that assumed one scene where there
+were two. **Twice running now, so it is a rule: before wiring a form, count the variants,
+not the beats.**
+
+**The night's own three holes, all visible from its own pages** — four waves running:
+1. **The recognition only existed on ONE road.** The canon says *"Nine knew his voice from
+   inside the farm"*; the only place it was staged was the SOFT landing, so a player who
+   hesitated never learned it at all. It is `she-knows-his-voice` now, an evening card, and
+   both roads reach it. **It is private by physics** — the bible says a shard *"speaks ONLY
+   as a private bone-hum to a carrier in sustained skin contact"* and *"can never address a
+   room"* — so it happens inside one closed hand while the family argues two feet away, and
+   she stops herself with the clock running: *"Ask me after. ...If there is an after."* The
+   landing is where she finishes it, which is what keeps it from being one scene twice.
+2. **Both landings offered to pull a sheet off a dead frame, and there was no card.** The
+   room's own `where` says *"a dead frame in the corner and nobody willing to be the one who
+   moves it"*. `the-dead-frame` is Vic's: a ripperdoc's post-mortem on a self-extraction,
+   and the second take is the whole vow in four words — *bench, hour, lamp, person*.
+3. **"Ask Vic where a chassis like that even comes from" is CUT**, and the word is the
+   reason: the room's `never` says *the chassis is not mentioned*, and night 15 is the night
+   a chassis comes up through Hesta's floor.
+
+Plus `hestas-door` — the beat's entire premise is that a dying man in **another city** heard
+there is a door here held open with a brick, and nobody had ever asked her how that happened.
+She will not take the brick out, and the reason is the best line in the room: the story is
+already gone, so closing the door does not call it back, it only turns the map into a lie
+somebody walks a hundred miles to.
+
+**A FALSE FIRE WAS FIXED BY CHANGING THE SENTENCE, NOT THE RULE.** A new narration line ran
+*"your hand has gone stiff"* and `death` certified a killing on it — `DEATH_VERBS` carries a
+bare "gone", `GONE_SOFT` forgives gone quiet/still/cold and not gone stiff, and "her" and
+"she" sit inside the proximity window. Widening `GONE_SOFT` for one sentence is exactly the
+move the corpus has overruled three times. The line is now *"your hand has closed without
+asking you"*.
+
+**AND ONE WORLD QUESTION IS STILL OPEN, DELIBERATELY NOT INVENTED.** The book never says
+**how Nine heard anything inside the farm.** She was in nobody's hand there, and a shard
+across a room is a stone. Night 14 did not need the answer and does not give one — she
+simply knows the voice — but **`a3-dreamers` (29) walks the family into a room full of
+shelved people and will need it.** It is the author's to rule.
 
 ### THE COLD OPENS ARE DONE (v5.32.0) — and there were 72 of them, not 64
 
