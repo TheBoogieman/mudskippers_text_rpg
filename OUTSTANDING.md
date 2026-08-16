@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.30.0. **Book One is closed. Season 2 has nine of its thirteen nights finished, and the hole in its middle is down to two.***
+*Written 2026-08-16, updated at v5.31.0. **Book One is closed. Season 2 has ten of its thirteen nights finished, and the hole in its middle is down to one.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,42 +11,44 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**18 of 33 nights finished.** A night is finished on four counts and not before:
+**19 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.30.0, not carried forward.*
+*Every figure below was read off the board at v5.31.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **18 of 33** |
-| cards across both decks | 401 |
-| second and third takes | 202 |
-| **takes with no choice line of their own** | **49 of 202** |
+| finished nights | **19 of 33** |
+| cards across both decks | 405 |
+| second and third takes | 209 |
+| **takes with no choice line of their own** | **49 of 209** |
 | nights short of cards | 13 |
-| nights that land on nothing to click | 15 |
-| rooms still on their first three cards | 13 |
-| authored lines in the drift net | 7,087 |
+| nights that land on nothing to click | 14 |
+| rooms still on their first three cards | 12 |
+| authored lines in the drift net | 7,177 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
-**Books Two and Three are the whole job**: 23 nights, of which 9 are finished and 13 rooms
+**Books Two and Three are the whole job**: 23 nights, of which 10 are finished and 12 rooms
 have never been opened.
 
-**Season 2 stands at nine of thirteen (v5.30.0).** The writing had jumped from night 10 to
-night 15 and left four nights behind it; `a2-ground` (11) and `a2-hand` (12) are now
-written, and the hole in the middle is **`a2-mirren` (13)** and **`a2-seven` (14)**. The
+**Season 2 stands at ten of thirteen (v5.31.0).** The writing had jumped from night 10 to
+night 15 and left four nights behind it; `a2-ground` (11), `a2-hand` (12) and `a2-mirren`
+(13) are now written, and the hole in the middle is down to **`a2-seven` (14)**. The
 season's own ending — **`a2-law` (21)** and **`a2-turn` (22)** — is still open, and those
 two are the expensive ones: seven in the room, both sides of the chassis fork, and `a2-law`
 is not fork-aware at all.
 
-**In sequence, the next night is `a2-mirren` (13)** — the act turn, the burial, and the
-night the vow gets written. It already has its full evening deck; what it needs is the
-room, the second takes and both landings.
+**In sequence, the next night is `a2-seven` (14)** — the vow's first trial, and the only
+night left in the season that is short on its EVENING deck as well as its room: **5 cards
+where the budget wants 6**, room at 3. It is the one where a defector walks up the row in a
+failing frame asking for nothing, and where the question `a2-mirren` deliberately left open
+gets answered — *does the vow cover somebody who is not ours?*
 
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
@@ -222,6 +224,25 @@ at `budget + 1`, so at `budget + 3` cards go dark outright. Measured, not reason
 
 **One choice, one card.** A landing row names exactly one card. The old three-id rows never
 once reached their second id — the landing always fires on a fresh deck.
+
+**Three rows may not name one card** *(v5.31.0)*. A row whose cards are all spent is
+dropped, so three rows about the same subject collapse into one question the moment it is
+answered. `a2-mirren`'s soft landing offered *"Answer it"*, *"Ask who else still has that
+number"* and *"Let it ring"* — three rows, one wire, and the player would have got one
+click out of three written lines.
+
+**A landing rail is evidence of a hole** *(v5.31.0)*. Both of `a2-mirren`'s landings ended
+on a wire ringing and both rails offered to answer it, and there was no card in the book
+that could. **Read a night's own landings before deciding what its room is short of** — the
+author already wrote down what the night wants, on the page, in the rows.
+
+**The room binds; the scorer is not the game** *(v5.31.0)*. In a room, `sceneRails` writes
+`railDeal` for every line before the row is shown, so a click never touches the keyword
+scorer. Measured across all 19 finished rooms, **164 of 337 rail lines (49%) score onto the
+wrong card** if the scorer alone decides — which is unreachable in a novel run and is
+exactly why the wiring exists. **A harness that calls `pickTopic` without `sceneRails`
+first is measuring the scorer, not the game**, and will report misbindings that no player
+can ever reach. It cost half an hour of chasing a defect that was in the harness.
 
 **Rooms are lanes; beats are shuffled.** Four lanes in the novel's family time, three at the
 wild table. Taking a lane advances that lane only. Beats deal in a run-seeded order and do

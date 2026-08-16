@@ -98,9 +98,9 @@ that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2
 (17) **done**, `a2-manual` (18) **done**, `a2-choir` (19) **done at v5.26.0**, **the new
 capture beat**, `a2-annul` (20) **done at v5.29.0**. **THEN THE ORDER CHANGED, ruled
 2026-08-16: sequence runs from the earliest UNFINISHED night, not forward from the last one
-written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; next is `a2-mirren`
-(13), then `a2-seven` (14), then `a2-law` (21) and `a2-turn` (22). *Night numbers are the board's
-1-based ones; `SPINE` indices are one lower.*
+written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; `a2-mirren`
+(13) **done at v5.31.0**; next is `a2-seven` (14), then `a2-law` (21) and `a2-turn` (22).
+*Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
 
@@ -245,21 +245,60 @@ the nights are written a wave apart.
 3. **One word may not win two cards in the same deck.** `standing` meant a standing
    arrangement on one card and a man refusing to sit down on the other.
 
-### THE NEXT ONE IS `a2-mirren` (13), ALONE — ruled 2026-08-16
+**AND TWO MORE FROM v5.31.0.**
 
-**One night per wave from here.** Nights 11 and 12 were paired because they are one
-unbroken action; 13 and 14 are not, so pairing them buys less than it costs.
+4. **THREE ROWS MAY NOT NAME ONE CARD.** A landing rail whose cards are all spent is
+   dropped on sight (`wireRail`), so three rows pointing at the same card collapse to one
+   the moment it is played — the player gets one question where the author wrote three.
+   `a2-mirren`'s soft landing had *"Answer it" / "Ask who else still has that number" /
+   "Let it ring"*: three rows, one subject, and once `the-wire` existed all three would
+   have been the same click. **Three rows, three cards, always.**
+5. **THE KEYWORD SCORER IS WRONG ABOUT HALF THE BOOK, AND THAT IS FINE — BUT KNOW IT.**
+   Measured across all 19 finished rooms: **164 of 337 rail lines (49%) score onto the
+   wrong card** when the scorer alone decides, and most of the misses fall through to the
+   deck's first card. This is unreachable in a novel run — the row *binds* its lines before
+   showing them and there is no typing box — which is exactly why the wiring was built. Do
+   not report "0 misbindings" off a harness that calls `pickTopic` without `sceneRails`
+   first: that measures the scorer, not the game. **The room binds; drive the bound path.**
 
-**`a2-mirren` is the act turn and the heaviest single night in the season.** They carry her
-home — not the hunter, *Mirren* — bury her, say her name aloud one after another, and the
-vow comes out of the worst thing they have ever had to do. **Its evening deck is already
-full at 6 of 6**, so this is a room wave: 3 cards to 7, second takes, both landings.
+### `a2-mirren` IS DONE (v5.31.0) — and the night was short of three things it had already put on the page
 
-**Two fences on it, and both are in the beat already.** Nothing in nights 11 or 12 says the
-whole name, on purpose — night 12's `never` fences the burial and the vow to tomorrow, and
-BOTH of night 12's landings end on the fact of the silence. Night 13 is where the name gets
-said, and it must be the first time. And **Pia's background stays blank** (ruled the same
-day): she gets no family, in either direction, until the author says so.
+**One night per wave from here** (ruled 2026-08-16). Nights 11 and 12 were paired because
+they are one unbroken action; 13 and 14 are not.
+
+Its evening deck was already full at 6 of 6, so this was purely a room wave: **3 cards to 7,
+a second take on every one, both landings wired.** 90 new lines; corpus 7,087 → **7,177**.
+
+**THE THREE HOLES WERE ALL VISIBLE FROM THE BEAT'S OWN PAGES, and that is now three waves
+running.** The law from `a2-door` keeps paying: *look for what the night is short OF before
+topping it up.*
+
+1. **A wire rang in both landings and nothing was behind it.** Both `lands` and `landsHard`
+   end on *"Somebody's wire goes off on the walk back. It rings twice, stops, and rings
+   again, and nobody has that number any more"*, and **both landing rails offered to answer
+   it** — three of the six rows were about that wire. There was no card. `the-wire` now
+   says what it actually is: a receiver's handset walking its own route because nobody
+   switched it off, with nothing at the far end. **That is the same sentence as the hunt
+   they ended two hours ago, pointed the other way**, and nobody in the scene says so.
+2. **Nine had no card in this room** — on the night the family learns how to bury somebody,
+   and she is the one who cannot be. She asks the practical question at the graveside in
+   the beat (*"Will anybody be able to find it? After."*) and the room never gave her a
+   second one. `nothing-to-bury` is hers.
+3. **The beat's own canon says *"Mirren's name goes first. On every cairn this family ever
+   builds, Mirren's name goes first"* and nothing anywhere earned it.** `whose-name-goes-first`
+   does now — and its second take is the rule the night is named for: **a cairn has no top.
+   It is a count, not a monument; it goes up; the day it has a top is the day the family
+   stopped coming out here.**
+
+Plus `the-basket`, the small one this room badly needed — Hesta's opening line is *"a burial
+is a meal with a hole in the ground attached"* and the basket was never mentioned again by
+anybody. Nobody ate a thing, she expected exactly that, and it goes on the counter
+uncovered and is gone by teatime.
+
+**The fences held.** Pia's background stays blank. Mirren does not speak, appear, or get
+heard — the wire has nothing on it. And `vow-in-practice`'s second take **notices that the
+vow as spoken has no boundary in it and refuses to put one in**, because whether it covers
+somebody who is not theirs is night 14's entire question.
 
 ## THE NEXT WAVE — and it is still a fork the author has to call
 
@@ -355,6 +394,7 @@ at seven cards.
 | `a2-annul` | 7 | The shack step at dawn, night 20. Five still in the world with no form for it, agreed-or-settled, the one thing she never learned, eleven pages carried for years |
 | `a2-ground` | 7 | A dry corner of the flooded undercroft, night 11. The napkin with all four crossed out, the door that stays open, the thing under the street, and a twelve-year-old asking to be in the room |
 | `a2-hand` | 7 | The marsh edge before dawn, night 12. A man checking the ground three times, fifteen hundred Tuesdays, whether it really was all of us, and the height the fog stops at |
+| `a2-mirren` | 7 | The walk back from the cairn, night 13. A wire ringing with nothing on it, a mind asking what her own grave would be, whose name goes at the bottom of every cairn, and a basket nobody touched |
 
 **And at v5.27.0 the two richest nights in the book finally counted as finished.**
 `a2-door` (16 family cards) and `a2-chassis` (25) had been sitting one count short for
