@@ -1681,6 +1681,15 @@
       <div class="hint">Stored only in this browser's local storage, on this machine. Local providers need no key.</div>
     </div>
     <div class="fld">
+      <label>READING PACE</label>
+      <select id="s-pace">
+        <option value="slow">SLOW — a line at a time, unhurried</option>
+        <option value="normal">NORMAL</option>
+        <option value="brisk">BRISK — get on with it</option>
+      </select>
+      <div class="hint">How long each line of an authored passage holds before the next one arrives. It only changes the <i>pacing</i> of the reveal — nothing is skipped at any speed, and clicking the feed still brings the whole passage up at once. When the passage finishes, the view returns to its first line so the choices are read with the scene above them rather than below it.</div>
+    </div>
+    <div class="fld">
       <label>VISUALS</label>
       <select id="s-visuals">
         <option value="full">FULL — the weather moves</option>
@@ -1715,6 +1724,10 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.37.0 "Read It From The Top"
+   a finished passage now returns to its FIRST line, so the choices are read with the scene above
+   scrollToTurn always existed and was only ever called at the start of a reveal, then undone
+   READING PACE in Settings — slow, normal, brisk — and it defaults to slow, which was the ask
    MUDSKIPPERS — THE COURIER'S RUN · v5.36.1 "One Divide By Zero, And The City Never Came Back"
    the title art lost its whole skyline after a run — a NaN parallax, and NaN is absorbing
    the mousemove listener is on WINDOW and the hidden title screen measures zero wide
@@ -12348,7 +12361,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.36.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.37.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -13652,6 +13665,14 @@ function scrollToTurn(el){
   var y = el.offsetTop - 24;
   $("feed").scrollTop = y < 0 ? 0 : y;
 }
+/* HOW LONG A LINE HOLDS BEFORE THE NEXT ONE ARRIVES (v5.37.0). The reveal was a fixed
+   500ms + 7ms a character, capped at 2400 - which is brisk for a passage of six lines,
+   and the author reads slower than the machine writes. It is a multiplier and not a
+   rewrite, so the shape of the pacing is unchanged: a long line still holds longer than
+   a short one, and the cap still exists. Nothing is ever SKIPPED at any setting, and
+   clicking the feed still brings the whole passage up at once. */
+var PACE = {slow:1.7, normal:1, brisk:0.6};
+function revealPace(){ return PACE[settings.pace] || PACE.slow; }
 /* HER CLOCK. Day 33 reads as a marathon because seven beats carry surface-shaped
    stamps across seventeen hours - and the descent has just taught the player that
    an hour on the substrate floor costs the surface a minute. Rather than restamp
@@ -14758,21 +14779,29 @@ function showScene(data, logIt, instant){
        settled, busy is down, and the seam is an ordinary composed turn. */
     if(seamPending) setTimeout(function(){ try{ seamFire(); }catch(e){} }, 0);
   }
+  /* THE PASSAGE IS READ FROM ITS TOP, NOT ITS BOTTOM (v5.37.0). Every one of these
+     paths used to finish on scrollFeed(), which sets scrollTop to scrollHeight - so the
+     moment the choices appeared the player was parked at the END of the scene and had to
+     scroll back up to read the thing they were choosing about. scrollToTurn already
+     existed and already did the right thing; it was only ever called at the START of a
+     reveal, and then undone. Now the view returns to the passage's first line when the
+     passage finishes, on every road out of here. */
+  function settle(){ if(first) scrollToTurn(first); else scrollFeed(); }
   if(instant || els.length === 0){
     els.forEach(function(el){ el.classList.remove("reveal"); el.classList.add("shown"); });
     done();
-    scrollFeed();
+    settle();
     return;
   }
   scrollToTurn(first);
   var i = 0;
   function step(){
     if(token !== revealToken) return;
-    if(i >= els.length){ done(); return; }
+    if(i >= els.length){ done(); settle(); return; }
     var el = els[i]; var b = blocks[i];
     el.classList.remove("reveal"); el.classList.add("shown");
     i++;
-    var wait = Math.min(2400, 500 + (b.text||"").length * 7);
+    var wait = Math.min(2400, 500 + (b.text||"").length * 7) * revealPace();
     revealTimer = setTimeout(step, wait);
   }
   skipReveal = function(){
@@ -14780,6 +14809,7 @@ function showScene(data, logIt, instant){
     if(revealTimer) clearTimeout(revealTimer);
     while(i < els.length){ els[i].classList.remove("reveal"); els[i].classList.add("shown"); i++; }
     done();
+    settle();
   };
   step();
 }
@@ -22958,6 +22988,11 @@ function loadSettings(){
     if(s && s.base) settings = s;
   }catch(e){}
   if(!settings.visuals) settings.visuals = "full";   /* pre-v2.3 settings blobs */
+  /* READING PACE (v5.37.0). Defaults to SLOW rather than the old fixed speed, because
+     the old speed was the complaint. Every settings blob written before this release
+     lacks the field entirely, so revealPace() falls through to slow for them too - and
+     one visit to Settings pins whatever they prefer. */
+  if(!settings.pace) settings.pace = "slow";
   /* ...and if a launcher load moved the provider, the old one is offered back in
      Settings rather than kept in a key nothing reads. */
   /* the offer is for the session the launcher moved you in - after an ordinary
@@ -23071,6 +23106,7 @@ function fillSettingsForm(){
       if($("setmodal").classList.contains("open") && settings.provider === "openrouter") renderStable(seen);
     });
   }
+  $("s-pace").value = settings.pace || "slow";
   $("s-visuals").value = settings.visuals || "full";
   var p = PRESETS[settings.provider]||PRESETS.custom;
   $("hint-base").textContent = p.hint
@@ -23145,12 +23181,17 @@ $("s-save").onclick = function(){
   settings.model = $("s-model").value.trim();
   settings.key = $("s-key").value.trim();
   settings.visuals = $("s-visuals").value;
+  settings.pace = $("s-pace").value;
   /* blank means the house setting, which is what replyTemp() answers with */
   var tv = $("s-temp").value.trim(), tn = parseFloat(tv);
   settings.temp = (tv && !isNaN(tn) && tn >= 0 && tn <= 2) ? tn : "";
   saveSettings();
   applyVisuals();
   $("s-status").innerHTML = '<div class="ok">Saved. Your key lives in this browser only.</div>';
+};
+$("s-pace").onchange = function(){
+  settings.pace = $("s-pace").value;
+  saveSettings();
 };
 $("s-visuals").onchange = function(){
   settings.visuals = $("s-visuals").value;

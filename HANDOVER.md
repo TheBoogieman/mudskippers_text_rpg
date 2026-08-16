@@ -132,6 +132,35 @@ deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds
    notes between the data are the project's memory, and a read-into-objects-and-write-back
    editor deletes every one of them silently. A diff must show only what the author changed.
 
+### THE PASSAGE IS READ FROM ITS TOP NOW (v5.37.0), and there is a READING PACE
+
+**Two complaints, one coat.** The reveal was too fast, and when the choices appeared the
+reader was parked at the END of the scene and had to scroll back up to read the thing they
+were choosing about.
+
+**The anchor was already written and was only ever undone.** `scrollToTurn(el)` sets the
+feed's scroll to the passage's own top and has existed for a long time — but it was called
+only at the START of a reveal, and every road out of `showScene` finished on `scrollFeed()`,
+which sets `scrollTop = scrollHeight`. So the passage was anchored, revealed, and then the
+view was thrown to the bottom. **A `settle()` now re-anchors on every exit** — the natural
+end of a reveal, the click-to-skip, and the instant path.
+
+**READING PACE is in Settings** — slow / normal / brisk — as a **multiplier**, not a rewrite:
+a long line still holds longer than a short one and the 2400ms cap still applies. Measured
+on a 120-character line: **1340ms before, 2278 slow, 1340 normal, 804 brisk.** It **defaults
+to SLOW**, including for every settings blob written before this release, because the old
+fixed speed was the complaint. Nothing is skipped at any setting and clicking the feed still
+brings the whole passage up at once.
+
+**WHAT IS VERIFIED AND WHAT IS NOT.** Driven at **1280x800**, because at a tall window the
+feed does not scroll at all and none of this is visible — my first measurement showed
+`scrollHeight === clientHeight` on every sample and proved nothing. After a real turn with
+13 blocks the view settles at **1005 of a possible 1134**, i.e. anchored above the bottom.
+**`showScene` is the path that is fixed.** There are about a dozen other `scrollFeed()`
+call sites — end cards, ceremonies, the busy indicator — and the COLD OPEN still ends at the
+bottom in a trace. Those are deliberate bottom-jumps in most cases and want their own pass;
+**do not assume they are covered.**
+
 ### THE TITLE ART LOST ITS CITY AFTER A RUN (fixed v5.36.1) — one divide by zero
 
 **Reproduce:** refresh, see the art; start a new run; answer a couple of questions; click
