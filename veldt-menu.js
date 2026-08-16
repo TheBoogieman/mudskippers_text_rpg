@@ -810,6 +810,16 @@ class Component extends DCLogic {
     else { cancelAnimationFrame(this.raf); this.draw(2.0); }
   };
 
+  /* THE TRANSITION NOBODY EVER SAW (fixed v5.38.0). start() faded the menu and the
+     wordmark out and scheduled them back in 3400ms later - but the game's own handler
+     ran on the same click and hid #titlescreen immediately, so the fade played to an
+     invisible screen and the run just began. Worse, the restore was still pending: come
+     back via MENU inside those 3.4 seconds and the menu was still at opacity 0, then
+     popped to 1 in front of you. That is the "disappears and reappears", and it was
+     intermittent purely because it depended on how long you played.
+     So the transition now HOLDS the door: see holdTheDoor() at the mount. And the
+     restore is no longer a timer anybody can arrive in the middle of - see settleMenu(),
+     which any return to the title screen calls. */
   start = () => {
     if (this.trans) return;
     this.trans = {t0: performance.now()};
@@ -817,12 +827,20 @@ class Component extends DCLogic {
     if (this.mark.current) this.mark.current.style.transition = 'opacity .6s ease';
     if (this.mark.current) this.mark.current.style.opacity = '0';
     if (this.low){ this.t0 = performance.now(); this.loop(); }
-    this.tTimer = setTimeout(() => {
-      this.trans = null;
-      if (this.menu.current) this.menu.current.style.opacity = '1';
-      if (this.mark.current) this.mark.current.style.opacity = '1';
-      if (this.low){ cancelAnimationFrame(this.raf); this.draw(2.0); }
-    }, 3400);
+  };
+
+  /* PUT THE MENU BACK, NOW, WITHOUT A FADE. Called whenever the title screen is shown
+     again. Cancelling the timer is the point: a restore that arrives on its own schedule
+     is a restore the player can walk in on. */
+  settleMenu = () => {
+    clearTimeout(this.tTimer);
+    this.trans = null;
+    const m = this.menu.current, k = this.mark.current;
+    if (m){ const t = m.style.transition; m.style.transition = 'none'; m.style.opacity = '1';
+            void m.offsetHeight; m.style.transition = t; }
+    if (k){ k.style.transition = 'none'; k.style.opacity = '1';
+            void k.offsetHeight; k.style.transition = 'opacity .6s ease'; }
+    if (this.low){ cancelAnimationFrame(this.raf); this.draw(2.0); }
   };
 
   loop = () => {
@@ -1496,11 +1514,40 @@ class Component extends DCLogic {
     };
     lb.addEventListener('click', inst.toggleLow);
 
-    // the art's own NEW GAME transition, fired from the game's real buttons
-    const nb = document.getElementById('t-new');
-    if (nb) nb.addEventListener('click', inst.start, true);
-    const cb = document.getElementById('t-continue');
-    if (cb) cb.addEventListener('click', inst.start, true);
+    /* HOLD THE DOOR OPEN LONG ENOUGH TO SEE IT (v5.38.0). The game's handler is an
+       onclick PROPERTY on the button, which runs in the target phase - so a capture
+       listener here goes first, and stopImmediatePropagation stops the property handler
+       too. We block the first click, play the transition, then re-issue the click with a
+       one-shot flag that lets it straight through.
+       1300ms, not the old 3400: the fade itself is .5s for the menu and .6s for the
+       wordmark, so this is the fade plus a beat of clear city, and no longer than anyone
+       wants to wait for a game they just asked to start. One constant, one place. */
+    const ENTER_HOLD = 1300;
+    function holdTheDoor(btn){
+      if (!btn) return;
+      btn.addEventListener('click', function(e){
+        if (btn.__veldtGo){ btn.__veldtGo = false; return; }   /* the re-issue: let it by */
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        inst.start();
+        setTimeout(function(){ btn.__veldtGo = true; btn.click(); }, ENTER_HOLD);
+      }, true);
+    }
+    holdTheDoor(document.getElementById('t-new'));
+    holdTheDoor(document.getElementById('t-continue'));
+
+    /* ...AND PUT IT BACK THE MOMENT THE TITLE SCREEN RETURNS. The game shows #titlescreen
+       by writing its style, so watching the attribute is the one signal that does not
+       require the skin to know which of MENU, a walk-out or an ending brought us here. */
+    const ts2 = document.getElementById('titlescreen');
+    if (ts2 && window.MutationObserver){
+      let wasHidden = getComputedStyle(ts2).display === 'none';
+      new MutationObserver(function(){
+        const hidden = getComputedStyle(ts2).display === 'none';
+        if (wasHidden && !hidden) inst.settleMenu();
+        wasHidden = hidden;
+      }).observe(ts2, {attributes:true, attributeFilter:['style','class']});
+    }
 
     relayoutMenu(ts);
 

@@ -1724,6 +1724,11 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.38.0 "Hold The Door Open Long Enough To See It"
+   the entry transition played to a hidden screen and its restore was a timer you walked into
+   CONTINUE and NEW GAME now hold for 1300ms so the fade is seen, then let the click through
+   any return to the title restores the menu at once — no more disappear-and-reappear
+   and the option panel is capped: four choices took 434px of an 800px window, leaving 237 to read in
    MUDSKIPPERS — THE COURIER'S RUN · v5.37.0 "Read It From The Top"
    a finished passage now returns to its FIRST line, so the choices are read with the scene above
    scrollToTurn always existed and was only ever called at the start of a reveal, then undone
@@ -12361,7 +12366,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.37.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.38.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -14786,7 +14791,19 @@ function showScene(data, logIt, instant){
      existed and already did the right thing; it was only ever called at the START of a
      reveal, and then undone. Now the view returns to the passage's first line when the
      passage finishes, on every road out of here. */
-  function settle(){ if(first) scrollToTurn(first); else scrollFeed(); }
+  /* ...AND IT HAS TO MEASURE AFTER THE OPTION BAR HAS GROWN (v5.38.0). #controls is
+     `flex: 0 1 auto` in a column, so the moment showChoices fills it the bar gets taller
+     and #feed gets SHORTER by the same amount - and anything the reader had at the bottom
+     of the feed is now underneath the panel. done() renders the choices, so settling
+     synchronously measured the feed at its old height and anchored against a viewport
+     that no longer existed. One frame later the layout is settled and the anchor is
+     honest. requestAnimationFrame with a timeout fallback, because this file is ES5 and
+     runs in whatever the player has. */
+  function settle(){
+    var go = function(){ if(first) scrollToTurn(first); else scrollFeed(); };
+    if(window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(go); });
+    else setTimeout(go, 32);
+  }
   if(instant || els.length === 0){
     els.forEach(function(el){ el.classList.remove("reveal"); el.classList.add("shown"); });
     done();

@@ -132,6 +132,44 @@ deliberately blank. Night 21's `the-knock-at-the-door` is its seed and withholds
    notes between the data are the project's memory, and a read-into-objects-and-write-back
    editor deletes every one of them silently. A diff must show only what the author changed.
 
+### THE ENTRY TRANSITION, AND THE PANEL THAT ATE THE SCREEN (v5.38.0)
+
+**Three faults, all measured, all in the skin except the last.**
+
+**1. The transition played to a hidden screen.** `start()` faded the menu and wordmark out
+and the game's own handler hid `#titlescreen` on the same click — so the fade was never
+seen and the run just began. It now **holds the door**: a capture listener blocks the first
+click, plays the transition, then re-issues the click with a one-shot flag that lets it
+through. **1300ms**, not the old 3400 — the fade is .5s/.6s, so that is the fade plus a beat
+of clear city. One constant, `ENTER_HOLD`, one place. The game's handler is an `onclick`
+PROPERTY, which runs in the target phase, so `stopImmediatePropagation` from capture stops
+it — that is why this works at all.
+
+**2. The restore was a timer you could walk into.** The menu's opacity was scheduled back to
+1 on a 3400ms timer. Return via MENU inside that window and the menu was still at 0, then
+popped to 1 in front of you — **which is why it was intermittent: it depended on how long
+you played.** It is now `settleMenu()`, fired by a `MutationObserver` on `#titlescreen`'s
+attributes whenever it goes hidden → visible, restoring opacity with the transition
+suppressed for that frame. Watching the attribute means the skin does not have to know
+whether MENU, a walk-out or an ending brought us back.
+
+**3. THE OPTION PANEL WAS TAKING HALF THE WINDOW.** `#controls` is `flex: 0 1 auto` in a
+column with `#feed`, so it takes whatever its contents want. **Measured at 1280x800 with a
+four-choice rail: the bar grew from 84px to 434px, leaving the feed 237px.** The scene the
+choices are about was a sliver — and no scroll anchoring can fix that, because the passage's
+top then falls outside the reachable scroll range and the browser clamps to the bottom.
+`max-height:42vh` + `overflow-y:auto` in **veldt-skin.css**, where visual values belong.
+After: bar 336px, feed 419px, **52% of the window**, and the rail scrolls in its own box on
+the rare turn that needs it. With that room, the v5.37.0 anchor works — after a real turn the
+feed sits **110px above the bottom** instead of parked on it.
+
+**A HARNESS THAT "RESTORES" FROM A MISSING BACKUP IS A WIPE.** My own backup/restore snippet
+read `window.__bk || {}` and then deleted every key not in it. A `location.href` between the
+capture and the restore cleared `window`, so it restored from `{}` — and deleted the
+author's live run with the confident wording of a repair. **Capture and restore must live in
+one page load, and a restore must refuse to run on an empty backup rather than treat it as
+"delete everything".**
+
 ### THE PASSAGE IS READ FROM ITS TOP NOW (v5.37.0), and there is a READING PACE
 
 **Two complaints, one coat.** The reveal was too fast, and when the choices appeared the

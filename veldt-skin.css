@@ -110,6 +110,16 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   background:linear-gradient(180deg,#0f1620,#0a0e15);
   box-shadow:0 -1px 26px rgba(0,0,0,.6);
   padding:13px 0 17px;
+  /* THE PANEL WAS EATING THE SCREEN (v5.38.0). #controls is `flex: 0 1 auto` in a
+     column with #feed, so it takes whatever height its contents want and the feed gets
+     the rest. Measured on a 1280x800 window with a four-choice rail: the bar grew from
+     84px to 434px, leaving 237px of feed - so the scene the choices are ABOUT was a
+     sliver, and no amount of scroll anchoring can help, because the passage's top is
+     then outside the reachable scroll range and the browser clamps to the bottom.
+     The reading half wins the argument. The rail scrolls inside its own box on the rare
+     turn that needs more. */
+  max-height:42vh;
+  overflow-y:auto;
 }
 #nowstrip{border-left-color:#2c3648;color:#8d99aa;font-size:11.5px}
 
