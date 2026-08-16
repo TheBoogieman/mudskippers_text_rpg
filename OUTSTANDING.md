@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.29.0. **Book One is closed. `a2-housing`, `a2-manual`, `a2-choir`, `a2-door`, `a2-chassis` and `a2-annul` are finished.***
+*Written 2026-08-16, updated at v5.30.0. **Book One is closed. Season 2 has nine of its thirteen nights finished, and the hole in its middle is down to two.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,32 +11,42 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**16 of 33 nights finished.** A night is finished on four counts and not before:
+**18 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
-*Every figure below was read off the board at v5.29.0, not carried forward.*
+*Every figure below was read off the board at v5.30.0, not carried forward.*
 
 | | count |
 |---|---|
-| finished nights | **16 of 33** |
-| cards across both decks | 388 |
-| second and third takes | 188 |
-| **takes with no choice line of their own** | **49 of 188** |
-| nights short of cards | 15 |
-| nights that land on nothing to click | 17 |
-| rooms still on their first three cards | 15 |
-| authored lines in the drift net | 6,887 |
+| finished nights | **18 of 33** |
+| cards across both decks | 401 |
+| second and third takes | 202 |
+| **takes with no choice line of their own** | **49 of 202** |
+| nights short of cards | 13 |
+| nights that land on nothing to click | 15 |
+| rooms still on their first three cards | 13 |
+| authored lines in the drift net | 7,087 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
-**Books Two and Three are the whole job**: 23 nights, of which 7 are finished
-(`a2-door`, `a2-chassis`, `a2-three`, `a2-housing`, `a2-manual`, `a2-choir`, `a2-annul`) and
-15 rooms have never been opened.
+**Books Two and Three are the whole job**: 23 nights, of which 9 are finished and 13 rooms
+have never been opened.
+
+**Season 2 stands at nine of thirteen (v5.30.0).** The writing had jumped from night 10 to
+night 15 and left four nights behind it; `a2-ground` (11) and `a2-hand` (12) are now
+written, and the hole in the middle is **`a2-mirren` (13)** and **`a2-seven` (14)**. The
+season's own ending — **`a2-law` (21)** and **`a2-turn` (22)** — is still open, and those
+two are the expensive ones: seven in the room, both sides of the chassis fork, and `a2-law`
+is not fork-aware at all.
+
+**In sequence, the next night is `a2-mirren` (13)** — the act turn, the burial, and the
+night the vow gets written. It already has its full evening deck; what it needs is the
+room, the second takes and both landings.
 
 **`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
 thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
@@ -231,6 +241,18 @@ biscuit tin); `arrives` is a summon word (it fired in a room whose own rule is *
 arrives*); `beat` is a mechanics word and reads as meta inside prose; `in his pocket` said
 to a shard who is talking tells the game she is stowed and audible at once.
 
+**GROWING A BEAT'S DECK DILUTES ITS ANCHORS.** An anchor is a name that has to reach the
+screen before the night can close. `a2-ground` names Mirren on two of its four cards, which
+was safe while all four were dealt — at six cards and a budget of four, a shuffle can deal
+the other four and never say her name on the night she is the anchor of. **The sweep row
+went red from adding two good cards.** Re-check anchors every time a beat gains a card, not
+only when one is written.
+
+**A CHARACTER'S FAMILY IS THE AUTHOR'S TO INVENT, AND THE DETECTOR ENFORCES IT.** A take
+written for Pia at v5.30.0 opened *"when my mum went"* — and `breach` caught it on the kin
+rule. The book has never given Pia a family. **Pia's background is an open question for the
+author**, and nothing should assume an answer to it until it is ruled on.
+
 **A LANDING RAIL IS THREE ROWS AND NO MORE.** `playAuthored` ends on `V.rail.slice(0, 3)`,
 so a fourth row is written, counted by the board as a cut row, and never once seen by a
 player. Spend all three on cards, or spend one of them on a knock — not both. Found at
@@ -258,10 +280,11 @@ comma after a block that already ended in one. **The board counts holes now.**
 
 **Beats get written in order.** The order from here is `a2-housing` (17), `a2-manual` (18),
 `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law` (21 today).
-**Nights 16 through 20 are all done.** The next written thing is either **the capture beat**
-— which is blocked on an engine call, because inserting into `SPINE` moves `beatIdx` and
-live save files hold that as a position — or **`a2-law` (21)**, which is pure writing and
-is not fork-aware at all.
+**Ruled 2026-08-16: go in sequence from the earliest unfinished night, not forward from the
+last one written.** That makes the order `a2-mirren` (13), `a2-seven` (14), then `a2-law`
+(21) and `a2-turn` (22). Nights 16 through 20 are all done. **The capture beat is still
+blocked on an engine call** — inserting into `SPINE` moves `beatIdx`, and live save files
+hold that as a position.
 
 **What he protects, ruled:** the running jokes and callbacks; nothing that steals a later
 night; the quiet character work; and comedy, hard — he has said twice that a scene was too

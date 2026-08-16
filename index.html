@@ -1710,6 +1710,11 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.30.0 "Four Options, In Two Hours, On A Napkin"
+   a2-ground FINISHED: the signal cut had no card, and option four had nobody to own it
+   a2-hand FINISHED: the offer to spare Vic, the ruling on Pia, and Nine asking for a job
+   a2-hand: Vic had no card at the marsh edge on the night his oldest friend was ended
+   the hole in the middle of Book Two is two nights smaller — 18 of 33 finished
    MUDSKIPPERS — THE COURIER'S RUN · v5.29.0 "There Is No Form For This"
    a2-annul FINISHED: the shack step at dawn, seven cards, and Five is still in the world
    a2-annul: the morning after - what taking turns costs, and what the asking was to watch
@@ -2773,9 +2778,9 @@ var SPINE = [
               "For a long moment the only sound is the water, and then somebody says it, and does not soften it.",
               ["Vic","...And one more thing, while we are saying things out loud. If that street goes tonight, something under it goes with it. It is mine. I have never told any of you it was there."],
               "Nobody asks him what. There is water over everyone's boots and a hunter between them and that door, and the asking will keep until it cannot."],
-       rail:["Say it myself, so it is not only theirs to carry.",
-             "Let them finish saying it.",
-             "Ask why nobody has suggested going back up."]}],
+       rail:[{line:"Say it myself, so it is not only theirs to carry.", cards:["her-door"]},
+             {line:"Let them finish saying it.", cards:["the-list"]},
+             {line:"Ask why nobody has suggested going back up.", cards:["the-undercroft"]}]}],
  landsHard:[{day:"11", time:"1:20am", place:"THE FLOODED UNDERCROFT", amb:"dead-signal",
        now:"Deep night, in the undercroft. The kind option died off-screen; they learned the jammer had failed from the silence after it.",
        lines:["It does not fail in front of you. It just stops being a thing that is happening, somewhere you are not, and the first you know of it is a silence where a signal was.",
@@ -2785,9 +2790,15 @@ var SPINE = [
               "The water is over your boots and nobody has suggested going back up.",
               ["Vic","There is a thing of mine under that street. I am saying it now because I did not say it earlier, and earlier would have been the useful time."],
               "He does not say what. Nobody has the room to ask, and he knows it, which is some of why he picked now."],
-       rail:["Hand in against her: ask if she is alright down here, in the dark and the water.",
-             "Ask Hesta what was on the rest of the list.",
-             "Ask why nobody has suggested going back up."]}],
+       /* "Ask Hesta what was on the rest of the list" was rewritten: the list is Pia's
+          napkin and the card that answers it is Pia's, so the line as written promised
+          one voice and would have dealt another - the exact complaint the wiring exists
+          to stop. On the ugly road "why nobody has suggested going back up" binds to
+          `her-door` rather than the building, because up is HER street and the hunt is
+          standing on it. */
+       rail:[{line:"Hand in against her: ask if she is alright down here, in the dark and the water.", cards:["nine-down-here"]},
+             {line:"Ask about the rest of the list. All four of them.", cards:["the-list"]},
+             {line:"Ask why nobody has suggested going back up.", cards:["her-door"]}]}],
  budget:4, floor:2, reveals:[], anchors:["Mirren","Hesta"],
  press:["The jammer that stills every other Hollow makes this one pause, recalibrate, and continue.",
         "She reaches the cafe's street. Hesta's door, and everyone behind it, is suddenly in the hunt's path."],
@@ -2843,9 +2854,9 @@ var SPINE = [
               ["Hesta","Whoever it was, it was all of us. That's not a comfort, it's just true, and I'll say it as often as it needs saying."],
               "Nobody has said her name yet. It is sitting in the middle of all of you waiting to be picked up.",
               ["Pia","Mirren. There. Somebody had to go first."]],
-       rail:["Say it properly. Say the whole name.",
-             "Ask Hesta to say the true part again.",
-             "Not yet. First we do this properly."]}],
+       rail:[{line:"Say it properly. Say the whole name.", cards:["the-tuesday-after"]},
+             {line:"Ask Hesta to say the true part again.", cards:["all-of-us"]},
+             {line:"Not yet. First we do this properly.", cards:["rest-of-tonight"]}]}],
  landsHard:[{day:"11", time:"4:00am", place:"THE MARSH EDGE", amb:"marsh-fog",
        now:"Before dawn at the marsh edge. The world finished it — a recall, a rail, a river — and nobody's hand got to matter.",
        lines:["It ends without any of you. A recall order, a rail, a river doing what rivers do, and the thing you spent three days becoming ready for happens to somebody else's schedule.",
@@ -2853,9 +2864,13 @@ var SPINE = [
               ["Pia","I was going to do it. I want that written down somewhere. I was going to."],
               ["Hesta","It's written down. I'm the one who writes things down."],
               "Nobody has said her name yet, and the question of whose hand is now permanently unanswerable."],
-       rail:["Say her name. Somebody has to go first.",
-             "Tell Pia it counts that she was going to.",
-             "Ask Hesta what else she writes down."]}],
+       /* "Ask Hesta what else she writes down" was rewritten. It is a good line and it
+          had nothing behind it: no card in this room is about her ledger, and the one
+          that nearly was belongs to night 11. It now asks for the sentence she has
+          already said twice in this passage, which is the card that exists. */
+       rail:[{line:"Say her name. Somebody has to go first.", cards:["the-tuesday-after"]},
+             {line:"Tell Pia it counts that she was going to.", cards:["anybody-alright"]},
+             {line:"Ask Hesta to say the true part again, for the ones who were not listening.", cards:["all-of-us"]}]}],
  /* NO ANCHOR HERE, AND I ALMOST GOT THIS ONE WRONG (v4.72.6). The anchor was
     "Mirren" and no card says her name, so this beat could never close clean - and the
     obvious repair was to have Vic say it once in the card that asks whether there is
@@ -7276,37 +7291,177 @@ var SCENEBOOK = {
     plays:["Hesta looks at the black water for a while, and it is her who says it, because she is the one who can carry it without dropping it.",
      ["Hesta","The kind things failed. All of them, honestly tried, on screen, tonight. What is left is the unkind thing."],
      ["Hesta","Not whose hand. Not tonight. Tonight we know THAT it ends, and we sit with that, and we do not audition for it."],
-     "Nobody argues. The water keeps moving through the dark with the patience of something that has outlasted every argument ever held near it."]}
+     "Nobody argues. The water keeps moving through the dark with the patience of something that has outlasted every argument ever held near it."]},
+   /* THE TWO THE NIGHT WAS SHORT OF (v5.30.0), and neither of them is an invention -
+      the night was already asking for both.
+      (1) THE BEAT'S OWN GOAL NAMES FOUR KIND OPTIONS: the jammer, the signal cut,
+          distance, mercy. Three had cards. The SIGNAL CUT had none, on the night whose
+          entire job is spending the gentle playbook on screen. It goes to Nine because
+          she is the only one in the room qualified to listen, and it fails in the worst
+          available way - not blocked, but empty. There is nothing to cut. She walks up
+          to what that rules in and turns round on purpose, because what was done to
+          Mirren is a later night's and this room's `never` says so.
+      (2) THE OPENING RAIL ASKS WHO WROTE OPTION FOUR and nothing in the book could
+          answer it. A question the night puts on its own first screen has to have a
+          card behind it. It is Pia's, in capitals, so it would be read before anybody
+          knew whose it was - and the scene is not the option, it is Hesta refusing it
+          properly instead of ignoring it. */
+   {ask:"cutting the signal she is on",
+    key:"signal cut channel link orders remote controller disconnect listen band",
+    who:"Nine",
+    gives:"the fourth kind option spent - she listens for something to cut and finds there is nothing there to cut",
+    holds:"what that rules in. She gets to the edge of it, says out loud that she is at the edge of it, and stops",
+    rail:"Nine. Listen for whatever she is on, and cut it.",
+    plays:[["Nine","Give me quiet. Not polite quiet - actual quiet. Everybody stop moving their feet about in the water."],
+     "The hum goes narrow and hard against your palm, a listener working, and for a long time nobody moves.",
+     ["Nine","There is no channel. I want to be precise, because precise matters here: I am not telling you I cannot find it. I am telling you I have been all the way along the band, twice, and there is nothing on it and nothing off it either."],
+     ["Pia","Then who is telling Mirren what to do?"],
+     ["Nine","Nobody is telling her anything. She is not being driven. She is only continuing."],
+     ["Hesta","Say the useful half of that, and say it slowly, because I want it in the room properly."],
+     "The hum comes back to its ordinary width, and takes its time about it, the way you put down a thing that turned out heavier than it looked.",
+     ["Nine","And I know exactly what that rules out. I am not going to stand in a wet room and guess out loud at what it rules IN, tonight, in front of everybody."]]},
+   {ask:"who wrote option four",
+    key:"four option napkin list handwriting wrote fourth capitals",
+    who:"Pia",
+    gives:"that she wrote it in a hand that was not hers on purpose, and what it says",
+    holds:"she will not pretend it is a good option - she wants it refused properly rather than ignored",
+    rail:"Ask who wrote option four. It is not in anybody's handwriting.",
+    plays:[["Pia","Me. I did it in capitals so it would get read before anybody knew whose it was. That worked, by the way. It got read twice."],
+     "Option four, in careful capitals, on a napkin with a hole in it: LET HER CATCH US.",
+     ["Pia","She is not hunting, she is delivering. A delivery that arrives is a delivery that is finished, and a finished thing stops. That is the whole of it and I have thought about it more than the rest of you put together."],
+     "Nobody laughs at her, which is the first kind thing that has happened tonight, and Hesta answers it properly, which is the second.",
+     ["Hesta","Then we do it out loud, and we do it at your working. What arrives is you. What signs for you is not Mirren and has not been for a while. And what a finished delivery does next is get filed - I have spent forty years on this row learning what filed means, and I will not have you find it out the short way."],
+     ["Pia","...Right. Cross it out then. Cross it out properly, so it counts as tried."],
+     "She crosses it out herself, hard enough to go through the napkin a second time."]}
   ],
   room:{
    where:"a dry corner of the undercroft with the water moving somewhere out of sight",
    here:["Pia","Vic","Nine","Hesta"],
    never:["Mirren does not appear","no hand is chosen here"],
    topics:[
-    {ask:"how Vic knew her", key:"vic mirren knew friend before history how-long",
+    {id:"knew-her", railTakes:["Ask him what the last ordinary Tuesday was like."],
+     ask:"how Vic knew her", key:"vic mirren knew friend before history how-long",
      who:"Vic", gives:"the receiver she was, and one specific ordinary memory that is worse than a speech",
      holds:"he does not say what he thinks they should do",
      rail:"Ask him about her. The real her. Before.",
      plays:[["Vic","She kept my books the first year of the shop, because I cannot add and she could not stop. Tuesdays. She came Tuesdays."],
       ["Vic","She used to bring the wrong biscuits on purpose. Thirty years. Every Tuesday, the wrong biscuits, because the first time was an accident and I laughed."],
       "One ordinary memory, and it is worse than any speech - the specific gravity of a person, measured in biscuits.",
-      ["Vic","That is who is walking around down there wearing her. That is the size of what they took."]]},
-    {ask:"whether Nine is alright down here", key:"nine ok alright dark water afraid",
+      ["Vic","That is who is walking around down there wearing her. That is the size of what they took."]],
+     takes:[[["Vic","The last ordinary one. I have been over it that many times it has gone smooth, like a step."],
+       ["Vic","She was cross about a delivery. Not mine - somebody else's, up the row, and she was cross on their behalf, which was the whole of her really. Wrong biscuits. Ginger, which she knew I hated, and she put them down and said next week I am bringing the good ones, and she meant it as a threat."],
+       "He says it without any particular weight, which is the thing that makes it unsurvivable.",
+       ["Vic","There was no last-time about it. That is what nobody tells you and I am telling you now, while I am the one who knows it: it does not announce itself. You get the ordinary one, and then you get this."]]]},
+    {id:"nine-down-here", railTakes:["Ask her what she has been taking notes ON."],
+     ask:"whether Nine is alright down here", key:"nine ok alright dark water afraid",
      who:"Nine", gives:"that the water is the loudest thing she has ever been near, said with interest rather than fear",
      holds:"she does not mention the vaults",
      rail:"Hand on the shard: is she alright, down here with all this.",
      plays:[["Nine","The water is the loudest thing I have ever been near. It goes under everything. It is under your voice right now."],
       "Interest, not fear - a listener finding the room's one honest instrument.",
       ["Nine","It never says the same thing twice. I thought everything did, eventually. I am taking notes."],
-      "The hum against your palm has gone slow and wide, matching itself to the water, learning the register."]},
-    {ask:"the undercroft itself", key:"undercroft place water old exchange house what-is",
+      "The hum against your palm has gone slow and wide, matching itself to the water, learning the register."],
+     takes:[[["Nine","What I have been taking notes on. All right - you have asked at a strange hour and you are getting a straight answer for it."],
+       ["Nine","Everything down here is older than the thing that is hunting us, and not one bit of it is worried. The columns. The water. There is a fountain at the far end still going, and nobody has asked it to for about sixty years."],
+       ["Nine","I find that useful. Not comforting; I want to be accurate about it, it is not comforting. Useful. There is a great deal of the world that simply carries on and does not check with anybody first."],
+       "The hum settles into the register of the water again, wide and slow, keeping time with something that has never once kept time with anything else.",
+       ["Nine","I am going to be one of those. That is the note. That is the whole note."]]]},
+    {id:"the-undercroft", railTakes:["Ask her about the fountain, then."],
+     ask:"the undercroft itself", key:"undercroft place water old exchange house what-is",
      who:"Hesta", gives:"what the building was before it flooded, told badly and warmly",
      holds:"nothing about what is under her own floor",
      rail:"Ask Hesta what this place was, before it flooded.",
      plays:[["Hesta","A market floor, when my grandmother ran the row. Then the water table had opinions, and the city agreed to lose."],
       ["Hesta","They moved the market up a storey and left the columns to the eels. Somewhere down the far end there is a fountain that has never once stopped being ironic."],
       "She tells it badly and warmly, the dates wrong, the affection exact.",
-      ["Hesta","Buildings do not die, down here. They just take on lodgers."]]}
+      ["Hesta","Buildings do not die, down here. They just take on lodgers."]],
+     takes:[[["Hesta","The fountain. Now that is a proper question, and I have been waiting a very long time for somebody to ask me it."],
+       ["Hesta","A man wanted the market to have a fountain and was told no four separate times. So he paid for it himself, badly, out of a plumbing arrangement he never explained to anybody, and it has outlasted the market, the men who told him no, and I should think the plumbing."],
+       "She is enjoying herself, which in a flooded building at one in the morning is a public service, and everybody present takes some.",
+       ["Hesta","It has never stopped. Not in the flood, not in the bad winter. It is down there in the dark being decorative at nobody, permanently, out of spite."],
+       ["Pia","That is the best thing I have ever heard."],
+       ["Hesta","It is the best thing you have ever heard. Remember it the next time somebody tells you a thing has to be useful."]]]},
+
+    /* THE FOUR THIS ROOM WAS BUILT WITHOUT (v5.30.0). Four people are down here and
+       three of them had one card each; Pia, who wrote the list the whole night runs
+       on, had none at all. What the four are for:
+       (1) `the-list` - the napkin, wet, every line crossed out, and she is keeping it.
+           The night's own prop, answered by the person who made it.
+       (2) `her-door` - the hunt has reached HER street, which is the beat's second
+           press, and nobody had ever asked her what she intends to do about it.
+       (3) `under-the-street` - both landings have Vic confessing there is something of
+           his under that street and nobody having the room to ask. The room is where
+           the asking lands. He gives the SHAPE and withholds the name, with a date on
+           the withholding, so it is a promise rather than a refusal.
+       (4) `sent-away` - tomorrow is the night the family does the unkind thing, and a
+           twelve-year-old is in this room. Nobody promises her anything, which is the
+           only honest version. */
+    {id:"the-list", railTakes:["Ask her which one she thought would actually work."],
+     ask:"what happens to the list now", key:"list napkin paper four options crossed keep pocket wet",
+     who:"Pia", gives:"what she intends to do with a list where every line is crossed out",
+     holds:"she is not going to be talked out of keeping it",
+     rail:"Ask Pia what she is going to do with that napkin.",
+     /* NOT "the napkin is in my pocket". `shard:stow` fired: anything going into a
+        pocket reads as HER being put away, because she is the thing this book puts in
+        pockets, and naming the object twice in the clause was not enough to save it. */
+     plays:[["Pia","I have still got the napkin. It is wet, everything on it is crossed out, and I am keeping it, so nobody start."],
+      ["Pia","Because in about a week somebody is going to say we did not try. Not to be horrible - people just say it, it is a thing mouths do. And when they do I am going to put a wet napkin on a table in front of them and they can read all four."],
+      "She folds it along the creases it already has, which by now is the only way it folds.",
+      ["Pia","Four options. Four, in two hours, in the dark, on a napkin. I would like that noted somewhere that is not just me."]],
+     takes:[[["Pia","Which one I thought would work. Two. Obviously two. Two was the good one."],
+       ["Pia","I had a whole thing about how it only had to hold for a minute, because a minute got us to the stairs and the stairs got us to the door. I did the timings. I did TIMINGS, on a napkin, in the dark, with a pencil I had to borrow."],
+       "Somewhere out past the columns the water goes on moving, unbothered, doing the only thing it has ever done.",
+       ["Pia","And it was still the wrong answer, and I did the timings right. That is the bit I keep going back round. You can do the whole thing correctly and still be wrong, and nobody tells you that in advance. That should be on a poster."]]]},
+
+    {id:"her-door", railTakes:["Ask her what she is not saying in front of Pia."],
+     ask:"what she is going to do about her own door", key:"door open shut cafe row street stay close hesta what-now",
+     who:"Hesta", gives:"the sum she has been doing since ten o'clock, and the answer she has already arrived at",
+     holds:"the reason, which she will not say over a twelve-year-old's head",
+     rail:"The hunt is on her street now. Ask Hesta what she is going to do about her door.",
+     plays:[["Hesta","My door. Right. I have been doing that sum since ten o'clock this evening, so you may as well have the answer with the working."],
+      ["Hesta","It stays open. That is not bravery and I would thank nobody to write it up afterwards as bravery. It is that a door which shuts when it gets frightening is not a door, it is a mood, and the whole row can tell the difference inside a week."],
+      ["Vic","Hesta - "],
+      ["Hesta","I know. I have heard your version, and your version ends with me and a child somewhere sensible, and the row finding out that safe was available all along and simply had not been offered to them."],
+      "She wrings out a sleeve, methodically, into water that is already there.",
+      ["Hesta","So it stays open, and it stays open with me behind it, and if that is stupid then it is stupid in a direction I can live in."]],
+     takes:[[["Hesta","What I am not saying in front of her. You noticed. Good - I would have thought less of you."],
+       "She looks over at the far corner, where a twelve-year-old is pretending to be asleep on a folded tarpaulin and doing it badly on purpose.",
+       ["Hesta","I have a list of my own. Mine is not on a napkin and it is not four long. It is names. It is the people who were behind my door on the nights I got it right, and it is the people who were behind my door on the nights I did not."],
+       ["Hesta","That is the entire sentence and you are not getting the second half of it tonight. Ask me in a year. I may be worse at refusing by then."]]]},
+
+    {id:"under-the-street", railTakes:["Ask him whether he will tell them before it matters."],
+     ask:"the thing of his under that street", key:"vic thing under street floor his secret kept never-told what-is",
+     who:"Vic", gives:"the shape of it - what it is not, and why he chose tonight of all nights to say it",
+     holds:"what it actually is. That is not tonight's, and the withholding comes with a date on it",
+     rail:"Ask Vic about the thing under that street. He brought it up himself.",
+     plays:["He is sitting on a dry step with his boots in the water, which is the wrong way round, and nobody has had the heart to tell him.",
+      ["Vic","I will do this properly, so here is the top of it: I am not going to tell you what it is. That is not me being clever. That is me being certain, which is worse, and I know it is worse."],
+      ["Vic","What I will give you, because you are owed something for the timing. It is not money. It is not a weapon. Nobody has ever been in any danger from it and nobody is in danger from it now. And if that street goes tonight I cannot get it out, and there is no other one."],
+      ["Hesta","And you said it tonight because."],
+      ["Vic","Because I have spent thirty years being a man who does not say things until the useful hour has been and gone. And there is a woman down there I did not say things to either. Look at the pair of us."],
+      "Nobody fills the silence after that, which is the correct amount of respect, and also nobody has the first idea what to put in it."],
+     takes:[[["Vic","Whether I will tell you before it matters. That is the good question and you have asked it the good way, which is without a face on."],
+       ["Vic","Yes. Not tonight - tonight has a hunter in it, and I am not putting a second thing on the table while the first one is still walking about."],
+       ["Vic","But before it matters. I will pick the hour and I will pick it early. And if I do not, one of you is to take me by the elbow and remind me that I said this in a flooded building with my boots on the wrong side."],
+       ["Pia","I'll do it."],
+       ["Vic","...Of course you will."]]]},
+
+    {id:"sent-away", railTakes:["Ask her why the room matters, if she is not going to touch anything."],
+     ask:"whether she is coming to the next part", key:"pia tomorrow next come room upstairs sent away child protect",
+     who:"Pia", gives:"a twelve-year-old refusing to be sent upstairs for the part nobody wants her at",
+     holds:"she does not win it, and nobody promises her anything",
+     rail:"Ask Pia what she thinks happens to her tomorrow night. She has been building up to it.",
+     plays:[["Pia","Say it then. Somebody has been building up to it for an hour and it is making the whole corner weird."],
+      ["Pia","Tomorrow. The part where it is not a list any more. You are all going to do the thing where you look at each other over my head and then one of you says my name gently."],
+      "She is twelve, sitting on a tarpaulin in a flooded building at two in the morning, and she is not wrong about one single part of it.",
+      ["Pia","I am not asking to hold anything or do anything. I am asking to be in the room. There is a difference and adults keep losing it."],
+      ["Hesta","I have not decided."],
+      ["Pia","That is fair. That is actually fair, which is the first fair thing anybody has said all night. Just do not decide it while I am asleep."]],
+     takes:[[["Pia","Why the room. Right."],
+       ["Pia","Because if I am not in it, I get told about it. And the told-about version is always tidier, and everybody is braver in it, and the bad part is one sentence somewhere in the middle."],
+       ["Pia","I have had four told-about versions this year. I know what they are for. They are not for me. They are so the person doing the telling does not have to hear themselves say the long one out loud."],
+       "Past the columns the water carries on with its one job, at its one speed.",
+       ["Pia","So put me in the room and I will be quiet in it. Then whatever it turns out to be, it happened to all of us, instead of to you lot with me upstairs being protected at."]]]}
    ]}
 },
 
@@ -7359,14 +7514,65 @@ var SCENEBOOK = {
      "On the record, in the room, in front of everyone, so it exists and no one has to ask it again.",
      ["Vic","I have had two nights and a lifetime of wanting a different answer. The answer is no. What is walking around down there is a procedure. Her - "],
      "He stops. Finishes it anyway, because tonight is for finishing things.",
-     ["Vic","Her, they kept somewhere I cannot reach. What we can reach is the procedure. That is all that is in reach."]]}
+     ["Vic","Her, they kept somewhere I cannot reach. What we can reach is the procedure. That is all that is in reach."]]},
+   /* THE THREE THIS NIGHT WAS SHORT OF (v5.30.0). Two of them are named in the beat's
+      own `before` and had no card to happen on; the third is a debt from last night.
+      (1) `spare-him` - the `before` says "Somebody will offer to spare him", and nobody
+          could, because there was no card where the offer gets made and answered. Vic
+          does not want to be spared, and then is, and the scene is him hating it.
+      (2) `pia-stays` - night 11's room ends with a twelve-year-old asking to be in the
+          room and Hesta saying "I have not decided." This is where that gets decided,
+          out loud, which is the only reason to write the two nights in one wave.
+      (3) `the-record` - Nine had no card at all on the night the family does the worst
+          thing it has ever done, and she keeps the Ledger. She asks for the job nobody
+          else will be able to do afterwards. It does NOT touch what is recoverable
+          about Mirren; the room's `never` fences that and it stays fenced. */
+   {ask:"letting somebody else carry it",
+    key:"instead me spare him take-it off-him relieve carry someone-else my-hand",
+    who:"Vic",
+    gives:"what happens when the offer is actually made to him, out loud, in front of everybody",
+    holds:"he does not say thank you, and everybody understands why not",
+    rail:"Offer it. Say you will do it instead of him.",
+    plays:["He looks at you for a long moment, and what is on his face first is not gratitude. It is the look of a man being robbed.",
+     ["Vic","No. No, because then it is a thing that was done FOR me, and I have to carry that as well, and I would rather carry the one heavy thing than the light one on top of it."],
+     ["Hesta","Vic."],
+     ["Vic","...I know what my hand is doing. I have been watching it do it for an hour and pretending it is the cold."],
+     "He puts the hand in question in his armpit, which is what men of his generation do instead of admitting a sentence.",
+     ["Vic","All right. All right. But you will do it properly and you will not do it kindly, because kindly is slow, and slow is for me and not for her."]]},
+   {ask:"whether Pia stays for it",
+    key:"pia stay go upstairs child young send away watch here",
+    who:"Hesta",
+    gives:"the ruling, out loud, with the reason - and the reason is not sentimental",
+    holds:"she does not pretend it is an easy call or that she is sure",
+    rail:"Pia asked to be in the room. Ask Hesta what she has decided.",
+    plays:[["Hesta","I said I had not decided. I have now, and you are all going to hear the working, because if I get this wrong I would rather it was on the record than in my head."],
+     ["Hesta","She stays. Not close. Not holding anything. In the room, where she can see us, and where we can see her."],
+     ["Pia","...Right. Good. Right."],
+     ["Hesta","And the reason is not that she has earned it, because that is not a thing anybody earns. It is that she is twelve and she is going to remember tonight either way, and I would rather she remembered what actually happened than what she built out of a shut door and our faces afterwards."],
+     "Nobody argues. Vic opens his mouth once and then does not, which is its own kind of vote.",
+     ["Hesta","And if I am wrong about that, then I am wrong in front of witnesses, and you can all tell me so for the rest of my life."]]},
+   {ask:"what Nine asks for",
+    key:"nine want ask her record remember ledger witness watch job",
+    who:"Nine",
+    gives:"the one job she asks for, on the night nobody thought to ask her anything",
+    holds:"she does not offer an opinion on whether the family should do it",
+    rail:"Ask Nine what she wants out of tonight. Nobody has asked her anything all evening.",
+    plays:[["Nine","Nobody has asked me anything all evening. I have noticed, and I am not sulking about it, because I have watched you all have a worse evening than mine."],
+     /* NOT "a thing that lives in your pocket" - `shard:stow` fired, and it is right to:
+        a pocket in a clause about her is her being put away, whoever says it, and she
+        is talking. The point survives without the word. */
+     ["Nine","I do not have a view on whether you should. I have been careful about that on purpose, because something that gets carried everywhere it goes should not get a vote on your worst night."],
+     "The hum has been small and level for an hour, which is the sound of somebody being deliberately easy to have around.",
+     ["Nine","What I want is the job. Let me have the remembering. All of it, exactly, in order, including the parts everybody is going to be too kind to keep."],
+     ["Nine","Because in four years one of you is going to tell this to somebody and get it slightly wrong in your own favour, and you will not even know you did it. And I will be there, and I will not correct you in front of them. But I will have it."]]}
   ],
   room:{
    where:"the marsh edge before dawn, carrying done, nobody ready for the next part",
    here:["Pia","Vic","Nine","Hesta"],
    never:["the burial does not happen here - that is tomorrow","the vow is not spoken"],
    topics:[
-    {ask:"whether anybody is alright", key:"ok alright fine you how-are cope",
+    {id:"anybody-alright", railTakes:["Ask her what she actually needs, then, since it is not handling."],
+     ask:"whether anybody is alright", key:"ok alright fine you how-are cope",
      who:"Pia", gives:"a twelve-year-old's honest answer, which is not the reassuring one",
      holds:"she does not cry on cue and does not want to be handled",
      rail:"Ask Pia if anybody is alright.",
@@ -7374,23 +7580,134 @@ var SCENEBOOK = {
       "Twelve years old, and the honest answer, and the fastest anyone has told the truth all season.",
       ["Pia","We are going to do a thing tonight that is right and also never going to feel right, and everyone keeps checking whether I understand that. I understand it better than the people checking."],
       "She tips her head at Vic, a small nod with a whole care plan inside it.",
-      ["Pia","Do not handle me. Handle him. He is the one made of glass tonight."]]},
-    {ask:"what to do with the rest of the night", key:"now next sleep rest night what-do",
+      ["Pia","Do not handle me. Handle him. He is the one made of glass tonight."]],
+     takes:[[["Pia","What I need. Nobody has asked me that in about a year, they just guess and then look pleased with themselves."],
+       ["Pia","A job. That is it, that is the whole list. Give me a job with a beginning and an end that somebody actually needs doing, and do not invent one, because I can tell."],
+       /* NOT "when my mum went". `breach` caught it on the KIN rule, and the rule was
+          right: the book has never once given Pia a family, and inventing a dead mother
+          for a main character in a room card is the author's call and not mine. The
+          need is the same and it is said out of what is already true - she has been
+          handled by these exact people, this season, and did not care for it. */
+       ["Pia","Everybody's instinct is to sit me down. Sitting somebody down is the worst thing you can do to a person who is twelve. There is nowhere to put your hands and your head just does laps."],
+       "She has plainly been on the receiving end of it before, more than once, and has had time to work out precisely what she would have preferred instead.",
+       ["Hesta","Basin. Potatoes. Tomorrow needs about forty and I am not doing them."],
+       ["Pia","...Good. Right. That's better. That's much better."]]]},
+    {id:"rest-of-tonight", railTakes:["Ask her who taught her that. It is too well made to be hers."],
+     ask:"what to do with the rest of the night", key:"now next sleep rest night what-do",
      who:"Hesta", gives:"one small practical instruction, which is the kindest thing available",
      holds:"nothing",
      rail:"Ask Hesta what we do with the rest of tonight.",
      plays:[["Hesta","Eat something small. Sleep in shifts. Whoever cannot sleep, peel the potatoes for tomorrow - there is a basin, and it is honest work that asks nothing."],
       "One small practical instruction, which is the kindest thing available in the building.",
       ["Hesta","Tomorrow has a morning in it regardless. Somebody should meet it having peeled something."],
-      "The basin gets used, that night, by three different sets of hands, none of which discuss it."]},
-    {ask:"what Nine saw", key:"nine saw watch heard you what",
+      "The basin gets used, that night, by three different sets of hands, none of which discuss it."],
+     takes:[[["Hesta","Who taught me. You have got an ear on you. No, it is not mine, I have never invented anything in my life except a way of standing."],
+       ["Hesta","A woman on this row when I was nineteen and no use to anybody. Her house was where you went when yours had gone wrong, and she never once asked what had happened, she just put a job in your hands within about a minute of the door shutting."],
+       ["Hesta","Peel that. Fold those. Hold this while I do the other end. And you would be an hour in before you noticed you had stopped shaking."],
+       "She says it the way you recite something you have said to yourself in an empty kitchen more than once.",
+       ["Hesta","I have never worked out whether she was very wise or simply extremely short-handed. I have decided it does not matter, because it worked, and I have been doing it at people for forty years."]]]},
+    {id:"what-nine-saw", railTakes:["Ask her what she is going to do with it. She said she was keeping it."],
+     ask:"what Nine saw", key:"nine saw watch heard you what",
      who:"Nine", gives:"that she watched, and did not look away, and is not sure whether that was right",
      holds:"she does not ask anybody to tell her it was",
      rail:"Quietly, palm on the shard: what did she see. Did she look away.",
      plays:[["Nine","I watched. All of it. I did not look away."],
       "The hum is very still, a held instrument.",
       ["Nine","I do not know if that was right. Nobody has taught me the rules for witnessing. I made mine up as it happened: somebody who is not a procedure should see it, all the way, so that it happened to a person and not just near one."],
-      ["Nine","Do not tell me it was right. I am keeping the not-knowing. It seems like the honest half of having been there."]]}
+      ["Nine","Do not tell me it was right. I am keeping the not-knowing. It seems like the honest half of having been there."]],
+     takes:[[["Nine","What I am going to do with it. Keep it accurately. That is not the same as keeping it safe and I want the difference on the record."],
+       ["Nine","Safe would be the version where everybody stood a bit straighter and nobody's voice went. That version is already forming. I can hear it forming, tonight, in real time, and it has only been an hour."],
+       ["Nine","So: accurately. Including the part where somebody said a thing they will want taken back, and the part where it took longer than anybody expected, and the part where it was quiet afterwards for a really uncomfortable length of time."],
+       "The hum stays exactly where it is, level and unhurried, a thing that has decided to be a witness and has no intention of being talked out of it.",
+       ["Nine","And I will never once use it against any of you. That is the other half of the job and it is the half nobody thinks to ask about."]]]},
+
+    /* THE FOUR THIS ROOM WAS BUILT WITHOUT (v5.30.0). Vic had NO card at the marsh
+       edge on the night his oldest friend was ended - the largest single hole in the
+       season, and it was hiding behind three good cards.
+       (1) `vic-at-the-edge` - what he does instead of grieving, which is check the
+           ground, twice, because he cannot stop being useful at people.
+       (2) `the-tuesday-after` - the payoff of night 11's `knew-her` take, and the
+           reason these two nights were written in one wave. Thirty years of Tuesdays,
+           and next Tuesday is in four days.
+       (3) `all-of-us` - Hesta says "whoever it was, it was all of us" in BOTH landings.
+           Nobody had ever asked her whether she believes it. She does not, yet.
+       (4) `the-fog` - the small one, and this room needed one badly.
+       NOTHING HERE TOUCHES TOMORROW. The burial, the vow and the saying of the whole
+       name are night 13's, and this room's `never` says so twice. Every card walks up
+       to the name and puts it down again. */
+    {id:"vic-at-the-edge", railTakes:["Ask him to stop and stand still for a minute. Just once."],
+     ask:"how Vic is, out here", key:"vic how-is you standing after ground edge marsh cope",
+     who:"Vic", gives:"a man doing tasks at a rate nobody needs, and the one sentence that gets out",
+     holds:"he will not sit down, and if you make him sit down it will be worse",
+     rail:"Ask Vic how he is. He has not stopped moving since you got here.",
+     plays:["He has checked the ground twice. He is checking it a third time, with his boot, in a way that is not about the ground.",
+      ["Vic","It's soft here but it's soft in the good way - it's not going to slump on anybody in the spring. I've seen ground slump on people in the spring. It's a bad thing to have to see twice."],
+      ["Hesta","Vic, the ground is fine."],
+      ["Vic","The ground is fine. Yes. I know the ground is fine, I have known the ground was fine for about twenty minutes, and I would very much like to keep finding out that it is fine for a while longer if that is all the same to everybody."],
+      "The fog comes in off the water the way it does, without any opinion about who it finds out here.",
+      ["Vic","Because when I stop, the next thing is Thursday, and I have not got a Thursday in me tonight."]],
+     takes:[[["Vic","Stand still. Right. For a minute. You will time it, will you, so I know it ends."],
+       "He stands still. It takes him two goes.",
+       ["Vic","...I keep waiting for the part where somebody tells me what to do next. That is what I do, that is my whole function - somebody comes to me broken and I know what is next, and I have never once not known."],
+       ["Vic","And I have got nothing. There is no next. There is a woman I have known for thirty years and a piece of ground and the whole of the rest of it, and no procedure whatsoever."],
+       ["Pia","Then somebody tells YOU what's next. That's how it works, it just goes round."],
+       "Nobody has ever said that to him before, and it lands somewhere he was not defending.",
+       ["Vic","...Go on then."],
+       ["Pia","Stand there. I'll tell you when it's a minute."]]]},
+
+    {id:"the-tuesday-after", railTakes:["Ask him what he is going to do on Tuesday, then."],
+     /* "standing" came out of this key list: it was in `vic-at-the-edge` too, and one
+        word may not win two cards in the same deck. It meant a standing arrangement
+        here and a man refusing to sit down there, which is exactly how that happens. */
+     ask:"the Tuesdays", key:"tuesday tuesdays biscuits shop books week next arrangement",
+     who:"Vic", gives:"thirty years of a standing arrangement, and the arithmetic of the next one",
+     holds:"he does not cry, and the room does not make him",
+     rail:"Say the whole thing out loud: thirty years of Tuesdays.",
+     plays:[["Vic","Tuesdays. Yes. I have been doing that sum since we got out here and I would rather say it than keep doing it."],
+      ["Vic","Thirty years is about fifteen hundred Tuesdays, allowing for the winter she had the chest thing and the year I was in the north and we did them by letter, which was worse and we both knew it."],
+      "He is counting. It is the most Vic thing that has happened all night: a man at a graveside doing arithmetic because arithmetic has an answer.",
+      ["Vic","And the next one is in four days."],
+      "Nobody says anything at all. The fog goes on arranging itself over the water, and somewhere behind, the causeway ticks as it cools."],
+     takes:[[["Vic","What I will do on Tuesday. I have thought about this and I have got two answers and I do not like either of them."],
+       ["Vic","One: I open at the usual time and I do the books myself, badly, and by eleven I have been wrong about a column and there is nobody to be pleased about it."],
+       ["Vic","Two: I do not open. And then Tuesday is the day I do not open, forever, and I have made a monument out of a shop, which she would find hilarious and would never let go of."],
+       ["Hesta","Open. And I will come at ten and be wrong about a column at you."],
+       ["Vic","...You cannot add either."],
+       ["Hesta","I cannot add at all. It will be extremely convincing."]]]},
+
+    {id:"all-of-us", railTakes:["Ask her whether she actually believes it, or is just saying it."],
+     ask:"whether it was really all of us", key:"all of us whose hand blame share together true-part carry",
+     who:"Hesta", gives:"the sentence she keeps saying, examined - and she does not pretend it is finished",
+     holds:"she will not let anybody take a bigger share than the others, including herself",
+     rail:"Ask Hesta about the true part. Whoever it was, it was all of us.",
+     plays:[["Hesta","I have said that three times tonight and I am going to keep saying it, and I would like to explain why before somebody decides it is a comfort."],
+      ["Hesta","It is not a comfort. It is a rule about how the arithmetic is allowed to be done afterwards. Nobody in this family gets to go home tonight holding more of it than anybody else, and nobody gets to go home holding less."],
+      ["Hesta","Because the ones who take too much of it do not survive it, and the ones who put it all on somebody else stop being any use, and I have watched both happen on this row and I am not having either in my kitchen."],
+      "She says it like a woman reading out a notice she wrote a long time ago and has been waiting to need.",
+      ["Hesta","So it was all of us. That is the ruling. Appeal it in the morning if you like."]],
+     takes:[[["Hesta","Whether I believe it. Ah."],
+       ["Hesta","Not yet. Not tonight, not the way I need to, and I am telling you that rather than lying about it because you will find it out anyway and then you will not trust the rest of it."],
+       ["Hesta","What I have got is a rule that is correct and a stomach that has not caught up. That is most of being any use to anybody, in my experience: keeping the rule going out loud while the rest of you catches it up privately."],
+       ["Nine","How long does that take."],
+       ["Hesta","In my experience? Years, and then one very ordinary afternoon, all at once, over something stupid. A drawer, usually."]]]},
+
+    {id:"the-fog", railTakes:["Ask her what she is going to remember instead."],
+     ask:"the fog, the water, the hour", key:"fog cold dawn quiet marsh water air morning small",
+     who:"Pia", gives:"something small on purpose, because the night was not",
+     holds:"nothing. It is free",
+     rail:"Say something small to Pia. It is that kind of hour.",
+     plays:[["Pia","The fog does this thing where it comes up to about here and then stops, like it has been told."],
+      ["Pia","I have watched it for ten minutes and it does not go higher. There is a rule about it and nobody knows what the rule is. Vic doesn't. I asked."],
+      "Out over the water, the fog does exactly as described, up to about here, and stops, obedient to something with no name.",
+      ["Pia","I like that there are still ordinary things with rules nobody knows. It is nice that not all the not-knowing is the bad kind."]],
+     /* NOT "the gentle voice" - that is the title of night 24, and the board is not in
+        the room. She means the voice everybody has been using at her all night, which
+        is what she says now. */
+     takes:[[["Pia","What I am going to remember instead. That is a proper question, and you have not asked it in the voice everybody else has been using at me, so thank you."],
+       ["Pia","The fog and the height it stops at. Hesta wringing her sleeve out into water that was already there, which was the stupidest thing I have ever seen a clever person do."],
+       ["Pia","Vic checking the ground three times. I am keeping that one. I do not know what for yet."],
+       "She has her arms round her knees and is entirely composed, in the way of somebody who has decided what tonight is going to be about and is enforcing it.",
+       ["Pia","Not the other bit. I know the other bit is in there and I know it is coming for me at some point, probably in about a fortnight, in a queue. But it does not get tonight. Tonight it gets the fog."]]]}
    ]}
 },
 
@@ -11344,7 +11661,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.29.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.30.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -28165,14 +28482,37 @@ function verdictMap(){
    copied through the air, and nothing is copied anywhere in that scene. It is the
    capitals trap in its fifth costume, and the third of the five that was not a name
    at all but a quantity. He says the man surfaced now. */
+/*
+   v5.30.0 - THREE ENTRIES ACROSS TWO WHOLE NIGHTS AND TWO HUNDRED NEW LINES. Two are
+   rail lines that say NINE because they open Nine's card, and the third is `shard:hand`
+   on the new Nine card in a2-ground - which is TRUE and belongs here: the courier is
+   holding her while she listens, in the same scene where the existing room card already
+   fires it one line away.
+   FOUR THE DESK STOPPED, and one of them is the most useful catch of the wave.
+   (1) `breach`, on the KIN rule, at "when my mum went" - a take I had written for Pia.
+   The book has never given Pia a family. Inventing a dead mother for a main character
+   inside a room card is the author's call and it is not mine to make; the rule exists
+   for precisely that and it worked. The need she is describing is unchanged and is now
+   said out of what is already true of her.
+   (2) `boardleak` at "you have not asked it in the gentle voice" - THE GENTLE VOICE is
+   the title of night 24. Second time in two waves that a perfectly ordinary phrase has
+   turned out to be a night's name; assume it will keep happening.
+   (3) `shard:stow` twice, both on POCKET, and one of them was Nine saying it about
+   herself. A pocket in a clause about her is her being put away no matter who is
+   speaking, and naming the other object twice does not buy it off.
+   (4) THE ANCHOR ROW WENT RED FROM ADDING GOOD CARDS. a2-ground names Mirren on two of
+   four cards, which was safe while four of four were dealt. At six cards and a budget
+   of four, a shuffle can deal the other four and never say her name on the night she is
+   the anchor of. Growing a beat's deck DILUTES its anchors - re-check them every time a
+   beat gets a card, not only when one is written. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/Rt3r","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-choir/Rt4r","a2-door/t5T1p1","a2-door/t5r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-choir/Rt4r","a2-door/t5T1p1","a2-door/t5r","a2-ground/t4r","a2-hand/t6r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/lands1/r0","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt2p1","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/lands0/r2","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/lands1/r1","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/opens0/r1","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-seven/opens0/r1","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
-  "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
+  "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
   "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };

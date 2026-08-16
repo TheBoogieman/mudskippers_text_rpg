@@ -96,7 +96,10 @@ and is not a speaker anywhere in the book.**
 the finished work stops at night 15 (`a2-chassis`). This file used to say "next: a2-law" and
 that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2-housing`
 (17) **done**, `a2-manual` (18) **done**, `a2-choir` (19) **done at v5.26.0**, **the new
-capture beat**, `a2-annul` (20) **done at v5.29.0**, `a2-law` (21 next). *Night numbers are the board's
+capture beat**, `a2-annul` (20) **done at v5.29.0**. **THEN THE ORDER CHANGED, ruled
+2026-08-16: sequence runs from the earliest UNFINISHED night, not forward from the last one
+written.** `a2-ground` (11) and `a2-hand` (12) **done at v5.30.0**; next is `a2-mirren`
+(13), then `a2-seven` (14), then `a2-law` (21) and `a2-turn` (22). *Night numbers are the board's
 1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
@@ -207,6 +210,41 @@ construction. `the-file` gives Vic the morning after the thing in his skull work
    character. Add that to the list: a shouted count, a clock reading, a numbered list, a
    plural, and now a duration.
 
+## `a2-ground` AND `a2-hand` ARE DONE (v5.30.0) — and the order changed
+
+**Ruled 2026-08-16: go in sequence from the EARLIEST unfinished night, not forward from the
+last one written.** The writing had jumped from night 10 to night 15 and left four nights
+behind it. Nights 11 and 12 were taken as one wave, on the author's call, because they are
+one unbroken action: the hunt corners them, and then the family has to end it.
+
+**Both were short of things they were already asking for, and neither absence was a matter
+of taste:**
+
+- `a2-ground`'s own `goal` names four kind options — jammer, signal cut, distance, mercy.
+  Three had cards. **The signal cut had none**, on the night whose entire job is spending
+  the gentle playbook on screen.
+- `a2-ground`'s **opening rail line asks who wrote option four** and nothing in the book
+  could answer it. A question a night puts on its own first screen must have a card behind
+  it. Check every `opens` rail for this; it is a cheap sweep and it found a whole card.
+- `a2-hand`'s `before` says *"Somebody will offer to spare him"* — and **there was no card
+  where the offer could be made**, so it could not happen however the player played.
+- **Vic had no room card at the marsh edge** on the night his oldest friend was ended. The
+  largest single hole in the season, hidden behind three good cards.
+
+**And writing two nights as one wave bought something specific:** night 11's room ends with
+a twelve-year-old asking to be in the room and Hesta saying *"I have not decided"*; night
+12's evening is where that gets decided out loud. Night 11's Vic take is thirty years of
+Tuesdays; night 12's room is the arithmetic of the next one. Neither payoff is available if
+the nights are written a wave apart.
+
+**THREE NEW LAWS CAME OUT OF IT** — see the fixture ledger and OUTSTANDING §6:
+1. **Growing a beat's deck dilutes its anchors.** The anchor row went red from adding two
+   good cards: two-of-four dealt is safe, two-of-six under a budget of four is not.
+2. **A character's family is the author's to invent.** `breach`'s kin rule caught a take
+   that opened *"when my mum went"*. Pia has never been given a family anywhere in the book.
+3. **One word may not win two cards in the same deck.** `standing` meant a standing
+   arrangement on one card and a man refusing to sit down on the other.
+
 ## THE NEXT WAVE — and it is still a fork the author has to call
 
 The nights get written in order, and the order says the next thing is **the capture**.
@@ -299,6 +337,8 @@ at seven cards.
 | `a2-manual` | 10 | The long table, night 18. Being a key, the mug on page four, standing up on purpose |
 | `a2-choir` | 7 | The long table at four in the morning, night 19. The name of the one they took out of Three, the handwriting on the forms, the page Vic will not put down |
 | `a2-annul` | 7 | The shack step at dawn, night 20. Five still in the world with no form for it, agreed-or-settled, the one thing she never learned, eleven pages carried for years |
+| `a2-ground` | 7 | A dry corner of the flooded undercroft, night 11. The napkin with all four crossed out, the door that stays open, the thing under the street, and a twelve-year-old asking to be in the room |
+| `a2-hand` | 7 | The marsh edge before dawn, night 12. A man checking the ground three times, fifteen hundred Tuesdays, whether it really was all of us, and the height the fog stops at |
 
 **And at v5.27.0 the two richest nights in the book finally counted as finished.**
 `a2-door` (16 family cards) and `a2-chassis` (25) had been sitting one count short for
