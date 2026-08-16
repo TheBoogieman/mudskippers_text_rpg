@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.25.0. **Book One is closed. `a2-housing` and `a2-manual` are finished.***
+*Written 2026-08-16, updated at v5.26.0. **Book One is closed. `a2-housing`, `a2-manual` and `a2-choir` are finished.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -11,29 +11,39 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ## 1. Where the book actually stands
 
-**12 of 33 nights finished.** A night is finished on four counts and not before:
+**13 of 33 nights finished.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
 3. a landing rail wired to real cards
 4. a room with more than the three it was born with
 
+*Every figure below was read off the board at v5.26.0, not carried forward.*
+
 | | count |
 |---|---|
-| finished nights | **12 of 33** |
-| cards written | 391 |
-| second and third takes | 168 |
-| **takes with no choice line of their own** | **49 of 168** |
-| nights short of cards | 20 |
-| nights that land on nothing to click | 19 |
-| rooms still on their first three cards | 17 |
-| authored lines in the drift net | 6,621 |
+| finished nights | **13 of 33** |
+| cards across both decks | 378 |
+| second and third takes | 176 |
+| **takes with no choice line of their own** | **49 of 176** |
+| nights short of cards | 18 |
+| nights that land on nothing to click | 18 |
+| rooms still on their first three cards | 16 |
+| authored lines in the drift net | 6,726 |
 
 **Book One (nights 1–9) is complete.** Nine rooms, nine pressure blocks, every landing
 wired, every take carrying its own line. Nothing in Book One is outstanding.
 
-**Books Two and Three are the whole job**: 23 nights, of which 2 are finished
-(`a2-three`, `a2-housing`, `a2-manual`) and 17 rooms have never been opened.
+**Books Two and Three are the whole job**: 23 nights, of which 4 are finished
+(`a2-three`, `a2-housing`, `a2-manual`, `a2-choir`) and 16 rooms have never been opened.
+
+**`a2-choir` (night 19) shipped at v5.26.0** and it carried the ruling the whole annulment
+thread rests on: **a grown mind is grown from a hosted scrape — a real person copied at
+intake, filed and cultivated.** It comes from Seven, who filed them for eleven years. The
+room does *not* follow the arithmetic to Nine: the bible rules that Nine having a line in
+the same book is a night of its own and must not be confirmed before the vaults are open,
+so `on-the-lists` walks right up to it and turns round on purpose, and the turning round
+is the scene. **If that seal is ever lifted, that card is where it lifts.**
 
 ---
 

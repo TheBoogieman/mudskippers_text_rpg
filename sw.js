@@ -3,7 +3,7 @@
 // BYTES changed, so a cache name left behind keeps serving the shell it was named
 // for: this said v4-36-0 while the game inside it was six releases further on, and
 // every offline player was reading the old build.
-var CACHE = "mudskippers-v5-25-0";
+var CACHE = "mudskippers-v5-26-0";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-maskable.svg"];
 
 self.addEventListener("install", function(e){

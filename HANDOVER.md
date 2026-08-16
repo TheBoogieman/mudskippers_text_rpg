@@ -94,9 +94,10 @@ and is not a speaker anywhere in the book.**
 
 **And beats get written IN ORDER from here.** `a2-law` was proposed next; it is night 21 and
 the finished work stops at night 15 (`a2-chassis`). This file used to say "next: a2-law" and
-that line was five beats stale. The order is `a2-three` (night 16), `a2-housing` (17),
-`a2-manual` (18), `a2-choir` (19), **the new capture beat**, `a2-annul` (20 today), `a2-law`
-(21 today). *Night numbers are the board's 1-based ones; `SPINE` indices are one lower.*
+that line was five beats stale. The order is `a2-three` (night 16) **done**, `a2-housing`
+(17) **done**, `a2-manual` (18) **done**, `a2-choir` (19) **done at v5.26.0**, **the new
+capture beat**, `a2-annul` (20 today), `a2-law` (21 today). *Night numbers are the board's
+1-based ones; `SPINE` indices are one lower.*
 
 ## The loop we are running
 
@@ -151,29 +152,59 @@ whenever you read this sentence, because it is the only state a wave is allowed 
 than about six splices, or a new field with readers to hunt, and the context is already
 long - say so before starting rather than after failing.
 
-## THE NEXT WAVE: `a2-choir`, night 19
+## `a2-choir` IS DONE (v5.26.0) — and what it settled
 
-Everything needed to run it cold:
+Night 19 shipped with 6 beat cards, 7 room cards, 9 second takes and both landings wired.
+Three things came out of it that outlive the night:
 
-- **budget 4, needs 6 beat cards; has 4.** Room has 3 cards, no ids, no takes, no landings
-  wired. Both landings currently carry plain-string rails and need the three-row shape.
-- **Cast, both decks:** Pia, Vic, Nine, Hesta, Seven, Three.
-- **This is the night the author ruled must carry WHY A GROWN MIND IS A PERSON, and it
-  comes from SEVEN.** A grown mind is grown FROM A HOSTED SCRAPE - a real person copied at
-  intake, filed, and cultivated. Not software that resembles a person: a person who was
-  copied and farmed. It makes the vow's second clause literal. This is the single most
-  load-bearing card left in Book Two and the whole annulment thread rests on it.
-- **The beat's `never` is unusually strict and correct:** the three fates are convergence,
-  fate two, and Hollowing. **ANNULMENT IS THE CURE, NOT A FATE.** Do not name it as one.
-  Nobody meets the machine or learns she exists. Nobody walks through a door.
-- **The room's `never`:** nobody goes to a Choir building; the vaults are not mentioned.
-- **Existing room cards** (need ids, takes, take lines): whether anyone joins willingly
-  [Seven]; what Seven was, exactly [Seven]; what to do with the paper [Hesta].
-- **Watch the earshot law.** From night 17 one of Nine and Seven is in the courier's skull,
-  so any line ANSWERING either of them must survive both roads. Seven carries most of this
-  night, so the risk is high: check every reply to him.
-- **Watch the fork.** `what Seven was, exactly` is road-neutral as written; a new card about
-  who has a body is not.
+1. **THE PERSONHOOD RULING IS ON THE PAGE.** A grown mind is grown from a hosted scrape —
+   a real person copied at intake, filed and cultivated. It is Seven's beat card, it is
+   also `canon[6]` so it is true of the run whether or not that card was drawn, and the
+   landing proves it: Three stands up and says the name of the one they took out of her,
+   because the overlay had a name, because the overlay was a person.
+2. **THE SEAL HELD.** The bible says Nine having a line in the same book is a NIGHT, not a
+   remark, and must not be confirmed before the vaults are open. Seven's `holds` is that he
+   does not follow the arithmetic to anybody at the table; `on-the-lists` walks up to it
+   and turns round; Nine's own second take says *"there is a version of tonight that is
+   about me... I am going to pick that night myself."* **That refusal is the hook. When the
+   vaults open, that is the line that gets cashed.**
+3. **THE EARSHOT LAW HAD ALREADY BEEN BROKEN, AND NOTHING WAS WATCHING IT.** `a2-choir`'s
+   first room card ended with Hesta saying *"Sit down, Seven"* in the block straight after
+   he spoke — the room answering, by name, a man who on one road is an inner voice in the
+   courier's skull. It was written before the fork existed. **The drift net found it as a
+   DELETION** (`named:Seven` stopped firing), which is the first time that ledger has
+   recorded a predicate going quiet on purpose. **Every pre-fork night is suspect the same
+   way** — anything written before a2-chassis that has Nine or Seven in the room.
+
+## THE NEXT WAVE — and it is a fork the author has to call
+
+The nights get written in order, and the order says the next thing is **the capture**.
+Two candidates, and they are not the same size of job.
+
+**(A) THE CAPTURE BEAT — a whole new night that does not exist.** The bible: *"THE CAPTURE
+IS ITS OWN BEAT, between a2-choir and a2-annul: the ambush, what it costs, and a Choir
+officer in a shack with a recovery team already looking. It is currently missing entirely
+and the annulment reads as assumed."* Everything after it currently assumes a capture the
+book never stages — night 20 opens with Five already taken alive and nobody ever took it.
+**THE STRUCTURAL COST, AND IT IS THE REAL QUESTION: adding a beat means inserting into
+`SPINE`, and `beatIdx` is a POSITION that live save files hold.** Every index at or after
+the insertion point shifts, and a save loaded against the new spine resumes on the wrong
+night. Appending at the end is free; inserting in the middle is not. It needs either a
+save migration keyed on beat id, or the beat appended and the ORDER held somewhere other
+than the array index. That is engine work before a word gets written.
+
+**(B) `a2-annul` REPAIRS — night 20, and it contradicts the bible in eight places.** No new
+structure, all rewriting: `aim`, `exits[0]`, `exits[2]`, `walkLine`, `walks[0]`, `goal`,
+`where` and `topics[0]` are all built around **holding a body still**, and the bible says
+the family does not perform a forced removal — that is the one thing that would make them
+the Choir. Five is ASKED, and consents believing it is about to die. And `topics[0]` has
+Three explaining the method start to finish, when the bible says she spent years and could
+not find it: the method is steps in Vic's file, read out by the mind in the housing, and
+**neither Three nor the file is enough alone.** Doing (B) first makes (A) cheaper, because
+the repaired night says what the capture has to have cost.
+
+**Recommendation: (B) first.** It is bounded, it is pure writing, and it retires the last
+night in Book Two that actively contradicts the settled bible.
 
 ## Two laws that arrived with the shuffle (v5.18.0)
 
@@ -228,6 +259,9 @@ at seven cards.
 | `a2-door` | 15 | The Open Door. The tin, the thimble, one true sentence a year |
 | `a2-chassis` | 25 | **Deepest room in the game.** The fork, the high cluster, the recital, the proceeding. 7 cards go three layers deep |
 | `a2-three` | 7 | The long table, morning. The years she could not find it, the name she refuses, the one who did not survive, the treaty over the chair |
+| `a2-housing` | 10 | The long table, night 17. The document nobody opens all evening |
+| `a2-manual` | 10 | The long table, night 18. Being a key, the mug on page four, standing up on purpose |
+| `a2-choir` | 7 | The long table at four in the morning, night 19. The name of the one they took out of Three, the handwriting on the forms, the page Vic will not put down |
 
 ## Book One is CLOSED
 
