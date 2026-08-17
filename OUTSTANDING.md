@@ -649,6 +649,16 @@ cost nothing now and save a wave later:**
   family should be frightened of how easy that street was, because easy means unnoticed, and
   unnoticed has an expiry date.
 
+**→ AND AGAIN ON NIGHT 24, v5.45.0.** The night's own pressure block was offering the
+storyteller *"the voice notices it is being listened to, and offers to help the listeners
+too"* — on a night whose `never` says twice that she never addresses them. **The pressure
+block was handing out a move the beat outlaws.** Replaced: the enemy's move is that she
+does NOT notice. She spends the morning being useful on the row they took yesterday —
+directions round a flooded drain Marek has not reached — and never mentions the eviction,
+because she has not registered that it happened to her. **Check every remaining night's
+`press` against its own `never` when you write it; this one had been wrong since it was
+drafted and nothing in the sweep looks at pressure blocks.**
+
 **→ DONE ON NIGHT 23, v5.44.0, AND HOLE 4 WENT WITH IT.** Seven's new card
 `who-holds-this-street` says it in the open: *"Nothing holds it. That is the answer, and I
 dislike being the one holding it."* A van with correct paperwork takes the row back by

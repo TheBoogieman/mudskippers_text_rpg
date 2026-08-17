@@ -268,7 +268,40 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 23 IS WRITTEN (v5.44.0) — 24 of 33, AND NINE NIGHTS ARE LEFT
+### → NIGHT 24 IS WRITTEN (v5.45.0) — 25 of 33, AND EIGHT NIGHTS ARE LEFT
+
+`a3-voice` is finished: **7 evening cards, 6 in the room, a second take on all thirteen,
+6 of 6 landing rows wired**, and all 26 choice lines naming their addressee. Three canon
+lines, up from one. **Eight nights left:** `a3-founding` · `a3-vic` · `a3-stone` ·
+`a3-for` · `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`.
+
+**HESTA NOW KNOWS WHAT THE ENDING IS GOING TO ASK HER, and it is canon.** Three names her
+as the one who talks for a living; Hesta works the method out loud and hates it: *"you sit
+with her, and you let her be kind at you, and you let her get fond — properly fond, the
+real thing — and THEN you tell her what it costs."* She has not agreed. Nobody in that
+room believes she said no. **This is the seven-night plant for `a3-principal`'s "food
+opened a door iron couldn't" and for the argument about keeping in `a3-granny`.**
+
+**A SHIPPED BUG CAME OUT OF THE AUDIT AND IT IS THE MOST IMPORTANT THING IN THIS WAVE.**
+`fork` gates a CARD — `cardOnBranch` reads that field and nothing else. `holder` gates a
+BLOCK inside a card. **Three cards said `holder` where they meant `fork`**, so the game
+dealt them on the wrong road, where the variant picker found no usable variant and served
+**nothing at all** — a blank lane and a spent turn, with no error anywhere.
+**And the desk could not see it, because the two readers disagreed in both directions:**
+the desk skipped a passage on `holder` and had never heard of `fork`. It was blind exactly
+where the deck leaked — and blind the other way the instant the cards were corrected, at
+which point it started judging Seven-bodied prose in the world where Nine has the chassis.
+**Both readers now read both fields.** New sweep row: *no card is dealt on a road it has
+nothing to say on* — 872 card/road pairs, proved, not exempt.
+**`a3-stone` (night 27) still owes its room a Nine twin** — its census card is gated to
+Seven now because it has him standing on a causeway.
+
+**THE COUNTING TRAP CAME BACK ONE WAVE AFTER IT WAS WRITTEN UP, as a CLOCK:** Marek's
+*"Three till six is me"* read as the engineer. **The rule is not "don't start on a number"
+— five of this cast ARE numbers, so any sentence where a number does ordinary English work
+(a count, a time, a shelf, a year) has to be read twice by whoever writes it.**
+
+### → NIGHT 23 IS WRITTEN (v5.44.0) — 24 of 33
 
 `a3-evict` is finished and the board's own counts say so: **6 evening cards (budget 4 + 2),
 6 in the room, a second take on all twelve, and 9 of 9 landing rows wired.** Five canon
