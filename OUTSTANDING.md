@@ -715,16 +715,97 @@ which is consistent with the author calling this "the rewrite".**
 - **the ~105 AI tics and every "load-bearing"** — ruled into this wave rather than a
   separate one, which supersedes the earlier "push on, sweep it later" ruling for the tics
   specifically. They get done as the prose is rewritten, not before and not after.
-- **THE CHARACTERS MUST STAY LIKEABLE.** Read as: the reader should still like these people
-  when the pass is finished. It is the counterweight to §7c — the bleakness goes in the
-  NARRATION, not into the cast's mouths. Nobody becomes bitter, cruel or self-pitying. The
-  family gets warmer as the prose around it gets colder. **See the open question below.**
+- **THE BLEAKNESS GOES IN THE NARRATION, NEVER INTO THEIR MOUTHS.** Nobody becomes bitter,
+  cruel or self-pitying. The family gets warmer as the prose around it gets colder.
 
-**→ ONE CLAUSE OF THE NOTE IS AMBIGUOUS AND IS RECORDED AS UNRESOLVED:** *"they should like
-the characters they are for the rewrite"*. Read above as **readers should still like them**.
-The other possible reading is **the characters should like who they have become** — a very
-different instruction, and one that would put self-acceptance into the cast's arc. **Ask
-before the pass runs.**
+### RESOLVED: THEY **TALK** LIKE THE CHARACTERS THEY ARE
+
+**I read this clause wrong the first time** — logged it as "readers should still like them".
+The author's own words: ***"they should TALK like the characters they are for the rewrite. A
+twelve-year-old being a twelve-year-old, not operational efficiency. Hesta being an old lady,
+Vic having a guilty conscience, Nine and Seven being grown minds."***
+
+**This is a VOICE pass and it touches every spoken line in the book.** The registers, as
+given:
+
+| | talks like |
+|---|---|
+| **Pia** | **a twelve-year-old.** Not a staff officer running a briefing |
+| **Hesta** | **an old lady.** Her age is in her mouth, not only in her competence |
+| **Vic** | **a guilty conscience.** He installed the housing without consent and it is in every line he says |
+| **Nine** and **Seven** | **grown minds.** Adults. Not quirky machines, not children, not devices |
+
+**THE DISTINCTION THAT MATTERS FOR PIA, because she is the one most at risk of being
+flattened: precocious is fine, PROCEDURAL is not.** She can be sharp, filthy, funny, rude and
+older than her years emotionally — that is who she has always been and it is not the note.
+What she must stop sounding like is somebody running an operation: jobs assigned, plans
+ratified, rules minuted. **This reinforces the §7c ruling rather than fighting it** — a kid
+making rules reads as a kid coping, which is far more affecting than a competent operator
+doing logistics, and it makes her break land when the rules stop working.
+
+**This is the largest of the four passes by line count**, because unlike the others it has no
+scope smaller than "every line anybody says".
+
+---
+
+## 7e. THE PRINCIPAL IS THE PRIME MOVER — ruled 2026-08-17. FOLD IT THROUGH THE WHOLE BOOK
+
+**The author's note:** *being a ragtag group both helps and defeats their odds. The leaks are
+happening with the help of the Principal; this group is the last piece she needs to take down
+the whole thing. We can write the whole plan as her attempt to kick the Choir out. A hundred
+and thirty year old woman in a bio-gren suit, peak technology. She should have a hand in the
+first night being the way it is. The Choir doesn't realise the danger they're in until it is
+too late to act in force.*
+
+**THIS IS BARELY A RETCON. IT IS AN ACTIVATION OF LORE THAT HAS BEEN SITTING IN THE BIBLE
+UNUSED.** Everything needed is already written:
+- **She and the Architect BUILT the machine together, after losing a child.** She is a
+  founder, not a landlord who happens to be old.
+- **"The bio-hash comes from their bloodline."** The maker's blood the courier carries is
+  *hers*.
+- **Her stated want, verbatim in `WANTS`: "an argument finished with a dead man, THROUGH
+  WHOEVER CARRIES HIS KEY."** She has always been written as somebody who acts through an
+  instrument. Nobody has ever played it that way.
+- **Vic co-founded the reprint program with the Architect** and spent decades scanning every
+  customer in his chair for blood the founders' lock would accept.
+- **v5.42.0 added the supply line:** 130 years of skimming substrate, housing shells, chassis
+  blanks and shard stock, left where builders would find it cheap — and Vic's "very good
+  supplier" was her, and he never knew.
+
+**THE FOLD, STATED AS ONE SENTENCE:** *she has spent a century assembling the conditions for
+somebody of her own bloodline to be sitting in a ripperdoc's chair with a housing in reach,
+and the family is the piece she could not manufacture.*
+
+**AND IT ANSWERS THREE OF §7b's SIX HOLES OUTRIGHT:**
+- **Why does nothing come back at them?** Because from the Choir's side they are a ragtag
+  group and beneath notice, and the hand behind them is invisible. **The Choir RENTS FROM
+  HER.** The single most dangerous person in the city is filed under premises. By the time
+  the pattern resolves into a threat it is too late to act in force — which is exactly the
+  author's sentence and now it has a cause.
+- **Where is everybody else?** The bigger authority is on their side and has been for a
+  century.
+- **The scale doesn't balance.** It does. They were never the weapon; they were the last
+  component.
+
+**WHAT MUST NOT BREAK, and it is one thing:** the epilogue rules that **nobody ever tells the
+courier why he was chosen**, and there is no entry about him in the founders' records. **The
+fold preserves this exactly, and the resolution is clean: she arranged the CONDITIONS, not
+the man.** She needed someone of the bloodline in that chair; which body turned up was
+chance, and she has never known why him either. The epilogue line — *"he was in a chair, his
+blood fitted a lock, and an old man made a decision about him in a room he wasn't in"* —
+lands harder under this reading, not softer. **Do not let any night imply she picked him.**
+
+**NEW CHARACTER FACT, RULED: she wears a bio-gren suit.** Peak technology, and it is how a
+mark-one survives a hundred and thirty years. Her six attendant bio-grens are already canon;
+this makes her one of them and explains the longevity the book has never accounted for.
+
+**WHERE IT GETS PLANTED:**
+- **`a1-hum` (night 1) — she has a hand in the night being the way it is.** This is a
+  REOPENING of the book's first night and the hardcoded cold open. Handle with care.
+- **`a3-principal` (night 31)** already carries the 130-years-of-theft plant (ruling 1). This
+  goes in the same night: theft and purpose are one conversation, not two.
+- **Every night between** gets one thread of it at most — the point is that it is invisible
+  until it isn't.
 
 ---
 

@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**SIX RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
+**SEVEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 7 describe a REWRITE that is now larger than the authoring left to do:**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
@@ -342,8 +342,27 @@ at, which is exactly why it was built first.**
    it. The pinned nights are the lowest in the book: `a2-chassis` 20.2%, `a2-door` 23.5%.
    **The ~105 AI tics and every "load-bearing" ride this pass** rather than a separate one,
    which supersedes the earlier ruling for the tics specifically. **And the cast stays
-   likeable: the bleakness goes in the NARRATION, never into their mouths.** One clause of
-   the note is ambiguous and is logged unresolved in §7d — ask before the pass runs.
+   likeable: the bleakness goes in the NARRATION, never into their mouths.** **AND THE VOICE PASS RIDES IT, RULED: they
+   TALK like the characters they are.** **Pia talks like a TWELVE-YEAR-OLD, not operational
+   efficiency** — precocious is fine, PROCEDURAL is not · **Hesta like an old lady** · **Vic
+   with a guilty conscience**, because he installed that housing without consent · **Nine and
+   Seven like grown minds**, adults rather than quirky machines. **This is the biggest of the
+   passes by line count** — it has no scope smaller than every line anybody says.
+
+7. **THE PRINCIPAL IS THE PRIME MOVER — FOLD IT THROUGH THE WHOLE BOOK. See `OUTSTANDING.md`
+   §7e.** The whole plan is HER attempt to evict the Choir; the family is the last piece she
+   could not manufacture. **This is barely a retcon** — the bible already says she and the
+   Architect BUILT the machine, that the bio-hash comes from THEIR bloodline, and that her
+   want is *"an argument finished with a dead man, through whoever carries his key."* Nobody
+   has ever played it that way. **It answers three of §7b's six holes outright, including the
+   big one:** the Choir RENTS FROM HER, so the most dangerous person in the city is filed
+   under premises, and by the time the pattern resolves it is too late to act in force.
+   **She wears a bio-gren suit** — new, ruled, and it explains a hundred and thirty years.
+   **THE ONE THING THAT MUST NOT BREAK:** nobody ever tells the courier why he was chosen.
+   She arranged the CONDITIONS, not the man — she needed someone of the bloodline in that
+   chair and which body turned up was chance. **No night may imply she picked him.**
+   **Plants at `a1-hum` (night 1, a reopening of the cold open) and `a3-principal` (31),
+   alongside the theft.**
 
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
