@@ -43,6 +43,13 @@ the repo, because a second copy of the bible drifted within a day the last time 
 
 ## → IF YOU ARE PICKING THIS UP COLD, START HERE
 
+**WHERE PASS 4 IS RIGHT NOW (update this line after every night):** 8 nights done —
+`a2-manual` `a2-law` `a2-turn` `a3-seize` `a1-turn` `a2-housing` `a2-seven` `a3-for`.
+**~252 blocks written, spoken still 4,656, the book's MEDIAN NIGHT has reached 35.0%.**
+Next, worst first: `a2-three` 15 · `a2-mirren` 14 · `a2-choir` 14 · `a3-granny` 13 ·
+`a2-hand` 12 · `a1-fare` 11 · `a3-voice` 10 · `a3-dreamers` 10. **`a2-chassis` and
+`a3-stone` are excluded on purpose** — pass 5 owns the first, and the second is the funeral.
+
 **A pass-4 night takes about twenty minutes and needs nothing in context but this block.**
 
 ```
