@@ -565,6 +565,77 @@ earlier.**
 
 ---
 
+## 7c. THE NERVE PASS — ruled 2026-08-17. NOBODY IN THIS BOOK IS EVER FRIGHTENED
+
+**The author's note, in his own framing:** *most of the time they don't even have a plan;
+they decide, and the world lets them act in much bigger ways than a ragtag group is allowed
+to. And most of the time they don't even panic — they joke around the real issue,
+deflecting, but never actually stopping to think what they signed up for. "Yeah, let's take
+on a cult with some random courier that got his life burned on the first day; there are
+shards, robots, minds walking around, but that's fine — what could go wrong?" The story is
+much more serious than any one of the characters ever admits. They should be a bit anxious
+and stressed.*
+
+**THIS IS A DIFFERENT NOTE FROM §7b AND MUST NOT BE MERGED WITH IT.** §7b is about what the
+WORLD does about them. This is about what THEY do about the world. A book can fix one and
+still fail the other.
+
+**THE DIAGNOSIS, AND IT IS SHARPER THAN "ADD ANXIETY": EVERY CHARACTER IN THIS CAST COPES BY
+BEING GOOD AT SOMETHING.** Go down the list and there is not one failure mode in it:
+
+| | under pressure they… |
+|---|---|
+| Pia | gets **more** organised. Rules, jobs, plans, a doorframe |
+| Hesta | cooks harder, sets more places, refuses to sit down |
+| Three | retreats into the record. Minutes it. States the accurate thing |
+| Seven | goes professional — describes the shape of the disaster in a flat voice |
+| Nine | listens harder, and cannot turn it down |
+| Marek | takes another shift |
+| Vic | shut doors, and a wet fingertip drawing on a table |
+| the Machine | asks whether it would be cruel to say the number |
+
+**Eight people, eight competences, zero panic.** That is why the book reads calm through a
+catastrophe: the cast is a set of professionals doing their jobs, and the reader is
+therefore never worried on their behalf. **Anxiety is not a tone to add. It is a missing
+piece of characterisation, and it needs to differ per person the same way their competence
+does.**
+
+**TWO LAWS FOR EVERYTHING WRITTEN FROM HERE — they join the three craft laws of 2026-08-16:**
+
+4. **THE JOKE MUST HAVE THE FEAR UNDERNEATH IT, ON THE PAGE, IN THE SAME PASSAGE.** A
+   deflection only reads as a deflection if the reader has already seen the thing being
+   deflected FROM. Set the weight, then let them dodge it — the dodge is funnier and it
+   stops being the author dodging too. **And once a night, somebody fails to dodge.**
+5. **THEY PLAN, AND THE PLAN FRIGHTENS THEM.** Before any big move: somebody says the odds
+   out loud, somebody says what happens if it goes wrong, and **somebody says they do not
+   want to do it.** Deciding and acting is the beat structure, not an excuse for the prose —
+   the preparation, the dread and the dissent all belong in the evening deck, which is
+   exactly what an evening deck is for.
+
+**THE TENSION THAT HAS TO BE MANAGED, AND IT IS REAL.** §7 of this file records that the
+author **protects the comedy, hard**, and has twice said a scene was too dry and was right
+both times. **He is not now asking for a dry book.** Law 4 is the reconciliation: the comedy
+survives — it gets BETTER — because a joke with visible pressure under it is funnier than a
+joke with nothing under it. **Do not swing the tone grey. Put the weight in and let them
+keep dodging.**
+
+**WHERE IT ALREADY PARTLY WORKS**, and these are the models: Pia at night 22 saying she is
+*"seven-digit-reference-number frightened"* and then refusing to be comforted; Hesta's
+epilogue sum ending *"that isn't a queue, that's geology"*; Toller on his own step in the
+dark. **All three set the weight before anybody gets a joke.**
+
+**WHAT THIS COSTS THE WORK ALREADY SHIPPED.** The v5.42.0 epilogue is built on the family
+joking, which was ruled — but nobody in that room is visibly frightened, and the fear is
+observed rather than felt. **The epilogue is in scope for this pass**, and so is every
+finished night. Expect it to touch second takes hardest, because a second take is where a
+character is asked again and has already used their deflection once.
+
+**→ A DECISION IS OUTSTANDING AND IT SHAPES NIGHT 23: WHO BREAKS?** At least one of them has
+to have a register that is not competence, or the cast will cope its way through Book Three
+exactly as it coped through Books One and Two. **Not yet ruled.**
+
+---
+
 ## 8. Still open, deferred by the author until the written side settles
 
 - 32 short transition scenes for `TAKE THE NIGHT ON`

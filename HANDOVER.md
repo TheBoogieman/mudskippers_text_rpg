@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**FOUR RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
+**FIVE RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
@@ -303,6 +303,21 @@ at, which is exactly why it was built first.**
    ordinary business after a night that cost the Choir something; and let somebody name the
    mismatch out loud once, early — **`a3-evict` is the place, and the family should be
    frightened of how easy that street was.**
+
+5. **THE NERVE PASS — NOBODY IN THIS BOOK IS EVER FRIGHTENED. See `OUTSTANDING.md` §7c.**
+   A SEPARATE note from §7b and it must not be merged with it: §7b is what the world does
+   about them, this is what they do about the world. **The diagnosis: every character in the
+   cast copes by being good at something and not one of them has a failure mode**, so the
+   reader is never worried on their behalf through a catastrophe. **Two more craft laws,
+   applying to everything written from here — they join the three of 2026-08-16:**
+   **(4) the joke must have the fear underneath it, on the page, in the same passage, and
+   once a night somebody fails to dodge**; **(5) they plan, and the plan frightens them** —
+   somebody says the odds, somebody says what happens if it goes wrong, and somebody says
+   they do not want to. **DO NOT SWING THE TONE GREY:** he protects the comedy hard and has
+   twice said a scene was too dry. A joke with visible pressure under it is funnier, which
+   is the whole reconciliation. **The v5.42.0 epilogue is in scope for this pass too.**
+   **OUTSTANDING DECISION THAT SHAPES NIGHT 23: who breaks?** At least one of them needs a
+   register that is not competence. Not yet ruled — ask.
 
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
