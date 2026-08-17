@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.71.0 "Aim At The Run, Not At The Percentage"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.72.0 "The Pass Was Writing The Habit It Was Removing"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.71.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.72.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -9360,6 +9360,66 @@ var SEALED_FACTS = [
    re:/scanned every customer|built the housing into/i}
 ];
 var SEALED_FIELDS = ["canon", "canonAlt", "canonA", "canonB", "canonSoft", "goal"];
+/* ==================== THE MANNERISM SCAN (v5.72.0) ====================
+
+   THE AUTHOR'S RULING, and it is old: the AI mannerisms are disguising as character.
+   Three shapes are banned - the CONTRAST ("it is not a rule. It is the shape of a
+   thing"), the phrase "which is the whole ...", and the word "load-bearing".
+
+   THIS IS PRODUCTION CODE INSTEAD OF A SCRATCH SCRIPT FOR ONE REASON. The scratch tool
+   that measured tics for the whole polishing pass collected SPOKEN blocks and returned
+   early on narration - and narration is where the habit actually lives, because narration
+   is the authorial voice with nobody's mouth in front of it. So the narration pass spent
+   three releases writing the exact figure it had been ruled to remove, four of them into
+   one night, and no instrument in the project could see it. The row below breaks by
+   restoring that blindness, which is why ticBlocks is a named function and not a loop.
+
+   THE CONTRAST IS COUNTED, NOT FORBIDDEN. A denial answered by an assertion is a real
+   figure and sometimes it is the sentence - "It is not a large bag, and it is the most
+   frightening thing in this kitchen" earns it. What is banned is the HABIT, so this is a
+   ceiling that ratchets down, never a zero. The banned WORD is a zero. */
+var TIC_CONTRAST_NEG = /\b(?:it|that|this|there|which|and it|and that)\s+(?:is|was|are|were)\s+not\b|\bis\s+not\s+(?:a|an|the)\b/i;
+var TIC_CONTRAST_AFF = /\b(?:it|that|this|and it|and that)\s+(?:is|was|are|were)\s+(?:a|an|the)?/i;
+var TIC_WORD = /load[- ]bearing|which is the whole/i;
+
+/* EVERY BLOCK IN THE BOOK, narration included, each stamped with which it is. The one
+   thing this function must never do is skip a string. */
+function ticBlocks(){
+  var out = [];
+  function eat(where, l){
+    var spoken = (Object.prototype.toString.call(l) === "[object Array]") || !!(l && l.who);
+    var t = spoken ? (Object.prototype.toString.call(l) === "[object Array]" ? l[1] : l.text)
+                   : (typeof l === "string" ? l : null);
+    if(t) out.push({where:where, spoken:spoken, t:String(t)});
+  }
+  SPINE.forEach(function(b){
+    var e = SCENEBOOK[b.id];
+    if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+      (t.plays || []).forEach(function(l){ eat(b.id + "/" + t.id, l); });
+      (t.takes || []).forEach(function(g){ (g || []).forEach(function(l){ eat(b.id + "/" + t.id, l); }); });
+    });
+    ["opens","lands","landsHard","closes"].forEach(function(k){
+      (b[k] || []).forEach(function(L){ (L.lines || []).forEach(function(l){ eat(b.id + "/" + k, l); }); });
+    });
+  });
+  return out;
+}
+
+function ticScan(){
+  var blocks = ticBlocks(), r = {word:0, narrContrast:0, saidContrast:0, narrSeen:0, saidSeen:0, where:[]};
+  blocks.forEach(function(bl){
+    if(bl.spoken) r.saidSeen++; else r.narrSeen++;
+    if(TIC_WORD.test(bl.t)){ r.word++; r.where.push(bl.where); return; }
+    var m = TIC_CONTRAST_NEG.exec(bl.t);
+    if(!m) return;
+    var rest = bl.t.slice(m.index + m[0].length, m.index + m[0].length + 140);
+    var a = TIC_CONTRAST_AFF.exec(rest);
+    if(!a || /\bnot\b/.test(a[0])) return;
+    if(bl.spoken) r.saidContrast++; else r.narrContrast++;
+  });
+  return r;
+}
+
 function sealedLeaks(){
   var out = [], i, j, k, f, v, arr, seal, at;
   for(i = 0; i < SPINE.length; i++){
@@ -19974,7 +20034,23 @@ function verdictMap(){
    had a run of eight when this wave started; it has a run of five now, in one layer, and
    the share went 30.6% to 35.8% as a by-product of fixing that. Two of the batch went in
    after a joke to say what the joke was covering, but most went in mid-layer, where the
-   prose gets to be quietly wrong about a thing the room is certain of. */
+   prose gets to be quietly wrong about a thing the room is certain of.
+   v5.72.0 - THE PASS WAS WRITING THE HABIT IT WAS RULED TO REMOVE. The author asked why
+   the AI mannerisms were still in the book - the contrast ("it is not a rule. It is the
+   shape of a thing"), "which is the whole", "load-bearing" - and the answer turned out to
+   be worse than an oversight: FOUR OF NIGHT TEN'S SEVEN NARRATION TICS WERE WRITTEN BY
+   THIS PASS, in the three releases whose entire job was the narration. Twenty-two edits
+   this wave - twelve load-bearings, five which-is-the-wholes and five contrasts on night
+   ten - and the drift fixture did not move, which is the correct signature: replacing a
+   figure of speech says nothing new about a person or a place.
+   THE REASON NOTHING CAUGHT IT IS THE FINDING, AND IT IS THE OLD ONE. The tool that
+   measured tics for the whole polishing pass collected SPOKEN blocks and returned early
+   on narration - and narration is the authorial voice with nobody's mouth in front of it,
+   so it is exactly where an authorial habit lives. The scan is production code now
+   (ticBlocks / ticScan) and row (6g7) breaks by restoring that blindness. A measurement
+   that cannot see the place a fault lives is not a measurement, and this project has now
+   been handed that same lesson by a card-only line audit, a mangled regex, and a
+   take-versus-line conflation. Four times. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon7","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
@@ -20183,6 +20259,11 @@ function selfTest(){
        replyCap is the model's token budget, blockCapFor is how many blocks reach
        the page - and until this release the second one was applied to the book. */
     "blockCapFor", "showScene",
+    /* ...and the mannerism scan (v5.72.0). It is production code rather than a scratch
+       script for one reason: the scratch script read SPOKEN blocks only, so the narration
+       pass spent three releases writing the exact habit it had been ruled to remove and
+       nothing anywhere could see it. */
+    "ticBlocks", "ticScan",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
     /* ...and the audit's rows (v4.72.1): the bit hold and the board itself */
     "holdTheDryPath", "boardTurn",
@@ -23778,6 +23859,46 @@ function selfTest(){
        + " is the only thing standing in front of LAW ZERO. The number beside it is the guard:"
        + " it moved from 3,819 to 4,342 while Book Three was written, and any wave that pushes"
        + " it back down is wrong however good the prose that replaced the jokes is."});
+
+    /* ---- (6g7) THE MANNERISMS STAY GONE (v5.72.0) ----
+       The banned WORD is a zero. The CONTRAST is a ceiling that ratchets down, because
+       a denial answered by an assertion is sometimes the sentence and a rule that
+       forbids it outright would cost the book good lines.
+       AND THE ROW PROVES THE SCAN CAN SEE NARRATION AT ALL, which is the whole finding:
+       the tool that measured this for the entire polishing pass read spoken blocks only,
+       so the narration pass wrote the habit it was removing, undetected, for three
+       releases. Its broken form restores that blindness. */
+    (function(){
+      var tk = ticScan();
+      /* the ceiling is the count at the moment the mannerism wave started fixing them.
+         LOWER IT WHEN A WAVE CLEARS SOME. NEVER RAISE IT TO MAKE A WAVE GO GREEN. */
+      var NARR_CONTRAST_CEILING = 28;
+      var bad = [];
+      if(tk.word) bad.push(tk.word + " banned phrase(s) back in the book: " + tk.where.slice(0, 4).join(", "));
+      if(tk.narrContrast > NARR_CONTRAST_CEILING)
+        bad.push(tk.narrContrast + " narration contrasts against a ceiling of " + NARR_CONTRAST_CEILING);
+      if(!tk.narrSeen) bad.push("THE SCAN READ NO NARRATION AT ALL - it is blind where the habit lives");
+      T("the banned mannerisms stay gone, and the scan can see narration",
+        bad.length === 0,
+        bad.length ? bad.join("; ")
+          : tk.narrSeen + " narration and " + tk.saidSeen + " spoken blocks read; "
+            + tk.word + " banned phrases; " + tk.narrContrast + " narration contrasts against a"
+            + " ceiling of " + NARR_CONTRAST_CEILING + ", and " + tk.saidContrast
+            + " in dialogue, which are the author's ruling to make and are not counted against this row",
+        {label:"the scan reading spoken blocks only, which is the shape that let the narration pass write the tic it was removing",
+         was:true,
+         check:function(){
+           var keep = window.ticBlocks;
+           try{
+             /* the shipped scratch-tool shape, restored exactly: narration returns early */
+             window.ticBlocks = function(){
+               return keep().filter(function(bl){ return bl.spoken; });
+             };
+             /* the claim: the scan sees narration. Under the break it cannot have. */
+             return ticScan().narrSeen > 0;
+           } finally { window.ticBlocks = keep; }
+         }});
+    })();
 
     /* ---- (6g6) the contraction band, per speaker — OUTSTANDING §8b ---- */
     var CB_PAIRS = [

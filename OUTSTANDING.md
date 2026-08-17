@@ -136,9 +136,39 @@ prose gets the last word after a joke — the highest-value position, and it nee
 re-indexing. **Mid-layer**, it gets to be quietly wrong about a thing the room is certain of,
 or to price a kindness nobody at the table noticed receiving.
 
-**WHAT ELSE RIDES THIS PASS:** the **~105 AI tics** — the contrast (*"it is not a thing, it is
-another thing"*), *"which is the whole…"*, *"and that is the point"*, and **"load-bearing"** —
-get done as the prose is rewritten, not before and not after.
+### THE AI MANNERISMS — measured properly at v5.72.0, and the pass was writing them
+
+**The banned shapes:** the **contrast** (*"it is not a rule. It is the shape of a thing"*),
+**"which is the whole…"**, **"and that is the point"**, and the word **"load-bearing"**.
+
+**THE ESTIMATE OF ~105 WAS LOW, AND THE TOOL THAT PRODUCED IT WAS BLIND.** It collected
+**spoken blocks only and returned early on narration** — and narration is the authorial
+voice with nobody's mouth in front of it, which is exactly where an authorial habit lives.
+**So the narration pass spent three releases writing the figure it had been ruled to
+remove: four of night ten's seven narration tics were written by the pass itself.**
+
+| | at v5.72.0 |
+|---|---|
+| **the banned word / phrase** | **0** — `load-bearing` (12) and `which is the whole` (5) are gone |
+| **the contrast, in NARRATION** | **28**, against a sweep ceiling of 28 that ratchets down |
+| **the contrast, in DIALOGUE** | **172** — *open, and the author's ruling to make* |
+
+**IT IS COUNTED, NOT FORBIDDEN.** A denial answered by an assertion is a real figure and
+sometimes it is the sentence — *"It is not a large bag, and it is the most frightening thing
+in this kitchen"* earns it, and night 10's *"What breaks it is not an apology. What breaks
+it is the room slowing down"* is a deliberate anaphora that was left alone. **What is banned
+is the habit**, which is why narration carries a ceiling rather than a zero.
+
+**THE GUARD IS SWEEP ROW (6g7)**, and it is PROVED rather than exempt: **its broken form
+restores the blindness** — the scan reading spoken blocks only — and the row fails, because
+what it asserts is that the scan can see narration at all. `ticBlocks` / `ticScan` are
+production code in `index.html` for that reason. **Lower the ceiling when a wave clears
+some; never raise it to make a wave go green.**
+
+**AND EVERY WAVE FROM HERE RUNS THE SCAN ON ITS OWN NEW PROSE BEFORE IT SHIPS.** The lesson
+is not "remember the tic list" — it is that a measurement which cannot see the place a fault
+lives is not a measurement. This project has now been handed that same lesson four times: a
+card-only line audit, a mangled regex, a take-versus-line conflation, and this.
 
 **AND THE BLEAKNESS GOES IN THE NARRATION, NEVER INTO THEIR MOUTHS.** Nobody becomes bitter,
 cruel or self-pitying. **The family gets warmer as the prose around it gets colder.**

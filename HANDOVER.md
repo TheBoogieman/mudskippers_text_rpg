@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.71.0. All 33 nights written. Sweep 75 PROVED of 100, 0 FAILED. Tree clean, pushed.**
+**v5.72.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass** — the plan is `OUTSTANDING.md`.
 Season 1 (nights 1–9) is polished; night 10's deck is finished and its narration pass is
@@ -114,7 +114,18 @@ and was right every time.
 6. Name every rail and take-line, and **re-run the line audit AFTER writing the takes**, not
    only after the naming pass — new take lines are lines, and two of night four's tied with a
    neighbour and lost on authored order.
-7. Sweep, fixture by delta plus ledger, release ritual, push, play it.
+7. **Run the mannerism scan over the wave's OWN new prose before it ships** —
+   `node scratchpad/tic.js <beat>`, and read every hit. This is step seven because the
+   narration pass wrote four of night ten's tics itself across three releases and no
+   instrument in the project could see it.
+8. Sweep, fixture by delta plus ledger, release ritual, push, play it.
+
+**AND THE THREE BANNED SHAPES, because they arrive under your own hand:** the **contrast**
+(*"it is not a rule. It is the shape of a thing"*) · **"which is the whole…"** · the word
+**"load-bearing"**. Sweep row (6g7) holds the word at zero and narration at a ceiling that
+ratchets down. **When you fix one, give it a DIFFERENT image each time** — twelve
+`load-bearing`s were replaced with twelve unlike things on purpose, because a single
+replacement applied twelve times is just the next tic.
 
 ---
 
@@ -138,6 +149,8 @@ tool would delete every one of them silently). `tools-gen-world.js` renders the 
 | `spread.js <beat> <Who>` | contraction rate per card |
 | `contract-pass.js` / `revert-cards.js` | the contraction pass and its dial-back |
 | `grammar.js` | all four contraction refusals over the whole book |
+| `tic.js [beat]` | the AI mannerisms, over **every** block including narration |
+| `untic.js <spec.json>` | replace exact strings in corpus.js, refusing on any count that is not one |
 | `debts.js` | the whole-book debt sheet in one pass |
 | `precheck.js <file>` | the release precheck |
 | `drive_lap.js` / `landing_audit.js` / `branchlie.js` | deck lapping, landing rails, fork lies |
