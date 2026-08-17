@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.60.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.61.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -310,7 +310,11 @@ more."*
   choice lines name their addressee, Vic 61%→53%, narration 30.5%→35.2%, **and §7j is done** —
   the door opens on screen and nothing had to move. §7j is closed in `OUTSTANDING.md`.
 
-**NEXT: `a1-pack` (night 4), then the remaining 18 Book One and Two nights, one per wave.**
+- **Phase 1 wave 4: night 4 `a1-pack` (v5.61.0).** All 13 cards have a second take, all 26
+  choice lines name their addressee AND reach their own card, cast 8%→42%, narration
+  29.1%→35.2%, **and the longest unbroken run of dialogue fell from NINE blocks to three.**
+
+**NEXT: `a1-fare` (night 5), then the remaining 17 Book One and Two nights, one per wave.**
 Book Three is clean and is not part of this pass.
 
 **AND EVENING SECOND TAKES ARE WORTH WRITING AGAIN** — from v5.59.0 every deck is lanes, so
@@ -356,6 +360,22 @@ they are reachable. Before v5.59.0 they were not, and 86 of them sat dark.
   subject.**
 - **Check key collisions with `pickTopic` itself, per road** — never an approximation.
 - **Grep a global's name before declaring one.**
+- **RE-RUN `lines_n2.js <beat>` AFTER WRITING THE TAKES, not only after the naming pass.**
+  New take lines are lines: two of night four's own new ones tied with a neighbour and lost
+  on authored order, and were only caught by running the audit a second time.
+- **MEASURE THE DIALOGUE RUNS, NOT JUST THE RATIO.** Night four carried a NINE-BLOCK
+  unbroken run of speech. The narration floor is a symptom; the runs are the disease, and
+  breaking them clears the floor as a side effect. Find them before writing narration.
+- **"<NAME> HAS GONE <ADJECTIVE>" IS THE DEATH SHAPE.** `deathPredicated` fires on it and is
+  right to - it is what a death line looks like. Written twice in two waves ("Pia has gone
+  very still", "Pia has gone the particular colour"). Use the present tense.
+- **THE BADGE CAN CONTRADICT ITS OWN LINE.** A card's badge says who ANSWERS, off `t.who`. A
+  take line reading "Ask Vic..." on a card whose `who` is Pia renders as "Ask Vic… PIA · 2ND
+  TIME". **Address the card's own answerer.** Found by playing it; no probe looks at a button
+  and a card's `who` in the same glance.
+- **`new RegExp` BUILT FROM A STRING PASSED THROUGH `node -e` IN BASH LOSES A BACKSLASH
+  LEVEL** — `` silently stops being a word boundary and the probe reports a confident
+  zero. Write probes to a FILE and run the file. A checker that cannot fail is not a checker.
 - **A LAW ADDED MID-BOOK NEVER LOOKS BACKWARDS.** The clause-final refusal was written on
   night 3 and widened on night 2; night 3's own prose still carried *"I've finally worked out
   what it's"* until v5.60.0. **When a refusal is added, sweep the whole book for it that wave**
