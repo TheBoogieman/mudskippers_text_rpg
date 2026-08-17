@@ -1052,11 +1052,96 @@ var REVEALS = [
    and never argued about.
 7. **"nobody explains the peak joke."** A named-line guard for §7f: the granny payoff exists
    once, in one place, and no other passage in the book spells out the relation.
+8. **"every choice line names who it is talking to."** §7i, and it starts at 45% / 89%
+   failing. Run it as a REPORT first, not a red row, or it fails the sweep on day one.
+9. **"a card's later takes are visibly later."** The badge from §7i, asserted present on
+   every second-and-beyond layer the client can deal.
+10. **"no beat's `where` describes two rooms."** §7j, and the tell is the word "then".
 
 **AND THE ONES THAT ALREADY EXIST DO NOT GET WEAKENED.** The drift net, the fork laws, the
 earshot law, the cast-of-the-scene row and the counting guard all run against every rewritten
 line, and **the fixture is taken by delta with a ledger paragraph, exactly as now.** A rewrite
 of this size will move hundreds of anchors; **the ledger is what keeps that honest.**
+
+---
+
+## 7i. THE CHOICE LINES ARE AMBIGUOUS — ruled 2026-08-17, AND IT IS MEASURED
+
+**The author's note:** *some of the choices are ambiguous about who they are addressing and
+whether it's the second or third time the courier is asking. The player can select the first
+card in a series and then be confused on the second take because the choice is ambiguous.*
+
+### THE NUMBERS
+
+| | naming nobody |
+|---|---|
+| **first-take choice lines** | **197 of 438 — 45%** |
+| **second/third-take choice lines** | **177 of 200 — 89%** |
+| ...and of those, with **no repeat marker either** (no *again*, *later*, *still*, *once more*) | **168 of 200 — 84%** |
+
+**The second-take problem is twice the first-take problem, which is exactly what the player
+reported.** Sample, all from the first two nights: *"Ask for the version she does not lead
+with."* · *"Ask her to take the lid off it."* · *"Ask what she is actually frightened of."*
+**Three different women on those three lines, no name on any of them, and every one is a
+SECOND take on a card the player may have read twenty turns ago.**
+
+### THE FIX IS TWO FIXES, AND ONLY ONE OF THEM IS WRITING
+
+**1. WHO — an authoring rule.** Every choice line names its addressee. **Never a bare "her",
+"him", "them" or "again".** Only the author knows who "her" is in a given room, and it has to
+read naturally, so no machine can do this one. **It is ~374 lines of rewriting and it rides
+the voice pass (§7d), where every line is being touched anyway.**
+
+**2. WHICH TAKE — an ENGINE job, not a writing one.** The client already knows: `topicLayer`
+holds the layer for every card and `takeForLap` clamps at the last one. **The row should carry
+a small marker the client renders — the same line, visibly flagged as a return to a card
+already opened.** Hand-writing "second take" into the prose would read badly, drift, and be
+forgotten on new cards. **A badge cannot be forgotten.**
+
+**AND IT AGREES WITH THE STANDING LAW.** *The deck is the choice*: one choice, one card, and a
+second take gets its own line. **The badge does not change the law — it makes the law
+visible.** The line is already different; the player just cannot tell it is the SAME CARD.
+
+**BUILD THE BADGE FIRST, BEFORE THE 374 LINES.** It is small, it is uniform, it covers every
+card in the book including ones not yet written, and it will show — in a real run — how much
+of the confusion was the missing name and how much was the missing "again".
+
+---
+
+## 7j. THE SAFEHOUSE DOOR — `a1-vic`, night 3. The beat is standing in the wrong room
+
+**The author's note:** *there's a problem with Vic's safehouse door. We have a family room at
+the door, and Pia and the courier are asking about things inside, or speaking ahead. That beat
+should be shorter, and the cards for that room should come after they get in.*
+
+### THE RECEIPTS
+
+- **The opening says the door is SHUT:** *"Day 1, small hours, on the safehouse porch. Pia has
+  knocked. The door has not opened yet."*
+- **The beat's own `where` admits the smear:** *"the safehouse porch, THEN the kitchen with
+  the shutters down."* One deck, two rooms, and nothing in between says when they moved.
+- **Six evening cards, all of them Vic answering** — through a door that the opening says has
+  not opened. Including *"Make him say it: what exactly was I carrying."*
+- **TWO CARDS ARE PHYSICALLY INTERIOR AND CANNOT BE PLAYED ON A PORCH.** `t5` is
+  **"the kettle, the doormat, the labels"**, whose rail is *"Ask about the labels. The kettle
+  says KETTLE, Vic."* **You cannot see the kettle from outside the house.** `t4`, *"whether
+  this place is safe"*, is a question you ask standing in a room, not shouting at a door.
+- **The room deck already IS the kitchen** — *"the safehouse kitchen, shutters down, kettle
+  on, three in the morning"* — with 8 cards. **The interior material has a home already.**
+
+### THE FIX
+
+1. **THE PORCH IS A SHORT BEAT.** It is one thing happening: a shut door opening. Name through
+   it, or let Pia use her leverage, and you are in. **Cut the budget so it cannot sprawl** —
+   at 4 it deals up to 5 cards on a doorstep.
+2. **THE OPENING MUST ACTUALLY OPEN THE DOOR**, or a card must be the door opening. Today the
+   passage ends with it shut and the next click is a conversation. **Whatever happens, the
+   prose has to move them across the threshold on screen.**
+3. **THE INTERIOR CARDS MOVE TO THE ROOM DECK**, starting with the kettle and the labels.
+   Anything that needs eyes inside the house belongs where the eyes are.
+4. **AND IT IS A PATTERN, NOT ONE NIGHT.** Any beat whose `where` contains the word "then" is
+   describing two rooms in one deck. **Sweep for it while this is open** — it is a cheap
+   query and it will find the others.
 
 ---
 

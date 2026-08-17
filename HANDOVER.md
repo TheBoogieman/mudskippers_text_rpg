@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**TEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 10 describe a REWRITE that is now clearly larger than the authoring left to do.**
+**TWELVE RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 12 describe a REWRITE that is now clearly larger than the authoring left to do.**
 
 > ### 0. THE BANTER FLOOR, AND IT OUTRANKS EVERY RULING BELOW IT. `OUTSTANDING.md` §7a.
 > **The author, after ruling all four passes: *"I still want to have banter, they shouldn't
@@ -341,6 +341,29 @@ at, which is exactly why it was built first.**
    · the finale is not where the book explains itself.** Plus three cheap ones worth building
    immediately: **the banter floor (spoken blocks ≥ 3,819)**, the narration ratio as a live
    gauge per night and per deck, and a guard that nobody ever explains the granny joke.
+
+11. **THE CHOICE LINES ARE AMBIGUOUS, AND IT IS MEASURED. §7i.** **197 of 438 first-take
+   lines (45%) name nobody; 177 of 200 later-take lines (89%) name nobody; 168 of 200 (84%)
+   carry no repeat marker either.** The player picks a card, and twenty turns later gets
+   *"Ask her to take the lid off it"* with no way to know who "her" is or that it is the same
+   card. **TWO FIXES AND ONLY ONE IS WRITING: (a) WHO is an authoring rule** — every choice
+   line names its addressee, never a bare her/him/them/again; ~374 lines, and it rides the
+   voice pass where every line is being touched anyway. **(b) WHICH TAKE is an ENGINE job** —
+   `topicLayer` already knows, so the client badges a line that returns to a card already
+   opened. A badge cannot be forgotten; a convention can. **BUILD THE BADGE FIRST**: it is
+   small, uniform, covers cards not yet written, and it will show in a real run how much of
+   the confusion was the missing name versus the missing "again".
+
+12. **THE SAFEHOUSE DOOR IS STANDING IN THE WRONG ROOM. `a1-vic`, night 3. §7j.** The opening
+   says *"Pia has knocked. The door has not opened yet"*, and then SIX evening cards play with
+   Vic answering. **Two of them cannot happen on a porch:** `t5` is *"Ask about the labels.
+   The kettle says KETTLE, Vic"* — **you cannot see the kettle from outside the house** — and
+   `t4` asks whether the place is safe. **The beat's own `where` confesses it:** *"the
+   safehouse porch, THEN the kitchen."* **Fix: the porch is a SHORT beat (cut the budget), the
+   opening actually moves them across the threshold on screen, and the interior cards go to
+   the room deck — which already is that kitchen and already holds 8 cards.**
+   **AND IT IS A PATTERN: any beat whose `where` contains "then" is two rooms in one deck.
+   Sweep for it.**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
