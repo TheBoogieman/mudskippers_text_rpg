@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.64.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.65.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -361,24 +361,39 @@ re-applied to the book from any other direction. `scratchpad/overnine.js` lists 
 **Found by PLAYING an act out and noticing ONE line missing from the end of a take.** Not by
 reading the code, and not by any audit — every audit in the drawer counts what is written.
 
-### → NEXT: SEASON 1 ACT 3, NIGHTS 8 AND 9 (`a1-carried`, `a1-turn`)
+### → SEASON 1 IS FINISHED (v5.65.0). ALL NINE NIGHTS POLISHED.
 
-Same pass as the last seven nights. Start with `node scratchpad/act.js a1-carried a1-turn`,
-then `node scratchpad/runs.js <beat> 4` for the dialogue runs. **`a1-carried` currently has
-ten room cards whose choice lines name nobody** — they show up in `scratchpad/ambig.js`.
+Act 3 - `a1-carried` and `a1-turn` - now match the rest: every evening card has a second
+take (13 written), and **all 70 choice lines across the two nights name their addressee and
+reach their own card when typed.** Grammar sweep clean, sweep 75 PROVED of 100, and the whole
+season played out in the drawer from the causeway to the last plate.
 
-**AND THE TAKES CAN BE AS LONG AS THEY WANT NOW.** Before v5.64.0 anything past nine blocks
-was decorative.
+**THE CONTRACTION PASS IS NOW PER CARD, NOT PER NIGHT.** Night eight was 2% across the board
+and night nine looked "backwards" at Vic 68% / Pia 43% - but `scratchpad/spread.js` showed
+night nine's Vic already running 0% on the manifest and the inventory and 100% at the dinner
+table. **That is an alternation, not a flatness, and it was already right.** Almost nothing
+was changed on night nine. On night eight the pass ran and then four whole cards were reverted
+with `revert-cards.js`: Vic's two testimony cards and Pia's causeway cards, where formal IS
+the register. Vic ends the season at 12% on the night his house is gone and 40% at the table.
 
-Then Season 1 Act 3 (`a1-carried`, `a1-turn`), then Season 2.
+**AND NINE CONTRACTS EXACTLY TWICE IN THE WHOLE SEASON** - "It's fine. I'm - it's fine." at
+the very end of night nine - and the next line is "That is a sentence somebody taught her."
+**Do not calibrate that away.** It is the tell.
 
-**Whole book after seven nights: run `node scratchpad/contract.js`.**
-Book Three is clean and is not part of this pass.
+### → NEXT: SEASON 2, NIGHTS 10-22
 
-**AND EVENING SECOND TAKES ARE WORTH WRITING AGAIN** — from v5.59.0 every deck is lanes, so
-they are reachable. Before v5.59.0 they were not, and 86 of them sat dark.
+`a2-door` (night 10) and `a2-chassis` (night 15) are the two pinned at over 50% narration and
+they are currently the thinnest in the book at 23.5% and 20.2%. Everything in season 2 sits
+below the book median of 30.8%.
 
-**Whole book after three nights: 12% contracted, up from 9%. Pia 28%, Vic 23%.**
+**TWO DEBTS FOUND THIS WAVE AND NOT CHASED:**
+1. **`lines_n2.js` only audits CARDS.** Landing and exit rails are not in it, and at least one
+   of them names nobody - "Ask her how it feels, being the only one nobody asked", which is
+   the line the whole season ends on. Teach the tool the landings.
+2. **A choice line addressed the wrong person entirely.** `marsh-finished` is Vic's card and
+   its second line read "Ask her to soften it." Nobody clicking it could have known who they
+   were talking to. Worth a book-wide sweep for `who` disagreeing with the line's pronoun.
+
 
 ### THE WAVE RECIPE (worked twice; follow it)
 
