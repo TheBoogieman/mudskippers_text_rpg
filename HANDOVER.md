@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.74.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.75.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -163,6 +163,7 @@ tool would delete every one of them silently). `tools-gen-world.js` renders the 
 | `tic.js [beat]` | the AI mannerisms, over **every** block including narration |
 | `untic.js <spec.json>` | replace exact strings in corpus.js, refusing on any count that is not one |
 | `debts.js` | the whole-book debt sheet in one pass |
+| `namer.js [beat]` | choice lines naming nobody, each with the card's OWN answerer and a proposed fix |
 | `contrasts.js <beat>` | every spoken contrast, with its speaker, for the per-voice repair |
 | `scold.js` | take layers that open with somebody talking straight at the courier |
 | `precheck.js <file>` | the release precheck |
@@ -306,6 +307,13 @@ so on an unsettled run every forked id is off branch and `wireRail` drops the ro
 took it", "the one who cannot eat". Only fork a card that genuinely cannot exist on the other
 road. **An unforked card is a promise that nothing in it depends on the road**, and that
 promise is easy to break by accident and invisible to read — `branchlie.js` finds them.
+
+**THE CLICKABLE LINES LIVE IN FIVE PLACES, NOT THREE.** `rail`, `railAlt` and `railTakes` on
+a card; the `rail` rows on every `opens`/`lands`/`landsHard`/`closes` variant; **and
+`exits[]` and `walks[]` on the beat itself, which no audit in this project had ever read
+until v5.75.0.** The door ends the night and the walk puts the whole job down — they are the
+most consequential buttons in the game. **Any audit of "the lines" that does not name all
+five is an audit of some of them.**
 
 **A LANDING RAIL IS THREE ROWS AND NO MORE.** `playAuthored` ends on `V.rail.slice(0,3)`. A
 fourth row is written, counted by the board, and never once seen. Two carded rows and one

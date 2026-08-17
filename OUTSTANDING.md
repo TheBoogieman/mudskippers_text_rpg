@@ -15,7 +15,7 @@ has been ruled, and which of it is a trap.
 
 | | count | where |
 |---|---|---|
-| choice lines that **address somebody and name nobody** | **123** of 1,181 | nights 11–33 |
+| choice lines that **name no addressee at all** | **33** | the tail of pass 2 — `Hesta` 17, `Vic` 6 |
 | ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
 | take layers that **open with somebody talking at the courier** | **87** of 423 | book-wide |
 | nights under the **35% narration floor** | 4 badly | `a2-manual` 19.5 · `a2-chassis` 20.2 · `a2-law` 23.1 · `a2-housing` 23.3 |
@@ -55,7 +55,7 @@ nine separate waves reaching them.
 | | pass | tool | size |
 |---|---|---|---|
 | ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
-| 2 | **every choice line names its addressee** | `allrails.js` | 123 lines |
+| 2 | **every choice line names its addressee** | `namer.js` | **139 DONE v5.75.0 · 33 left** |
 | 3 | **the scold: a narration beat before anyone speaks** | `scold.js` | 87 takes |
 | 4 | **the narration floor**, on the four nights genuinely under it | `floors.js`, `layers.js` | 4 nights |
 | 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
@@ -70,6 +70,27 @@ at him**, and 87 say *"you"* in the very first sentence. The fault is the SHAPE,
 vocabulary. **One narration block at the head of such a take kills the scold, raises that
 night's narration share, and breaks the dialogue run** — one edit, three debts, and it needs
 no audit of the night first. **It adds; it does not rewrite.**
+
+**PASS 2 FOUND THREE SHAPES, NOT ONE, AND THE THIRD IS STILL OPEN.** (a) a line saying
+*"Ask **her**…"* — 122 of these, done. (b) **THE DOOR AND WALK LINES, WHICH NO AUDIT IN THIS
+PROJECT HAD EVER READ** — `exits[]` ends the night and `walks[]` puts the whole job down,
+they are the most consequential buttons in the game, and every naming wave for nine months
+walked past them. 20 found, 17 named. (c) **a line naming no addressee at all** — *"Ask why
+the Choir has not come for her"* — **33 left**, found by `node /tmp/noname.js`'s shape and
+listed by driving a night and reading the badges.
+
+**THREE PRONOUNS WERE LEFT UNNAMED ON PURPOSE, and the reason is the writing:** `a1-chase`'s
+pursuers have no name because nobody knows who they are yet, and `a1-late`'s *"let her get
+close enough to say her piece"* is a night whose whole question is who she turns out to be.
+**A pronoun the reader cannot resolve is a fault; a pronoun the COURIER cannot resolve is a
+plot.**
+
+**AND THE BADGE IS THE METER, PROVED.** `rowBadge` prefixes WHO ANSWERS only where the line
+does not already name them. The audit reported zero remaining and the very first night
+driven afterwards still had *"Ask her straight what she wants"* in slot one. **Drive a
+night, look at the buttons: any row still showing a NAME prefix is a line the pass has not
+reached.** That is cheaper and truer than any audit, and it has now caught two whole shapes
+the audits could not see.
 
 **PASS 6 IS A REPORT BEFORE IT IS A WAVE.** The author ruled that new cards are warranted
 **only where a closing does not match its scene**. So: read all 33 nights' landings AND the
