@@ -1213,3 +1213,113 @@ should be shorter, and the cards for that room should come after they get in.*
 - 6 amber sweep rows, all AI-side
 - the storyteller respecting family time
 - the drift nudge pointing at `TAKE THE NIGHT ON`
+
+---
+
+# 8. THE POLISHING PASS — the plan, ruled 2026-08-17 after the novel was finished
+
+**The authoring phase is over: 33 of 33.** This section supersedes nothing in §7a–§7j; it is
+the ORDER those notes get worked in, with the debt measured rather than estimated.
+
+## 8a. THE MEASUREMENT THAT REFRAMES EVERYTHING
+
+| | nights | cards | no 2nd take | take w/o own line | narration | unnamed rails | unnamed take-lines | bare landing rows |
+|---|---|---|---|---|---|---|---|---|
+| **Book One** | 9 | 142 | **41%** | 0% | 31% | **64%** | **96%** | 3% |
+| **Book Two** | 13 | 210 | **33%** | **19%** | 24% | 37% | **85%** | 17% |
+| **Book Three** | 11 | 131 | **4%** | 0% | 28% | **2%** | **3%** | **0%** |
+
+**THE POLISHING PASS IS A BOOKS ONE AND TWO PASS.** Book Three is clean because it was
+written to the laws as they were being made. Nothing in the plan below should be run over
+Book Three without a measured reason.
+
+**TWO NOTES ARE ALREADY PAID.** §7g (Vic refuses) landed on night 26. §7a's banter floor is
+not merely held but **up**: 4,342 spoken blocks against the 3,819 floor. The passes have been
+adding banter, not spending it.
+
+## 8b. THE REAL DIAGNOSIS: THE CAST DOES NOT USE CONTRACTIONS
+
+**The author's note, 2026-08-17:** *the AI tics and mannerisms are disguising as character…
+the dialogue just doesn't read fluidly and hurts my brain a bit.*
+
+**He is right, and it is one thing, and it is measurable.** Of every place in the book where
+a contraction was available, **576 of 6,148 were taken — 9%. Natural speech runs 60–80%.**
+
+| Pia | Vic | Marek | Hesta | Seven | Three | Nine | Machine |
+|---|---|---|---|---|---|---|---|
+| 18% | 18% | 15% | 8% | 7% | 2% | 1% | **0%** |
+
+**The order is right and the band is wrong.** Pia loose, Three precise, the Machine perfectly
+formal — that is correct characterisation. But the whole cast sits forty points below speech,
+so every voice lands in a narrow strip at the stiff end and the differences between them
+compress to nothing a reader can feel.
+
+**The tic test proves the same thing from the other side.** Eleven speakers share *"do not"*
+(277), *"it is not"* (153), *"that is not"* (121), *"that is the"* (289), with a spread of
+0.7–0.8 — meaning no character owns them. **That is not eleven voices with a shared habit. It
+is one authorial habit wearing eleven faces.**
+
+**AND THE FIX PAYS TWICE.** Raise the family and the Machine's 0% becomes *eerie* instead of
+invisible — the effect the book has been trying to get from her diction all along, for free,
+with no new lines. Same for Three's precision.
+
+**RULED BANDS — raise the whole thing, keep the spread:**
+
+| speaker | now | target |
+|---|---|---|
+| Pia | 18% | **~65%** |
+| Vic | 18% | **~60%** |
+| Marek | 15% | **~55%** |
+| Hesta | 8% | **~45%** |
+| Seven | 7% | **~30%** |
+| Three | 2% | **~15%** |
+| Nine | 1% | **~10%** |
+| Machine / Principal | 0% | **0% — do not touch** |
+
+**BLOCK LENGTH IS NOT THE PROBLEM AND MUST NOT BE "FIXED".** Median spoken block is 20–22
+words in all three books; only ~11% run over forty. The stiffness is grammatical, not bulky.
+**Cutting for length would spend the banter floor to solve a problem it does not have.**
+
+## 8c. §7d IS RESCOPED — the ratio is a symptom, not the target
+
+>50% whole-book is ~2,400 new narration blocks, which §7d itself calls a rewrite. **Ruled
+instead:**
+
+- **Nights 10 and 15 go past 50%** and become the demonstration of the two-narrator technique.
+- **Every other night gets a 35% floor.**
+- **The contraction pass moves the ratio on its own**, because uncontracting is padding: the
+  dialogue gets shorter as it gets more fluent, without a word of new narration.
+
+Re-measure after the contraction pass before writing narration to hit any number.
+
+## 8d. THE PHASES, IN ORDER
+
+**PHASE 0 — THE GUARDS (§7h, ruled to come first).** One wave, no prose. The REVEALS ledger
+and its four rows; the banter floor (≥3,819); the narration gauge per night and per deck; the
+choice-line report as amber, counting down from 344; the granny guard. **Plus one new row
+this measurement earned: the contraction band per speaker**, so §8b can never be argued about
+or drift back. The fork-gate guard already exists.
+
+**PHASE 1 — ONE NIGHT AT A TIME, BOOKS ONE AND TWO.** 22 waves. Each wave takes one night and
+finishes it: empty second takes, take-lines that name nobody, rails that name nobody, bare
+landing rows, the contraction band, the narration floor, the §7c nerve beat, and the tics.
+**Each wave leaves the book playable and is driven in the rehearsal drawer before it ships.**
+Night 3 (`a1-vic`) carries §7j's safehouse-door fix as part of its wave.
+
+**PHASE 2 — THE TWO PINNED NIGHTS.** Nights 10 and 15 get their own waves, past 50%, after
+Phase 1 has settled the voice — because the two-narrator contrast only reads once the
+dialogue underneath it is fluent.
+
+**PHASE 3 — THE LORE FOLDS (§7b, §7e, §7f).** **Only where a scene already reaches for them.**
+Grep Books One and Two for the places that already gesture at a supplier, a landlord, a lock,
+or Vic's parts, and sharpen those. **No new cards, no new plants** — the author's standing
+instruction is that nothing already written gets retconned.
+
+## 8e. WHAT WOULD MAKE THIS PLAN WRONG
+
+- **If the contraction pass does not visibly improve a night's readability**, stop and re-ask.
+  The whole of §8b rests on one diagnosis and it should be tested on one night before it is
+  applied to twenty-two.
+- **If the banter floor falls** during any wave, the wave is wrong however good the prose is.
+- **If the narration gauge shows a night dropping** while its dialogue improves, that is
+  expected and fine — check the floor, not the direction.
