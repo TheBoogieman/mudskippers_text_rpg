@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.56.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.57.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 72 PROVED of 97, 0 FAILED. Tree clean, pushed.**
 
@@ -281,9 +281,15 @@ more."*
   taken by an object with six readers and taking it broke all of them.**
 - **Phase 1 wave 1: night 1 `a1-hum` (v5.56.0).** All 16 cards have a second take, all 26
   choice lines name their addressee, Pia 3%→48%, narration 38%.
+- **Phase 1 wave 2: night 2 `a1-chase` (v5.57.0).** All 14 cards have a second take, all 30
+  choice lines name their addressee, Pia 7%→50%, Nine 2%→7%, narration 36.7%.
 
-**NEXT: `a1-chase` (night 2), then the remaining 20 Book One and Two nights, one per wave.**
-Book Three is clean and is not part of this pass.
+**NEXT: `a1-vic` (night 3), which already had its contraction pass at v5.54.0 but has NOT had
+its second takes, its naming pass or its narration floor** — it sits at 30.5%, the lowest of
+the three, and it carries §7j's safehouse-door fix. Then the remaining 19 Book One and Two
+nights, one per wave. Book Three is clean and is not part of this pass.
+
+**Whole book after three nights: 12% contracted, up from 9%. Pia 28%, Vic 23%.**
 
 ### THE WAVE RECIPE (worked twice; follow it)
 
@@ -294,10 +300,17 @@ Book Three is clean and is not part of this pass.
    for WEIGHT, never evenly** — restore uncontracted forms on the lines where the speaker
    means it. Better still, find that speaker's own split (Pia: loose when twelve, formal when
    working). **Machine and Principal stay at 0%.**
-3. Write the missing second takes. **`takes` is an array of ARRAYS** — writing an array of
+3. **Check the SPREAD, not the night's number** — `scratchpad/spread.js <beat> <Who>`. Night
+   one is the calibration and its shape is 0% on the working cards, 100% on the jokes. **A
+   flat night is a night the pass was applied to rather than written.** Night two came out
+   flat at 75% and needed a whole second restore pass read card by card.
+4. Write the missing second takes. **`takes` is an array of ARRAYS** — writing an array of
    strings crashes the whole sweep.
-4. Name every rail and take-line.
-5. Sweep, fixture by delta + ledger paragraph, release ritual, push.
+5. Name every rail and take-line, and **check both faults at once with
+   `scratchpad/lines_n2.js`** (edit the beat id): a line that names nobody usually also
+   matches nothing, and then typed input deals whatever card is first unplayed. On night two
+   that was 22 unnamed and 8 mis-dealing, and 6 of the 8 were the same lines.
+6. Sweep, fixture by delta + ledger paragraph, release ritual, push.
 
 ### TRAPS THAT HAVE ALREADY COST A WAVE EACH
 
@@ -305,9 +318,12 @@ Book Three is clean and is not part of this pass.
   that". Five of this cast are numbers.
 - **Metaphors of HOLDING** are the fork trap for Seven and Nine (`bodiless` refuses them even
   in the past tense).
-- **Grammar the contraction pass must refuse** (all three shipped as bugs first): sentence-final
-  `it is`/`that is`/`there is`; modal `have to`; sentence-final `you are`/`we are`/`I am`.
-  **No law in this project reads English — read every contraction diff by eye.**
+- **Grammar the contraction pass must refuse** (all shipped as bugs first): **CLAUSE**-final
+  `it is`/`that is`/`there is` — a comma ends a clause as hard as a full stop, which night 2
+  found the hard way; modal `have to`; the pro-form (*"What you're is"*); and **possessive
+  `have`**, the nastiest of them, because *"I've been meaning to"* is right and *"I've one
+  most Tuesdays"* is not. All four are in `contract-pass.js` with the shipped strings as
+  their tests. **No law in this project reads English — read every contraction diff by eye.**
 - **The name-magnet is narrow:** only strip a name from a `key` on a night where ONE speaker
   owns every rail. Doing it on a two-hander broke typed input. **Strip the name, never the
   subject.**

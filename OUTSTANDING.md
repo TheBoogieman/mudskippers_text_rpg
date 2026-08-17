@@ -1290,16 +1290,39 @@ sentence lands because it is the only one in the paragraph. **Restore for weight
 **Pia sits at 79% against a 65% target and was deliberately left there** — she is twelve, and
 the higher band may simply be right for her. Rule on it before Book One is finished.
 
-### TWO SUBSTITUTIONS THE MECHANICAL PASS MUST REFUSE — both shipped as bugs on night 3
+### FOUR SUBSTITUTIONS THE MECHANICAL PASS MUST REFUSE — all four shipped as bugs
 
-1. **Sentence-final `it is` / `that is` / `there is` cannot contract.** The pass produced
-   *"for the tea being the way it's"*. Refuse when the pair is followed by a full stop,
-   exclamation mark, question mark or end-of-string.
-2. **Modal `have to` / `has to` / `had to` cannot contract.** The pass produced *"a day
+1. **CLAUSE-final `it is` / `that is` / `there is` cannot contract.** Night 3 produced *"for
+   the tea being the way it's"* and the refusal was written for a full stop. **Night 2 then
+   produced *"Here it's, and then we go back to metres"* — a comma ends a clause just as
+   hard,** and so do a semicolon, a colon, a dash and a closing quote. Widened to all of them.
+2. **Modal `have to` / `has to` / `had to` cannot contract.** Night 3 produced *"a day
    before you've to"*. Refuse `have` when the next word is `to`.
+3. **The pro-form cannot contract** *(new, night 2)*. *"What you are is somebody people hand
+   things to"* became *"What you're is"*. The first `are` is clause-final before the copula.
+   Refuse when `is`/`are`/`was`/`were` follows.
+4. **Possessive `have` is not the perfect auxiliary** *(new, night 2)*. The pass shipped both
+   *"I've you. I've you."* and *"I've one most Tuesdays"*. A contraction is only available
+   when a past participle follows; a determiner, a number or a pronoun means the verb is
+   carrying its own weight. **This one is the most dangerous of the four**, because *"I've
+   been meaning to"* is correct and sits one word away from *"I've one"*, which is not.
 
-**Both were caught by reading the output, not by the sweep** — there is no law that reads
-English. Every night's contraction diff gets read by eye before it ships.
+**All four were caught by reading the output, not by the sweep** — there is no law in this
+project that reads English. Every night's contraction diff gets read by eye before it ships.
+All four now live in `contract-pass.js` with the shipped strings as their tests and four
+controls that must still contract.
+
+### AND THE CALIBRATION IS THE SPREAD, NOT THE RATE — ruled on night 2, v5.57.0
+
+Night one's calibration is **not** *"Pia is 49%"*. It is that she runs **0% on the cards
+where she is working and 100% on the cards where she is twelve**. The mechanical pass landed
+night two at **75% flat across every card** — which is the same stiffness with the sign
+flipped, and a per-card measurement is what showed it. A second restore pass, read card by
+card against the twelve/working rule, put the shape back: 20% on the Hollow brief, 29% on
+her one confession, 100% on the stairs joke, **50% for the night**.
+
+**Measure the spread per card before believing a night's number.** A flat night is a night
+the pass was applied to rather than written.
 
 **BLOCK LENGTH IS NOT THE PROBLEM AND MUST NOT BE "FIXED".** Median spoken block is 20–22
 words in all three books; only ~11% run over forty. The stiffness is grammatical, not bulky.
