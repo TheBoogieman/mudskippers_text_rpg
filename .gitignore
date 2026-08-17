@@ -5,3 +5,7 @@ _assemble.js
 _drive.js
 _play.js
 _proto.js
+# the world document is GENERATED from var BIBLE in corpus.js by tools-gen-world.js.
+# It is never committed: a second copy of the bible drifts, and the last one did so
+# inside a day. Generate it, read it, delete it.
+THE-WORLD.md
