@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.66.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.67.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -380,29 +380,46 @@ the register. Vic ends the season at 12% on the night his house is gone and 40% 
 the very end of night nine - and the next line is "That is a sentence somebody taught her."
 **Do not calibrate that away.** It is the tell.
 
-### → NEXT: SEASON 2, NIGHTS 10-22
+### → NIGHT 10 STARTED (v5.67.0), AND THE PLAN FOR IT WAS WRONG BEFORE THIS WAVE
 
-`a2-door` (night 10) and `a2-chassis` (night 15) are the two pinned at over 50% narration and
-they are currently the thinnest in the book at 23.5% and 20.2%. Everything in season 2 sits
-below the book median of 30.8%.
+**Done on `a2-door`:** all 34 clickable lines name their addressee and reach their own card
+when typed - Hesta is a stranger the player has just met, and fifteen lines said only "her".
+Plus the first eleven blocks of the §7d narration pass.
 
-**BOTH DEBTS PAID AT v5.66.0.** `scratchpad/allrails.js` now reads EVERY clickable line in
-the book - cards, `lands`, `landsHard`, `opens`, `closes` and peril rows, 1,181 of them - and
-Season 1 is clean. **154 across the book address somebody and name nobody; 138 of those are on
-nights 10-33 and get fixed as each night comes up.** Run it before claiming a night is done.
+**`act.js` HAD BEEN MISREPORTING "cards with no second take" FOR NINE WAVES.** It counted
+cards missing a `railTakes` LINE and printed that as missing PROSE. They are different
+things, and on night 10 they diverge badly:
 
-**AND USE IT, NOT `lines_n2.js`, FOR THE NAMING CLAIM.** lines_n2 reads a deck and nothing
-else, which is how nine waves of "every choice line names its addressee" were true about part
-of the book. A landing rail's `cards:[...]` names its referent exactly - that is how the
-second wrong-person line turned up (a1-pack's "Ask HER who did the routing", dealing Vic's
-card), and the new check reads the who off the card the rail deals.
+| | `takes` (the prose) | `railTakes` (the choice line) |
+|---|---|---|
+| a2-door | 4 unwritten | **14 written but with no line of their own** |
+| a2-chassis | 4 unwritten | **25 written but with no line of their own** |
+| whole book | 75 unwritten of 483 cards | 39, and **all 39 are on those two nights** |
 
-**THE TOOL FAILED SILENTLY FIRST AND THIS IS THE STANDING WARNING.** Its predicates were
-patched in through a bash heredoc into python into JavaScript, and every `` arrived as a
-literal BACKSPACE and every `\s` as a bare `s`. It parsed, it ran, and it reported a
-confident ZERO across 1,181 lines. **PROBES GO IN FILES, WRITTEN WHOLE.** allrails.js now
-self-tests its own predicates before printing a verdict, and both known faults were watched
-being caught on a deliberately broken copy of the corpus before the live zero was believed.
+A card with prose and no line of its own is still REACHABLE - it re-offers the FIRST take's
+wording with a 2ND TIME badge and serves the real second take underneath - so this is not the
+v5.59.0 fault again. It breaks the softer law: **a second take gets its own line.** Watched
+happening in the drawer: "Ask Hesta what she makes of this family, honestly." offered twice,
+identically, the second time answering *"Again? Right. Then you get the part I keep back."*
+
+`act.js` now prints both numbers. **Nothing was damaged by the old label** - `addtake.js`
+refuses any card that already has `takes:`, and it never once refused on nights 1-9.
+
+### → NEXT: FINISH NIGHT 10, THEN NIGHT 15
+
+1. **14 second-take lines on `a2-door`** (the prose exists), then **4 whole takes** on the
+   evening cards.
+2. **The §7d narration pass.** THE AUTHOR'S OWN NUMBER IS STALE: §7d was written at 3,819
+   spoken blocks and 27.5% narration and priced the job at "about 2,400 blocks". The book is
+   now **4,677 spoken / 1,933 narration / 29.2%**, so **the real bill is 2,744** and it grows
+   with every take written. **The floor to check against is 4,677, never 3,819.**
+   Night 10 alone owes about 186 more blocks: eleven moved it 23.5% -> 25.7%.
+3. Then `a2-chassis` (night 15): 25 lines, 4 takes, and the same narration pass.
+
+**THE REGISTER IS RULED AND IT IS IN `OUTSTANDING.md` §7d.** In narration, dread wins - the
+odds, the cost, what is coming. In dialogue, banter wins; they do not know what the prose
+knows. Dialogue is never cut, only rephrased. The eleven blocks written this wave moved no
+drift predicate at all, which is the correct signature for this pass.
 
 
 ### THE WAVE RECIPE (worked twice; follow it)
