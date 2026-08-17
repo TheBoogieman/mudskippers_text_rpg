@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**SEVEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 7 describe a REWRITE that is now larger than the authoring left to do.**
+**TEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 10 describe a REWRITE that is now clearly larger than the authoring left to do.**
 
 > ### 0. THE BANTER FLOOR, AND IT OUTRANKS EVERY RULING BELOW IT. `OUTSTANDING.md` §7a.
 > **The author, after ruling all four passes: *"I still want to have banter, they shouldn't
@@ -297,6 +297,50 @@ at, which is exactly why it was built first.**
 > which says where the ~2,400 new blocks belong and where they do not.
 >
 > **THE TEST: if a room card has no line that would make somebody smile, it is not finished.**
+>
+> **THE TWO REGISTERS, SETTLED WITH A PICTURE (2026-08-17): dialogue is Ken, narration is
+> Blade Runner K.** Dialogue bright, easy, fluid, everyone deflecting **at the same level**,
+> nobody admitting what the task demands. Narration bleak, soft, poetic, foreshadowing,
+> describing the emotions — and it is the only voice in the book that says the sentence out
+> loud. **The courier is why it works:** his life burned on day one and facing that head-on
+> would break anybody, so he deflects and the family deflects with him.
+> **DIALOGUE IS REPHRASED FOR FLUIDITY, NEVER CUT** — the craft-side statement of the 3,819
+> floor.
+>
+> **AND THE ENDING MUST NOT BE REVEAL-HEAVY. This corrects v5.42.0**, where the drift net
+> measured EIGHT new `tell` anchors on the last night alone. **The facts move earlier; what
+> stays in the epilogue is what they COST.** The model for a late payoff is §7f's granny joke:
+> **a payoff the reader assembles is not a reveal; a payoff somebody narrates is.**
+
+8. **THE FOUNDING LOCK, AND IT IS NOT A RETCON. `OUTSTANDING.md` §7f.** The Architect forged
+   the key **with his own blood, while they were estranged**, and died before she could ask
+   what he meant to do once the Choir took the machine. **She is locked out** — she can hold
+   the door, she cannot knock — so she preserved herself and spent a hundred and thirty years
+   undoing **the keeping**, which is the thing that estranged them. She found Vic, fed his
+   blood-scan secretly and supplied his parts. **Even she does not know why the courier fits;
+   the maths check out and the reason does not exist.** **THE RECEIPT THAT THIS NEEDS NO
+   RETCON:** `a3-vic`'s own `before` already says Vic's tissue *"could hold the door open and
+   never knock, and he does not know why the difference exists either."* The lock has
+   distinguished holding from knocking since it was written.
+   **THE PEAK JOKE OF THE BOOK: the courier calls the machine GRANNY** because in the most
+   abstract way they are related by blood — and **that is where the name a3-granny has been
+   using for ten nights comes from.** Write it as a laugh that lands and then goes quiet.
+   **Nobody in the room explains it.**
+
+9. **VIC REFUSES, AND IT IS THE GUILT RATHER THAN THE PARTS. §7g.** Minds go on shards in this
+   world and the family knows it, **so somebody must OFFER and he must refuse.** The
+   mechanical reason already authored in `a3-vic` stays — the rig went past saving, the parts
+   do not exist. What is added underneath is that he would say no anyway: **he cannot carry
+   the guilt any more and does not want more time with it.** Self-defeating, sincere, not
+   noble. **Seeing the family take the reins is what lets him stop.** One `never` line needs a
+   careful reword so the offer is not forbidden by accident — see §7g.
+
+10. **THE GUARDS COME BEFORE THE REWRITE, NOT DURING IT. §7h.** A `REVEALS` ledger in
+   `corpus.js` — fact, plant beat, pay beat, words — and four rows off it: **planted before
+   paid · nothing states it earlier than its plant · the plant beat really contains its plant
+   · the finale is not where the book explains itself.** Plus three cheap ones worth building
+   immediately: **the banter floor (spoken blocks ≥ 3,819)**, the narration ratio as a live
+   gauge per night and per deck, and a guard that nobody ever explains the granny joke.
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her

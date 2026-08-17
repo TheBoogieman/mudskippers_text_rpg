@@ -538,6 +538,41 @@ and it is the part of this game the game is about. **The staged passages are alr
   funnier than a joke over nothing. If a passage came out sadder rather than funnier, law 4
   was applied backwards.
 
+### THE TWO REGISTERS, AS THE AUTHOR ILLUSTRATED THEM (2026-08-17)
+
+He sent a picture to settle it: **Ken on the left, Blade Runner K on the right.**
+
+| | |
+|---|---|
+| **DIALOGUE is the LEFT-HAND PICTURE** | Bright, easy, fluid, quick to read. Everyone deflecting, everyone on the same level to some degree, **nobody willing to admit what the task actually demands** — taking down a system that spans a city |
+| **NARRATION is the RIGHT-HAND PICTURE** | Bleak, soft, foreshadowing, poetic, descriptive of emotions. It knows exactly what the jokes are for and it says so |
+
+**THE COURIER IS WHY THIS WORKS.** His life burned down on day one and he is taking on a
+cult. **Facing that head-on would break anybody, so he deflects** — and the family deflects
+with him, at his level, because that is what a family does when the alternative is saying the
+sentence out loud. **The narration is the only voice in the book that says the sentence.**
+
+**DIALOGUE IS NOT CUT. IT IS REPHRASED — more fluid, easier to read.** Ruled explicitly. This
+is the same instruction as the 3,819 floor above, said from the craft side rather than the
+arithmetic side: the lines get BETTER and LIGHTER, and there are not fewer of them.
+
+### AND THE ENDING MUST NOT BE REVEAL-HEAVY — RULED, AND IT CORRECTS v5.42.0
+
+**The epilogue as shipped is reveal-heavy and that is on me.** Twelve room cards, and the
+biggest lore in the book lands in four of them: the Principal's hundred and thirty years, the
+scale of the vaults, the world's reaction, and the file being opened upstairs. **The drift net
+measured it — `tell` gained EIGHT anchors on that one night**, all of them the Principal's
+card and the canon line under it.
+
+**The ending is for the FEELING, not the facts.** The facts move earlier — which is exactly
+what ruling 1 already does with the Principal's theft (plant at night 31) and what §7f does
+with the founding lock. **What stays in the epilogue is what those facts COST**: Hesta's sum,
+Toller on his step, the empty chairs, *"nobody has our names; somebody will."*
+
+**AND THE PEAK JOKE IS THE MODEL FOR HOW A LATE REVEAL SHOULD BEHAVE** (§7f): the courier
+calls the machine granny, the room laughs, and nobody explains it. **A payoff the reader
+assembles is not a reveal. A payoff somebody narrates IS one.**
+
 ### THE TEST
 
 **If a room card has no line in it that would make somebody smile, it is not finished** —
@@ -862,6 +897,166 @@ this makes her one of them and explains the longevity the book has never account
   goes in the same night: theft and purpose are one conversation, not two.
 - **Every night between** gets one thread of it at most — the point is that it is invisible
   until it isn't.
+
+---
+
+## 7f. THE FOUNDING LOCK — ruled 2026-08-17. AND IT IS NOT A RETCON
+
+**The author's note:** *the Principal is also locked out of the machine. The Architect's lock
+is a double-edged sword, because he used his own blood to forge the key while they were
+estranged, and died before she could speak to him and learn what he was trying to do after
+seeing the Choir take the machine. She discovers this, but cannot unlock it alone. So she
+preserves herself and dedicates her life to undoing the thing that estranged them in the
+first place. She knows about Vic — aiding the blood-scan effort secretly, and supplying him
+the parts anyway. Even she does not understand why the courier fits, but the maths check out.*
+
+### THE RECEIPTS: EVERY PIECE OF THIS IS ALREADY ON THE PAGE
+
+**The author asked for no retcons. There are none required, and here is the proof.**
+
+- **`a3-vic`'s `before` already says it, about Vic:** *"his own tissue could hold the door
+  open and never knock, and he does not know why the difference exists either."*
+  **THE LOCK ALREADY DISTINGUISHES HOLDING FROM KNOCKING.** The Principal's whole predicament
+  is Vic's predicament, already written, one character over.
+- **The bible already says the Architect died estranged from the Principal**, that his dying
+  wish was *teach the machine to let go*, and that he co-founded the reprint program with Vic.
+- **The bible already says "the bio-hash comes from their bloodline"**, and that the two of
+  them built the machine after losing a child.
+- **The bible already says Vic spent decades scanning every customer in his chair** for blood
+  the founders' lock would accept, and **v5.42.0 added that his parts supplier was her.**
+
+**Nothing above needs changing. What is missing is the WHY, and that is the note.**
+
+### THE SHAPE, STATED ONCE
+
+1. **The Architect forged the key with HIS OWN BLOOD, while they were estranged.** The lock
+   is double-edged: it kept the Choir out, and it kept HER out.
+2. **He died before she could reach him** — before she could ask what he intended to do once
+   he saw the Choir take the machine. **The argument was never finished. That is her want,
+   already in `WANTS`: "an argument finished with a dead man."**
+3. **She works out the mechanism and finds she cannot use it.** She can hold the door. She
+   cannot knock. **She is not of his blood** — they were partners who lost a child, not
+   relatives.
+4. **So she preserves herself.** The bio-gren suit, a hundred and thirty years, and a life
+   spent undoing the thing that estranged them: **the KEEPING.** Her position was *"nothing
+   that can be lost is safe"*; his was *"teach her to let go"*. **The family finishing the
+   machine's keeping in the finale is her argument being won against her, by her own hand,
+   which is the best possible ending for that character and it is already what happens.**
+5. **She finds Vic** — the Architect's best friend, the co-founder of the reprint program,
+   the one man in the city already looking for blood the lock would answer. **She feeds the
+   scan secretly and supplies the parts openly-but-anonymously.** Vic thinks he has a very
+   good grey-market supplier. He has a patron.
+6. **EVEN SHE DOES NOT UNDERSTAND WHY THE COURIER FITS. The maths check out and the reason
+   does not exist.** This is the same mystery Vic already carries in his own `before`, and it
+   preserves the epilogue's ruling exactly: **nobody ever tells the courier why he was
+   chosen, because nobody knows.**
+
+### THE PEAK JOKE OF THE BOOK, AND IT IS A PAYOFF, NOT A REVEAL
+
+**The courier's last joke is calling the machine GRANNY — because in the most abstract way
+possible, they are related by blood.** She is the child the Architect and the Principal built
+after losing one; the lock is keyed to that bloodline; and the courier is the only living
+thing left that the door answers.
+
+**THE NAME ALREADY EXISTS IN THE GAME.** `a3-granny` is night 31, titled *"the child under
+the Exchange"*; the tease reads *"Talk to her. About letting go."*; `LOAD_BEARING` lists *"the
+Granny"*. **Nobody has ever explained where the name came from.** This is the explanation, it
+costs nothing, and it retro-fits a name the player has been using for ten nights.
+
+**IT IS A JOKE FIRST AND A REVEAL SECOND.** He calls her granny to deflect, the way he
+deflects everything, and it happens to be nearly true. **Write it as a laugh that lands and
+then goes quiet. Do not let anybody in the room explain it.**
+
+---
+
+## 7g. VIC REFUSES — ruled 2026-08-17. THE GUILT, NOT THE PARTS
+
+**The author's note:** *Vic dies in a world where consciousness can be uploaded to shards and
+substrates, and the family knows this. They try to save him, but he flat out refuses. He is
+self-defeating in the most sincere way — he cannot carry the guilt any more. Seeing the
+family take the reins gives him the last reassurance.*
+
+**THIS IS A DEEPENING, NOT A CONTRADICTION, AND THE DIFFERENCE MATTERS.** `a3-vic`'s `before`
+already supplies a MECHANICAL reason he cannot be saved — the filtering rig went past saving
+a year ago, the parts do not exist, and he has known since spring; *"what he has been doing is
+choosing where to be standing when it stopped."* **That stays. It is good and it is authored.**
+
+**What the note adds is the reason UNDERNEATH it: even if the parts existed, he would say no.**
+The world can put a mind on a shard — the whole book is built on it, and Nine is sitting in
+somebody's hand while it happens. **So the family MUST offer, out loud, and he must refuse for
+a reason that is about guilt rather than logistics.** A death nobody offered to prevent, in a
+world with shards in it, is the hole. This closes it.
+
+**THE THREE BEATS OF THE REFUSAL:**
+- **Somebody offers** — and it should be the person it costs most, which is not the courier.
+- **He refuses, and the reason is that he cannot carry it.** Ten years of a housing he built
+  into a child's skull without asking. **He does not want more time with that; he has had
+  enough time with that.** Self-defeating, sincere, and not remotely noble about it.
+- **The family taking the reins is his last reassurance.** He gets to see it. That is what
+  lets him stop. **His last words are already authored: PAID IN FULL.**
+
+**ONE PIECE OF EXISTING TEXT NEEDS A CAREFUL REWORD, NOT A DELETION.** `a3-vic`'s room carries
+`never: "nobody talks him out of it, and nobody discovers a way to save him"`. **The offer is
+not a discovery** — it is the family proposing the thing their world does every day — but the
+line is close enough to forbid the scene by accident. **Reword to something like: "the offer
+is made and he refuses it; nobody talks him out of the refusal and no new way is discovered."**
+Same law, room for the scene.
+
+---
+
+## 7h. THE GUARDS — ruled 2026-08-17. THE REWRITE GETS ITS OWN SWEEP ROWS FIRST
+
+**The author's instruction:** *I don't want to retcon any lore we've already written, and we
+should write new self-test guards for this rewrite to not create more plot holes.*
+
+**BUILD THESE BEFORE THE REWRITE STARTS, NOT DURING IT.** Every one of them is a `?selftest`
+row in the existing harness, subject to the standing rule that a row carries a broken form or
+a declared exemption. **The lesson this project keeps re-learning is that reading the corpus
+has never once caught the defect** — so the rewrite gets mechanisms in front of it.
+
+### THE REVEAL LEDGER — the main one, and the only new data structure
+
+A table in `corpus.js`, beside the corpus it describes:
+
+```
+var REVEALS = [
+  {id:"principal-theft",  fact:"the Principal has been robbing her own tenant",
+   plant:"a3-principal",  pay:"a3-seize",  words:["stealing","supplier","shelf I emptied"]},
+  {id:"founding-lock",    fact:"the Architect forged the key with his own blood",
+   plant:"a3-principal",  pay:"a3-granny", words:["his own blood","locked out","cannot knock"]},
+  ...
+];
+```
+
+**FOUR ROWS COME OFF IT, AND EACH ANSWERS A DIFFERENT PLOT HOLE:**
+
+1. **"every ruled fact is planted before it is paid."** `beatById(plant) < beatById(pay)`.
+   Catches a reveal that pays a debt nobody incurred.
+2. **"nothing states a fact before its plant."** Search every beat earlier than `plant` for
+   the fact's `words`. **This is the plot-hole guard proper** — it is what stops the rewrite
+   leaking the founding lock into night 9 because it was fresh in my head that day.
+3. **"the plant beat actually contains its plant."** The `words` appear in that night's
+   authored prose. **Same class of bug as the six unwired landing rows that shipped for nine
+   waves:** a plant that gets edited away is invisible, and the whole chain silently breaks.
+4. **"the last night is not where the book explains itself."** Count facts paid per night.
+   **The finale's share must sit under a declared ceiling.** This is §7a's
+   "not reveal-heavy" made checkable rather than remembered.
+
+### THE THREE CHEAP ONES, WHICH ARE WORTH BUILDING TODAY
+
+5. **"the banter floor holds."** Spoken blocks ≥ **3,819**. A fall is a failure however good
+   the new prose is. **This is the only thing standing between §7d's narration target and a
+   drier book**, and it is four lines of code.
+6. **"the narration ratio, per night and per deck."** A live gauge — the book at 27.5%, the
+   rooms at 21.7%, staged passages at 56.1% — so the rewrite is never measured by hand again
+   and never argued about.
+7. **"nobody explains the peak joke."** A named-line guard for §7f: the granny payoff exists
+   once, in one place, and no other passage in the book spells out the relation.
+
+**AND THE ONES THAT ALREADY EXIST DO NOT GET WEAKENED.** The drift net, the fork laws, the
+earshot law, the cast-of-the-scene row and the counting guard all run against every rewritten
+line, and **the fixture is taken by delta with a ledger paragraph, exactly as now.** A rewrite
+of this size will move hundreds of anchors; **the ledger is what keeps that honest.**
 
 ---
 
