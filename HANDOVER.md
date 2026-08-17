@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.61.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.62.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -314,7 +314,23 @@ more."*
   choice lines name their addressee AND reach their own card, cast 8%→42%, narration
   29.1%→35.2%, **and the longest unbroken run of dialogue fell from NINE blocks to three.**
 
-**NEXT: `a1-fare` (night 5), then the remaining 17 Book One and Two nights, one per wave.**
+- **Phase 1 wave 5: Season 1 Act 2, HALF (v5.62.0).** Nights 5, 6 and 7 (`a1-fare`,
+  `a1-late`, `a1-exit`) have their contraction pass, their dial-back, and all 59 choice lines
+  named and dealing correctly.
+
+**THE AUTHOR RULED ON 2026-08-17 THAT WAVES GO ACT BY ACT, NOT NIGHT BY NIGHT**, and that a
+wave should only stop for a ruling that genuinely cannot wait.
+
+### → NEXT, AND IT IS THE UNFINISHED HALF OF THIS ACT
+
+1. **20 EVENING SECOND TAKES** — 7 on `a1-fare`, 6 on `a1-late`, 7 on `a1-exit`. Ids are in
+   the act audit: `node scratchpad/act.js a1-fare a1-late a1-exit`.
+2. **THREE NARRATION FLOORS** — a1-fare 29.1%, a1-late 33.8%, a1-exit 32.6%, all under 35.
+   Longest dialogue runs are 4, 5 and 6 — break those first, the floor follows.
+
+Then Season 1 Act 3 (`a1-carried`, `a1-turn`), then Season 2.
+
+**Whole book after seven nights: run `node scratchpad/contract.js`.**
 Book Three is clean and is not part of this pass.
 
 **AND EVENING SECOND TAKES ARE WORTH WRITING AGAIN** — from v5.59.0 every deck is lanes, so
@@ -360,6 +376,17 @@ they are reachable. Before v5.59.0 they were not, and 86 of them sat dark.
   subject.**
 - **Check key collisions with `pickTopic` itself, per road** — never an approximation.
 - **Grep a global's name before declaring one.**
+- **MEASURE PER SPEAKER BEFORE THE PASS, AND EXCLUDE ANYONE ALREADY CALIBRATED.** Mirren
+  was written as a deliberate ALTERNATION — full forms for the law, contractions for the
+  intimacy — and the pass flattened her to 100% and dissolved the character. A speaker whose
+  spread is deliberate rather than absent must not be passed over. **Check the per-card
+  spread of every speaker on the night before running `contract-pass.js`.**
+- **THE DIAL-BACK HAS A TOOL: `scratchpad/revert-cards.js <backup> <beat> <ids>`.** On a card
+  that is entirely the speaker working, the right dial-back IS the author's original. Take a
+  `cp corpus.js scratchpad/corpus.before-<act>.js` before the pass so it has something to
+  revert to.
+- **A MAGNET IS NOT ALWAYS A NAME.** Night six's was a key holding `what`, `was`, `her`,
+  `thing` — question-scaffolding, not subject. Strip what is not the subject.
 - **RE-RUN `lines_n2.js <beat>` AFTER WRITING THE TAKES, not only after the naming pass.**
   New take lines are lines: two of night four's own new ones tied with a neighbour and lost
   on authored order, and were only caught by running the audit a second time.
