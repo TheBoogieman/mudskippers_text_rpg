@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**FIVE RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
+**SIX RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
@@ -325,6 +325,25 @@ at, which is exactly why it was built first.**
    · it arcs and escalates across Book Three rather than repeating · **nobody fixes her**,
    because "stand there and be ordinary at me" is her own ruled law. **Book Three does not
    run grey and the jokes do not get rarer.**
+
+6. **THE NARRATION PASS — TWO NARRATORS WHO DISAGREE. See `OUTSTANDING.md` §7d.**
+   **Two nights are pinned by id as the peak of normalcy**, the last sincere ordinary the
+   family gets: **`a2-door` (night 10, "The Open Door")** — Hesta's door and the tin going
+   round for the first time — **and `a2-chassis` (night 15, "the cook")**, the second smoke
+   session. **The technique:** the room jokes and the prose does not. Narration carries the
+   bleak truth start to finish — the odds, the cost, what is coming — while the dialogue
+   stays warm and completely unaware. **A joke over a visible drop is funny; a joke over
+   nothing is noise.** This is craft law 4 seen from the other end: law 4 says the fear must
+   be on the page, and this says WHERE — in the narration, permanently, as the book's second
+   voice.
+   **THE RATIO IS MEASURED AND IT SUPERSEDES CRAFT LAW 3's TARGET:** the book is at **27.5%
+   narration blocks (1,452 against 3,819 spoken)**; the ruled target is **over 50%**, which
+   is about **2,400 more narration blocks** — a REWRITE, which is what the author is calling
+   it. The pinned nights are the lowest in the book: `a2-chassis` 20.2%, `a2-door` 23.5%.
+   **The ~105 AI tics and every "load-bearing" ride this pass** rather than a separate one,
+   which supersedes the earlier ruling for the tics specifically. **And the cast stays
+   likeable: the bleakness goes in the NARRATION, never into their mouths.** One clause of
+   the note is ambiguous and is logged unresolved in §7d — ask before the pass runs.
 
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.

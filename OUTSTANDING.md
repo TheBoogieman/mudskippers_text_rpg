@@ -659,6 +659,75 @@ over "dread as the default" deliberately.
 
 ---
 
+## 7d. THE NARRATION PASS — ruled 2026-08-17. THE PROSE STOPS AGREEING WITH THE ROOM
+
+**The author's note:** *Hesta's open door and the smoke session in "the cook" are the last
+normal and most sincere moments of normalcy they have until it starts to hit the fan. Pin it
+for the rewrite. That night should be the peak moment: cosy, jokes, banter — but the
+narration is telling a different story than what the room shows. It is foreshadowing the
+immense price they are about to pay. Narration always shows the bleak truth from start to
+finish, how impossible the odds look. It contrasts the jokes, giving them a stable grounding.
+Aim for slightly more narration than dialogue, while addressing tics and "load-bearing"
+contrasts.*
+
+### THE TWO NIGHTS ARE PINNED, BY ID
+
+- **`a2-door` — NIGHT 10, "The Open Door".** Hesta's door, and the tin going round for the
+  first time: `asking-for-it`, `the-rolling`, `stops-being-a-meal`, all in the ROOM deck.
+- **`a2-chassis` — NIGHT 15, "the cook".** The second smoke session, where the tin is
+  offered to the one who has just been housed: `seven-asks`, `nine-asks`, also in the room.
+
+**Night 10 is the peak.** It is the first night the family is a family in one room with the
+door shut, and nothing after it is that uncomplicated again.
+
+### THE TECHNIQUE, STATED PRECISELY SO IT CANNOT DRIFT
+
+**THERE ARE TWO NARRATORS IN THIS BOOK FROM NOW ON AND THEY DISAGREE.** The room jokes; the
+prose does not. Narration carries the bleak truth start to finish — the odds, the cost, what
+is coming — while the dialogue stays warm, funny and completely unaware. **The contrast is
+the point and it is what makes the jokes land instead of float:** a joke over a visible drop
+is funny; a joke over nothing is noise.
+
+**This is the same mechanism as craft law 4** ([[the joke must have the fear under it]] —
+§7c) seen from the other end. Law 4 says the fear must be on the page. This says **where**:
+in the narration, permanently, as the book's second voice.
+
+### THE RATIO, MEASURED
+
+| | narration | spoken | narration share |
+|---|---|---|---|
+| **whole book** | 1,452 | 3,819 | **27.5%** |
+| `a2-door` (10) | 87 | 283 | 23.5% |
+| `a2-chassis` (15) | 157 | 621 | **20.2%** — the lowest of the pinned nights |
+| `a2-law` (21) | 55 | 183 | 23.1% |
+| `a2-turn` (22) | 91 | 258 | 26.1% |
+| `a3-seize` (33) | 79 | 209 | 27.4% |
+
+**"Slightly more narration than dialogue" means crossing 50%, and the book is at 27.5%.**
+Reaching it across the whole corpus is **about 2,400 narration blocks** — a rewrite of the
+book, not a pass over it. **THIS SUPERSEDES CRAFT LAW 3's target** (which said "two-plus
+narration blocks per passage", written when the book was at 23.6%); there must not be two
+numbers in play. **Ruled target: >50% narration blocks, and it is a REWRITE-scale figure,
+which is consistent with the author calling this "the rewrite".**
+
+### WHAT ELSE RIDES THIS PASS
+
+- **the ~105 AI tics and every "load-bearing"** — ruled into this wave rather than a
+  separate one, which supersedes the earlier "push on, sweep it later" ruling for the tics
+  specifically. They get done as the prose is rewritten, not before and not after.
+- **THE CHARACTERS MUST STAY LIKEABLE.** Read as: the reader should still like these people
+  when the pass is finished. It is the counterweight to §7c — the bleakness goes in the
+  NARRATION, not into the cast's mouths. Nobody becomes bitter, cruel or self-pitying. The
+  family gets warmer as the prose around it gets colder. **See the open question below.**
+
+**→ ONE CLAUSE OF THE NOTE IS AMBIGUOUS AND IS RECORDED AS UNRESOLVED:** *"they should like
+the characters they are for the rewrite"*. Read above as **readers should still like them**.
+The other possible reading is **the characters should like who they have become** — a very
+different instruction, and one that would put self-acceptance into the cast's arc. **Ask
+before the pass runs.**
+
+---
+
 ## 8. Still open, deferred by the author until the written side settles
 
 - 32 short transition scenes for `TAKE THE NIGHT ON`
