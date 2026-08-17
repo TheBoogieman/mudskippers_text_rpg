@@ -1371,3 +1371,50 @@ instruction is that nothing already written gets retconned.
 - **If the banter floor falls** during any wave, the wave is wrong however good the prose is.
 - **If the narration gauge shows a night dropping** while its dialogue improves, that is
   expected and fine — check the floor, not the direction.
+
+## 9. EIGHTY-SIX EVENING SECOND TAKES ARE UNREACHABLE — measured 2026-08-17, awaiting a ruling
+
+**Found by playing night two out in the rehearsal drawer, on the author's ruling that every
+wave now gets played rather than only driven.**
+
+**A second take on an EVENING card can never be served.** Proved by construction and by
+driving both decks to exhaustion:
+
+- `advanceCard` counts layers **only** for a `|room` key. Outside the room a dealt card goes
+  straight onto `topicSpent` and is never dealt again.
+- `takeForLap` outside a lane falls back to `deckLap(key)`.
+- `deckLap` for a `|scene` key **never increments** — the only writer is `pickTopicFresh`,
+  and it laps only when the key contains `|room`. That is deliberate and commented: *"Only
+  the room laps; the beat keeps its dry answer, because the beat has a budget and an ending
+  and is not the part you live in."*
+- Typed input, the other route, is disabled in novel runs.
+- The save-restore path that synthesises `topicLayer` from an older save is also room-only.
+
+**Driven, forty draws per deck:** `a1-hum|scene` and `a1-chase|scene` served **0** second
+takes and finished with `deckLap` still at 0. The same nights' rooms served 51 and 52.
+
+### THE SCALE, AND WHOSE FAULT IT IS
+
+| | count | words |
+|---|---|---|
+| evening second takes, book-wide | **86** | **9,711** |
+| of which written in this polishing pass | 13 | 2,001 |
+| room second takes (all reachable) | 288 | — |
+
+**Two of those nights are mine and I reported both as finished without checking the evening
+deck could serve one** — night one at v5.56.0 and night two at v5.57.0. The other 73 predate
+the pass and go back through the authoring phase. **Nothing has been deleted.**
+
+### THE OPTIONS, FOR THE AUTHOR
+
+1. **Give the evening deck lanes, like the room.** `advanceCard` keeps a card unspent until
+   its layers are gone, so asking it twice serves the second take, and `railCardNow` reads
+   `cardPlayed` instead of `deckLap`. The deck still never goes *round again*, so the quoted
+   design rule survives: the beat keeps its dry answer and its budget still ends the night.
+   Smallest change that makes 9,711 written words reachable.
+2. **Let the evening deck lap outright**, like the room. Bigger: it changes pacing on all 33
+   nights and reverses an explicit ruling.
+3. **Move the takes into the room decks** of their nights, or delete them.
+4. **Leave them written but dark**, and stop authoring evening takes from night three on.
+
+**Until this is ruled, no further wave should write an evening second take.**

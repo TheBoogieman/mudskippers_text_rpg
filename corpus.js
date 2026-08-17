@@ -494,7 +494,11 @@ var SPINE = [
    {scene:["It is the chase that chooses it, not you: the lights behind you multiply, the way ahead shuts like a drawer, and the only dark left is a maintenance hatch and its ladder shaft, dropping to the flood channel - black and breathing water. Two rungs in, the night states its terms: the third rung is gone, the fourth is rust holding hands with memory, and the channel below is running full and fast enough to file a courier under lost property.",
            ["Pia","Stop. STOP. Look at me. Two dead rungs and live water - this is not the fast way, this is the last way. Back up or I swear I'll bill Vic for the paperwork."],
            "Against your ribs the shard's hum climbs half a note - the blind, buried kind of urgency, a passenger who can feel the lift cable fraying and cannot reach the alarm."],
-    rail:[{text:"Climb back up and take the stairs like a person.", key:"up back climb stairs out person leave safe"},
+    /* `out:true` ON THE FIRST ROW, and this is the only one in the book. Every other
+       peril's stage-nought rows are tactics for the first half of a two-part move;
+       this one is a way out of the shaft entirely, Pia has just shouted BACK UP, and
+       the clearScene below is the stairs. Without the flag it walked the player DOWN. */
+    rail:[{text:"Climb back up and take the stairs like a person.", out:true, key:"up back climb stairs out person leave safe"},
           {text:"Test the fourth rung anyway.", tempt:true},
           {text:"Freeze and hug the ladder.", key:"freeze hug hold still wait stop stay"}]},
    {scene:["You put weight on the fourth rung. It gives a centimetre - the polite centimetre, the one that is a question. Below, the channel has stopped sounding like water and started sounding like appetite.",

@@ -1738,6 +1738,26 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.58.0 "Back Up, She Said, And The Game Walked Him Down"
+   THE LADDER SHAFT LET YOU CLIMB OUT AND THEN DIDN'T. Pia shouts BACK UP; the player
+   picks "climb back up and take the stairs like a person"; the game prints "You put
+   weight on the fourth rung" and drops him a stage nearer the water. FOUND BY PLAYING
+   NIGHT TWO IN THE DRAWER, on the author's ruling that every wave now gets played out
+   THE ENGINE WAS RIGHT NINE TIMES AND THE TENTH CARD ASKED FOR SOMETHING ELSE. a peril's
+   stages are the two halves of one manoeuvre, so a keyed row on stage nought is the
+   CAREFUL way through the first half - "get down and wait for her count", "rope off to
+   Marek", "the service stairs, on Nine's count" - and going deeper is correct for all of
+   them. the ladder is the only card whose stage-nought row is an exit rather than a
+   tactic, and its clearScene was the stairs all along: the author wrote the way out
+   twice and only the second one could ever fire
+   `out:true` - ONE FLAG, ONE ROW, THE WHOLE BOOK. opt-in, so the default is untouched
+   and no other peril moves. new sweep row drives all ten cards: the declared way out
+   ends its peril from stage nought, and every one of the nine undeclared rows on a
+   two-stage card still goes deeper. 73 PROVED of 98
+   AND THE DRIVE FOUND SOMETHING BIGGER THAT IS NOT FIXED HERE - see OUTSTANDING §9.
+   EIGHTY-SIX EVENING SECOND TAKES, 9,711 WORDS, ARE UNREACHABLE. only the room laps;
+   an evening card is spent on its first deal and its deckLap never moves, so takeForLap
+   can only ever return take one. it is awaiting a ruling and nothing has been deleted
    MUDSKIPPERS — THE COURIER'S RUN · v5.57.0 "The Ones Who Go And Look Come Back Different"
    PHASE 1 WAVE 2: NIGHT TWO, FINISHED. all fourteen cards now carry a second take, every
    choice line names who it addresses, Pia goes 7% to 50%, narration 36.7%
@@ -2289,7 +2309,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.57.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.58.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -7570,7 +7590,20 @@ function attemptTake(i){
   }
   attemptTempted = false;
   attemptSaid(r.text);
-  if(attemptLast()){ attemptClear(); return; }
+  /* `out:true` - THE ROW THAT IS A WAY OUT AND NOT A TACTIC (v5.58.0). A peril's
+     stages are the two halves of one manoeuvre, and a keyed row on stage nought is
+     normally the CAREFUL way of doing the first half - "get down and wait for her
+     count", "rope off to Marek", "the service stairs, on Nine's count". Going deeper
+     is right for all of those, and this line advanced them for nine cards correctly.
+     THE TENTH WAS THE LADDER SHAFT, where stage nought's keyed row is not a tactic
+     at all: "Climb back up and take the stairs like a person" is abandoning the
+     shaft, Pia has just shouted BACK UP, and the card's own clearScene is the
+     stairs - the author wrote the exit twice and only the second one could fire.
+     Picking it printed "You put weight on the fourth rung" and dropped the player a
+     stage, which is the game contradicting the choice it just offered, on the first
+     peril anybody meets. FOUND BY PLAYING THE NIGHT, not by reading it.
+     The flag is opt-in and the default is unchanged, so no other peril moves. */
+  if(r.out || attemptLast()){ attemptClear(); return; }
   attemptStalls = 0; attemptStage++; attemptPlay();
 }
 /* A TYPED LINE RESOLVES AGAINST THE STAGE'S OWN KEYS, and the keyless door is the
@@ -22195,6 +22228,63 @@ function selfTest(){
               still owns the turn, the deck still deals, and the floor still holds. */
            return !sceneSkeletonNow() && !doorMeetsFloor() && sceneRails(1).length === 0;
          } finally { runMode = k.m; runSlug = k.s; beatIdx = k.bi; beatTurns = k.bt; phase = k.ph; }
+       }});
+
+    /* ---- (4a2) A WAY OUT IS A WAY OUT ON ANY STAGE, AND ONLY WHERE IT IS DECLARED
+       (v5.58.0, found by PLAYING night two rather than reading it). A peril's stages
+       are the two halves of one manoeuvre, so a keyed row on stage nought normally
+       goes DEEPER and should - "get down and wait for her count", "rope off to Marek".
+       The ladder shaft is the one card whose stage-nought row is not a tactic but an
+       exit, Pia has just shouted BACK UP, and taking it printed "you put weight on
+       the fourth rung" and dropped the player a stage. `out:true` says so, once, in
+       the whole book. THIS ROW DRIVES BOTH HALVES: the flagged row ends its peril
+       from stage nought, and no unflagged row on any of the other nine cards can. */
+    var outBad = [], outSaw = [], outFlagged = 0, outDeeper = 0;
+    (function(){
+      var k = barKeep();
+      try{
+        SPINE.forEach(function(b){
+          if(!b.teeth || !(b.teeth.stages || []).length) return;
+          var multi = b.teeth.stages.length > 1;
+          (b.teeth.stages[0].rail || []).forEach(function(r, i){
+            if(!r || r.tempt) return;
+            barBoard(beatById(b.id));
+            TEETH_LIVE = true;
+            if(!attemptOpen()){ outBad.push(b.id + ": the peril would not arm"); return; }
+            if(attemptStage !== 0) outBad.push(b.id + ": armed above stage nought");
+            attemptTake(i);
+            if(r.out){
+              outFlagged++;
+              if(attemptOn) outBad.push(b.id + " row " + i + ": a declared way out did NOT end the peril");
+              if(attemptStage !== 0) outBad.push(b.id + " row " + i + ": the way out advanced a stage first");
+            } else if(multi){
+              outDeeper++;
+              if(!attemptOn) outBad.push(b.id + " row " + i + ": an undeclared row ended a two-stage peril early");
+              if(attemptStage !== 1) outBad.push(b.id + " row " + i + ": an undeclared row did not go deeper (stage " + attemptStage + ")");
+            }
+          });
+        });
+        if(outFlagged !== 1) outBad.push("the book carries " + outFlagged + " declared ways out, and the ruling was one");
+        outSaw.push(outFlagged + " declared way out, taken from stage nought and ending its peril there; "
+          + outDeeper + " undeclared rows on two-stage perils, every one of them going deeper instead");
+      } finally { barPut(k); }
+    })();
+    T("a peril's way out ends it from any stage, and only the row that says so",
+      outBad.length === 0, outBad.length ? outBad.slice(0, 6).join("; ") : outSaw.join(" · "),
+      {label:"the row with its flag taken off - which is every build before v5.58.0, where the ladder's exit walked the player DOWN",
+       was:true,
+       check:function(){
+         var b = SPINE[beatById("a1-chase")], row = b.teeth.stages[0].rail[0];
+         var had = row.out, k = barKeep();
+         try{
+           delete row.out;                       /* the shipped shape, restored */
+           barBoard(beatById("a1-chase"));
+           TEETH_LIVE = true;
+           attemptOpen();
+           attemptTake(0);
+           /* the claim: taking it ENDED the peril. Under the break it cannot have. */
+           return !attemptOn && attemptStage === 0;
+         } finally { if(had) row.out = had; barPut(k); }
        }});
 
     /* ---- (4b) A WILD BIT IS ONE CALL, AND NOBODY ACCUSES IT OF SENDING NO CHOICES
