@@ -11,16 +11,16 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.80.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.81.0
 
 | | count | where |
 |---|---|---|
 | ~~choice lines that name nobody~~ | **0** | **PASS 2 CLOSED at v5.76.0** — 179 lines named across three shapes |
 | ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
 | ~~take layers that open with somebody talking at the courier~~ | **2** | **PASS 3 CLOSED at v5.77.0** — 85 opened on a beat; `a3-stone`'s two left on purpose |
-| nights under the **35% narration floor** | **21 nights, ~210 blocks** | `a2-chassis` excluded (pass 5 owns it) |
+| nights under the **35% narration floor** | **19 nights, ~161 blocks** | `a2-chassis` excluded (pass 5 owns it) |
 | spoken blocks — **THE BANTER FLOOR** | **4,656** | must never fall |
-| narration blocks | 2,192 | **32.0%** book-wide, median night **34.1%** |
+| narration blocks | 2,242 | **32.5%** book-wide, median night **34.3%** |
 | bare landing / opening rows | **0** | closed |
 
 ### RETIRED BY THE AUTHOR, 2026-08-17 — these are NOT debts and must not come back
@@ -57,7 +57,7 @@ nine separate waves reaching them.
 | ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
-| 4 | **the narration floor** | `floors.js`, `layers.js`, `breathe.js` | **21 nights left — 5 done, 181 blocks** |
+| 4 | **the narration floor** | `floors.js`, `layers.js`, `breathe.js` | **19 nights left — 7 done, 231 blocks** |
 | 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
@@ -106,11 +106,20 @@ the driest night in the book; twelve layers carried no narration at all) · `a2-
 35.6 · `a2-turn` 27.1 → 35.0. **`a2-law` also carried the longest unbroken dialogue in the
 book — fourteen spoken blocks with nothing between them. It is four, four and four now.**
 
-**ALSO DONE:** `a3-seize` 27.9 → 35.6 (the finale) · `a1-turn` 30.0 → 35.0.
+**ALSO DONE:** `a3-seize` 27.9 → 35.6 (the finale) · `a1-turn` 30.0 → 35.0 ·
+`a2-housing` 24.2 → 35.8 · `a2-seven` 26.0 → 36.4.
 
-**THE ORDER FROM HERE, worst first:** `a2-housing` 27 · `a2-seven` 22 · `a3-for` 18 ·
-`a2-three` 15 · `a2-mirren` 14 · `a2-choir` 14 · `a3-granny` 13 · `a2-hand` 12 · then
-elevens and under.
+**THE ORDER FROM HERE, worst first:** `a3-for` 18 · `a2-three` 15 · `a2-mirren` 14 ·
+`a2-choir` 14 · `a3-granny` 13 · `a2-hand` 12 · `a1-fare` 11 · `a3-voice` 10 ·
+`a3-dreamers` 10 · then nines and under.
+
+**NOT EVERY NEW DRIFT FIRE IS A FAULT.** Three of my own blocks fired predicates this pass.
+Two were real — a mind-and-body sentence read as `breach`, and *"inside one **closed
+hand**"* moved the shard, because `closed hand` is a SHARD_TO_HAND phrase and the pocket
+trap wears more than one glove. **The engine's model of where she is should be moved by the
+author's staging, never by a narrator reaching for an image of privacy.** The third was
+kept: narration naming Three, on Three's own card, in a room she is in. **The test is
+whether the sentence meant to do it.**
 
 **AND A HABIT OF MINE TO WATCH FOR, twice now on the same character:** when a summarising
 narration block is wanted on a Principal night, I reach for *"a hundred and thirty years"* —
