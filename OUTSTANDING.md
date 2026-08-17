@@ -11,16 +11,16 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.78.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.79.0
 
 | | count | where |
 |---|---|---|
 | ~~choice lines that name nobody~~ | **0** | **PASS 2 CLOSED at v5.76.0** — 179 lines named across three shapes |
 | ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
 | ~~take layers that open with somebody talking at the courier~~ | **2** | **PASS 3 CLOSED at v5.77.0** — 85 opened on a beat; `a3-stone`'s two left on purpose |
-| nights under the **35% narration floor** | **26 nights, 396 blocks** | priced at v5.78.0, `a2-chassis` excluded — see below |
+| nights under the **35% narration floor** | **23 nights, ~269 blocks** | `a2-chassis` excluded (pass 5 owns it) |
 | spoken blocks — **THE BANTER FLOOR** | **4,656** | must never fall |
-| narration blocks | 2,050 | **30.6%** book-wide, median night **32.2%** |
+| narration blocks | 2,138 | **31.5%** book-wide, median night **32.8%** |
 | bare landing / opening rows | **0** | closed |
 
 ### RETIRED BY THE AUTHOR, 2026-08-17 — these are NOT debts and must not come back
@@ -57,7 +57,7 @@ nine separate waves reaching them.
 | ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
-| 4 | **the narration floor** | `floors.js`, `layers.js`, `breathe.js` | **26 nights, 396 blocks — 1 done** |
+| 4 | **the narration floor** | `floors.js`, `layers.js`, `breathe.js` | **23 nights left — 3 done, the worst three** |
 | 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
@@ -101,11 +101,14 @@ past 50% anyway. Doing it in pass 4 would be work thrown away twice, so **pass 4
 and the real bill is 396 across 26 nights.** `a3-stone` is on the list needing two and is
 also skipped: it is the funeral, and the shortness is the writing.
 
-**DONE: `a2-manual` (night 18), v5.78.0 — 19.5% to 35.4% on 39 blocks.** It was the driest
-night in the book and twelve of its layers carried no narration at all.
+**DONE — THE THREE WORST NON-PINNED NIGHTS, 127 blocks:** `a2-manual` 19.5 → 35.4 (it was
+the driest night in the book; twelve layers carried no narration at all) · `a2-law` 23.4 →
+35.6 · `a2-turn` 27.1 → 35.0. **`a2-law` also carried the longest unbroken dialogue in the
+book — fourteen spoken blocks with nothing between them. It is four, four and four now.**
 
-**THE ORDER FROM HERE, worst first:** `a2-law` 43 · `a2-turn` 43 · `a3-seize` 32 · `a1-turn`
-27 · `a2-housing` 27 · `a2-seven` 22 · `a3-for` 18 · then fifteens and under. **Aim at the
+**THE ORDER FROM HERE, worst first:** `a3-seize` 32 · `a1-turn` 27 · `a2-housing` 27 ·
+`a2-seven` 22 · `a3-for` 18 · `a2-three` 15 · `a2-mirren` 14 · `a2-choir` 14 · then
+thirteens and under. **Aim at the
 run, not the percentage** — `layers.js <beat> 4` gives the addresses, and the share follows.
 
 **AND RE-DUMP BETWEEN BATCHES ON THE SAME LAYER.** `breathe.js` addresses lines by index and
