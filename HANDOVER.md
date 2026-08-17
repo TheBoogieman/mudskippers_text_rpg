@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.69.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.70.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -411,8 +411,13 @@ refuses any card that already has `takes:`, and it never once refused on nights 
 of its own that says what is in it, all 38 clickable lines name their addressee and reach
 their own card when typed. The fourteen recovered lines were the interesting half - their
 prose was written long ago and was being offered under the FIRST take's wording.
-2. **The §7d narration pass, STARTED (v5.69.0).** Night 10 is at **29.9%**, up from 23.5%,
-   with **35 blocks written and the spoken count unmoved at 310**. It owes about **178 more**.
+2. **The §7d narration pass, STARTED (v5.70.0).** Night 10 is at **30.6%**, up from 23.5%,
+   with **40 blocks written and the spoken count unmoved at 310**. It owes about **173 more**.
+
+   **AN EMPTY DRIFT DELTA IS THE CORRECT RESULT FOR THIS PASS.** The net reads for death,
+   four names, breach and the two shard positions; dread about what an evening costs touches
+   none of them. A §7d wave that moves the fixture has said something about a person or a
+   place by accident - read it again before shipping it.
 
    **THE PLACEMENT THAT WORKS:** twenty-two of night ten's layers ended on a spoken line.
    Dread appended after the last joke, so the prose gets the last word, is the single
