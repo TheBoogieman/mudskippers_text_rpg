@@ -268,7 +268,31 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 26 IS WRITTEN (v5.47.0) — 27 of 33, AND SIX NIGHTS ARE LEFT
+### → NIGHT 27 IS WRITTEN (v5.48.0) — 28 of 33, AND FIVE NIGHTS ARE LEFT
+
+`a3-stone` is finished: **4 evening cards, 5 in the room, a second take on all nine, 6 of
+6 landing rows wired**, four and four live on both roads. **Five nights left:** `a3-for` ·
+`a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`.
+
+**IT IS DELIBERATELY THE SMALLEST NIGHT IN THE BOOK and the wave respected that.** Budget
+2, and its own law says *a stone, a name, one line each at most — do not let it become a
+meeting.* **The second takes here are two or three blocks, not five.** Do not "bring it up
+to size" on a later pass; the shortness is the writing.
+
+**THE FORK DEBT FROM v5.45.0 IS PAID.** The dawn census had Seven standing on a causeway,
+so it was gated to his road and the Nine road walked that room a card short. It has its
+twin now — same census, same joke, Nine caught calibrating a path she has walked four
+hundred times.
+
+**AND A THIRD GUARD DISAGREED WITH THE ENGINE ABOUT THE FORK.** A landing row may name a
+fork PAIR — `wireRail` picks whichever half is live — but the landing walker drove with
+**no chassis holder at all**, where `cardOnBranch` answers false for both halves, so it
+dropped the row and reported it as written-but-never-offered. The row was correct on both
+real roads and broken only under nobody. **The walker now drives both roads: 167 aimed
+rows became 334.** The recurring lesson, third time: *a test that runs in a state the game
+cannot reach is not testing the game.*
+
+### → NIGHT 26 IS WRITTEN (v5.47.0) — 27 of 33
 
 `a3-vic` is finished: **6 evening cards, 6 in the room, a second take on all twelve, 6 of
 6 landing rows wired**, and six and six live on both fork roads. Eleven canon lines, up
