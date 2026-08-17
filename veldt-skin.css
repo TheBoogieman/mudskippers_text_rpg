@@ -141,6 +141,15 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   color:var(--sodium);border:1px solid #3c3320;background:#191510;
   border-radius:2px;padding:2px 6px;margin-right:11px;font-size:11px;
 }
+/* ASKING AGAIN (v5.43.0). The visual value lives here, per the standing ruling - the
+   base rule in index.html is the unskinned floor and this is the one the player sees.
+   Made to match the number chip it sits opposite: same monospace, same small caps,
+   dimmer, because it labels the row rather than speaking on it. */
+.choice .again{
+  border:1px solid #26303f;background:#0f151e;border-radius:2px;
+  padding:2px 6px;font-size:10px;color:#6d7789;opacity:1;line-height:1.6;
+}
+.choice:hover .again{border-color:#3c3320;color:var(--sodium)}
 /* stall: the house style, deliberately the quietest of the three */
 .choice.stall{box-shadow:inset 2px 0 0 #33404f}
 /* exit: still unlabelled — the light is the whole tell */

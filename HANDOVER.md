@@ -350,9 +350,14 @@ at, which is exactly why it was built first.**
    line names its addressee, never a bare her/him/them/again; ~374 lines, and it rides the
    voice pass where every line is being touched anyway. **(b) WHICH TAKE is an ENGINE job** —
    `topicLayer` already knows, so the client badges a line that returns to a card already
-   opened. A badge cannot be forgotten; a convention can. **BUILD THE BADGE FIRST**: it is
-   small, uniform, covers cards not yet written, and it will show in a real run how much of
-   the confusion was the missing name versus the missing "again".
+   opened. A badge cannot be forgotten; a convention can.
+   **THE BADGE SHIPPED AT v5.43.0 AND HALF THIS IS CLOSED.** `rowBadge()` puts "2ND TIME" on
+   any returning row, and prefixes WHO ANSWERS only where the sentence does not already name
+   them. **The line string is byte-identical** — it is the deal key, not decoration.
+   `hideWho:true` opts a card out where the answerer is the surprise.
+   **THE 374 LINES ARE STILL OPEN.** The badge makes the ambiguity survivable, not the prose
+   good. **When the rewrite names them, the badge goes quiet on those lines by itself — which
+   is the tell that the writing has caught up.**
 
 12. **THE SAFEHOUSE DOOR IS STANDING IN THE WRONG ROOM. `a1-vic`, night 3. §7j.** The opening
    says *"Pia has knocked. The door has not opened yet"*, and then SIX evening cards play with

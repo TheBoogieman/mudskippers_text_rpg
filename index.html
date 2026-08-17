@@ -78,6 +78,14 @@
   .choice:hover{border-color:var(--sodium);background:var(--panel-2);transform:translateX(3px)}
   .choice:disabled{opacity:.4;cursor:default;transform:none}
   .choice .n{color:var(--sodium);font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-right:9px;letter-spacing:.1em}
+  /* THE ROW THAT IS ASKING AGAIN says who and which time, quietly, to the right of the
+     sentence. Quiet on purpose: it is a signpost, not a second voice - it must never
+     compete with the line it is labelling. The skin restyles it; this is the floor. */
+  .choice .again{
+    float:right;margin-left:12px;font-family:ui-monospace,Menlo,monospace;font-size:10px;
+    letter-spacing:.12em;color:var(--ink-dim);opacity:.72;line-height:1.9;white-space:nowrap;
+  }
+  .choice:hover .again{opacity:1;color:var(--sodium)}
   .mudrow{display:flex;gap:8px}
   #mudinput{
     flex:1;background:#1c150e;border:1px solid #6b5326;color:var(--gold);
@@ -1730,6 +1738,12 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.43.0 "Who, And Which Time"
+   a row that returns to a card already opened now says so, on the button
+   and it says WHO answers - but only where the sentence does not already name them
+   measured before it was built: 45% of first-take lines and 89% of second-take lines
+   named nobody, and 84% of second-take lines carried no "again" either
+   the line itself is byte-identical, because the line is the deal key, not decoration
    MUDSKIPPERS — THE COURIER'S RUN · v5.42.0 "And Nobody Up There Knows"
    THE NOVEL HAS AN ENDING. a3-seize is finished — 23 of 33, and the last night is written
    the last beat used to end the run the instant it closed, so the one night that had to
@@ -2026,7 +2040,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.42.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.43.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -2995,6 +3009,64 @@ function railLineFor(t, lap){
   if(lap > 0 && alts.length) return alts[Math.min(lap, alts.length) - 1] || t.rail;
   return t.rail;
 }
+/* ---- THE BADGE ON A ROW THAT IS ASKING AGAIN (v5.43.0) ----
+   PLAYER-REPORTED, AND MEASURED BEFORE IT WAS BUILT. A player opens the first card in
+   a series, plays twenty other turns, and is then offered "Ask her to take the lid off
+   it" with no way to know who "her" is or that it is the same card coming round again.
+   Counted across the book: 197 of 438 first-take lines name nobody (45%), 177 of 200
+   later-take lines name nobody (89%), and 168 of 200 carry no "again" either (84%).
+
+   THE LINE ITSELF MUST NOT CHANGE, AND THAT IS THE WHOLE DESIGN CONSTRAINT. A choice
+   line is not decoration: it is the KEY. railDeal maps normLine(line) -> card index,
+   pickTopic scores lastPlayerText against the deck, and takeAction carries the string
+   into the record. Rewriting it to read "(2nd) Ask her..." would break the deal map and
+   the matcher in the same edit. So the badge is rendered BESIDE the line and the string
+   is byte-identical to the one the deck dealt.
+
+   IT SAYS TWO THINGS AND EARNS BOTH SEPARATELY:
+   - WHICH TIME, always, when the row returns to a card already opened. The client has
+     always known this - topicLayer per card in a lane, deckLap outside one - and has
+     never once said it out loud.
+   - WHO ANSWERS, but ONLY when the line does not already name them. Badging a name the
+     sentence already carries gives you "PIA · Ask Pia who sent a twelve-year-old", which
+     is worse than the problem. So it targets exactly the 45% and 89% that are blind.
+   A card may opt out of the name with `hideWho:true`, for the handful where WHO answers
+   is the surprise the card is built on - naming them on the button spoils the card. */
+function railCardNow(line){
+  if(!V5SCENE || wildRun()) return null;
+  var s = sceneNow();
+  if(!s || !s.sc || !s.sc.topics) return null;
+  var map = railDeal[s.key];
+  if(!map) return null;
+  var idx = map[normLine(line)];
+  if(typeof idx !== "number") return null;
+  var t = s.sc.topics[idx];
+  if(!t) return null;
+  /* the layer this row is offering, read the same way the row was BUILT: a lane counts
+     per card, every other deck counts deck-wide. Read the two call sites in sceneRails
+     before touching this - a badge that disagrees with railLineFor is a badge that lies. */
+  var lap = (String(s.key).indexOf("|room") !== -1) ? cardPlayed(t, s.key) : deckLap(s.key);
+  return {card:t, lap:lap, key:s.key};
+}
+function ordinalTime(n){
+  var k = n + 1;                                  /* lap 1 is the SECOND time it is asked */
+  var s = (k % 100 >= 11 && k % 100 <= 13) ? "TH"
+        : (k % 10 === 1) ? "ST" : (k % 10 === 2) ? "ND" : (k % 10 === 3) ? "RD" : "TH";
+  return k + s + " TIME";
+}
+function rowBadge(line){
+  var r = railCardNow(line);
+  if(!r) return "";
+  var bits = [];
+  var who = String((r.card && r.card.who) || "").trim();
+  /* ...and never a name the sentence already said. namedUse is the same reader the
+     drift net uses for "does this line name this person", so the two agree by
+     construction rather than by two regexes that drift apart. */
+  if(who && !r.card.hideWho && who !== "Narration" && !isAnonSpeaker(who)
+     && !new RegExp("\\b" + who + "\\b").test(String(line))) bits.push(who.toUpperCase());
+  if(r.lap > 0) bits.push(ordinalTime(r.lap));
+  return bits.join(" · ");
+}
 function dealOrder(list, key, spent, sc){
   var idx = [], i;
   for(i = 0; i < list.length; i++) idx.push(i);
@@ -3235,7 +3307,10 @@ function showChoices(choices){
     var btn = document.createElement("button");
     var kind = live ? (slots[i] || "") : "";
     btn.className = "choice" + (kind ? " " + kind : "");
-    btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c);
+    /* the badge rides the row, never the door: an exit is not a card and has no take */
+    var badge = (kind === "exit" || kind === "walk") ? "" : rowBadge(c);
+    btn.innerHTML = '<span class="n">'+(i+1)+'</span>'+esc(c)
+      + (badge ? '<span class="again">'+esc(badge)+'</span>' : '');
     if(kind === "exit"){
       /* THE DOOR IS ALWAYS VISIBLE AND NOT ALWAYS OPEN. Hiding it until the floor
          cleared meant the player spent the early turns not knowing what tonight's
@@ -19349,7 +19424,9 @@ function selfTest(){
        The broken-form check for the ending row calls armBeat, which was not on this
        roster - so a proof that ran real game code was filed as a restatement. */
     "aftermathDrain", "armBeat", "lastRoom", "openSlackDoor", "renderSlackDoor",
-    "slackArm", "closeTheBook", "endCard", "beatDone", "seasonAhead"];
+    "slackArm", "closeTheBook", "endCard", "beatDone", "seasonAhead",
+    /* ...and the badge (v5.43.0): the row that says who it is talking to and which time */
+    "railCardNow", "rowBadge", "ordinalTime", "railLineFor", "cardPlayed", "showChoices"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -20197,6 +20274,99 @@ function selfTest(){
              b.cards = choiceCards(a).slice();
              return function(){ b.cards = keep; };
            }).same.length === 0;
+         }});
+    })();
+
+    /* THE ROW SAYS WHO IT IS TALKING TO, AND WHICH TIME (v5.43.0).
+       A player opened the first card in a series, played twenty other turns, and was then
+       offered "Ask her to take the lid off it" - no way to know who "her" is, and no way
+       to know it was the same card coming round again. Counted before it was built: 45%
+       of first-take lines and 89% of later-take lines name nobody, and 84% of later-take
+       lines carry no "again" either.
+       FOUR CLAIMS, DRIVEN AGAINST A REAL DECK: a first take is silent; a second take says
+       which time; the name appears only where the sentence does not already carry it; and
+       the badge never touches a line the deck did not deal. */
+    (function(){
+      var K = {sn:sceneNow, v5:V5SCENE, is:introStage, rm:runMode, sp:topicSpent,
+               lp:topicLap, ly:topicLayer, rd:railDeal, rk:railKnock, tx:lastPlayerText};
+      var KEY = "fxbadge|room";
+      var FX = {where:"a fixture room", here:["Hesta","Pia"], topics:[
+        {id:"fx-blind", ask:"the blind one", key:"blind lid",  who:"Hesta",
+         rail:"Ask her to take the lid off it.",
+         railTakes:["Ask for the half she left out."],
+         plays:[["Hesta","One."]], takes:[[["Hesta","Two."]]]},
+        {id:"fx-named", ask:"the named one", key:"named paper", who:"Pia",
+         rail:"Ask Pia what the paper says.",
+         railTakes:["Ask Pia for the rest of it."],
+         plays:[["Pia","One."]], takes:[[["Pia","Two."]]]}
+      ]};
+      var bad = [], seen = {};
+      function badgeOf(id){
+        topicSpent = {}; topicLap = {}; railDeal = {}; railKnock = {};
+        var rows = sceneRails(4) || [];
+        for(var i = 0; i < rows.length; i++){
+          var ix = (railDeal[KEY] || {})[normLine(rows[i])];
+          if(FX.topics[ix] && FX.topics[ix].id === id) return {line:rows[i], badge:rowBadge(rows[i])};
+        }
+        return {line:"", badge:"(never offered)"};
+      }
+      try{
+        sceneNow = function(){ return {sc:FX, key:KEY}; };
+        V5SCENE = true; introStage = 2; runMode = "novel"; topicLayer = {};
+
+        /* (i) FIRST TAKE. The blind line names nobody, so the badge supplies the name
+               and says nothing about a repeat. The named line already carries "Pia". */
+        var b1 = badgeOf("fx-blind"), n1 = badgeOf("fx-named");
+        seen.blindFirst = b1.badge; seen.namedFirst = n1.badge;
+        if(b1.badge !== "HESTA") bad.push("first take of the blind card badged \"" + b1.badge + "\", wanted HESTA");
+        if(n1.badge !== "") bad.push("first take of a line that already says Pia badged \"" + n1.badge + "\"");
+
+        /* (ii) SECOND TAKE. Both say which time; only the blind one says who. */
+        topicLayer = {}; topicLayer[KEY] = {"fx-blind":1, "fx-named":1};
+        var b2 = badgeOf("fx-blind"), n2 = badgeOf("fx-named");
+        seen.blindSecond = b2.badge; seen.namedSecond = n2.badge;
+        if(b2.badge !== "HESTA · 2ND TIME") bad.push("second take badged \"" + b2.badge + "\", wanted HESTA · 2ND TIME");
+        if(n2.badge !== "2ND TIME") bad.push("second take of a named line badged \"" + n2.badge + "\", wanted 2ND TIME alone");
+
+        /* (iii) the ordinal keeps counting past the takes that exist */
+        topicLayer = {}; topicLayer[KEY] = {"fx-blind":2};
+        if(ordinalTime(2) !== "3RD TIME") bad.push("the third time is called \"" + ordinalTime(2) + "\"");
+        if(ordinalTime(3) !== "4TH TIME") bad.push("the fourth time is called \"" + ordinalTime(3) + "\"");
+
+        /* (iv) A LINE THE DECK NEVER DEALT IS NOT A CARD. Doors, stalls and house lines
+               all arrive here and none of them has a take. */
+        if(rowBadge("Take the night on.") !== "") bad.push("a line the deck never dealt was badged");
+      } finally {
+        sceneNow = K.sn; V5SCENE = K.v5; introStage = K.is; runMode = K.rm;
+        topicSpent = K.sp; topicLap = K.lp; topicLayer = K.ly; railDeal = K.rd;
+        railKnock = K.rk; lastPlayerText = K.tx;
+      }
+      T("a row that is asking again says who, and says which time",
+        bad.length === 0,
+        "first take of a line naming nobody → \"" + seen.blindFirst + "\"; of a line that already"
+        + " names her → \"" + (seen.namedFirst || "nothing") + "\"; second takes → \""
+        + seen.blindSecond + "\" and \"" + seen.namedSecond + "\"; and a line the deck never"
+        + " dealt is never badged"
+        + (bad.length ? " - FIRED: " + bad.join(" | ") : ""),
+        {label:"the shipped behaviour up to v5.42.0, where the row said nothing at all and"
+             + " the player could not tell a second take from a first",
+         /* THE BREAK IS THE BOOKKEEPING, NOT A CONSTANT. Blanking topicLayer is exactly
+            the state the client was in before this release - it knew the layer and never
+            said it - and it proves the badge is READ from the deck rather than hardcoded. */
+         check:function(){
+           var k2 = {sn:sceneNow, v5:V5SCENE, is:introStage, rm:runMode, sp:topicSpent,
+                     lp:topicLap, ly:topicLayer, rd:railDeal};
+           var got;
+           try{
+             sceneNow = function(){ return {sc:FX, key:KEY}; };
+             V5SCENE = true; introStage = 2; runMode = "novel";
+             topicLayer = {};                       /* the client stops counting layers */
+             got = (badgeOf("fx-blind").badge === "HESTA · 2ND TIME");
+           } finally {
+             sceneNow = k2.sn; V5SCENE = k2.v5; introStage = k2.is; runMode = k2.rm;
+             topicSpent = k2.sp; topicLap = k2.lp; topicLayer = k2.ly; railDeal = k2.rd;
+           }
+           return got;
          }});
     })();
 

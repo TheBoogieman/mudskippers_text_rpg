@@ -1102,9 +1102,31 @@ forgotten on new cards. **A badge cannot be forgotten.**
 second take gets its own line. **The badge does not change the law — it makes the law
 visible.** The line is already different; the player just cannot tell it is the SAME CARD.
 
-**BUILD THE BADGE FIRST, BEFORE THE 374 LINES.** It is small, it is uniform, it covers every
-card in the book including ones not yet written, and it will show — in a real run — how much
-of the confusion was the missing name and how much was the missing "again".
+### THE BADGE IS BUILT AND SHIPPED AT v5.43.0. THE 374 LINES ARE NOT.
+
+**Half of this is closed.** `rowBadge()` puts a chip on the right of any row that returns to a
+card already opened: **"2ND TIME"**, **"3RD TIME"**, and so on — and it prefixes **WHO
+ANSWERS** when, and only when, the sentence does not already name them. So *"Ask her what is
+arriving on the channels right now"* now reads with **MACHINE · 2ND TIME** beside it, and
+*"Ask Three what happens to the paper"* is left alone.
+
+**THE LINE ITSELF IS BYTE-IDENTICAL** — the whole design constraint. A choice line is the deal
+KEY: `railDeal` maps `normLine(line)` to a card index and `pickTopic` scores `lastPlayerText`
+against the deck. Rewriting the string to say "(2nd)" would have broken the deal map and the
+matcher in one edit. **The badge is rendered beside the line, never into it.**
+
+**A card can opt out of the name with `hideWho:true`**, for the handful where WHO answers is
+the surprise the card is built on.
+
+**Driven, not asserted:** a sweep row plays a fixture deck through both states and checks all
+four cases; and the real epilogue room was played in the browser until a row carried a blind
+second take, a named second take and two first takes at once. **Mobile checked too** — the
+chip wraps under the line and stays inside the button at 375px.
+
+**WHAT IS STILL OPEN: the 374 lines.** The badge makes the ambiguity survivable; it does not
+make the prose good. *"Ask her to take the lid off it"* is still a worse sentence than one
+that says who. **The rewrite still names them, and the badge then goes quiet on those lines by
+itself — which is the tell that the writing has caught up.**
 
 ---
 
