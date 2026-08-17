@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.63.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.64.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -341,18 +341,34 @@ blocks without the room doing anything. `node scratchpad/runs.js <beat> 4` lists
 unbroken run of spoken blocks, longest first. Break the fours and the ratio follows; do not
 break a list the character has just announced as a list.
 
-### → NEXT: THE NINE-BLOCK CAP, AND IT NEEDS A RULING FIRST
+### → THE NINE-BLOCK CAP IS FIXED (v5.64.0) — RULED BY THE AUTHOR: LET THE NOVEL PRINT IN FULL
 
-**`showScene` trims every reply past NINE blocks** (`index.html`, the `data.scene.length > 9`
-slice). It is a guard against a rambling model, and it is applied to the authored book as
-well. **107 card layers of 889 are over it. 456 authored blocks never reach the page in any
-run, on any night.** Found by playing the act out in the drawer and noticing one line missing
-from the end of a take; `node scratchpad/overnine.js` lists all 107 and the first line each
-one loses.
+`showScene` trimmed EVERY reply at nine blocks. It is a guard against a model that was asked
+for four blocks and hands back twenty, and it was being applied to the authored book:
+**107 card layers of 889 were over it, and 456 written blocks never reached the page on any
+night in any run.** Vic's "The kettle has not boiled. Nobody says so." was one of them.
 
-It is a one-line change either way and the author has to choose: let the novel print what it
-was written to print, or cut 107 cards to fit. **DO NOT SILENTLY RAISE IT** - it changes what
-every player reads on 107 cards, including nights nobody has polished yet.
+The cap is now one function with one reader — `blockCapFor(data)` — and it answers a question
+about WHO WROTE THE REPLY. The composing path (the single place a model's reply is rendered)
+sets `__composed:true` and gets the cap. A card playing itself, a landing, an opening and the
+client's own skeleton print what they were written with.
+
+**Sweep row (4a4) drives both halves through the real `showScene`:** a twelve-block authored
+reply must arrive whole, a twelve-block composed one must still be cut to nine. Its broken
+form restores the shipped shape. It also counts the corpus, so it goes red the day a cap gets
+re-applied to the book from any other direction. `scratchpad/overnine.js` lists the 107.
+
+**Found by PLAYING an act out and noticing ONE line missing from the end of a take.** Not by
+reading the code, and not by any audit — every audit in the drawer counts what is written.
+
+### → NEXT: SEASON 1 ACT 3, NIGHTS 8 AND 9 (`a1-carried`, `a1-turn`)
+
+Same pass as the last seven nights. Start with `node scratchpad/act.js a1-carried a1-turn`,
+then `node scratchpad/runs.js <beat> 4` for the dialogue runs. **`a1-carried` currently has
+ten room cards whose choice lines name nobody** — they show up in `scratchpad/ambig.js`.
+
+**AND THE TAKES CAN BE AS LONG AS THEY WANT NOW.** Before v5.64.0 anything past nine blocks
+was decorative.
 
 Then Season 1 Act 3 (`a1-carried`, `a1-turn`), then Season 2.
 

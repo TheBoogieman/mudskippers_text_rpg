@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.63.0 "Counting What Is Written Is Not Counting What Is Read"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.64.0 "A Card Prints Every Block It Was Written With"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.63.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.64.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4563,6 +4563,12 @@ function mergeCanon(list){
   });
   return added;
 }
+/* ONE RULE, ONE READER. How long a reply may be is a fact about WHO WROTE IT, so it is
+   asked in one place: the composing path marks its reply `__composed` and gets the cap,
+   and everything else - a card playing itself, a landing, an opening, the client's own
+   skeleton - prints what it was written with. Zero means no cap. */
+var BLOCK_CAP = 9;
+function blockCapFor(data){ return (data && data.__composed) ? BLOCK_CAP : 0; }
 function showScene(data, logIt, instant){
   sceneCollapsed = false;
   /* a block with no word in it is not a line. A Narration block whose entire text
@@ -4626,10 +4632,19 @@ function showScene(data, logIt, instant){
        feeding the truncation into the same counter the collapse detector reads
        turned a verbose, entirely non-repetitive gate turn into a held gate. Two
        counters, because they are two different faults. */
-    var trimmed = 0;
-    if(data.scene.length > 9){
-      trimmed = data.scene.length - 9;
-      data.scene = data.scene.slice(0, 9);
+    /* ...AND THE CAP IS THE MODEL'S, NOT THE BOOK'S (v5.64.0). This trimmed EVERY reply,
+       and an authored card is a reply. 107 CARD LAYERS OF 889 WERE OVER NINE BLOCKS, so
+       456 written blocks never reached the page on any night in any run - Vic's "The
+       kettle has not boiled. Nobody says so." among them, written long before anybody
+       went looking. The cap is a guard against a model that was asked for four blocks and
+       hands back twenty; a card that plays itself cannot ramble, it can only be as long
+       as it was written. The composing path marks its own reply and only that reply is
+       capped. Found by playing an act out in the drawer and noticing ONE line missing
+       from the end of a take - `scratchpad/overnine.js` then listed the other 455. */
+    var trimmed = 0, cap = blockCapFor(data);
+    if(cap && data.scene.length > cap){
+      trimmed = data.scene.length - cap;
+      data.scene = data.scene.slice(0, cap);
     }
     if((dropped || trimmed) && window.console && console.info){
       console.info("[mudskippers] dropped " + dropped + " repeated block(s)"
@@ -12905,6 +12920,9 @@ function callDM(corrected, tag){
   if(eb && eb.firstChild) eb.innerHTML = "";
     setBusy(false);
     parsed.data.__live = true;      /* a real turn against the board, not a replay */
+    /* THE ONE REPLY IN THE GAME A MODEL WROTE - and therefore the only one the block
+       cap is about. See blockCapFor: everything else on the page is authored. */
+    parsed.data.__composed = true;
     showScene(parsed.data, true);
   }).catch(function(e){
     setBusy(false);
@@ -20079,6 +20097,10 @@ function selfTest(){
     "buildContext", "contextForThisTurn", "historyWindow", "briefingOf", "memoryBriefing",
     "playOpening", "playAuthored", "dealTableTalk", "playPremiere", "dealTease",
     "modelFamily", "jsonModeOK", "replyCap", "replyTemp", "stripReasoning", "contentOf",
+    /* ...and the block cap (v5.64.0), which is a different cap from replyCap above:
+       replyCap is the model's token budget, blockCapFor is how many blocks reach
+       the page - and until this release the second one was applied to the book. */
+    "blockCapFor", "showScene",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
     /* ...and the audit's rows (v4.72.1): the bit hold and the board itself */
     "holdTheDryPath", "boardTurn",
@@ -22557,6 +22579,66 @@ function selfTest(){
            return deals === owed;
          } finally { window.advanceCard = keepAdv; sceneNow = keepScene; barPut(k); }
        }});
+
+    /* ---- (4a4) THE BLOCK CAP IS THE MODEL'S, NOT THE BOOK'S (v5.64.0) ----
+       showScene trimmed EVERY reply at nine blocks. It is a guard against a model that
+       was asked for four and hands back twenty, and it was applied to the authored book
+       as well: 107 CARD LAYERS OF 889 WERE OVER IT, AND 456 WRITTEN BLOCKS NEVER REACHED
+       THE PAGE - on any night, in any run, since the cap was written. The corpus reads
+       whole in the file, whole in the editor and whole to every audit that counts lines,
+       and loses its tail on screen. Nothing warned.
+       THIS ROW DRIVES BOTH HALVES through the real showScene: a twelve-block AUTHORED
+       reply must arrive whole, and a twelve-block COMPOSED one must still be cut to nine.
+       And it counts the corpus, so the row goes red again the day somebody re-applies a
+       cap to the book from any other direction. */
+    (function(){
+      var capBad = [], over = 0, lost = 0, layers = 0;
+      var long12 = function(){
+        var out = [];
+        for(var i = 0; i < 12; i++) out.push({speaker:"Narration", text:"Block number " + i + ", which is a whole sentence and says something nobody has said."});
+        return out;
+      };
+      var kk = barKeep();
+      try{
+        var authored = {scene:long12(), __live:true};
+        showScene(authored, false, true);
+        if(authored.scene.length !== 12) capBad.push("an authored twelve-block reply printed " + authored.scene.length);
+        var composed = {scene:long12(), __live:true, __composed:true};
+        showScene(composed, false, true);
+        if(composed.scene.length !== BLOCK_CAP) capBad.push("a composed twelve-block reply printed " + composed.scene.length + ", not " + BLOCK_CAP);
+      } catch(e){ capBad.push("showScene threw: " + e.message); }
+      finally { barPut(kk); }
+      /* ...and the book's own side of it, so the number in the detail is measured */
+      SPINE.forEach(function(b){
+        var e = SCENEBOOK[b.id]; if(!e) return;
+        (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+          [t.plays || []].concat(t.takes || []).forEach(function(L){
+            layers++;
+            if((L || []).length > BLOCK_CAP){ over++; lost += L.length - BLOCK_CAP; }
+          });
+        });
+      });
+      T("a card prints every block it was written with, and only a model gets capped",
+        capBad.length === 0,
+        capBad.length ? capBad.join("; ")
+          : (over + " of " + layers + " card layers run past " + BLOCK_CAP + " blocks - "
+             + lost + " blocks that were cut on every run before this one - and all of them"
+             + " now reach the page, while a composed reply is still trimmed to " + BLOCK_CAP),
+        {label:"the cap applied to every reply, which is every build up to v5.63.0 - the shape that swallowed 456 authored blocks",
+         was:true,
+         check:function(){
+           var keep = window.blockCapFor;
+           try{
+             /* the shipped shape, restored exactly: everybody gets the cap */
+             window.blockCapFor = function(){ return BLOCK_CAP; };
+             var d = {scene:[], __live:true};
+             for(var i = 0; i < 12; i++) d.scene.push({speaker:"Narration", text:"Block number " + i + ", which is a whole sentence and says something nobody has said."});
+             showScene(d, false, true);
+             /* the claim: an authored card arrives whole. Under the break it cannot have. */
+             return d.scene.length === 12;
+           } finally { window.blockCapFor = keep; }
+         }});
+    })();
 
     /* ---- (4a2) A WAY OUT IS A WAY OUT ON ANY STAGE, AND ONLY WHERE IT IS DECLARED
        (v5.58.0, found by PLAYING night two rather than reading it). A peril's stages
