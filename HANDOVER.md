@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.83.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.84.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -48,9 +48,21 @@ excluded on purpose: **`a2-chassis`, which pass 5 takes past 50% anyway, and `a3
 which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine releases**,
 book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 
-**NEXT IS PASS 5: the two pinned nights past 50%** — `a2-door` (37.5%) and `a2-chassis`
-(20.6%, and it is 174 blocks on its own). Then pass 6, the closings audit, **which is a
-REPORT before it is a wave** — the author rules the mismatches before a word is written.
+**PASS 5 IS STARTED AND IT IS THE BIGGEST THING LEFT IN THE BOOK. PRICED: 586 blocks.**
+`a2-door` is 39.6% and owes **108**; `a2-chassis` is 20.6% and owes **461**, which is more
+than the whole of pass 4. **It is a multi-session job — do not start `a2-chassis` in a
+session that cannot give it a few hundred blocks.** Same method as pass 4: `layers.js`,
+`dumplayer.js`, `breathe.js`, re-dump between batches.
+
+**AND THE AUTHOR'S SEAM BUG IS CONFIRMED AND WRITTEN UP IN `OUTSTANDING.md`, NOT FIXED.**
+Every seam takes `showScene`'s INSTANT branch — `playAuthored` adds the `shown` class inside
+its own render loop at `index.html:8587`, so READING PACE has never touched a seam. The fix
+is small and the write-up carries its shape and the three things to check first, **but it is
+the render path of every opening, landing, close and premiere in the game** — give it a
+session with room to drive all three at three paces.
+
+Then pass 6, the closings audit, **which is a REPORT before it is a wave** — the author
+rules the mismatches before a word is written.
 
 **AND `floors.js` PRINTS TWO NUMBERS NOW. THE FIRST ONE GOVERNS.** It used to count the
 TEETH — peril stages and death scenes, almost pure narration, which most players never

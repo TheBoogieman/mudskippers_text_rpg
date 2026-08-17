@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.83.0 "That Is Geology"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.84.0 "The Seams Never Revealed At All"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.83.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.84.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -20250,7 +20250,22 @@ function verdictMap(){
    THE PRINCIPAL'S NUMBER CAME BACK A THIRD TIME. "a hundred and thirty years too late",
    written into a3-principal by me, two releases after I recorded the habit in the handover
    and one after I recorded it again. `tell` caught it both times. Some habits do not respond
-   to being written down; they respond to a machine that will not let them through. */
+   to being written down; they respond to a machine that will not let them through.
+   v5.84.0 - PASS 5 OPENS ON a2-door, AND THE AUTHOR'S SEAM BUG IS CONFIRMED.
+   Seventeen blocks into the first pinned night: 37.5% -> 39.6%, spoken unmoved at 310.
+   PASS 5 IS PRICED AND IT IS THE BIGGEST THING LEFT: 125 blocks for a2-door and 461 for
+   a2-chassis, which is more than the whole of pass 4. It is a multi-session job and saying
+   so now is cheaper than discovering it at block 200.
+   AND THE SEAMS DO NOT REVEAL SLOWLY BECAUSE THEY DO NOT REVEAL AT ALL. playAuthored - the
+   one function behind every opening, landing, close and premiere - adds the `shown` class
+   inside its own render loop, synchronously, per block. That is the class the reveal
+   applies; showScene adds it from step() with the READING PACE multiplier between blocks.
+   So a seam is not fast, it is taking the INSTANT branch that showScene keeps for
+   skip-and-replay, and the pace setting has never touched a seam in the history of the
+   file. Confirmed at index.html:8587, written up in OUTSTANDING with the shape of the fix
+   and the three things to check before making it. NOT FIXED HERE: it is the render path of
+   every seam in the game and it wants a session with room to drive a landing, a premiere
+   and a close at three different paces. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon7","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],

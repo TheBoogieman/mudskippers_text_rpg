@@ -133,14 +133,33 @@ first batch's numbers and the tool refused it — found the needle three and fiv
 than once. **When an anchor is genuinely ambiguous** — Pia's bare *"No."* appears five times
 in the book — **drop the block rather than force a home for it.**
 
-**AND PASS 6 CARRIES A BUG THE AUTHOR REPORTED, 2026-08-17.** **Beat and season seams
-RENDER IMMEDIATELY instead of revealing block by block the way cards do.** Confirm it, then
-fix it while the seams are already open. Suspect the paths that print a seam bypass the
-reveal that `showScene` runs — `playOpening` / `playAuthored` / `playLanding` /
-`playPremiere` / the season record — most likely by writing the feed directly or by passing
-the `instant` flag. **READING PACE in Settings is the same mechanism**, so whatever is
-skipped is skipping that too. It is his own reported defect: verify it in the browser before
-changing anything, and drive a seam afterwards at more than one pace.
+**THE SEAM REVEAL BUG — REPORTED BY THE AUTHOR AND CONFIRMED AT v5.84.0. NOT YET FIXED.**
+
+**The seams do not reveal slowly because they do not reveal at all.** Every opening,
+landing, hard landing, close and premiere in the game is rendered by **`playAuthored`**, and
+at **`index.html:8587`** its render loop does this, once per block, synchronously:
+
+```js
+renderBlock(blk); feedLog.push(blk); blocks.push(blk);
+var el = $("feedinner").lastElementChild;
+if(el) el.classList.add("shown");          // <-- the whole seam, instantly
+```
+
+`shown` is the class the reveal applies. `showScene` adds it one block at a time from
+`step()`, waiting `Math.min(2400, 500 + text.length * 7) * revealPace()` between them —
+**and `revealPace()` is READING PACE.** So a seam is not revealing quickly: **it is taking
+the `instant` branch that `showScene` reserves for skip-and-replay**, and the pace setting
+has never had any effect on a single seam in the book.
+
+**THE SHAPE OF THE FIX:** stop revealing inside the loop, keep the cast-sheet and ledger
+bookkeeping where it is, and hand the finished `blocks` array to `showScene(...)` once at
+the end. **Check before doing it:** `playAuthored` already does `feedLog.push` per block, so
+whatever `logIt` does must not double-log; `renderDivider()` runs first and the scroll
+anchor settles inside `showScene`; and the block cap is safe, because `blockCapFor` returns
+zero for anything without `__composed`.
+
+**DRIVE IT AT THREE PACES, OVER A LANDING, A PREMIERE AND A CLOSE** — the premiere is the
+one no wiring wave has ever reached on its own.
 
 **PASS 6 IS A REPORT BEFORE IT IS A WAVE.** The author ruled that new cards are warranted
 **only where a closing does not match its scene**. So: read all 33 nights' landings AND the
