@@ -490,6 +490,62 @@ dry, and both times he was right.
 
 ---
 
+## 7a. THE BANTER FLOOR — READ THIS BEFORE §7b, §7c, §7d AND §7e. IT OUTRANKS ALL FOUR
+
+**Reaffirmed by the author on 2026-08-17, after all four passes were ruled, in one sentence:**
+***"I still want to have banter, they shouldn't be too serious."***
+
+**He has now said this three times across the project** — twice as "that scene was too dry",
+once here — and he was right every time. **It is placed above the four passes on purpose. If
+any instruction in §7b–§7e can be read as "make it grimmer", it is being read wrong.**
+
+### THE ARITHMETIC GUARANTEE, WHICH IS THE PART THAT ACTUALLY PROTECTS IT
+
+§7d sets a narration target of **over 50%**, and the book is at 27.5%. **There are two ways
+to hit that number and only one of them is allowed.**
+
+> **THE NARRATION TARGET IS REACHED BY ADDING NARRATION. NEVER BY CUTTING DIALOGUE.**
+> **The book's spoken-block count is 3,819 and it is a FLOOR, not a budget.** After the
+> rewrite it must be **≥ 3,819**. Crossing 50% therefore means **adding about 2,400 narration
+> blocks** and the book gets BIGGER, not drier.
+
+**This is checkable and it should be checked**, the same way the drift net is: count spoken
+blocks before and after, and a fall is a failure regardless of how good the new prose is. A
+rule with a number beats a rule without one, and every other law in this file has a number.
+
+### WHERE THE BANTER ACTUALLY LIVES, MEASURED
+
+| | narration | spoken | narration share |
+|---|---|---|---|
+| staged passages (openings, landings, the last page) | 365 | 286 | **56.1%** |
+| evening decks | 315 | 742 | 29.8% |
+| **THE ROOMS** | 772 | **2,791** | **21.7%** |
+
+**THE ROOMS HOLD 73% OF EVERY SPOKEN LINE IN THE GAME.** The family's own time IS the banter,
+and it is the part of this game the game is about. **The staged passages are already at
+56.1% narration** — they have effectively met §7d's target already, which tells you where the
+2,400 blocks belong and where they do not.
+
+### THE TIEBREAK, SO THE PASSES CANNOT ARGUE WITH EACH OTHER
+
+**Territory, not compromise — this is the two-narrators idea used as a rule:**
+- **IN NARRATION: dread wins.** The odds, the cost, what is coming. Bleak start to finish.
+- **IN DIALOGUE: banter wins.** Warm, funny, rude, callbacks, running jokes. They do not know
+  what the prose knows.
+- **§7c's "one break a night" is ONE PASSAGE per night, not a mood.** Everything around it
+  stays funny. A book where somebody breaks every night is a book where nobody breaks.
+- **§7c law 4 is a comedy instruction, not a sadness one.** A joke over a visible drop is
+  funnier than a joke over nothing. If a passage came out sadder rather than funnier, law 4
+  was applied backwards.
+
+### THE TEST
+
+**If a room card has no line in it that would make somebody smile, it is not finished** —
+whatever else it is doing. §7 of this file records what the author protects: the running
+jokes and the callbacks, the quiet character work, and comedy, hard.
+
+---
+
 ## 7b. THE PLAUSIBILITY PASS — ruled 2026-08-17, RUNS AFTER BOOK THREE IS WRITTEN
 
 **The author's note, in his own framing:** *a ragtag group infiltrates a cult, a city-wide

@@ -275,7 +275,28 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**SEVEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 7 describe a REWRITE that is now larger than the authoring left to do:**
+**SEVEN RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED — and rulings 4 to 7 describe a REWRITE that is now larger than the authoring left to do.**
+
+> ### 0. THE BANTER FLOOR, AND IT OUTRANKS EVERY RULING BELOW IT. `OUTSTANDING.md` §7a.
+> **The author, after ruling all four passes: *"I still want to have banter, they shouldn't
+> be too serious."* He has now said this three times across the project and was right every
+> time. IF ANY INSTRUCTION BELOW READS AS "MAKE IT GRIMMER", IT IS BEING READ WRONG.**
+>
+> **THE GUARANTEE IS ARITHMETIC:** §7d's narration target is reached **by ADDING narration,
+> never by cutting dialogue.** **The spoken-block count is 3,819 and it is a FLOOR** — after
+> the rewrite it must be ≥ 3,819. Check it the way the drift net is checked; a fall is a
+> failure however good the new prose is. The book gets BIGGER, not drier.
+>
+> **THE TIEBREAK IS TERRITORY, NOT COMPROMISE:** in NARRATION dread wins; in DIALOGUE banter
+> wins. **"One break a night" is ONE PASSAGE, not a mood** — a book where somebody breaks
+> every night is a book where nobody breaks. **Craft law 4 is a COMEDY instruction:** if a
+> passage came out sadder rather than funnier, it was applied backwards.
+>
+> **WHERE THE BANTER LIVES, MEASURED: the ROOMS hold 73% of every spoken line in the game.**
+> The staged passages are already at 56.1% narration and have met §7d's target on their own,
+> which says where the ~2,400 new blocks belong and where they do not.
+>
+> **THE TEST: if a room card has no line that would make somebody smile, it is not finished.**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
