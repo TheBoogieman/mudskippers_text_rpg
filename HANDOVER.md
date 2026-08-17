@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.82.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.83.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -43,14 +43,20 @@ the repo, because a second copy of the bible drifted within a day the last time 
 
 ## → IF YOU ARE PICKING THIS UP COLD, START HERE
 
-**WHERE PASS 4 IS RIGHT NOW (update this line after every night):** **10 nights done** —
-`a2-manual` `a2-law` `a2-turn` `a3-seize` `a1-turn` `a2-housing` `a2-seven` `a3-for`
-`a2-three` `a2-mirren`. **~293 blocks, spoken still 4,656, and THE BOOK'S MEDIAN NIGHT IS
-35.4% — over the floor**, though thirteen individual nights are still under it.
-Next, worst first: `a2-choir` 14 · `a3-granny` 13 · `a2-hand` 12 · `a1-fare` 11 ·
-`a3-voice` 10 · `a3-dreamers` 10 · `a2-annul` 9 · `a3-evict` 8 · `a3-principal` 7 ·
-`a3-vic` 6 · then fives and under. **`a2-chassis` and `a3-stone` are excluded on purpose** —
-pass 5 owns the first, and the second is the funeral.
+**PASS 4 IS FINISHED (v5.83.0).** Every night is at or over the 35% floor except the two
+excluded on purpose: **`a2-chassis`, which pass 5 takes past 50% anyway, and `a3-stone`,
+which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine releases**,
+book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
+
+**NEXT IS PASS 5: the two pinned nights past 50%** — `a2-door` (37.5%) and `a2-chassis`
+(20.6%, and it is 174 blocks on its own). Then pass 6, the closings audit, **which is a
+REPORT before it is a wave** — the author rules the mismatches before a word is written.
+
+**AND `floors.js` PRINTS TWO NUMBERS NOW. THE FIRST ONE GOVERNS.** It used to count the
+TEETH — peril stages and death scenes, almost pure narration, which most players never
+see — and every night with teeth read up to three points high. **Four nights were called
+done that were not.** Found by making it disagree with a second reader. A night whose deck
+runs dry does not become fine because its death scene is narration.
 
 **A pass-4 night takes about twenty minutes and needs nothing in context but this block.**
 
