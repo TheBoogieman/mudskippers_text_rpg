@@ -49,7 +49,7 @@ which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine re
 book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 
 **PASS 5 IS STARTED AND IT IS THE BIGGEST THING LEFT IN THE BOOK. PRICED: 586 blocks.**
-`a2-door` is 39.6% and owes **108**; `a2-chassis` is 20.6% and owes **461**, which is more
+`a2-door` is **42.8%** and owes **79**; `a2-chassis` is 20.6% and owes **461**, which is more
 than the whole of pass 4. **It is a multi-session job — do not start `a2-chassis` in a
 session that cannot give it a few hundred blocks.** Same method as pass 4: `layers.js`,
 `dumplayer.js`, `breathe.js`, re-dump between batches.
