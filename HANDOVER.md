@@ -268,7 +268,40 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 30 IS WRITTEN (v5.51.0) — 31 of 33, AND TWO NIGHTS ARE LEFT
+### → NIGHT 31 IS WRITTEN (v5.52.0) — 32 of 33, AND ONE NIGHT IS LEFT
+
+`a3-principal` is finished: **6 evening cards, 4 in the room, a second take on all ten, 6 of
+6 landing rows wired.** Nine canon lines, up from four. **One night left: `a3-granny`** —
+the child under the Exchange, and the peak joke of the book.
+
+**BOTH LANDINGS OFFERED "SAY HELLO TO THE CHILD"** on a night whose law says *"nothing about
+the Heart Room, the child, or what happens next"* — twice, with no card able to answer it
+either way. Rewired; the child stays night 32's.
+
+**SHE ASKS AFTER VIC AND DOES NOT KNOW HE IS DEAD.** Thirty-one years of supplying him, a
+housing seal sent nine days ago, and she asks how her tissue man is, mid-argument. Nobody
+answers for slightly too long. She puts the bread down — the first thing she does all
+evening that was not decided in advance. **He never once said her name; the family thought
+he was protecting a price.**
+
+**THE 130 YEARS OF THEFT IS PLANTED, NOT ANNOUNCED** — Hesta clocks a new pan, new wire, a
+crate with the packing straw still in it, and asks where a woman who never goes upstairs
+gets a new pan. The Principal declines to answer, precisely, and looks faintly pleased.
+**The epilogue still pays it.**
+
+**NINE ASKS, AND THE ANSWER KEEPS THE FACT OPEN WHILE EXPLAINING WHY IT IS OPEN:** the
+Principal kept no record of a single mind she ever made, deliberately, from the first,
+because a record is a thing that can be taken. **Nobody will ever be able to tell Nine where
+she came from — and now there is a reason rather than a hole.**
+
+**AND THE AMBIGUOUS-CHOICE LAW BUILT ITS OWN TRAP.** Rewriting every rail to say *"the
+Principal"* instead of *"her"* is correct — and `who-she-is` had **"principal" in its key**,
+while `scenewideTerms` only measures a term across keys, never across rails. One card
+quietly won every line in the deck. **A character's own name must never sit in a key on a
+night where every rail names them.** The two laws only collide on a night with one dominant
+speaker — which is exactly what a reveal night is, and `a3-granny` is the next one.
+
+### → NIGHT 30 IS WRITTEN (v5.51.0) — 31 of 33
 
 `a3-dreamers` is finished: **6 evening cards, 4 in the room, a second take on all ten, 6 of
 6 landing rows wired.** Nine canon lines, up from four. Seven and Marek were both silent on
