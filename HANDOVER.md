@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.77.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.78.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
