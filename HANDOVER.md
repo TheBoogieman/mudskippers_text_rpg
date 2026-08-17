@@ -268,7 +268,43 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 31 IS WRITTEN (v5.52.0) — 32 of 33, AND ONE NIGHT IS LEFT
+### → THE NOVEL IS WRITTEN (v5.53.0) — 33 OF 33
+
+`a3-granny` is finished — **8 evening cards, 4 in the room, a second take on all twelve, 6
+of 6 landing rows wired**, seven and four live on both roads. **Every night of all three
+books now has cards to its budget, an id on every card, and both landings wired.**
+
+**THE PEAK JOKE IS IN THE BOOK.** The beat has been called `a3-granny` for ten nights and
+nothing in it earned the name. She says nobody has offered her a name since the second one
+died; Pia laughs at her own joke first, the way she always does, and then stops, because
+Three has not laughed and Three is doing arithmetic with her face. *"Granny. Yes. I should
+like that very much. ...I do not know why you have all gone quiet."* **Nobody explains it.**
+
+**HESTA'S PLAN FROM NIGHT 24 IS EXECUTED AND IT WORKS, WHICH IS THE HORROR.** She made a
+forty-year-old child fond of her in eleven minutes, deliberately, and then used it. *"It is
+the best piece of work I have done in forty years and I would like never to do it again."*
+She will not be thanked for it.
+
+**AND THE FORK WROTE A BETTER SCENE THAN THE ONE IT REJECTED.** `earshot` refused the
+Machine thanking Seven by name on the housed road — so on that road **she cannot perceive
+him at all**, counts the room at six, and he asks the courier not to correct her. Second
+time a law has produced a better scene than the one it blocked.
+
+### → WHAT IS LEFT IS NOT AUTHORING. THE MEASURED DEBTS, WHOLE-BOOK:
+
+- **133 of 483 cards have no second take at all** — 58 in Book One, 70 in Book Two, **5 in
+  Book Three.** Ask a card twice in Books One and Two and a quarter of the time there is
+  nothing behind it.
+- **39 more have a second take but no choice line of its own** (`takes` without
+  `railTakes`), all in Book Two — the take exists and the row that offers it reuses the
+  first line. **This is exactly the ambiguity the badge papers over.**
+- **8 nights have unwired landing rows** (`a1-hum`, `a2-chassis`, `a2-three`, `a2-housing`,
+  `a2-manual`, `a2-choir`, `a2-law`, `a2-turn`) — they fall back to the keyword scorer,
+  which works but is not aimed.
+- **The four named passes remain** — `OUTSTANDING.md` §7a–§7j — and they are now the whole
+  of the remaining work.
+
+### → NIGHT 31 IS WRITTEN (v5.52.0) — 32 of 33
 
 `a3-principal` is finished: **6 evening cards, 4 in the room, a second take on all ten, 6 of
 6 landing rows wired.** Nine canon lines, up from four. **One night left: `a3-granny`** —
