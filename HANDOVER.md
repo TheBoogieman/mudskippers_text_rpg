@@ -268,9 +268,9 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.57.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.59.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
-**State: 33 of 33 nights authored. Sweep 72 PROVED of 97, 0 FAILED. Tree clean, pushed.**
+**State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
 **THE PLAN IS `OUTSTANDING.md` §8 — read it before anything else.** It supersedes nothing in
 §7a–§7j; it is the ORDER those notes get worked in, with the debt measured.
@@ -283,6 +283,28 @@ more."*
   choice lines name their addressee, Pia 3%→48%, narration 38%.
 - **Phase 1 wave 2: night 2 `a1-chase` (v5.57.0).** All 14 cards have a second take, all 30
   choice lines name their addressee, Pia 7%→50%, Nine 2%→7%, narration 36.7%.
+
+- **v5.58.0, the ladder shaft.** Its stage-nought row was a real exit the engine could not
+  grant, so "climb back up like a person" printed "you put weight on the fourth rung". One
+  opt-in flag, `out:true`, on the one row in the book that needs it.
+- **v5.59.0, EVERY DECK IS LANES.** 86 evening second takes - 9,711 words across 17 nights -
+  were written and unreachable, because only the room let a card be asked twice. Ask an
+  evening card twice and it answers twice now. See `OUTSTANDING.md` §9 for the chain, the
+  five readers the change had, and the peek that burned a layer.
+
+### TWO STANDING RULINGS FROM 2026-08-17 - BOTH COST A WAVE ALREADY, BOTH PAID
+
+1. **EVERY WAVE GETS PLAYED OUT IN THE DRAWER**, not merely driven through the Node harness.
+   `startRehearsal(beatId, label)` in the browser at `http://localhost:8124`. **It is free and
+   it is safe: the rehearsal room is pinned to the novel, so it never reaches the wire and
+   costs no key, and every save routes to `mud-reh-runs`.** Check `localStorage["mud-runs"]`
+   is byte-identical before and after anyway. **NEVER click NEW GAME** - that is the live
+   save. Dying in the drawer is free; just call `startRehearsal` again.
+   *It found the ladder shaft on the turn it was made, and the 9,711 dark words on the next.*
+2. **NOTHING COUNTS UNTIL IT IS REACHED IN PLAY.** An audit that counts
+   `(t.takes||[]).length` counts what is WRITTEN, never what is REACHED - nine waves of them
+   called nights finished that were not. A night is done when the running game has served
+   every scene in it.
 
 **NEXT: `a1-vic` (night 3), which already had its contraction pass at v5.54.0 but has NOT had
 its second takes, its naming pass or its narration floor** — it sits at 30.5%, the lowest of
@@ -329,6 +351,11 @@ nights, one per wave. Book Three is clean and is not part of this pass.
   subject.**
 - **Check key collisions with `pickTopic` itself, per road** — never an approximation.
 - **Grep a global's name before declaring one.**
+- **A FORM HAS READERS, AND A SAVE/RESTORE PAIR IS ONE OF THEM.** Making every deck lanes
+  broke five readers, and the harness found all five. The worst was a PEEK: `barWouldServe`
+  saves `topicSpent`, deals a card to see if one is servable, and restores it - "the peek
+  costs the deck nothing". It never restored `topicLayer`, so every peek burned a layer.
+  **Before changing what a deal writes, grep every place that saves and puts back the deck.**
 
 ### → THE NOVEL IS WRITTEN (v5.53.0) — 33 OF 33
 

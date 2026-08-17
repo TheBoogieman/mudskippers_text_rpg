@@ -1372,7 +1372,7 @@ instruction is that nothing already written gets retconned.
 - **If the narration gauge shows a night dropping** while its dialogue improves, that is
   expected and fine — check the floor, not the direction.
 
-## 9. EIGHTY-SIX EVENING SECOND TAKES ARE UNREACHABLE — measured 2026-08-17, awaiting a ruling
+## 9. EIGHTY-SIX EVENING SECOND TAKES WERE UNREACHABLE — RULED AND FIXED at v5.59.0
 
 **Found by playing night two out in the rehearsal drawer, on the author's ruling that every
 wave now gets played rather than only driven.**
@@ -1417,4 +1417,36 @@ the pass and go back through the authoring phase. **Nothing has been deleted.**
 3. **Move the takes into the room decks** of their nights, or delete them.
 4. **Leave them written but dark**, and stop authoring evening takes from night three on.
 
-**Until this is ruled, no further wave should write an evening second take.**
+### RULED: OPTION 1. SHIPPED v5.59.0.
+
+**Every deck is lanes now, not only the room.** `advanceCard` keeps a card unspent until its
+layers are gone, `railLineFor` and `railCardNow` read `cardPlayed` instead of `deckLap`, and
+the save-restore that rebuilds `topicLayer` covers evening keys too. **Ask an evening card
+twice and it answers twice.** All 9,711 words are live.
+
+**The quoted design rule survives untouched.** `pickTopicFresh` is not changed: the beat still
+never goes *round again*. A lane holds its card until the card is finished and then the deck
+is honestly dry. The budget and the ending are exactly what they were.
+
+**Proved by a new sweep row** that drives every deck of every night to dry: **66 decks, 829
+authored layers every one of them served, 321 second-take lines offered, no card dealt past
+its last take.** Its break re-gates lanes on `|room` and the claim fails.
+
+### THE CHANGE HAD FIVE READERS, AND THE HARNESS FOUND THEM, NOT ME
+
+1. **"no card is dealt twice"** counted cards; under lanes it has to count **layers**.
+2. **"a spent card retires from the row"** knew `rail` and `railAlt` but **not `railTakes`**,
+   so a take's line looked like it belonged to no card at all - three assertions failed at
+   once, and one of them offered a take line as proof the row was not the deck.
+3. **`barBoard` reset `topicSpent` and not `topicLayer`**, so the twin run's second leg opened
+   on a half-played deck.
+4. **Four guards that prove a turn did not spend a card** compared only `topicSpent`; a burnt
+   layer walked straight past them. All four now compare the whole deck.
+5. **THE ONE THAT TOOK LONGEST WAS A PEEK.** `barWouldServe` saves `topicSpent`, deals a card
+   to see whether one is servable, and restores it - *"the peek costs the deck nothing"*. It
+   did not restore `topicLayer`, so **every peek burned a layer**, and the twin run's two legs
+   came out as different nights. **A save/restore pair is a reader too.**
+
+**THE LESSON, AND IT IS WHY THIS SECTION EXISTS: an audit that counts `(t.takes||[]).length`
+counts what is WRITTEN, never what is REACHED.** Nine waves of audits called those nights
+finished. Nothing counts until the running game has served it.

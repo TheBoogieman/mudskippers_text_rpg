@@ -1738,6 +1738,36 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.59.0 "Nine Thousand Words Nobody Could Reach"
+   EVERY DECK IS LANES NOW, NOT ONLY THE ROOM. ask an evening card twice and it answers
+   twice. 86 SECOND TAKES ACROSS 17 NIGHTS - 9,711 WORDS - WERE WRITTEN AND UNREACHABLE
+   THE CHAIN, ALL FOUR LINKS: advanceCard counted layers only for a |room key, so an
+   evening card was spent on its first deal; takeForLap outside a lane falls back to
+   deckLap; deckLap for a beat key never increments, because only the room laps; and
+   typed input, the other route in, is off in novel runs. driven forty draws deep, both
+   test decks served ZERO second takes while their rooms served fifty-one and fifty-two
+   NINE WAVES OF AUDITS SAID THOSE NIGHTS WERE FINISHED, because every one of them
+   counted `(t.takes||[]).length`. COUNTING WHAT IS WRITTEN IS NOT COUNTING WHAT IS
+   REACHED. the new row reaches: 66 decks driven to dry, 829 authored layers every one
+   of them served, 321 second-take lines offered, no card dealt past its last take
+   THE BEAT STILL DOES NOT GO ROUND AGAIN. a lane holds its card until the card is
+   finished and then the deck is honestly dry - the budget and the ending are untouched,
+   which was the rule that mattered. pickTopicFresh is not changed
+   AND THE CHANGE HAD FIVE READERS I HAD NOT HUNTED, all four of them found by the
+   harness rather than by me: the dealt-twice row counted cards where it now has to
+   count layers; the row-retires row knew `rail` and `railAlt` but not `railTakes`, so
+   a take's line looked like it belonged to no card at all; barBoard reset topicSpent
+   and not topicLayer, so the twin run's second leg opened on a half-played deck; and
+   FOUR GUARDS THAT PROVE A TURN DID NOT SPEND A CARD compared only topicSpent, so a
+   burnt layer walked straight past them
+   THE ONE THAT TOOK LONGEST WAS A PEEK. barWouldServe saves topicSpent, deals a card
+   to see whether one is servable, and restores it - "the peek costs the deck nothing".
+   it does not restore topicLayer, so under lanes EVERY PEEK BURNED A LAYER and the twin
+   run's two legs came out as different nights. a save/restore pair is a reader too
+   BACKWARD COMPATIBLE BY CONSTRUCTION: a save from before this release keeps its
+   already-asked evening cards in topicSpent and they stay there. a run standing mid-night
+   loses nothing it had; it does not gain the second takes on that one night, and every
+   night after it behaves fully. 74 PROVED of 99, fixture unmoved
    MUDSKIPPERS — THE COURIER'S RUN · v5.58.0 "Back Up, She Said, And The Game Walked Him Down"
    THE LADDER SHAFT LET YOU CLIMB OUT AND THEN DIDN'T. Pia shouts BACK UP; the player
    picks "climb back up and take the stairs like a person"; the game prints "You put
@@ -2309,7 +2339,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.58.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.59.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -3184,9 +3214,24 @@ function laneLine(t, key){ return railLineFor(t, cardPlayed(t, key)); }
    layer left, which is what empties its lane and lets a new card have the slot.
    ONE FUNCTION, because pickTopic can deal a card two ways - bound to a rail line,
    or chosen by score - and a rule with two implementations is a rule with one. */
+/* EVERY DECK IS LANES FROM v5.59.0, not only the room. Until this release the branch
+   below was gated on `|room`, so an evening card was spent the instant it was dealt
+   and its deckLap never moved - which meant takeForLap could only ever return its
+   first take, and EIGHTY-SIX AUTHORED SECOND TAKES, 9,711 WORDS ACROSS SEVENTEEN
+   NIGHTS, COULD NOT BE REACHED BY ANY PLAYER. Found by playing night two out rather
+   than counting what was written: an audit that counts `(t.takes||[]).length` counts
+   the writing, never the reaching.
+   THE BEAT STILL DOES NOT GO ROUND AGAIN, which is the rule that mattered - see
+   pickTopicFresh, untouched. A lane holds its card until the card is finished; when
+   every card is finished the beat is dry and honestly the door alone. What changes is
+   only that asking an evening card twice now answers twice.
+   BACKWARD COMPATIBLE BY CONSTRUCTION: a save taken before this release has its
+   already-asked evening cards sitting in topicSpent with no layer, and they stay
+   there. A run mid-night loses nothing it had; it simply does not gain the second
+   takes on the one night it is standing in. Every night after it behaves fully. */
 function advanceCard(list, idx, key, spent){
   var t = list[idx];
-  if(String(key).indexOf("|room") !== -1 && t && t.id){
+  if(t && t.id){
     var lm = topicLayer[key] || (topicLayer[key] = {});
     var was = (typeof lm[t.id] === "number") ? lm[t.id] : 0;
     lm[t.id] = was + 1;
@@ -3314,7 +3359,9 @@ function railCardNow(line){
   /* the layer this row is offering, read the same way the row was BUILT: a lane counts
      per card, every other deck counts deck-wide. Read the two call sites in sceneRails
      before touching this - a badge that disagrees with railLineFor is a badge that lies. */
-  var lap = (String(s.key).indexOf("|room") !== -1) ? cardPlayed(t, s.key) : deckLap(s.key);
+  /* v5.59.0: every deck counts per card now, so the badge asks the card and not the
+     deck. A card with no id has no lane and keeps the deck-wide count it always had. */
+  var lap = (t && t.id) ? cardPlayed(t, s.key) : deckLap(s.key);
   return {card:t, lap:lap, key:s.key};
 }
 function ordinalTime(n){
@@ -3453,7 +3500,12 @@ function sceneRails(n){
        both learned the fork when it was built; this reader did not, and nothing was
        looking at it. A form has readers: hunt all of them. */
     if(!cardOnBranch(t)) continue;
-    ln = railLineFor(t, lap);
+    /* THE ROW OFFERS THE LAYER THE CARD IS ABOUT TO PLAY (v5.59.0). This read the
+       deck-wide lap, which outside the room is nought for ever - so a half-played
+       evening card was re-offered under its FIRST take's line while takeForLap was
+       ready to serve its second. Same rule as the room's lane walk above; `lap`
+       survives only for a card with no id, which has no lane to count. */
+    ln = railLineFor(t, (t && t.id) ? cardPlayed(t, s.key) : lap);
     /* the per-run rotation: one wording per run, never two names for one card. It
        applies to the card's own line only - a take's line is the take's. */
     if(ln === t.rail && t.railAlt) ln = pickVariant([t.rail, t.railAlt], "ra|" + s.key + "|" + i) || ln;
@@ -17932,9 +17984,15 @@ function restoreFromBlob(s){
   if(!s.topicLayer){
     var okeys = Object.keys(topicSpent || {});
     okeys.forEach(function(k2){
-      if(String(k2).indexOf("|room") === -1) return;
+      /* v5.59.0 - AND THE EVENING DECKS TOO, now that they are lanes. This was
+         room-only, which was right while only rooms counted layers; a save from
+         before that release would otherwise come back with every evening card at
+         layer nought and the badge saying FIRST TIME about a card already asked.
+         The evening's lap is always nought, so the same arithmetic gives a spent
+         card exactly one layer, which is the truth about it. */
       var bid = String(k2).split("|")[0], sbk = SCENEBOOK[bid];
-      var lst = (sbk && sbk.room && sbk.room.topics) || [];
+      var isRm = String(k2).indexOf("|room") !== -1;
+      var lst = (isRm ? (sbk && sbk.room && sbk.room.topics) : (sbk && sbk.topics)) || [];
       if(!lst.length) return;
       var L = topicLap[k2] || 0, sp = topicSpent[k2] || [], m2 = topicLayer[k2] = {};
       lst.forEach(function(c, ci){
@@ -20223,15 +20281,21 @@ function selfTest(){
            picker failing. This never fired before because every fork-gated card in the
            book lived in a ROOM deck and this row only ever walked the evening one;
            a3-voice is the first night to fork a card in `topics`. */
-        var seen = {}, dupes = 0, live = branchLive(e.topics).length;
-        for(var i = 0; i < live; i++){
+        /* ...AND ONCE PER LAYER, NOT ONCE PER CARD (v5.59.0). Every deck is lanes now,
+           so a card with a second take is DELIBERATELY dealt twice and stays unspent
+           in between - the old count called that a repeat and failed five nights. The
+           anti-staleness claim survives in lane terms: a card is never dealt past its
+           last layer, which is the thing the picker's ledger is actually for. */
+        var seen = {}, dupes = 0, live = branchLive(e.topics), layers = 0;
+        live.forEach(function(ix){ layers += takesOf(e.topics[ix]).length; });
+        for(var i = 0; i < layers; i++){
           var got = pickTopic(e, "ST|" + k);
           if(!got) break;                    /* deck genuinely empty: not a repeat */
           var idx = e.topics.indexOf(got);
-          if(seen[idx]) dupes++;
-          seen[idx] = 1;
+          seen[idx] = (seen[idx] || 0) + 1;
+          if(seen[idx] > takesOf(e.topics[idx]).length) dupes++;
         }
-        if(dupes) deckBad.push(k + " re-dealt " + dupes);
+        if(dupes) deckBad.push(k + " dealt a card past its last layer " + dupes + " time(s)");
       });
     } finally { topicSpent = keptSpent; lastPlayerText = keptText; }
     T("no card is dealt twice while the deck has cards", deckBad.length === 0, deckBad.slice(0, 5).join("; "),
@@ -21640,7 +21704,7 @@ function selfTest(){
               gn:gateNotes, fb:foldedBeats, fp:foldPending, fs:foldServed, ov:runOver,
               sc:V5SCENE, said:lastPlayerText, mud:lastTurnMud, an:attemptOn, wb:walkbackNow,
               log:chatLog, feed:feedLog, led:ledgerText, txt:beatText, seen:beatSeen,
-              spent:topicSpent, cs:currentSeason, sl:slackTurns, sr:slackRoom,
+              spent:topicSpent, lanes:topicLayer, cs:currentSeason, sl:slackTurns, sr:slackRoom,
               ask:window.askAI, per:window.persistAll, dl:deathLine, tk:turnToken,
               /* ...and the fix wave: the fork's booking, the row's binding, the door
                  taken, the peril latch and the wall switch over the teeth */
@@ -21672,7 +21736,7 @@ function selfTest(){
       foldPending = k.fp; foldServed = k.fs; runOver = k.ov; V5SCENE = k.sc;
       lastPlayerText = k.said; lastTurnMud = k.mud; attemptOn = k.an; walkbackNow = k.wb;
       chatLog = k.log; feedLog = k.feed; ledgerText = k.led; beatText = k.txt;
-      beatSeen = k.seen; topicSpent = k.spent; currentSeason = k.cs; slackTurns = k.sl;
+      beatSeen = k.seen; topicSpent = k.spent; topicLayer = k.lanes; currentSeason = k.cs; slackTurns = k.sl;
       slackRoom = k.sr; window.askAI = k.ask; window.persistAll = k.per;
       deathLine = k.dl; turnToken = k.tk;
       chassisDoor = k.cd; chassisPick = k.cp; railDeal = k.rd; pickKind = k.pk;
@@ -21700,7 +21764,13 @@ function selfTest(){
       runMode = "novel";
       foldPending = false; foldServed = false; attemptOn = false; lastTurnMud = false;
       chassisHolder = "Seven"; roster = {family:[], fallen:[]}; castSheets = {};
-      runCanon = []; gateNotes = {}; foldedBeats = []; topicSpent = {};
+      /* ...AND THE LANES WITH THE SPENT LIST (v5.59.0). topicLayer was never cleared
+         here, which was harmless while only ROOM keys ever wrote to it and this
+         driver plays evening decks. Every deck is lanes now, so the first leg of the
+         twin run left its layers standing and the second leg opened on a deck already
+         half played - two different nights, and the row said so. A board that resets
+         half of the deck's memory is a board that hands the next row a loaded deck. */
+      runCanon = []; gateNotes = {}; foldedBeats = []; topicSpent = {}; topicLayer = {};
       chatLog = []; feedLog = []; ledgerText = ""; beatText = ""; beatSeen = {};
       currentSeason = SPINE[at].season;
       window.persistAll = function(){};
@@ -21721,6 +21791,15 @@ function selfTest(){
       var sc = sceneNow(), spent, card, ok;
       if(!sc || !sc.sc) return false;
       spent = JSON.stringify(topicSpent);
+      /* ...AND THE LANES WITH IT (v5.59.0). The peek restored topicSpent and nothing
+         else, which was free while advanceCard only wrote layers for |room keys and
+         this driver plays the evening deck. Every deck is lanes now, so each peek was
+         BURNING A LAYER off whatever card it looked at - the deck the twin run played
+         was quietly one layer deeper every turn, and the second leg came out as a
+         different night. A peek that costs the deck nothing has to put back
+         everything the deal touches, not the half of it that existed when it was
+         written. A FORM HAS READERS, and a save/restore pair is one of them. */
+      var lanes = JSON.stringify(topicLayer);
       /* FRESH, not replayed (v4.71.6): a dry room is a finished room, and a player
          who has heard every card takes the door - the driver should too. The old
          peek used pickTopic, whose replay branch never runs dry, so the drains
@@ -21729,6 +21808,7 @@ function selfTest(){
       card = pickTopicFresh(sc.sc, sc.key);
       ok = !!(card && card.plays && card.plays.length && sceneBlocksFor(card).length);
       topicSpent = JSON.parse(spent);        /* the peek costs the deck nothing */
+      topicLayer = JSON.parse(lanes);
       return ok;
     }
     /* one turn, taken the way a player takes it: through callDM, the only door.
@@ -21758,11 +21838,16 @@ function selfTest(){
        of the two transcripts IS the proof that the wire was never in it. A single
        reached call would make the two legs differ, because one leg's endpoint answers
        and the other one throws on sight. */
-    var barWire = 0;
+    var barWire = 0, barLaneStart = [];
     function barNight(kill){
       var at = beatById("a1-chase"), guard = 0;
       barBoard(at);
       V5SCENE = true;
+      /* the twin run reports its own starting deck, so a leg that opens on a deck the
+         previous leg left behind says so instead of surfacing as a prose difference
+         thirty lines later - which is how this cost a diagnosis at v5.59.0 */
+      barLaneStart.push(JSON.stringify(topicLayer) + "/" + JSON.stringify(topicSpent)
+        + "/shard:" + shardWhere + "/t:" + nowTime + "/m:" + storyMin + "/pt:" + perilTurns);
       window.askAI = kill
         ? function(){ barWire++; throw new Error("the endpoint is dead"); }
         : function(){ barWire++; return {then:function(){ return {catch:function(){}}; }}; };
@@ -21786,8 +21871,20 @@ function selfTest(){
         if(wireLive !== 0 || wireDead !== 0){
           barBad.push("the wire was reached: " + wireLive + " live, " + wireDead + " with the endpoint dead");
         }
+        if(barLaneStart[0] !== barLaneStart[1]) barBad.push("the two legs did not open on the same deck: " + barLaneStart[0] + " vs " + barLaneStart[1]);
         if(!liveRun.script) barBad.push("the night printed nothing at all");
-        if(liveRun.script !== deadRun.script) barBad.push("the two nights are not the same night");
+        if(liveRun.script !== deadRun.script){
+          /* SAY WHERE (v5.59.0). "not the same night" sent the reader to diff two
+             transcripts by hand; the first differing line names the fault in one look. */
+          var la = liveRun.script.split("\n"), da = deadRun.script.split("\n"), dq = -1;
+          for(var q3 = 0; q3 < Math.max(la.length, da.length); q3++){
+            if(la[q3] !== da[q3]){ dq = q3; break; }
+          }
+          barBad.push("the two nights are not the same night - first difference at line " + dq
+            + " of " + la.length + "/" + da.length
+            + ": live=" + JSON.stringify(String(la[dq] || "(end)").slice(0, 90))
+            + " dead=" + JSON.stringify(String(da[dq] || "(end)").slice(0, 90)));
+        }
         if(liveRun.book !== deadRun.book){
           barBad.push("the two nights booked differently: " + liveRun.book + " vs " + deadRun.book);
         }
@@ -21925,10 +22022,10 @@ function selfTest(){
         barBoard(at); V5SCENE = true; runMode = "novel"; phase = "aftermath";
         lastPlayerText = "Take her out properly and start again.";
         lastRail = [lastPlayerText]; turnToken++;
-        kSpent = JSON.stringify(topicSpent);
+        kSpent = JSON.stringify(topicSpent) + JSON.stringify(topicLayer);
         callDM();
         if(phase !== "slack") slkBad.push("the conversational settle did not open the room: " + phase);
-        if(JSON.stringify(topicSpent) !== kSpent) slkBad.push("the settling line was answered with a dealt card");
+        if(JSON.stringify(topicSpent) + JSON.stringify(topicLayer) !== kSpent) slkBad.push("the settling line was answered with a dealt card");
         /* AND A BIT, ON PURPOSE, WITH THE KEY IN PLACE. The button's own channel is
            the last thing in this game that ever touched the wire; the seam has to
            press it rather than assume it. */
@@ -22155,13 +22252,13 @@ function selfTest(){
       try{
         /* (a) A COMPOSED TURN REACHES THE WIRE PATH, and carries the room as material */
         wildBoard(at);
-        var spentBefore = JSON.stringify(topicSpent), railBefore = JSON.stringify(railDeal);
+        var spentBefore = JSON.stringify(topicSpent) + JSON.stringify(topicLayer), railBefore = JSON.stringify(railDeal);
         wldWire = 0;
         window.askAI = wildReply({scene:[{speaker:"Narration", text:"The rain keeps on and the stairwell holds its breath."}],
                                   choices:["Wait for it.", "Say nothing and listen."]});
         callDM(); wildLand();
         if(wldWire !== 1) wldBad.push("a wild turn reached the wire " + wldWire + " time(s), not once");
-        if(JSON.stringify(topicSpent) !== spentBefore) wldBad.push("the wild turn spent a card from the deck");
+        if(JSON.stringify(topicSpent) + JSON.stringify(topicLayer) !== spentBefore) wldBad.push("the wild turn spent a card from the deck");
         if(JSON.stringify(railDeal) !== railBefore) wldBad.push("the wild turn bound a row to the deck");
         if(wldSent.indexOf("WHAT THIS ROOM KNOWS") === -1) wldBad.push("the briefing carried no room material");
         if(wldSent.indexOf("YOU OWN THE CLOCK") === -1) wldBad.push("the briefing carried no nudge ladder");
@@ -22228,6 +22325,100 @@ function selfTest(){
               still owns the turn, the deck still deals, and the floor still holds. */
            return !sceneSkeletonNow() && !doorMeetsFloor() && sceneRails(1).length === 0;
          } finally { runMode = k.m; runSlug = k.s; beatIdx = k.bi; beatTurns = k.bt; phase = k.ph; }
+       }});
+
+    /* ---- (4a3) EVERY AUTHORED TAKE CAN BE REACHED, AND NO DECK GOES ROUND AGAIN
+       (v5.59.0). The row this wave was built for. Until v5.59.0 only the room kept
+       lanes, so an evening card was spent on its first deal and takeForLap could
+       only ever return take one - EIGHTY-SIX SECOND TAKES, 9,711 WORDS ACROSS
+       SEVENTEEN NIGHTS, WRITTEN AND UNREACHABLE. Nine waves of audits counted
+       `(t.takes||[]).length` and every one of them reported those nights finished.
+       COUNTING WHAT IS WRITTEN IS NOT COUNTING WHAT IS REACHED, so this row reaches:
+       it drives each deck of every night through sceneRails and pickTopic until the
+       row goes empty, and asserts three things at once - every authored layer was
+       served, no card was dealt more times than it has takes, and the deck went DRY
+       rather than round, which is the ruling the beat's budget rests on. */
+    var rchBad = [], rchDecks = 0, rchLayers = 0, rchSecond = 0;
+    (function(){
+      var k = barKeep(), keepScene = sceneNow;
+      try{
+        SPINE.forEach(function(b){
+          var e = SCENEBOOK[b.id]; if(!e) return;
+          [["scene", e], ["room", e.room]].forEach(function(pr){
+            var sc = pr[1]; if(!sc || !(sc.topics || []).length) return;
+            var key = b.id + "|" + pr[0];
+            barBoard(beatById(b.id));
+            V5SCENE = true; introStage = 2;
+            topicSpent[key] = []; topicLap[key] = 0; topicLayer = {}; railDeal = {};
+            sceneNow = function(){ return {sc:sc, key:key}; };
+            /* what the night owes, counted on the branch the board is standing on.
+               branchLive returns INDICES, not cards - taking them for cards made
+               takesOf see no plays and no takes, so every card looked like one
+               layer and the row failed 50 times on its own arithmetic. */
+            var owed = 0, live = branchLive(sc.topics).map(function(ix){ return sc.topics[ix]; });
+            live.forEach(function(t){ owed += takesOf(t).length; });
+            var served = {}, deals = 0, dry = false;
+            for(var turn = 0; turn < 400; turn++){
+              var rows = sceneRails(3);
+              if(!rows.length){ dry = true; break; }
+              lastPlayerText = rows[0];
+              live.forEach(function(t){ if((t.railTakes || []).indexOf(rows[0]) !== -1) rchSecond++; });
+              var t2 = pickTopic(sc, key);
+              if(!t2){ dry = true; break; }
+              deals++; served[t2.id || ("#" + deals)] = (served[t2.id || ("#" + deals)] || 0) + 1;
+            }
+            rchDecks++; rchLayers += deals;
+            if(!dry) rchBad.push(key + ": the row never went empty - the deck is going round");
+            if(deals !== owed) rchBad.push(key + ": " + deals + " layers served, " + owed + " authored");
+            live.forEach(function(t){
+              if(!t.id) return;
+              var got = served[t.id] || 0, has = takesOf(t).length;
+              if(got > has) rchBad.push(key + "/" + t.id + ": dealt " + got + " times, has " + has + " takes");
+              if(got < has) rchBad.push(key + "/" + t.id + ": take " + (got + 1) + " of " + has + " is UNREACHABLE");
+            });
+          });
+        });
+      } finally { sceneNow = keepScene; barPut(k); }
+    })();
+    T("every authored take is reachable, and no deck goes round again",
+      rchBad.length === 0,
+      rchBad.length ? (rchBad.length + " problems: " + rchBad.slice(0, 5).join("; "))
+        : (rchDecks + " decks driven to dry, " + rchLayers + " authored layers every one of them served, "
+           + rchSecond + " second-take lines offered, no card dealt past its last take"),
+      {label:"lanes gated on |room, which is every build up to v5.58.0 - the shape that left 86 evening takes dark",
+       was:true,
+       check:function(){
+         var k = barKeep(), keepScene = sceneNow, keepAdv = window.advanceCard;
+         try{
+           /* the shipped shape, restored exactly: layers for the room, spend for the rest */
+           window.advanceCard = function(list, idx, key2, spent){
+             var t = list[idx];
+             if(String(key2).indexOf("|room") !== -1 && t && t.id){
+               var lm = topicLayer[key2] || (topicLayer[key2] = {});
+               var was = (typeof lm[t.id] === "number") ? lm[t.id] : 0;
+               lm[t.id] = was + 1;
+               if(was + 1 >= takesOf(t).length && spent.indexOf(idx) === -1) spent.push(idx);
+               return;
+             }
+             if(spent.indexOf(idx) === -1) spent.push(idx);
+           };
+           var e = SCENEBOOK["a1-chase"], key = "a1-chase|scene";
+           barBoard(beatById("a1-chase"));
+           V5SCENE = true; introStage = 2;
+           topicSpent[key] = []; topicLap[key] = 0; topicLayer = {}; railDeal = {};
+           sceneNow = function(){ return {sc:e, key:key}; };
+           var owed = 0;
+           branchLive(e.topics).forEach(function(ix){ owed += takesOf(e.topics[ix]).length; });
+           var deals = 0;
+           for(var turn = 0; turn < 200; turn++){
+             var rows = sceneRails(3); if(!rows.length) break;
+             lastPlayerText = rows[0];
+             if(!pickTopic(e, key)) break;
+             deals++;
+           }
+           /* the claim: the deck served every layer it was written with */
+           return deals === owed;
+         } finally { window.advanceCard = keepAdv; sceneNow = keepScene; barPut(k); }
        }});
 
     /* ---- (4a2) A WAY OUT IS A WAY OUT ON ANY STAGE, AND ONLY WHERE IT IS DECLARED
@@ -24272,7 +24463,7 @@ function selfTest(){
         lastPlayerText = his; lastRail = []; pickKind = "exit"; turnToken++;
         if(!doorSkeletonNow()) tdBad.push("the door had no route of its own");
         callDM();
-        if(JSON.stringify(topicSpent) !== "{}"){
+        if(JSON.stringify(topicSpent) !== "{}" || JSON.stringify(topicLayer) !== "{}"){
           tdBad.push("the ending spent a topic card: " + JSON.stringify(topicSpent));
         }
         if(phase === "live") tdBad.push("the door did not close the night: phase=" + phase);
@@ -24294,11 +24485,11 @@ function selfTest(){
         beatTurns = 0;
         var tdAsk = window.askAI, tdWire = 0;
         window.askAI = function(){ tdWire++; return {then:function(){ return {catch:function(){}}; }}; };
-        var tdSpent = JSON.stringify(topicSpent), tdTurns = beatTurns, tdFeed = feedLog.length;
+        var tdSpent = JSON.stringify(topicSpent) + JSON.stringify(topicLayer), tdTurns = beatTurns, tdFeed = feedLog.length;
         try{ doorHoldServe(); } finally { window.askAI = tdAsk; }
         if(tdWire !== 0) tdBad.push("the held door reached the wire");
         if(beatTurns !== tdTurns) tdBad.push("the held door ticked the clock");
-        if(JSON.stringify(topicSpent) !== tdSpent) tdBad.push("the held door spent a card");
+        if(JSON.stringify(topicSpent) + JSON.stringify(topicLayer) !== tdSpent) tdBad.push("the held door spent a card");
         if(feedLog.length <= tdFeed || feedLog[feedLog.length - 1].text !== DOOR_HELD_ASIDE){
           tdBad.push("the held door did not leave the yellow box");
         }
@@ -24378,7 +24569,16 @@ function selfTest(){
            run, so the row is asserted against the card, not against one wording -
            either authored line is the deck's own. The binding assert below still runs
            on whichever wording was actually dealt, which is the half that matters. */
-        var wordOf = function(t, ln){ return !!t && (ln === t.rail || (!!t.railAlt && ln === t.railAlt)); };
+        /* ...AND A TAKE'S LINE IS ONE OF THE CARD'S WORDINGS TOO (v5.59.0). This knew
+           only `rail` and `railAlt`, which was complete while a card outside the room
+           could be offered exactly once. Every deck is lanes now, so a card that has
+           played its first layer comes back under `railTakes[0]` - and to this reader
+           that line belonged to no card at all, which failed three assertions in a row
+           and named a take line as proof the row was not the deck. A FORM HAS READERS. */
+        var wordOf = function(t, ln){
+          return !!t && (ln === t.rail || (!!t.railAlt && ln === t.railAlt)
+                         || (t.railTakes || []).indexOf(ln) !== -1);
+        };
         /* ORDER IS NOT THE CONTRACT ANY MORE (v5.18.0). This asserted that the row
            showed topics[0] and topics[1], which was only ever true because the deal
            walked the deck in file order - and from v5.18.0 a BEAT deals in an order
@@ -24400,11 +24600,18 @@ function selfTest(){
         var got = pickTopic(sc.sc, sc.key);
         if(got !== offered[0]) rwBad.push("clicking a rail dealt a different card: offered "
           + (offered[0] && offered[0].id) + ", dealt " + (got && got.id));
-        /* ...and that card has now retired from the row - under either of its names */
+        /* ...AND THAT LAYER HAS RETIRED FROM THE ROW (v5.59.0, restated for lanes).
+           It used to be the CARD that retired, which was the truth while a card had
+           one layer outside the room. Under lanes a card with a take left is SUPPOSED
+           to come back - under its next take's line, never under the one just spent.
+           So the claim is the layer's, and it is the stronger of the two: offering the
+           same wording twice is the frozen-line fault the fork gate cost a wave over. */
         var row2 = railFor([]);
-        if(offered[0] && (row2.indexOf(offered[0].rail) !== -1
-           || (offered[0].railAlt && row2.indexOf(offered[0].railAlt) !== -1))){
-          rwBad.push("a spent card is still on the row");
+        if(row2.indexOf(row[1]) !== -1) rwBad.push("the line just played is still on the row: " + row[1]);
+        if(offered[0] && cardPlayed(offered[0], sc.key) >= takesOf(offered[0]).length
+           && (row2.indexOf(offered[0].rail) !== -1
+               || (offered[0].railAlt && row2.indexOf(offered[0].railAlt) !== -1))){
+          rwBad.push("a finished card is still on the row");
         }
         if(!cardFor(row2[1])) rwBad.push("the row did not walk on: " + row2[1]);
         rwSaw.push("the row deals from the deck in the run's own order, and each card retires as it is spent");
