@@ -133,6 +133,15 @@ first batch's numbers and the tool refused it — found the needle three and fiv
 than once. **When an anchor is genuinely ambiguous** — Pia's bare *"No."* appears five times
 in the book — **drop the block rather than force a home for it.**
 
+**AND PASS 6 CARRIES A BUG THE AUTHOR REPORTED, 2026-08-17.** **Beat and season seams
+RENDER IMMEDIATELY instead of revealing block by block the way cards do.** Confirm it, then
+fix it while the seams are already open. Suspect the paths that print a seam bypass the
+reveal that `showScene` runs — `playOpening` / `playAuthored` / `playLanding` /
+`playPremiere` / the season record — most likely by writing the feed directly or by passing
+the `instant` flag. **READING PACE in Settings is the same mechanism**, so whatever is
+skipped is skipping that too. It is his own reported defect: verify it in the browser before
+changing anything, and drive a seam afterwards at more than one pace.
+
 **PASS 6 IS A REPORT BEFORE IT IS A WAVE.** The author ruled that new cards are warranted
 **only where a closing does not match its scene**. So: read all 33 nights' landings AND the
 season seams, and produce **one list of mismatches with a proposed card for each — and take
