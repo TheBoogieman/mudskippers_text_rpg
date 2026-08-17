@@ -1730,6 +1730,14 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.42.0 "And Nobody Up There Knows"
+   THE NOVEL HAS AN ENDING. a3-seize is finished — 23 of 33, and the last night is written
+   the last beat used to end the run the instant it closed, so the one night that had to
+   have family time in it was the only night in the book with none: it reaches its room now
+   12 cards in the epilogue, a second take on every one, two landings wired, six rows
+   and a last page after it — 13 blocks, played by the player's own hand, ending on a city
+   that wakes up not knowing what was taken out of it or by whom or what it cost
+   PAID IN FULL is off the closing card; those were Vic's dying words and it was spending them
    MUDSKIPPERS — THE COURIER'S RUN · v5.41.0 "Say It In Shorter Breaths"
    a2-turn is finished — 22 of 33, and SEASON TWO IS CLOSED
    7 evening cards, 11 in the room, a second take and its own choice line on every one
@@ -2018,7 +2026,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.41.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.42.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -2694,7 +2702,7 @@ function placeNamesOk(){
   if(placeNameOk) return placeNameOk;
   placeNameOk = {};
   SPINE.forEach(function(b){
-    ["opens", "lands", "landsHard"].forEach(function(k){
+    ["opens", "lands", "landsHard", "closes"].forEach(function(k){
       (b[k] || []).forEach(function(p){
         var t = " " + String((p && p.place) || "").toLowerCase() + " ";
         LOAD_BEARING.forEach(function(nm){
@@ -3410,7 +3418,11 @@ function endCard(kind, line){
   var head = tongues ? "HE IS SPEAKING IN TONGUES"
     : dead ? "THE COURIER IS DEAD" : lost ? lc.head
     : broken ? "THE RAIN HAS TOO MUCH TO OFFER"
-    : walked ? "HE PUT IT DOWN" : "PAID IN FULL";
+    /* NOT "PAID IN FULL" (v5.42.0). Those are Vic's dying words, and the finished
+       book was spending them as a completion stamp - the one line in the game that
+       belongs to one man's death, printed over every winning run. The card the
+       player gets after the last page says what the last page says. */
+    : walked ? "HE PUT IT DOWN" : "AND NOBODY UP THERE KNOWS";
   var sub  = tongues
     ? "The courier has lost his sanity in the worst way. Nobody can talk sense to him now,"
       + " and the rain is confused."
@@ -3419,7 +3431,8 @@ function endCard(kind, line){
     : lost ? esc(lc.line)
     : broken ? esc((line || "Someone load-bearing") + " held this story up. It can not end like this — so it ends here.")
     : walked ? "He said it twice, and the second time he meant it. The job is somebody else's now."
-    : "Season complete. The chronicle survives the courier.";
+    : "Thirty-three nights, and a city that wakes to a quiet nobody will ever tell it"
+      + " the price of. The chronicle survives the courier.";
   d.innerHTML = '<div class="end-h">' + head + '</div><div class="end-s">' + sub + '</div>'
     + (tongues ? '<div class="end-s2">A Mudskipper moment is a joke the table gets to be in on. '
             + 'Three times he asked the world to stop being the world, and the third time it stopped '
@@ -3432,10 +3445,17 @@ function endCard(kind, line){
             + 'another night, and everyone alive again. Start again?</div>'
      : walked ? '<div class="end-s2">Nobody died. That is the whole difference, and it is not '
             + 'nothing. The rain keeps falling on the people he left in it — and somewhere in it '
-            + 'there is another courier who does not put it down. Start again?</div>' : '');
+            + 'there is another courier who does not put it down. Start again?</div>'
+     : '<div class="end-s2">The ledger is the whole run in its own words &mdash; every night, '
+            + 'as this family played it. Take it with you. The rain goes on falling on a city '
+            + 'that got its quiet for nothing, and there is another courier in it somewhere '
+            + 'who has not been handed a shard yet.</div>');
   var b1 = document.createElement("button");
   b1.className = over ? "btn" : "btn ghost";
-  b1.textContent = over ? "NEW GAME" : "NEW SEASON";
+  /* ...and it is not a NEW SEASON either. This card only ever reaches the screen with
+     the whole spine behind it, so there is no next season to offer - there is another
+     run, with another family, in the same rain. */
+  b1.textContent = over ? "NEW GAME" : "START AGAIN";
   /* through the two doors, never around them (v4.72.1). This went straight to
      newRun, whose default is the novel - so a wild player whose courier died
      pressed "Start again?" and was seated, silently, at the other table. Every
@@ -6260,10 +6280,16 @@ function seasonContinue(){
    invitation dealt after the new beat's opening scene, and worse, showChoices
    overwriting the new beat's rail with the leftover slack choices and saving them.
    The door goes up in done(), when the turn is actually over. */
+/* THE LAST ROOM IN THE BOOK. Every other slack room has a question waiting on the
+   far side of its door; this one has the end of the story. Everything that reads
+   "what happens when they leave the room" has to ask which room it is in. */
+function lastRoom(){ return !beatDone() && beatIdx === SPINE.length - 1; }
 function openSlackDoor(){
   slackDoorUp = true;
   queueAside("room", "The room is yours as long as you want it - nothing out there is counting."
-    + " When you have had enough of each other, the night still has one more question in it.");
+    + (lastRoom()
+       ? " There is nothing after this. When you have had enough of each other, the book closes."
+       : " When you have had enough of each other, the night still has one more question in it."));
 }
 function renderSlackDoor(){
   var box = $("boardbox"); if(!box) return;
@@ -6281,9 +6307,13 @@ function renderSlackDoor(){
   var d = document.createElement("div"); d.className = "warn";
   d.appendChild(document.createTextNode(
     "Nothing is owed and nothing is counting. Stay in this room as long as you like"
-    + (nx ? " - the night's next question waits on you, not the other way round." : ".")));
-  var go = document.createElement("button"); go.className = "small"; go.textContent = "TAKE THE NIGHT ON";
-  go.title = "Ends the family's time and opens the next question. No AI call - the board writes the room.";
+    + (nx ? " - the night's next question waits on you, not the other way round."
+          : " - there is no question after this one, and no hurry at all.")));
+  var go = document.createElement("button"); go.className = "small";
+  go.textContent = nx ? "TAKE THE NIGHT ON" : "CLOSE THE BOOK";
+  go.title = nx
+    ? "Ends the family's time and opens the next question. No AI call - the board writes the room."
+    : "Ends the family's time and finishes the story. There is no way back from this one.";
   go.onclick = slackArm;
   d.appendChild(go);
   box.appendChild(d);
@@ -6295,6 +6325,17 @@ function slackArm(){
   /* skipReveal is the belt to the door's braces: it is non-null for exactly as
      long as a turn is still landing, and nothing may arm a beat on top of one */
   if(busy || skipReveal || phase !== "slack" || !slackDoorUp || beatDone() || runOver) return;
+  /* THE LAST DOOR CLOSES THE BOOK. Every other one opens a question; this one ends
+     the story, and it is the only button in the game that cannot be taken back - so
+     it asks first, in the house's own way. */
+  if(lastRoom()){
+    if(!confirm("Close the book? The family's own time ends here and the story finishes."
+      + " There is no way back into this run afterwards — the ledger keeps it.")) return;
+    slackDoorUp = false;
+    var lbox = $("boardbox"); lbox.innerHTML = ""; lbox.removeAttribute("data-slack-door");
+    closeTheBook();
+    return;
+  }
   slackDoorUp = false;
   var box = $("boardbox"); box.innerHTML = ""; box.removeAttribute("data-slack-door");
   chatLog.push({role:"user", content:"(The player has taken the night on: the family's own time is over,"
@@ -6318,6 +6359,30 @@ function slackArm(){
   /* the way on out of the room is a fresh player action, so the seam it ordered can
      go straight out - there is no reply mid-render to nest inside here */
   if(seamPending) seamFire();
+}
+/* ---- THE LAST PAGE ----
+   The book's own closing passage, played once, by the player's hand, after the last
+   room. It is a pool like `lands` and `opens` are pools, so it forks with the season's
+   choice and every walker in the file already knows the shape.
+
+   IT IS AUTHORED AT BOTH TABLES, and that is deliberate. A landing hands itself to the
+   storyteller above the line; this does not. The last image of thirty-three nights is
+   the board's to write - and the very end of a run is the worst place in the game for a
+   network call to fail, because there is no next turn to recover on. The wild table
+   diverges through the middle and arrives at the same last page. */
+function closeTheBook(){
+  var b = beatNow();
+  var V = pickVariant(holderPool(b && b.closes), (b ? b.id : "end") + "|close");
+  if(V) playAuthored(V, (b ? b.id : "end") + "|close");
+  /* the pointer moves HERE, by their hand, which is what makes beatDone() true */
+  beatIdx++;
+  phase = "live"; phaseLeft = 0;
+  slackTurns = 0; slackRoom = "";
+  applyTension();
+  renderNow();
+  runOver = "season";
+  endCard("season");
+  persistAll([]);
 }
 /* the premiere itself, split out because a save can be sitting at the seam right
    now - written by the version that asked the DM for this page and then reloaded
@@ -6832,7 +6897,7 @@ function dayPinNow(){
 }
 function beatDayPin(b){
   var pin = NaN;
-  ["opens", "lands", "landsHard"].forEach(function(k){
+  ["opens", "lands", "landsHard", "closes"].forEach(function(k){
     (b && b[k] || []).forEach(function(p){
       var d = parseInt(String((p && p.day) || ""), 10);
       if(!isNaN(d) && (isNaN(pin) || d > pin)) pin = d;
@@ -7278,6 +7343,53 @@ function attemptDeath(){
   killCourier(line);
   persistAll([]);
 }
+/* THE LANDING'S OWN CLOCK, LIFTED OUT SO IT CAN BE DRIVEN (v5.42.0). This was three
+   nested branches buried in the middle of the reply handler, which meant the one
+   question worth asking about it - where does the LAST night of the book go when its
+   landing settles - could only ever be answered by reading the code. It is a function
+   now and the sweep drives it directly, twice, and asks the running game where it
+   ended up. Reading it is what shipped the defect in the first place. */
+function aftermathDrain(){
+  phaseLeft--;
+  if(phaseLeft > 0) return;
+  /* ...AND THE EPILOGUE IS THE ROOM (v5.42.0). The finale used to be special-cased
+     here: the pointer moved, beatDone() went true, and the season card was dealt over
+     the top of a family who had just won and never got to sit down. So the last night
+     of thirty-three was the ONE night in the game with no family time in it - the part
+     of this game the game is actually about, missing from the only night that had to
+     have it. It falls through to the room now like every other beat. What is different
+     is the way OUT: there is no next question, so the door closes the book instead of
+     opening one (slackArm), and the pointer moves there, by the player's own hand,
+     when they have had enough of each other. seasonAhead() is false at the last beat -
+     there is no next one to compare - so the second half of this condition is what
+     keeps the finale out of the season break rather than what puts it in the room. */
+  if(seasonAhead() && beatIdx < SPINE.length - 1){
+    phase = "seasonend";
+    if(!epilogueNow){
+      seasonBreakDue = true;   /* the card announces once; the door stands after */
+      epilogueNow = true;
+    }
+    renderSeasonBanner();
+    return;
+  }
+  /* into the room, and the room is theirs: no counter runs down toward the next
+     question, because nothing but the player opens that door */
+  phase = "slack"; phaseLeft = 0;
+  slackTurns = 0; slackDoorUp = false;
+  slackRoom = $("hud-loc").textContent || "";
+  slackMovedTo = ""; slackWalkedIn = [];
+  /* THE WAY OUT IS THERE FROM THE FIRST TURN (v4.82.0). It used to appear on the
+     seventh, and the seventh was doing damage: thirty of the thirty-three rooms hold
+     fewer than seven cards, so the shape of the family's own time was three real
+     questions and then four turns of two hollow stalls, waiting on a timer for a door.
+     The room is not a corridor with a lock at the end of it. It is the part of this
+     game the game is actually about, and the way out of it is the player's to take
+     whenever they want it - which is what the door has said in words since it was
+     written: "Stay in this room as long as you like." Nothing is lost by opening it
+     early. Nothing out here is counting, the deck does not run down toward it, and no
+     peril can reach into this phase. The only thing the seven ever added was the wait. */
+  openSlackDoor();
+}
 /* One live DM turn against the board. */
 function boardTurn(data){
   lastCloseHard = false;       /* read by the canon hold, so it is this turn's */
@@ -7325,51 +7437,7 @@ function boardTurn(data){
   if(phase === "seasonopen"){ armBeat(); return; }
   /* the landing: no gates, no drift, no clocks - the closed beat settles.
      A finale's landing ends in the season break instead of slack. */
-  if(phase === "aftermath"){
-    phaseLeft--;
-    if(phaseLeft <= 0){
-      /* THE SERIES ENDS WHEN ITS EPILOGUE HAS BEEN PLAYED. The finale used to
-         advance the pointer inside closeBeat and end the run in the same render
-         pass, so its epilogue had nowhere to go. It gets two settling turns like
-         any other landing now - and the pointer moves here, when they drain, which
-         is what makes beatDone() true and deals the closing card. seasonAhead() is
-         false at the last beat (there is no next one to compare), so without this
-         the run would settle into slack and never finish. */
-      if(beatIdx === SPINE.length - 1){
-        beatIdx++;
-        phase = "live"; phaseLeft = 0;
-        return;
-      }
-      if(seasonAhead()){
-        phase = "seasonend";
-        if(!epilogueNow){
-          seasonBreakDue = true;   /* the card announces once; the door stands after */
-          epilogueNow = true;
-        }
-        renderSeasonBanner();
-      } else {
-        /* into the room, and the room is theirs: no counter runs down toward the
-           next question, because nothing but the player opens that door */
-        phase = "slack"; phaseLeft = 0;
-        slackTurns = 0; slackDoorUp = false;
-        slackRoom = $("hud-loc").textContent || "";
-        slackMovedTo = ""; slackWalkedIn = [];
-        /* THE WAY OUT IS THERE FROM THE FIRST TURN (v4.82.0). It used to appear on the
-           seventh, and the seventh was doing damage: thirty of the thirty-three rooms
-           hold fewer than seven cards, so the shape of the family's own time was three
-           real questions and then four turns of two hollow stalls, waiting on a timer
-           for a door. The room is not a corridor with a lock at the end of it. It is
-           the part of this game the game is actually about, and the way out of it is
-           the player's to take whenever they want it - which is what the door has said
-           in words since it was written: "Stay in this room as long as you like."
-           Nothing is lost by opening it early. Nothing out here is counting, the deck
-           does not run down toward it, and no peril can reach into this phase. The only
-           thing the seven ever added was the wait. */
-        openSlackDoor();
-      }
-    }
-    return;
-  }
+  if(phase === "aftermath"){ aftermathDrain(); return; }
   /* the family's time. Gates are dead here and so is the DM's key: nothing it
      sends arms the next question. The knock survives as a doorbell rather than a
      key - a player who is plainly reaching for the next matter gets the door
@@ -15092,7 +15160,7 @@ function wbCol(n){ return WB_COLOR[n] ? "var(--" + WB_COLOR[n] + ")" : "var(--gr
 function wbStage(b){
   var s = {};
   (b.anchors || []).forEach(function(a){ s[a] = 1; });
-  ["opens","lands","landsHard"].forEach(function(k){
+  ["opens","lands","landsHard","closes"].forEach(function(k){
     (b[k] || []).forEach(function(V){
       (V.lines || []).forEach(function(L){
         if(Object.prototype.toString.call(L) === "[object Array]"){
@@ -15149,7 +15217,7 @@ function wbStats(){
       mute += Math.max(0, (c.takes || []).length - ((c.railTakes || []).length));
     });
     var wired = 0, pass = 0, lines = 0;
-    ["opens","lands","landsHard"].forEach(function(k){
+    ["opens","lands","landsHard","closes"].forEach(function(k){
       (b[k] || []).forEach(function(V){
         pass++; lines += (V.lines || []).length;
         (V.rail || []).forEach(function(r){
@@ -15168,7 +15236,10 @@ function wbStats(){
     t.doors += (b.exits || []).length;
     t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
     t.live += (b.budget || 4);
-    t.slack += (i === SPINE.length - 1) ? 0 : (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
+    /* ...and the last night has a room too now (v5.42.0). This subtracted one room
+       from the book's own estimate of itself on the reasoning that the finale ended
+       where it closed. It does not: its family time IS the epilogue. */
+    t.slack += (typeof SLACK_ARM === "number" ? SLACK_ARM : 7);
     /* a rail row naming a card that is not in the deck is dropped in silence, and
        an authored fourth row is never dealt at all. Both are counted across the
        whole book so neither can hide on a night nobody happens to open. */
@@ -15638,6 +15709,10 @@ function wbDrawBeat(){
   (b.landsHard || []).forEach(function(V, n){
     h += '<div class="wb-c red"><span class="wb-t red">RED &mdash; the world took it, and it cost'
        + ((b.landsHard.length > 1) ? ", version " + (n + 1) : "") + "</span>" + wbPassage(V) + "</div>";
+  });
+  (b.closes || []).forEach(function(V, n){
+    h += '<div class="wb-c gold"><span class="wb-t gold">THE LAST PAGE &mdash; played when the player closes the book'
+       + ((b.closes.length > 1) ? ", version " + (n + 1) : "") + "</span>" + wbPassage(V) + "</div>";
   });
   if(b.scar) h += '<div class="wb-c red"><span class="wb-t red">The scar &mdash; what the red close leaves behind</span><div class="wb-pass">' + esc(b.scar) + "</div></div>";
   if(b.teeth){
@@ -17837,7 +17912,7 @@ function stPassages(){
     });
   });
   SPINE.forEach(function(b, i){
-    ["opens", "lands", "landsHard"].forEach(function(k){
+    ["opens", "lands", "landsHard", "closes"].forEach(function(k){
       (b[k] || []).forEach(function(p, j){
         /* THE FOURTH FORM, READ HERE TOO. This walker knew a string and a pair and
            nothing else, so a frame in a staged scene was silently dropped from the
@@ -17896,7 +17971,7 @@ function stCorpus(){
     seen[id] = 1; out.push({id:id, t:t});
   }
   SPINE.forEach(function(b){
-    ["opens", "lands", "landsHard"].forEach(function(k){
+    ["opens", "lands", "landsHard", "closes"].forEach(function(k){
       (b[k] || []).forEach(function(p, j){
         /* through the block reader, like the cards above already are. Read as a pair,
            a frame has no [1], so every holder-tagged line in a staged scene came out
@@ -19032,16 +19107,51 @@ function verdictMap(){
    mouths that have called her an it, rewritten as a list of places so no bare number
    sat where a name goes, and Vic's brass rule losing "for nine years" because a
    duration is a number too and the net has been caught by exactly that once already. */
+/* v5.42 - THE ENDING. Twelve room cards, twelve second takes, two landings, a closing
+   passage and six new canon lines, and the delta is 18 gained and 2 lost. Every one of
+   them accounted for below, because this is the wave where a whole deck was REORDERED
+   and an index-shifted anchor looks exactly like a lost line.
+   FOURTEEN GAINED, THIRTEEN OF THEM RAILS AND ONE OF THEM A NAME IN NARRATION. The
+   rails that name the person you are asking: Nine on what the city sounds like, Three
+   on the paper and on the drawers she left full and on the count under the building and
+   on what she does when it beats her, Seven on the desk upstairs and on what he would
+   write, and the two hard-landing rows that name Three and Seven. `named:Five` gains one
+   line of narration - "Five is the only other person in this city who has stood in that
+   lock at that hour" - which is a number-name at a sentence head and IS the name, so it
+   is a true fire and it is listed.
+   EIGHT MORE ON `tell`, AND THEY ARE THE BIGGEST REVEAL IN THE BOOK. All of them are the
+   Principal's card: a hundred and thirty years of stealing from her own tenant to supply
+   every quiet body in the city, plus the canon line that records it and the landing row
+   that offers it. A finale is where things get told; the net noticing is the net working.
+   TWO LOST, AND NEITHER IS A LINE. `named:Three` on a3-seize/Rt1r and `breach` on
+   a3-seize/Rt2p3 are both INDEX SHIFTS: the epilogue deck went from three cards to
+   twelve and the three that were already there moved, so Rt1 and Rt2 no longer name the
+   cards they named at v5.41. The rail that used to be Rt1r is now Rt2r and it is in the
+   gained list one paragraph up. The old Rt2p3 was a narration line in the quiet card
+   that ended "Somebody, streets up, laughing at something" - rewritten, because the
+   laughing was the wrong sound for what this ending turned out to be, and the street is
+   now screaming into the quiet in that card's second take instead.
+   THE SAME SHIFT HAPPENED A SECOND TIME, IN THE EVENING DECK, and it is worth writing
+   down twice because it is the shape most likely to be mistaken for damage. The writers'
+   board asked the finale for a fifth evening card - at budget 3 a night wants five and it
+   had four - and the new card went in at index 3, so `tell` moved off t3g/t3p0 and onto
+   t4g/t4p0 with the words unchanged, while `named:Seven` gained t3r, which is the new
+   card's rail asking him what it is like inside the calm. Nineteen gained, four lost, and
+   all four of the lost are an index with a new card standing on it.
+   AND THE DESK CAUGHT TWO FORK LEAKS BEFORE THE FIXTURE EVER SAW THEM, in the same card,
+   both Seven: a napkin folded into smaller and smaller rectangles, and "I sat at one",
+   written for a man who has no body at all on the road where Nine took the chassis.
+   Neither is in the list below, because neither survived to be listed. */
 var VERDICT_FIXTURE = {
-  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/Rt2p3","a3-seize/teeth1/r2"],
+  "breach":["a1-chase/t1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-vic/before","open/canon6","open/s3"],
-  "named:Five":["a2-annul/Rt3r","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-law/Rt4T1r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","want19"],
-  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-choir/Rt4r","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-door/t5T1p1","a2-door/t5r","a2-ground/t4r","a2-hand/t6r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt5r","a2-law/t5r","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/Rt6T1r","a2-turn/Rt6r","a2-turn/lands1/r1","a2-turn/t4r","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
-  "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/Rt6p2","a2-law/Rt7p2","a2-law/Rt8T1p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/Rt3T1r","a2-turn/Rt3r","a2-turn/Rt5p10","a2-turn/Rt8T1r","a2-turn/Rt8p14","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1p5","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt1r","a3-seize/canon7","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
+  "named:Five":["a2-annul/Rt3r","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-law/Rt4T1r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","a3-seize/Rt3p6","want19"],
+  "named:Nine":["a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/never0","a1-carried/opens0/now","a1-carried/scar","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/lands0/r0","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-fare/before","a1-fare/t5r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/landsHard0/l4","a1-hum/landsHard0/now","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1p4","a1-hum/t2p1","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-turn/Rt8p3","a1-turn/before","a1-turn/canon0","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard1/l6","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2r","a1-turn/t6r","a1-vic/t2g","a1-vic/t2p0","a2-annul/Rt5r","a2-chassis/Rt11T1p6","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p7","a2-chassis/Rt7r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t2p0","a2-chassis/t5g","a2-choir/Rt4r","a2-door/before","a2-door/opens0/r1","a2-door/t2p4","a2-door/t5T1p1","a2-door/t5r","a2-ground/t4r","a2-hand/t6r","a2-housing/Rt5r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/canon2","a2-seven/t2p1","a2-three/Rt4T1p4","a2-three/Rt5p2","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r2","a3-dreamers/Rt2r","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2r","a3-seize/Rt8r","a3-seize/teeth0/r0","a3-vic/opens0/l3","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4r","a2-choir/Rt0r","a2-choir/t4r","a2-housing/Rt1r","a2-housing/Rt8r","a2-law/Rt5r","a2-law/t5r","a2-manual/Rt4r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/teeth/c2","a2-turn/Rt0p0","a2-turn/Rt6T1r","a2-turn/Rt6r","a2-turn/lands1/r1","a2-turn/t4r","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1r","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-evict/lands1/l5","a3-evict/lands1/r2","a3-evict/t3r","a3-for/goal","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-seize/Rt9T1r","a3-seize/Rt9r","a3-seize/landsHard0/r2","a3-seize/t3r","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1r","want14","want15","want16"],
+  "named:Three":["a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t4p0","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/landsHard0/l4","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0r","a2-housing/Rt3r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/t0r","a2-housing/t2r","a2-housing/t4r","a2-housing/t5r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p8","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/Rt6p2","a2-law/Rt7p2","a2-law/Rt8T1p4","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1r","a2-manual/Rt5r","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t4r","a2-manual/t5r","a2-seven/never0","a2-three/Rt4p2","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/opens0/l0","a2-three/opens0/now","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/walk","a2-turn/Rt3T1r","a2-turn/Rt3r","a2-turn/Rt5p10","a2-turn/Rt8T1r","a2-turn/Rt8p14","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1p5","a2-turn/t1r","a3-descent/Rt0r","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0r","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/t0r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/t0r","a3-evict/t2r","a3-evict/teeth0/s0","a3-for/goal","a3-for/t0r","a3-for/t1r","a3-founding/Rt0r","a3-founding/landsHard0/r2","a3-founding/t0r","a3-founding/t2r","a3-granny/Rt0p2","a3-granny/Rt0r","a3-principal/t2r","a3-seize/Rt2T1r","a3-seize/Rt2r","a3-seize/Rt7T1r","a3-seize/Rt7r","a3-seize/canon7","a3-seize/landsHard0/r0","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1r","a3-stone/t1r","a3-vic/Rt2r","a3-voice/t0r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p1","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p2","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/opens0/r0","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/before","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/t2r","a3-seize/t3g","a3-seize/t3p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p3","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p3","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/opens0/r0","a3-founding/press0","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt1r","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/landsHard0/now","a3-principal/press1","a3-principal/scar","a3-principal/t0g","a3-principal/t0p0","a3-principal/t3p3","a3-seize/Rt6T1p2","a3-seize/Rt6T1r","a3-seize/Rt6g","a3-seize/Rt6p2","a3-seize/Rt6r","a3-seize/before","a3-seize/canon14","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/lands0/l5","a3-seize/lands0/r2","a3-seize/t2r","a3-seize/t4g","a3-seize/t4p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -19233,7 +19343,13 @@ function selfTest(){
     "modelFamily", "jsonModeOK", "replyCap", "replyTemp", "stripReasoning", "contentOf",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
     /* ...and the audit's rows (v4.72.1): the bit hold and the board itself */
-    "holdTheDryPath", "boardTurn"];
+    "holdTheDryPath", "boardTurn",
+    /* ...and the ending (v5.42.0). The whole lifecycle of the last night: the landing's
+       clock, the room it now settles into, the door out of it and the page after that.
+       The broken-form check for the ending row calls armBeat, which was not on this
+       roster - so a proof that ran real game code was filed as a restatement. */
+    "aftermathDrain", "armBeat", "lastRoom", "openSlackDoor", "renderSlackDoor",
+    "slackArm", "closeTheBook", "endCard", "beatDone", "seasonAhead"];
   function runsProductionCode(fn, arg){
     var saved = {}, hit = 0, i, nm;
     for(i = 0; i < PROD_SYMBOLS.length; i++){
@@ -19485,7 +19601,7 @@ function selfTest(){
     });
     SPINE.forEach(function(b, bi){
       var prose = [];
-      ["opens","lands","landsHard"].forEach(function(k){ (b[k] || []).forEach(function(p){
+      ["opens","lands","landsHard","closes"].forEach(function(k){ (b[k] || []).forEach(function(p){
         (p.lines || []).forEach(function(l){ prose.push(typeof l === "string" ? l : (l[1] || "")); });
         if(p.now) prose.push(p.now);
         (p.rail || []).forEach(function(r){ prose.push(choiceLine(r)); });
@@ -19526,7 +19642,7 @@ function selfTest(){
     var anchLost = [];
     SPINE.forEach(function(b){
       var hay = [];
-      ["opens","lands","landsHard"].forEach(function(k){ (b[k] || []).forEach(function(p){
+      ["opens","lands","landsHard","closes"].forEach(function(k){ (b[k] || []).forEach(function(p){
         (p.lines || []).forEach(function(l){ hay.push(typeof l === "string" ? l : (l[1] || "")); });
       }); });
       (b.canon || []).forEach(function(c){ hay.push(c); });
@@ -20084,6 +20200,118 @@ function selfTest(){
          }});
     })();
 
+    /* THE LAST NIGHT REACHES ITS OWN ROOM, AND THE BOOK CLOSES BY HAND (v5.42.0).
+       The novel had no ending for thirty-two releases and nothing in this file said so.
+       The finale's landing advanced the pointer the instant it settled, beatDone() went
+       true on the same render pass, and the season card was dealt over a family who had
+       just won and never got to sit down - so the one night that HAD to have family time
+       in it was the only night in the book with none. Reading the aftermath tick is what
+       missed that for thirty-two releases; this drives it.
+       THREE CLAIMS, ALL RUN AGAINST THE LIVE GAME: the last beat's landing settles into
+       the room rather than past it; the season seam beside it still goes where it always
+       went, which is what a change to a shared branch has to prove; and the way out of
+       that last room ends the run - pointer moved, chronicle played, card dealt.
+       The close is driven with the four functions that touch the screen and the SAVE
+       stubbed out, because a sweep row that persists is a sweep row that eats a save. */
+    (function(){
+      var K = {bi:beatIdx, ph:phase, pl:phaseLeft, st:slackTurns, sd:slackDoorUp,
+               sr:slackRoom, sm:slackMovedTo, sw:slackWalkedIn, ro:runOver,
+               en:epilogueNow, sb:seasonBreakDue, cs:currentSeason,
+               pa:pendingAsides.slice(), pAu:playAuthored, pAll:persistAll,
+               eC:endCard, aT:applyTension, rN:renderNow};
+      var last = SPINE.length - 1, seam = -1, i;
+      for(i = 0; i < last; i++){ if(SPINE[i + 1].season !== SPINE[i].season){ seam = i; break; } }
+      var bad = [], story = [], played = null, ended = null;
+      try{
+        /* (i) the last night's landing settles into the family's own time */
+        beatIdx = last; runOver = ""; epilogueNow = false; seasonBreakDue = false;
+        phase = "aftermath"; phaseLeft = 2;
+        aftermathDrain();
+        story.push("after one settling turn: " + phase);
+        if(phase !== "aftermath") bad.push("the landing gave up after one turn instead of two");
+        aftermathDrain();
+        story.push("after two: " + phase);
+        if(phase !== "slack") bad.push("the last night's landing went to \"" + phase + "\" and not into the room");
+        if(beatDone()) bad.push("the pointer moved before the player touched anything");
+        if(!lastRoom()) bad.push("lastRoom() is false standing in the last room");
+        if(!slackDoorUp) bad.push("the way out of the last room never opened");
+
+        /* (ii) ...and the season seam beside it is untouched */
+        if(seam >= 0){
+          beatIdx = seam; epilogueNow = false; seasonBreakDue = false;
+          phase = "aftermath"; phaseLeft = 1;
+          aftermathDrain();
+          story.push("the season seam at " + SPINE[seam].id + ": " + phase);
+          if(phase !== "seasonend") bad.push("the season break went to \"" + phase + "\" instead of the seam");
+          if(!seasonBreakDue) bad.push("the season break card was never queued");
+        }
+
+        /* (iii) the door out of the last room ends the story */
+        beatIdx = last; runOver = ""; phase = "slack"; slackDoorUp = true;
+        playAuthored = function(V){ played = V; return null; };
+        persistAll = function(){};
+        endCard = function(kind){ ended = kind; };
+        applyTension = function(){}; renderNow = function(){};
+        closeTheBook();
+        story.push("the book closed: pointer at " + beatIdx + " of " + SPINE.length);
+        if(!beatDone()) bad.push("the book closed and the pointer did not move");
+        if(runOver !== "season") bad.push("the run did not end: runOver = \"" + runOver + "\"");
+        if(ended !== "season") bad.push("no closing card was dealt");
+        if(!played || !(played.lines || []).length) bad.push("the last page played nothing");
+      } finally {
+        playAuthored = K.pAu; persistAll = K.pAll; endCard = K.eC;
+        applyTension = K.aT; renderNow = K.rN;
+        beatIdx = K.bi; phase = K.ph; phaseLeft = K.pl; slackTurns = K.st;
+        slackDoorUp = K.sd; slackRoom = K.sr; slackMovedTo = K.sm; slackWalkedIn = K.sw;
+        runOver = K.ro; epilogueNow = K.en; seasonBreakDue = K.sb; currentSeason = K.cs;
+        pendingAsides = K.pa;
+      }
+      var fin = SPINE[last], room = (SCENEBOOK[fin.id] || {}).room || {};
+      T("the last night reaches its own room, and the book closes by hand",
+        bad.length === 0,
+        "the finale's landing drained a turn at a time and ended in the family's own time; the"
+        + " season seam beside it still opens the break; and the door out of that room moved the"
+        + " pointer, played a last page of " + ((fin.closes && fin.closes[0] && fin.closes[0].lines) || []).length
+        + " blocks and dealt the closing card"
+        + " (" + story.join(" · ") + ")"
+        + (bad.length ? " - FIRED: " + bad.join(" | ") : ""),
+        {label:"the shipped behaviour up to v5.41.0: the last beat advanced its own pointer"
+             + " inside the aftermath tick, so beatDone() was true before the family sat down"
+             + " and the room never opened",
+         /* THE OLD LINE IS armBeat, EXACTLY. What the finale used to do when its landing
+            drained was `beatIdx++; phase = "live"; phaseLeft = 0` - which is the body of
+            armBeat, still shipping, still reachable, and still the right thing on every
+            other night. So the break runs the real function at the last beat and asks the
+            same question: did the family get their room. */
+         check:function(){
+           var k2 = {bi:beatIdx, ph:phase, pl:phaseLeft, sd:slackDoorUp, bt:beatText,
+                     bs:beatSeen, gr:gateRefusedNames, st:slackTurns, sr:slackRoom,
+                     cs:currentSeason, pa:pendingAsides.slice()};
+           var got;
+           try{
+             beatIdx = last; phase = "aftermath"; phaseLeft = 1; slackDoorUp = false;
+             armBeat();
+             got = (phase === "slack" && !beatDone() && slackDoorUp);
+           } finally {
+             beatIdx = k2.bi; phase = k2.ph; phaseLeft = k2.pl; slackDoorUp = k2.sd;
+             beatText = k2.bt; beatSeen = k2.bs; gateRefusedNames = k2.gr;
+             slackTurns = k2.st; slackRoom = k2.sr; currentSeason = k2.cs;
+             pendingAsides = k2.pa;
+           }
+           return got;
+         }});
+      T("the last room is the biggest in the book",
+        (room.topics || []).length >= 10
+        && (room.topics || []).every(function(t){ return !!t.id && (t.takes || []).length; }),
+        (room.topics || []).length + " cards in the epilogue, every one with an id and a second take"
+        + " - the family's own time on the last night is the ending of the novel, so it carries"
+        + " more than any other room in the book",
+        {exempt:"A FLOOR, NOT A DETECTOR. This is the ten-card standard for Book Three written"
+          + " down where it cannot quietly slip: there is no old version of the room to run it"
+          + " against, because before this release the room could not be reached at all and"
+          + " nothing in it had ever been dealt to anybody."});
+    })();
+
     /* EVERY NIGHT'S PAGE IN THE WRITERS' BOARD ACTUALLY RENDERS (v5.36.0).
        This row exists because the board's night pages were dead for THREE RELEASES and
        nothing said so. wbReach was taught at v5.32.0 that an opening wires against the
@@ -20155,7 +20383,7 @@ function selfTest(){
           var SB = SCENEBOOK[b.id];
           if(!SB) return;
           var walkons = WALKONS[b.id] || [], here = (SB.here || []).concat(walkons);
-          ["opens", "lands", "landsHard"].forEach(function(k){
+          ["opens", "lands", "landsHard", "closes"].forEach(function(k){
             (b[k] || []).forEach(function(V, vi){ look(V.lines, k + vi, here, b.id, out); });
           });
           (SB.topics || []).forEach(function(t, ti){

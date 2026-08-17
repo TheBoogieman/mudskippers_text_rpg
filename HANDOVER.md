@@ -205,61 +205,76 @@ REOPENING of a finished night · how Nine heard anything inside the farm is an O
 FACT and must not be invented (night 29 needs it) · the ~105 AI tics in the finished nights
 · eighteen nights unaudited for the earshot fault.
 
-### THE NOVEL HAS NO ENDING, AND THIS IS THE NEXT THING WORTH DOING
+### THE NOVEL HAS AN ENDING (v5.42.0) — 23 of 33, AND NIGHT 33 IS WRITTEN
 
-**Driven, not read, on 2026-08-16.** `a3-seize` (night 33) is the only beat in the book with
-**no `lands` and no `landsHard`**. That was deliberate for the wild table, where a model
-writes the epilogue against the run's own record. The novel has no model.
-
-**So this is every word a player currently gets after thirty-three nights:**
+**This was the biggest hole in the game and it is closed.** Up to v5.41.0 a player who
+finished all thirty-three nights got exactly this and nothing else:
 
 > **PAID IN FULL** — Season complete. The chronicle survives the courier.
 
-Two buttons. And **the family's own time on the last night never opens**: the aftermath tick
-at `index.html` sees `beatIdx === SPINE.length - 1`, advances the pointer and returns, so
-the run goes straight to `endCard("season")` and `a3-seize`'s three room cards have never
-been reachable by anybody.
+**Three things were wrong with that and all three are fixed.**
 
-**Worse, that headline is Vic's dying words**, spent as a generic completion stamp four
-nights after the scene that earns them.
+1. **THE LAST NIGHT COULD NOT REACH ITS OWN ROOM.** The aftermath tick special-cased the
+   finale: pointer advanced, `beatDone()` went true, closing card dealt over the top of a
+   family who had just won and never sat down. So the ONE night that had to have family
+   time in it was the only night in the book with none. The tick is now `aftermathDrain()`,
+   a function of its own, and the finale falls through to `slack` like every other beat.
+   **The way OUT is what differs:** `lastRoom()` is true there, the door reads **CLOSE THE
+   BOOK** instead of TAKE THE NIGHT ON, it confirms first, and `closeTheBook()` plays the
+   last page and ends the run **by the player's hand**.
+2. **`endCard("season")` WAS SPENDING VIC'S DYING WORDS.** The head is now **AND NOBODY UP
+   THERE KNOWS**, and the first button says START AGAIN, because there is no next season.
+3. **THE CLOSING PASSAGE IS A NEW FIELD, `closes:`, AND EVERY READER WAS HUNTED.** Ten of
+   them: `placeNamesOk`, `beatDayPin`, `wbStage`, `wbStat`, the beat page, `stScenes`,
+   `stCorpus`, the death-predication row, the anchor row and the cast-of-the-scene row.
+   `editor.html` needed nothing — it walks cards, never passages. It is a POOL like `lands`
+   and `opens`, so it forks with the season's choice and every existing walker understands
+   the shape.
 
-**And `a3-seize`'s own canon promises ten things nobody ever sees** — Mirren's name called
-first at the narrow door, nobody filing Pia under anything again, the canals reopening under
-two pilots who take turns, the Principal staying for the letting go. All written as canon.
-None of it dramatised.
+**`a3-seize` scores four of four on the board's own count:** 5 evening cards, **12 in the
+room**, a second take on every one, both landings wired (6 rows), and a 13-block last page.
+**Driven on both fork roads:** 24 room turns, 12 distinct cards, every one served twice with
+distinct text, nothing empty on the Nine road, nothing repeated.
 
-### → THE NEXT WAVE IS THE ENDING, AND IT WAS RULED ON 2026-08-16
+**THE ENDING WAS RULED ON 2026-08-17 AND IT IS NOT A HAPPY ONE.** Write every Book Three
+night toward this, because the epilogue is written against it:
 
-**Build night 33's closing BEFORE any other Book Three night**, so the ten nights in front
-of it can aim at it and plant for it. Ruled explicitly, against the earliest-unfinished
-order, because it is the biggest hole and the last thing anybody sees.
+- **They took down something holding millions of minds and there is no fast way out.** An
+  unmaking done right takes days, by hand, one person at a time. Hesta's own sum: *"At one a
+  day, by hand, that isn't a queue. That's geology."*
+- **Four hundred thousand convergent citizens lost the voice mid-sentence, and most of them
+  had signed up for it.** They queued. It made them calm and useful and a great many of them
+  liked it. **Seven says this out loud in the evening, BEFORE the word goes out**, because
+  he is the only person in the room who chose the calm and left it.
+- **THE PRINCIPAL HAS BEEN STEALING FROM HER OWN TENANT FOR A HUNDRED AND THIRTY YEARS** —
+  substrate, housing shells, chassis blanks, shard stock — and putting it where builders
+  would find it cheap. **Vic's "very good supplier" on the grey market was her, and he never
+  knew.** Every quiet body in this city that is not the Choir's came off a shelf she
+  emptied. Eleven hundred people got out that way. At her rate, from here, the last sleeper
+  comes up in about twenty thousand years. *"Congratulations. It is the correct disaster."*
+  **THIS IS NEW LORE AND IT NEEDS PLANTING at `a3-principal` (night 31), which is unwritten.**
+- **The city came outside and stayed outside. It is global news by breakfast, with no cause
+  attached.** The family is about to be the most famous family alive and not one word of it
+  will be about the plates. **Nobody has their names yet. Somebody will.**
+- **NOBODY EVER TELLS THE COURIER WHY HE WAS CHOSEN.** Vic never said, there is no entry
+  about him in the founders' records, and the family says so to his face. *"He was in a
+  chair, his blood fitted a lock, and an old man made a decision about him in a room he
+  wasn't in."* **That is the door left open for a second season and it must stay shut.**
+- **Emrys Toller is on his own step in the dark**, working out the end of a sentence
+  something else started for him ten days ago, and Hesta does not know who will be in there
+  when he stands up.
 
-**THREE LAYERS, IN THIS ORDER — all three, ruled:**
-1. **A staged landing**, like every other night in the book. `a3-seize` has neither `lands`
-   nor `landsHard` today.
-2. **The family's own time IS the epilogue.** Ten-plus room cards, one per person, each
-   their ending, read in whatever order the player wants and for as long as they want.
-   This is the part of the game the game is about and the book should finish inside it.
-3. **A written chronicle passage** that plays when the player finally closes the book, and
-   **it ends on THE CITY WAKING UP NOT KNOWING** — every Hollow still at once, every gentle
-   voice stopped mid-sentence, and a city that will never learn who did it or what it cost.
-   That is the ruled last image. Cold and wide, after a whole book of warm rooms.
+**The last page is the book's own voice, wide and cold, after thirty-three nights of warm
+rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
+more."*
 
-**THIS WAVE HAS ENGINE WORK IN IT AND A NEW FORM WITH READERS — plan for both:**
-- **The last beat cannot currently reach its own room.** The aftermath tick sees
-  `beatIdx === SPINE.length - 1`, advances the pointer and returns, before the branch that
-  sets `phase = "slack"` and calls `openSlackDoor()`. Layer 2 does not exist without fixing
-  that, and it must not break the season-break path beside it.
-- **The closing passage is a NEW SHAPE**, and the standing law says hunt every reader before
-  shipping it: the sweep's corpus walkers, the drift net, `wbReach`/the writers' board, the
-  editor, `sw.js` if anything new is served, and whatever decides that a run is over.
-- **`endCard("season")` must stop saying PAID IN FULL.** Those are Vic's dying words and it
-  is spending them as a completion stamp. Whatever replaces it, it is not that.
-- The epilogue must read the run's own record — the chassis fork, who was lost, what the
-  quests did — and **author nothing the record contradicts**, which is the beat's own
-  standing instruction.
+### → THE NEXT WAVE IS BOOK THREE, IN ORDER, FROM `a3-evict` (23)
 
-**Then Book Three runs in order from `a3-evict` (23).** Toller is standing in that street.
+**Ten nights left**, every one at 3–4 beat cards and 2–4 room cards with no second takes and
+nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-stone` · `a3-for` ·
+`a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
+at, which is exactly why it was built first.**
+
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
 

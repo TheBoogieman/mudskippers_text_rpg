@@ -1,6 +1,6 @@
 # What is outstanding
 
-*Written 2026-08-16, updated at v5.41.0. **BOOKS ONE AND TWO ARE CLOSED. 22 of 33 nights are finished and Book Three is the whole of what is left — eleven nights, the lore-heavy ones, and an ending the novel does not currently have.***
+*Written 2026-08-16, updated at v5.42.0. **BOOKS ONE AND TWO ARE CLOSED AND SO IS THE ENDING. 23 of 33 nights are finished. What is left is the ten middle nights of Book Three — the lore-heavy ones — and they now have a finale to aim at.***
 
 **Do not trust this file's numbers over the game's.** Open MUDSKIPPERS, pry into THE
 WRITERS' BOARD, and page one recounts everything below off the live arrays every time it
@@ -9,7 +9,7 @@ the way it is, what has been ruled, and which of it is a trap.
 
 ---
 
-## 0. The shape of the repo, as of v5.41.0
+## 0. The shape of the repo, as of v5.42.0
 
 **The game is four files, not one.** This changed during the tooling run and everything
 below assumes it.
@@ -45,7 +45,7 @@ taking half the window, and the corpus split.
 
 ## 1. Where the book actually stands
 
-**22 of 33 nights finished — every night of Books One and Two.** A night is finished on four counts and not before:
+**23 of 33 nights finished — every night of Books One and Two, plus the finale.** A night is finished on four counts and not before:
 
 1. enough cards to outlast its own pressure block — `budget + 2`
 2. a second take on them
@@ -56,7 +56,7 @@ taking half the window, and the corpus split.
 
 | | count |
 |---|---|
-| finished nights | **22 of 33** |
+| finished nights | **23 of 33** |
 | cards across both decks | 417 |
 | second and third takes | 224 |
 | **takes with no choice line of their own** | **47 of 224** |
@@ -274,31 +274,38 @@ three-layer cards.
 
 ---
 
-## 5. VERIFIED AT v5.41.0, AND IT IS WORSE THAN "UNVERIFIED": THE NOVEL HAS NO ENDING
+## 5. CLOSED AT v5.42.0: THE NOVEL HAS AN ENDING
 
-**`a3-seize`, night 33, has no authored closing.** No `lands`, no `landsHard`. That is
-deliberate for the wild table: its goal says *"Epilogue in chronicle voice, then set
-the_end true"*, written per run against that run's own record. **The novel has no
-storyteller, and this was driven rather than reasoned about.**
+**This section used to say the novel had none, and it was right.** `a3-seize` had no
+`lands` and no `landsHard`; the aftermath tick advanced the pointer at the last beat before
+the branch that enters `slack`, so the last night's family time had never been reachable by
+anybody; and the only thing a player got after thirty-three nights was **PAID IN FULL**,
+which is Vic's dying words spent as a completion stamp.
 
-**Every word a player gets after thirty-three nights:** the head **PAID IN FULL**, the line
-*"Season complete. The chronicle survives the courier."*, and two buttons.
+**All of it is written now.** Five evening cards, twelve in the room with a second take on
+every one, both landings wired, a thirteen-block last page, and a closing card that says
+what the last page says. The lifecycle is a sweep row that drives the real game:
+`aftermathDrain()` twice at the last beat, the season seam beside it, and the door out of
+the room. Night 33 scores four of four on the board's own count.
 
-**And the last night's family time never opens.** The aftermath tick sees
-`beatIdx === SPINE.length - 1`, advances the pointer and returns before the branch that
-enters `slack` — so `a3-seize`'s three room cards have never been reachable by anybody.
+**WHAT IS NEW DEBT, AND IT IS ALL PLANTING.** The ending rules a great deal about the world
+and the ten unwritten nights have to agree with it:
+- **The Principal's hundred and thirty years of theft** — substrate, housing shells, chassis
+  blanks and shard stock skimmed off her own tenant and left where builders would find it
+  cheap; Vic's grey-market supplier was her and he never knew. **This is the single biggest
+  piece of new lore in the book and `a3-principal` (night 31) has to carry the plant.**
+- **The cost.** Four hundred thousand convergent citizens lost the voice mid-sentence and
+  most of them had asked for it. Nothing in Book Three may treat the fall of the Choir as a
+  clean win, and `a3-voice` (night 24) is where that has to start being true.
+- **The scale.** Millions asleep in the vaults, an unmaking that takes days by hand, and no
+  honest way to industrialise it. `a3-dreamers` (night 30) is the night that has to make the
+  arithmetic felt rather than stated.
+- **Why him.** Nobody ever answers it. Vic never said, the founders' records carry no entry,
+  and the family says so out loud in the epilogue. **`a3-vic` (night 26) must not answer it
+  either** — that is the door left open, and it is the only one.
 
-**Three things make this the most valuable hour left in the project:**
-1. **The headline is Vic's dying words**, spent as a generic completion stamp four nights
-   after the scene that earns them.
-2. **`a3-seize`'s canon already promises ten specific things** and dramatises none of them:
-   Mirren's name called first at the narrow door · nobody filing Pia under anything ever
-   again · the canals reopening under two pilots who take turns · every keeping left
-   sleeping now having Three to answer to · the Principal staying for the letting go.
-3. **It is the last thing a player ever sees.**
-
-`a1-hum` also has no `opens`, and that one **is** correct: it comes straight out of the
-hardcoded cold open, and the board says so.
+`a1-hum` has no `opens`, and that one **is** correct: it comes straight out of the hardcoded
+cold open, and the board says so.
 
 ---
 
