@@ -316,8 +316,15 @@ at, which is exactly why it was built first.**
    they do not want to. **DO NOT SWING THE TONE GREY:** he protects the comedy hard and has
    twice said a scene was too dry. A joke with visible pressure under it is funnier, which
    is the whole reconciliation. **The v5.42.0 epilogue is in scope for this pass too.**
-   **OUTSTANDING DECISION THAT SHAPES NIGHT 23: who breaks?** At least one of them needs a
-   register that is not competence. Not yet ruled — ask.
+   **RULED THE SAME DAY: PIA BREAKS, AND THE DIAL IS "WEIGHT UNDER EVERY JOKE, ONE BREAK A
+   NIGHT".** Her over-organising is the symptom, so the book turns it — **the rules stop
+   working**, and a twelve-year-old is left next to a decision nobody her age should be
+   near, which answers §7b's Pia hole in the same stroke. **Four rules so it does not eat
+   her:** she is still the funniest person in the book and the break is rationed · it costs
+   her the METHOD, not her nerve — she has been frightened since night 22 and said so calmly
+   · it arcs and escalates across Book Three rather than repeating · **nobody fixes her**,
+   because "stand there and be ordinary at me" is her own ruled law. **Book Three does not
+   run grey and the jokes do not get rarer.**
 
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.

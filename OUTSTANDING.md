@@ -630,9 +630,32 @@ observed rather than felt. **The epilogue is in scope for this pass**, and so is
 finished night. Expect it to touch second takes hardest, because a second take is where a
 character is asked again and has already used their deflection once.
 
-**→ A DECISION IS OUTSTANDING AND IT SHAPES NIGHT 23: WHO BREAKS?** At least one of them has
-to have a register that is not competence, or the cast will cope its way through Book Three
-exactly as it coped through Books One and Two. **Not yet ruled.**
+### RULED 2026-08-17: PIA BREAKS, AND THE DIAL IS "WEIGHT UNDER EVERY JOKE, ONE BREAK A NIGHT"
+
+**PIA IS THE ONE WITH A FAILURE MODE.** Her over-organising is the symptom, so the book
+turns it: **the rules stop working.** Rules, jobs, a doorframe, a plan for everybody — and
+then a night where none of it holds and a twelve-year-old is left standing next to a
+decision nobody her age should be near. **This answers §7b's fifth hole in the same stroke:
+the book stops being able to have her be operational without noticing she is a child.**
+
+**FOUR RULES FOR WRITING IT, so it does not eat her:**
+- **SHE IS STILL THE FUNNIEST PERSON IN THE BOOK.** The break is rationed. She does not
+  become the one who cries in scenes; she becomes the one whose system fails and who has to
+  keep going without it.
+- **IT COSTS HER THE THING SHE IS BEST AT.** The break is the organising failing, not her
+  being frightened in general. She has been frightened since night 22 and said so calmly —
+  fear is not new for her, **losing the method is.**
+- **IT ARCS ACROSS BOOK THREE. IT DOES NOT REPEAT.** Different failure each time, escalating
+  — not the same scene ten times with different furniture.
+- **NOBODY FIXES HER.** The family's law is "stand there and be ordinary at me", ruled on
+  night 22 in her own words. Comfort is what she refuses; that does not change because she
+  is worse.
+
+**THE DIAL, RULED: weight under every joke, one break a night.** The tone stays warm and
+funny. The difference is that the reader always sees the thing being dodged, and **once per
+night somebody cannot dodge it** — usually not Pia. Book Three does NOT run grey, and the
+jokes do not get rarer. This is the cheapest of the three options and the author took it
+over "dread as the default" deliberately.
 
 ---
 
