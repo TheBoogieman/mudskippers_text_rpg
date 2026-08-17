@@ -275,6 +275,25 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
+**THREE RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
+
+1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
+   is where she admits it — a hundred and thirty years of skimming her own tenant, in her
+   own house, to her face. **The epilogue's version then changes job: it stops being the
+   news and becomes the ARITHMETIC** — eleven hundred people, twenty thousand years, *"it is
+   the correct disaster."* When night 31 is written, re-read `what-the-principal-has-been-doing`
+   in a3-seize's room and make sure it reads as a sum rather than a revelation.
+2. **THE ~105 AI TICS STAY A DEBT AND DO NOT GET SWEPT PIECEMEAL.** The finale's four
+   original evening cards still read in the old voice, next to twelve new ones written to
+   the craft laws, and the join is visible. **Ruled: push on to night 23 anyway.** Doing
+   four cards now would hide the size of the debt rather than pay it. It is its own wave,
+   whole-corpus, when the author calls it.
+3. **NIGHT 23 IS THE FIRST TASTE OF THE COST.** `a3-evict` — the family takes Cannery Row
+   back and stills the nine the kind way, **and it works, and it is horrible.** The
+   neighbours they save do not thank them. **This is where the epilogue's moral engine
+   starts running**, on the first night of Book Three, so that every night after it is
+   living with something rather than heading toward it. Toller is standing in that street.
+
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.
 
