@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.67.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.68.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -405,10 +405,12 @@ identically, the second time answering *"Again? Right. Then you get the part I k
 `act.js` now prints both numbers. **Nothing was damaged by the old label** - `addtake.js`
 refuses any card that already has `takes:`, and it never once refused on nights 1-9.
 
-### → NEXT: FINISH NIGHT 10, THEN NIGHT 15
+### → NEXT: THE §7d NARRATION PASS, THEN NIGHT 15
 
-1. **14 second-take lines on `a2-door`** (the prose exists), then **4 whole takes** on the
-   evening cards.
+**Night 10's deck is finished (v5.68.0):** every card has a second take, every take has a line
+of its own that says what is in it, all 38 clickable lines name their addressee and reach
+their own card when typed. The fourteen recovered lines were the interesting half - their
+prose was written long ago and was being offered under the FIRST take's wording.
 2. **The §7d narration pass.** THE AUTHOR'S OWN NUMBER IS STALE: §7d was written at 3,819
    spoken blocks and 27.5% narration and priced the job at "about 2,400 blocks". The book is
    now **4,677 spoken / 1,933 narration / 29.2%**, so **the real bill is 2,744** and it grows
