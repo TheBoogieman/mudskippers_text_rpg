@@ -275,7 +275,7 @@ nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-ston
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
-**THREE RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
+**FOUR RULINGS TAKEN 2026-08-17, AFTER THE ENDING SHIPPED:**
 
 1. **THE PRINCIPAL'S THEFT IS PLANTED AT NIGHT 31 AND PAID IN THE EPILOGUE.** `a3-principal`
    is where she admits it — a hundred and thirty years of skimming her own tenant, in her
@@ -293,6 +293,16 @@ at, which is exactly why it was built first.**
    neighbours they save do not thank them. **This is where the epilogue's moral engine
    starts running**, on the first night of Book Three, so that every night after it is
    living with something rather than heading toward it. Toller is standing in that street.
+
+4. **THE PLAUSIBILITY PASS IS A NAMED WAVE, AFTER BOOK THREE — see `OUTSTANDING.md` §7b.**
+   The author's note of 2026-08-17: the Choir looks like it just let all this happen, nobody
+   bigger ever chases them, a whole street gets "taken back" and the next night is a normal
+   Tuesday, and one of them is twelve. **Six holes, written up in full in that section.**
+   **THREE OF THEM MUST BE HONOURED WHILE WRITING NIGHTS 23–32 or the pass grows instead of
+   shrinking:** give the enemy a move in every night's pressure block; never open a night on
+   ordinary business after a night that cost the Choir something; and let somebody name the
+   mismatch out loud once, early — **`a3-evict` is the place, and the family should be
+   frightened of how easy that street was.**
 
 
 **Writing now happens in `corpus.js`**, and `editor.html` is the fastest way to proofread it.

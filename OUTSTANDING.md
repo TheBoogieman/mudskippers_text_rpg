@@ -490,6 +490,81 @@ dry, and both times he was right.
 
 ---
 
+## 7b. THE PLAUSIBILITY PASS — ruled 2026-08-17, RUNS AFTER BOOK THREE IS WRITTEN
+
+**The author's note, in his own framing:** *a ragtag group infiltrates a cult, a city-wide
+organisation; takes a city block; does surgeries; and everyone is just playing along. The
+ending makes them realise it, but they are a much bigger threat than the book gives them
+credit for. The suspension of disbelief is real. The Choir looks like it just let this
+happen. No bigger authority chases them. After a whole street is "taken back" they go on
+like a normal Tuesday. How do they even TAKE a row back? One of them is twelve.*
+
+**This is one note and six separate holes. Each is stated below as the reader's own
+question, because that is the form it will arrive in.**
+
+1. **WHY DOES NOTHING COME BACK AT THEM?** The Choir holds four hundred thousand converts,
+   millions of sleepers, intake desks on every row and an apparatus in the walls of the
+   oldest building in the city — and across thirty-three nights it never once costs them
+   anything for what they did the night before. It behaves like scenery with a voice.
+2. **WHERE IS EVERYBODY ELSE?** No civic authority, no rival, nobody above the Choir ever
+   takes an interest. A city is being run by a tenant in a basement and no other power in it
+   has an opinion.
+3. **CONSEQUENCE DOES NOT SURVIVE THE NIGHT.** Each beat resets. They take a street and the
+   next night opens on ordinary business. **The engine is complicit in this:** the record
+   carries canon and scars forward, and almost nothing in the book READS them as pressure.
+4. **"TAKING A ROW BACK" IS UNDEFINED.** `a3-evict` stills nine people the kind way — and
+   then what? Who holds the street? What stops an intake van on Tuesday morning? The phrase
+   is doing work the prose has never shown.
+5. **PIA IS TWELVE AND SHE IS LOAD-BEARING.** Not present — operational. The book has never
+   said out loud why the adults allow it, and the Choir has never once used it against them,
+   which is the first thing an organisation that files children would do.
+6. **THE SCALE DOES NOT BALANCE.** Eight people against a city. As written, either the Choir
+   is far weaker than it is described, or the family is far more dangerous than the book
+   admits.
+
+**THE FIX IS IN THE AUTHOR'S OWN SENTENCE, AND IT IS THE SECOND ONE: they ARE a much bigger
+threat than the book gives them credit for.** Everything needed is already on the page and
+none of it has ever been treated as decisive by the enemy:
+- **maker's blood** that opens doors nothing else in the city opens
+- **a founding-era chassis and a housing built to seat a mind**, from a supply line the
+  Choir does not know is leaking
+- **an unmaker who can undo a conversion** — the only counter to the Choir's entire method
+- **a defector who worked inside it** and knows the shape of its paperwork
+- **a shard on every civic channel at once**
+- **the building's own landlord**, who has been robbing it for a hundred and thirty years
+
+**AND THE CHOIR HAS A REAL ANSWER TOO, WHICH THE BOOK HAS NEVER SAID OUT LOUD.** It is a
+TENANT with an apparatus, not a police force. Its method is paperwork, patience and
+conversion. It has never needed force because until this family nobody had ever simply
+refused — so it is genuinely slow, clumsy and improvisational at violence. **That is a
+legitimate explanation and it is currently doing its work invisibly, which is the same as
+not doing it.** Somebody in the book has to SAY it, early, or every quiet night reads as the
+author looking away.
+
+**WHAT THE PASS ACTUALLY IS:** a read of all thirty-three nights asking, per night, *what
+did the other side do about last night, and what did it cost this family* — and then the
+writing that answers it. Expect it to touch pressure blocks, teeth, canon and scars far more
+than rooms.
+
+**→ AND THE TIMING NEEDS SAYING, BECAUSE IT CUTS AGAINST THE RULING.** The pass was ruled to
+run AFTER Book Three, and that is the right call for the rewriting. But nights 23–32 are
+being written NOW, and every one written without an answer to hole 1 or hole 3 makes the
+pass bigger rather than smaller. **Three things to honour while writing Book Three, which
+cost nothing now and save a wave later:**
+- **give the enemy a move in every night's pressure block** — something that happened
+  because of what they did last night, even if it is one line
+- **never let a night open on ordinary business after a night that cost the Choir something**
+- **let somebody name the mismatch out loud, once, early — `a3-evict` is the place.** The
+  family should be frightened of how easy that street was, because easy means unnoticed, and
+  unnoticed has an expiry date.
+
+The epilogue at v5.42.0 is the first place consequence lands at full weight — the city out
+in the street, the inquiry, the world's wires, *"nobody has our names; somebody will."*
+**The author is right that it lands only at the end. The pass is how it starts landing
+earlier.**
+
+---
+
 ## 8. Still open, deferred by the author until the written side settles
 
 - 32 short transition scenes for `TAKE THE NIGHT ON`
