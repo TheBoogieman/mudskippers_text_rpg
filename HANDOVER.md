@@ -41,6 +41,38 @@ the repo, because a second copy of the bible drifted within a day the last time 
 
 ---
 
+## → IF YOU ARE PICKING THIS UP COLD, START HERE
+
+**A pass-4 night takes about twenty minutes and needs nothing in context but this block.**
+
+```
+node scratchpad/floors.js                 # pick the lowest night not yet done
+node scratchpad/layers.js <beat> 4        # its layers by longest unbroken spoken run
+node scratchpad/dumplayer.js <beat> <id> <layer> …    # dump them WHOLE, with indices
+# write a spec: [{id, layer:"plays"|0|1…, after:<index>, narr:"…"}]
+node scratchpad/breathe.js <beat> spec.json
+node scratchpad/floors.js | grep <beat>   # repeat until 35%+
+```
+
+**THE RULES THAT MAKE IT GO WRONG IF IGNORED:**
+- **RE-DUMP BETWEEN BATCHES ON THE SAME LAYER.** Every insert shifts the indices behind it.
+  `breathe.js` refuses rather than guessing, but only after you have wasted the batch.
+- **An ambiguous anchor means write one block fewer.** Pia's bare *"No."* appears five times.
+- **Two to three blocks per layer, aimed at the longest runs.** Do not spread evenly.
+- **Check `debts.js | grep FLOOR` after every batch.** Spoken must stay at **4,656**.
+- **Then: `grammar.js`, browser `?selftest`, fixture by delta + ledger, stamp, drive, push.**
+
+**THE FOUR WAYS MY OWN NEW NARRATION HAS FIRED A PREDICATE**, all of them this pass:
+a number at a sentence head (*"Nine years…"*, *"Three clauses…"*) · a DURATION, which is a
+number too (*"he spent nine years…"* fired `breach`) · **`closed hand` / `in your pocket`,
+which MOVE THE SHARD** · and narration doing a character's own reveal (*"a hundred and
+thirty years"* — twice, both the Principal). **Read that list before writing, not after.**
+
+**NOT EVERY NEW FIRE IS A FAULT.** Narration naming Three on Three's own card is honest.
+The test is whether the sentence meant to do it.
+
+---
+
 ## THE LOOP
 
 1. Audit the night. Bring the author a **pick-list** — alternatives, never open questions.
