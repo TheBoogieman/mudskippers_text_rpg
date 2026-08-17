@@ -268,7 +268,30 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 28 IS WRITTEN (v5.49.0) — 29 of 33, AND FOUR NIGHTS ARE LEFT
+### → NIGHT 29 IS WRITTEN (v5.50.0) — 30 of 33, AND THREE NIGHTS ARE LEFT
+
+`a3-descent` is finished: **7 evening cards, 5 in the room, a second take on all twelve,
+6 of 6 landing rows wired.** Marek had no line at all on a *cable descent*; he has two now.
+**Three nights left:** `a3-dreamers` · `a3-principal` · `a3-granny`.
+
+**THE WAVE CAUGHT A CONTRADICTION IT HAD WRITTEN ITSELF THE NIGHT BEFORE.** Night 28's new
+card has Hesta say she is not coming down — *"going back is how six become none"* — and
+`a3-descent` has her on the cable, and the finale has her in the Heart Room. **Ruled: keep
+the promise and break it.** She is forty rungs down before anybody notices, she does not
+announce it, and she waited until announcing it would have meant somebody climbing back up
+to argue. *"It is a good rule. I am simply not a good enough woman for it."*
+**The general lesson: a card written in one wave can contradict a beat three nights later.
+Grep the character across the remaining nights' `here` lists before promising anything.**
+
+**THE OPEN WORLD FACT STAYS OPEN.** Nine's second take does not invent where her hum comes
+from — *"I do not have a where"* — so the gap is now **hers rather than the author's**.
+Still do not invent it.
+
+**Seven states the time ratio once, flatly:** a minute in there per second out here, the
+published figure he filed against for eleven years without being told why it was the
+figure.
+
+### → NIGHT 28 IS WRITTEN (v5.49.0) — 29 of 33
 
 `a3-for` is finished: **7 evening cards, 5 in the room, a second take on all twelve, 6 of 6
 landing rows wired**, six and five live on both roads. Seven canon lines, up from three.
