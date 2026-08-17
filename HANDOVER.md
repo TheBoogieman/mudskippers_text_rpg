@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.76.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.77.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -131,6 +131,11 @@ the drift was the discovery: once the scratch tool read 23 blocks the guard coul
 once it carried a pattern the guard lacked and was quietly the better reader. **Chase the
 difference; never just pick one.**
 
+**A DELTA THAT IS ALL MATCHED PAIRS SAID NOTHING NEW.** Inserting a block at position zero
+renumbers everything behind it, so the net reports an add and a drop for the same unchanged
+sentence. **Check that the pairs really do pair** — a single genuine fire hiding among
+fifteen renumberings is the easiest thing in this project to wave through, and one did.
+
 **AND THE THREE BANNED SHAPES, because they arrive under your own hand:** the **contrast**
 (*"it is not a rule. It is the shape of a thing"*) · **"which is the whole…"** · the word
 **"load-bearing"**. Sweep row (6g7) holds the word at zero and narration at a ceiling that
@@ -163,6 +168,7 @@ tool would delete every one of them silently). `tools-gen-world.js` renders the 
 | `tic.js [beat]` | the AI mannerisms, over **every** block including narration |
 | `untic.js <spec.json>` | replace exact strings in corpus.js, refusing on any count that is not one |
 | `debts.js` | the whole-book debt sheet in one pass |
+| `openers.js` / `openwith.js` | takes that open with a mouth already moving, and the beat that fixes them |
 | `namer.js [beat]` | choice lines naming nobody, each with the card's OWN answerer and a proposed fix |
 | `contrasts.js <beat>` | every spoken contrast, with its speaker, for the per-voice repair |
 | `scold.js` | take layers that open with somebody talking straight at the courier |

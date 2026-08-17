@@ -11,16 +11,16 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.76.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.77.0
 
 | | count | where |
 |---|---|---|
 | ~~choice lines that name nobody~~ | **0** | **PASS 2 CLOSED at v5.76.0** — 179 lines named across three shapes |
 | ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
-| take layers that **open with somebody talking at the courier** | **87** of 423 | book-wide |
-| nights under the **35% narration floor** | 4 badly | `a2-manual` 19.5 · `a2-chassis` 20.2 · `a2-law` 23.1 · `a2-housing` 23.3 |
+| ~~take layers that open with somebody talking at the courier~~ | **2** | **PASS 3 CLOSED at v5.77.0** — 85 opened on a beat; `a3-stone`'s two left on purpose |
+| nights under the **35% narration floor** | re-measure first | pass 3 moved every night; `floors.js` before writing a word |
 | spoken blocks — **THE BANTER FLOOR** | **4,656** | must never fall |
-| narration blocks | 1,926 | **29.3%** book-wide, median night 31% |
+| narration blocks | 2,011 | **30.2%** book-wide, median night **32.2%** |
 | bare landing / opening rows | **0** | closed |
 
 ### RETIRED BY THE AUTHOR, 2026-08-17 — these are NOT debts and must not come back
@@ -56,7 +56,7 @@ nine separate waves reaching them.
 |---|---|---|---|
 | ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
-| 3 | **the scold: a narration beat before anyone speaks** | `scold.js` | 87 takes |
+| ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
 | 4 | **the narration floor**, on the four nights genuinely under it | `floors.js`, `layers.js` | 4 nights |
 | 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |

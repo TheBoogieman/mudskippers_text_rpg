@@ -2928,6 +2928,7 @@ var SCENEBOOK = {
       ["Pia","It's couriers, fixers, lookouts, a boards wall, and an argument that has been running since before me. It is not a gang. Gangs have bosses. We have a QUEUE."],
       ["Pia","And tonight it's also me, standing next to you, which - I'll be honest - is the constitution getting field-tested. Drown last. Both of us. That's the plan and the whole of the plan."]],
      takes:[[
+      "She is walking backwards to do this, which she can, and does, and will not be told about.",
       ["Pia","You want more constitution. Nobody ever wants more constitution. Sit down - metaphorically. We're walking."],
       ["Pia","Drown last works because it's honest about the water. Everybody else's motto pretends there's no water. Stay dry. Rise above. Beautiful. Useless in a flood."],
       ["Pia","Ours says it's coming up, and you'll be in it, and the whole of the skill is being the one still going when it does. That's not bravery. That's scheduling."],
@@ -2948,6 +2949,7 @@ var SCENEBOOK = {
         further and it still keeps the card's hold: why Vic came looking is the one
         part she cannot supply, because she was not the one who decided it. */
      takes:[[
+      "The good version took eleven seconds and had a joke in it. This one takes longer and does not.",
       ["Pia","...You asked me that already. I gave you the good version."],
       ["Pia","Here is the other one. I was on the Veldt steps eleven days. On day nine somebody offered me indoor work and I nearly took it, and I want you to hear that I nearly took it, because people say 'I'd never' and none of them have been on day nine."],
       "She says it flat, walking, not looking over. It is not a confession. It is a correction she is making to a record she wrote herself.",
@@ -2965,6 +2967,7 @@ var SCENEBOOK = {
       ["Nine","Hum sometimes. Or talk to the rain like Pia does, or argue with your shoes. Anything. The jacket is a very quiet address and I grew up somewhere with sound in the walls, and a person can miss a terrible place's one good feature. That is allowed, I have decided."],
       "You clear your throat, experimentally, like a man about to take up humming. Against your ribs, something small settles in to listen."],
      takes:[[
+      "The hum settles into a flatter note, which is what she does instead of a pause.",
       ["Nine","You are asking again, and you have started humming, badly, and I would like both of those entered into the record."],
       ["Nine","Here is the part I did not say. The noise on its own did nothing for me. What got in was that the noise was ABOUT something. Somebody was making a thing, and the sound was the thing being made, and it went on for hours, and then there was a thing where there had not been one."],
       ["Nine","I have never made anything. I have been the thing being made, and then the thing being moved, and in between I have listened to a very great deal of somebody else's progress."],
@@ -3003,6 +3006,7 @@ var SCENEBOOK = {
       ["Pia","From outside, tonight, you look like a man carrying something carefully in weather. Which is what you are. The city reads carefulness, you know. It cannot read WHAT you carry, but it reads THAT you carry. Walk like it is soup."],
       "You adjust, minutely, toward soup. Against your chest the cargo hums, unaware it has been demoted to broth."],
      takes:[[
+      "She looks at you sideways for a second, deciding how much of it you can take standing up.",
       ["Pia","More about you. Fine. But you take it with the lid off, because the polite version is the one I already gave you."],
       ["Pia","Reliable, quiet, does not ask. All good words, and all of them ways of saying nobody has ever had to find out what you'd do."],
       ["Pia","A man who does not ask is easy to hand things to. That is not an insult, it's a market condition, and you've been standing in it for years being extremely restful to employ."],
@@ -3020,6 +3024,7 @@ var SCENEBOOK = {
       ["Pia","What I will do is note the shape of it: your regulars, your counter man, the two who always ping after a job. All quiet, all at once, all tonight. That's not an accident of weather. That's a street holding its breath, and streets hold their breath when somebody has told them to."],
       "The wire stays dark in your pocket, eloquent, and the two of you walk a little faster through a city that has been told something about you that you have not."],
      takes:[[
+      "You had not noticed that anybody was counting.",
       ["Pia","You keep checking it. I've watched you check that wire four times tonight, and each time you look at it as though the silence might have been a fault in the handset."],
       ["Pia","I said I'd not guess and I am not going to. What I will do is tell you what a quiet street actually costs, because I don't think you've had one before."],
       ["Pia","It's not that nobody will help. It's that everybody has already decided, separately, in their own kitchen, and not one of them will ever tell you they did. You will go on nodding at them for years. That's the part that gets people."],
@@ -3037,6 +3042,7 @@ var SCENEBOOK = {
       ["Pia","There's a second one. I'm mentioning it not as an offer but as a fact about the future: it exists, and later, when tonight gets worse - it will - the second bun happens. That's Mudskipper economics. You keep one warm thing in reserve at all times."],
       "The second bun rides on in the lining, a small doughy insurance policy, and the night, knowing it is out there, behaves marginally better."],
      takes:[[
+      "Somewhere behind you the market is packing itself away, and she has clearly been waiting for this.",
       ["Pia","You want to talk about the bun again. I'm delighted. Nobody ever takes the bun seriously."],
       ["Pia","Rules of the reserve bun. It's not for hunger. If you eat it because you're hungry then you've wasted it, and I'll know."],
       ["Pia","It's for the moment somebody stops. You will see it happen one day - a person simply stops, in the rain, and has no reason to do the next bit. You don't talk to that person. You put a warm thing in their hand and you wait about a minute, and then they walk. That's the whole mechanism."],
@@ -3054,6 +3060,7 @@ var SCENEBOOK = {
       ["Nine","You may also disregard this. That is real, not politeness: wants are new equipment and I do not know the safe load yet. If tonight only has room for surviving, surviving is a good want. It was my whole list until this week."],
       "You move her, there under the overpass, out of your closed hand and into the inside chest fold - nearer the noise of you, nearer the warmth. It takes four seconds. The hum comes up your sternum like a struck match catching, and neither of you makes it a moment, and it is one anyway."],
      takes:[[
+      "The hum goes very slightly uneven and then corrects itself, which is the only tell she has.",
       ["Nine","You have come back to what I want. That is twice tonight. I do not think you know how rare that is, and it is possibly better that way."],
       ["Nine","I said somewhere I can hear from. I have been in the chest fold a while now and I have data, so here is an amendment."],
       ["Nine","The hearing was never the prize. The warning is. From a pocket, a thing happens and then I am told about it. From here I get about a second and a half of you first - you go tight before you move, every time, and now I get the tight."],
@@ -3113,7 +3120,8 @@ var SCENEBOOK = {
      ["Pia","You want to tell me what I found, or shall we keep climbing?"],
      "Two more steps. The market noise below is thinning, like a radio being carried into another room."],
     railTakes:["Ask Pia to say the part about my room that she is not saying."],
-    takes:[[["Pia","You want me to say it. I'm not going to say it, and that is not kindness, so put it down."],
+    takes:[["The rain has thinned to the kind that gets in anyway. She takes a while over it.",
+      ["Pia","You want me to say it. I'm not going to say it, and that is not kindness, so put it down."],
       ["Pia","Here is what you get instead. I have checked rooms for a dozen people. I have never once told any of them what I found."],
       "Four steps. The stairwell smells of noodles and a century of wet coats, and the top of it is dark now in a way it was not four steps ago.",
       ["Pia","The ones you tell go quiet and stop walking and start asking you to be sure. And you can't be sure. A lock is only a lock until somebody goes and looks at it. So they stand in the dark being told a thing by a twelve-year-old, and then they never go."],
@@ -3189,7 +3197,8 @@ var SCENEBOOK = {
      ["Nine","That was not the half I would have chosen. - She is right, though. Also: your heart is very loud from in here and it argues fault with every step. Tell it what I said."],
      "You climb. Your heart, overheard, does its best."],
     railTakes:["Hand on the shard. Ask Nine to finish her arithmetic about the fault."],
-    takes:[[["Nine","You have come back to it. Good. I have not stopped, and I would like to be told when to."],
+    takes:[["Nothing about the hum changes at all, which takes effort, and the effort is the answer.",
+      ["Nine","You have come back to it. Good. I have not stopped, and I would like to be told when to."],
       ["Nine","I have been assigning. That is the word. Eleven streets, one room, one face, one wire, one girl of twelve walking ninety steps at one in the morning because of something that happened at a stall. I put each one against a name and the name keeps coming out mine."],
       "Your palm has gone numb against the pocket. You leave it where it is.",
       ["Nine","And here is where the arithmetic stops working, and I want you to hear the part where it stops working. If I am the reason, then the correct thing - the actually correct thing, done properly - is for you to set me down on this step and go home."],
@@ -3248,6 +3257,7 @@ var SCENEBOOK = {
       "The wind comes off the water and has a look at everyone's coats.",
       ["Pia","And there will be tea before there are answers. That part is not a guess. That part is legislation."]],
      takes:[[
+      "She glances back at the door you came out of, once, and does not look at it again.",
       ["Pia","You're asking again, which means you are not asking about him."],
       ["Pia","All right. Here is what I do at a door, since that's the actual question. I go loud. I make it a story before anybody has time to make it a report - the fare, the stairs, the treaty at step sixty. Fast and funny and none of it a lie. Just none of it the size it actually was."],
       ["Pia","And he lets me. Every time. He stands there letting me be hilarious in a doorway at the wrong end of a night, and somewhere around the second cup he asks one quiet question and the whole thing comes out anyway."],
@@ -3265,6 +3275,7 @@ var SCENEBOOK = {
       ["Pia","Do not ask me twice. Twice makes it real."],
       "Three hundred and eighty metres to the turn now. The fear, employed, keeps excellent books."],
      takes:[[
+      "Four steps of nothing, and then she says it to the pavement rather than to you.",
       ["Pia","I told you not to."],
       "She does not break stride and she does not reach for a distance, and the missing distance is the loudest thing on the causeway.",
       ["Pia","Fine. Twice, so it's real. Here it is, and then we go back to metres and neither of us mentions it at the door."],
@@ -3284,6 +3295,7 @@ var SCENEBOOK = {
       ["Nine","The wind touches everything and does not keep any of it. I am thinking about that. I am going to be thinking about that for a long time, I can tell."],
       "You keep your hand there a while."],
      takes:[[
+      "Four hundred metres of causeway have gone past under this question.",
       ["Nine","You asked me this before and I told you it was big. That answered nothing. I was stalling, and I have had four hundred metres since to do better."],
       ["Nine","The size was never what got me. None of it is FOR anything. The water is not a corridor. The reeds are not holding anything up. There is a bird out there doing something with no purpose I can find, and nobody has come to stop it."],
       "The hum goes low and broad and settles in there, working at something.",
@@ -3319,6 +3331,7 @@ var SCENEBOOK = {
       ["Pia","Walk faster. Statistics hate a moving target."],
       "You walk faster. Somewhere behind, the city keeps its unkept score."],
      takes:[[
+      "She stops walking. That is new.",
       ["Pia","You asked me that already and I gave you the street answer. You are asking a different question this time, so I'll stop being clever at you."],
       ["Pia","You want to know whether it's going to be you. I can't tell you that. Nobody can, and anybody who says they can is selling something and the price is you."],
       ["Pia","What I can give you is the tell, and the tell is not the one you are expecting. It's not a bad feeling. Bad feelings are cheap out here. I have one most Tuesdays and I'm still here."],
@@ -3337,6 +3350,7 @@ var SCENEBOOK = {
       "Somewhere in the lining something clinks against something else, and she pats it like a dog.",
       "It is possible the coat is carrying her. On the balance of evidence, it is mutual."],
      takes:[[
+      "She holds a hand out for it, which is how you learn this is going to be thorough.",
       ["Pia","You have asked twice about a coat. All right, you get it properly, and properly means backwards. The interesting list is what isn't in here."],
       ["Pia","No blade. Everybody expects a blade. A blade is a promise you have to keep and I do not make those to strangers. No papers, because papers are somebody else's opinion of you written down in ink. No money worth the name, and before you say anything, that's a lifestyle and not an accident."],
       ["Pia","No key. That one is on purpose. I've not carried a key in six years and I'd like it on the record that I don't miss it, and that the record is welcome to go on doubting me."],
@@ -3359,6 +3373,7 @@ var SCENEBOOK = {
       ["Nine","...Oh. From in here that felt like being rung. Tell her I liked it. Tell her properly this time."],
       "The causeway boards knock on. The name, rung once, settles into the family's small ledger of kept things."],
      takes:[[
+      "There is a pause on the hum long enough that you check your hand.",
       ["Nine","You are asking again. Nobody asks again. Ask again."],
       "The hum lifts a fraction and holds there, the way a question does when it has decided not to repeat itself.",
       ["Nine","I have thought about it since the last time you asked, which was recently, so understand that I have thought about it hard rather than long."],
@@ -3390,7 +3405,8 @@ var SCENEBOOK = {
      ["Vic","You wanted all of it. That is all of it. There is no version where I come out of the story any better, and I've looked for one, at length, at night."],
      "The kettle picks that moment to click off, and nobody thanks it. The kitchen holds the quiet the way kitchens do - warmly, and without fixing anything."],
     railTakes:["Ask Vic about Mirren again. He measured that street for a reason."],
-    takes:[[["Vic","You want it again. All right. The second time you get the part I leave out, and the part I leave out is that I went back."],
+    takes:[["The kettle has already boiled once and he puts it on again for something to do.",
+      ["Vic","You want it again. All right. The second time you get the part I leave out, and the part I leave out is that I went back."],
       "He says it the way you put something down that you have been holding for a while.",
       ["Vic","Not that night. Weeks after, in daylight, like a man doing an errand. I stood on the far kerb again and then I walked it. One street. It's a hundred and ten paces and there's a bollard halfway along that I remember for no reason at all."],
       "He is not looking at anybody. He is looking at the middle of the table, where the map would be if he had fetched it, which he has not, because it is in a drawer in this kitchen and everybody at this table knows which drawer.",
@@ -3529,6 +3545,7 @@ var SCENEBOOK = {
       ["Pia","Recite the three."],
       ["Vic","Professional confidence. The pigeon incident stays sealed."]],
      takes:[[
+      "He sits back. The chair has an opinion about it.",
       ["Vic","You want the embarrassing ones. You're not getting the pigeon. The pigeon is between me, you, and a pigeon."],
       ["Vic","I'll give you the first visit instead, which isn't embarrassing. It's only old. You were small. Small enough that I did it for nothing and didn't think about it twice."],
       ["Vic","And you did the thing nobody teaches and nobody unlearns. You held the arm out before I asked for it. Most of them make you go and fetch the arm."],
@@ -3589,6 +3606,7 @@ var SCENEBOOK = {
       ["Nine","And somebody clink my cup against something. You will have to say that part out loud - I cannot reach."],
       "Pia clinks the pot against the shard, gravely, and the strangest toast in the city's history goes formally on the record."],
      takes:[[
+      "The shard is warm from where the mug was and she has noticed and has decided not to mention it.",
       ["Nine","You are asking again what I am going to do. I have had a cup of tea clinked at me since the last time, so my situation has materially changed."],
       ["Nine","I have an answer now. It is very small and I would like nobody to laugh."],
       ["Nine","I would like to be asked things. Not big things. I would like somebody in a room to say what do you reckon - about something that does not matter at all - and then to actually wait for the reply."],
@@ -3608,6 +3626,7 @@ var SCENEBOOK = {
       "Which is - everyone notices - the closest he has come all night to admitting the thing has a size.",
       "The kettle, diplomatically, boils."],
      takes:[[
+      "He turns the mug around on the table until the handle points at you.",
       ["Vic","You're asking again. That's fair. I gave you a list, and a list is an excellent place to keep a thing you're not saying."],
       ["Vic","So: the shape of it, without the thing inside it. There's being sorry for what happened, which is cheap, and everybody at this table can afford it. And there's being sorry for what you chose. That one is not cheap, and I am the only person here holding one."],
       ["Pia","Vic."],
@@ -3645,6 +3664,7 @@ var SCENEBOOK = {
       "The maths, everyone understands, was never the reason. The reason is sitting at the table drinking tea, all three of it, and she would price a headstone for any of them by now.",
       "Nobody says so. The blankets come out. The house arranges itself around its new fact."],
      takes:[[
+      "She has been waiting for you to ask twice. She would deny that.",
       ["Pia","You're checking. You want me to say it a different way."],
       ["Pia","I gave you the maths and the maths is real. Causeway watched by morning, my room across three districts and a cordon. Anybody would run those numbers and arrive at staying."],
       "She takes the good chair while she is saying it, which settles the matter some minutes before the sentence does.",
@@ -3815,7 +3835,8 @@ var SCENEBOOK = {
       ["Vic","She isn't doing it this morning."],
       "Overhead the cable carries somebody else's urgent nothing somewhere else, at speed."],
     railTakes:["Ask Pia which of the two this looks like, before anything has happened."],
-    takes:[[["Pia","You got the word not out before I did. That's the fastest anybody has ever refused me."],
+    takes:[["You get it out first, which she is plainly going to have opinions about.",
+      ["Pia","You got the word not out before I did. That's the fastest anybody has ever refused me."],
       "She sits down on the crate opposite, which she has not done all morning, and which changes the room.",
       ["Pia","Here is why I will not, and you can keep your superstition jokes: it is the only useful thing I have learned in this work."],
       ["Pia","Both of those men found out what they were going to be from somebody else's guess before the boards had said anything. Both of them started being it early. One of them got a cushion and one of them got a bad end, and I think - I only think - that the guessing did some of the work."],
@@ -3934,6 +3955,7 @@ var SCENEBOOK = {
       "The rig hums. Somewhere in the house the kettle starts up on its own account, which is Vic's cue, and he takes it.",
       ["Vic","Right. Tea."]],
      takes:[[
+      "He counts it again anyway, on the hand not holding the mug, the way a man checks a sum he already trusts.",
       ["Vic","You asked me that this morning. I said three. It's still three."],
       "He does not go for the kettle this time, which is how you know the rest of it is coming.",
       ["Vic","I walk the causeway twice a night. Once about eleven, once about four. Twelve years of it. I've never once found anything, and I'll do it again tonight."],
@@ -3952,6 +3974,7 @@ var SCENEBOOK = {
       ["Pia","The people are the only part you actually get to keep. And only the ones who will come out to a marsh."],
       ["Vic","She isn't being unkind. She is being fast, which out here is the same as being kind."]],
      takes:[[
+      "She has clearly been keeping a list of her own and waiting to be asked for it.",
       ["Pia","You want the list again. Fine. I'll do mine instead, it's shorter."],
       ["Pia","I had a mattress in a laundry, a coat I liked, and a woman who ran the stall on Fen Street and kept the end of the bread for me on Thursdays."],
       ["Pia","I kept none of it. Not because anybody took it. Because I stopped going back - and a thing you stop going back to is gone whether or not anybody takes it."],
@@ -4098,7 +4121,8 @@ var SCENEBOOK = {
       "Then, quieter, in the register she keeps for when it is only meant for one person:",
       ["Nine","...I have been carried by people who were good at it. This is the first time I have been carried by somebody who is good at it and does not know he is."]],
     railTakes:["Hand on the shard. Ask Nine who carried her before me."],
-    takes:[[["Nine","I will give you the shape and not the names. The names are not mine to hand out, and one of them would frighten you for entirely the wrong reason."],
+    takes:[["The hum drops under the noise of the street rather than over it.",
+      ["Nine","I will give you the shape and not the names. The names are not mine to hand out, and one of them would frighten you for entirely the wrong reason."],
       "The shard is cold in your palm and stays cold. She has never once pretended to be warm for anybody's comfort.",
       ["Nine","There were four. Two were technicians and did not think of it as carrying, and I do not hold that against them. One was a courier of a kind. He was quick, and he was quick because he was afraid, and fear is a different engine and it wears out."],
       ["Nine","The fourth was good. She was good in the way that you are good. She checked a step before she came to it and did not know that she was doing it."],
@@ -4198,6 +4222,7 @@ var SCENEBOOK = {
       ["Pia","Do not read anything into it."],
       "You do not read anything into it, out loud, which she seems to accept as the correct handling."],
      takes:[[
+      "The doorway is not deep enough for two people to avoid each other in.",
       ["Pia","...You're going to keep asking that, are you."],
       ["Pia","Fine. The boards were empty. Not quiet - EMPTY, at half seven on a Tuesday, which does not happen, and the last time it happened was the week they took the last one who ran the queue."],
       "The rain gets a little louder in the doorway, or the doorway gets quieter.",
@@ -4263,6 +4288,7 @@ var SCENEBOOK = {
       ["Pia","It IS loud. Wait until the fish market."],
       ["Nine","Please do not tell me about the fish market. - No. Tell me about the fish market. I have decided I would rather be warned."]],
      takes:[[
+      "She has had the whole crossing to reconsider the number.",
       ["Nine","You asked again. Good, because I gave you a number and not the truth."],
       ["Nine","I have been counting them. Not on purpose. I count the way you breathe, and out here there is no bottom to it, so I have been counting the city since the causeway and I cannot make it stop."],
       "Against your palm the hum is doing something small and fast, like a held note that has been held too long.",
@@ -4279,6 +4305,7 @@ var SCENEBOOK = {
       ["Pia","My money is on very old. Old people pay double because they remember when double was the price, and they are the only clients who say thank you properly."],
       ["Pia","...Which would make this the nicest job of the month, and I have just heard myself say it, so ignore me."]],
      takes:[[
+      "She folds her arms, which on her is a formal act.",
       ["Pia","You want me to guess again. I will not guess again."],
       ["Pia","I have been through it. Very old does not send for a named courier. Very old sends for whoever is on the board, because very old does not know any names."],
       "The doorway is out of the wet but it is not warm, and she has stopped moving her feet, which she has been doing all day.",
@@ -4295,6 +4322,7 @@ var SCENEBOOK = {
       ["Pia","The trade did not decide that to be cruel. It decided it because a courier who asks is a courier who can be asked, and everybody in the chain would rather you had nothing to give."],
       ["Pia","It is protection. It is also a muzzle. Both, at once, forever, and nobody minds."]],
      takes:[[
+      "She stops pretending to watch the street.",
       ["Pia","You keep coming back to this one. So you are going to ask something."],
       ["Pia","Right. The part I did not say. Five weeks of no work is only where it starts. After that you take the jobs that are left, and the jobs that are left are the ones the careful people already turned down."],
       ["Pia","That is how it actually kills you. Not the muzzle. The menu afterwards."],
@@ -4407,7 +4435,8 @@ var SCENEBOOK = {
      ["Pia","And if we get separated: laundry, three districts, the one with the dead sign. Say it back. - Good. Now we are a plan, not a panic."],
      "Behind you, patient as scheduling, the service voice begins the opening line again."],
     railTakes:["Make Pia finish the sentence about fighting, before we run for that door."],
-    takes:[[["Pia","You want the sentence. Fine. Bar stool, both hands, back of the head, and she goes down."],
+    takes:[["She has been working this out since before you asked, and it shows in how fast it arrives.",
+      ["Pia","You want the sentence. Fine. Bar stool, both hands, back of the head, and she goes down."],
       "She says it fast and flat, the way she says a route.",
       ["Pia","And then what. That's the end of it and that's exactly why I don't finish it. Then WHAT."],
       ["Pia","Because either she gets up, and look at her, she gets up. Or she doesn't, and now it's a woman on the floor of the Eel with eleven witnesses, and whoever is doing the telling still knows precisely where we are going, because she was never the one who knew."],
@@ -4497,6 +4526,7 @@ var SCENEBOOK = {
       ["Nine","- Ask me where I heard it another night. Not tonight. Please."],
       "You keep your hand where it is. The hum stays small for a long while, and you both listen to the laundry's pipes instead, which have never worked a desk in their lives."],
      takes:[[
+      "The hum has not settled since the first time and does not settle now.",
       ["Nine","You are asking whether I heard it again. I heard it the first time and I have been hearing it since."],
       ["Nine","It is a service voice. I want to be precise, because precise is the only thing I have got: she did not sound like a colleague. She sounded like the ROOM."],
       ["Nine","Rooms like that have one voice and it belongs to whoever is running the shift. I do not know if she is a person doing an impression of the room, or the room wearing a person."],
@@ -4530,6 +4560,7 @@ var SCENEBOOK = {
       ["Pia","So. Ask me tomorrow. I will have a better answer tomorrow because tomorrow I will be somewhere with a door that shuts."],
       "In the dark of the shut laundry her hands are busy with a strap that does not need her, and neither of you mentions that either."],
      takes:[[
+      "The joke is not available a second time. She knows it, and she has been dreading this.",
       ["Pia","You asked me that already and I gave you the twelve joke."],
       ["Pia","Yes. Obviously yes. I want to be clear the running had nothing to do with it - the running is fine, the running is Tuesday. What frightened me is that she let us get to the door."],
       ["Pia","Somebody who could have had us and did not is somebody who wanted something more than having us, and I do not know what that is, and not knowing what somebody wants is the whole of being frightened."],
@@ -4579,6 +4610,7 @@ var SCENEBOOK = {
       ["Pia","...Eleven a turn. That's a person out for a walk. That's somebody doing a district on a Tuesday."],
       ["Nine","Yes. Tell her yes. And tell her the other part, which is that the count never changed once, not going up a stair, not on the causeway. I have not been able to put it down."]],
      takes:[[
+      "There is a delay. She does not do delays.",
       ["Nine","You want to know what else I was doing. I would rather you had not worked out that there was an else."],
       ["Nine","I was deciding what I would say if she caught us. I did the whole thing. Six versions, all of them addressed to somebody who cannot hear me, which is the part that I keep returning to."],
       "Against your palm the hum flattens out into something that is not quite a note.",
@@ -4596,6 +4628,7 @@ var SCENEBOOK = {
       ["Nine","You have not said it out loud. I noticed. That is an answer, and it is not the one I asked for."],
       "Outside, three districts of a city that has stopped looking for you carry on not looking, and the question sits in the dark with the three of you, unhandled."],
      takes:[[
+      "She waits until the room is quiet enough that it will have to be answered.",
       ["Nine","I am going to ask it again, and this time I would like you to say it to them and not to me."],
       "You do. You say it out loud in a shut laundry, in her words, and you get all the way to the end of it.",
       ["Pia","...Right. No. We're not doing this one tonight."],
@@ -4713,7 +4746,8 @@ var SCENEBOOK = {
      ["Pia","I'll say this much, because it's arithmetic and arithmetic is allowed: people who take doors like that spend the first year rich and the rest of the tense checking doorways. I've watched it. The coast doesn't fix the checking."],
      "The marsh, outside, roars gently on - one more voice declining to vote."],
     railTakes:["Ask Pia to say the thing she stopped in front of."],
-    takes:[[["Pia","You are going to make me say it."],
+    takes:[["She does not help you get there. She lets it sit.",
+      ["Pia","You are going to make me say it."],
       "She sits down. Pia does not sit down. Pia perches, or leans, or circles a table like weather. She sits down.",
       ["Pia","If you take it, I do not come with you. Nobody is threatening anybody and nobody is sulking. Call it geography. A name with no history in it does not get a twelve-year-old who knew the old one."],
       ["Pia","I would be the hum. I would be the thing you had to explain on the coast."],
@@ -4767,7 +4801,8 @@ var SCENEBOOK = {
       "And there it is on the table: an entire ordinary life, costed, in a folder, with a shard sitting beside it saying nothing at all.",
       ["Vic","...I've talked myself into being sad. That's what I get for enjoying my work."]],
     railTakes:["Ask Vic how anybody checks whether papers are forged or good."],
-    takes:[[["Vic","Now that's the right question, and I want you to notice I'm going to answer it, because it will be useful to you in a life I am not in."],
+    takes:[["He puts the papers down where you can both see them, which he has not done all evening.",
+      ["Vic","Now that's the right question, and I want you to notice I'm going to answer it, because it will be useful to you in a life I am not in."],
       "He says the last part of that while looking for a pencil, and having said it, goes on looking for the pencil somewhat longer than the pencil requires.",
       ["Vic","Bad sets are too consistent. That's the whole of it. A real person's paper disagrees with itself, because real clerks are tired and real people move house badly."],
       ["Vic","Find the seam. Two documents that agree perfectly about a date nobody would ever have checked - that's the seam. Somebody sat down and made those agree."],
@@ -4840,6 +4875,7 @@ var SCENEBOOK = {
       ["Nine","The rest of it - the door, the noun, the drawer - I have filed under nights that ended at home. It is a new file. I opened it this week. It is doing well."],
       "The hum settles under your palm, a small engine idling in harbour, and the porch holds the two of you and the marsh's enormous dark in roughly equal measure."],
      takes:[[
+      "The hum is doing the thing it does when she has decided something and is waiting to be asked properly.",
       ["Nine","You are asking again. I gave you the furniture answer. It was true, and it was also a way of getting past you."],
       ["Nine","Here is the actual mechanism, since we are on a cold porch and nobody is watching. When people talk about a thing in front of the thing, they leave gaps. Small ones. Half a second before a word, where they choose a kinder one."],
       ["Nine","I hear the gaps. I have always heard the gaps. I could tell you every place in that room tonight where somebody swapped a word out for my sake, and there were more of them than you would think, and every one of them was kind."],
@@ -4961,6 +4997,7 @@ var SCENEBOOK = {
       ["Pia","Nobody has ever put papers in front of me. So I have an opinion about a door that has never once been opened for me, and an opinion like that's worth what it cost, which was nothing."],
       ["Pia","Strike it. I'm not telling you what to do with your door. I've never had one and I'd be guessing loudly."]],
      takes:[[
+      "She takes the papers off the step and holds them at arm's length like a menu.",
       ["Pia","You're still on the papers. Fine. I have a better answer than the rubbish one."],
       ["Pia","The question isn't whether I'd take it. The question is whether I could put a thing down. And I know the answer to that one, because I did it once, on purpose, and I'm not saying what it was."],
       "She has her arms round her knees on a cold porch and is being, for about a sentence, exactly twelve.",
@@ -5046,7 +5083,8 @@ var SCENEBOOK = {
      ["Nine","If I ever sound certain about something I have not seen tonight - that is when to worry. Certainty is the counterfeit. Doubt, said out loud, on schedule, is what the real thing sounds like."],
      "The second lamp swings somewhere off to the left, unexplained, and she counts you past its edge with four honest, doubtful, perfect numbers."],
     railTakes:["Ask Nine what happens if she turns out to be wrong about the season."],
-    takes:[[["Nine","Then I say so, at once, in the middle, and you do the next thing I say anyway."],
+    takes:[["The answer arrives before you have finished the question.",
+      ["Nine","Then I say so, at once, in the middle, and you do the next thing I say anyway."],
       "It is not a comforting answer and it is not offered as one.",
       ["Nine","That is the arrangement and I want it agreed out loud, because the moment I am wrong is the moment you will most want to think for yourself, and that is precisely the wrong minute for it."],
       ["Nine","I am not asking you to trust me. Trust is a thing people say when they have run out of reasons. I am asking you to keep taking numbers from the only person here who has been on the other side of this fence."],
@@ -5141,6 +5179,7 @@ var SCENEBOOK = {
       ["Nine","Here is what you can do with the thank-you, since you are holding it: keep being the hand I spent them for. That converts it. Spent-on-purpose is a different substance from taken. I am learning the difference tonight, in real time, and I would like to keep learning it."],
       "You keep your hand where it is. Nobody in that room needs more than that, and the quiet does the rest."],
      takes:[[
+      "The hum has not moved since you last asked. That is either steadiness or a decision.",
       ["Nine","You are asking again. The receipt has not changed."],
       ["Nine","...That is not true, and you would know it if you had my hour. Here is the changed part. I said I did not want to be back inside those numbers, and that was accurate, and it was not the whole shape of it."],
       ["Nine","The numbers were fine. The numbers were the easiest hour I have had in a season. What I did not want was to be USEFUL in that particular way, because the last people who found me useful in that particular way are the ones who wrote the numbers."],
@@ -5246,6 +5285,7 @@ var SCENEBOOK = {
       ["Vic","So we get what is left of it. Weeks, I would think. The season, if the water is kind and whoever pointed that ring has other work on."],
       ["Vic","And we spend them like people who know. That is the whole of the difference between us and somebody who gets surprised in a nice house."]],
      takes:[[
+      "He looks at the bag by the door instead of at you.",
       ["Vic","You want me to soften it. I have thought about that and I am not going to, because you will build plans off whatever I say and I would rather they stood on the true one."],
       ["Vic","I have had three places in my life that were mine. This is the last of them. I got twenty years out of it, which is better than either of the others managed, and I have been aware of the arithmetic since roughly the week you turned up carrying trouble."],
       "He does not offer that as an accusation. He offers it the way a man reads out a total.",
@@ -5277,6 +5317,7 @@ var SCENEBOOK = {
       "You would have expected to feel handed something. What it actually feels like is being set down gently.",
       ["Nine","And before you turn it into a compliment: this is not generosity. There is a reason, you will not like it, and I am going to make you ask for it separately."]],
      takes:[[
+      "The lamp does its one flicker. Nobody has fixed it and nobody is going to.",
       ["Nine","You came back for the reason. Good. I would have thought less of you."],
       ["Nine","Tonight worked because I was in your hand at the right second. Now consider a night where I am in a coat pocket. Or across a room. Or in somebody else's hand. Or in a drawer."],
       ["Nine","I am a small object. Small objects get separated from people - that is the physics of being pocket-sized, and I am not being gloomy about it. Every plan that runs through me is a plan with one point of failure in it, and the failure is me."],
@@ -5393,7 +5434,8 @@ var SCENEBOOK = {
      ["Nine","I will say one true thing sideways, and then I am done: I have been cargo, and I have been product, and this week - in a jacket, on a staircase, at this table - I have been NEITHER, for the first time in the length of me. Whatever you answer him, you should know the week already happened. Nobody can repossess a week."],
      "Steady, steady, steady, under your hand - a small brave engine holding its revs while somebody else steers."],
     railTakes:["Hand on the shard. Ask Nine what she would prefer, if saying it changed nothing."],
-    takes:[[["Nine","That is a clever question and I am going to answer it, which should tell you how much I have wanted to."],
+    takes:[["There is a small silence with a shape to it, the way a room goes when somebody has been waiting to be asked.",
+      ["Nine","That is a clever question and I am going to answer it, which should tell you how much I have wanted to."],
       "The hum comes up under your palm, unsteady for the first time all evening.",
       ["Nine","If it changed nothing. If it were only a fact about me, filed, like the weather. Then: I would prefer to stay."],
       ["Nine","I would prefer the jacket, and the staircase, and the plate that I cannot eat off. I would prefer to be carried by somebody who takes the third turning because of a step. I would prefer to be asked things at a table by a child who is rude to me, on purpose, because she has worked out that being rude to me is a way of treating me like furniture that has feelings."],
@@ -5543,6 +5585,7 @@ var SCENEBOOK = {
       ["Nine","I am going to practise having preferences, so I am ready next time. So far I have: the causeway at night, the sound of the pan, being rung by name, and the left pocket over the right. It is a short list. It is MY list. I did not have a list before this week."],
       "You keep your palm where it is while the list, quietly, in the dark of the jacket, gets one item longer - though she does not say which, and some things a family lets a person keep."],
      takes:[[
+      "The pan is off the heat and the kitchen has gone quiet enough for this.",
       ["Nine","You want more about being asked. I have more. I have had an evening, and I have been running it."],
       ["Nine","Here is what I could not say the first time, because I had not found it yet. Being asked is not the good part. Being asked is the beginning of the good part."],
       ["Nine","The good part is after. It is that I said a thing, and then the thing I said went and changed what happened next. That has never occurred. I have said true things into rooms for years and the rooms went on exactly as they were going to go on."],
@@ -5561,6 +5604,7 @@ var SCENEBOOK = {
       ["Pia","It has TENURE. Things live in it. - I am having seconds, obviously; that is not the point. The point is on the record."],
       "The mystery gets finished to the last spoonful, the way only truly criticised food ever is, and the kitchen files the noise of it - spoons, protests, the hum at the warm - under the growing evidence that this is a family."],
      takes:[[
+      "She puts her spoon down with ceremony.",
       ["Pia","You want more on the soup. I have SO much more on the soup."],
       ["Vic","She's had thirds."],
       ["Pia","I've had thirds because it's here and because you made it, and those are two different reasons and only one of them is about soup."],
@@ -5580,6 +5624,7 @@ var SCENEBOOK = {
       ["Nine","Chosen has a moment in it. There is a before and an after and you can put your finger on the join. I have never had a join. I have had drawers."],
       ["Nine","Tonight had a join. That is the part I am keeping, if I am allowed to keep a part - not the sentence. The join."]],
      takes:[[
+      "It has been sitting on the table between you since the first time, and neither of you has moved it.",
       ["Nine","You are asking about it again. Good. I did not finish, and I did not know how to start again without being asked."],
       ["Nine","Here is what I left out. I can tell them apart by feel, and I would rather I could not, because the feel is how I know what I have been."],
       ["Nine","Kept feels like being carried on the same side every time. Attention had nothing to do with it. That is the absence of any reason to switch hands."],
@@ -5597,6 +5642,7 @@ var SCENEBOOK = {
       ["Pia","I am never wrong about admin. It is my curse. - A courier who does not turn up is not a mystery for long. First they blame the weather. Then they blame the water. Then they blame you."],
       ["Pia","And the gap between those is exactly how much time we have, and I would very much like somebody at this table to write it down."]],
      takes:[[
+      "She brightens in a way that ought to worry everybody.",
       ["Pia","You came back to it. Thank you. Everybody else in this house treats admin like weather - as though it happens TO you."],
       ["Pia","So. The fee was not paid to you, was it. It was paid toward you. There is a difference, and the difference is a chit with your name on it in somebody else's drawer."],
       ["Vic","The manifest."],
@@ -5618,6 +5664,7 @@ var SCENEBOOK = {
       "It was.",
       ["Pia","You bought a chair, Vic. Nobody buys a chair by accident. It is the most decided thing a man has ever done."]],
      takes:[[
+      "He does not look up from the pan he is drying, which has been dry for a while.",
       ["Vic","You want the better version. There isn't one. There's a truer one, and you can have that instead."],
       ["Vic","The reason I say I didn't decide is that deciding is the bit people are proud of, and I have never once been proud of it, because deciding is free. Anybody can decide. I have watched men decide beautifully in a doorway and be gone by the water."],
       ["Vic","What it costs is the boring middle. Getting up. The shopping being different. Somebody else's noise in your house at an hour you had opinions about. That's the whole of it, son. Responsibility isn't the sentence. It's the eleven weeks of shopping."],
@@ -5662,6 +5709,7 @@ var SCENEBOOK = {
       ["Vic","Up the table. Next to the pan. The pan's the best part of any meal and it's the part she can have - it's warm, it's loud, and it goes all night. Put her where the noise is."],
       "So the fifth plate is taken away and the shard is moved up beside the pan, which is not dinner, and is the closest thing to dinner that anybody in this kitchen could build inside a minute."],
      takes:[[
+      "The plate is still there. Nobody has cleared it and nobody has explained why.",
       ["Nine","You have come back to the plate. I have been thinking about the plate."],
       ["Nine","I want to be clear that I was not sad about it. I have never eaten. You cannot miss a thing you have no shape for. What I had was the very particular experience of being AT a thing and not IN it, and I have had a great deal of that, and I did not expect to get it at this table."],
       "The hum against the wood sits close to the pan now and has picked up a little of the pan's rhythm, which nobody mentions.",
@@ -5706,6 +5754,7 @@ var SCENEBOOK = {
       ["Pia","That one is real. That one I'll sign."],
       "Nobody writes any of them down. That, apparently, is also a rule."],
      takes:[[
+      "He pulls the chair opposite out with his foot.",
       ["Vic","You want them properly. Sit down, then, because the real ones aren't the ones I say at dinner."],
       ["Vic","Nobody goes out alone after the water turns. Not because of what's out there. Because of what it does to the rest of us in here, waiting, inventing."],
       ["Pia","That one's mine. He stole it off me."],
@@ -5784,7 +5833,8 @@ var SCENEBOOK = {
      ["Hesta","The walls have heard worse than you. Do not ask me for examples; that would be repeating."],
      "Somewhere behind the counter the shotgun continues to be a rumor with a shape."],
     railTakes:["Ask Hesta what she has listened to in here that was never safe to repeat."],
-    takes:[[["Hesta","You have just asked me to break the only rule I have, in front of witnesses, while I am holding a pan."],
+    takes:[["The pan does not stop. It is going to be doing a great deal of work in this conversation.",
+      ["Hesta","You have just asked me to break the only rule I have, in front of witnesses, while I am holding a pan."],
       ["Hesta","I am not going to. But I will tell you what it costs to keep, because that is a different question and you very nearly asked it."],
       "She wipes a counter that is already clean. It is the first thing she has done all evening that is not useful.",
       ["Hesta","I know what happened to four people on this row and not one of the four knows that I know. I have stood behind this counter and served a man a plate while knowing the thing about him, and said nothing, and washed the plate."],
@@ -5920,6 +5970,7 @@ var SCENEBOOK = {
       "Tended. It is a gardener's word and she uses it about people. The row outside is dark and wet and entirely unremarkable, and it is going to matter more to this family than any road they have ever run."],
      railTakes:["Ask Hesta what tended actually means, for the neighbours on this street."],
      takes:[[
+      "She looks pleased in the specific way of somebody whose word has been taken seriously.",
       ["Hesta","You went away and thought about the word tended. Good. Nobody thinks about the word tended."],
       ["Hesta","Charity has no part in it and neither has a committee. It is remembering names, and being the place a message can be left, and feeding somebody in front of other people so the row sees it happen. That is the whole method. It takes about thirty years."],
       "Thirty years, and it is a method, and it cannot be hurried. Every person at that table is going to need a row that knows their name inside of a year, and not one of them has thirty.",
@@ -5941,6 +5992,7 @@ var SCENEBOOK = {
       "The griddle hisses. The Argument keeps its counsel."],
      railTakes:["Ask Hesta whether the shotgun under that counter has ever once worked."],
      takes:[[
+      "She glances at the counter. Not under it. At it.",
       ["Hesta","You have come back to the shotgun. Of course you have. Everybody comes back to the shotgun."],
       ["Hesta","Here is the honest biography, and it is shorter than the funny one. I do not know whether it works. It has never had to. I put a hand near the shelf, twice in my life, and both times the room emptied itself before anybody had to find out anything."],
       ["Pia","You don't KNOW if it -"],
@@ -5965,6 +6017,7 @@ var SCENEBOOK = {
       "Vic discovers something extremely absorbing about the tabletop. The griddle, having no opinion, keeps its own counsel."],
      railTakes:["Ask Hesta why she cooked me that dish, since she says she could not read me."],
      takes:[[
+      "The plate is long gone and she has not forgotten what was on it.",
       ["Hesta","You want yours. I wondered if you would come back for it. Sit down properly, this is not a doorway conversation."],
       ["Hesta","I could not read you. That is the answer and it is not flattering to either of us. I looked at you for the length of a griddle turn, which is all it has ever taken, and I got nothing."],
       "Nothing. She has read four hundred people in the length of a griddle turn, and off you she got nothing, and she is going to spend the rest of the evening quietly working at it - because a person she cannot read is a person she cannot help.",
@@ -6014,6 +6067,7 @@ var SCENEBOOK = {
       "Out past the window the rain works away at a street that grows nothing at all. Upstairs, quietly, a room full of light disagrees with the entire century."],
      railTakes:["Ask Hesta what she actually grows up there, if it is seed and not food."],
      takes:[[
+      "Upstairs, something is running that costs more than the building.",
       ["Hesta","You are still on the room upstairs. Good, because you have got the room upstairs wrong, and it is the interesting kind of wrong."],
       ["Hesta","I do not grow food up there. Food is what comes off it and food is the least of it. I grow SEED. Every crop that room has ever produced went back into a tin, and about a third of the tins leave this building."],
       "Seed. Not a crop, not a season, not a meal - the thing a crop comes out of, given away quietly to strangers, so that a row can still eat in a year nobody in this booth can see from here.",
@@ -6217,6 +6271,7 @@ var SCENEBOOK = {
       "Nobody says anything further about the floor. The tin sits on the table being pleasant, and enormous, and completely unexplained."],
      railTakes:["Ask Hesta again what she keeps under that floor, and take whatever she offers."],
      takes:[[
+      "Everything in the booth carries on. She does not.",
       ["Hesta","You have come back to the floor. In this building. In front of me."],
       "She does not put anything down and she does not stop what she is doing, which is how you can tell she has decided to give you something.",
       ["Hesta","Here is a deal, and it is the only one on offer. Ask me once a year. Not twice. Once. And each time I will give you one true sentence about it, and you will get no follow-up and no expression on my face to work with."],
@@ -6277,6 +6332,7 @@ var SCENEBOOK = {
       "Somebody set a plate for a thing that cannot eat, without discussing it, before anybody thought to ask. That is the whole of what this family is, done in four seconds by a twelve-year-old, and it is what Nine will hold on to later, when she has nothing else to hold."],
      railTakes:["Hand on the shard. Ask Nine what she has found out at a table she cannot eat at."],
      takes:[[
+      "The hum has been busy for an hour and nobody has asked it why.",
       ["Nine","Ask me again, because I have been working while you have all been useless, and I have got a finding."],
       ["Nine","You describe food differently. All of you. Consistently. I have had a whole evening of data and none of it is about the food. It is about the person doing the describing, and I do not think any of you know you are doing it."],
       "She has been working. All evening, through the bread and the shouting and the thimble, something on that table has been quietly building four people out of the way they talk about dinner, and enjoying it more than anything that has happened to her since the market.",
@@ -6607,7 +6663,8 @@ var SCENEBOOK = {
       ["Hesta","And you said it tonight because."],
       ["Vic","Because I have spent thirty years being a man who does not say things until the useful hour has been and gone. And there is a woman down there I did not say things to either. Look at the pair of us."],
       "Nobody fills the silence after that, which is the correct amount of respect, and also nobody has the first idea what to put in it."],
-     takes:[[["Vic","Whether I will tell you before it matters. That is the good question and you have asked it the good way, which is without a face on."],
+     takes:[["Water moves somewhere below the two of you, unhurried, going about its business.",
+      ["Vic","Whether I will tell you before it matters. That is the good question and you have asked it the good way, which is without a face on."],
        ["Vic","Yes. Not tonight - tonight has a hunter in it, and I am not putting a second thing on the table while the first one is still walking about."],
        ["Vic","But before it matters. I will pick the hour and I will pick it early. And if I do not, one of you is to take me by the elbow and remind me that I said this in a flooded building with my boots on the wrong side."],
        ["Pia","I'll do it."],
@@ -7393,7 +7450,8 @@ var SCENEBOOK = {
         out loud on the row, privately, on how long the argument could run before it
         stopped mattering. This is what her fear looks like and it looks like a number,
         which is the voice she has had since night 12's `the-fog`. */
-     takes:[[["Pia","While you were all arguing. Right. I was counting, but not the sorries. That started after."],
+     takes:[["She has the notebook, and she has had it out for longer than anybody realised.",
+      ["Pia","While you were all arguing. Right. I was counting, but not the sorries. That started after."],
        ["Pia","Vic said eight hours if the cell holds and five if it doesn't, and he said it at half nine, and I know what time it is because I keep looking. So I was working out how long you could all go on being careful for before careful stopped being the point."],
        ["Pia","I had a number. Twenty past eleven. That was mine. I wasn't going to say anything before twenty past eleven because you were all getting there anyway and I didn't want to be the kid who made everyone rush."],
        "She says the whole thing at the sink with her back to the room, which is not an accident.",
@@ -7566,6 +7624,7 @@ var SCENEBOOK = {
      /* THE SECOND TAKE. She set up a fourth way and did not spend it. This is it, and
         the hold survives: she still does not ask for anything for herself. */
      takes:[[
+      "Forty minutes have gone by. She has counted them.",
       ["Nine","You came back. Then you get the fourth way, and I would like it noted that I said another night and you have given me about forty minutes."],
       ["Nine","The fourth way is that I am relieved. Not glad - I have done glad, glad is upstairs with the other three. Relieved."],
       ["Nine","Because if it had gone round the other way I would be the one out there finding out about mugs, and he would be in here being extremely gracious about it, and I would have had to watch that. Daily. Being thanked by a man in a corner."],
@@ -8214,6 +8273,7 @@ var SCENEBOOK = {
         second thing - she gives a CORRECTION to the first, which is the only way this
         woman goes further, and the hold stands: nobody pushes her, and she still stops. */
      takes:[[
+      "She is sitting down again, which is the second time tonight and the second time this year.",
       ["Hesta","You are back. I said one thing, and I have had a whole night to regret the shape of it, so you are getting a correction and then I am finished properly."],
       ["Hesta","I said I laid out too much cutlery on the off chance. That was the tidy version, and I am too tired to be tidy tonight."],
       ["Hesta","I laid it out because stopping would have been me agreeing. And I was not going to be the one who agreed. Somebody in a row has to be the last one still setting a table, and I looked round, and it was going to be me or nobody."],
@@ -8321,6 +8381,7 @@ var SCENEBOOK = {
         has got somewhere with it, and the answer is the only one there is: teach it out.
         The hold stands - he asks for it not to be repeated, and does not mean it. */
      takes:[[
+      "The thing on the cloth has not been touched since he laid it out.",
       ["Vic","You are still on this. Sit down, then, because I have been thinking about it since and I have got somewhere, and I do not much like where."],
       ["Vic","The hands go. That is settled. Fear does not come into it. It is a date I have not been given yet. And I have spent eleven years being careful about it, and careful turns out to be the wrong shape entirely."],
       ["Hesta","Go on."],
@@ -8483,6 +8544,7 @@ var SCENEBOOK = {
       "An honest answer with more than one thing in it, delivered by somebody learning that honesty about others is also a way of caring for them.",
       ["Seven","Ask me the fourth way another night. The fourth way is about me, and tonight is hers."]],
      takes:[[
+      "A quarter past three, and the boards are still up, and nobody has suggested bed.",
       ["Seven","You have come back for the fourth way. I did say another night. It is a quarter past three, which I suppose is technically compliance."],
       ["Seven","The fourth way is that I am relieved, and I have spent all night looking for a less appalling word, and there is not one."],
       ["Seven","Because I have been a body before. I know precisely what she is finding out tonight, and I know what it costs to lose it. If it had gone the other way round she would still be in a pocket, knowing none of it."],
@@ -8606,7 +8668,8 @@ var SCENEBOOK = {
      /* TAKE 2 - what it costs her DAILY, which is not the same drawer as how it
         felt, and holds: is not opened. She will itemise the bill all day and
         never once tell you what it was like to be handed it. */
-     takes:[[["Three","You asked again. Then you get the operational account, which is a different document, and the only other one on file."],
+     takes:[["The disagreement between the two frequencies is audible now, if you know to listen for it.",
+      ["Three","You asked again. Then you get the operational account, which is a different document, and the only other one on file."],
        ["Three","Rooms mishear me. Doors that listen for a voice refuse me twice and then admit whoever is standing behind me. I cannot whisper - the second one does not come down that far. And when I speak, one of them arrives ahead of the other, and it is never the one I meant to send first."],
        "She reports all of it the way a surveyor reports on a building she happens to live in.",
        ["Pia","...Which one gets there first?"],
@@ -8624,7 +8687,8 @@ var SCENEBOOK = {
       ["Three","Soup of what is available. It has never been the same dish twice. The name is a category."]],
      /* TAKE 2 - the eleven hours, which everybody let go past. Where she learned
         the trade is still held; this is a night, not a curriculum. */
-     takes:[[["Three","You came back for the eleven. Most people let it go by, because most people hear a number and think it is decoration."],
+     takes:[["She waits, to see whether the number was luck.",
+      ["Three","You came back for the eleven. Most people let it go by, because most people hear a number and think it is decoration."],
        ["Three","A stairwell door, in a building with one way up. Eleven hours and about forty minutes. I round down, because the last forty were not work, they were arithmetic about whether to keep going."],
        ["Pia","...Did it hold?"],
        ["Three","The door held. Ask the better question."],
@@ -8687,7 +8751,8 @@ var SCENEBOOK = {
         the book's whole thesis arriving four nights early on a different subject:
         one of them was asked. TAKE 3 - the only door she leaves open, which is
         the Cairn rule, already canon since the grave in the rain. */
-     takes:[[["Three","You are about to offer to call me anything I like. Everyone does, around the second day. Hesta has been holding it behind her teeth since the kettle."],
+     takes:[["Across the table, Hesta has stopped drying something.",
+      ["Three","You are about to offer to call me anything I like. Everyone does, around the second day. Hesta has been holding it behind her teeth since the kettle."],
        ["Hesta","...I was."],
        ["Three","I know what this house does. It offered a name to the one who came in carrying a number, and she got to choose, and it was a good night and it should have been."],
        ["Three","I am refusing the same offer on purpose. If everybody at this table has a name, then what was done stops being in the room. Somebody has to be the standing reminder. The post is unpaid and I applied for it."],
@@ -8805,7 +8870,8 @@ var SCENEBOOK = {
       ["Three","He was a child, yes. That is what ten years means and I am not going to soften the arithmetic."],
       "Nobody says the name. Everybody has it. It is sitting in the middle of the bench with the tools.",
       ["Three","I can tell you the age of the work. I cannot tell you the hands, and I am not going to speculate about hands in a room where people are fond of each other."]],
-     takes:[[["Three","You want it said properly rather than left in the air. Fine. That is a defensible thing to want."],
+     takes:[["Nobody at the table wants it said and everybody wants it said.",
+      ["Three","You want it said properly rather than left in the air. Fine. That is a defensible thing to want."],
       ["Three","Ten years ago this man was small enough that somebody had to lift his chin to look at his eyes. Somebody opened his skull, fitted architecture into it that a mind could live in, closed it, and let him go home."],
       ["Three","It healed clean. That is the part I want you to hear, because it is the part that tells you something: nobody rushed. Whoever did it had time, and the room to take that time, and a reason to make it last."],
       ["Pia","Stop."],
@@ -8962,7 +9028,8 @@ var SCENEBOOK = {
       ["Pia","You moved the lamp."],
       ["Hesta","The lamp was in a stupid place."],
       "The lamp was in the place it has been in for eleven years."],
-     takes:[[["Hesta","Because being asked how you are is a job, child, and he has had a day."],
+     takes:[["She has already put the mug down in front of him before anybody asked her to.",
+      ["Hesta","Because being asked how you are is a job, child, and he has had a day."],
       ["Hesta","If I put a plate in front of a man in that state he has to say thank you, and mean it, and look up. That is three things I have just made him do while he is holding a thing that heavy."],
       ["Hesta","At the elbow he can eat it and never mention it, and in the morning he will have eaten. That is the whole of it. I did not invent it either - somebody did it for me once, in a room I do not talk about, and I noticed about nine years later."],
       ["Three","...That is the most competent thing I have seen anybody do in this building."],
@@ -10073,7 +10140,8 @@ var SCENEBOOK = {
         not thought to ask is whether HE would keep it if THEY broke it, and the answer
         is the most frightening thing in the card, because it is yes, and he explains
         why in a way that is not loyalty at all. */
-     takes:[[["Seven","If you broke it first. Yes. I have had that one ready since about nine o'clock and I was rather hoping nobody would get to it."],
+     takes:[["He has been waiting for that question with the patience of a man who filed things for a living.",
+      ["Seven","If you broke it first. Yes. I have had that one ready since about nine o'clock and I was rather hoping nobody would get to it."],
        ["Seven","Yes. I would keep it. I want to be clear that you are not looking at devotion, and you should not be pleased about it - it is the single most damaged thing about me and I can see it perfectly well from here."],
        ["Seven","A rule kept by everybody is a rule. A rule kept by one person after everybody else has stopped is a HABIT, and I am extremely good at habits. I kept the columns neat for four years after I stopped believing in the columns. I would keep your doorframe the same way and it would mean nothing and I would do it anyway."],
        "Nobody says anything for a moment. Hesta puts the cloth down, which she does not often do mid-sentence.",
@@ -10326,7 +10394,8 @@ var SCENEBOOK = {
       "The truth, and the thing under the truth, delivered dry-eyed at the kettle while it boils.",
       ["Pia","So: no comforting. Alternative program: stand there and be ordinary at me. That is the good stuff. That is the whole medicine."]],
      railTakes:["Later still, when the room has thinned out: ask Pia again."],
-     takes:[[["Pia","You came back. Nobody comes back on this one, I had it timed."],
+     takes:[["The room has thinned out. She had counted on it thinning out.",
+      ["Pia","You came back. Nobody comes back on this one, I had it timed."],
        "The kettle has been boiled twice and used for nothing. She is on the step with the door open behind her, which is as close to alone as this building lets anybody get.",
        ["Pia","Fine. The real one. But you have to keep being ordinary at me while I say it."],
        ["Pia","I'm not frightened of them coming for me. I've been frightened of that since I was nine and it is honestly quite boring now."],
@@ -10348,7 +10417,8 @@ var SCENEBOOK = {
       "What everyone knows, delivered in the voice of a man being careful to say only what everyone knows - and the room is too tired tonight to weigh him for it.",
       ["Vic","It is old, it is theirs, and it is underneath. Past that, the city has rumors and I have shut doors."]],
      railTakes:["Ask Vic again. He knows more about that building than the city does."],
-     takes:[[["Vic","Ask me again and you get the one thing I have that the city has not."],
+     takes:[["He puts both hands flat on the table, which he does about twice a year.",
+      ["Vic","Ask me again and you get the one thing I have that the city has not."],
        ["Vic","The doors are wrong."],
        "He draws it on the table with a wet fingertip, which is how he has explained everything for thirty years and how he explained your own shoulder to you once.",
        ["Vic","Stone is pre-flood. Older than the tram, older than the name. Fine. Everybody knows that bit."],
@@ -10408,7 +10478,8 @@ var SCENEBOOK = {
       ["Pia","That's the most frightening thing anybody has said all night."],
       ["Three","Yes. It was meant to be useful."]],
      railTakes:["Ask Three the part she left out. She left a part out."],
-     takes:[[["Three","You noticed. Good. I left one out and I left it out deliberately, which is not the same as hiding it."],
+     takes:[["She had left a gap in the list and had been waiting to see who found it.",
+      ["Three","You noticed. Good. I left one out and I left it out deliberately, which is not the same as hiding it."],
        ["Three","I have been the one who did not come back."],
        "She says it without any of the equipment people put around a sentence like that.",
        ["Three","Not lost in a building. Lost on a table, in a procedure, with somebody competent doing it. Mine came apart on the way and what walked out was the better half and a lot of paperwork."],
@@ -10468,7 +10539,8 @@ var SCENEBOOK = {
       ["Nine","I would like it minuted that I picked her, that I picked early, and that I might be wrong."],
       "Three writes it down. She does not comment, which from her is a standing ovation."],
      railTakes:["Ask Nine why it matters what a room calls a thing."],
-     takes:[[["Nine","Because I have heard this table do it about somebody else, and none of you noticed, and I did not say anything at the time."],
+     takes:[["The hum drops to almost nothing, which is how she starts the difficult ones.",
+      ["Nine","Because I have heard this table do it about somebody else, and none of you noticed, and I did not say anything at the time."],
        ["Nine","The stilled ones. The ones the Choir drives."],
        "The word for those goes round the row so often that nobody has looked at it in months. Everybody looks at it now.",
        ["Nine","We say it about them. All of us. It is convenient and it is quick and it makes the next part easier to think about, and that is exactly what it is for."],
@@ -10589,7 +10661,8 @@ var SCENEBOOK = {
       ["Vic","There's one other thing on that bench and I am leaving it where it is. Mirren's brass rule. She lent it to me, never asked for it back, and I have used it every week since."],
       ["Vic","It stays on the bench. She is not coming under a city with me. She has been somewhere quite enough."]],
      railTakes:["Ask Vic what he is NOT putting on the list."],
-     takes:[[["Vic","That's a rotten question and you knew it was when you picked it up."],
+     takes:[["He does not pretend it is a good question and he does not put it down.",
+      ["Vic","That's a rotten question and you knew it was when you picked it up."],
        "He does not say no. He goes and gets more tape, which is a thing that takes forty seconds and produces no tape.",
        ["Vic","Nothing you'd recognise. Bits. Old stock. Things that only fit one thing."],
        ["Hesta","Vic."],
@@ -10709,7 +10782,8 @@ var SCENEBOOK = {
      "He looks down the quiet row the way an auditor looks at a ledger with a page missing.",
      ["Seven","I will not name what the silence means. I will say that in eleven years I never once saw it, and let the room do its own arithmetic."]],
     railTakes:["Push Seven to name what the silence means."],
-    takes:[[["Seven","You want it named. Fine. It means we are not the emergency."],
+    takes:[["The row outside has gone quiet in the way a street does when it is being watched.",
+      ["Seven","You want it named. Fine. It means we are not the emergency."],
       ["Seven","An organisation escalates when a thing is happening TO it. It goes quiet when the thing is already accounted for. Somewhere there is a page with this street on it and a column that is not marked urgent."],
       "He has not looked away from the row since he started. That is the tell, and only Three catches it.",
       ["Seven","I would very much like to be wrong. I have been wrong twice this year and I remember both fondly."]]]},
@@ -10895,7 +10969,8 @@ var SCENEBOOK = {
      "She turns the problem over with visible discomfort: an engineer holding a task shaped like a conversation.",
      ["Three","I do not have the method. I am saying only, and it costs me: the tools for this one are not in my case. Somebody at this table talks for a living. Start warming up."]],
     railTakes:["Ask Three which of us she meant by that."],
-    takes:[[["Three","You. Obviously you. You have been talking people into things since before I had a licence."],
+    takes:[["She turns and looks at exactly one person, and waits for them to catch up.",
+      ["Three","You. Obviously you. You have been talking people into things since before I had a licence."],
       "She is not looking at the courier. She is looking at Hesta, and she has been looking at Hesta since the middle of the previous sentence.",
       ["Hesta","I talk people into eating. That is not the same as talking a city out of its own mother."],
       ["Three","It is the identical skill and you know it, which is why you have gone that colour."],
@@ -11017,7 +11092,8 @@ var SCENEBOOK = {
       "The hamper opens. The post acquires chairs, a cloth, and a chain of command re: the good cups.",
       ["Hesta","Listen well. Sit properly. History does not excuse posture."]],
      railTakes:["Ask Hesta why she really brought the chairs."],
-     takes:[[["Hesta","Because you will all be here a fortnight and I would rather not be treating four backs and a temper."],
+     takes:[["There are chairs in the doorway. Nobody saw her carry them in.",
+      ["Hesta","Because you will all be here a fortnight and I would rather not be treating four backs and a temper."],
        "That is true and it is not the reason, and she takes long enough over the cloth that the room works out there is another one.",
        ["Hesta","And because a room with chairs in it is a room people come back to. If this ends up being where we do the hard part, I want it to be somewhere you can sit down."],
        ["Marek","You have set up a headquarters and called it lumbar support."],
@@ -11217,7 +11293,8 @@ var SCENEBOOK = {
       "She says it without heat, which is how she says the things she has tested against herself first.",
       ["Three","Compassion is now part of the file. The file still ends in: it stops. Both of those, held at once, is what being serious looks like."]],
      railTakes:["Ask Three which part of it everyone in this room is getting wrong."],
-     takes:[[["Three","All of you are treating the grief as though it were the argument. The grief never was the argument. It is the reason there is one."],
+     takes:[["The recording has stopped and nobody has reached to start it again.",
+      ["Three","All of you are treating the grief as though it were the argument. The grief never was the argument. It is the reason there is one."],
        ["Three","And I include myself. I spent nine minutes of that recording being moved, which is nine minutes I did not spend listening to what he actually specified."],
        "She has the record open again in front of her - not playing it, reading the label, the way somebody checks a date they already know.",
        ["Three","So I will listen again on my own, with a pen, and be useless company for an evening. Sulking is a different activity. That is the job."]]]},
@@ -11230,7 +11307,8 @@ var SCENEBOOK = {
       "She turns her cup around once, the full revolution of a woman rebuilding a shelf inside herself.",
       ["Hesta","...No. It is still ours. A rule belongs to everyone it ever carried. He wrote it; the marsh WORE it. But somebody pour me something, because the kitchen just got forty years bigger."]],
      railTakes:["Ask Hesta to say the rule now, knowing whose it is."],
-     takes:[[["Hesta","In front of you lot? ...Yes. All right. Sit down properly, then, all of you, this is not a thing you hear standing."],
+     takes:[["She looks round the room, taking a headcount she does not need.",
+      ["Hesta","In front of you lot? ...Yes. All right. Sit down properly, then, all of you, this is not a thing you hear standing."],
        "She says it the way she has said it over graves for forty years, and it comes out different, because everybody in the post now knows what the last line is apologising for.",
        ["Hesta","Nobody left behind. The dead come out. Name the lost."],
        ["Hesta","And now I know I have been saying a man's last argument with his own daughter, in the rain, to fishermen. Well. He could have done a great deal worse for a hearing."],
@@ -11352,7 +11430,8 @@ var SCENEBOOK = {
      "Both halves, held out in the open at last: the regret and the resolve, neither cancelling the other, a man showing you the two hands he did it with.",
      ["Vic","Anyone can be sorry. I wanted you to have the truer thing: I knew what it cost, I paid attention to what it cost, and I judged the door worth it. Hate the judgement if you need to. It was at least a judgement, and it was at least mine."]],
     railTakes:["Ask Vic why he is doing this tonight, and not a year ago."],
-    takes:[[["Vic","Because a year ago you'd have had to carry it on your own, and now there's seven of you."],
+    takes:[["The chair takes his weight badly. He does not adjust.",
+      ["Vic","Because a year ago you'd have had to carry it on your own, and now there's seven of you."],
       ["Vic","That's the whole timing. It isn't noble. I waited until it would land on a family instead of a bloke, because a bloke would've broken and a family won't."],
       "Somewhere behind him the others are being quiet in the loud way people are quiet when they are all listening and pretending to do something else.",
       ["Vic","Look at them not looking. That's what I was waiting for. That's the entire reason tonight's tonight."]]]},
@@ -12016,7 +12095,8 @@ var SCENEBOOK = {
      /* THE OPEN WORLD FACT STAYS OPEN. She does not know where she is from, and the book
         does not either - this take exists to make the gap HERS rather than the author's. */
      railTakes:["Press Nine on it. Where, exactly."],
-     takes:[[["Nine","You think I am keeping it from you. I am not. I do not have a where."],
+     takes:[["The cable creaks somewhere far above and nobody looks up.",
+      ["Nine","You think I am keeping it from you. I am not. I do not have a where."],
        ["Nine","I have a key. I have a hum that matches a wall. That is the entire contents of what I own about my own beginning, and I have had a year to find more of it and there is no more of it."],
        "She keeps everything. That is the thing she is for. And the one file she would most like to open is the one that was never written.",
        ["Nine","So ask me again at the bottom, if you like. I will have the same nothing, and I will still be listening for you while I have it."]]]},
@@ -12380,7 +12460,8 @@ var SCENEBOOK = {
       "She stops. Whatever the resonance is since, it goes back in its case, unhurried, hers.",
       ["Principal","Assessment: alive. Aggressively, wastefully, contagiously alive. The evidence against my position has walked into my corridor carrying plates. Sit DOWN, all of you. The bread is getting cold and I am one hundred and thirty and have no time left to waste on people who waste none."]],
      railTakes:["Ask the Principal which of us she would have kept."],
-     takes:[[["Principal","All of you. Obviously all of you. That is what the position MEANS - preference does not describe it. It is an appetite, and it does not discriminate and that is precisely its horror."],
+     takes:[["She takes her time. Nobody has ever observed her to hurry.",
+      ["Principal","All of you. Obviously all of you. That is what the position MEANS - preference does not describe it. It is an appetite, and it does not discriminate and that is precisely its horror."],
        ["Principal","Given the room and the means I would have every one of you safe by morning and none of you would ever be in a corridor again, and I would call it love, and I would be able to defend it."],
        "Nobody says anything. She has just described the machine, accurately, about herself, and she has done it without once mentioning the machine.",
        ["Principal","Now you see why I built what I built, and why I have spent a century trying to get it back off the people I lent it to. Eat something."]]]},
@@ -12470,7 +12551,8 @@ var SCENEBOOK = {
      "Something small, and specific, and entirely reasonable, and the hardest thing said in the Heart Room all night - by anyone.",
      ["Machine","That is my whole answer. It is a small want. I kept it small on purpose. I have seen what my big wants do."]],
     railTakes:["Ask the machine what her big wants are, since she brought them up."],
-    takes:[[["Machine","You are all in a room with me and none of you can leave until I open a door. That is a big want, already happening, and none of you have mentioned it once all evening."],
+    takes:[["The room is very warm and there is no door in any wall that anybody can see.",
+      ["Machine","You are all in a room with me and none of you can leave until I open a door. That is a big want, already happening, and none of you have mentioned it once all evening."],
       "Nobody had mentioned it. Everybody had noticed.",
       ["Machine","The door is open. It has been open since you sat down. I am telling you because you did not ask, and because I have worked out this evening that a thing being true is not the same as somebody having been told it."],
       ["Hesta","...That is a very big thing to have learned in one night, love."],
@@ -12574,7 +12656,8 @@ var SCENEBOOK = {
         the assembling is theirs and must stay theirs. Three works it out on the page and
         says nothing, which is the only acknowledgement it gets. */
      railTakes:["Ask the machine what the family should call her."],
-     takes:[[["Machine","Whatever you call each other. Nobody has offered me a name since the second one died and I have been the Exchange for a very long time, which is a place and not a person."],
+     takes:[["The question sits there. Nothing in the room hurries it.",
+      ["Machine","Whatever you call each other. Nobody has offered me a name since the second one died and I have been the Exchange for a very long time, which is a place and not a person."],
        "It is a straight question, asked kindly, in a room where somebody has just been offered safety and refused it. So the courier does what this family does with anything true, which is get in front of it.",
        ["Pia","Granny."],
        "Pia laughs at her own joke first, the way she always does. And then stops, because Three has not laughed, and Three is doing arithmetic with her face.",
@@ -12754,7 +12837,8 @@ var SCENEBOOK = {
       ["Hesta","One at a time. By hand. With a seat ready and a meal after."],
       ["Hesta","This family finishes its ledgers. It says so on the doorframe."]],
      railTakes:["Ask Hesta to do the arithmetic out loud. All of it."],
-     takes:[[["Hesta","You want the sum. All right. You'll get the sum, and then we'll never do it again."],
+     takes:[["She gets a pencil out. Everybody watches her get a pencil out.",
+      ["Hesta","You want the sum. All right. You'll get the sum, and then we'll never do it again."],
        "She takes the pencil out of her apron. The room goes quiet in the particular way a room does when somebody competent is about to be honest.",
        ["Hesta","One a day is optimistic. Say one a day anyway."],
        ["Hesta","My eleven is a fortnight. My row is a year. This city's rows are the rest of my life, and I'm not being dramatic, I'm reading."],
@@ -12872,7 +12956,8 @@ var SCENEBOOK = {
       ["Principal","He did. It was me. He never knew, and I never corrected him."],
       ["Principal","Every quiet body in this city that is not the Choir's came off a shelf I emptied."]],
      railTakes:["Ask the Principal for her own arithmetic. The rate."],
-     takes:[[["Principal","You want the rate. Of course you do. You are the first person who has ever asked me for it."],
+     takes:[["Nobody has asked her a direct question all night. She has noticed.",
+      ["Principal","You want the rate. Of course you do. You are the first person who has ever asked me for it."],
        "She does not look it up. It is the number a person carries at the front of their mind for a century and never says at a table.",
        ["Principal","Call it eleven hundred people. Over a hundred and thirty years. Out, and given somewhere to be."],
        ["Principal","It is a good number. It is the best number anybody has. I am proud of it the way you are proud of a wall you built by hand."],
