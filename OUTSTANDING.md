@@ -649,6 +649,18 @@ cost nothing now and save a wave later:**
   family should be frightened of how easy that street was, because easy means unnoticed, and
   unnoticed has an expiry date.
 
+**→ DONE ON NIGHT 23, v5.44.0, AND HOLE 4 WENT WITH IT.** Seven's new card
+`who-holds-this-street` says it in the open: *"Nothing holds it. That is the answer, and I
+dislike being the one holding it."* A van with correct paperwork takes the row back by
+lunch; nothing in the world prevents that; **the only thing holding Cannery Row is that
+nobody has come for it.** Its second take is the fear: *"a van is an argument. We know how
+to have an argument... Nobody comes at all, and we are not in the argument. We are in
+somebody's diary."* Pia asks why that is worse and nobody answers her. Marek's room card
+carries the practical half — water, lamps, drains, *"the eleven minutes were the easy
+part"* — so **"taking a row back" now has a definition on the page**, which is hole 4.
+Both are canon lines, so the nights after read them as pressure. **Holes 1 and 3 are still
+open and still cost a wave each.**
+
 The epilogue at v5.42.0 is the first place consequence lands at full weight — the city out
 in the street, the inquiry, the world's wires, *"nobody has our names; somebody will."*
 **The author is right that it lands only at the end. The pass is how it starts landing
@@ -1127,6 +1139,23 @@ chip wraps under the line and stays inside the button at 375px.
 make the prose good. *"Ask her to take the lid off it"* is still a worse sentence than one
 that says who. **The rewrite still names them, and the badge then goes quiet on those lines by
 itself — which is the tell that the writing has caught up.**
+
+**→ NIGHT 23 IS THE FIRST NIGHT WRITTEN UNDER THE RULE, AND IT PROVED THE TELL WORKS
+(v5.44.0).** All 24 choice lines on `a3-evict` — 12 rails and 12 take lines — name their
+addressee, and the badge's WHO half is silent on every one of them; it prints only which
+time. **The badge caught the one line that did not comply, in the live room:** the old rail
+*"Ask her what this street was like, before they had it"* came back badged **HESTA · 3RD
+TIME**, which is the mechanism reporting an unwritten line rather than hiding it. Renamed to
+*"Ask Hesta…"* and the prefix vanished. **Use this as the meter for the voice pass: drive a
+night, and any row still showing a NAME prefix is a line the rewrite has not reached.**
+
+**AND ONE CASE THE BADGE CANNOT GET RIGHT, now handled by `hideWho:true`.** A card whose
+SECOND TAKE changes speaker will badge the wrong person, because `rowBadge` reads `who` off
+the card, not off the take. `how-long-the-kind-way-takes` is Three's card and its second
+take is Pia breaking on the arithmetic, so the row would have announced THREE and then Pia
+would answer. **`hideWho:true` is the right tool for that shape** — the rail already names
+Three, the take already names Pia, and the badge has nothing true to add. Watch for it
+wherever a take hands the card to somebody else.
 
 ---
 

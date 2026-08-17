@@ -268,10 +268,32 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → THE NEXT WAVE IS BOOK THREE, IN ORDER, FROM `a3-evict` (23)
+### → NIGHT 23 IS WRITTEN (v5.44.0) — 24 of 33, AND NINE NIGHTS ARE LEFT
 
-**Ten nights left**, every one at 3–4 beat cards and 2–4 room cards with no second takes and
-nothing wired: `a3-evict` · `a3-voice` · `a3-founding` · `a3-vic` · `a3-stone` · `a3-for` ·
+`a3-evict` is finished and the board's own counts say so: **6 evening cards (budget 4 + 2),
+6 in the room, a second take on all twelve, and 9 of 9 landing rows wired.** Five canon
+lines, up from three.
+
+**THE FINDING OF THAT WAVE, AND IT COST NOTHING: Toller was already standing in that street
+and nobody had noticed.** The handover said he could be one of the nine stilled. He cannot —
+`a3-seize`'s `the-empty-chairs` had already spent him as a CONVERGENT man, taken with
+paperwork, *"very calm and very pleasant and not one bit himself"*, whose borrowed voice
+stops mid-word at the seizure. Stilling him on night 23 would put him in a bed and break the
+ending. **And the existing prose had him all along:** Hesta's neighbour card named the
+chandler *"watching through his own stock"* on day 31 — eight days after he was taken. So
+night 23's cost is that the family frees nine strangers the kind way while the one man Hesta
+owes serves customers across the road, unhelpable, because there is no kind eleven minutes
+for what was done to him. **No retcon, and the ending gets its plant for free.**
+
+**HOLE 4 OF THE PLAUSIBILITY PASS IS ANSWERED IN PROSE** — *"taking a row back" is
+undefined.* Seven now says it out loud: nothing holds the street except that nobody has come
+for it, a van with correct paperwork takes it back by lunch, and **no van is worse news than
+a van**, because it means they are not in the argument, they are in somebody's diary. Marek
+carries the unglamorous other half — water, lamps, drains — *"the eleven minutes were the
+easy part."* Both are canon now, so the night after reads them.
+
+**Nine nights left**, every one still at 3–4 beat cards and 2–4 room cards with no second
+takes and nothing wired: `a3-voice` · `a3-founding` · `a3-vic` · `a3-stone` · `a3-for` ·
 `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`. **They now have an ending to aim
 at, which is exactly why it was built first.**
 
