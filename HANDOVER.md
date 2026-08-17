@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.68.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.69.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -411,7 +411,21 @@ refuses any card that already has `takes:`, and it never once refused on nights 
 of its own that says what is in it, all 38 clickable lines name their addressee and reach
 their own card when typed. The fourteen recovered lines were the interesting half - their
 prose was written long ago and was being offered under the FIRST take's wording.
-2. **The §7d narration pass.** THE AUTHOR'S OWN NUMBER IS STALE: §7d was written at 3,819
+2. **The §7d narration pass, STARTED (v5.69.0).** Night 10 is at **29.9%**, up from 23.5%,
+   with **35 blocks written and the spoken count unmoved at 310**. It owes about **178 more**.
+
+   **THE PLACEMENT THAT WORKS:** twenty-two of night ten's layers ended on a spoken line.
+   Dread appended after the last joke, so the prose gets the last word, is the single
+   highest-value position and it needs no re-indexing of anything. `node scratchpad/act.js`
+   for the rate; the layer-end list comes from a one-line dump of each layer's last block.
+
+   **AND WATCH THE POCKET.** Three narration beats written this pass said "in your pocket"
+   and the engine read every one as Nine being PUT there - twice on night eight, once on
+   night ten, one beat before she is taken out and set on a table. When the prose reaches for
+   where she is it reaches for the pocket, and **the pocket is a verb to this engine**.
+   "Against your chest" moves nobody.
+
+   THE AUTHOR'S OWN NUMBER IS STALE: §7d was written at 3,819
    spoken blocks and 27.5% narration and priced the job at "about 2,400 blocks". The book is
    now **4,677 spoken / 1,933 narration / 29.2%**, so **the real bill is 2,744** and it grows
    with every take written. **The floor to check against is 4,677, never 3,819.**

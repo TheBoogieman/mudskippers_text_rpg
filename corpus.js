@@ -5792,7 +5792,8 @@ var SCENEBOOK = {
       ["Vic","Hesta."],
       ["Hesta","I am not complaining, Victor, I am invoicing."],
       "It goes round the table as a joke, and lands as one, and underneath it a woman has just described three decades of holding other people's worst nights on her own without once putting them down.",
-      ["Hesta","Now. Nobody at this table is to look at me kindly. I will not have it in my own building."]]]},
+      ["Hesta","Now. Nobody at this table is to look at me kindly. I will not have it in my own building."],
+      "Nobody looks at her kindly. It is the only thing anybody in that booth has to give her, so they give it, carefully, for the rest of the evening."]]},
    {id:"what-she-will-feed-them", ask:"what she will feed them",
     key:"food eat feed hungry pan bacon bread cook menu",
     who:"Hesta",
@@ -5823,7 +5824,8 @@ var SCENEBOOK = {
     plays:[["Hesta","Yes. Condition: you leave this place the way you found it. Not the furniture - the people. Whoever walks in that door after you walks into the same room you did."],
      "A plain yes with the condition standing next to it, both of them load-bearing.",
      ["Hesta","Money is not the rent here. Behaviour is the rent."],
-     ["Pia","We can afford behaviour. Mostly. He has a deficit but I co-sign."]],
+     ["Pia","We can afford behaviour. Mostly. He has a deficit but I co-sign."],
+      "It is the first roof any of them has been offered without a price on it since the marsh went. Nobody says so. Saying so would make it a debt, which is exactly what she has just spent a minute making sure it is not."],
     railTakes:["Ask Hesta what happened to the last people who stayed the night here."],
     takes:[["Hesta puts the cloth down. The evening does not stop, exactly, but it takes a step back to give her room.",
       ["Hesta","They left the place the way they found it, and they went where they were going, and I do not know what happened to them after that and I have chosen not to find out."],
@@ -5852,12 +5854,14 @@ var SCENEBOOK = {
      ["Vic","Six days ago somebody sat in my place and said out loud that he was keeping her. Flat, over a cold plate, like a delivery time. You do not leave a sentence like that lying about outdoors."],
      "He does not say the next part. Everybody watches him not say it, and nobody reaches for it, because he asked for an address and an hour and that is what he was given.",
      ["Vic","So: an address, an hour, and everybody at it. That is the entire extent of what I did. What that woman does with word is her own business and it is usually enormous."],
-     ["Pia","There are eleven forks out. I counted them through the window."]],
+     ["Pia","There are eleven forks out. I counted them through the window."],
+      "Eleven forks, and five of them, and a man who has not yet said the thing he called everybody here to hear."],
     takes:[[["Vic","What a roof is for. All right. Not shelter. Shelter is what a doorway is for and I have used plenty of doorways."],
      ["Vic","A roof is for being counted under. Get everybody in one place, once, and afterwards they all know the number. They know who is missing before anybody has to say it."],
      ["Vic","That is the whole trick and it is not a warm one. It is arithmetic. It is only that when the arithmetic comes out right it feels like something else entirely."],
      ["Hesta","It is called supper, Vic."],
-     ["Vic","...It is called supper."]]]},
+     ["Vic","...It is called supper."],
+      "He will say it eventually. Not tonight. There is a version of this evening where he says it over the bread and every one of them has a worse week for knowing, and he has decided, without mentioning the decision to anybody, to give them the meal first."]]},
    {id:"whether-nine-gets-introduced", ask:"whether Nine gets introduced",
     key:"nine introduce name pocket guest thing what-i-am mention tell her",
     who:"Nine", railTakes:["Hand on the shard. Ask Nine what she wants said when she is introduced. Exactly."],
@@ -5868,12 +5872,14 @@ var SCENEBOOK = {
      ["Nine","Here is the whole of it. Either I am somebody who was brought, or I am something that was carried. Both of those get me into the building. Only one of them gets introduced."],
      ["Nine","I am not asking to be defended. I am asking to be MENTIONED. It costs one sentence and I would like to hear which one you pick."],
      "The hum does not go up or down at all, which with her is as loud as it gets.",
-     ["Hesta","Take your time. I have got food on and food does not care."]],
+     ["Hesta","Take your time. I have got food on and food does not care."],
+      "Against your chest the hum has gone very careful. She has been introduced to rooms before. It has never once been a question anybody put to her first."],
     takes:[[["Nine","What I want said. Exactly. Right - I have had six days to draft this and it is two sentences long."],
      ["Nine","'This is Nine. She is with us.' That is the whole of it. Not what I am. Not how I work. Not the interesting bit."],
      ["Nine","Because the interesting bit is what people lead with when they are introducing an object, and I have been led with. I would like to be buried in the middle of a sentence, like a person."],
      "Behind the counter something goes into the pan, and the room fills up with the smell of a decision that was made a while ago.",
-     ["Hesta","Heard it the first time. Sit her where I can see her."]]]}
+     ["Hesta","Heard it the first time. Sit her where I can see her."],
+      "So she is set down where she can be seen, at a table, by name. It takes four seconds. It is the largest thing that has happened to her since the market and not one person in the room notices it happening."]]}
   ],
   room:{
    where:"the back booth after, plates empty, the rain outside somebody else's problem",
@@ -5887,7 +5893,8 @@ var SCENEBOOK = {
      plays:[["Hesta","One courier, overdrawn on adrenaline, underslept, carrying something he has decided to love. One child doing the family's worrying at a discount. One ripperdoc apologising with his shoulders."],
       "A docket, read flat, every line landing where it lives.",
       ["Hesta","And a hum in a jacket that says please and thank you through skin. I have fed worse tables. I have RUN worse tables."],
-      ["Hesta","You will do. Eat."]],
+      ["Hesta","You will do. Eat."],
+      "Two people at that table have been read like that before, by somebody who meant it differently. Neither of them says anything. The plates come."],
      railTakes:["Ask Hesta what she got wrong about us, the first time she read this family."],
      takes:[[
       ["Hesta","Again? Right. Then you get the part I keep back, which is the part where I was wrong."],
@@ -5896,7 +5903,8 @@ var SCENEBOOK = {
       ["Pia","Can I hear mine again."],
       ["Hesta","No, because I left a line off yours and I am going to say it now while you are sitting down. You have appointed yourself. Nobody appointed you. You have taken a job in this family that nobody offered and nobody is going to relieve you of, because they have all quietly decided it suits them."],
       "The booth gets very interested in the tabletop, all of it at once, in a way that is its own kind of confession.",
-      ["Hesta","So somebody in here is going to have to notice her. It will not be her. Eat."]
+      ["Hesta","So somebody in here is going to have to notice her. It will not be her. Eat."],
+      "The noticing is left lying on the table between them, unassigned, the way a job gets left when everybody is hoping somebody else will pick it up. Somebody will. It is going to cost them."
      ]]},
     {id:"the-street", ask:"the street outside", key:"street outside neighbours who-lives area",
      who:"Hesta", gives:"who is on this row and which of them she trusts, which is most of them",
@@ -5905,7 +5913,8 @@ var SCENEBOOK = {
      plays:[["Hesta","The lamp man two doors down: trust him. The sisters at the wash-house: trust them with your life, not your laundry, they are thieves about socks specifically."],
       ["Hesta","The chandler on the corner I trust to be exactly what he is, which is a coward with good hearing - useful, if you price it right."],
       "A street map drawn in debts and characters, more accurate than any drone pass.",
-      ["Hesta","Most of this row is good. That is not luck. Rows get tended."]],
+      ["Hesta","Most of this row is good. That is not luck. Rows get tended."],
+      "Tended. It is a gardener's word and she uses it about people. The row outside is dark and wet and entirely unremarkable, and it is going to matter more to this family than any road they have ever run."],
      railTakes:["Ask Hesta what tended actually means, for the neighbours on this street."],
      takes:[[
       ["Hesta","You went away and thought about the word tended. Good. Nobody thinks about the word tended."],
@@ -5914,7 +5923,8 @@ var SCENEBOOK = {
       ["Hesta","I describe it accurately."],
       ["Hesta","And there is one on this row I do not trust at all. I will not tell you which, because you would do a face at him, and I have spent eleven years being pleasant to that man so that I always know where he is. An enemy you can find is a fixture. An enemy you cannot find is weather."],
       "Out past the glass the row goes on being tended, in the rain, by nobody visible.",
-      ["Hesta","Learn the row before you need it. Everybody learns the row the night they need it, and that is the night it is too late to be charming."]
+      ["Hesta","Learn the row before you need it. Everybody learns the row the night they need it, and that is the night it is too late to be charming."],
+      "Everybody learns the row the night they need it. That is the sentence, and it is the most useful thing said in that building all evening, and not one person in the booth writes it down."
      ]]},
     {id:"the-shotgun", ask:"the shotgun", key:"shotgun gun counter under weapon",
      who:"Hesta", gives:"a bit - she is entirely unembarrassed and mildly disappointed he noticed",
@@ -5932,7 +5942,8 @@ var SCENEBOOK = {
       ["Hesta","I do not know, and I have decided not to learn. The day I learn is the day it stops being The Argument and becomes a different object with a different name, and I would have to keep that one somewhere else."],
       "She says it the way you state a policy: no weather in it, all of it decided years ago by somebody who has not changed her mind since.",
       ["Vic","She is not joking. She has never once looked at it."],
-      ["Hesta","I look at it constantly. I have never PICKED IT UP. There is a difference and the whole row is built on it."]
+      ["Hesta","I look at it constantly. I have never PICKED IT UP. There is a difference and the whole row is built on it."],
+      "There is a difference, and she has held on to it for thirty years in a city that has offered her a great many reasons not to. It is not a small thing to have kept. Nothing guarantees she gets to go on keeping it."
      ]]},
     {id:"what-she-cooked", ask:"what she cooked and why that", key:"cook cooked why food chose menu made dish plate",
      who:"Hesta", gives:"that she cooks AT people - she looked at four wet strays and decided what each of them was short of",
@@ -5953,7 +5964,8 @@ var SCENEBOOK = {
       ["Hesta","So I gave you the plain plate. The one I do for people who have just been told a large thing, on the grounds that a large thing is the only diagnosis I could make."],
       ["Hesta","I have it now, though. I have had all evening. There was nothing to read because you have not decided what you are yet. There is no shortage in you. There is a vacancy, and it is very recent, and you are sitting in a room full of people who would all fill it for you if you let them, so do not let them."],
       "The plainest plate in the building, chosen for the plainest reason, and it has been the most accurate thing said to you since the market.",
-      ["Hesta","Come back in a month and I will get it in one turn of the griddle. I am extremely good at this and tonight was an anomaly."]
+      ["Hesta","Come back in a month and I will get it in one turn of the griddle. I am extremely good at this and tonight was an anomaly."],
+      "In a month. She says it lightly, the way people say a month when they have had a great many of them and expect more. Nobody at that table has any business expecting a month."
      ]]},
     {id:"put-to-work", ask:"getting put to work in her kitchen", key:"help work kitchen onions knife hand chop job",
      who:"Hesta", gives:"a job, handed over without ceremony - the first one anybody has given him that is not a delivery",
@@ -5965,7 +5977,8 @@ var SCENEBOOK = {
       ["Hesta","You could NOT. You have had a drink. I have seen your seams sober."],
       "The onions take longer than they should and nobody hurries you. Behind you the room carries on without needing you in it, which is a new sensation, and you decide not to look at it directly in case it stops.",
       ["Pia","He's gone quiet. He does that when he's happy. It's very annoying, you can't tell."],
-      ["Hesta","Thinner."]],
+      ["Hesta","Thinner."],
+      "He does them thinner. It is the first instruction anybody has given him in eleven days that is not about staying alive, and his hands are steadier for it than they have been all week."],
      railTakes:["Ask Hesta what the onions were really for, since the work was never the point."],
      takes:[[
       ["Hesta","Back at my board. Right, then you get told what that was, since you have earned it twice."],
@@ -5975,7 +5988,8 @@ var SCENEBOOK = {
       ["Vic","She did this to me as well."],
       ["Hesta","I did. You took four visits."],
       ["Vic","There was a queue."],
-      ["Hesta","There has never been a QUEUE."]
+      ["Hesta","There has never been a QUEUE."],
+      "Thirty years of people standing in her kitchen with their hands going, waiting to be told what came next. She has counted them. She has counted them the way a person counts anything they have had to be, over and over, for people who could not be it for themselves."
      ]]},
     {id:"where-food-comes-from", ask:"where the food comes from", key:"where food come from grow seed supply source get",
      who:"Hesta", gives:"the row that trades, and a room upstairs with lights in it and seed stock from before",
@@ -6017,7 +6031,8 @@ var SCENEBOOK = {
       "She turns the tea round on the table a quarter turn, which is a thing Vic does, and one of them has caught it off the other and neither of them will ever know which way it went.",
       ["Hesta","I sat on a bank and ate a pie I had brought with me and I thought: well. That is where the stove is from. It is from a bend in the water."],
       ["Pia","That's the saddest thing I've ever -"],
-      ["Hesta","It is not sad, child, it is SETTLED, and there is a great deal of difference. I know where my stove is from. Most people do not know where anything is from."]
+      ["Hesta","It is not sad, child, it is SETTLED, and there is a great deal of difference. I know where my stove is from. Most people do not know where anything is from."],
+      "Settled. One knife, one pan, a stove older than the building, and a town that is now reeds and a bend in the water. Everything she owns fits inside that sentence. Nobody in this family owns a sentence like it yet, and two of them are going to need one badly."
      ]]},
     {id:"asking-for-it", railTakes:["Ask Hesta for the etiquette of the tin. There is obviously an etiquette."], ask:"whether there is anything for after the plates go back", key:"smoke lettuce green tin roll after plates something",
      who:"Hesta", gives:"the tin, and the price of it, which is saying the whole name properly out loud",
@@ -6056,7 +6071,8 @@ var SCENEBOOK = {
       ["Hesta","Because it is not for the effect, child. Anybody can have the effect on their own, and plenty do, and you can tell which ones by looking at them. It is for the hour it buys, and an hour is no use to a person by themselves."],
       "An hour. That is the unit she deals in - not a night, not a life. An hour, bought and shared out, because an hour is the largest quantity of good this city has ever reliably let her hand anybody.",
       "She puts the lid back on and leaves the tin closed in the middle of the table, which is somehow more of an invitation than open was.",
-      ["Hesta","That is the ceremony. Now somebody talk about something enormously stupid, because that is the next part and it is not optional."]
+      ["Hesta","That is the ceremony. Now somebody talk about something enormously stupid, because that is the next part and it is not optional."],
+      "So somebody does. That is what the hour is for, and the hour is what the tin is for, and the tin has been in this building longer than the rule that governs it. Every part of it has been held in place by one person, on purpose, against the general direction of everything else."
      ]]},
     /* THE RITUAL DONE RATHER THAN DESCRIBED (v5.16.0). The tin had a ceremony and
        nobody had ever smoked anything on the page. Ruled by the author: the tin is
@@ -6177,7 +6193,8 @@ var SCENEBOOK = {
       ["Vic","Hesta."],
       ["Hesta","This year's sentence, then, since he has bought it fairly. - It is not mine."],
       "Nobody asks the next question. Everybody has it. It sits on the table with the tin, and the two of them get on with each other, and the rain gets on with the window.",
-      ["Hesta","That is the year gone. Come back in the spring after next and bring better manners."]
+      ["Hesta","That is the year gone. Come back in the spring after next and bring better manners."],
+      "The spring after next. She hands the future out like that, in small dated pieces, to people she has known for one evening. It is either the most careless thing she does or the bravest, and she settled which a long time ago."
      ]]},
     {id:"what-she-pours", ask:"what she pours, and what it is in", key:"drink pour glass jar mug bottle thimble booze",
      who:"Hesta", gives:"mismatched glasses, the good one going to whoever carried the most, and a thimble for the child",
@@ -6219,7 +6236,8 @@ var SCENEBOOK = {
       ["Hesta","Somebody has to be told what it was like. Food that nobody describes is only fuel. Go on then. Tell her, do it properly, and I will be marking."],
       "So it becomes a game, badly, for the rest of the evening: four people trying to put a mouthful into words for somebody with no way of checking, and one shard on a plate handing down verdicts like a magistrate.",
       ["Nine","That was not a description. That was a noise made with confidence. Vic. Again. Slower."],
-      ["Nine","- And for the record, the plate was already the answer. Somebody set me a place on the first night without being asked to, and I have not stopped thinking about it since. The rest of this is decoration and I would like a great deal more of it."]],
+      ["Nine","- And for the record, the plate was already the answer. Somebody set me a place on the first night without being asked to, and I have not stopped thinking about it since. The rest of this is decoration and I would like a great deal more of it."],
+      "Somebody set a plate for a thing that cannot eat, without discussing it, before anybody thought to ask. That is the whole of what this family is, done in four seconds by a twelve-year-old, and it is what Nine will hold on to later, when she has nothing else to hold."],
      railTakes:["Hand on the shard. Ask Nine what she has found out at a table she cannot eat at."],
      takes:[[
       ["Nine","Ask me again, because I have been working while you have all been useless, and I have got a finding."],
@@ -6245,7 +6263,8 @@ var SCENEBOOK = {
       ["Hesta","There was no queue. There has never been a queue in this building. He stood in an empty room being considerate about a queue he had invented, so that he would not have to say the actual sentence."],
       ["Pia","What was the actual sentence."],
       "They both take a drink at precisely the same moment, with the coordination of two people who have run this play before, and neither of them answers it.",
-      ["Hesta","Long time ago. He was thinner. Eat your bread."]],
+      ["Hesta","Long time ago. He was thinner. Eat your bread."],
+      "Whatever is between those two is thirty years long and gets about four words a decade. Nobody at this table is ever going to be told it. That is not secrecy. It is two people who worked out somewhere in the middle of it that saying the thing out loud would make it smaller."],
      railTakes:["Let Pia finish it. What was the actual sentence, between Vic and Hesta."],
      takes:[[
       ["Pia","Nope. Coming back to it. What was the actual sentence."],
@@ -6281,7 +6300,8 @@ var SCENEBOOK = {
       ["Vic","I know the name."],
       ["Hesta","I know you know the name."],
       ["Vic","I have never said it."],
-      ["Hesta","I know that as well. It is why you still get the good glass."]
+      ["Hesta","I know that as well. It is why you still get the good glass."],
+      "The good glass. There is a rank in this building and it is measured in glassware, and Vic has been at the top of it for longer than either of them intends to say."
      ]]},
     {id:"this-booth-before", ask:"who else has sat in this booth", key:"booth before others strays who-else sat table history",
      who:"Hesta", gives:"the ones who came through, where they are now, and one she will not put a name to",
@@ -6293,7 +6313,8 @@ var SCENEBOOK = {
       ["Pia","And the ones you're not listing."],
       "A pause with some weather in it.",
       ["Hesta","There is a cairn out past the marsh with a set of initials scratched on the underside of the top stone, where you would only ever find them if you already knew. I put them there. That is as much of that as anybody gets tonight."],
-      ["Hesta","Now. This booth has held better people than you, and worse, and it held all of them the same, and that is the entire point of a booth."]],
+      ["Hesta","Now. This booth has held better people than you, and worse, and it held all of them the same, and that is the entire point of a booth."],
+      "The initials go back further than the paint. Some of the hands that cut them are dead, and some of them are three streets away and do not come in any more, and she keeps the table anyway and has never once sanded it."],
      railTakes:["Ask Hesta about the initials cut under this booth's table."],
      takes:[[
       ["Hesta","The initials. I wondered whether you would come back for the initials or leave them where they were. Most people leave them."],
@@ -6303,7 +6324,8 @@ var SCENEBOOK = {
       "The booth is very warm and the window is very cold and out past it the marsh is doing whatever the marsh does at this hour, without an audience, as usual.",
       ["Hesta","I go out. Not often. I take bread, which is ridiculous, and I know it is ridiculous, and I have made my peace with being a ridiculous woman about one particular stone."],
       ["Vic","It is not ridiculous."],
-      ["Hesta","It is a bit ridiculous. Eat your bread. Not that bread, that bread is going out to the marsh."]
+      ["Hesta","It is a bit ridiculous. Eat your bread. Not that bread, that bread is going out to the marsh."],
+      "Underneath a table, where the weather cannot get at it, a great many people have written down that they were here. For most of them it is the only record there will ever be. It is better than most people get."
      ]]},
     {id:"stops-being-a-meal", ask:"the moment it stops being a meal", key:"us family moment said laugh smoke together become",
      who:"Vic", gives:"one word he did not mean to say, and a table that will not let him have it back",
@@ -6319,7 +6341,8 @@ var SCENEBOOK = {
       ["Vic","...None of us."],
       ["Nine","He said none of us. Tell him I heard it as well and that he cannot have it back."],
       "Somebody laughs, badly, and it turns into everybody, and the tin gets the blame for it, and the tin takes the blame graciously. Hesta puts more bread on the table without being asked and without saying one word about it.",
-      ["Pia","Right. Well. That is the worst thing that has ever happened to me."]],
+      ["Pia","Right. Well. That is the worst thing that has ever happened to me."],
+      "It is not, and every person at that table knows exactly what is, and the joke is doing the precise work jokes were invented for."],
      railTakes:["Keep watching after the laugh, and see what gets written down about this moment."],
      takes:[[
       "Later, and quieter, and only if you were watching: Hesta goes behind the counter and writes something down.",
@@ -6332,7 +6355,8 @@ var SCENEBOOK = {
       ["Pia","It says four. It says four and then it says a word I can't do upside down."],
       "It says four, and then it says a word she cannot do upside down, and Hesta closes it without hurry and puts it where it lives and pours somebody else a drink.",
       ["Nine","Tell her I would like to be counted in the four. - She has already done it, hasn't she. That is why she wrote it down."],
-      ["Hesta","Bed, all of you. The booth is not going anywhere and neither, apparently, are any of you."]
+      ["Hesta","Bed, all of you. The booth is not going anywhere and neither, apparently, are any of you."],
+      "The booth is not going anywhere. That stays true for a while. Then it stops being true, and nobody sitting in it tonight has any way of telling which of the two they are living in."
      ]]}
    ]}
 },
