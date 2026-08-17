@@ -268,7 +268,30 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 27 IS WRITTEN (v5.48.0) — 28 of 33, AND FIVE NIGHTS ARE LEFT
+### → NIGHT 28 IS WRITTEN (v5.49.0) — 29 of 33, AND FOUR NIGHTS ARE LEFT
+
+`a3-for` is finished: **7 evening cards, 5 in the room, a second take on all twelve, 6 of 6
+landing rows wired**, six and five live on both roads. Seven canon lines, up from three.
+**Four nights left:** `a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`.
+
+**SEVEN HAD NO CARD ON THE NIGHT EVERYBODY GETS A NAMED PART** — and the beat's own brief
+lists *"Seven's chassis senses"* as one of them. He has two now, one per road: with the
+frame he is doors and dark and reach; **housed he is eleven years of their floorplans**,
+read out from inside the courier's skull, and it is the bigger contribution.
+
+**THE WINDOW CLOSES BECAUSE A CLERK STARTED A LIST.** A polite man spent yesterday on
+Cannery Row asking who had been helpful during the eviction — no van, no uniform, no hurry.
+**That is what the Choir looks like when it finally moves**, and it pays night 23's *easy
+means unnoticed* and night 24's *we are in somebody's diary*. He bought his candle from
+Toller, who would not have known.
+
+**A CHECK I HAD BEEN USING FOR SIX WAVES WAS WRONG.** My hand-rolled key-collision probe
+scored only single tokens, and the real `pickTopic` gives **+2 for a hyphenated phrase** —
+so it reported collisions on cards that resolve correctly. The collisions it found earlier
+were real; the false positives were mine. **Use `pickTopic` itself, per road, not an
+approximation of it.**
+
+### → NIGHT 27 IS WRITTEN (v5.48.0) — 28 of 33
 
 `a3-stone` is finished: **4 evening cards, 5 in the room, a second take on all nine, 6 of
 6 landing rows wired**, four and four live on both roads. **Five nights left:** `a3-for` ·
