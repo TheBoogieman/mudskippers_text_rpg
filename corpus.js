@@ -2497,7 +2497,7 @@ var SPINE = [
        now:"Evening. The argument was joined on the Principal's terms, in her tempo, in her house.",
        lines:["You get into the room, which is not the same as getting the argument. She sets the terms of both before anybody has sat down.",
               "Hesta's food stays on the table untouched — the oldest person in the world notices that and files it, and it is the only point scored all evening.",
-              ["Principal","You may have the next question. I'll tell you when."],
+              ["Principal","You may have the next question. I shall tell you when."],
               ["Principal","My position, since nobody asked for it in the correct order: nothing that can be lost is safe, and nothing that is safe is alive. I picked one. Tell me which of those two you are picking and we can stop circling."],
               ["Three","We are being managed. I am saying so out loud because it works less well once it is said out loud."],
               "One of the six by the door has been standing very still the whole time, and when the light moves it is wearing the courier's face. Nobody explains it. Nobody looks at it twice except him.",
@@ -12359,3 +12359,95 @@ var TEASES = {
    scene-critical rungs in the DM's working hand, era-correctly: during
    matches from the moment that beat is live, afterBeat and untilBeat behave
    as in WANTS. */
+
+/* =====================================================================
+   THE REVEAL LEDGER (v5.55.0) — OUTSTANDING §7h's main guard, built before
+   the polishing pass touches a second night.
+
+   WHAT IT IS FOR. This book pays things off across thirty-three nights, and the
+   defect it cannot survive is a reveal that leaks early: a rewrite gets the
+   founding lock fresh in its head on a Tuesday and puts it in night 9, and
+   nothing in the harness notices, because no law in this project reads English.
+   The ledger is the one place that says which fact is planted where and paid
+   where, and four sweep rows read it.
+
+   TWO CORRECTIONS TO §7h's SKETCH, both found by probing the corpus rather than
+   by remembering it:
+
+   1. PLANT WORDS AND PAY WORDS ARE DIFFERENT WORDS. §7h imagined one `words`
+      list. But the Principal's theft is PLANTED as "packing straw" and "a new
+      pan" and PAID as "stealing from her own tenant" - a single list cannot be
+      present in both beats without making the plant explicit, which would
+      destroy the plant. So `plantWords` and `payWords` are separate.
+
+   2. `pay` MAY BE NULL, AND THAT IS THE MOST IMPORTANT ENTRY IN THE TABLE. The
+      granny joke has no payoff anybody says out loud - the reader assembles it
+      from Vic's blood, the founders' lost child and a door that answers one
+      living man. A ledger that demanded a payWord for it would force somebody
+      to write the explanation the whole design refuses. `pay:null` means
+      DELIBERATELY UNSPOKEN, and row 4 below is what protects it.
+
+   `leakWords` is the guard proper: phrases that must not appear in ANY beat
+   earlier than the plant. They are deliberately narrow. "chandler" is not a
+   leak word for Toller being taken, because he is a man on a corner long before
+   anything happens to him; "Toller" - the name nobody uses until the night they
+   take him - is. A leak word that is merely a topic will fire on the whole book
+   and get deleted; a leak word that is the FACT will earn its place. */
+/* NOT `REVEALS` - THAT NAME WAS ALREADY TAKEN, and taking it broke six readers at once:
+   lockedReveals(), revealLeak(), the DM briefing, the too-early guard and the writers' board
+   all index REVEALS as an OBJECT of key -> sentence. The sweep caught it in one run.
+   "A form has readers": before naming a new structure, grep the name. */
+var REVEAL_LEDGER = [
+  {id:"principal-theft",
+   fact:"the Principal has been robbing her own tenant for a hundred and thirty years",
+   plant:"a3-principal", pay:"a3-seize",
+   plantWords:["packing straw","new pan"],
+   payWords:["stealing from her own tenant","substrate, housing shells"],
+   leakWords:["stealing from her own tenant"]},
+
+  {id:"pia-unfileable",
+   fact:"Pia cannot be converged, guided or written - the salvage listing is a key",
+   plant:"a2-turn", pay:"a3-for",
+   plantWords:["salvage"],
+   payWords:["cannot be converged"],
+   leakWords:["cannot be converged","salvage"]},
+
+  {id:"founding-lock",
+   fact:"the lock answers blood, and Vic's tissue could hold the door but never knock",
+   plant:"a3-vic", pay:"a3-seize",
+   plantWords:["hold the door","never knock"],
+   payWords:["maker's blood"],
+   leakWords:["never knock"]},
+
+  {id:"toller-taken",
+   fact:"the chandler on the corner was taken with paperwork and came back not himself",
+   plant:"a2-turn", pay:"a3-seize",
+   plantWords:["Toller"],
+   payWords:["Toller"],
+   leakWords:["Toller"]},
+
+  {id:"time-runs-hot",
+   fact:"time runs hot near the substrate - about a minute inside per second outside",
+   plant:"a3-descent", pay:"a3-seize",
+   plantWords:["minute in there"],
+   payWords:["no fast way"],
+   leakWords:["minute in there","runs hot"]},
+
+  {id:"mirren-is-findable",
+   fact:"Mirren's scrape sleeps in the vaults and can be found by name",
+   plant:"a3-dreamers", pay:"a3-seize",
+   plantWords:["found by name"],
+   payWords:["first name called"],
+   leakWords:["found by name"]},
+
+  /* THE ONE WITH NO PAYOFF, AND IT IS THE POINT. Row 4 asserts that the granny
+     name appears in exactly ONE beat in the whole book. The moment a second
+     night says it, somebody has explained the joke, and the joke stops being a
+     thing the reader worked out and becomes a thing they were told. */
+  {id:"granny-name",
+   fact:"the courier calls the machine Granny, and nobody in the book explains why",
+   plant:"a3-granny", pay:null,
+   plantWords:["Granny"],
+   payWords:[],
+   leakWords:["Granny"]}
+];

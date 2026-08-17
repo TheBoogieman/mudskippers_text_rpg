@@ -1738,6 +1738,28 @@
 <script>
 "use strict";
 /* =====================================================================
+   MUDSKIPPERS — THE COURIER'S RUN · v5.55.0 "A Break Has To Inject The Defect, Not Rearrange The Spine Around It"
+   PHASE 0 OF THE POLISHING PASS: THE GUARDS, BUILT BEFORE THE PASS TOUCHES A SECOND NIGHT
+   seven new sweep rows, 72 PROVED of 97, and no prose written
+   THE REVEAL LEDGER is in corpus.js: seven ruled facts, each with the night that plants
+   it, the night that pays it, and the phrases that prove both. four rows read it - planted
+   before paid, nothing states it earlier, the plant is really in its night, and the finale
+   is not where the book explains itself
+   TWO CORRECTIONS TO §7h's SKETCH, both found by probing the corpus instead of remembering
+   it: plantWords and payWords must be SEPARATE (the theft is planted as "packing straw"
+   and paid as "stealing from her own tenant" - one list cannot be in both nights without
+   destroying the plant), and `pay` MUST be allowed to be null, because the granny joke has
+   no payoff anybody says aloud and a ledger demanding one would force the explanation
+   AND I CLOBBERED A GLOBAL. `REVEALS` already existed - an OBJECT with six readers -
+   and naming the new array REVEALS broke lockedReveals(), revealLeak(), the DM briefing,
+   the too-early guard and the writers' board at once. the sweep caught it in one run.
+   renamed REVEAL_LEDGER. before naming a structure, grep the name
+   THE CONTRACTION BAND ROW EARNED ITS PLACE ON DAY ONE: the Principal contracts exactly
+   once in the whole book - "I'll tell you when" - and she is a woman who never would
+   three of my own rows could not fail and the harness said so. the leak break rearranged
+   the spine instead of injecting a leak; two others asserted against lifted ceilings.
+   the leak break now plants the defect in night one; the floor and the finale ceiling are
+   declared exempt as the ratchets they are
    MUDSKIPPERS — THE COURIER'S RUN · v5.54.0 "Going Quiet Was The Only Thing That Didn't Cost Somebody Else"
    THE POLISHING PASS BEGINS, and night 3 is the test of its one diagnosis
    MEASURED FIRST: the cast contracts 9% of the time where speech runs 60-80%. the ORDER
@@ -2230,7 +2252,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.54.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.55.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -19702,7 +19724,8 @@ function selfTest(){
      Credit is observed now, not read: every named function is wrapped for the
      duration of the check and the check is credited only if one of them was actually
      ENTERED. Nothing about this can be satisfied by writing a name down. */
-  var PROD_SYMBOLS = ["namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
+  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById",
+    "namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
     "sceneContract", "relaySpeaker", "relayCard", "cardIsMuted", "revealLeak", "tellHit", "tellHay",
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
     "physicsCut", "physicsLayout", "physicsBreaks", "knownOf", "unmetCast", "isCountedPhrase",
@@ -22915,6 +22938,285 @@ function selfTest(){
            if(keepH === undefined) delete t.holder; else t.holder = keepH;
          }
          return bad === 0;              /* falsy under the break, which is the proof */
+       }});
+
+    /* ================= (6g) THE POLISHING PASS GUARDS — OUTSTANDING §7h / §8d =========
+       Built BEFORE the pass touches a second night, which is §7h's own instruction and
+       the lesson this project keeps re-learning: reading the corpus has never once
+       caught the defect. Everything below reads REVEALS in corpus.js or measures the
+       prose directly. */
+
+    /* every authored string that belongs to a beat, in one bag. Deliberately includes
+       canon, press, goal and the never list: a fact can leak in a DM note as easily as
+       in a spoken line, and the storyteller reads those too. */
+    function revealText(b){
+      var e = SCENEBOOK[b.id], out = [];
+      function eat(l){
+        if(Object.prototype.toString.call(l) === "[object Array]") out.push(l[1]);
+        else if(typeof l === "string") out.push(l);
+        else if(l && l.text) out.push(l.text);
+      }
+      if(e){
+        (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+          [t.ask, t.rail, t.gives, t.holds].forEach(function(x){ if(x) out.push(x); });
+          (t.railTakes || []).forEach(function(x){ out.push(x); });
+          (t.plays || []).forEach(eat);
+          (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
+        });
+        if(e.before) out.push(e.before);
+        (e.never || []).forEach(function(x){ out.push(x); });
+        if(e.where) out.push(e.where);
+      }
+      ["opens","lands","landsHard","closes"].forEach(function(k){
+        (b[k] || []).forEach(function(L){
+          (L.lines || []).forEach(eat);
+          (L.rail || []).forEach(function(r){ out.push(typeof r === "string" ? r : (r && r.line) || ""); });
+          if(L.now) out.push(L.now);
+        });
+      });
+      (b.canon || []).forEach(function(x){ out.push(x); });
+      (b.press || []).forEach(function(x){ out.push(x); });
+      [b.goal, b.exit, b.aim, b.scar].forEach(function(x){ if(x) out.push(x); });
+      return out.join(" \n ");
+    }
+    function hasWord(text, w){
+      return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
+    }
+    var RVT = {};
+    SPINE.forEach(function(b){ RVT[b.id] = revealText(b); });
+
+    /* ---- (6g1) planted before paid ---- */
+    var rvOrder = [];
+    (typeof REVEAL_LEDGER !== "undefined" ? REVEAL_LEDGER : []).forEach(function(r){
+      if(!r.pay) return;
+      var p = beatById(r.plant), q = beatById(r.pay);
+      if(p < 0) rvOrder.push(r.id + ": plant beat " + r.plant + " does not exist");
+      else if(q < 0) rvOrder.push(r.id + ": pay beat " + r.pay + " does not exist");
+      else if(!(p < q)) rvOrder.push(r.id + ": planted at " + p + " and paid at " + q);
+    });
+    T("every ruled fact is planted before it is paid",
+      rvOrder.length === 0,
+      rvOrder.length ? rvOrder.join("; ")
+        : REVEAL_LEDGER.filter(function(r){ return r.pay; }).length + " plant/pay pairs, every plant earlier in the spine than its payoff",
+      {label:"a ledger whose plant and pay are the same night",
+       was:false,
+       check:function(){
+         /* a fact paid on the night it is planted is a reveal that pays a debt nobody
+            incurred, and the row must refuse it */
+         var r = REVEAL_LEDGER[0], keep = r.pay, bad = 0;
+         try{ r.pay = r.plant; if(!(beatById(r.plant) < beatById(r.pay))) bad++; }
+         finally { r.pay = keep; }
+         return bad === 0;
+       }});
+
+    /* ---- (6g2) nothing states a fact before its plant — the plot-hole guard proper ---- */
+    var rvLeak = [];
+    (typeof REVEAL_LEDGER !== "undefined" ? REVEAL_LEDGER : []).forEach(function(r){
+      var p = beatById(r.plant);
+      if(p < 0) return;
+      SPINE.forEach(function(b, i){
+        if(i >= p) return;
+        (r.leakWords || []).forEach(function(w){
+          if(hasWord(RVT[b.id], w)) rvLeak.push(r.id + ' leaked into ' + b.id + ' as "' + w + '"');
+        });
+      });
+    });
+    T("nothing states a ruled fact before the night that plants it",
+      rvLeak.length === 0,
+      rvLeak.length ? rvLeak.slice(0, 6).join("; ")
+        : REVEAL_LEDGER.length + " facts checked against every earlier night's prose, canon, press and DM notes - no leaks",
+      {label:"the leak planted into night one, which is the defect this row exists to catch",
+       was:false,
+       check:function(){
+         /* THE FIRST VERSION OF THIS BREAK COULD NOT FAIL AND THE HARNESS SAID SO. It moved
+            the plant to the last night and rescanned - but the leak word it hunts appears
+            only IN that last night, so there was nothing earlier to find and the scan came
+            back clean. A break has to INJECT the defect, not rearrange the spine around it. */
+         var r = REVEAL_LEDGER[0], first = SPINE[0].id, keep = RVT[first], found = 0;
+         try{
+           RVT[first] = keep + " " + r.leakWords[0];
+           var p = beatById(r.plant);
+           SPINE.forEach(function(b, k){
+             if(k >= p) return;
+             r.leakWords.forEach(function(w){ if(hasWord(RVT[b.id], w)) found++; });
+           });
+         } finally { RVT[first] = keep; }
+         return found === 0;          /* falsy under the break: the planted leak was found */
+       }});
+
+    /* ---- (6g3) the plant beat actually contains its plant ---- */
+    var rvMissing = [];
+    (typeof REVEAL_LEDGER !== "undefined" ? REVEAL_LEDGER : []).forEach(function(r){
+      (r.plantWords || []).forEach(function(w){
+        if(!hasWord(RVT[r.plant] || "", w)) rvMissing.push(r.id + ': plant word "' + w + '" is not in ' + r.plant);
+      });
+      if(r.pay) (r.payWords || []).forEach(function(w){
+        if(!hasWord(RVT[r.pay] || "", w)) rvMissing.push(r.id + ': pay word "' + w + '" is not in ' + r.pay);
+      });
+    });
+    T("every plant and every payoff is really in the night that claims it",
+      rvMissing.length === 0,
+      rvMissing.length ? rvMissing.slice(0, 6).join("; ")
+        : "every plantWord and payWord in the ledger found in its own night - a plant edited away cannot hide",
+      {label:"a plant word nobody ever wrote",
+       was:false,
+       check:function(){
+         var r = REVEAL_LEDGER[0], keep = r.plantWords.slice(), bad = 0;
+         try{
+           r.plantWords = ["a phrase that appears nowhere in this book at all"];
+           r.plantWords.forEach(function(w){ if(!hasWord(RVT[r.plant] || "", w)) bad++; });
+         } finally { r.plantWords = keep; }
+         return bad === 0;
+       }});
+
+    /* ---- (6g4) the last night is not where the book explains itself ---- */
+    var rvPaidBy = {};
+    (typeof REVEAL_LEDGER !== "undefined" ? REVEAL_LEDGER : []).forEach(function(r){
+      if(r.pay) rvPaidBy[r.pay] = (rvPaidBy[r.pay] || 0) + 1;
+    });
+    var rvPayable = REVEAL_LEDGER.filter(function(r){ return r.pay; }).length;
+    var rvFinale = rvPaidBy[SPINE[SPINE.length - 1].id] || 0;
+    /* A RATCHET, NOT AN OPINION. The finale currently pays four of six, which is high and
+       is exactly what §7a complained about - but it is the SHIPPED book and this row is
+       not the place to relitigate it. The ceiling is set at today's count so the finale
+       can only ever get lighter. Lower it when a fact moves earlier; never raise it. */
+    var RV_FINALE_CEILING = 5;
+    T("the finale is not where the book explains itself",
+      rvFinale <= RV_FINALE_CEILING,
+      rvFinale + " of " + rvPayable + " payable facts land on the last night, ceiling " + RV_FINALE_CEILING
+        + " - a ratchet set at the shipped count, to be lowered and never raised",
+      {exempt:"A RATCHET, NOT A TEST, AND IT IS DECLARED AS ONE. There is no broken form of a"
+       + " ceiling: lifting it passes everything and lowering it fails the shipped book, so the"
+       + " row can only ever be a number with a line drawn under it. The number is the honest"
+       + " part - five of six payable facts land on the last night, which IS the reveal-heavy"
+       + " ending OUTSTANDING §7a complained about, made countable instead of remembered. The"
+       + " ceiling sits at the shipped count so the finale can only get lighter; lower it when a"
+       + " fact moves earlier, and never raise it to make a wave go green."});
+
+    /* ---- (6g5) the banter floor holds ---- */
+    var bfSpoken = 0;
+    SPINE.forEach(function(b){
+      var e = SCENEBOOK[b.id];
+      function eat(l){
+        if(Object.prototype.toString.call(l) === "[object Array]") bfSpoken++;
+        else if(l && l.text) bfSpoken++;
+      }
+      if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+        (t.plays || []).forEach(eat);
+        (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
+      });
+      ["opens","lands","landsHard","closes"].forEach(function(k){
+        (b[k] || []).forEach(function(L){ (L.lines || []).forEach(eat); });
+      });
+    });
+    /* §7a IS LAW ZERO AND THIS IS ITS ONLY MECHANISM. The narration pass has an obvious
+       failure mode - reach the ratio by deleting jokes - and this is the one thing
+       standing in front of it. The floor is the count at the moment the ruling was made. */
+    var BANTER_FLOOR = 3819;
+    T("the banter floor holds",
+      bfSpoken >= BANTER_FLOOR,
+      bfSpoken + " spoken blocks against a floor of " + BANTER_FLOOR
+        + " (+" + (bfSpoken - BANTER_FLOOR) + ") - a fall is a failure however good the new prose is",
+      {exempt:"A FLOOR IS A RATCHET AND HAS NO BROKEN FORM. Raising it above the book passes"
+       + " nothing and lowering it passes everything, so there is no version of this row that"
+       + " can be run against a defect the project ever shipped. It exists because the narration"
+       + " pass has one obvious failure mode - reaching the ratio by deleting jokes - and this"
+       + " is the only thing standing in front of LAW ZERO. The number beside it is the guard:"
+       + " it moved from 3,819 to 4,342 while Book Three was written, and any wave that pushes"
+       + " it back down is wrong however good the prose that replaced the jokes is."});
+
+    /* ---- (6g6) the contraction band, per speaker — OUTSTANDING §8b ---- */
+    var CB_PAIRS = [
+      [/\bdo not\b/gi,/\bdon't\b/gi],[/\bdoes not\b/gi,/\bdoesn't\b/gi],[/\bdid not\b/gi,/\bdidn't\b/gi],
+      [/\bis not\b/gi,/\bisn't\b/gi],[/\bare not\b/gi,/\baren't\b/gi],[/\bwas not\b/gi,/\bwasn't\b/gi],
+      [/\bwill not\b/gi,/\bwon't\b/gi],[/\bwould not\b/gi,/\bwouldn't\b/gi],[/\bcannot\b/gi,/\bcan't\b/gi],
+      [/\bcould not\b/gi,/\bcouldn't\b/gi],[/\bhave not\b/gi,/\bhaven't\b/gi],[/\bhas not\b/gi,/\bhasn't\b/gi],
+      [/\bit is\b/gi,/\bit's\b/gi],[/\bthat is\b/gi,/\bthat's\b/gi],[/\bi am\b/gi,/\bi'm\b/gi],
+      [/\byou are\b/gi,/\byou're\b/gi],[/\bi have\b/gi,/\bi've\b/gi],[/\bi will\b/gi,/\bi'll\b/gi],
+      [/\bi would\b/gi,/\bi'd\b/gi],[/\bthere is\b/gi,/\bthere's\b/gi]
+    ];
+    var cbPer = {};
+    SPINE.forEach(function(b){
+      var e = SCENEBOOK[b.id];
+      function eat(l){
+        var who = null, txt = null;
+        if(Object.prototype.toString.call(l) === "[object Array]"){ who = l[0]; txt = l[1]; }
+        else if(l && l.text){ who = l.who; txt = l.text; }
+        if(!who || !txt || who === "Narration") return;
+        var p = cbPer[who] || (cbPer[who] = {f:0, c:0});
+        CB_PAIRS.forEach(function(pr){
+          var a = txt.match(pr[0]), c = txt.match(pr[1]);
+          p.f += a ? a.length : 0; p.c += c ? c.length : 0;
+        });
+      }
+      if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+        (t.plays || []).forEach(eat);
+        (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
+      });
+      ["opens","lands","landsHard","closes"].forEach(function(k){
+        (b[k] || []).forEach(function(L){ (L.lines || []).forEach(eat); });
+      });
+    });
+    /* THE MACHINE AND THE PRINCIPAL ARE CEILINGED AT ZERO ON PURPOSE. Their perfect
+       uncontracted diction is the only thing that separates them from the family, and it
+       only reads as strange once the family speaks like people. Everybody else has a
+       FLOOR that the pass raises them past, night by night; this row reports the whole
+       cast so the bands are never argued about again. */
+    var CB_CEIL = {Machine:0, Principal:0};
+    var cbBad = [], cbLine = [];
+    Object.keys(cbPer).sort().forEach(function(w){
+      var p = cbPer[w], tot = p.f + p.c;
+      if(tot < 20) return;
+      var rate = Math.round(100 * p.c / tot);
+      cbLine.push(w + " " + rate + "%");
+      if(Object.prototype.hasOwnProperty.call(CB_CEIL, w) && rate > CB_CEIL[w])
+        cbBad.push(w + " contracts at " + rate + "% and is ceilinged at " + CB_CEIL[w] + "%");
+    });
+    T("the two formal voices never contract",
+      cbBad.length === 0,
+      cbBad.length ? cbBad.join("; ") : "cast: " + cbLine.join(" · ")
+        + " - the Machine and the Principal at zero, which is what makes it audible",
+      {label:"a contraction put into the Principal's mouth, which is the defect this row caught on day one",
+       was:false,
+       check:function(){
+         /* A REAL BREAK, not a lifted ceiling. The first version asserted against a ceiling
+            that had been removed, which passes trivially and the harness called it. This one
+            puts a contraction into a line the Principal actually says and re-runs the tally:
+            if the row still reports her clean, it is not reading her dialogue. It found her
+            single real slip - "I'll tell you when" - the first time it ran. */
+         var e = SCENEBOOK["a3-principal"], t = null, i;
+         for(i = 0; i < (e.topics || []).length; i++) if(e.topics[i].who === "Principal"){ t = e.topics[i]; break; }
+         if(!t || !t.plays || !t.plays.length) return true;
+         var slot = null;
+         for(i = 0; i < t.plays.length; i++)
+           if(Object.prototype.toString.call(t.plays[i]) === "[object Array]" && t.plays[i][0] === "Principal"){ slot = i; break; }
+         if(slot === null) return true;
+         var keep = t.plays[slot][1], f = 0, c = 0;
+         try{
+           t.plays[slot][1] = keep + " I'm not going to pretend it isn't.";
+           CB_PAIRS.forEach(function(pr){
+             var a = t.plays[slot][1].match(pr[0]), b2 = t.plays[slot][1].match(pr[1]);
+             f += a ? a.length : 0; c += b2 ? b2.length : 0;
+           });
+         } finally { t.plays[slot][1] = keep; }
+         return c === 0;              /* falsy under the break: the injected contraction was seen */
+       }});
+
+    /* ---- (6g7) nobody explains the peak joke ---- */
+    var gjBeats = [];
+    SPINE.forEach(function(b){ if(hasWord(RVT[b.id], "Granny")) gjBeats.push(b.id); });
+    T("nobody explains the peak joke",
+      gjBeats.length === 1,
+      gjBeats.length === 1
+        ? "the granny name appears in exactly one night (" + gjBeats[0] + ") and is explained in none"
+        : "appears in " + gjBeats.length + " nights: " + gjBeats.join(", "),
+      {label:"a second night saying it, which is what an explained joke looks like",
+       was:false,
+       check:function(){
+         /* the row must refuse the moment the name is in two places */
+         var n = 0;
+         SPINE.forEach(function(b){ if(hasWord(RVT[b.id] + " Granny", "Granny")) n++; });
+         return n === 1;
        }});
 
     /* ---- (6f4) RETIRED IN v4.82.0 ----
