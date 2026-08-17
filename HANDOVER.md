@@ -268,6 +268,52 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
+### → YOU ARE HERE: v5.56.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+
+**State: 33 of 33 nights authored. Sweep 72 PROVED of 97, 0 FAILED. Tree clean, pushed.**
+
+**THE PLAN IS `OUTSTANDING.md` §8 — read it before anything else.** It supersedes nothing in
+§7a–§7j; it is the ORDER those notes get worked in, with the debt measured.
+
+**DONE:**
+- **Phase 0, the guards (v5.55.0).** `REVEAL_LEDGER` in `corpus.js` + four rows; banter floor;
+  contraction band; granny guard. **The ledger is NOT called `REVEALS` — that name was already
+  taken by an object with six readers and taking it broke all of them.**
+- **Phase 1 wave 1: night 1 `a1-hum` (v5.56.0).** All 16 cards have a second take, all 26
+  choice lines name their addressee, Pia 3%→48%, narration 38%.
+
+**NEXT: `a1-chase` (night 2), then the remaining 20 Book One and Two nights, one per wave.**
+Book Three is clean and is not part of this pass.
+
+### THE WAVE RECIPE (worked twice; follow it)
+
+1. Audit: empty second takes, unnamed rails/take-lines, bare landing rows (**`knock:true` rows
+   are NOT bare — they are way-forwards and correctly cardless**), contraction rates per
+   speaker, narration %, and read `never`/`press`/`here`.
+2. Contraction pass: `scratchpad/contract-pass.js <beat> <Who,Who> --apply`. **Then dial back
+   for WEIGHT, never evenly** — restore uncontracted forms on the lines where the speaker
+   means it. Better still, find that speaker's own split (Pia: loose when twelve, formal when
+   working). **Machine and Principal stay at 0%.**
+3. Write the missing second takes. **`takes` is an array of ARRAYS** — writing an array of
+   strings crashes the whole sweep.
+4. Name every rail and take-line.
+5. Sweep, fixture by delta + ledger paragraph, release ritual, push.
+
+### TRAPS THAT HAVE ALREADY COST A WAVE EACH
+
+- **The counting trap, four times now** — "Nine beds", "Three till six", "Three beats of
+  that". Five of this cast are numbers.
+- **Metaphors of HOLDING** are the fork trap for Seven and Nine (`bodiless` refuses them even
+  in the past tense).
+- **Grammar the contraction pass must refuse** (all three shipped as bugs first): sentence-final
+  `it is`/`that is`/`there is`; modal `have to`; sentence-final `you are`/`we are`/`I am`.
+  **No law in this project reads English — read every contraction diff by eye.**
+- **The name-magnet is narrow:** only strip a name from a `key` on a night where ONE speaker
+  owns every rail. Doing it on a two-hander broke typed input. **Strip the name, never the
+  subject.**
+- **Check key collisions with `pickTopic` itself, per road** — never an approximation.
+- **Grep a global's name before declaring one.**
+
 ### → THE NOVEL IS WRITTEN (v5.53.0) — 33 OF 33
 
 `a3-granny` is finished — **8 evening cards, 4 in the room, a second take on all twelve, 6
