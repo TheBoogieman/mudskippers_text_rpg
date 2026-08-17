@@ -268,7 +268,39 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 25 IS WRITTEN (v5.46.0) — 26 of 33, AND SEVEN NIGHTS ARE LEFT
+### → NIGHT 26 IS WRITTEN (v5.47.0) — 27 of 33, AND SIX NIGHTS ARE LEFT
+
+`a3-vic` is finished: **6 evening cards, 6 in the room, a second take on all twelve, 6 of
+6 landing rows wired**, and six and six live on both fork roads. Eleven canon lines, up
+from six. Nine, Seven and Marek had no line on this night at all; all three do now.
+**Six nights left:** `a3-stone` · `a3-for` · `a3-descent` · `a3-dreamers` ·
+`a3-principal` · `a3-granny`.
+
+**THE SHARD OFFER WAS NEVER IN THIS BEAT, and the author's ruling required it.** This is a
+world that keeps people on shards, the family owns every piece of the method, and the book
+had never once put that offer in front of him. It is made now — **once, properly, costed
+honestly** — and the night's `never` was rewritten to say so, because the old law only ever
+forbade *repairing the rig*.
+
+**NINE MAKES IT, because she is exactly what he would become.** Her half is written as a
+fork pair inside the card — aloud where she holds the chassis, relayed through the courier
+where she does not — which is the landing form applied to a card, and it swept clean on
+both roads. **He refuses her to her face**, and his reason is the novel's own argument
+handed back: *"You're offering me the same weight and no end to it. That's the thing we're
+all out here trying to switch off, and you're offering me a private one."* Four seconds
+earlier he called her the proof it works and meant both, and `what-nine-does-after` is her
+having to hold those apart with him no longer available to be asked.
+
+**IT ALSO GIVES A LOOSE PRESSURE LINE ITS FIRST MEANING** — *"the choice arrives early and
+Vic takes it before anyone can argue"* had nothing to point at while nothing could save
+him.
+
+**HE NEVER REACHES THE OTHER HALF.** Night 25 ended on him asking for a chair and a drink
+and tomorrow. He spends all of tomorrow on the part that indicts him and gets as far as
+*"His name was —"*. **That is how `a3-seize`'s canon stays true:** nobody ever told the
+courier why he was chosen, and there is no entry about Vic in the founders' records.
+
+### → NIGHT 25 IS WRITTEN (v5.46.0) — 26 of 33
 
 `a3-founding` is finished: **6 evening cards, 6 in the room, a second take on all twelve,
 6 of 6 landing rows wired.** Six canon lines, up from four. Seven and Marek had no card on
