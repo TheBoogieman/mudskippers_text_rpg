@@ -1276,6 +1276,31 @@ with no new lines. Same for Three's precision.
 | Nine | 1% | **~10%** |
 | Machine / Principal | 0% | **0% — do not touch** |
 
+### CALIBRATED ON NIGHT 3, v5.54.0 — THE RATE IS A BUDGET, NOT A MAXIMUM
+
+**The mechanical pass took Vic to 85% and the author ruled it back: *"dial it back, give him
+some room"*.** He was right, and the reason generalises: **a speaker with no uncontracted
+forms left has no emphasis instrument.** Fourteen were restored on Vic's weighted lines only —
+the confession, the refusals, the flat truths — landing him at **59%**.
+
+The effect is visible in one paragraph: *"there's no clever second door… it doesn't like
+strangers… we're never casual on that road. **That is the whole doctrine.**"* The uncontracted
+sentence lands because it is the only one in the paragraph. **Restore for weight, never evenly.**
+
+**Pia sits at 79% against a 65% target and was deliberately left there** — she is twelve, and
+the higher band may simply be right for her. Rule on it before Book One is finished.
+
+### TWO SUBSTITUTIONS THE MECHANICAL PASS MUST REFUSE — both shipped as bugs on night 3
+
+1. **Sentence-final `it is` / `that is` / `there is` cannot contract.** The pass produced
+   *"for the tea being the way it's"*. Refuse when the pair is followed by a full stop,
+   exclamation mark, question mark or end-of-string.
+2. **Modal `have to` / `has to` / `had to` cannot contract.** The pass produced *"a day
+   before you've to"*. Refuse `have` when the next word is `to`.
+
+**Both were caught by reading the output, not by the sweep** — there is no law that reads
+English. Every night's contraction diff gets read by eye before it ships.
+
 **BLOCK LENGTH IS NOT THE PROBLEM AND MUST NOT BE "FIXED".** Median spoken block is 20–22
 words in all three books; only ~11% run over forty. The stiffness is grammatical, not bulky.
 **Cutting for length would spend the banter floor to solve a problem it does not have.**
