@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.65.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.66.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -386,13 +386,23 @@ the very end of night nine - and the next line is "That is a sentence somebody t
 they are currently the thinnest in the book at 23.5% and 20.2%. Everything in season 2 sits
 below the book median of 30.8%.
 
-**TWO DEBTS FOUND THIS WAVE AND NOT CHASED:**
-1. **`lines_n2.js` only audits CARDS.** Landing and exit rails are not in it, and at least one
-   of them names nobody - "Ask her how it feels, being the only one nobody asked", which is
-   the line the whole season ends on. Teach the tool the landings.
-2. **A choice line addressed the wrong person entirely.** `marsh-finished` is Vic's card and
-   its second line read "Ask her to soften it." Nobody clicking it could have known who they
-   were talking to. Worth a book-wide sweep for `who` disagreeing with the line's pronoun.
+**BOTH DEBTS PAID AT v5.66.0.** `scratchpad/allrails.js` now reads EVERY clickable line in
+the book - cards, `lands`, `landsHard`, `opens`, `closes` and peril rows, 1,181 of them - and
+Season 1 is clean. **154 across the book address somebody and name nobody; 138 of those are on
+nights 10-33 and get fixed as each night comes up.** Run it before claiming a night is done.
+
+**AND USE IT, NOT `lines_n2.js`, FOR THE NAMING CLAIM.** lines_n2 reads a deck and nothing
+else, which is how nine waves of "every choice line names its addressee" were true about part
+of the book. A landing rail's `cards:[...]` names its referent exactly - that is how the
+second wrong-person line turned up (a1-pack's "Ask HER who did the routing", dealing Vic's
+card), and the new check reads the who off the card the rail deals.
+
+**THE TOOL FAILED SILENTLY FIRST AND THIS IS THE STANDING WARNING.** Its predicates were
+patched in through a bash heredoc into python into JavaScript, and every `` arrived as a
+literal BACKSPACE and every `\s` as a bare `s`. It parsed, it ran, and it reported a
+confident ZERO across 1,181 lines. **PROBES GO IN FILES, WRITTEN WHOLE.** allrails.js now
+self-tests its own predicates before printing a verdict, and both known faults were watched
+being caught on a deliberately broken copy of the corpus before the live zero was believed.
 
 
 ### THE WAVE RECIPE (worked twice; follow it)
