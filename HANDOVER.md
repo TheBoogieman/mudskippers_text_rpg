@@ -268,7 +268,35 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 24 IS WRITTEN (v5.45.0) — 25 of 33, AND EIGHT NIGHTS ARE LEFT
+### → NIGHT 25 IS WRITTEN (v5.46.0) — 26 of 33, AND SEVEN NIGHTS ARE LEFT
+
+`a3-founding` is finished: **6 evening cards, 6 in the room, a second take on all twelve,
+6 of 6 landing rows wired.** Six canon lines, up from four. Seven and Marek had no card on
+this night at all; both do now. **Seven nights left:** `a3-vic` · `a3-stone` · `a3-for` ·
+`a3-descent` · `a3-dreamers` · `a3-principal` · `a3-granny`.
+
+**VIC WAS ALREADY IN THIS NIGHT AND THE CAST LIST DID NOT KNOW — the exact fault
+`a3-voice`'s doorway had, one night later in the book.** Both landings already ended on
+him asking the courier outside *"in the voice people use when they have already decided to
+say the whole thing"*, and **all six landing rails were about that, with no card in either
+deck to answer them.** `outside-with-vic` is the card those rails were asking for. He knew
+the Architect's voice inside two seconds, will not say how, and on the step he starts, and
+stops, and asks for a chair and a drink and tomorrow. **Tomorrow is night 26. He does not
+get it.** Nobody standing on that step knows that, which is the whole point of the card.
+
+**THE PRINCIPAL IS NOW PLANTED AS A WRONG ANSWER.** She is all over the early record and
+absent from the end of it, and Hesta closes the question out loud and comfortably: *"Long
+dead, love. Everybody in that room is long dead."* **Nobody checks.** The drift net flagged
+that line as a `tell`, correctly — it is the only deliberately FALSE tell in the book, and
+the ledger paragraph beside the fixture says so, because a later guard that reads `tell` as
+truth would have to survive it and the fix would never be to soften the line.
+
+**AND A THIRD PRESSURE BLOCK CONTRADICTED ITS OWN NIGHT** — *"the machine answers a
+question nobody asked her out loud"*, on a night whose `never` says the machine does not
+speak here. **Two in two nights. Nothing in the sweep reads `press`, so every remaining
+night's pressure block has to be read against its own `never` by hand when it is written.**
+
+### → NIGHT 24 IS WRITTEN (v5.45.0) — 25 of 33
 
 `a3-voice` is finished: **7 evening cards, 6 in the room, a second take on all thirteen,
 6 of 6 landing rows wired**, and all 26 choice lines naming their addressee. Three canon
