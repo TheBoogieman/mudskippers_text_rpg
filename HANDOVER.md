@@ -268,7 +268,32 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → NIGHT 29 IS WRITTEN (v5.50.0) — 30 of 33, AND THREE NIGHTS ARE LEFT
+### → NIGHT 30 IS WRITTEN (v5.51.0) — 31 of 33, AND TWO NIGHTS ARE LEFT
+
+`a3-dreamers` is finished: **6 evening cards, 4 in the room, a second take on all ten, 6 of
+6 landing rows wired.** Nine canon lines, up from four. Seven and Marek were both silent on
+the act turn; both speak now. **Two nights left: `a3-principal` · `a3-granny`.**
+
+**ALL SIX LANDING RAILS WERE ABOUT LIGHTS COMING ON AND NO CARD ANSWERED THEM** — the same
+fault nights 24 and 25 had, third time. The housekeeping has its card now, and what it does
+is the most frightening courtesy in the book: **it lights the way *ahead* of them**, one
+bank at a time, unhurried, toward the shelf they were already walking to. Nobody turns it
+off, because turning it off is a sentence — *"we do not want your help"* — and nobody is
+ready to have said that to this room.
+
+**SEVEN KNOWS THE AISLE NUMBERING BY INTAKE QUARTER**, so he knows where the people he
+processed are: nine minutes' walk, worked out without deciding to. He does not go.
+**MAREK IS THE ONLY ONE LOOKING AT THE ROOM** rather than the shelves, and it is superbly
+kept and has been for forty years, by her, by hand — *"every perfect seal is her being
+careful with somebody."*
+**NINE IS NOT FILED HERE.** She looked before they reached the bottom of the ladder. She is
+still from somewhere and it is still not here — **and it still must not be invented.**
+
+**HESTA'S LIST IS NOW ONE LIST.** The four names taken in pencil at the Cannery Row post
+door on night 24 are on the same page as the eleven from under her floor, copied over on
+the ladder. It has stopped being a keepsake and become a working document.
+
+### → NIGHT 29 IS WRITTEN (v5.50.0) — 30 of 33
 
 `a3-descent` is finished: **7 evening cards, 5 in the room, a second take on all twelve,
 6 of 6 landing rows wired.** Marek had no line at all on a *cable descent*; he has two now.
