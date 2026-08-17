@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.70.0 "An Empty Delta Is The Correct Result"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.71.0 "Aim At The Run, Not At The Percentage"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.70.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.71.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -19964,7 +19964,17 @@ function verdictMap(){
    is worth saying so once, plainly: the net reads for death, four names, breach and the two
    shard positions, and dread written about what an evening costs touches none of those. A
    §7d wave that moves the fixture is a §7d wave that has said something about a person or a
-   place by accident, and should be read again before it ships. */
+   place by accident, and should be read again before it ships.
+   v5.71.0 - AIM AT THE RUN, NOT AT THE PERCENTAGE. Forty-two more narration blocks into
+   night ten, spoken count unmoved at 303, fixture delta empty again. The change that made
+   this wave four times the size of the last one was not effort, it was the instrument:
+   listing every layer of a beat by its LONGEST UNBROKEN SPOKEN RUN rather than by its
+   share of narration. A share is an average and an average hides the thing that actually
+   goes wrong - eight people talking in a row with nobody looking at the room. Night ten
+   had a run of eight when this wave started; it has a run of five now, in one layer, and
+   the share went 30.6% to 35.8% as a by-product of fixing that. Two of the batch went in
+   after a joke to say what the joke was covering, but most went in mid-layer, where the
+   prose gets to be quietly wrong about a thing the room is certain of. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon7","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
