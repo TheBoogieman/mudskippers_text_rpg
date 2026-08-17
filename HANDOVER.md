@@ -268,9 +268,9 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.70.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.71.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
-**State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
+**State: 33 of 33 nights authored. Sweep 75 PROVED of 100, 0 FAILED. Tree clean, pushed.**
 
 **THE PLAN IS `OUTSTANDING.md` §8 — read it before anything else.** It supersedes nothing in
 §7a–§7j; it is the ORDER those notes get worked in, with the debt measured.
@@ -333,7 +333,7 @@ book's median is **30.6%**, and the four nights sitting above 35 are the four I 
 polished — the target was my own homework read back to me. The three nights land at 30.8,
 34.7 and 33.1, at or above the book's middle. **Run `node scratchpad/floors.js` before ever
 quoting a narration floor again.** The real narration debt is Season 2: `a2-manual` 19.5%,
-`a2-chassis` 20.2%, `a2-law` 23.1%, `a2-housing` 23.3%, `a2-door` 23.5% — and two of those
+`a2-chassis` 20.2%, `a2-law` 23.1%, `a2-housing` 23.3% (`a2-door` was 23.5% and is 35.8% as of v5.71.0) — and two of those
 are the nights pinned at over 50%.
 
 **AND MEASURE THE RUNS, NOT THE RATIO.** The floor is what you get when nobody talks for nine
@@ -411,8 +411,19 @@ refuses any card that already has `takes:`, and it never once refused on nights 
 of its own that says what is in it, all 38 clickable lines name their addressee and reach
 their own card when typed. The fourteen recovered lines were the interesting half - their
 prose was written long ago and was being offered under the FIRST take's wording.
-2. **The §7d narration pass, STARTED (v5.70.0).** Night 10 is at **30.6%**, up from 23.5%,
-   with **40 blocks written and the spoken count unmoved at 310**. It owes about **173 more**.
+2. **The §7d narration pass, STARTED (v5.70.0), RUNNING (v5.71.0).** Night 10 is at
+   **35.8%**, up from 23.5%, with **82 blocks written and the spoken count unmoved at 303**.
+   It owes about **135 more** to clear 50%.
+
+   **AIM AT THE RUN, NOT AT THE PERCENTAGE.** The share is an average and an average hides
+   the thing that actually goes wrong on the page: eight people talking in a row with nobody
+   looking at the room. `node scratchpad/layers.js <beat> [minRun]` lists every layer of a
+   beat by its LONGEST UNBROKEN SPOKEN RUN, longest first, and that listing is an ADDRESS -
+   card, layer, and how bad. Night 10 opened v5.71.0 with a run of eight and closed it with
+   a run of five, in one layer, and the share moved as a by-product. Feed the addresses to
+   `node scratchpad/dumplayer.js <beat> <id> <layer> ...`, which prints a layer whole, with
+   indices, UNTRUNCATED - because `breathe.js` addresses lines by index and a listing that
+   abbreviates is a listing that lies.
 
    **AN EMPTY DRIFT DELTA IS THE CORRECT RESULT FOR THIS PASS.** The net reads for death,
    four names, breach and the two shard positions; dread about what an evening costs touches
