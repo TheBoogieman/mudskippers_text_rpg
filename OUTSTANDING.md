@@ -11,12 +11,12 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.73.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.74.0
 
 | | count | where |
 |---|---|---|
 | choice lines that **address somebody and name nobody** | **123** of 1,181 | nights 11–33 |
-| the **contrast** in dialogue | **124** | Books Two and Three |
+| ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
 | take layers that **open with somebody talking at the courier** | **87** of 423 | book-wide |
 | nights under the **35% narration floor** | 4 badly | `a2-manual` 19.5 · `a2-chassis` 20.2 · `a2-law` 23.1 · `a2-housing` 23.3 |
 | spoken blocks — **THE BANTER FLOOR** | **4,656** | must never fall |
@@ -54,7 +54,7 @@ nine separate waves reaching them.
 
 | | pass | tool | size |
 |---|---|---|---|
-| 1 | **the contrast leaves the dialogue** — Books Two and Three | `contrasts.js <beat>` | 124 lines |
+| ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
 | 2 | **every choice line names its addressee** | `allrails.js` | 123 lines |
 | 3 | **the scold: a narration beat before anyone speaks** | `scold.js` | 87 takes |
 | 4 | **the narration floor**, on the four nights genuinely under it | `floors.js`, `layers.js` | 4 nights |

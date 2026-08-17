@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.73.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.74.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -124,6 +124,12 @@ and was right every time.
    narration pass wrote four of night ten's tics itself across three releases and no
    instrument in the project could see it.
 8. Sweep, fixture by delta plus ledger, release ritual, push, play it.
+
+**ONE PREDICATE, THREE COPIES — `tic.js`, `contrasts.js` and `ticScan` in `index.html` —
+and ANY DISAGREEMENT BETWEEN THEM IS A FINDING.** They have drifted twice and both times
+the drift was the discovery: once the scratch tool read 23 blocks the guard could not see,
+once it carried a pattern the guard lacked and was quietly the better reader. **Chase the
+difference; never just pick one.**
 
 **AND THE THREE BANNED SHAPES, because they arrive under your own hand:** the **contrast**
 (*"it is not a rule. It is the shape of a thing"*) · **"which is the whole…"** · the word
