@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.72.0 "The Pass Was Writing The Habit It Was Removing"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.73.0 "One Habit Wearing Nine Faces"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.72.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.73.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -9379,17 +9379,33 @@ var SEALED_FIELDS = ["canon", "canonAlt", "canonA", "canonB", "canonSoft", "goal
    frightening thing in this kitchen" earns it. What is banned is the HABIT, so this is a
    ceiling that ratchets down, never a zero. The banned WORD is a zero. */
 var TIC_CONTRAST_NEG = /\b(?:it|that|this|there|which|and it|and that)\s+(?:is|was|are|were)\s+not\b|\bis\s+not\s+(?:a|an|the)\b/i;
-var TIC_CONTRAST_AFF = /\b(?:it|that|this|and it|and that)\s+(?:is|was|are|were)\s+(?:a|an|the)?/i;
+/* THE AFFIRMATIVE HALF MUST REFUSE A FOLLOWING "not", AND THE LOOKAHEAD IS WHY.
+   "it is not the marsh, and it is not the wire, and it is not the hour" is a LIST of
+   denials, not a denial answered by an assertion, and the first cut of this counted it -
+   while at the same time MISSING real contrasts whose first candidate happened to be
+   another denial. Tightening it found seven the loose version had masked and dropped a
+   whole beat of false positives. A predicate that is wrong in both directions at once is
+   the ordinary case, not the surprising one. */
+var TIC_CONTRAST_AFF = /\b(?:it|that|this|and it|and that)\s+(?:is|was|are|were)\s+(?!not\b)/i;
 var TIC_WORD = /load[- ]bearing|which is the whole/i;
 
-/* EVERY BLOCK IN THE BOOK, narration included, each stamped with which it is. The one
-   thing this function must never do is skip a string. */
+/* EVERY BLOCK IN THE BOOK, narration included, each stamped with which it is.
+
+   THERE ARE FOUR BLOCK SHAPES AND THE FIRST CUT OF THIS KNEW THREE. A block is an ARRAY
+   (spoken), a STRING (narration), an object with `who` (spoken) - or, in Book Three, a
+   HOLDER-TAGGED FRAME: {holder, text} and {holder, relay, text}, which is narration that
+   differs by which mind has the chassis. Twenty-three of them, all narration, all invisible
+   to the first version of this function - which was written to catch a blind instrument and
+   was itself blind in a second place within the hour. It was found by cross-checking two
+   instruments against each other and noticing they read a different number of blocks.
+   THE ONE THING THIS FUNCTION MUST NEVER DO IS SILENTLY SKIP A SHAPE, so an unknown shape
+   with a `text` on it is counted rather than dropped. */
 function ticBlocks(){
   var out = [];
   function eat(where, l){
-    var spoken = (Object.prototype.toString.call(l) === "[object Array]") || !!(l && l.who);
-    var t = spoken ? (Object.prototype.toString.call(l) === "[object Array]" ? l[1] : l.text)
-                   : (typeof l === "string" ? l : null);
+    var isArr = Object.prototype.toString.call(l) === "[object Array]";
+    var spoken = isArr || !!(l && l.who);
+    var t = isArr ? l[1] : (typeof l === "string" ? l : (l && l.text));
     if(t) out.push({where:where, spoken:spoken, t:String(t)});
   }
   SPINE.forEach(function(b){
@@ -20050,7 +20066,24 @@ function verdictMap(){
    (ticBlocks / ticScan) and row (6g7) breaks by restoring that blindness. A measurement
    that cannot see the place a fault lives is not a measurement, and this project has now
    been handed that same lesson by a card-only line audit, a mangled regex, and a
-   take-versus-line conflation. Four times. */
+   take-versus-line conflation. Four times.
+   v5.73.0 - THE CONTRAST LEAVES THE DIALOGUE, AND BOOK ONE IS DONE. The author ruled the
+   remaining 164 spoken contrasts gone. Forty of them - all of Book One - are rewritten
+   here, and THE SPOKEN BLOCK COUNT IS 4,656 BEFORE AND 4,656 AFTER, which is the proof
+   that they were rephrased rather than cut and is the only number LAW ZERO cares about.
+   Fixture delta empty again: a figure of speech says nothing new about a person.
+   TWO INSTRUMENT FAULTS WERE FOUND BY MAKING TWO INSTRUMENTS DISAGREE, and both were in
+   code written the same day to catch exactly this class of thing. First, the affirmative
+   half of the contrast test counted a LIST of denials - "not the marsh, and not the wire,
+   and not the hour" - as a contrast, while simultaneously MISSING real ones whose nearest
+   candidate happened to be another denial; a lookahead fixed both directions at once and
+   the count went UP. Second, and worse: ticBlocks knew three block shapes and the book has
+   FOUR. The holder-tagged frames of Book Three - {holder,text} and {holder,relay,text},
+   twenty-three blocks of forked narration - were invisible to it. A guard built to catch a
+   blind instrument was itself blind in a second place within the hour, and the only reason
+   it surfaced is that two tools read a different number of blocks and I chased the
+   difference instead of picking one. TWO READERS THAT AGREE ON A NUMBER ARE WORTH MORE
+   THAN ONE READER THAT IS CONFIDENT. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon7","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
@@ -23872,7 +23905,7 @@ function selfTest(){
       var tk = ticScan();
       /* the ceiling is the count at the moment the mannerism wave started fixing them.
          LOWER IT WHEN A WAVE CLEARS SOME. NEVER RAISE IT TO MAKE A WAVE GO GREEN. */
-      var NARR_CONTRAST_CEILING = 28;
+      var NARR_CONTRAST_CEILING = 27;
       var bad = [];
       if(tk.word) bad.push(tk.word + " banned phrase(s) back in the book: " + tk.where.slice(0, 4).join(", "));
       if(tk.narrContrast > NARR_CONTRAST_CEILING)

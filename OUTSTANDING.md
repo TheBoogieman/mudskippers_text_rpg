@@ -150,8 +150,21 @@ remove: four of night ten's seven narration tics were written by the pass itself
 | | at v5.72.0 |
 |---|---|
 | **the banned word / phrase** | **0** — `load-bearing` (12) and `which is the whole` (5) are gone |
-| **the contrast, in NARRATION** | **28**, against a sweep ceiling of 28 that ratchets down |
-| **the contrast, in DIALOGUE** | **172** — *open, and the author's ruling to make* |
+| **the contrast, in NARRATION** | **27**, against a sweep ceiling of 27 that ratchets down |
+| **the contrast, in DIALOGUE** | **124** — **ruled gone.** Book One's 40 are done; Books Two and Three remain |
+
+**RULED 2026-08-17: THE CONTRAST COMES OUT OF THE DIALOGUE TOO.** Book One is finished at
+v5.73.0 — forty lines rewritten, and **the spoken block count was 4,656 before and 4,656
+after**, which is the proof that they were rephrased rather than cut and is the only number
+LAW ZERO cares about. **Check it on every wave of this.** `node scratchpad/contrasts.js
+<beat>` lists them with their speaker; the repair is per-voice, because Hesta correcting
+somebody and Pia correcting somebody are different repairs. **Vary the repair move** —
+delete the denial, or keep it and drop the answering copula, or turn the second half into a
+different grammar entirely. Forty identical repairs would just be the next tic.
+
+**Books Two and Three, by night:** `a2-chassis` 22 · `a2-door` 15 · `a2-law` 12 ·
+`a2-mirren` 8 · `a2-housing` 8 · `a3-voice` 7 · `a3-vic` 7 · then fours and threes.
+**By speaker it is Nine and Hesta above everyone** — the two who explain things.
 
 **IT IS COUNTED, NOT FORBIDDEN.** A denial answered by an assertion is a real figure and
 sometimes it is the sentence — *"It is not a large bag, and it is the most frightening thing
