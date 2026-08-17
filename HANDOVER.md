@@ -10,9 +10,14 @@ in the commit that did it, and this file forgets it.*
 
 **v5.73.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
-The authoring phase is over. **We are in the polishing pass** — the plan is `OUTSTANDING.md`.
-Season 1 (nights 1–9) is polished; night 10's deck is finished and its narration pass is
-running; nights 11–22 have not been started.
+The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
+as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
+ordered list is in `OUTSTANDING.md` and each pass is finishable in a sitting.
+
+**TWO DEBTS WERE RETIRED BY THE AUTHOR AND MUST NOT COME BACK: not every card needs a second
+take**, and `a2-chassis`'s 25 take-lines are being lived with. **Never add a second take to a
+beat that is short by nature**, and **never rewrite a second take that already exists** —
+the scold fix adds narration in front of them, it does not touch his lines.
 
 **The game is five files.**
 
@@ -152,6 +157,8 @@ tool would delete every one of them silently). `tools-gen-world.js` renders the 
 | `tic.js [beat]` | the AI mannerisms, over **every** block including narration |
 | `untic.js <spec.json>` | replace exact strings in corpus.js, refusing on any count that is not one |
 | `debts.js` | the whole-book debt sheet in one pass |
+| `contrasts.js <beat>` | every spoken contrast, with its speaker, for the per-voice repair |
+| `scold.js` | take layers that open with somebody talking straight at the courier |
 | `precheck.js <file>` | the release precheck |
 | `drive_lap.js` / `landing_audit.js` / `branchlie.js` | deck lapping, landing rails, fork lies |
 

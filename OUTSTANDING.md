@@ -11,23 +11,29 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.71.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.73.0
 
 | | count | where |
 |---|---|---|
-| cards with **no second take at all** | **71** of 483 | all in Book Two, plus 5 in `a3-seize` |
-| takes with **no choice line of their own** | **25** | all in `a2-chassis` |
 | choice lines that **address somebody and name nobody** | **123** of 1,181 | nights 11–33 |
+| the **contrast** in dialogue | **124** | Books Two and Three |
+| take layers that **open with somebody talking at the courier** | **87** of 423 | book-wide |
+| nights under the **35% narration floor** | 4 badly | `a2-manual` 19.5 · `a2-chassis` 20.2 · `a2-law` 23.1 · `a2-housing` 23.3 |
 | spoken blocks — **THE BANTER FLOOR** | **4,656** | must never fall |
-| narration blocks | 1,926 | **29.3%** book-wide |
+| narration blocks | 1,926 | **29.3%** book-wide, median night 31% |
 | bare landing / opening rows | **0** | closed |
 
-**The no-second-take debt, by night:** `a2-hand` 7 · `a2-turn` 7 · `a2-ground` 6 ·
-`a2-mirren` 6 · `a2-seven` 6 · `a2-three` 6 · `a2-annul` 6 · `a2-law` 6 · `a3-seize` 5 ·
-`a2-chassis` 4 · `a2-housing` 4 · `a2-manual` 4 · `a2-choir` 4.
+### RETIRED BY THE AUTHOR, 2026-08-17 — these are NOT debts and must not come back
 
-**Book Three is clean** and was written to the laws as they were being made. Nothing in the
-plan below runs over Book Three without a measured reason.
+- **~~71 cards with no second take.~~ NOT EVERY CARD NEEDS ONE.** Season 2 has a great many
+  already and Season 3 has enough. **Do not add a second take to a beat that is short by
+  nature** — `a3-stone` is deliberately the smallest night in the book and the shortness *is*
+  the writing. Write one only where a specific room genuinely wants it.
+- **~~`a2-chassis`'s 25 takes with no line of their own.~~** The prose exists and is
+  reachable; the row re-offers the first take's wording under a **2ND TIME** badge. One night
+  living with that is cheaper than 25 lines.
+- **AND DO NOT REWRITE THE SECOND TAKES THAT EXIST.** The scold fix below adds a narration
+  block in front of them; it does not touch the author's lines.
 
 Also open, unmeasured: **32 transition scenes** for TAKE THE NIGHT ON (not started) ·
 roughly **230 staged choices unwired** outside the finished rooms · **6 amber sweep rows**,
@@ -36,29 +42,48 @@ NIGHT ON. The last two are **deferred by the author until the written side settl
 
 ---
 
-## THE PLAN, AND WHERE WE ARE IN IT
+## THE PLAN — BOOK-WIDE PASSES, NOT NIGHT-WAVES. Ruled 2026-08-17.
 
-**PHASE 0 — THE GUARDS. DONE at v5.55.0.** `REVEAL_LEDGER` in `corpus.js` and its rows, the
-banter floor, the contraction band per speaker, the granny guard.
+**THE OLD PLAN WAS TWELVE NIGHT-WAVES, EACH DOING SIX KINDS OF JUDGEMENT AND ENDING IN A
+FULL RELEASE RITUAL.** That is seventy-odd context switches for work that groups naturally
+by FAULT rather than by night. **One pass = one tool = one kind of judgement = one release.**
+The contrast pass proved it: forty lines in a sitting, where the old plan would have spent
+nine separate waves reaching them.
 
-**PHASE 1 — ONE NIGHT AT A TIME, BOOKS ONE AND TWO.** Each wave takes one night and finishes
-it: empty second takes, take-lines and rails that name nobody, the contraction band, the
-narration floor, the nerve beat, and the tics. **Season 1 (nights 1–9) is done. Night 10's
-deck is done. Nights 11–22 have not been started.**
+**THE ORDER, AND EACH ONE IS FINISHABLE IN A SITTING:**
 
-**PHASE 2 — THE TWO PINNED NIGHTS**, past 50% narration, after Phase 1 has settled the voice
-— because the two-narrator contrast only reads once the dialogue under it is fluent. **Night
-10 is running now; night 15 has not been started.**
+| | pass | tool | size |
+|---|---|---|---|
+| 1 | **the contrast leaves the dialogue** — Books Two and Three | `contrasts.js <beat>` | 124 lines |
+| 2 | **every choice line names its addressee** | `allrails.js` | 123 lines |
+| 3 | **the scold: a narration beat before anyone speaks** | `scold.js` | 87 takes |
+| 4 | **the narration floor**, on the four nights genuinely under it | `floors.js`, `layers.js` | 4 nights |
+| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
+| 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
+| 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
+| 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
 
-**PHASE 3 — THE LORE FOLDS.** Only where a scene already reaches for them. Grep Books One and
-Two for the places that already gesture at a supplier, a landlord, a lock or Vic's parts, and
-sharpen those. **No new cards, no new plants** — the standing instruction is that nothing
-already written gets retconned.
+**PASS 3 IS THE CHEAPEST HIGH-VALUE ONE AND IT PAYS THREE DEBTS AT ONCE.** The author's note
+was that the second takes sound like the cast scolding the courier — and measured, **only
+6.6% of take layers open on narration. The other 93.4% open with somebody talking straight
+at him**, and 87 say *"you"* in the very first sentence. The fault is the SHAPE, not the
+vocabulary. **One narration block at the head of such a take kills the scold, raises that
+night's narration share, and breaks the dialogue run** — one edit, three debts, and it needs
+no audit of the night first. **It adds; it does not rewrite.**
+
+**PASS 6 IS A REPORT BEFORE IT IS A WAVE.** The author ruled that new cards are warranted
+**only where a closing does not match its scene**. So: read all 33 nights' landings AND the
+season seams, and produce **one list of mismatches with a proposed card for each — and take
+it to him before writing a word.** The precedent is good: a landing rail asking a question no
+card in the room could answer has found four real holes already.
 
 ### WHAT WOULD MAKE THIS PLAN WRONG
 
-- **If the contraction pass stops visibly improving a night's readability**, stop and re-ask.
-- **If the banter floor falls** during any wave, the wave is wrong however good the prose is.
+- **If the banter floor falls** during any pass, the pass is wrong however good the prose is.
+  Check it every time: it was 4,656 before and after the last one, which is what proved the
+  lines were rephrased rather than cut.
+- **If a pass starts needing the whole night in context to make a call**, it is a night-wave
+  wearing a pass's clothes — stop and say so.
 - **If the narration gauge shows a night dropping** while its dialogue improves, that is
   expected and fine — check the floor, not the direction.
 
