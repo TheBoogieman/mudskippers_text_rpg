@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.62.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.63.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -321,12 +321,38 @@ more."*
 **THE AUTHOR RULED ON 2026-08-17 THAT WAVES GO ACT BY ACT, NOT NIGHT BY NIGHT**, and that a
 wave should only stop for a ruling that genuinely cannot wait.
 
-### → NEXT, AND IT IS THE UNFINISHED HALF OF THIS ACT
+### → SEASON 1 ACT 2 IS FINISHED (v5.63.0)
 
-1. **20 EVENING SECOND TAKES** — 7 on `a1-fare`, 6 on `a1-late`, 7 on `a1-exit`. Ids are in
-   the act audit: `node scratchpad/act.js a1-fare a1-late a1-exit`.
-2. **THREE NARRATION FLOORS** — a1-fare 29.1%, a1-late 33.8%, a1-exit 32.6%, all under 35.
-   Longest dialogue runs are 4, 5 and 6 — break those first, the floor follows.
+All three nights now have a second take on every evening card - 20 written this wave - and
+all 100 choice lines across the act name their addressee AND deal to their own card when
+typed. Bands: Clerk 59%, Pia 62/51/61%, Vic 63%, Mirren 38% (the author's own alternation,
+left alone). Longest unbroken dialogue run is 3, 4 and 5.
+
+**THE NARRATION "FLOOR" OF 35 WAS A NUMBER I INVENTED.** Measured across all 33 nights the
+book's median is **30.6%**, and the four nights sitting above 35 are the four I had already
+polished — the target was my own homework read back to me. The three nights land at 30.8,
+34.7 and 33.1, at or above the book's middle. **Run `node scratchpad/floors.js` before ever
+quoting a narration floor again.** The real narration debt is Season 2: `a2-manual` 19.5%,
+`a2-chassis` 20.2%, `a2-law` 23.1%, `a2-housing` 23.3%, `a2-door` 23.5% — and two of those
+are the nights pinned at over 50%.
+
+**AND MEASURE THE RUNS, NOT THE RATIO.** The floor is what you get when nobody talks for nine
+blocks without the room doing anything. `node scratchpad/runs.js <beat> 4` lists every
+unbroken run of spoken blocks, longest first. Break the fours and the ratio follows; do not
+break a list the character has just announced as a list.
+
+### → NEXT: THE NINE-BLOCK CAP, AND IT NEEDS A RULING FIRST
+
+**`showScene` trims every reply past NINE blocks** (`index.html`, the `data.scene.length > 9`
+slice). It is a guard against a rambling model, and it is applied to the authored book as
+well. **107 card layers of 889 are over it. 456 authored blocks never reach the page in any
+run, on any night.** Found by playing the act out in the drawer and noticing one line missing
+from the end of a take; `node scratchpad/overnine.js` lists all 107 and the first line each
+one loses.
+
+It is a one-line change either way and the author has to choose: let the novel print what it
+was written to print, or cut 107 cards to fit. **DO NOT SILENTLY RAISE IT** - it changes what
+every player reads on 107 cards, including nights nobody has polished yet.
 
 Then Season 1 Act 3 (`a1-carried`, `a1-turn`), then Season 2.
 
