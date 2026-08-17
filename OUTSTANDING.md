@@ -11,11 +11,11 @@ has been ruled, and which of it is a trap.
 
 ---
 
-## THE MEASURED DEBTS — read off `corpus.js` at v5.74.0
+## THE MEASURED DEBTS — read off `corpus.js` at v5.76.0
 
 | | count | where |
 |---|---|---|
-| choice lines that **name no addressee at all** | **33** | the tail of pass 2 — `Hesta` 17, `Vic` 6 |
+| ~~choice lines that name nobody~~ | **0** | **PASS 2 CLOSED at v5.76.0** — 179 lines named across three shapes |
 | ~~the **contrast** in dialogue~~ | **0** | **CLOSED at v5.74.0** — all 164 rewritten, spoken count unmoved |
 | take layers that **open with somebody talking at the courier** | **87** of 423 | book-wide |
 | nights under the **35% narration floor** | 4 badly | `a2-manual` 19.5 · `a2-chassis` 20.2 · `a2-law` 23.1 · `a2-housing` 23.3 |
@@ -55,7 +55,7 @@ nine separate waves reaching them.
 | | pass | tool | size |
 |---|---|---|---|
 | ~~1~~ | ~~the contrast leaves the dialogue~~ | | **DONE v5.73.0 + v5.74.0** |
-| 2 | **every choice line names its addressee** | `namer.js` | **139 DONE v5.75.0 · 33 left** |
+| ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | 3 | **the scold: a narration beat before anyone speaks** | `scold.js` | 87 takes |
 | 4 | **the narration floor**, on the four nights genuinely under it | `floors.js`, `layers.js` | 4 nights |
 | 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
@@ -76,8 +76,11 @@ no audit of the night first. **It adds; it does not rewrite.**
 PROJECT HAD EVER READ** — `exits[]` ends the night and `walks[]` puts the whole job down,
 they are the most consequential buttons in the game, and every naming wave for nine months
 walked past them. 20 found, 17 named. (c) **a line naming no addressee at all** — *"Ask why
-the Choir has not come for her"* — **33 left**, found by `node /tmp/noname.js`'s shape and
-listed by driving a night and reading the badges.
+the Choir has not come for her"* — **DONE at v5.76.0** — 40 named, and the
+first cut of that audit said 57 because it counted every imperative. **get/let/make/show/hand
+are the COURIER ACTING, not the courier addressing** — "Get up. We are not sleeping here",
+"Get something to write on" — and naming those would make them worse. **Only Ask and Tell
+have somebody on the other end.**
 
 **THREE PRONOUNS WERE LEFT UNNAMED ON PURPOSE, and the reason is the writing:** `a1-chase`'s
 pursuers have no name because nobody knows who they are yet, and `a1-late`'s *"let her get
