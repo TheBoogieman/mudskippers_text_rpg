@@ -1169,7 +1169,7 @@ wherever a take hands the card to somebody else.
 
 ---
 
-## 7j. THE SAFEHOUSE DOOR — `a1-vic`, night 3. The beat is standing in the wrong room
+## 7j. THE SAFEHOUSE DOOR — `a1-vic`, night 3. DONE at v5.60.0
 
 **The author's note:** *there's a problem with Vic's safehouse door. We have a family room at
 the door, and Pia and the courier are asking about things inside, or speaking ahead. That beat
@@ -1200,6 +1200,31 @@ should be shorter, and the cards for that room should come after they get in.*
    prose has to move them across the threshold on screen.**
 3. **THE INTERIOR CARDS MOVE TO THE ROOM DECK**, starting with the kettle and the labels.
    Anything that needs eyes inside the house belongs where the eyes are.
+
+### DONE AT v5.60.0 — AND THE DIAGNOSIS WAS NARROWER THAN THE NOTE
+
+**Point 3 turned out not to be needed.** The note says the interior cards should move to the
+room deck. Reading all six: **every one of them is already written inside the kitchen** — the
+kettle clicking off, the shard on the table, the jar in the pantry, every seat in the kitchen,
+the shutters holding the marsh out. **The deck was never on the porch.** The OPENING was, and
+it ended with the door shut, so the first click teleported the player inside mid-sentence.
+
+**So point 2 was the whole fix, and it is the safest one available.** The opening now crosses
+the threshold on screen — three locks and a bar, *"mind the step, it has opinions"*, and a
+kettle already boiling because he has been in there being sure for the length of the causeway.
+`where` drops the two-room smear, `place` and `now` say the kitchen, and the opening's two rail
+rows are interior questions. **Nothing was relocated and nothing was retconned.**
+
+**Point 1's remedy has nothing left to fix.** The budget stays at 4 because there are no longer
+any cards on a doorstep for it to sprawl across.
+
+**Point 4, the book-wide sweep, found four beats** whose `where` names more than one place:
+`a1-chase`, `a1-vic`, `a1-fare`, `a1-late`. **Only `a1-vic` was a defect.** `a1-chase` and
+`a1-fare` are JOURNEYS — stairs to streets to causeway, a counter to the streets across town —
+and every card on them is askable while walking. `a1-late` was a false positive of the search.
+**The sharp test is not the word "then". It is whether a card names something you can only see
+from inside**, and that test now has one confirmed instance in the whole book, which is closed.
+
 4. **AND IT IS A PATTERN, NOT ONE NIGHT.** Any beat whose `where` contains the word "then" is
    describing two rooms in one deck. **Sweep for it while this is open** — it is a cheap
    query and it will find the others.
@@ -1450,3 +1475,20 @@ its last take.** Its break re-gates lanes on `|room` and the claim fails.
 **THE LESSON, AND IT IS WHY THIS SECTION EXISTS: an audit that counts `(t.takes||[]).length`
 counts what is WRITTEN, never what is REACHED.** Nine waves of audits called those nights
 finished. Nothing counts until the running game has served it.
+
+
+## 10. A LEADING ELLIPSIS IS LOST ON THE PLAYED PATH — small, book-wide, logged 2026-08-17
+
+Driving night three, `["Vic","...I arranged a night. Tea."]` rendered as *"I arranged a night.
+Tea."* — the leading `...` gone. **`renderBlock` called directly preserves it** on all three
+probes, including that exact string, so the loss is somewhere on the played path
+(`playAuthored` / `serveSceneTurn`), not in the renderer.
+
+**It is book-wide and it predates this pass** — the ellipsis-opening line is one of the book's
+habits (*"...Oh. From in here that felt like being rung."*, *"...Still there."*, *"...Who."*),
+and nothing in the polishing waves touched that code. It is cosmetic: the beat of hesitation
+before a line is what is lost, which is exactly what those lines are for.
+
+**Not chased, because it is not night three's fault and the wave was already large.** Worth one
+short wave of its own: find the strip, decide whether it is deliberate, and either keep it and
+stop writing leading ellipses or drop it and let them through.

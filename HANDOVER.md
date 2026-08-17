@@ -268,7 +268,7 @@ night toward this, because the epilogue is written against it:
 rooms.** It ends: *"It only knows that it is quiet, and that nobody is speaking for it any
 more."*
 
-### → YOU ARE HERE: v5.59.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
+### → YOU ARE HERE: v5.60.0. THE NOVEL IS WRITTEN. THE POLISHING PASS HAS STARTED.
 
 **State: 33 of 33 nights authored. Sweep 74 PROVED of 99, 0 FAILED. Tree clean, pushed.**
 
@@ -306,10 +306,15 @@ more."*
    called nights finished that were not. A night is done when the running game has served
    every scene in it.
 
-**NEXT: `a1-vic` (night 3), which already had its contraction pass at v5.54.0 but has NOT had
-its second takes, its naming pass or its narration floor** — it sits at 30.5%, the lowest of
-the three, and it carries §7j's safehouse-door fix. Then the remaining 19 Book One and Two
-nights, one per wave. Book Three is clean and is not part of this pass.
+- **Phase 1 wave 3: night 3 `a1-vic` (v5.60.0).** All 14 cards have a second take, all 29
+  choice lines name their addressee, Vic 61%→53%, narration 30.5%→35.2%, **and §7j is done** —
+  the door opens on screen and nothing had to move. §7j is closed in `OUTSTANDING.md`.
+
+**NEXT: `a1-pack` (night 4), then the remaining 18 Book One and Two nights, one per wave.**
+Book Three is clean and is not part of this pass.
+
+**AND EVENING SECOND TAKES ARE WORTH WRITING AGAIN** — from v5.59.0 every deck is lanes, so
+they are reachable. Before v5.59.0 they were not, and 86 of them sat dark.
 
 **Whole book after three nights: 12% contracted, up from 9%. Pia 28%, Vic 23%.**
 
@@ -351,6 +356,11 @@ nights, one per wave. Book Three is clean and is not part of this pass.
   subject.**
 - **Check key collisions with `pickTopic` itself, per road** — never an approximation.
 - **Grep a global's name before declaring one.**
+- **A LAW ADDED MID-BOOK NEVER LOOKS BACKWARDS.** The clause-final refusal was written on
+  night 3 and widened on night 2; night 3's own prose still carried *"I've finally worked out
+  what it's"* until v5.60.0. **When a refusal is added, sweep the whole book for it that wave**
+  — `scratchpad/grammar.js` does all four in one pass. Watch for false positives: a possessive
+  genitive (*"other people's to tell"*) looks exactly like a contracted modal to a regex.
 - **A FORM HAS READERS, AND A SAVE/RESTORE PAIR IS ONE OF THEM.** Making every deck lanes
   broke five readers, and the harness found all five. The worst was a PEEK: `barWouldServe`
   saves `topicSpent`, deals a card to see if one is servable, and restores it - "the peek
