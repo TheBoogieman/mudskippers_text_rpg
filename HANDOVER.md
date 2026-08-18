@@ -229,6 +229,56 @@ widened, the audit tools are `scratchpad/nerve.js` (census, `--dry`, or one beat
 `scratchpad/wide.js` (the over-wide control) and `scratchpad/pretend.js` (the house-voice
 tic, still 17 instances across the untouched nights).
 
+---
+
+## §D — THE PRESSURE AUDIT IS TAKEN. Nine collisions, not two, plus a structural one.
+
+**`press` reaches a player ONLY THROUGH THE WILD TABLE.** In the novel nothing reads it
+(index.html ~7239-7362 is the storyteller wire and it is the only reader). So the collisions
+below are wild-table defects — real, but they cannot reach a novel run.
+
+**A KEYWORD TOOL CANNOT DO THIS JOB AND IT PROVED IT.** `scratchpad/press.js` ranks every
+press line against its own beat's `never` by shared rare vocabulary. Its whole top of list is
+the press *implementing* the never — nights 6, 30 and 31 restate their rule almost word for
+word, which is good design. **The real collisions share almost no vocabulary with the rule
+they break.** So all 33 were read by hand, which is what the note asked for.
+
+### THREE ARE OUTRIGHT CONTRADICTIONS
+
+| night | the press says | the never says |
+|---|---|---|
+| **13** `a2-mirren` | "The Choir sends a polite retrieval notice… **It arrives mid-burial.**" | "**nobody has a wire go off, a message arrive, or a caller ring here**" — and "nobody who was not at the undercroft arrives at this grave" |
+| **17** `a2-housing` | "**The housed mind** can suddenly do something it should not be able to do" | "**nobody is seated in the housing in this scene**" — there is no housed mind to act |
+| **18** `a2-manual` | "**Something tests the lock** while they are still reading" | "**the lock is the founders' lock and it is somewhere else** — the manual is paper, not a door" |
+
+### SIX MORE ARE UNDER-SPECIFIED IN A WAY THAT INVITES THE FORBIDDEN MOVE
+
+**3** `a1-vic` — "Pia says the thing Vic did not want said in front of the courier", when the
+only such thing on that night is what `never[0]` and `never[1]` outlaw · **4** `a1-pack` — a
+packmate collects a debt "exactly now", against "the pack does not arrive in person" · **5**
+`a1-fare` — the recipient "recognizes his face", against "an ordinary person with an ordinary
+errand — not the Choir, not a contact" · **21** `a2-law` — "the meal is interrupted", against
+"nothing interrupts except the thing the board sends" · **23** `a3-evict` — "somebody could
+leave a door open for him", against "nobody knocks on a neighbour's door and goes inside" ·
+**30** `a3-dreamers` — the housekeeping "asks, gently", against "she does not appear".
+
+### TWO THINGS THE READ TURNED UP THAT NOBODY WAS LOOKING FOR
+
+**Night 9 `a1-turn` has NO press at all** — an empty array, the only one of thirty-three.
+**Night 33's press[1] is engine instructions in a prose field**: *"Land it now. Epilogue in
+chronicle voice, then set the_end true."* That string goes to a language model.
+
+### AND THE STRUCTURAL ONE, WHICH IS HOLE 3 MEASURED
+
+**In THE NOVEL the other side can only cost this family something on the ten nights that
+carry `teeth`, or when the player runs out of turns and takes a toll.** Teeth are on nights
+2, 8, 11, 12, 14, 19, 23, 29, 30, 33. **The other twenty-three nights have no mechanism at
+all by which last night costs anything** — `canon` and `scar` are carried forward and read
+back on the board, in the endgame and by the storyteller, but nothing in a novel night ever
+reads them AS PRESSURE. That is hole 3 exactly, and it is an engine fact, not a prose one.
+
+**AWAITING RULINGS. No prose and no engine work started.**
+
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
 read the anchor out of the corpus, refuse on a duplicated anchor.
