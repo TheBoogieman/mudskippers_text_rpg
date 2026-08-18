@@ -1806,7 +1806,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.26.0 "Who Is In It With You"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.27.0 "A Card Each"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2508,7 +2508,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.26.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.27.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4389,6 +4389,25 @@ function familyOnStage(nm){
   var n = familyName(nm);
   return n ? mergeRoster({family:[n]}) : 0;
 }
+/* ---- THE DOSSIER LANDS WHEN THE PERSON DOES (v6.27.0) ----
+   A sheet was made the instant somebody spoke and then filled in by nobody, so the CAST
+   pane was a contact list: Vic's card on the night he tells the whole story was a name, a
+   want and a list of who else was in the room. Only Pia read as a person, and that was the
+   cold open's doing on night one.
+   FILLS EMPTY FIELDS AND NOTHING ELSE, so a card the story has already written keeps what
+   it was given - the cold open's Pia is untouched here - and so a re-entry can never
+   double a note. Novel only: the cast is the DM's to write at the wild table, and the two
+   modes have been kept apart everywhere else in this pane. */
+function dossierFill(nm){
+  if(wildRun()) return 0;
+  if(typeof DOSSIERS === "undefined") return 0;
+  var d = DOSSIERS[String(nm || "").trim()];
+  if(!d) return 0;
+  var s = castSheet(nm), n = 0;
+  if(!s.voice && d.voice){ s.voice = d.voice; n++; }
+  if(!s.notes.length && d.notes){ d.notes.forEach(function(t){ s.notes.push(t); n++; }); }
+  return n;
+}
 /* ---- QUESTS (client-owned, like the cast) ----
    The DM proposes transitions; the client keeps the book of jobs. The settled
    are served back every turn so the DM finally SEES what is finished - that is
@@ -4618,6 +4637,7 @@ function deriveFromScene(data, skip){
     var sheet = castSheet(nm);          /* a sheet exists the moment someone speaks */
     sheet.seen = stamp;
     familyOnStage(nm);                  /* ...and so does a place on the family list */
+    dossierFill(nm);                    /* ...and the card that says who they are */
     present.forEach(function(raw2){
       var other = castName(raw2);
       if(other && other !== nm) learned += mergeList(sheet.met, [other], MET_CAP, false);
@@ -9164,7 +9184,7 @@ function playAuthored(V, salt){
        existed, where every sheet is already there and nobody is on the roster.
        mergeRoster refuses a name it is holding, so saying it every turn costs
        nothing and repairs an old run on its next authored passage. */
-    if(sp !== "Narration" && !isAnonSpeaker(sp)) familyOnStage(sp);
+    if(sp !== "Narration" && !isAnonSpeaker(sp)){ familyOnStage(sp); dossierFill(sp); }
     lines.push((sp === "Narration" ? "" : sp.toUpperCase() + ": ") + tx);
   });
   if(lines.length){
@@ -15906,7 +15926,13 @@ function renderTermCast(){
   var s = castSheet(termCastSel), col = castColor(termCastSel);
   var html = '<h3 style="color:' + col + '">' + esc(termCastSel.toUpperCase())
     + (isFallen(termCastSel) ? ' <span style="color:#e08b8b">&mdash; FALLEN</span>' : '') + '</h3>';
-  if(s.status) html += '<p class="cast-status">' + esc(s.status) + '</p>';
+  /* A STATUS IS A SITUATION, AND THE WRITTEN GAME HAS NO WAY TO KEEP ONE (v6.27.0). Only
+     the cold open ever set one, on Pia, so her card read "Leading the courier to Vic's
+     safehouse" while she stood in the cable shack two nights past it - the same stale
+     sentence as THE JOB, in a smaller font. At the wild table the DM keeps it current
+     every turn, so it stays there and only there. Where they are is the STATUS pane's
+     job; what they did is the chronicle's. */
+  if(s.status && wildRun()) html += '<p class="cast-status">' + esc(s.status) + '</p>';
   /* the served want, surface line only - the WILL NOT is the DM's teeth, not display */
   var wf = wantForName(termCastSel);
   if(wf && !wf.inst && !isFallen(termCastSel)){
@@ -18419,7 +18445,11 @@ function rehSeedTo(idx){
     if(castSheets[n]) return;
     castSheets[n] = {notes:[], met:[], knows:[], status:"", voice:"", seen:""};
     var s = castSheet(n);          /* the real shape, then a seeded line */
-    s.notes.push("With the family, where the record leaves them.");
+    /* THE DRAWER GETS THE REAL CARD FIRST (v6.27.0), or rehearsing a late night shows a
+       cast pane the actual game never renders - and this session audited the terminal
+       through exactly that window and had to keep discounting what it saw. */
+    dossierFill(n);
+    if(!s.notes.length) s.notes.push("With the family, where the record leaves them.");
     s.status = "Present, as the record leaves them.";
   });
   beatIdx = idx; currentSeason = SPINE[idx].season;
@@ -19386,6 +19416,13 @@ function stCorpus(){
     });
   });
   WANTS.forEach(function(w, i){ add("want" + i, w.line); });
+  /* the dossiers are prose a player reads on the wrist, so they are inside the net from
+     the release that writes them - not one release later, the way the walk answers were */
+  if(typeof DOSSIERS !== "undefined") Object.keys(DOSSIERS).forEach(function(nm){
+    var d = DOSSIERS[nm];
+    add("dossier/" + nm + "/voice", d.voice);
+    (d.notes || []).forEach(function(t, i){ add("dossier/" + nm + "/n" + i, t); });
+  });
   TABLE_TALK.forEach(function(c, i){
     (c.lines || []).forEach(function(l, j){
       add("talk" + i + "/" + j, playText(l));
@@ -21995,6 +22032,11 @@ function selfTest(){
       });
     });
     WANTS.forEach(function(w){ extra.push(w.line); });
+    if(typeof DOSSIERS !== "undefined") Object.keys(DOSSIERS).forEach(function(nm){
+      var d = DOSSIERS[nm];
+      extra.push(d.voice);
+      (d.notes || []).forEach(function(t){ extra.push(t); });
+    });
     SPINE.forEach(function(b, bi){ extra.push({t:b.goal, at:bi}); extra.push({t:b.aim, at:bi}); });
     /* the stall pins, which nobody had swept. The walk lines ride the spine loop below,
        where they are already pushed into prose - counting them here counted them twice. */
@@ -23134,6 +23176,90 @@ function selfTest(){
              beatIdx = keepIdx2; phase = keepPhase2; runSlug = keepSlug;
            }
            return caught === 0;    /* the assertion's verdict, not a tally - see (4b2) */
+         }});
+    })();
+
+    /* ---- (4b4) EVERY DOSSIER LANDS, AND NONE OF THEM ARRIVES BEFORE ITS PERSON ----
+       THE FAULT: a cast sheet was made the instant somebody spoke and filled in by nobody,
+       so the CAST pane was a contact list - Vic's card on the night he tells the whole
+       story was a name, a want and a list of who else was in the room.
+       THE ROW DRIVES dossierFill, and then asks the harder question, which is a TIMING
+       one: a sheet appears on the night its person first opens their mouth, so a card that
+       leans on anything later than that night is a spoiler the player is handed early.
+       Every dossier is checked against the night it will actually be read on. */
+    (function(){
+      var names = (typeof DOSSIERS !== "undefined") ? Object.keys(DOSSIERS) : [];
+      var keepSheets = castSheets, ok = true, why = "", filled = 0;
+      /* when does each of them first speak? measured off the book, not assumed */
+      var firstNight = {};
+      function eat(x, bi){
+        if(Object.prototype.toString.call(x) !== "[object Array]") return;
+        if(typeof x[0] === "string" && typeof x[1] === "string"){
+          if(!(x[0] in firstNight)) firstNight[x[0]] = bi;
+          return;
+        }
+        x.forEach(function(y){ eat(y, bi); });
+      }
+      SPINE.forEach(function(b, i){
+        ["opens","lands","landsHard","closes"].forEach(function(k){
+          (b[k] || []).forEach(function(v){ eat(v.lines || [], i); });
+        });
+        eat(b.walkAnswer || [], i);
+        var e = SCENEBOOK[b.id];
+        if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+          (t.takes || []).forEach(function(x){ eat(x, i); });
+          eat(t.plays || [], i);
+        });
+      });
+      try{
+        castSheets = {};
+        names.forEach(function(n){ filled += dossierFill(n); });
+        names.forEach(function(n){
+          var s = castSheets[n];
+          if(ok && (!s || !s.voice || !s.notes.length)){ ok = false; why = n + "'s card did not land"; }
+        });
+        /* a card must not name somebody the player has not met by the night it appears */
+        names.forEach(function(n){
+          if(!ok) return;
+          var mine = firstNight[n];
+          if(mine === undefined) return;                  /* never speaks: never rendered */
+          var text = DOSSIERS[n].voice + " " + (DOSSIERS[n].notes || []).join(" ");
+          names.forEach(function(other){
+            if(!ok || other === n) return;
+            var theirs = firstNight[other];
+            if(theirs === undefined || theirs <= mine) return;
+            if(namedUse(other, text, true)){
+              ok = false;
+              why = n + "'s card names " + other + ", who does not speak until night " + (theirs + 1)
+                  + " and " + n + " arrives on night " + (mine + 1);
+            }
+          });
+        });
+      } catch(e){ ok = false; why = "dossierFill threw: " + e; }
+      finally { castSheets = keepSheets; }
+
+      T("every dossier lands on its person, and none of them arrives before its subject",
+        ok,
+        ok ? (names.length + " cards filled from the book (" + filled + " fields), each one "
+              + "checked against the night its subject first speaks - Mirren's on night six off "
+              + "a body the cold open has already named, Five's on night twenty, which is the "
+              + "night before the annulment his card does not mention")
+           : ("WRONG: " + why),
+        {label:"a sheet made on first speech and filled in by nobody, as shipped to v6.26.0",
+         was:true,
+         check:function(){
+           /* THE SHIPPED SHAPE: dossierFill on its wild-table branch, which is the branch
+              that did not exist - a sheet is made and stays empty. Enters the real
+              function; a hand-rolled empty sheet would prove only that {} is falsy. */
+           var keepMode = runMode, keepSlug = runSlug, keep2 = castSheets, blank = 0;
+           try{
+             runSlug = runSlug || "sweep-break"; runMode = "wild";
+             castSheets = {};
+             dossierFill("Vic");
+             var s = castSheets["Vic"];
+             if(!s || (!s.voice && !s.notes.length)) blank++;
+           } finally { runMode = keepMode; runSlug = keepSlug; castSheets = keep2; }
+           return blank === 0;     /* the assertion's verdict - see (4b2) */
          }});
     })();
 

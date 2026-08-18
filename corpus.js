@@ -215,6 +215,55 @@ var OPENING_CANON = [
 /* Turn two: the reveal, dealt by the game the moment the courier steps into the
    rain. Pia talks, the truth of the job lands, and the DM inherits a table with
    the cards already face up. */
+/* ---- THE DOSSIERS (v6.27.0) - ONE CARD PER PERSON, AND NOT ONE OF THEM A SITUATION ----
+   The CAST pane knew who the courier had met and nothing else about them: Vic's card, on
+   the night he tells the whole story, was a name, a want and a list of who else was in the
+   room. Only Pia had a description, and it was written into the cold open on night one.
+   EVERY CARD IS TRUE THE DAY IT FIRST APPEARS, and the days were measured rather than
+   assumed: a sheet is made the moment somebody speaks, so Mirren's arrives on night six
+   off a body the cold open has already warned him about, and Five's on night twenty, which
+   is the night BEFORE the annulment - so his card may not lean on the arrangement he has
+   not made yet. Nothing in here says where anyone is or what they have just done. That is
+   the STATUS pane's job and the chronicle's, and a situation written once is the whole
+   fault v6.26.0 went in to fix. */
+var DOSSIERS = {
+ "Nine":{voice:"Precise, warm, and allergic to being managed. Says the frightening thing plainly and then waits.",
+   notes:["A mind in a shard. She reaches exactly one person at a time, skin to skin, and nobody else in the room hears a word of it.",
+            "Asks permission for things nobody else would think to ask permission for, and means it every time."]},
+ "Vic":{voice:"Flat, practical, funny at the worst possible moment. Answers the question next to the one he was asked.",
+   notes:["Ripperdoc, and the closest thing to family the work allows. Years of patch jobs, free, no questions asked either way.",
+            "Has been building something out of sight for a long time. He will tell you about the job. He will not tell you about himself."]},
+ "Hesta":{voice:"Kind in the imperative. Feeds first, argues second, and never raises her voice to do either.",
+   notes:["Keeps a cafe that never quite closes, and keeps a good deal more than that under its floor.",
+            "Has lost people to the harvests, and says less about it than the number would suggest."]},
+ "Seven":{voice:"A poet in whatever he has been given. Takes his time over a word and is embarrassed about neither the time nor the word.",
+   notes:["Came out of the Choir and would rather make things now than go on unmaking them.",
+            "What he did over there is his to tell, and he has not told it."]},
+ "Three":{voice:"Two voice frequencies, slightly out of sync. Says little, means the whole of it, and does not repeat herself.",
+   notes:["Survived the deep procedure and was cut free of it afterwards. The unmaking left marks she does not bother to hide.",
+            "Wants nobody kept, anywhere, by anyone. She will help with anything at all that points that way."]},
+ "Marek":{voice:"Most of a decade without speaking, and it shows in the pauses rather than in the words.",
+   notes:["A body the Choir spent, with the man still inside it the entire time.",
+            "Drawn to panels, hinges and wiring. Anything with a way it is supposed to work."]},
+ "Five":{voice:"A commander's diction and an unnerving politeness laid over the top of it.",
+   notes:["An officer of the Choir, grown and overlaid by the deep procedure, riding a body that had somebody else in it first.",
+            "Speaks about what was done to him with the detachment of a man reading out a rota."]},
+ "Mirren":{voice:"Warm and unhurried, on a voice that was recorded before any of this started.",
+   notes:["The receiver the run was for. Vic's collaborator, and an ordinary person who agreed to help him.",
+            "The Choir reached her first. What holds down a stool at the Copper Eel is her body and is not her."]},
+ "Machine":{voice:"Gentle, literal, and forty years out of practice at being spoken to rather than through.",
+   notes:["The kind voice in a million heads, reading her tenant's approved lines and meaning every one of them.",
+            "Perceives only what is physically connected to her. Everything else in the world, she is told."]},
+ "Principal":{voice:"The last word in every room for longer than anyone else has been alive, and no habit at all of hurrying.",
+   notes:["She receives people rather than meeting them, and the difference is most of the experience.",
+            "Attended by six who can wear only faces they have sampled, and who always carry a tell.",
+            "Fond of a proper table, and of being disagreed with by somebody competent."]},
+ "The File":{voice:"Capitals, and a flat certainty about things it has no way of still knowing.",
+   notes:["An expert system Vic left running on the courier's wrist. It is aware that it is not him."]},
+ "Courier":{voice:"Jokes first, feels about it afterwards, and under-reports absolutely everything to everybody.",
+   notes:["A Mudskipper. Broke, quick, and considerably better at keeping people than at keeping money.",
+            "Carries what he is asked to carry. That has recently stopped being a small sentence."]}
+};
 var OPENING2 = {
   day: 1, time: "11:52pm", location: "Lower Veldt Market", ambience: "rain-neon",
   now: "Day 1, near midnight, moving through Lower Veldt Market in the rain. Pia is leading; the Choir's watcher has lost the coin toss; Vic's safehouse is the destination.",
