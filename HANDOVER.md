@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.95.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
+**v5.96.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -172,7 +172,62 @@ I am saying that before anybody asks it kindly and I have to be brave in front o
 and Seven: *"I'm well. I say it first, before somebody asks kindly and I have to be brave in
 front of people."*
 
-**AWAITING A RULING ON SCOPE AND ON WHO ELSE BREAKS. Not a word of prose is written yet.**
+### THE RULINGS, AND WHAT WAS DONE WITH THEM (v5.96.0)
+
+The author ruled four ways: **the dry big-move nights** (not the whole book), **rewrite what
+is there** (not new cards), **Pia breaks and the other seven crack once each**, and **fold
+the "I am not going to pretend" habit into the same pass**.
+
+**EIGHT NIGHTS, TWENTY-TWO BLOCKS REWRITTEN. Nothing added, nothing cut.** Every swap is
+same-speaker, so the spoken count is **4687 before and 4687 after** and the block count is
+7724 on both sides - the banter floor cannot move under a same-speaker swap, and that is
+checkable rather than promised.
+
+| night | what changed |
+|---|---|
+| 12 `a2-hand` | a heel going under the table, and nobody has noticed whose |
+| 14 `a2-seven` | Vic says out loud that if the frame quits mid-extraction there is no second attempt and no him |
+| 18 `a2-manual` | the Choir would not want him for a night - they would want him for life, warm and now, on a schedule; and Seven's "I will not pretend" is gone |
+| 23 `a3-evict` | Three says the other half: two hours standing still on a street the Choir holds the paperwork to |
+| 26 `a3-vic` | Vic rehearsed shutting the door on the last of it and finds he cannot |
+| 27 `a3-stone` | Hesta will not make peace with waiting at the hatch · Three is frightened of the down and says so once · **Pia's system has a range** · Seven stops inflating four weeks |
+| 29 `a3-descent` | **ten blocks.** Marek does not want to go under the patched iron and goes · Three spends one unprofessional sentence · Seven's clerk register breaks · Hesta comes down the cable · Pia pre-files her own failure |
+| 31 `a3-principal` | Hesta knows she can be filed before a kettle boils and knocks · her hands have been going since the stairs |
+
+**HESTA ARCS ACROSS 27 AND 29 and that was not planned - it fell out of the pass.** She
+refuses to make peace with standing at the hatch on night 27, and on night 29 she is forty
+rungs down the cable. Two nights apart, and the second now pays the first.
+
+**TWO NIGHTS THE AUDIT CALLED DRY WERE NOT.** `a3-vic` already had *"I could do this one in
+my sleep and I find that I cannot do it at all"* and a mug full and untouched all night;
+`a3-evict` already had *"Three's hands are shaking and she's doing sums at me so I say they
+aren't"*. Both got **one** edit instead of six. **A word list finds fear that is SPELLED,
+not fear that is FELT** - read the cards before believing the census about them.
+
+**THE CENSUS STILL CANNOT SEE MOST OF THIS PASS.** NAMED went 52 to 55 book-wide. That is
+not the size of the change; it is the size of the vocabulary the instrument knows. The
+proof is the prose and the drive.
+
+**THE INSTRUMENT HAD TWO BUGS AND THE PROSE FOUND BOTH.** The refusal partition read the
+whole block instead of the refusal's own clause, so Marek's *"I don't want to go under that
+patch"* filed as a speech refusal because the word `say` appears thirty words later. And
+ODDS had only ever been taught the phrase "goes wrong", so it walked past *"if the cable
+goes... nobody up top hears about it for a day and a half"*. Both repaired. **SHOWN was
+left alone on purpose** - it missed a body tell I had just written, and widening a list
+because it did not applaud your own sentence is the invented-floor mistake.
+
+**`scratchpad/swap.js` IS NEW AND IT IS THE FIRST TOOL IN THE DRAWER THAT REPLACES.** Every
+other one only adds, which is a safety property. This one carries the discipline instead:
+address by card+layer+index, read the needle out of the corpus, refuse on a `was` mismatch,
+refuse to change the speaker, refuse a `holder`/`relay` gated block, and **refuse a
+duplicated needle unless the spec declares `n:`**. That last one earned itself immediately:
+`whether-anyone-slept` and `whether-anyone-slept-nine` are a FORK PAIR carrying Pia's answer
+word for word, and changing one would have given half the players the old line.
+
+**WHAT §C DID NOT TOUCH.** The other 25 nights, by the author's ruling. If the pass is ever
+widened, the audit tools are `scratchpad/nerve.js` (census, `--dry`, or one beat),
+`scratchpad/wide.js` (the over-wide control) and `scratchpad/pretend.js` (the house-voice
+tic, still 17 instances across the untouched nights).
 
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
