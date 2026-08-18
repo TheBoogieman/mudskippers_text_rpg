@@ -8,11 +8,31 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.2.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
+**v6.3.0. THIRTY-FOUR nights written. Sweep 80 PROVED of 105, 0 FAILED. Tree clean, pushed.**
 
-The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
-as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
-ordered list is in `OUTSTANDING.md` and each pass is finishable in a sitting.
+**THE CAPTURE BEAT EXISTS — `a2-take`, "one of them, alive", between a2-choir and a2-annul.**
+The book had a whole day and a violent thing happening between two nights with nobody
+watching: night 19 ended over the Choir's filing, night 20 opened with a convoy commander
+already in a chair, and not one of night 20's twenty-two cards was about the taking.
+
+**AND THE THING THAT BLOCKED IT FOR MONTHS WAS NEVER TRUE.** "Adding a beat means inserting
+into SPINE, and `beatIdx` is a position that live saves hold" — they hold a NAME as well
+(`saveBlob` writes `beatId`), and `beatPointerFrom` prefers the name whenever SPINE still
+knows it. Sweep row **(4a5)** drives it: a save naming a2-annul with a stale number 0 resolves
+to the right night. **Before writing off a whole class of work as blocked, drive the claim.**
+
+The authoring phase is over apart from what the bible still lists as missing. **We are in the
+polishing pass**, and since 2026-08-17 it runs as **book-wide passes rather than night-waves**
+— one fault, one tool, one release. The ordered list is in `OUTSTANDING.md`.
+
+**A NEW NIGHT SURFACED AN OLD ENGINE BUG, and it was found by driving, not reading.**
+`attemptClose` was the only writer of `perilTurns` in the file with no `applyTension` after
+it, so the lethal countdown stayed lit over the landing — worst on the five `onExit` perils
+(`a1-carried`, `a2-hand`, `a2-take`, `a3-descent`, `a3-seize`), where the peril resolves
+straight into the landing and nothing repaints. Fixed in two places, because the first fix
+repainted while the phase was still `live` and swapped a lethal countdown for a BUDGET
+countdown over a landing. **The control was a night with no teeth**, which clears the strip
+to nothing; that is the right answer and both roads now give it. Sweep row **(4a6)**.
 
 **TWO DEBTS WERE RETIRED BY THE AUTHOR AND MUST NOT COME BACK: not every card needs a second
 take**, and `a2-chassis`'s 25 take-lines are being lived with. **Never add a second take to a

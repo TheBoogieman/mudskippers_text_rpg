@@ -560,16 +560,6 @@ answers is the surprise the card is built on.
 
 ## THE SMALL OPEN ITEMS
 
-**THE CAPTURE BEAT DOES NOT EXIST.** The bible: *"THE CAPTURE IS ITS OWN BEAT, between
-a2-choir and a2-annul: the ambush, what it costs, and a Choir officer in a shack with a
-recovery team already looking. It is currently missing entirely and the annulment reads as
-assumed."* Night 19 is a knowledge night; night 20 opens with a commander already in a chair,
-and nobody ever took them. **It is blocked on engine work, not writing:** adding a beat means
-inserting into `SPINE`, and `beatIdx` is a **position** that live save files hold. Every index
-at or after the insertion shifts and a save resumes on the wrong night. It needs either a save
-migration keyed on beat id, or the beat appended with the order held somewhere other than the
-array index.
-
 **THE MIRREN DOCTRINE STILL WAITS FOR NIGHT 19.** *Machines serve, never harvest* is in the
 bible as a law the family may write, and her grave is where it comes from. It is deliberately
 **not** at the cairn — it belongs on `a2-choir`, once they know what the harvesting actually
@@ -588,15 +578,6 @@ a kitchen line. The vault descent has Marek and not him.
 out — but it is a document in the scene rather than a voice in it. **Whether it ever gets a
 nameplate of its own, all caps, out loud, through the wrist, is an open question for the
 author.**
-
-**A LEADING ELLIPSIS IS LOST ON THE PLAYED PATH.** `["Vic","...I arranged a night. Tea."]`
-renders as *"I arranged a night. Tea."* **`renderBlock` called directly preserves it**, so the
-strip is somewhere on the played path (`playAuthored` / `serveSceneTurn`), not in the renderer.
-It is book-wide and it predates the polishing pass — the ellipsis-opening line is one of the
-book's habits. **It is cosmetic, and what is lost is the beat of hesitation before a line,
-which is exactly what those lines are for.** Worth one short wave: find the strip, decide
-whether it is deliberate, and either keep it and stop writing leading ellipses or drop it and
-let them through.
 
 ---
 
