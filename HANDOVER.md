@@ -8,7 +8,60 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.17.0. THIRTY-FOUR nights written. Sweep 90 PROVED of 108, 0 FAILED. Tree clean, pushed.**
+**v6.25.0. THIRTY-FOUR nights written. Sweep 91 PROVED of 109, 0 FAILED. Tree clean, pushed.**
+
+**THE BOOK IS FINISHED AND THE WORK HAS MOVED TO THE GLASS.** Nothing in `OUTSTANDING.md` is
+unwritten prose. What is owed is one audit: **THE TERMINAL**, which the author says he is not
+sure is still telling the truth about the story. That is item 0 and it is a wave of its own.
+
+**READ THE TOLL CORRECTION IN `OUTSTANDING.md` BEFORE TOUCHING THAT SCREEN.** The author
+believes the TOLLS row shows a removed mechanic. It is NOT removed - `payToll()` fires on a
+forced close and on a walkback, and at `TOLL_MAX` the season FOLDS, novel runs only. What went
+at v6.10 was the pressure STRIP AT THE WILD TABLE. **Deleting the row would hide a live
+mechanic that can end a season.**
+
+---
+
+## THE PHONE, AND WHAT A WEEK OF IT TAUGHT
+
+**HE PLAYS ON AN ANDROID PHONE AND THAT IS WHERE EVERY RECENT FAULT CAME FROM.** He was in
+DESKTOP MODE on purpose, and the reason he gave was the finding: in mobile mode you could not
+see the options without scrolling, and you scrolled in TWO places to take one turn.
+
+**A NUMBER TUNED ON A DESKTOP CAN BE A PHONE BUG.** `#controls{max-height:42vh}` was measured
+at v5.38.0 on a 1280x800 WINDOW, where a four-choice rail grew to 434px and starved the feed.
+Correct there. On a phone the same 42vh is 341px and a phone wraps every choice to THREE lines
+instead of one, so the rail overflowed by seventeen pixels and put a scrollbar on the turn.
+**When a layout rule has a number in it, find out which screen it was measured on.**
+
+**EVERYTHING THE PLAYER READS RIDES ONE MULTIPLIER.** `--feed-scale` in `veldt-skin.css`
+scales dialogue, narration, small print, the premise card, the aside, the choice rows and
+their furniture. SETTINGS turns it: TINY 0.72 · COMPACT 0.82 · SMALL 0.92 · NORMAL 1 · LARGE
+1.12, phones defaulting to SMALL. **It is stored under `mud-type` and NEVER in `mud-settings`,
+which is where the API key lives** - sweep row (4b1) holds that separation and its first break
+was a tautology the harness correctly refused.
+
+**A FIXED OFFSET AND A PADDING ARE ONE MEASUREMENT IN TWO PLACES.** Trimming card padding on
+phones, one rule covered the premise card and the DM's aside together. The aside has a LAMP -
+an absolutely positioned `::before` at `left:13px` - and its 30px of left padding is the
+clearance the text walks around it with. Setting it to 13 put the first letter on top of the
+dot. **Group two selectors only when they are the same shape.**
+
+**A CLIPPED BUTTON IS AN UNREACHABLE BUTTON.** Pinning the header to one row at TINY with
+`nowrap` + `overflow:hidden` pushed SETTINGS to 419px on a 375px screen - off the edge, and
+SETTINGS is where the reader size lives. Everything that can be long (the place name, the
+drawer chip) shrinks and ellipses now, so no control is ever the thing that gives.
+
+**THE HALF-UPDATED BUILD IS CLOSED FOR GOOD.** `index.html` was network-first and every other
+file cache-first, so a new page rendered through the previous release's CSS - and the author
+spent an evening reporting fixed things as broken. v6.10.2 answered this by reloading once on
+`controllerchange`, which works and still shows one stale render. **The whole shell is
+network-first with a cache fallback now.** Offline is untouched: a failed fetch still falls
+back to the cache, which is all cache-first was ever for.
+
+**AND A REFRESH RETURNS TO THE RUN** (v6.25.0), on the CONTINUE button's own condition -
+restored, has a slug, not over. A dead or finished courier still stops at the title screen.
+`restoreFromBlob` always ran on every load; only the overlay moved.
 
 **THE WALK IS ANSWERED ON ALL THIRTY-FOUR NIGHTS, AND THERE IS NO UNWRITTEN PROSE LEFT IN
 THIS BOOK.** Every night now says something back when the courier announces he is done, and
