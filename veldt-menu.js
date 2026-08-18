@@ -1650,6 +1650,26 @@ class Component extends DCLogic {
     lb.addEventListener('click', inst.toggleLow);
     art.__inst = inst;          /* so a history event can find the live one to re-sync */
 
+    /* THE TITLE SCREEN'S CAST WAS READ ONCE, AT PAGE LOAD, AND NEVER AGAIN (v6.29.0).
+       The author: starting a new run does not reset the characters on the main menu -
+       after a new run Pia and Vic are still standing there. Both true and worse than it
+       sounds, because it is not only NEW GAME: these props are handed to the component
+       in its constructor and nothing has ever updated them, so the picture is whichever
+       run was on file the moment the page opened. It has been a photograph of the past
+       since the art shipped. Now the screen re-reads the game every time it is shown,
+       and only redraws when the answer actually changed - a repaint of an identical
+       skyline would restart the rain for nothing. */
+    window.veldtRefresh = function(){
+      try{
+        const w = veldtWeather(), c = veldtCast();
+        const same = (inst.props.weather === w)
+                  && (String(inst.props.castStage) === String(c));
+        inst.props.weather = w; inst.props.castStage = c;
+        if(!same) inst.build();
+        if(inst.sync) inst.sync();
+      }catch(e){}
+    };
+
     /* HOLD THE DOOR OPEN LONG ENOUGH TO SEE IT (v5.38.0). The game's handler is an
        onclick PROPERTY on the button, which runs in the target phase - so a capture
        listener here goes first, and stopImmediatePropagation stops the property handler

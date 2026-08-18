@@ -1826,7 +1826,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.28.0 "Room To Read It"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.29.0 "One Column, One Anchor"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2528,7 +2528,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.28.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.29.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -3946,10 +3946,32 @@ function setAmbience(name){
   renderNow();                                  /* the clock strip carries the weather */
   if($("termmodal") && $("termmodal").classList.contains("open")) renderTerminal();
 }
-function scrollToTurn(el){
+/* ---- THE FEED MOVES LIKE READING, NOT LIKE A SLIDESHOW (v6.29.0) ----
+   The author: the openings and the beat closes are janky, the text scrolls up or down
+   too much, anchor it and let it scroll naturally against the choice block below.
+   He is describing TWO jumps in one turn. A passage snapped its first line to the top,
+   the lines then revealed downward past the fold, and when the last one landed the view
+   SNAPPED BACK to the top again - so a long scene threw the reader up, down and up
+   inside a single turn. The anchor was right; doing it twice was the jank. */
+function feedScrollTo(y, smooth){
+  var f = $("feed");
+  if(y < 0) y = 0;
+  if(smooth && f.scrollTo){
+    try{ f.scrollTo({top:y, behavior:"smooth"}); return; }catch(e){}
+  }
+  f.scrollTop = y;
+}
+function scrollToTurn(el, smooth){
   if(!el){ scrollFeed(); return; }
-  var y = el.offsetTop - 24;
-  $("feed").scrollTop = y < 0 ? 0 : y;
+  feedScrollTo(el.offsetTop - 24, smooth);
+}
+/* the newest line comes into view and NOTHING ELSE MOVES. A line already on screen is
+   left exactly where the eye last had it, which is the whole of what "naturally" means
+   here - the feed follows the reading rather than re-staging the scene under them. */
+function keepVisible(el){
+  if(!el) return;
+  var f = $("feed"), bottom = el.offsetTop + el.offsetHeight + 18;
+  if(bottom > f.scrollTop + f.clientHeight) feedScrollTo(bottom - f.clientHeight, true);
 }
 /* HOW LONG A LINE HOLDS BEFORE THE NEXT ONE ARRIVES (v5.37.0). The reveal was a fixed
    500ms + 7ms a character, capped at 2400 - which is brisk for a passage of six lines,
@@ -5219,8 +5241,23 @@ function showScene(data, logIt, instant){
      that no longer existed. One frame later the layout is settled and the anchor is
      honest. requestAnimationFrame with a timeout fallback, because this file is ES5 and
      runs in whatever the player has. */
+  /* ...AND THE SETTLE IS A CORRECTION NOW, NOT A SECOND ANCHOR (v6.29.0). It still has
+     to run a frame late for the reason v5.38.0 found - showChoices grows #controls and
+     #feed loses exactly that height, so measuring synchronously anchors against a
+     viewport that no longer exists. What changed is what it does with the measurement:
+     if the whole passage fits between its own top and the choice block, the top is
+     where it belongs and it goes there. If the passage is LONGER than the glass, the
+     reader has already followed it down, and hauling them back to a first line they
+     read thirty seconds ago is the jank the author named. Then it only makes sure the
+     last line cleared the bar. */
   function settle(){
-    var go = function(){ if(first) scrollToTurn(first); else scrollFeed(); };
+    var go = function(){
+      if(!first){ scrollFeed(); return; }
+      var f = $("feed"), last = els.length ? els[els.length - 1] : first;
+      var top = first.offsetTop - 24, bottom = last.offsetTop + last.offsetHeight + 18;
+      if(bottom - top <= f.clientHeight) feedScrollTo(top, true);
+      else keepVisible(last);
+    };
     if(window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(go); });
     else setTimeout(go, 32);
   }
@@ -5230,13 +5267,14 @@ function showScene(data, logIt, instant){
     settle();
     return;
   }
-  scrollToTurn(first);
+  scrollToTurn(first, true);          /* one anchor, and it is allowed to glide */
   var i = 0;
   function step(){
     if(token !== revealToken) return;
     if(i >= els.length){ done(); settle(); return; }
     var el = els[i]; var b = blocks[i];
     el.classList.remove("reveal"); el.classList.add("shown");
+    keepVisible(el);                  /* follow the line that just arrived, and only it */
     i++;
     var wait = Math.min(2400, 500 + (b.text||"").length * 7) * revealPace();
     revealTimer = setTimeout(step, wait);
@@ -17196,6 +17234,14 @@ $("wbgate-pry").onclick = function(){
 
 function openTitle(){
   refreshTitle();
+  /* AND THE ART READS THE GAME AGAIN, NOT THE GAME IT WAS BUILT ON (v6.29.0). The skin
+     takes its weather and its cast in the component's constructor, which runs once per
+     page load - so the family standing on the title screen was whoever was on file when
+     the tab opened, and starting a fresh run left Pia and Vic out there in the rain.
+     `refreshTitle` next door has always brought the BUTTONS up to date; the picture
+     behind them was never asked. Guarded, because the skin is a separate file and the
+     game has to open its own front door without it. */
+  try{ if(window.veldtRefresh) window.veldtRefresh(); }catch(e){}
   $("titlescreen").classList.add("open");
   try{ shardHide(); }catch(e){}
 }

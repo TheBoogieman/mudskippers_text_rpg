@@ -442,3 +442,32 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   .choice .n{margin-right:8px;padding:1px 5px}
   .choice-hint{padding:6px 10px;margin-top:4px;line-height:1.4}
 }
+
+/* ============ v6.29.0 — SPEECH SITS IN THE SAME COLUMN AS THE PROSE ============
+   The author, plainly: do not indent any speech. A spoken block lived in a padded box,
+   so every line of dialogue began 22px to the right of the narration around it, and a
+   scene of alternating prose and speech read as two columns wandering in and out of
+   each other. The BOX is worth keeping - it carries the speaker's colour on its left
+   rule and the tint that makes a run of lines read as one - so the box hangs into the
+   feed's own gutter instead of pushing the words inward. The coloured edge leaves the
+   text column; the words line up with the prose. One inset, named once, so the phone
+   and the desktop cannot drift apart the way a fixed offset and a padding did once
+   before on the DM's aside. */
+:root{--speech-inset:22px}
+@media (max-width:760px){:root{--speech-inset:13px}}
+.block:has(> .tag + span),
+.block:has(> .tag + span)[data-run="first"],
+.block:has(> .tag + span)[data-run="mid"],
+.block:has(> .tag + span)[data-run="last"]{
+  /* the 2px is the speaker's own coloured rule. Hang the padding AND the border, or
+     every line of dialogue lands two pixels right of the prose - which is not enough to
+     name and is exactly enough to see. */
+  margin-left:calc(-1 * (var(--speech-inset) + 2px));
+  padding-left:var(--speech-inset);
+}
+/* THE PREMISE CARD IS NOT SPEECH AND WAS NEVER MEANT TO BE. It happens to be a tag
+   followed by a span, so it matched the speaker selector and came along for the ride.
+   It is a CARD - its own border, its own tint - and a card is allowed to be inset. */
+.block.beatcard:has(> .tag + span){margin-left:0}
+/* what the courier says is speech too, and it carried its own 15px */
+.you-said{margin-left:-15px}
