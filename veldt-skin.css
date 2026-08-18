@@ -139,9 +139,14 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
 #pressure.t3{color:#f09a9a;border-color:#8d3a3a;background:#2b1111}
 
 #choices{gap:7px}
+/* THE RAIL RIDES THE READER SCALE TOO (v6.21.0). v6.20 held the choices OUT of it on the
+   reasoning that they are what the player reads to decide, so shrinking them would be
+   paying with the wrong thing. The author then reported the option box still scrolling at
+   COMPACT, which settles it: a reader size that leaves a third of the reading on the page
+   at full size is not a reader size. Everything the player reads moves together now. */
 .choice{
   background:#131a25;border-color:#26303f;border-radius:3px;
-  font-size:15.5px;line-height:1.5;padding:11px 15px;
+  font-size:calc(15.5px * var(--feed-scale));line-height:1.5;padding:11px 15px;
 }
 .choice:hover{background:#19222f;border-color:var(--sodium)}
 .choice .n{
@@ -325,8 +330,13 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
    type two inches above it.
    ============================================================================ */
 @media (max-width:760px){
-  /* the rail gets half the screen instead of 42%, because it has to hold four sentences */
-  #controls{max-height:50vh;padding:10px 0 12px}
+  /* THE RAIL GETS WHAT IT NEEDS, WHICH TURNS OUT TO BE BARELY MORE THAN IT HAD (v6.21.0).
+     50vh is 406px on a 375x812 phone and the rail's content measures 423 at NORMAL - so it
+     overflowed by SEVENTEEN PIXELS, every four-choice turn, at every reader size above TINY.
+     All four choices were already visible; what hung below the fold was the hint line under
+     them, which is enough to put a scrollbar on the box and make the whole thing feel
+     unfinished. 56vh clears it outright and the feed pays 17px for it. */
+  #controls{max-height:56vh;padding:10px 0 12px}
 
   /* the standing scene line keeps two lines on a phone. The header has the facts. */
   /* FADED, NOT CLAMPED, AND THE REASON IS A ONE-LINE READER. -webkit-line-clamp needs
@@ -352,6 +362,11 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
      THE COLUMN and buys extra wraps. And the type ran a notch above what a 375px screen
      wants. All three move; the prose is untouched. */
   :root{--feed-scale:.92}
+  /* the rail's own furniture scales with it, or a smaller size just buys more frame */
+  #nowstrip{font-size:calc(11px * var(--feed-scale))}
+  #pressure{font-size:calc(9.5px * var(--feed-scale))}
+  .choice-hint{font-size:calc(11px * var(--feed-scale))}
+  .choice .n{font-size:calc(11px * var(--feed-scale))}
   .block{line-height:1.5;margin-bottom:13px}
   .narr{line-height:1.52}
   .sys{line-height:1.55}
@@ -361,7 +376,7 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   /* the rows themselves: same words, less frame. 15.5px is kept - this is the text the
      player reads to decide, and shrinking it would be paying with the wrong thing. */
   #choices{gap:6px}
-  .choice{padding:9px 12px;line-height:1.38}
+  .choice{padding:calc(9px * var(--feed-scale)) calc(12px * var(--feed-scale));line-height:1.38}
   .choice .n{margin-right:8px;padding:1px 5px}
   .choice-hint{padding:6px 10px;margin-top:4px;line-height:1.4}
 }

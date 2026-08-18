@@ -1766,12 +1766,13 @@
     <div class="fld">
       <label>READER SIZE</label>
       <select id="s-type">
-        <option value="0.82">COMPACT — most words on screen</option>
+        <option value="0.72">TINY — as much as the screen will hold</option>
+        <option value="0.82">COMPACT</option>
         <option value="0.92">SMALL</option>
         <option value="1">NORMAL</option>
         <option value="1.12">LARGE</option>
       </select>
-      <div class="hint">Scales every word in the feed together — dialogue, narration and the small print — so the balance between them never changes. It takes effect the moment you pick it and does not wait for SAVE, because it is kept on this device rather than with your table settings. <b>On a phone the game starts at SMALL</b>, which is where a line of dialogue stops taking half the screen; COMPACT goes further if you would rather scroll less than read large.</div>
+      <div class="hint">Scales every word in the feed together — dialogue, narration and the small print — so the balance between them never changes. It takes effect the moment you pick it and does not wait for SAVE, because it is kept on this device rather than with your table settings. <b>On a phone the game starts at SMALL</b>, which is where a line of dialogue stops taking half the screen. COMPACT and TINY go further, and at TINY a four-choice rail stops scrolling on a 375px screen — which is the size a phone in portrait actually gives you.</div>
     </div>
     <div class="btnrow">
       <button class="btn" id="s-test">TEST CONNECTION</button>
@@ -1805,7 +1806,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.20.0 "The Reader Decides"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.21.0 "As Much As The Screen Will Hold"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2507,7 +2508,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.20.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.21.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -14078,7 +14079,7 @@ var TYPE_KEY = "mud-type";
 function feedScaleSaved(){
   try{
     var v = parseFloat(localStorage.getItem(TYPE_KEY) || "");
-    return (v >= 0.7 && v <= 1.4) ? v : null;      /* a corrupt value reads as "unset" */
+    return (v >= 0.68 && v <= 1.4) ? v : null;     /* a corrupt value reads as "unset" */
   }catch(e){ return null; }
 }
 function applyFeedScale(){
