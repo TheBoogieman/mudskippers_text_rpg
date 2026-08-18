@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.92.0 "A Door Offered Mid-Reveal"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.93.0 "The Rate Is A Budget"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.92.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.93.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -20465,6 +20465,35 @@ function verdictMap(){
    AND THE ONE THAT MATTERS: a live landing sampled every 0.9s ran 11 unrevealed blocks down
    to 0 one at a time, with the rail button count at ZERO the whole way and three rows up
    afterwards. Before the fix that first sample reads 0 unrevealed and 4 buttons.
+   v5.93.0 - PASS 7 OPENS, ON THE TWO NIGHTS THAT OWED MOST. a2-chassis 2% -> on band for
+   all five speakers, a2-door 7% -> on band for all four. 354 swaps. Book-wide 19% -> 24%.
+   THE BAND IS A SET OF TARGETS AND THE OLD TOOL HAD NO IDEA. contract-pass.js converts
+   EVERY available instance for whoever it is given, which was right for the first waves and
+   is wrong now: running Hesta through it lands her near 100% against a target of 45%. The
+   author already ruled one mechanical pass back for exactly that - Vic to 85% - and the
+   note out of it was THE RATE IS A BUDGET, NOT A MAXIMUM. band-pass.js spends to a target.
+   AND THE SPREAD HAS A REASON NOW. A flat night is a night the pass was applied to rather
+   than written, so the budget is split by WHERE THE CHARACTER IS: the room deck is the
+   family's own time, the evening deck is the night's business, and people contract more
+   when they are not working. The same shape night one already has by hand.
+   THREE FAULTS IN THIS TOOL, ALL THREE CAUGHT BY LOOKING AT WHAT IT WROTE:
+   (1) THE LEAN OVERSHOT. Setting the room rate to target x 1.45 and trusting the evening
+   deck to pull the mean back down works only on a night that HAS an evening deck. Night 15
+   is nearly all room, so the lean became the night's rate and every speaker overshot - Vic
+   to 82%. The target is SPENT now, not scaled: work out the night's budget first, then
+   split that between the two sides.
+   (2) THE QUOTA WAS SPENT FRONT TO BACK, which put Hesta at 100% on the first card of the
+   night, 29% on the second and 0% on the other nine. That is not a spread with a reason
+   behind it, it is the iteration order showing through, and it is worse than the flat night
+   the note warns about. Each card gets its own share now, and Hesta runs 0-100% across it.
+   (3) TWO GRAMMAR HOLES, BOTH IN THE SAME FAMILY AS THE FOUR ALREADY IN THE REFUSAL LIST.
+   "you've about eight seconds" - possessive have, with an adverb of approximation in front
+   of the number instead of a determiner. And "Of course you've." plus "...the child I'll." -
+   a clause-final AUXILIARY cannot contract, and the list only ever knew about the copula.
+   Both shipped instances repaired in the prose; both holes closed in the tool.
+   NO LAW IN THIS PROJECT READS ENGLISH, so the diff still gets read by eye, and that is the
+   only reason any of the three were ever found.
+   THE FLOOR IS 4,664 AND THE DRIFT DID NOT MOVE - a contraction changes no predicate.
    */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
