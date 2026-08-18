@@ -7,41 +7,30 @@ Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
 ---
 
-## 1. THE 101 UNREAD CARD ROWS — *and the two instruments now disagree about them*
+## 1. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
 
-`node scratchpad/flagcards.js` lists 103 cards sitting 28 points or more from their
-speaker's contraction target. Three were read: two were real and are fixed, one was the tool
-being wrong about a card where Pia is shouting throughout.
+**THE TWO READERS ARE RECONCILED AND `band.js` WAS RIGHT.** `flagshape.js` disagreed with it
+by up to ten points and the cause was entirely in the reader, not the book: it carried 18
+contraction pairs against band.js's 23, and — the real one — it averaged **per-card** rates
+instead of taking the whole-book ratio, so a five-instance card counted the same as a
+fifty-instance one. Re-run with band.js's own pair list and a true ratio (`flagshape2.js`),
+the two land within 0–5 points on every speaker. **The earlier figures of Pia 54, Seven 18
+and Vic 54 were wrong and are withdrawn.**
 
-**AN ATTEMPT TO CLOSE THIS BY MEASUREMENT INSTEAD OF READING PRODUCED A DISAGREEMENT, AND
-THE DISAGREEMENT IS THE THING TO SETTLE FIRST.** `scratchpad/flagshape.js` was written to
-ask whether the list is a fault list or a written SHAPE — the wave recipe says a correct
-night is "0% on the working cards and 100% on the jokes", and if that holds book-wide then
-reading 103 cards would only find the shape again.
+**AND THE ANSWER TO THE ACTUAL QUESTION IS THAT THE LIST IS MEASURING SPREAD.** Every
+speaker is on band book-wide — Pia 59 against 65, Vic 59 against 60, Hesta 44 against 45,
+Seven 27 against 30, Three 14 against 15, Nine 9 against 10, and Machine, Principal and Five
+flat at zero as ruled. Of Pia's 113 cards, 13 sit at the bottom, 19 at the top and **81 in
+the middle**; Vic, Hesta, Marek and Seven are the same shape. Only Nine and Three pile at one
+end, which is correct for both.
 
-**It answered the shape question and then contradicted `band.js` on the numbers.**
+**So the 103 flagged cards are per-card deviation around a correct book average — the same
+thing the 294 residual swaps are, counted a different way.** The two flagged cards that were
+real were both extremes (80% against a target of 15; 0% on the night a man first speaks in
+nine years), which is the tail rather than the body.
 
-| | flagshape.js | band.js / the pass-7 record |
-|---|---|---|
-| Pia | 54% | 58% (target 65) |
-| Seven | 18% | 28% (target 30) |
-| Vic | 54% | 59% (target 60) |
-
-**Neither number is being reported as true.** `flagshape.js` carries a cruder pair list and
-averages per-card rates rather than taking the whole-book ratio, so it is the likelier one
-to be wrong — but *likelier* is not *proven*, and this project has twice found that the
-scratch tool was quietly the better reader. **One predicate, two copies, and any
-disagreement between them is a finding.**
-
-**What the shape half does say, and it does not depend on the exact rates:** Pia is **not**
-bimodal. Of 91 cards, 11 sit at the bottom and 15 at the top and **65 are in the middle** —
-so "0% on the working cards, 100% on the jokes" is the shape of *some* of her cards, not the
-shape of her part. The same is true of Vic, Hesta, Marek and Seven. Only Nine and Three pile
-at one end, which is right for both of them, and Machine, Principal and Five are flat at
-zero, which is ruled.
-
-**NEXT STEP IS NOT READING THE CARDS. It is reconciling the two readers**, and only then
-deciding whether 101 rows are worth anybody's afternoon.
+**Not closed by reading, and it does not need to be.** If anything is ever worth taking it
+is Pia and Seven book-wide, and that is the ruling already made about the 294.
 
 ---
 
@@ -53,9 +42,24 @@ debt.
 
 ---
 
-## 3. `band-pass.js` CANNOT REACH `a3-seize` — *tooling, only matters if 1 or 2 ever run*
+## 3. `band-pass.js` CANNOT REACH `a3-seize` — **FIXED**
 
-The contraction tool does not see that night's cards. Nothing is wrong with the night.
+**The last beat has no next beat, and that was the whole bug.** Both of the tool's regions
+were bounded by the *next* entry of their kind; `a3-seize` is last in both `SPINE` and
+`SCENEBOOK`, so the search found nothing, the bound fell back to end-of-file, the region
+swallowed the rest of `corpus.js` and the size guard threw. **The guard was right and the
+bound was wrong.** Regions end at their own container's terminator now.
+
+**AND THE TERMINATOR HAD TO BE A REGEX, BECAUSE THE WORKING COPY IS CRLF.** A literal
+`"
+};"` cannot match `"
+};"`. The next-entry bound never noticed, because a regex `
+`
+matches the `
+` inside a `
+` perfectly well — so the line endings were invisible until
+a literal string was compared against them. Verified on the first beat, a middle beat, a
+random beat and the last one.
 
 ---
 
@@ -71,15 +75,27 @@ was left.
 
 ---
 
-## 5. NINE SWEEP ROWS CARRY NO BROKEN FORM — *declared, not hidden*
+## 5. NINE SWEEP ROWS CARRY NO BROKEN FORM — *now named, and none has earned one yet*
 
-Each says on the page why it has no "before": ratchets, where lifting the number passes
-everything and lowering it fails the shipped book; negative controls, whose only possible
-break is a deliberately stubbed detector; and standing properties of the corpus that have
-no old version to run, because when a rule changed it was the corpus that was re-swept.
+A row proves itself by breaking the code and watching the claim fail. These nine assert
+something and have no broken version to run, so they show a property without proving they
+would notice it going away. **They are named here for the first time:**
 
-**Not a to-do. A number to keep honest** — it should go down when a row earns a real break,
-and never up quietly.
+- every card is answered by somebody in the room
+- no card orders a voice the physics has switched off
+- the relay never speaks the answer it is withholding
+- the composer is reached once per player action
+- every correction route spends from one capped budget
+- every plant and every payoff is really in the night that claims it
+- the two formal voices never contract
+- nobody explains the peak joke
+- a bit turn asks for dialogue and nothing else
+
+**Several of these can be broken honestly** — the plant/payoff row by moving a plant word to
+a night that does not contain it, the formal-voices row by contracting one Machine line in a
+copy — and those are the mutations the row exists to catch rather than a stubbed detector.
+**None was attempted; this was identification, not repair.** The number should go down one
+row at a time and never up quietly.
 
 ---
 
