@@ -295,3 +295,51 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   color:#4e5766;font-size:9px;letter-spacing:.22em;line-height:2.1;margin-top:6px;
 }
 .veldt-ded{opacity:.6}
+
+/* ============================================================================
+   THE PHONE (v6.19.0)
+
+   THE AUTHOR PLAYS THIS IN DESKTOP MODE ON AN ANDROID PHONE, and the reason he gave is
+   the whole finding: in mobile mode you cannot see the options without scrolling, and you
+   end up scrolling in TWO places to take one turn. Measured at 375x812 before this block:
+   the feed scrolled 738px of story inside a 353px window, and #controls scrolled 553px of
+   content inside a 341px one - so the rail OPENED ON 123px OF FURNITURE and showed one and
+   a half choices.
+
+   AND THE CAP THAT CAUSED IT WAS A DESKTOP FIX. `#controls{max-height:42vh}` above was
+   measured on a 1280x800 WINDOW, where a four-choice rail grew to 434px and left the feed a
+   sliver. That reasoning is still correct there. On a phone the same 42vh is 341px, and a
+   phone wraps every choice to three lines instead of one, so the rail legitimately needs
+   more of the screen than a desktop rail does. One number, two devices, opposite answers.
+
+   SO THE FURNITURE PAYS, NOT THE PROSE. Every reduction here is to a frame, a meter, a
+   gap or a hint. No authored sentence is clamped except the standing `now` line, which
+   repeats the day, the time and the place that the header is already showing in larger
+   type two inches above it.
+   ============================================================================ */
+@media (max-width:760px){
+  /* the rail gets half the screen instead of 42%, because it has to hold four sentences */
+  #controls{max-height:50vh;padding:10px 0 12px}
+
+  /* the standing scene line keeps two lines on a phone. The header has the facts. */
+  /* FADED, NOT CLAMPED, AND THE REASON IS A ONE-LINE READER. -webkit-line-clamp needs
+     display:-webkit-box, and renderNow() sets `st.style.display = "block"` INLINE - an
+     inline style beats a stylesheet every time, so the clamp silently did nothing and the
+     strip kept all three lines. Forcing it with !important would win the argument and then
+     break the hide, because the same line sets display:none when there is no scene text.
+     A mask changes no property anybody else is writing to: the strip keeps two lines and
+     the third goes to nothing, which reads as a decision rather than as a cut. */
+  #nowstrip{font-size:11px;line-height:1.4;padding:4px 9px;margin-bottom:6px;
+            max-height:3.1em;overflow:hidden;
+            -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 98%);
+            mask-image:linear-gradient(180deg,#000 62%,transparent 98%)}
+  #pressure{padding:4px 10px;margin-bottom:6px;font-size:9.5px;letter-spacing:.14em}
+  #pressure .ticks{width:74px}
+
+  /* the rows themselves: same words, less frame. 15.5px is kept - this is the text the
+     player reads to decide, and shrinking it would be paying with the wrong thing. */
+  #choices{gap:6px}
+  .choice{padding:9px 12px;line-height:1.38}
+  .choice .n{margin-right:8px;padding:1px 5px}
+  .choice-hint{padding:6px 10px;margin-top:4px;line-height:1.4}
+}

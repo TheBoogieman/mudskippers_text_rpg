@@ -750,6 +750,27 @@
        the room's own voice, and were shipping at 13.5px against prose at 18px. */
     .block.sys{font-size:14.5px;line-height:1.6}
     .block.dmaside{font-size:15px;line-height:1.6}
+
+    /* ---- ONE TURN, ONE SCREEN, ONE SCROLL (v6.19.0) ----
+       THE AUTHOR PLAYS IN DESKTOP MODE ON A PHONE, and the reason he gave is the whole
+       finding: in mobile mode you cannot see the options without scrolling, and you scroll
+       in TWO places to take one turn. Measured at 375x812: the feed scrolled 738px of story
+       inside a 353px window, AND #controls scrolled 609px of content inside a 340px one -
+       so the choice area opened on 123px of furniture and one and a half options.
+       THE CHOICES DO NOT SCROLL ANY MORE. #controls sizes to its content and the feed is the
+       only scrolling region, which is the one gesture a phone expects. Paying for it means
+       cutting the furniture rather than the prose, so every reduction below is to a frame,
+       a meter or a hint - not to a word anybody wrote. */
+    #controls{overflow:visible;padding:10px 0 12px}
+    #nowstrip{padding:5px 9px;margin-bottom:7px;line-height:1.4;max-height:4.4em;overflow:hidden}
+    #pressure{padding:5px 10px;margin-bottom:7px;font-size:10px;letter-spacing:.16em}
+    #choices{gap:6px;margin-bottom:8px}
+    .choice{padding:9px 11px;line-height:1.35}
+    .choice .n{margin-right:7px}
+    .choice-hint{padding:6px 10px;margin-top:4px;line-height:1.4}
+    /* the typing row stays: it is the WILD TABLE's only input, and a novel run merely
+       borrows it to hold one hint. Shrunk, never hidden. */
+    .mudrow{gap:6px}
   }
 
   /* terminal glass content */
@@ -1774,7 +1795,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.18.0 "Read It On A Phone"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.19.0 "One Turn, One Screen"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2476,7 +2497,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.18.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.19.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
