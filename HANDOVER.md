@@ -22,10 +22,9 @@ rota and has to be told to stop. **Five had never been listed in `here` on the v
 the BODY was, because Marek is.** They share it, so letting Five take a turn there is the
 established mechanic rather than a new person in the room.
 
-**The authoring phase and the polishing passes are over.** What is left is in
-`OUTSTANDING.md` and it is short: one real authoring thread (Five and the vault), one open
-question for the author (Vic's file), an unread audit list, and three measured things that
-are declared rather than owed.
+**The authoring phase and the polishing passes are over, and so is everything the bible
+listed as missing.** What is left is in `OUTSTANDING.md` and it is an unread audit list plus
+four measured things that are declared rather than owed.
 
 **The game is five files.**
 
