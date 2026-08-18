@@ -39,6 +39,25 @@ established mechanic rather than a new person in the room.
 listed as missing.** What is left is in `OUTSTANDING.md` and it is an unread audit list plus
 four measured things that are declared rather than owed.
 
+**THE WILD TABLE IS DRIVEN AGAINST THE LOCAL MODELS, and the drawer cannot do it** - it is
+pinned to the novel so it never reaches the wire. `scratchpad/pressdrive.js` sends a beat's
+own fields straight to ollama and prints the scene; it never touches the browser, localStorage
+or `mud-settings`, and the local models need no key.
+
+**WHAT THAT PROVES AND WHAT IT DOES NOT.** The wiring is proved by the sweep against stubbed
+replies, which is right, because a stub is deterministic. What no stub can show is whether a
+pressure line is USABLE. Driven at v6.8.0: night 9's new lines produce a scene (*"There are
+checkpoints now, questions asked twice"*), and the finale's replacement produces the
+convergent citizen stopping mid-sentence with a stranger explaining it. **And the model wrote
+Nine a body** - *"her fingers tracing the pattern of the tablecloth"* - **which the game's own
+bodiless law caught.** That is the system working, not failing.
+
+**THE MODEL FENCES ITS JSON.** ```json around the object, which the game strips and a probe
+must too, or the probe is measuring its own parser.
+
+**AND THE TYPED ROUTE ONTO A GRAZE ROW IS DRIVEN**: typing toward the costly row grazes,
+toward the careful row clears, and typing something irrelevant stalls, which is survivable.
+
 **The game is five files.**
 
 | file | what it is |
