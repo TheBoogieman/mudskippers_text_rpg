@@ -1748,7 +1748,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.11.0 "A Label, Not A Tail"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.11.1 "The Scar An Old Build Left"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2450,7 +2450,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.11.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.11.1";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5362,6 +5362,28 @@ function contractionByVoice(){
      FLOOR that the pass raises them past, night by night; this row reports the whole
      cast so the bands are never argued about again. */
   return cbPer;
+}
+/* ---- THE SCAR AN OLD BUILD LEFT ON A PLAYER'S OWN LINE (v6.11.1) ----
+   The row badge is markup beside the choice, and takeAction has been handed the choice
+   STRING for a long time - but the INITIAL RELEASE handed it the button, and a button's
+   textContent concatenates its children with no separator. So a run old enough carries
+   lines like "...She left something out.2ND TIME" in its feedLog, and the feed is replayed
+   from feedLog on every load: fixing the echo upstream can never clean a string that is
+   already written down.
+   THE MATCH IS NARROW ON PURPOSE. The badge is welded on with NO SPACE, and it is either a
+   cast name, an ordinal TIME, or both joined by a middle dot. A trailing capitalised word
+   with a space before it is somebody SHOUTING, which this book does deliberately - that is
+   left exactly as written, because eating a line's last word is worse than the scar. */
+var ECHO_BADGE = new RegExp(
+  "(?:(?:PIA|VIC|HESTA|SEVEN|THREE|NINE|FIVE|MAREK|MIRREN|MACHINE|PRINCIPAL|THE CLERK|THE FILE)"
+  + "(?:\\s\u00b7\\s)?)?"
+  + "(?:\\d+(?:ST|ND|RD|TH) TIME)?$");
+function stripEchoBadge(t){
+  var str = String(t == null ? "" : t);
+  /* only ever strips something glued to the end of a sentence - never after a space */
+  return str.replace(
+    /([.!?\u2019"')\]])((?:(?:PIA|VIC|HESTA|SEVEN|THREE|NINE|FIVE|MAREK|MIRREN|MACHINE|PRINCIPAL|THE CLERK|THE FILE)(?:\s\u00b7\s)?)?(?:\d+(?:ST|ND|RD|TH) TIME)?)$/,
+    function(m, tail, badge){ return badge ? tail : m; });
 }
 function hasWord(text, w){
   return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
@@ -12475,7 +12497,7 @@ function takeAction(text, isMud){
      had just made, and served the player a red card for pressing a button the game
      offered them. One third of the way to finishTongues, for obeying the rail. */
   breachNow = breachScanned(isMud, clickNow) ? (breachIn(text) || breachMore(text)) : "";
-  var pb = {kind:"player", text:text.trim(), mud:!!isMud, speaker:"__player"};
+  var pb = {kind:"player", text:stripEchoBadge(text.trim()), mud:!!isMud, speaker:"__player"};
   renderBlock(pb); feedLog.push(pb);
   ledgerText += "\n\n> **" + (isMud ? "MUDSKIPPER MOMENT" : "PLAYER") + ":** " + text.trim();
   $("choices").innerHTML = ""; $("mudinput").value = "";
@@ -18140,7 +18162,7 @@ function rehCapture(data, before){
     phaseIn: before.phase, turnIn: before.beatTurns,
     played: before.n === 0 ? null : {
       door: before.pick || (before.mud ? "mud" : "typed"),
-      text: before.text, mud: !!before.mud
+      text: stripEchoBadge(before.text), mud: !!before.mud
     },
     railIn: before.rail,
     scene: (data.scene||[]).map(function(x){ return {s:x.speaker, t:x.text}; }),
