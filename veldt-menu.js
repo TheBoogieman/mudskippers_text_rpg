@@ -44,6 +44,62 @@ const CAST = {
   courier: {x:163, d:1.06, h:80, kind:'human', facing:'back', hat:'hood',  accent:'#cdd68a', coat:'#a3ad2e', dark:'#4a5313', leg:'#2b333f', skin:'#bb9b80', hair:'#4a5464', build:0.96}
 };
 const ORDER = ['hesta','three','vic','seven','marek','pia','courier'];
+
+/* ---- WHAT THE RUN LOOKS LIKE, FOR THE TITLE SCREEN (v6.9.0) ----
+   Read defensively: the menu loads before the game on a cold start, and it must never be
+   the reason a title screen fails to draw. Every lookup is guarded and every fallback is
+   the value that used to be hardcoded here. */
+
+/* the day the run is actually on, or nothing if there is no run to ask */
+function veldtDay(){
+  try{
+    const el = document.getElementById('hud-day');
+    const n = el ? parseInt(el.textContent, 10) : NaN;
+    if (!isNaN(n) && n > 0) return 'DAY ' + n;
+  }catch(e){}
+  return '';
+}
+
+/* the game keeps twelve ambiences; this screen has six skies. Interiors and the deep
+   places come out CLEAR - the title card is a street, and a street on the night the family
+   spent in a vault is simply a quiet street, not an invented indoor weather. */
+const AMB_SKY = {
+  'storm':'storm', 'downpour':'downpour',
+  'rain-neon':'rain', 'danger':'rain',
+  'marsh-fog':'mist', 'dead-signal':'mist', 'smoke':'mist',
+  'dawn':'drizzle', 'neon-dry':'clear', 'interior-warm':'clear',
+  'substrate-dark':'clear', 'vault-cold':'clear', 'tunnel':'clear'
+};
+function veldtWeather(){
+  try{
+    const a = window.currentAmbience;
+    if (typeof a === 'string' && AMB_SKY[a]) return AMB_SKY[a];
+  }catch(e){}
+  return 'rain';
+}
+
+/* WHO WAS ON STAGE, filtered to the seven this screen can draw. NO NEW FIGURES: the author's
+   instruction, and the right one - Nine has no body for most of the book and the Machine and
+   the Principal are not people you put on a poster. If the last scene held three of the
+   seven, three stand on the quay.
+   The courier is always there. It is his title screen; he is the one with his back to us. */
+function veldtCast(){
+  try{
+    const drawable = ['hesta','three','vic','seven','marek','pia'];
+    const seen = [];
+    const eat = (n) => {
+      const k = String(n || '').toLowerCase();
+      if (drawable.indexOf(k) >= 0 && seen.indexOf(k) < 0) seen.push(k);
+    };
+    (window.lastPresent || []).forEach(eat);
+    if (!seen.length && window.roster && window.roster.family) window.roster.family.forEach(eat);
+    /* nobody the screen can draw - a cold start, or a night of Nine and the Machine.
+       Fall back to what was hardcoded, rather than putting the courier on an empty quay. */
+    if (!seen.length) return 'full';
+    return seen.concat(['courier']);
+  }catch(e){ return 'full'; }
+}
+
 const STAGES = {
   day1:  ['courier'],
   early: ['vic','courier','pia'],
@@ -310,7 +366,9 @@ class Component extends DCLogic {
       this.traffic.push({x: rnd()*W, y: 128 + Math.floor(rnd()*3)*13, s: (0.1 + rnd()*0.22) * (rnd() > 0.5 ? 1 : -1), c: rnd() > 0.5 ? '#ff9e6d' : '#f4e6c8'});
 
     const stage = this.props.castStage || 'full';
-    const want = STAGES[stage] || STAGES.full;
+    /* a stage is either one of the named presets or an explicit list of keys, which is
+       what veldtCast() hands back when it can see the run */
+    const want = Array.isArray(stage) ? stage : (STAGES[stage] || STAGES.full);
     // interlaced: each figure carries a depth, scaling its height and dropping its feet
     // toward the viewer, then they're drawn far-to-near so the group overlaps
     this.cast = ORDER.filter(k => want.indexOf(k) >= 0)
@@ -542,10 +600,14 @@ class Component extends DCLogic {
         for (let cc = 0; cc < st.cols; cc++){
           const bx = st.x + cc * 12, by = QUAY - (r + 1) * 6;
           const col = CBOX[Math.floor((st.seed * 97 + r * 3 + cc * 7) % CBOX.length)];
-          P(bx, by, 11, 5, col);
-          P(bx, by, 11, 1, mix(col, '#ffffff', 0.22));
-          P(bx + 10, by, 1, 5, mix(col, '#000000', 0.5));
-          P(bx, by + 4, 11, 1, mix(col, '#000000', 0.35));
+          /* FLUSH: the step is 12 across and 6 up, so the box is 12 and 6 - drawn 11x5 it
+             left a pixel of quay showing between every column and every row, and the bottom
+             row floated one pixel clear of the road. The highlight, right edge and bottom
+             shade are what separate one container from the next; the gap never was. */
+          P(bx, by, 12, 6, col);
+          P(bx, by, 12, 1, mix(col, '#ffffff', 0.22));
+          P(bx + 11, by, 1, 6, mix(col, '#000000', 0.5));
+          P(bx, by + 5, 12, 1, mix(col, '#000000', 0.35));
         }
     }
     // portal cranes: legs, portal beam, jib and backstay — all above the road
@@ -1032,6 +1094,9 @@ class Component extends DCLogic {
     }
     ctx.restore();
 
+    // the floor's own water, under everybody's boots rather than over them
+    if (!this.low) this.splashes_(ctx, w);
+
     // --- CAST ---
     const tr = this.trans ? (performance.now() - this.trans.t0) / 1000 : -1;
     ctx.save(); ctx.translate(pr * 16, 0);
@@ -1097,6 +1162,30 @@ class Component extends DCLogic {
     if (tr >= 1.9) P(0, 0, W, H, '#05070b', Math.min(1, (tr - 1.9) / 0.7));
   }
 
+  /* THE WATER ON THE FLOOR, DRAWN WITH THE FLOOR (v6.9.0).
+     A splash lands at y = LEDGE+3 .. H, which is where the family stands. It used to be
+     spawned and drawn inside the foreground rain pass, and that pass runs after the cast so
+     the falling streaks read in front - right for a streak, wrong for a puddle. Every splash
+     that landed on somebody's boots was painted over the boots. This runs before the cast. */
+  splashes_(ctx, w){
+    if (!w.drops) return;
+    const spawn = Math.round(w.drops / 34);
+    for (let i = 0; i < spawn; i++)
+      this.splashes.push({x: Math.random() * W, y: LEDGE + 3 + Math.random() * (H - LEDGE - 5), a: 0});
+    for (let i = this.splashes.length - 1; i >= 0; i--){
+      const sp = this.splashes[i];
+      sp.a += 0.085;
+      if (sp.a >= 1){ this.splashes.splice(i, 1); continue; }
+      const r = Math.round(sp.a * 4), fade = (1 - sp.a) * 0.5;
+      this.px(ctx, sp.x - r, sp.y, 1, 1, '#c8e0f2', fade);
+      this.px(ctx, sp.x + r, sp.y, 1, 1, '#c8e0f2', fade);
+      if (sp.a < 0.45){
+        this.px(ctx, sp.x, sp.y - 1 - r, 1, 2, '#dceaf6', fade * 1.3);
+        this.px(ctx, sp.x, sp.y, 2, 1, '#dceaf6', fade);
+      }
+    }
+  }
+
   rain(ctx, layer, w, t){
     if (!w.drops) return;
     ctx.strokeStyle = layer ? 'rgba(206,230,248,0.52)' : 'rgba(158,184,210,0.24)';
@@ -1111,8 +1200,10 @@ class Component extends DCLogic {
       ctx.lineTo(d.x + w.wind * d.len * 0.55, d.y + d.len);
     }
     ctx.stroke();
-    // Splashes: each drop that lands on the stones opens a small ring and dies.
-    if (layer){
+    // Splashes moved out of here in v6.9.0 - see splashes(). Water on the ground is not
+    // the same layer as water in the air, and drawing them together put every splash on
+    // top of whoever was standing in it.
+    if (false){
       const spawn = Math.round(w.drops / 34);
       for (let i = 0; i < spawn; i++)
         this.splashes.push({x: Math.random() * W, y: LEDGE + 3 + Math.random() * (H - LEDGE - 5), a: 0});
@@ -1470,14 +1561,19 @@ class Component extends DCLogic {
   renderVals(){
     const w = this.wx();
     const stage = this.props.castStage || 'full';
+    /* THE DAY COMES OFF THE RUN, NOT OFF THE CAST. This used to look the stage up in the
+       table below, which works while a stage is one of four preset names and silently
+       reads DAY 9 for ever once it can also be an explicit list. The game puts the day on
+       screen; that is the honest source, and the table is the cold-start fallback. */
     const names = {day1:'DAY 1', early:'DAY 2', mid:'DAY 4', full:'DAY 9'};
+    const runDay = veldtDay();
     return {
       cv: this.cv, menu: this.menu, mark: this.mark,
       toggleLow: this.toggleLow,
       start: this.start,
       lowLabel: this.state.low ? 'LOW POWER · ON' : 'LOW POWER · OFF',
       readout: 'LOWER VELDT · 23:14 · ' + w.label,
-      continueSub: (names[stage] || 'DAY 9') + ' — ' + (this.props.continueNote || 'the safehouse, and nobody sleeping')
+      continueSub: (runDay || names[stage] || 'DAY 9') + ' — ' + (this.props.continueNote || 'the safehouse, and nobody sleeping')
     };
   }
 }
@@ -1500,7 +1596,13 @@ class Component extends DCLogic {
       '<button type="button" class="veldt-low"></button>';
     ts.insertBefore(art, ts.firstChild);
 
-    const inst = new Component({ weather:'rain', castStage:'full' });
+    /* THE RUN'S OWN NIGHT ON THE TITLE SCREEN (v6.9.0). This was hardcoded, so every
+       save opened on heavy rain and all seven people however the last scene actually
+       went. Both are read off the live game now, and both fall back to what was
+       hardcoded before when there is no run to read - a cold start still opens on the
+       rain and the whole family, which is the right picture for a game nobody has
+       started yet. */
+    const inst = new Component({ weather: veldtWeather(), castStage: veldtCast() });
     inst.cv.current   = art.querySelector('.veldt-cv');
     inst.mark.current = art.querySelector('.veldt-mark');
     inst.menu.current = ts.querySelector('.t-menu');
