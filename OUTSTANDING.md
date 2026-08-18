@@ -3,7 +3,7 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.7.0 · 34 nights written · sweep 81 PROVED of 106, 0 FAILED.**
+**v6.7.4 · 34 nights written · sweep 81 PROVED of 106, 0 FAILED.**
 
 ---
 
@@ -83,27 +83,41 @@ it did. Re-driven: that case lands on `a3-evict` now. Sweep row **(4a5)** covers
 
 ---
 
-## 5. NINE SWEEP ROWS CARRY NO BROKEN FORM — *now named, and none has earned one yet*
+## 5. SEVEN SWEEP ROWS CARRY NO BROKEN FORM — *was nine; two were the instrument's own fault*
 
-A row proves itself by breaking the code and watching the claim fail. These nine assert
-something and have no broken version to run, so they show a property without proving they
-would notice it going away. **They are named here for the first time:**
+A row proves itself by breaking the code and watching the claim fail. The harness credits a
+break only when the check **enters** a function named in `PROD_SYMBOLS` — it wraps each one
+and watches, because an earlier version credited any check whose *source text* mentioned a
+name, which a comment satisfies.
+
+**TWO OF THE NINE WERE NOT THE ROWS' FAULT AT ALL.** `hasWord` and `revealText` are both in
+that roster and both were declared **inside** `selfTest`, so the names referred to globals
+that did not exist. Every check calling them entered the sweep's own private copy, touched no
+game code, and was correctly reported as *"a restatement, not a proof"*. **The one-predicate-
+three-copies trap, inside the instrument that exists to catch it.** Hoisted to top level;
+*nobody explains the peak joke* and *every plant and payoff is really in the night that
+claims it* both went green on the next load. **9 → 7, and PROVED 81 → 83.**
+
+**Found by sweeping the roster rather than the rows** — `scratchpad/shadows.js` walks all 198
+names and asks which are top-level and wrappable. It also turned up **two dead names**,
+`shardWhereAfter` and `unproved`, declared nowhere in the file. A dead or shadowed name does
+not fail loudly; it quietly denies credit to every row that calls it.
+
+**THE REMAINING SEVEN NEED REAL WORK, ONE AT A TIME:**
 
 - every card is answered by somebody in the room
 - no card orders a voice the physics has switched off
 - the relay never speaks the answer it is withholding
 - the composer is reached once per player action
 - every correction route spends from one capped budget
-- every plant and every payoff is really in the night that claims it
 - the two formal voices never contract
-- nobody explains the peak joke
 - a bit turn asks for dialogue and nothing else
 
-**Several of these can be broken honestly** — the plant/payoff row by moving a plant word to
-a night that does not contain it, the formal-voices row by contracting one Machine line in a
-copy — and those are the mutations the row exists to catch rather than a stubbed detector.
-**None was attempted; this was identification, not repair.** The number should go down one
-row at a time and never up quietly.
+Each computes its predicate **inline in the sweep**, so a break can only re-run that inline
+copy. The honest fix is to extract each predicate into a production function and have both
+the row and its break drive that — the same move `leadPunctStrip`, `beatPointerFrom` and
+`answererFor` were made for. **Bolting a production call onto a restatement to buy the
+credit is exactly what the harness's own note forbids, and must not be done.**
 
 ---
 

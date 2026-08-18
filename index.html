@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.7.3 "Somewhere Defensible"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.7.4 "The Instrument Had A Shadow"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.7.3";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.7.4";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5220,6 +5220,53 @@ function stutterKey(t){
 function beatSeasonFirst(arc){
   for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].season === arc) return i; }
   return 0;
+}
+/* ONE READER, AND IT LIVES WHERE THE ROSTER CAN SEE IT (v6.7.4).
+   hasWord was declared INSIDE selfTest. PROD_SYMBOLS has named it since the credit rule was
+   written, and that rule wraps each named function and credits a broken form only if one
+   was actually ENTERED - so every row that called hasWord entered the sweep's own private
+   copy, touched no game code, and was reported as "a restatement, not a proof". The harness
+   was exactly right and the fault was the shadow: a predicate the roster expected to be the
+   game's, living nowhere but the instrument.
+   THAT IS THE ONE-PREDICATE-THREE-COPIES TRAP, inside the thing that exists to catch it. */
+/* HOISTED OUT OF THE SWEEP (v6.7.4) - see the note on hasWord above. This was the
+   second shadowed name in the credit roster, and both were found by sweeping the
+   roster itself rather than one row at a time. */
+/* every authored string that belongs to a beat, in one bag. Deliberately includes
+   canon, press, goal and the never list: a fact can leak in a DM note as easily as
+   in a spoken line, and the storyteller reads those too. */
+function revealText(b){
+  var e = SCENEBOOK[b.id], out = [];
+  function eat(l){
+    if(Object.prototype.toString.call(l) === "[object Array]") out.push(l[1]);
+    else if(typeof l === "string") out.push(l);
+    else if(l && l.text) out.push(l.text);
+  }
+  if(e){
+    (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+      [t.ask, t.rail, t.gives, t.holds].forEach(function(x){ if(x) out.push(x); });
+      (t.railTakes || []).forEach(function(x){ out.push(x); });
+      (t.plays || []).forEach(eat);
+      (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
+    });
+    if(e.before) out.push(e.before);
+    (e.never || []).forEach(function(x){ out.push(x); });
+    if(e.where) out.push(e.where);
+  }
+  ["opens","lands","landsHard","closes"].forEach(function(k){
+    (b[k] || []).forEach(function(L){
+      (L.lines || []).forEach(eat);
+      (L.rail || []).forEach(function(r){ out.push(typeof r === "string" ? r : (r && r.line) || ""); });
+      if(L.now) out.push(L.now);
+    });
+  });
+  (b.canon || []).forEach(function(x){ out.push(x); });
+  (b.press || []).forEach(function(x){ out.push(x); });
+  [b.goal, b.exit, b.aim, b.scar].forEach(function(x){ if(x) out.push(x); });
+  return out.join(" \n ");
+}
+function hasWord(text, w){
+  return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
 }
 function beatById(id){
   for(var i = 0; i < SPINE.length; i++){ if(SPINE[i].id === id) return i; }
@@ -24762,42 +24809,6 @@ function selfTest(){
        caught the defect. Everything below reads REVEALS in corpus.js or measures the
        prose directly. */
 
-    /* every authored string that belongs to a beat, in one bag. Deliberately includes
-       canon, press, goal and the never list: a fact can leak in a DM note as easily as
-       in a spoken line, and the storyteller reads those too. */
-    function revealText(b){
-      var e = SCENEBOOK[b.id], out = [];
-      function eat(l){
-        if(Object.prototype.toString.call(l) === "[object Array]") out.push(l[1]);
-        else if(typeof l === "string") out.push(l);
-        else if(l && l.text) out.push(l.text);
-      }
-      if(e){
-        (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
-          [t.ask, t.rail, t.gives, t.holds].forEach(function(x){ if(x) out.push(x); });
-          (t.railTakes || []).forEach(function(x){ out.push(x); });
-          (t.plays || []).forEach(eat);
-          (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
-        });
-        if(e.before) out.push(e.before);
-        (e.never || []).forEach(function(x){ out.push(x); });
-        if(e.where) out.push(e.where);
-      }
-      ["opens","lands","landsHard","closes"].forEach(function(k){
-        (b[k] || []).forEach(function(L){
-          (L.lines || []).forEach(eat);
-          (L.rail || []).forEach(function(r){ out.push(typeof r === "string" ? r : (r && r.line) || ""); });
-          if(L.now) out.push(L.now);
-        });
-      });
-      (b.canon || []).forEach(function(x){ out.push(x); });
-      (b.press || []).forEach(function(x){ out.push(x); });
-      [b.goal, b.exit, b.aim, b.scar].forEach(function(x){ if(x) out.push(x); });
-      return out.join(" \n ");
-    }
-    function hasWord(text, w){
-      return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
-    }
     var RVT = {};
     SPINE.forEach(function(b){ RVT[b.id] = revealText(b); });
 
