@@ -70,10 +70,26 @@ const AMB_SKY = {
   'dawn':'drizzle', 'neon-dry':'clear', 'interior-warm':'clear',
   'substrate-dark':'clear', 'vault-cold':'clear', 'tunnel':'clear'
 };
+/* the active save, straight off the runs map - the same place the CONTINUE button reads its
+   day and location from. Never mud-settings. */
+function veldtSave(){
+  try{
+    const active = localStorage.getItem('mud-active');
+    if (!active) return null;
+    const raw = localStorage.getItem('mud-runs');
+    if (!raw) return null;
+    const map = JSON.parse(raw);
+    const blob = map && map[active];
+    return blob ? JSON.parse(blob) : null;
+  }catch(e){ return null; }
+}
 function veldtWeather(){
   try{
-    const a = window.currentAmbience;
-    if (typeof a === 'string' && AMB_SKY[a]) return AMB_SKY[a];
+    /* a loaded run wins - the player is looking at the menu mid-game */
+    const live = window.currentAmbience;
+    if (window.runSlug && typeof live === 'string' && AMB_SKY[live]) return AMB_SKY[live];
+    const sv = veldtSave();
+    if (sv && typeof sv.amb === 'string' && AMB_SKY[sv.amb]) return AMB_SKY[sv.amb];
   }catch(e){}
   return 'rain';
 }
@@ -84,20 +100,37 @@ function veldtWeather(){
    seven, three stand on the quay.
    The courier is always there. It is his title screen; he is the one with his back to us. */
 function veldtCast(){
-  try{
-    const drawable = ['hesta','three','vic','seven','marek','pia'];
+  const drawable = ['hesta','three','vic','seven','marek','pia'];
+  const pick = (list) => {
     const seen = [];
-    const eat = (n) => {
+    (list || []).forEach((n) => {
       const k = String(n || '').toLowerCase();
       if (drawable.indexOf(k) >= 0 && seen.indexOf(k) < 0) seen.push(k);
-    };
-    (window.lastPresent || []).forEach(eat);
-    if (!seen.length && window.roster && window.roster.family) window.roster.family.forEach(eat);
-    /* nobody the screen can draw - a cold start, or a night of Nine and the Machine.
-       Fall back to what was hardcoded, rather than putting the courier on an empty quay. */
-    if (!seen.length) return 'full';
-    return seen.concat(['courier']);
-  }catch(e){ return 'full'; }
+    });
+    return seen;
+  };
+  try{
+    /* a loaded run, read live */
+    if (window.runSlug){
+      let seen = pick(window.lastPresent);
+      if (!seen.length && window.roster && window.roster.family) seen = pick(window.roster.family);
+      return seen.concat(['courier']);
+    }
+    /* otherwise the save, which is what the title screen is actually showing */
+    const sv = veldtSave();
+    if (sv){
+      /* roster.family is the run's own answer to "who is with you". There is no
+         last-scene field in the blob - I guessed at one and checked: the save carries
+         no `prev`, so reading it was a read of undefined dressed up as a source. */
+      const seen = (sv.roster && sv.roster.family) ? pick(sv.roster.family) : [];
+      /* A SAVE WITH NOBODY DRAWABLE IS NOT AN EMPTY SCREEN - it is Day 1, and on Day 1 the
+         courier is on his own. That distinction is the bug this release fixes: an absent
+         save and a save whose family is still empty were both reading as "show everybody". */
+      return seen.concat(['courier']);
+    }
+  }catch(e){}
+  /* no save at all: the poster. All seven and the rain, for a game nobody has started. */
+  return 'full';
 }
 
 const STAGES = {
