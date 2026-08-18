@@ -324,6 +324,60 @@ consequence lives entirely in the press.** Both its pressure lines are the Choir
 stalls about a courier by description, and a debt being called in - and a novel player
 meets neither. That is the one clear case of authored consequence the novel cannot serve.
 
+### THE 23 NIGHTS ARE NOW READ BY HAND (v5.98.0), and the diagnosis is sharper than the note
+
+`scratchpad/enemy.js` does RECALL and decides nothing: it prints every authored block on a
+teeth-less night that names anything on the Choir's side of the world - 135 of them - and
+leaves the judgement to the read. That is the division of labour costs.js got wrong.
+
+**THE ENEMY IS A SUBJECT OF EXPLANATION AND ALMOST NEVER A SUBJECT OF VERBS.** Nearly all
+135 are a character explaining it: Vic on debts (*"a leash with a nicer name"*), Seven on
+intake columns (*"a thing does not exist to me because I've seen it, it exists because it
+has a column"*), Three on lock classes, Hesta on how the city files its dead. **It is
+described with more precision than almost anything else in the book, and it hardly ever
+does anything.**
+
+**WHERE IT DOES ACT THE BOOK IS AT ITS BEST, AND THERE ARE FOUR PLACES.** Night 22, Hesta
+reading the record out: *"Intake conducted on the row at eleven-twenty. One subject.
+Voluntary conscription paperwork lodged and countersigned"* and *"they took him regardless,
+because he was standing nearest and he was on their list"* · night 28, *"it came to Seven
+off a fish porter before six this morning. No van, no uniform, no threats. A clerk doing a
+list"* · night 32, the Machine: *"the small one is filed for salvage. I have read it. It is
+a bad file and it will be actioned, because files are"* · and nights 3 and 5, where it is
+the CITY rather than the Choir - the causeway watched by morning, the noodle man making
+change without touching his hand. **Night 24 has it conspicuously not reacting, on purpose,
+and says so: *"she hasn't said one word about yesterday. Not the nine, not the van, not
+us."***
+
+**THE HOLE HAS A LOCATION: NIGHTS 9 TO 21.** Of the nine teeth-less nights in that stretch
+- 9, 10, 13, 15, 16, 17, 18, 20, 21 - not one has the other side doing anything about what
+this family did. That is the middle of Book Two, and it is exactly where the book gets
+talky.
+
+**AND SEVERAL OF THOSE NIGHTS FORBID IT ON PURPOSE, WHICH CHANGES THE FIX.** Night 10's own
+`never` says nobody knocks at Hesta's door in a stall - *"that is the world's move and it
+belongs to the pressure"*. Night 13 forbids any message arriving at the grave. Night 21
+allows exactly one interrupter. **The quiet on those nights is authored, not accidental.**
+So the fix cannot be "give the Choir a verb here". It has to be **the family saying what
+last night cost**, which is what a deck is for and which breaks no rule on any night.
+
+**NIGHT 17 IS WRITTEN AS THE MODEL.** On `anybody-else`, second take, straight after Seven
+says he has stopped protecting his own answer: his desk at the west intake has been empty
+for eleven days and somebody has filed that. He countersigned four hundred of those forms
+and knows almost to the hour how one travels. Three asks how long. *"It went days ago.
+Eleven days is a staffing note for the first four and a name for the rest. I am not
+forecasting weather at you. I am telling you what it is doing outside."* Nobody at that
+table had thought about what it cost the Choir to lose a clerk, because nobody had thought
+of him as a thing the Choir had lost. Four blocks; **the floor rose 4689 to 4692**.
+
+**WHAT IS LEFT: EIGHT NIGHTS - 9, 10, 13, 15, 16, 18, 20, 21** - each wanting one exchange
+in the family's own mouths about what the night before has cost. **`a2-chassis`'s
+`does-anybody-owe` MUST NOT BE ONE OF THEM.** It is eighteen closed blocks setting the
+family's debt economy against the Choir's - *"there is no bill in this building"*, *"in
+about four hundred small ways over about thirty years and not one of us will notice it
+happening"* - and a cost dropped into it would spoil the contrast it exists to draw. Find
+another card on that night.
+
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
 read the anchor out of the corpus, refuse on a duplicated anchor.
