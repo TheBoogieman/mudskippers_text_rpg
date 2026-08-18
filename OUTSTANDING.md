@@ -3,7 +3,7 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.27.0 · 34 nights written · sweep 94 PROVED of 112, 0 FAILED.**
+**v6.28.0 · 34 nights written · sweep 94 PROVED of 112, 0 FAILED.**
 
 **NOTHING IS OWED.** The book is written, the terminal audit is closed, and the two entries
 below are measurements that came out fine rather than debts. **The next real work is the

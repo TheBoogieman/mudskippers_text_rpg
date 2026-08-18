@@ -8,7 +8,12 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.27.0. THIRTY-FOUR nights written. Sweep 94 PROVED of 112, 0 FAILED. Tree clean, pushed.**
+**v6.28.0. THIRTY-FOUR nights written. Sweep 94 PROVED of 112, 0 FAILED. Tree clean, pushed.**
+
+**WORK IN SMALLER WAVES FROM HERE.** The terminal wave ran four releases deep in one
+sitting and that is no longer the shape to plan for. **One section, driven, shipped,
+reported - then stop and ask.** Everything in this file was learned the expensive way and
+it is all still true at any size; what changes is how much you take on before you land it.
 
 **THE BOOK IS FINISHED, THE TERMINAL AUDIT IS CLOSED, AND NOTHING IS OWED.** `OUTSTANDING.md`
 carries two measurements that came out fine and no work. **The next fault will come from the
