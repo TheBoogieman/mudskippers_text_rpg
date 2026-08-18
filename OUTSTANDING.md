@@ -3,9 +3,9 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.17.0 · 34 nights written · sweep 90 PROVED of 108, 0 FAILED.**
+**v6.25.0 · 34 nights written · sweep 91 PROVED of 109, 0 FAILED.**
 
-**NOTHING IS OWED.** The record sweep is closed, both halves, and the walk is answered on all
+**ONE THING IS OWED: the terminal, below.** The record sweep is closed, both halves, and the walk is answered on all
 34 nights. There is no unwritten prose in this book and no known defect in it.
 
 *The two entries below are not tasks. They are MEASUREMENTS THAT CAME OUT FINE, written down
@@ -14,6 +14,31 @@ that was genuinely outstanding has left this file, which is what the line above 
 
 **The next real work is the author playing it**, which is where the last five faults came from
 and where the next one will come from too.
+
+---
+
+## 0. THE TERMINAL HAS NOT BEEN AUDITED AGAINST THE FINISHED BOOK
+
+**The author, playing on a phone: "the terminal needs some love too... I'm not sure if
+anything on this screen is up to date with the story."** Not yet checked, and it should be
+done as its own wave with a fresh head.
+
+**FIRST, A CORRECTION THAT MUST NOT BE ACTED ON BACKWARDS. He believed the TOLLS row shows a
+removed mechanic. IT IS NOT REMOVED.** `payToll()` is called on a forced close
+(`index.html:7928`) and on a walkback (`index.html:8433`), and at `TOLL_MAX` the season FOLDS
+- `tolls >= TOLL_MAX && !isFinaleBeat()`, gated `!wildRun()`, so **novel runs only**. What was
+removed at v6.10 is the pressure STRIP AT THE WILD TABLE, which is a different thing in a
+different mode. **Deleting the TOLLS row would hide a live mechanic that can end a season.**
+The likely truth is that he has never SEEN one charged, because they only land on forced
+closes and walkbacks.
+
+**WHAT THE AUDIT IS.** The STATUS pane renders THE JOB, TONIGHT, the season-beats line, the
+turn meter, TOLLS, THE FAMILY, THE COURIER SO FAR and THE RECORD, and there are five more
+panes behind it - JOBS, CAST, MAP, ARCHIVE. Each has its own source. The question for every
+one of them is the question this week has been asking everywhere else: **does it still say
+something true about a book that is now finished, or is it describing a game from before the
+34 nights landed?** Read each pane against the run it claims to describe, and drive the
+screen rather than reading the renderer.
 
 ---
 
