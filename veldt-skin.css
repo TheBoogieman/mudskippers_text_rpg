@@ -348,8 +348,8 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
      the third goes to nothing, which reads as a decision rather than as a cut. */
   #nowstrip{font-size:11px;line-height:1.4;padding:4px 9px;margin-bottom:6px;
             max-height:3.1em;overflow:hidden;
-            -webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 98%);
-            mask-image:linear-gradient(180deg,#000 62%,transparent 98%)}
+            -webkit-mask-image:linear-gradient(180deg,#000 86%,transparent 100%);
+            mask-image:linear-gradient(180deg,#000 86%,transparent 100%)}
   #pressure{padding:4px 10px;margin-bottom:6px;font-size:9.5px;letter-spacing:.14em}
   #pressure .ticks{width:74px}
 
@@ -363,7 +363,40 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
      wants. All three move; the prose is untouched. */
   :root{--feed-scale:.92}
   /* the rail's own furniture scales with it, or a smaller size just buys more frame */
-  #nowstrip{font-size:calc(11px * var(--feed-scale))}
+  /* THE SCENE LINE GETS A THIRD LINE BACK (v6.22.0). Two was set when the rail was fighting
+     for every pixel; the rail now sizes to its content under a cap it does not reach, so the
+     line that says where you are standing can finish its sentence. The fade stays for the
+     rare long one. */
+  #nowstrip{font-size:calc(11px * var(--feed-scale));max-height:6em}  /* 4.7em fell FOUR PIXELS short of three lines plus its own padding and shaved the
+     bottom off the last one, which is the ugliest possible amount to be wrong by. 6em
+     clears three lines at TINY and four at NORMAL, and still caps a runaway. */
+  /* the bar's own sentence rides the reader scale like everything else the player reads */
+  #mudinput{font-size:calc(15px * var(--feed-scale))}
+
+  /* ---- AT TINY, THE NOVEL GIVES THE BAR BACK (v6.22.0) ----
+     In a novel run that row is a disabled input holding one sentence that teaches the rail.
+     It is worth its height at every other size. At TINY the reader has asked for as much
+     story per screen as the phone will give, and a hint they have now read forty times is
+     the cheapest thing in the frame to spend. BOTH CONDITIONS ARE REQUIRED: `read-tiny` is
+     set only from a stored pick, never from the phone default, and `mode-novel` is off at
+     the wild table - where that input is the ONLY way to say anything and must never go. */
+  html.read-tiny body.mode-novel .mudrow{display:none}
+
+  /* ---- THE HEADER GETS OUT OF THE WAY (v6.22.0) ----
+     It was three rows on a phone - the wordmark, then the day and place and ledger, then
+     two buttons on a line of their own - for something the player reads once a minute.
+     `display:contents` dissolves the .meta wrapper so every part becomes a flex item of the
+     header itself and can wrap where it likes, and MENU takes the auto margin so the buttons
+     ride the end of whichever row they land on instead of claiming a third. The whole bar
+     rides the reader scale too, so TINY shrinks the chrome along with the prose. */
+  header{gap:4px 8px;align-items:baseline;padding:7px 11px 6px}
+  header .meta{display:contents}
+  .title{font-size:calc(12.5px * var(--feed-scale));letter-spacing:.2em}
+  header .meta > span{font-size:calc(10px * var(--feed-scale));letter-spacing:.04em}
+  header button.small{font-size:calc(10px * var(--feed-scale));padding:3px 8px;margin-left:0}
+  /* NO AUTO MARGIN ON MENU. It pushed MENU to the far right and left SETTINGS to wrap
+     ALONE onto a row of its own, which spends a whole line to right-align one button.
+     Flowing them together after the text keeps the pair on one row. */
   #pressure{font-size:calc(9.5px * var(--feed-scale))}
   .choice-hint{font-size:calc(11px * var(--feed-scale))}
   .choice .n{font-size:calc(11px * var(--feed-scale))}

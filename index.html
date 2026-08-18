@@ -1806,7 +1806,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.21.0 "As Much As The Screen Will Hold"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.22.0 "Give The Screen Back To The Story"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2508,7 +2508,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.21.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.22.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -12014,13 +12014,42 @@ function barTyping(){
   if(runOver) return false;
   return !runSlug || wildRun();     /* no run yet: the title screen's bar is nobody's */
 }
+/* THE BAR'S SENTENCE HAS TO FIT THE BAR (v6.22.0). In a novel run this input is disabled
+   ON PURPOSE and its placeholder IS the message - "a greyed field with a sentence in it
+   reads as a rule", which only works while the sentence is legible. AN INPUT IS ONE LINE
+   AND CANNOT WRAP, so on a 375px phone the long form was clipping mid-word at EVERY reader
+   size, including before any of this week's work: 54 characters do not fit that bar at any
+   font this game would use. It reads as a broken build rather than a rule.
+   So the phone gets the same rule in fewer words. Not an ellipsis on the long one - a
+   sentence that ends. */
 function barPlaceholder(){
+  var tight = (typeof window !== "undefined" && window.innerWidth <= 760);
   if(runOver) return "The run is over. Start a new game.";
-  if(!barTyping()) return "Tonight is written — the rail is the game. Pick a line.";
-  return "…or say what the courier does. Enter to do it, the button for a bit.";
+  if(!barTyping()) return tight ? "Tonight is written. Pick a line."
+                                : "Tonight is written — the rail is the game. Pick a line.";
+  /* THE SHORT WILD FORM STILL NAMES THE BUTTON. The first draft cut the clause and the
+     sweep failed it inside a minute: the MUDSKIPPER MOMENT button is a FACT OF THE MODE,
+     not a disabled control, and a bar that stops mentioning it on a phone is a bar that
+     lies about what the table can do. Shortened around the clause instead of through it. */
+  return tight ? "…or say what the courier does, button for a bit."
+               : "…or say what the courier does. Enter to do it, the button for a bit.";
 }
+/* and it is re-picked when the bar changes width - a phone turned on its side crosses the
+   breakpoint, and a sentence chosen once at load would be the wrong one from then on. */
+var barPhraseTimer = null;
+window.addEventListener("resize", function(){
+  if(barPhraseTimer) clearTimeout(barPhraseTimer);
+  barPhraseTimer = setTimeout(function(){
+    var mi = $("mudinput");
+    if(mi) mi.placeholder = barPlaceholder();
+  }, 150);
+});
 function applyModeUI(){
   var row = document.querySelector(".mudrow"), mi = $("mudinput"), mb = $("mudbtn");
+  /* THE BAR IS THE WILD TABLE'S, AND ONLY THE NOVEL MAY LOSE IT. This class lets the phone
+     stylesheet reclaim the row at TINY without CSS ever having to know what a run mode is -
+     and without any chance of taking the input away from a table that types into it. */
+  document.body.classList.toggle("mode-novel", !wildRun());
   if(wildRun()){
     if(!mb && mudBtnHeld && row){ row.appendChild(mudBtnHeld); mudBtnHeld = null; }
   } else if(mb && row){
@@ -14087,6 +14116,10 @@ function applyFeedScale(){
   /* unset means "let the stylesheet decide", which is how the phone default survives */
   if(v === null) document.documentElement.style.removeProperty("--feed-scale");
   else document.documentElement.style.setProperty("--feed-scale", String(v));
+  /* TINY is a DELIBERATE pick, never a default, so the class is set only from a stored
+     value. A phone that has never been to SETTINGS gets SMALL from the stylesheet and
+     keeps its bar. */
+  document.documentElement.classList.toggle("read-tiny", v !== null && v <= 0.75);
   var sel = $("s-type");
   if(sel) sel.value = v === null ? "" : String(v);
 }
