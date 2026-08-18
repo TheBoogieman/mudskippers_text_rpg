@@ -340,6 +340,19 @@ var SPINE = [
  exit:"the courier has knowingly held a two-way conversation with Nine",
  aim:"get the shard into his bare hand and let him talk to her knowing she is a person",
  walkLine:"Give the shard to Pia and walk back the way I came.",
+ /* THE ANSWER TO THE FIRST PRESS (v6.12.0). Nothing is charged and nothing is refused -
+    the ruling is that a walk costs nothing and is remembered - so what the room does is
+    decline to make it easy. Night one's own never list writes most of this: only Pia and
+    Nine may speak, and NINE CANNOT HEAR THROUGH CLOTH, so she does not answer, because he
+    has not touched her. He is offering to hand over somebody who cannot hear him offer it,
+    and the fact that Pia has to point that out is the whole scene. */
+ walkAnswer:["Pia does not put her hand out.",
+       ["Pia","No. I'm not being difficult, I'm being accurate: my hand is not a place she goes. Vic gave her to you."],
+       ["Pia","And before you say it again - she can't hear you. Not through the cloth. You are standing in the rain arranging her whole life at conversational volume and she has no idea any of it is happening."],
+       "That lands harder than anything else she has said tonight, and she is twelve, and she did not build it to land.",
+       ["Pia","So if you're going to do it, do it properly. Get her out and say it to her face. And then you'll have to hear what she says back, which is the part I don't think you've thought about."],
+       "Nobody takes anything from anybody. The market carries on being wet around a courier with his hand in his jacket and a decision he has just been handed back."],
+
  exits:["Stop walking. Shard out of the jacket and into my bare hand — I want to hear her myself.",
         "Skin on the shard, and I say the name out loud. Nine. Let her answer that.",
         "She's a person, so I talk to her like one. Right here, both ways, and the street can wait."],

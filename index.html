@@ -1748,7 +1748,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.11.1 "The Scar An Old Build Left"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.12.0 "My Hand Is Not A Place She Goes"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2450,7 +2450,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.11.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.12.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5384,6 +5384,38 @@ function stripEchoBadge(t){
   return str.replace(
     /([.!?\u2019"')\]])((?:(?:PIA|VIC|HESTA|SEVEN|THREE|NINE|FIVE|MAREK|MIRREN|MACHINE|PRINCIPAL|THE CLERK|THE FILE)(?:\s\u00b7\s)?)?(?:\d+(?:ST|ND|RD|TH) TIME)?)$/,
     function(m, tail, badge){ return badge ? tail : m; });
+}
+/* ---- WHAT THE ROOM SAYS WHEN HE SAYS HE IS LEAVING (v6.12.0) ----
+   Every night authors what the courier SAYS to walk out and the ending he reaches on the
+   second press. NOTHING answered the first press: the room had no card for it, so the reply
+   fell through to the banter pool, and the most consequential button in the game was met
+   with a joke about filing. The author found it by playing.
+
+   RULED: one answer per night, all 34, and the first walk COSTS NOTHING BUT IS REMEMBERED.
+   So this plays the beat's own scene and merges one canon line - no toll, no scar, and a
+   later night can still know he once stood at the door.
+
+   `walkNoted` holds the record to once per run. The record should say that he did it, not
+   how many times he thought about it.
+
+   A BEAT WITH NO walkAnswer FALLS BACK TO WHAT IT DID BEFORE, deliberately: this ships with
+   the form proved and one night written, and 33 still to author. A missing answer must read
+   as "not written yet", never as a crash on the button that ends the run. */
+var walkNoted = false;
+function walkAnswerFor(b){
+  var w = b && b.walkAnswer;
+  return (Object.prototype.toString.call(w) === "[object Array]" && w.length) ? w : null;
+}
+function playWalkAnswer(){
+  if(beatDone()) return false;
+  var b = beatNow(), lines = walkAnswerFor(b);
+  if(!lines) return false;
+  playAuthored({lines:lines}, "walk|" + b.id);
+  if(!walkNoted){
+    walkNoted = true;
+    mergeCanon(["The courier said out loud that he was done, once, and the family talked him round."]);
+  }
+  return true;
 }
 function hasWord(text, w){
   return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
@@ -12521,6 +12553,10 @@ function takeAction(text, isMud){
   walkoutDue = false;
   if(pickKind === "walk"){
     redRun++;
+    /* the answer plays BEFORE the warning is queued, and out of the if/else below rather
+       than inside it: that else already had a comment between it and its if, and hooking
+       into it swallowed the else and left a dangling one. Caught by node --check. */
+    if(redRun < 2) playWalkAnswer();
     if(redRun >= 2) walkoutDue = true;
     /* the warning is the client's, not the DM's: it gets said whatever the reply
        does, because the next red click ends the run */
@@ -13604,7 +13640,7 @@ function saveBlob(){
     seasonRecords:seasonRecords, archiveIndex:archiveIndex, epilogue:epilogueNow,
     tollExplained:tollExplained, prySpoilers:prySpoilers,
     foldedBeats:foldedBeats, chassisHolder:chassisHolder,
-    redRun:redRun,
+    redRun:redRun, walkNoted:walkNoted,
     over:runOver, deathLine:deathLine, peril:perilTurns, perilName:perilName, talk:tableTalkUsed,
     intro:introStage, wet:wetRun
   });
@@ -18341,6 +18377,7 @@ function newRun(confirmFirst, bare, mode){
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
   attemptOn = false; attemptStage = 0; attemptStalls = 0; attemptTempted = false;
   redRun = 0; walkoutDue = false; pickKind = ""; pendingKind = ""; stalledNow = false;
+  walkNoted = false;
   exitArmed = false; exitArmedAt = -1;
   pressureSent = false;
   thinReplies = 0; truncWarned = false; chairCuts = 0;
@@ -18472,6 +18509,7 @@ function restoreFromBlob(s){
   tableTalkUsed = Object.prototype.toString.call(s.talk) === "[object Array]" ? s.talk.slice() : [];
   tolls = (typeof s.tolls === "number" && s.tolls > 0) ? s.tolls : 0;
   driftRun = (typeof s.driftRun === "number" && s.driftRun > 0) ? s.driftRun : 0;
+  walkNoted = (s.walkNoted === true);   /* absent in an older save: it has not been said */
   walkbackNow = false; foldPending = false; foldServed = false; interludeServedId = null;
   foldedBeats = Object.prototype.toString.call(s.foldedBeats) === "[object Array]" ? s.foldedBeats : [];
   gateHeldNow = false; lastTurnMud = false; lastPlayerText = "";
@@ -21218,7 +21256,7 @@ function selfTest(){
      Credit is observed now, not read: every named function is wrapped for the
      duration of the check and the check is credited only if one of them was actually
      ENTERED. Nothing about this can be satisfied by writing a name down. */
-  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "beatPointerFrom", "attemptClose", "applyTension",
+  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "walkAnswerFor", "playWalkAnswer", "beatPointerFrom", "attemptClose", "applyTension",
     "namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
     "sceneContract", "relaySpeaker", "relayCard", "cardIsMuted", "revealLeak", "tellHit", "tellHay",
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",

@@ -7,6 +7,33 @@ Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
 ---
 
+## 1. THIRTY-THREE WALK ANSWERS ARE STILL TO WRITE — *authoring, mechanical, and the shape is set*
+
+**RULED: one per night, all 34, and the first walk costs nothing but is remembered.**
+
+The hole the author found by playing: every night authors what the courier SAYS to walk out,
+and the ending he reaches on the second press — but nothing answered the FIRST press, so the
+room fell through to the banter pool and the most consequential button in the game was met
+with a joke about filing.
+
+**THE FORM IS BUILT, PROVED AND DRIVEN.** `walkAnswer` on the beat, in the corpus's own block
+shape, so the mannerism scan, the drift net and the speaker fence already read it.
+`playWalkAnswer()` plays it and merges one canon line once per run — no toll, no scar.
+**A night with no `walkAnswer` falls back to exactly what it did before**, so the 33 unwritten
+ones read as "not written yet" and never as a crash on the button that ends the run.
+
+**`a1-hum` IS WRITTEN AND IS THE TEMPLATE.** What the scene has to do is NOT talk him out of
+it — the ruling is that it costs nothing — but to decline to make it easy. Night one's own
+`never` list wrote most of it: only Pia and Nine may speak, and **Nine cannot hear through
+cloth**, so she does not answer, because he has not touched her. He is offering to hand over
+somebody who cannot hear him offer it, and Pia having to point that out is the scene.
+
+**The remaining 33 are mechanical.** Read the night's `never` first — it will usually decide
+who may answer and what they cannot say. Add `walkAnswer` beside `walkLine`. Then the guards:
+`ticfind.js`, `grammar.js`, the drift delta, and press the walk once in the drawer.
+
+---
+
 ## 1. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
 
 **THE TWO READERS ARE RECONCILED AND `band.js` WAS RIGHT.** `flagshape.js` disagreed with it
