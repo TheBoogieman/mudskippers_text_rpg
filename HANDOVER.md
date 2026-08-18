@@ -8,17 +8,77 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.25.0. THIRTY-FOUR nights written. Sweep 91 PROVED of 109, 0 FAILED. Tree clean, pushed.**
+**v6.27.0. THIRTY-FOUR nights written. Sweep 94 PROVED of 112, 0 FAILED. Tree clean, pushed.**
 
-**THE BOOK IS FINISHED AND THE WORK HAS MOVED TO THE GLASS.** Nothing in `OUTSTANDING.md` is
-unwritten prose. What is owed is one audit: **THE TERMINAL**, which the author says he is not
-sure is still telling the truth about the story. That is item 0 and it is a wave of its own.
+**THE BOOK IS FINISHED, THE TERMINAL AUDIT IS CLOSED, AND NOTHING IS OWED.** `OUTSTANDING.md`
+carries two measurements that came out fine and no work. **The next fault will come from the
+author playing it**, which is where the last six came from.
 
-**READ THE TOLL CORRECTION IN `OUTSTANDING.md` BEFORE TOUCHING THAT SCREEN.** The author
-believes the TOLLS row shows a removed mechanic. It is NOT removed - `payToll()` fires on a
-forced close and on a walkback, and at `TOLL_MAX` the season FOLDS, novel runs only. What went
-at v6.10 was the pressure STRIP AT THE WILD TABLE. **Deleting the row would hide a live
-mechanic that can end a season.**
+**THE TOLL IS LIVE. PROVED, NOT ARGUED.** Driving badly took three tolls in three nights and
+the wrist said *"one more folds the table"* by night three. `payToll()` fires on a forced
+close and on a walkback; at `TOLL_MAX` the season FOLDS, novel runs only. **Never delete the
+TOLLS row.** What went at v6.10 was the pressure strip at the WILD TABLE.
+
+---
+
+## THE TERMINAL, AND THE SIX-READER FORM
+
+**THE WRIST WAS DESCRIBING A GAME FROM BEFORE THE BOOK, and the author found it by opening it
+on a phone and asking whether any of it was still true.** Most of it was not.
+
+**THE PANE HEADED "WHO IS IN IT WITH YOU" SAID THE COURIER, SO FAR FOR ALL THIRTY-FOUR
+NIGHTS.** `mergeRoster` had two callers and both were the wild table, so nothing in the
+written game ever added a living person - on the last night the whole list was the courier
+and two dead people, in a story about a found family. **`familyOnStage` fills it now, fenced
+by `FAMILY_NAMES` against SPINE_CAST, which holds the Principal and the Machine and neither
+is at the table.** And `closeBeat`'s `falls` push went straight onto `fallen` and left
+`family` alone: free while nothing filled the family, a double entry the moment something did.
+
+**A FORM HAS READERS AND THIS ONE HAD SIX.** `canonIsBoard` puts BOARD or THIS TABLE beside
+every line on the wrist, and it was blind to the cold open's reveal turn AND to all
+thirty-three peril outcomes. **Thirty-eight authored lines stamped THIS TABLE in a mode with
+no table** - so a player who nearly drowned was told the sentence about it came from a model.
+The audit found five of them; a DRIVEN run found the sixth reader. `scratchpad/boardall.js`
+asks the whole book at once now, and row (4b2) does it in the page.
+
+**THE GOAL IS NOT A JOB, IT IS THE END OF THE CHAPTER PRINTED AT THE TOP OF IT.** THE JOB was
+frozen on the cold open's errand for thirty-one nights, and the obvious replacement - each
+night's own `goal` - was written for the DM and narrates the night's EVENTS: night two's says
+*his room is burned*, the finale's opens *SERIES FINALE. The courier takes custody.* **The
+`exit` states a condition and no events, and is already the sentence the pane shows the
+instant the night closes.** Driving is what settled that; reading it would not have.
+
+**A STATUS IS A SITUATION, AND THE WRITTEN GAME CANNOT KEEP ONE.** Every stale sentence on
+that screen was a situation written once by the cold open. The dossiers carry a voice and
+notes and **no status field at all**, on purpose.
+
+**AND A DOSSIER MUST BE TRUE THE DAY IT FIRST APPEARS.** A sheet is made the moment its
+person first speaks, and those nights are measured off the book, never assumed: **Mirren's
+card lands on night six and Five's on night twenty, which is the night BEFORE the
+annulment.** Row (4b4) checks every card against its own night.
+
+**THE NET CAUGHT ME LEAKING AND THE RULE HELD.** The Principal's first card opened *"Mark
+one. She was there at the founding"* and `tell` fired - both her designation and her age are
+sealed. **Tested against the live predicate rather than guessed at. FIX THE SENTENCE.**
+
+**TWO MORE WAYS A SWEEP ROW LOOKS GREEN WHILE PROVING NOTHING.** The harness reads
+`caught = ran && !value`, so **a break must return the ASSERTION'S VERDICT, not a tally of
+hits** - written the other way round, row (4b3) went green on the inverted value. And it
+needed `runSlug` as well as `runMode`, because **`wildRun()` is slug AND mode and the sweep
+page has no run on it**: setting the mode alone left both functions on their new branch.
+
+**AND THE HARNESS LIED AGAIN.** A driver clicking every 420ms reached `a1-pack` at budget+2
+with no clickable anything. **At 3,000ms the same night closed cleanly in nine steps.** Not a
+defect - written down here so nobody re-finds it and believes it. **Drive at human speed
+before reporting a dead end.**
+
+**THE DRAWER IS A WINDOW THAT LIES, AND KNOWING WHICH PANES IT LIES ABOUT IS THE WHOLE
+SKILL.** `rehSeedTo` seeds the record, the cast and the stones and touches neither the
+family, the job, the open jobs nor the map - so a late-book claim about the first three is a
+claim about the drawer. It fills real dossiers before its placeholder now, which is one
+fewer lie, not none.
+
+---
 
 ---
 

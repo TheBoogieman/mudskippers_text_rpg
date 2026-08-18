@@ -3,12 +3,12 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.25.0 · 34 nights written · sweep 91 PROVED of 109, 0 FAILED.**
+**v6.27.0 · 34 nights written · sweep 94 PROVED of 112, 0 FAILED.**
 
-**ONE THING IS OWED: THE TERMINAL — and it has now been AUDITED BY PLAYING IT.** Four faults,
-driven and written up below, awaiting a ruling on three questions. The record sweep is closed,
-both halves, and the walk is answered on all 34 nights. **There is no unwritten prose in this
-book. The defects that are left are all on the glass.**
+**NOTHING IS OWED.** The book is written, the terminal audit is closed, and the two entries
+below are measurements that came out fine rather than debts. **The next real work is the
+author playing it**, which is where the last six faults came from and where the next one will
+come from too.
 
 *The two entries below are not tasks. They are MEASUREMENTS THAT CAME OUT FINE, written down
 so that nobody finds the numbers again in six months and mistakes them for a debt. Everything
@@ -19,64 +19,57 @@ and where the next one will come from too.
 
 ---
 
-## 0. THE TERMINAL — DRIVEN, AND IT IS FOUR FAULTS AND SOME FURNITURE
+## 0. THE TERMINAL — AUDITED, FIXED, DRIVEN AND SHIPPED
 
-**AUDITED BY PLAYING IT, v6.25.0.** Two cold-open novel runs routed to the drawer, plus a
-seeded night 34. `mud-runs` 24,386 and `mud-settings` 239 before and after. **Awaiting the
-author's ruling on the three questions below; nothing is written yet.**
+**CLOSED at v6.27.0.** Everything the audit found is on the glass and proved. What follows is
+the part worth keeping; the fixes are in the two commits that did them.
 
-**THE TOLL CORRECTION IS NOW PROVED, NOT ARGUED.** Driving badly picked up **three tolls in
-three nights** and the wrist said *"one more folds the table"* by night three. `payToll()`
-fires on a forced close (`index.html:7928`) and a walkback (`index.html:8433`); at `TOLL_MAX`
-the season FOLDS, `!wildRun()`, novel only. **Do not delete the TOLLS row.** What went at
-v6.10 was the pressure STRIP AT THE WILD TABLE.
+**THE TOLL IS LIVE AND THE NOTE THAT SAID SO IS NOW PROVED RATHER THAN ARGUED.** Driving
+badly took three tolls in three nights and the wrist said *"one more folds the table"* by
+night three. **Do not delete the TOLLS row.** What went at v6.10 was the pressure strip at
+the WILD TABLE, which is a different thing in a different mode.
 
-### The four faults, each driven
+### The rulings, and what they became
 
-1. **THE FAMILY IS EMPTY FOR THE WHOLE BOOK.** The pane headed *who is in it with you* reads
-   `THE COURIER, SO FAR` on night 1 and still reads it in the Heart Room on night 34 - where
-   the entire list is *the courier, so far · MIRREN · VIC*. **`mergeRoster` has exactly two
-   callers: the DM absorber (4866) and restore (15354).** Nothing in the novel ever adds a
-   living person. Deaths land because `falls` is a beat field; joining is not.
-2. **THE JOB AND OPEN JOBS ARE FROZEN ON NIGHT ONE.** `agendaText` is written once, by
-   `OPENING2.agenda`, and never again in a novel run - so the wrist says *"Follow Pia through
-   the rain to Vic's safehouse"* while the courier stands in the safehouse kitchen on night 3,
-   and says it for 31 more nights. **`OPENING2.quests` is the ONLY quest in the corpus** and
-   its status never moves off `active`.
-3. **`OPENING2.canon` IS STAMPED THIS TABLE.** Five authored lines - Pia, Mirren, Vic in
-   hiding, the shard is Nine, the safehouse - are the game's own words and the wrist labels
-   them as model improv, in a mode with no model. `canonIsBoard` walks SPINE, card canon and
-   `OPENING_CANON`; **the reveal turn's own array was never added.** A one-line fix, but hunt
-   the readers first.
-4. **THE DOSSIERS ARE THIN FOR EVERYONE BUT PIA.** `OPENING2.cast` is the only cast data in
-   the corpus. `playAuthored` sets `.seen` on a speaker and nothing else, so Vic's card on the
-   night he confesses is a name, a want and a met-list. **`WANTS` is the one part that keeps
-   pace**, because it is served per season.
+- **THE FAMILY — "whoever has been on stage".** `FAMILY_NAMES` fences the found family
+  against SPINE_CAST, which holds the Principal and the Machine and neither is at the table.
+- **THE JOB — the night's own line, AND IT IS THE EXIT, NOT THE GOAL.** He ruled the goal;
+  driving showed the goal is the DM's brief and narrates the night's EVENTS - night two's
+  says *his room is burned*, the finale's opens *SERIES FINALE. The courier takes custody.*
+  **That is not a job, it is the end of the chapter printed at the top of it.** The exit
+  states a condition, and it is already the sentence the pane shows the moment the night
+  closes. **He can still overrule this in one word, and option B - a heading per night in the
+  courier's own register - is thirty-four lines and one changed line in `headingNow`.**
+- **THE DOSSIERS — a card each.** `DOSSIERS` in corpus.js, twelve of them, voice plus notes,
+  **no status field anywhere in them on purpose.**
 
-### Smaller, and cheap
+### The lessons, which outlived the wave
 
-- **The map is fine and `placeNotes` is always empty.** `noteMove` builds routes correctly
-  (five places by night 3); nothing in the novel ever writes a marker a note.
-- **The wrist boots `LINK ........ OPENROUTER / OK` on a run that never calls anything.**
+**A FORM HAS READERS AND THIS ONE HAD SIX.** `canonIsBoard` was missing the cold open's
+reveal turn AND all thirty-three peril outcomes: **thirty-eight authored lines wearing THIS
+TABLE**, not the five the audit found. Only a driven run with the wrist open found the sixth.
+`scratchpad/boardall.js` now asks the whole book at once, and row **(4b2)** does it in the page.
 
-### What came out clean, so nobody re-audits it
+**A BREAK MUST ANSWER THE ASSERTION'S VERDICT, NOT A TALLY OF HITS.** The harness reads
+`caught = ran && !value`. Row (4b3) went **GREEN on an inverted return** while proving
+nothing. And it needed `runSlug` as well as `runMode`, because `wildRun()` is slug AND mode
+and the sweep page has no run on it - **the mode alone left both functions on their new
+branch.** Two more ways a row looks green while asserting air.
 
-**THE SEASON SO FAR is the best pane on the device** - every closed night in order under its
-season and act with what it settled. THE STONES fills (14 by the end). Location, day, time,
-weather and the strip line all move. **SENT and REPLY are honest in novel mode** - *"the novel
-never asks"*, *"zero calls"*.
+**THE NET CAUGHT ME LEAKING, AND THE RULE HELD.** The Principal's first card said *"Mark
+one. She was there at the founding"* and `tell` fired. Both her designation and her age are
+sealed. **Tested against the live predicate rather than guessed at. FIX THE SENTENCE.**
 
-### What was NOT driven, and one non-finding
+**AND A HARNESS LIED AGAIN.** A driver clicking every 420ms reached `a1-pack` at budget+2
+with no clickable anything. **At 3,000ms the same night closed cleanly in nine steps.** Not a
+defect. Written down so nobody re-finds it and believes it.
 
-**A real run was played to night 3 only.** Nights 4-34 were read in the rehearsal drawer,
-which seeds the record, the cast and the stones artificially - so the claims above about late
-nights are limited to the four registers the drawer does not touch: the family, the job, the
-open jobs and the map.
+### What was NOT driven
 
-**AND A HARNESS LIED, AGAIN.** A driver clicking every 420ms reached `a1-pack` at budget+2
-with no clickable anything. **At 3,000ms the same night closed cleanly in nine steps.** It was
-the harness outrunning the reveal, not the game. Not a defect, and it is written down here so
-nobody re-finds it and believes it.
+**A real novel run was played to night four.** Nights five to thirty-four were read in the
+rehearsal drawer. The drawer now fills real dossiers before its own placeholder, so that
+window lies about one less thing than it did - but it still seeds the record and the stones,
+and a claim about a late night that depends on those is a claim about the drawer.
 
 ---
 
