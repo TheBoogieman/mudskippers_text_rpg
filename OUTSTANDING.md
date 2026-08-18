@@ -58,7 +58,7 @@ nine separate waves reaching them.
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
 | ~~4~~ | ~~the narration floor~~ | | **DONE v5.78.0 – v5.83.0, ~470 blocks** |
-| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | **`a2-door` DONE v5.86.0. `a2-chassis` owes 460.** |
+| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | **`a2-door` DONE v5.86.0. `a2-chassis` 34.0%, owes ~300.** |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
 | 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
@@ -226,8 +226,10 @@ stays in the epilogue is what they COST.** The model for a late payoff is the gr
 spoken unmoved at 310 and the book floor unmoved at 4,656. Every one of its layers now has
 breath in it and the longest unbroken run of talking on the night is three blocks.
 
-**WHAT IS LEFT OF PASS 5 IS `a2-chassis` ALONE: 20.6%, owing 460 blocks to clear 50%.**
-That is larger than the whole of pass 4. It needs its own session, probably two.
+**`a2-chassis` IS STARTED: 20.6% -> 34.0% at v5.87.0, 159 blocks, spoken unmoved at 621.**
+It owes about 300 more to clear 50%. **The longest unbroken run of talking left anywhere in
+the book was on this night** — twenty-nine blocks inside Pia's cross-examination, a
+forty-one-block layer carrying five narration blocks. That run is five now.
 
 **AND A REAL DEFECT FELL OUT OF THE PASS RATHER THAN OUT OF AN AUDIT.**
 `what-is-safe-to-say-in-here`'s second take ended with **the same narration block printed

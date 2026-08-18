@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.86.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.87.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -52,9 +52,10 @@ book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 unmoved at 310.** Every layer on that night now has breath in it and the longest unbroken
 run of talking left on it is three blocks.
 
-**WHAT IS LEFT OF PASS 5 IS `a2-chassis`: 20.6%, and it owes 460 blocks to clear 50%** —
-more than the whole of pass 4, which took six releases. **It is a multi-session job — do not
-start it in a session that cannot give it a few hundred blocks.** Same method: `layers.js`,
+**`a2-chassis` IS STARTED AND IS AT 34.0% AS OF v5.87.0** — 159 blocks in, spoken unmoved
+at 621. **It owes about 300 more to clear 50%.** The night had the longest unbroken run of
+talking left anywhere in the book — twenty-nine blocks, in Pia's cross-examination — and
+that run is five now. **It is still a multi-session job.** Same method: `layers.js`,
 `dumplayer.js`, `breathe.js`, **re-dump between batches on the same layer** because every
 insert shifts the indices behind it.
 
