@@ -903,3 +903,74 @@ to end in**, so it is the state this file is in whenever you read this sentence.
 
 **Say so before starting, not after failing**, if a wave will involve more than about six
 splices or a new field with readers to hunt and the context is already long.
+
+---
+
+## §E AND §F ARE WRITTEN (v6.0.0). They were the same fold from two directions.
+
+**MOST OF §E WAS ALREADY ON THE PAGE and nobody had noticed.** Night 31 has said since it
+shipped: *"I hold the freehold. They hold a lease. Every terrible thing they run down there,
+they run as TENANTS"* - which is §D's biggest hole answered in her own mouth. And
+*"There is a man I have been sending parts to for a very long time and he has stopped
+acknowledging them"* … *"How is my tissue man?"* … *"...Ah."* **She already supplied Vic.**
+What was missing was smaller than the note thought.
+
+**THE FOUR RULINGS AND WHAT THEY BOUGHT:**
+
+**§F, night 25, in the record.** `who-made-her`, second take, already had the estrangement
+structurally - *"Two voices for the first forty minutes. One voice for the last nine"* and
+*"somebody edited a woman out of her own recording"*. What it lacked was the content of the
+last nine minutes. Now the Architect describes a lock he has just finished and says **he has
+made it so that she cannot open it either** - not triumphant, *"a man who has thought for a
+long time and has decided to be sorry later"*. Then Hesta's existing *"Long dead, love"*
+lands on top of it, and the narration's existing verdict - *"the only deliberately false
+thing anybody says in this book"* - is now false twice over.
+
+**IT DOES NOT SAY THE LOCK ANSWERS BLOOD, AND THAT IS DELIBERATE.** `founding-lock` is
+planted a beat later on `a3-vic` and paid at `a3-seize`; stating the mechanism on 25 would
+spend a3-vic's own reveal five nights early. The reader assembles blood plus her exclusion
+themselves, which is the shape the book already uses.
+
+**§E, night 31, conditions and never the man.** *"I can hold that door. I have never once
+been able to knock on it. He saw to that in the year we were not speaking, and then he died
+before I could ask him whether it was a punishment or a kindness."* Then the prime mover, in
+her own words: *"I spent a century arranging the CONDITIONS. A line that goes on. A man in a
+chair who scans everyone who sits in it and has never been told why. Parts that arrive from
+nowhere and are never invoiced. Conditions, courier - not people. Which body walked into
+that shop was never mine to choose, and I do not know why you fit."* **The ruling that no
+night may imply she picked him is kept in the same breath that makes the claim.**
+
+**THE SUIT, said flatly by her**, on `how-she-has-lived-this-long`, straight after
+*"replaced tissue on a schedule"*. She is wearing one of them, the same pattern as the ones
+at her door, worn longer than any of them have been alive. And her existing closer - *"then
+six strangers carry crockery down a cable and fry bread in my corridor. Do you see the
+methodological insult? I had it SOLVED"* - is a better joke now it follows the reveal.
+
+**THE PLANT WENT ON NIGHT ONE'S DECK, not the cold open.** Pia, second take, closing a card
+about why Vic picked him, on something that is *not* about him: his shop takes deliveries
+nobody ever bills him for, and in two years of doing his doors she has never seen a docket.
+*Nobody has any use for it tonight. It goes in anyway, and that is the whole of her method.*
+**Thirty nights later the Principal says "parts that arrive from nowhere and are never
+invoiced."**
+
+**TWO NEW ROWS IN `REVEAL_LEDGER`** - `she-is-locked-out` (plant a3-founding, pay
+a3-principal) and `unbilled-parts` (plant a1-hum, pay a3-principal). The sweep now reports
+**8 plant/pay pairs, every plant earlier in the spine than its payoff**, and 9 facts checked
+against every earlier night with no leaks. A fact that travels thirty nights and is not in
+the ledger is a fact nothing is watching.
+
+**THE PEAK JOKE IS UNTOUCHED.** The sweep still reports the granny name in exactly one night
+and explained in none. The fold lays the pieces - the bloodline, the lock keyed to it, the
+child they built after losing one - and never once connects them out loud.
+
+### TWO THINGS THE GUARDS CAUGHT IN MY OWN NEW PROSE
+
+**`breach` fired on a narration line and it was right.** I wrote *"become relatives in the
+space of a sentence"*, and the bare word **space** is a place-breach term - what it means in
+a player's typed line is not what it meant in mine. **The prose was changed, not the
+fixture.** That is the only correct direction for that mechanism to be pushed.
+
+**The `tell` delta was three entries and every one is accounted for** in a ledger paragraph
+above `VERDICT_FIXTURE`: one matched renumbering pair (Hesta's line moved three indices, word
+for word) and two new lines that are *supposed* to fire, because they are the principal
+reveal and a detector that stayed quiet on them would be the thing worth investigating.

@@ -2920,7 +2920,9 @@ var SCENEBOOK = {
       ["Pia","Here is what I have got. He did not pick a hard man, and he could have. He did not pick somebody who owes him, and half this district does."],
       ["Pia","He picked a man with a clean route and no opinions, on a night when having no opinions was the qualification. I have decided that is either very careful or very unkind and I cannot get it to settle."],
       "She looks at him properly for the first time since the stalls, the way you look at a tool you have been handed and not yet used.",
-      ["Pia","Ask me again in a week. I will have decided by then. I always decide by then."]]]},
+      ["Pia","Ask me again in a week. I will have decided by then. I always decide by then."],
+      ["Pia","One more thing while I am being thorough, and it is not about you, so unclench. His shop gets deliveries. Good ones - surgical stock the proper clinics on this side of the water cannot get. He has never once been billed for them and he has never once mentioned them, and I have done his doors for two years and I have never seen a docket."],
+      "She files it the way she files everything, which is out loud, to whoever is nearest, so that a second person is carrying it too. Nobody has any use for it tonight. It goes in anyway, and that is the whole of her method."]]},
    {id:"what-is-behind-us", ask:"what is behind us",
     key:"behind shoulder stalls follow following watched lights tail",
     who:"Pia",
@@ -12180,6 +12182,9 @@ var SCENEBOOK = {
     takes:[[["Three","Two voices for the first forty minutes. One voice for the last nine. I noticed it at minute forty and I have been sitting on it since."],
       ["Three","She isn't introduced and she is not said goodbye to. She is simply in it, and then the recording is one man talking to a machine about his daughter."],
       "Not introduced, not said goodbye to. Somebody edited a woman out of her own recording and the family is hearing the gap forty minutes before anybody names it.",
+      ["Three","And in those last nine minutes he does one thing worth reporting. He describes a lock he has just finished, and he says - I am quoting, the diction is his - that he has made it so that she cannot open it either. He does not sound triumphant about it. He sounds like a man who has thought for a long time and has decided to be sorry later."],
+      "He has made it so that she cannot open it either. Nobody in the room asks the obvious question, which is what an argument has to have become before a man builds it into a door.",
+      ["Three","The record does not say what they were arguing about. It says that they were, and that he finished the work alone, and that the last nine minutes are addressed to a machine and not to her."],
       ["Hesta","She'd have been what - thirty? Forty, at the outside?"],
       ["Hesta","Long dead, love. Everybody in that room is long dead. That is rather the trouble with a hundred and thirty years."],
       "Nobody argues with her, because there is nothing to argue with and because it is the comfortable end of the sentence. The record is put down. The assumption is not examined again.",
@@ -13469,7 +13474,10 @@ var SCENEBOOK = {
      plays:[["Principal","To finish an argument. It is older than this city, it has one other party, and I have conducted my half alone for longer than your family has existed - which is unsatisfying, like playing chess against a room."],
       ["Principal","Here it is, whole: nothing that can be lost is safe, and nothing that is safe is alive. I chose safe. I have had one hundred and thirty years to find the flaw in my choice and I have not found it. You have until the bread is cold to make the other case."],
       "An argument, named as the thing she wants the way other people want rescue or revenge - the last hunger left after all the others were maintained away.",
-      ["Principal","With whom I began remains none of your business for the present. Make a good enough case and it may become your business. That is called an incentive. I invented several of the city's."]],
+      ["Principal","With whom I began remains none of your business for the present. Make a good enough case and it may become your business. That is called an incentive. I invented several of the city's."],
+      ["Principal","Since you have made me say more than I intended, you may as well have the rest of it in order. I can hold that door. I have never once been able to knock on it. He saw to that in the year we were not speaking, and then he died before I could ask him whether it was a punishment or a kindness, and I have had a hundred and thirty years to settle the question and I change my mind about it twice a decade."],
+      "She says it the way a person says a thing they have said aloud to an empty room a great many times and never once to a listener.",
+      ["Principal","So I did the only work left available to me. I spent a century arranging the CONDITIONS. A line that goes on. A man in a chair who scans everyone who sits in it and has never been told why. Parts that arrive from nowhere and are never invoiced. Conditions, courier - not people. Which body walked into that shop was never mine to choose, and I do not know why you fit. The arithmetic is sound and the reason does not exist, and if you find that unsatisfying you may take it up with the man who wrote it."]],
      railTakes:["Ask the Principal to say the argument itself. Both halves."],
      takes:[[["Principal","Nothing that can be lost is safe. Nothing that is safe is alive. Those are the two halves and they do not reconcile, and I have had a hundred and thirty years to find the flaw and I have not found it."],
        ["Principal","I chose safe. He chose the other one, and then he died of it, which I consider an argumentative tactic of the lowest order."],
@@ -13482,6 +13490,9 @@ var SCENEBOOK = {
      plays:[["Principal","Maintenance. The word is exact and I will not let you upgrade it. Replaced tissue on a schedule. Six degrees of permitted weather. Nothing eaten that was not logged, nothing risked that was not modelled, nobody kept close enough to cost me anything when they went."],
       ["Principal","One hundred and thirty years of not dying. You will notice - you look like a noticing family - that I did not call it living. That vocabulary distinction is the entire argument, served early."],
       "A dry account of the actuarial life, delivered with the timing of a woman who has had a very long time to sharpen it on herself.",
+      ["Principal","And before somebody at this table works up the courage to ask it: yes. What you are looking at is one of theirs. Grown rather than born, the same pattern as the ones standing at my door, fitted a good deal more carefully, and worn now for longer than any of you have been alive."],
+      ["Principal","I did not put myself in a jar. I put myself into the best thing my own workshop ever made, and then I maintained it on a schedule for a hundred and thirty years, and here we all are being rude to one another over bread."],
+      "One of theirs, worn. The staff at the door stop being staff and become relatives between one sentence and the next, and not one of them so much as turns its head.",
       ["Principal","And then six strangers carry crockery down a cable and fry bread in my corridor. Do you see the methodological insult? I had it SOLVED."]],
      railTakes:["Ask the Principal what a hundred and thirty years is actually like."],
      takes:[[["Principal","Long. No joke was attempted and I will not be doing a better one. It is long, and it is mostly Tuesdays."],
@@ -14327,6 +14338,31 @@ var REVEAL_LEDGER = [
      name appears in exactly ONE beat in the whole book. The moment a second
      night says it, somebody has explained the joke, and the joke stops being a
      thing the reader worked out and becomes a thing they were told. */
+  /* SECTION E/F, THE FOLD. Two facts that cross most of the book, so two ledger rows.
+     SHE IS LOCKED OUT is planted in the founding record on night 25 - the Architect, in
+     the last nine minutes of a recording she has been edited out of, saying he has made
+     it so that she cannot open it either - and paid on night 31 when she says she can
+     hold that door and has never once been able to knock on it. Note it does NOT say
+     the lock answers blood: that is `founding-lock`, planted a beat later on a3-vic,
+     and stating the mechanism here would spend a3-vic's own reveal five nights early.
+     THE UNBILLED PARTS are planted on night ONE, in Pia's second take, as a thing
+     nobody has any use for yet - Vic's shop takes deliveries nobody ever bills him for -
+     and paid on night 31 in the Principal's own account of the conditions she arranged.
+     Thirty nights apart, and invisible until it is not. */
+  {id:"she-is-locked-out",
+   fact:"the Architect built the lock so that the Principal could not open it either",
+   plant:"a3-founding", pay:"a3-principal",
+   plantWords:["cannot open it either"],
+   payWords:["never once been able to knock"],
+   leakWords:["cannot open it either"]},
+
+  {id:"unbilled-parts",
+   fact:"Vic's shop takes deliveries nobody ever bills him for, because he has a patron",
+   plant:"a1-hum", pay:"a3-principal",
+   plantWords:["never seen a docket"],
+   payWords:["never invoiced"],
+   leakWords:["never seen a docket"]},
+
   {id:"granny-name",
    fact:"the courier calls the machine Granny, and nobody in the book explains why",
    plant:"a3-granny", pay:null,
