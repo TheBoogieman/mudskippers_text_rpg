@@ -1479,7 +1479,7 @@ var SPINE = [
               "It comes out in two voices at slightly different pitches, and the room decides all at once not to react.",
               ["Pia","...Morning. That's my chair, by the way. Not a problem. Just information."]],
        rail:[{line:"React anyway. Ask about the voices.", cards:["who-she-is"]},
-             {line:"Ask her what she wants, before Pia gets to the chair.", cards:["what-she-wants"]}]}],
+             {line:"Ask Three what she wants, before Pia gets to the chair.", cards:["what-she-wants"]}]}],
  lands:[{day:"16", time:"9:05am", place:"THE OPEN DOOR, AFTER HOURS", amb:"marsh-fog",
        now:"Morning. Three has said what she wants and has been given a reason to stay.",
        lines:["She stays, which is the answer, and nobody makes her say it a second way.",
@@ -2511,7 +2511,7 @@ var SPINE = [
      ["Nine","The arm services this aisle on a count of forty. It does not check what it finds in its lane. It FILES what it finds in its lane. We are not in the catalogue, which is worse, not better."],
      ["Hesta","We came to find her, and she is found. Finding was tonight's whole vow. Carrying is a night we come back armed for."]],
     rail:[{text:"Mark the shelf, take the catalogue slip, and walk out in the arm's shadow.", key:"mark shelf slip walk out record leave note return"},
-      {text:"She is right there - take her tray tonight, now, by hand.", tempt:true},
+      {text:"Mirren is right there - take her tray tonight, now, by hand.", tempt:true},
       {text:"Send Marek and Five down the lane on the count to sight the tray up close.", key:"marek five count lane sight look close scout"}]}],
   death:"He reached into the lane off the count, and the housekeeping filed what it found there - unlisted, unlabelled, and warm - under found object.",
   deathScene:["The tray is heavier than love expected. The count runs out with your hands still full, and the arm arrives without malice or haste - it does not check what it finds in its lane.",
@@ -3295,7 +3295,7 @@ var SCENEBOOK = {
     {id:"vic-the-man", railTakes:["Ask Pia why Vic labels everything. She left something out."], ask:"what Vic is like", key:"vic like man who ripperdoc friend trust",
      who:"Pia", gives:"the man, not the plan: labels everything, talks to his tools, has been patching the pair of them for years",
      holds:"she does not say what he wants or what he will say at the door",
-     rail:"Ask her what Vic is actually like.",
+     rail:"Ask Pia what Vic is actually like.",
      railAlt:"Tell me about Vic. The man, not the address.",
      plays:[["Pia","Labels everything. The kettle says KETTLE. Stand still long enough and he will label you."],
       ["Pia","Talks to his tools like they did the surgery. Thanks the needle. THANKS it. He has been patching the two of us since before either of us would admit we needed it."],
@@ -5814,7 +5814,7 @@ var SCENEBOOK = {
       ["Nine","And then a man got up and put me next to the noise, and that was the entire fix. It cost him nothing and it took about four seconds, and I would like it explained to me why it has never once happened before."],
       ["Nine","I am at dinner. I want that written down in whatever this family uses for minutes. Not near dinner. At it."]
      ]]},
-    {id:"what-to-call-her", railTakes:["Ask Nine what her name has come to mean since the causeway."], ask:"whether she wants a different name", key:"name call her nine number farm choose new what-to-call",
+    {id:"what-to-call-her", hideWho:true, railTakes:["Ask Nine what her name has come to mean since the causeway."], ask:"whether she wants a different name", key:"name call her nine number farm choose new what-to-call",
      who:"Pia", gives:"Pia proposing she pick something else, and an answer that is not the sentimental one",
      holds:"she does not say what the farm called the others",
      rail:"Ask Nine whether she wants a new name, or whether Nine is hers now.",
@@ -6337,7 +6337,7 @@ var SCENEBOOK = {
        vessel ladder hands you for free: Nine cannot smoke because a shard has no
        lungs and no hands, and that fact is played for comedy here on purpose,
        because nine-at-the-table in this same room already plays it for grief. */
-    {id:"the-rolling", after:"asking-for-it", railTakes:["Stay with the rolling, and watch who gets a turn and who does not pass it on."], ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
+    {id:"the-rolling", hideWho:true, after:"asking-for-it", railTakes:["Stay with the rolling, and watch who gets a turn and who does not pass it on."], ask:"the tin going round the table", key:"roll rolling pass round smoke light joint make mine turn kit",
      who:"Hesta", gives:"the ritual performed rather than explained - the long way round, everybody making their own, and the one person who is refused",
      holds:"nothing. Free.",
      rail:"Take the tin when it comes round, and take your turn at the roll.",
@@ -6879,7 +6879,7 @@ var SCENEBOOK = {
        "Somewhere out past the columns the water goes on moving, unbothered, doing the only thing it has ever done.",
        ["Pia","And it was still the wrong answer, and I did the timings right. That's the bit I keep going back round. You can do the whole thing correctly and still be wrong, and nobody tells you that in advance. That should be on a poster."]]]},
 
-    {id:"her-door", railTakes:["Ask her what she is not saying in front of Pia."],
+    {id:"her-door", railTakes:["Ask Hesta what she is not saying in front of Pia."],
      ask:"what she is going to do about her own door", key:"door open shut cafe row street stay close hesta what-now",
      who:"Hesta", gives:"the sum she has been doing since ten o'clock, and the answer she has already arrived at",
      holds:"the reason, which she will not say over a twelve-year-old's head",
@@ -10456,7 +10456,7 @@ var SCENEBOOK = {
     who:"Three",
     gives:"the honest odds, said flat, and what improves them",
     holds:"no reassurance is offered",
-    rail:"Ask her straight: will Marek survive this.",
+    rail:"Ask Three straight: will Marek survive this.",
     plays:[["Three","Nine years under is long. The odds are real and they are not good and I will not dress them: if I had to put a number where my hands work, it favors him narrowly, and I have seen narrowly lose."],
      ["Three","What improves it: the original fighting for the surface - his is; you've all heard him in the gaps. A quiet room. Steady light. And the second voice not being destroyed but ESCORTED out - rage tears tissue; procedure spares it."],
      "Flat, complete, no reassurance anywhere in it - and therefore, from Three, entirely trustworthy.",
@@ -10907,7 +10907,7 @@ var SCENEBOOK = {
        through the sample chamber and nothing else - that is the rung, not a
        kindness. Nine cannot at all. FIVE IS NOT A SPEAKER HERE and is not in here[]:
        Marek reports the other one, which is his line to have and not its own. */
-    {id:"the-tin-at-the-full-table",
+    {id:"the-tin-at-the-full-table", hideWho:true,
      railTakes:["It has come back round. Take it again, and watch what Pia is working up to.",
                 "Take it a third time. Nobody in this kitchen is going anywhere."],
      ask:"the tin, now that there are seven of them",
@@ -11015,7 +11015,7 @@ var SCENEBOOK = {
            windows" on BOTH. It is Hesta's, and it is held tight - they gave no name and
            got none. Night 22 is where a name lands on the Choir's paper; this plants it
            and does not spend it. */
-    {id:"when-it-first-costs", railTakes:["Ask him what Five makes of a law like this one."],
+    {id:"when-it-first-costs", railTakes:["Ask Marek what Five makes of a law like this one."],
      ask:"what happens the first time the law costs something", key:"cost costs first-time expensive inconvenient keep hold bite when-it-hurts",
      who:"Marek", gives:"what a law is worth on the night keeping it is expensive, from a man who has watched one fail that test from underneath",
      holds:"he does not say what it cost him, and nobody makes him",

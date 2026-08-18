@@ -974,3 +974,68 @@ fixture.** That is the only correct direction for that mechanism to be pushed.
 above `VERDICT_FIXTURE`: one matched renumbering pair (Hesta's line moved three indices, word
 for word) and two new lines that are *supposed* to fire, because they are the principal
 reveal and a detector that stayed quiet on them would be the thing worth investigating.
+
+---
+
+## §G IS CLOSED (v6.1.0) — and the tool §G named as the meter had a hole in it.
+
+**THE STALE NUMBER FIRST.** OUTSTANDING says 123 lines remain. `allrails.js` reported **one**,
+because §G predicted correctly that this work rides the narration pass, and eight passes have
+been quietly naming addressees for months. That one line - a3-dreamers' peril tempt, *"She is
+right there - take her tray tonight"* - is now **"Mirren is right there"**.
+
+**THEN THE SECOND INSTRUMENT DISAGREED WITH THE FIRST, AND THE FIRST WAS WRONG.**
+`scratchpad/badgemeter.js` replicates `rowBadge`'s own rule - chip the card's answerer onto
+any row whose sentence does not mention them - over every rail and railTake, and split the
+result by whether the line names somebody ELSE. Twelve rows came back. Four of them were
+lines `allrails.js` called clean.
+
+**THE HOLE: `allrails.js` only flagged a bare pronoun when the line named NOBODY AT ALL.**
+So *"Ask her what Vic is actually like"* passed - a bare HER being asked about a named man,
+which is precisely the ambiguity §G is about - because the sentence names Vic. Nine waves of
+"all lines named" were claims about a predicate with an exception in it that §G's own rule
+does not have.
+
+**WIDENING IT TO "any bare pronoun in the addressing position" THEN OVER-FIRED**, on eighteen
+rows, and fourteen of those are correct English: *"Pia - jam her. Cut the signal. Make her
+stop"* names its addressee and then uses a pronoun for somebody else, which is what pronouns
+are for. **THE ACTUAL RULE IS ANAPHORA: a pronoun in the addressing position is a fault only
+if no cast name appears EARLIER IN THE SAME LINE.** A name after it does not help; the reader
+has already had to guess. Eight self-tests now pin all three shapes.
+
+**FIVE LINES WERE REAL AND ARE NAMED**, and rewriting them is safe for live runs because
+index.html:2692 says the index is the identity - `topicSpent`, `railDeal` and every deck
+counter store POSITIONS, and the line string is only used inside a turn to map a click:
+
+| night | was | now |
+|---|---|---|
+| 2 `vic-the-man` | Ask **her** what Vic is actually like. | Ask **Pia** what Vic is actually like. |
+| 11 `her-door` | Ask **her** what she is not saying in front of Pia. | Ask **Hesta** … |
+| 16 `opens0` | Ask **her** what she wants, before Pia gets to the chair. | Ask **Three** … |
+| 20 `whether-marek-will-survive-it` | Ask **her** straight: will Marek survive this. | Ask **Three** straight … |
+| 21 `when-it-first-costs` | Ask **him** what Five makes of a law like this one. | Ask **Marek** … |
+
+**AND THE OTHER TRAP §G NAMES, FOUND AS A CLASS RATHER THAN AN INSTANCE.** `t.who` is set
+from whoever OPENS a card, so when a take hands the card to somebody else the badge still
+says the opener. Twenty cards in the book do that. Most are fine - the opener does answer
+first. **Three actively contradict their own line** and now carry `hideWho:true`:
+`a1-turn/what-to-call-her` (*"Ask Nine what her name has come to mean"* → chip PIA, over a
+take that is five blocks of Nine and none of Pia), `a2-law/the-tin-at-the-full-table` and
+`a2-door/the-rolling` (both tin-round-the-table cards whose takes belong to Pia, Vic and
+Marek). All three are the shape §G nominates `hideWho` for.
+
+**WHAT WAS PROVED AND WHAT WAS NOT.** allrails 0/0, badge clashes 12 → 5 and all five are
+lines where the chip is doing its job. `hideWho` was **already carried by eight cards before
+these three**, so it is a shipped mechanism and this change is data, not code - but **the
+three cards' second takes were not driven by hand to watch the chip go quiet.** Read
+`rowBadge` at index.html:3488 if that needs settling; the field is the second term in the
+condition.
+
+### AND A FIXTURE EDIT WENT INTO THE WRONG ARRAY
+
+Naming two lines made `named:Three` fire on them, which is the change working. Taking that
+by delta, the first attempt anchored on `"a2-annul/scar",` and asserted it was unique **in
+the file**. It was - and it lives in `named:Five`. **A UNIQUENESS CHECK OVER A FILE IS NOT A
+SCOPE CHECK.** The drift net reported `named:Five` losing a line on the very next run, which
+is exactly its job. The repair finds the array by its KEY and edits inside that slice only,
+and the lesson is written above `VERDICT_FIXTURE`.
