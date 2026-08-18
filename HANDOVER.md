@@ -1,96 +1,25 @@
 # Handover — where we are, and the rules that were learned the hard way
 
 *This file holds **live state and standing rules only**. What is still to do lives in
-`OUTSTANDING.md`. Nothing here is a record of finished work — if a thing is done, it is
-in the commit that did it, and this file forgets it.*
+`OUTSTANDING.md`. Nothing here is a record of finished work — if a thing is done, it is in
+the commit that did it, and this file forgets it.*
 
 ---
 
 ## WHERE WE ARE
 
-**v6.5.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+**v6.6.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
 
-**EVERY PERIL HAS A MIDDLE OUTCOME NOW, AND IT IS REACHABLE.** All eleven beats with teeth
-had a `grazeScene` written and no click could reach one: `attemptGraze`'s only caller was
-`attemptStall`, whose only caller is `attemptTyped` - the wild table's route, and the novel
-has no typing box. **RULED BY THE AUTHOR 2026-08-18: the novel is not to be limited by a
-mechanism only the AI side can reach.** `graze:true` on a row is the door.
-
-**AND ON TEN OF THE ELEVEN IT WAS NOT AN AUTHORING DECISION.** Every peril is built the
-same way - row 0 is the plan executed, row 1 is the tempting one that kills, row 2 is the
-improvised third way - and on ten cards the `grazeScene` already DESCRIBES row 2: the tarp
-drag, the counter ledge, the drain mouth, the re-rigged drop, the gren on the rail. The
-author wrote the outcome and the engine never asked for it.
-
-**THREE READERS HAD TO BE HUNTED FOR ONE NEW FIELD, and two of them caught me.** The
-way-out guard called `a1-carried`'s drain an *undeclared* early exit - it was written for
-`out:true` and had never been told another word could end a peril, and it was right to
-fire. And the desk caught `bodyBreak(Seven)` on *"Seven steps into its light"*: from night
-17 one of Nine and Seven is in the courier's skull, so on one road Seven has no feet - and
-the ROW had the same fault, since "put Seven in front of it" is not a thing that road can
-do. **Rewritten so the cadence does the work and the courier's mouth says it**, which plays
-on both roads and is colder than what it replaced.
-
-**THE BADGE READS THE LAYER NOW, NOT THE CARD.** `rowBadge` used `card.who` - the card's
-OWNER - so the fifteen cards whose second take changes speaker chipped the wrong name over
-somebody else's line, eight of them on night 15. `answererFor` reads the take's own first
-mouth and falls back to `who`. **`hideWho:true` was the workaround and it is the wrong
-instrument**: it silences the name on both takes, including the first, where it was right.
-
-**AND A ROW WAS DELETED FOR BEING A RESTATEMENT.** A standalone sweep row for `answererFor`
-could only break by swapping the function and calling the swap, which enters no game code.
-The fixture row above it drives the real `rowBadge` over a real dealt deck. **One driven
-claim beats two assertions**, and the undeclared-debt count went back to 9 rather than 10.
-
-**a2-take IS DRIVEN ON ALL FOUR ROADS** — the clean landing, the hard landing (stall it out;
-the world takes the beat and charges a toll), the death (the tempting move at the peril), and
-the walk-out (**twice, across two turns** — one walk is a warning, the family lets it be).
-Room cards driven including Five's first appearance. `mud-runs` 24,386 and `mud-settings` 239
-unchanged throughout.
-
-**THE TWO PRESS DEFECTS §D FOUND AND LEFT ARE CLOSED.** `a1-turn` had an empty `press` array,
-the only one of thirty-four, on a season finale. `a3-seize`'s `press[1]` was *"Land it now.
-Epilogue in chronicle voice, then set the_end true."* — engine instructions in a prose field
-that gets handed to a language model. Both rewritten against their own beat's `never`.
-**Both are wild-table only, so no novel drive could ever have shown them.**
-
-**AND THE GRAZE ROAD DOES NOT EXIST IN THE NOVEL — see `OUTSTANDING.md`.** 33 blocks and 11
-canon lines of authored middle-outcome that no click can reach. Awaiting a ruling.
-
-**THE CAPTURE BEAT EXISTS — `a2-take`, "one of them, alive", between a2-choir and a2-annul.**
-The book had a whole day and a violent thing happening between two nights with nobody
-watching: night 19 ended over the Choir's filing, night 20 opened with a convoy commander
-already in a chair, and not one of night 20's twenty-two cards was about the taking.
-
-**AND THE THING THAT BLOCKED IT FOR MONTHS WAS NEVER TRUE.** "Adding a beat means inserting
-into SPINE, and `beatIdx` is a position that live saves hold" — they hold a NAME as well
-(`saveBlob` writes `beatId`), and `beatPointerFrom` prefers the name whenever SPINE still
-knows it. Sweep row **(4a5)** drives it: a save naming a2-annul with a stale number 0 resolves
-to the right night. **Before writing off a whole class of work as blocked, drive the claim.**
-
-The authoring phase is over apart from what the bible still lists as missing. **We are in the
-polishing pass**, and since 2026-08-17 it runs as **book-wide passes rather than night-waves**
-— one fault, one tool, one release. The ordered list is in `OUTSTANDING.md`.
-
-**A NEW NIGHT SURFACED AN OLD ENGINE BUG, and it was found by driving, not reading.**
-`attemptClose` was the only writer of `perilTurns` in the file with no `applyTension` after
-it, so the lethal countdown stayed lit over the landing — worst on the five `onExit` perils
-(`a1-carried`, `a2-hand`, `a2-take`, `a3-descent`, `a3-seize`), where the peril resolves
-straight into the landing and nothing repaints. Fixed in two places, because the first fix
-repainted while the phase was still `live` and swapped a lethal countdown for a BUDGET
-countdown over a landing. **The control was a night with no teeth**, which clears the strip
-to nothing; that is the right answer and both roads now give it. Sweep row **(4a6)**.
-
-**TWO DEBTS WERE RETIRED BY THE AUTHOR AND MUST NOT COME BACK: not every card needs a second
-take**, and `a2-chassis`'s 25 take-lines are being lived with. **Never add a second take to a
-beat that is short by nature**, and **never rewrite a second take that already exists** —
-the scold fix adds narration in front of them, it does not touch his lines.
+**The authoring phase and the polishing passes are over.** What is left is in
+`OUTSTANDING.md` and it is short: one real authoring thread (Five and the vault), one open
+question for the author (Vic's file), an unread audit list, and three measured things that
+are declared rather than owed.
 
 **The game is five files.**
 
 | file | what it is |
 |---|---|
-| `index.html` | engine, UI and the sweep — ~24,900 lines |
+| `index.html` | engine, UI and the sweep — ~25,000 lines |
 | `corpus.js` | **every authored word**: BIBLE, SPINE, SCENEBOOK, TEASES, REVEAL_LEDGER |
 | `veldt-menu.js` + `veldt-skin.css` | the skin: title art, menu, feed styling |
 | `editor.html` | the card editor. Not loaded by the game; open it yourself |
@@ -99,450 +28,65 @@ the scold fix adds narration in front of them, it does not touch his lines.
 All classic scripts in document order — no JSON, no fetch, no modules, nothing async, so
 `file://` still works. **The writing goes in `corpus.js`.**
 
-**`var BIBLE` in `corpus.js` is the single source of world truth** — the founding, the cast,
-the annulment, the rules. Read it before asserting anything about the world is missing.
-`tools-gen-world.js` renders it as a document if you want one; the document is not kept in
-the repo, because a second copy of the bible drifted within a day the last time there was one.
+**`var BIBLE` in `corpus.js` is the single source of world truth.** Read it before asserting
+anything about the world is missing. `tools-gen-world.js` renders it as a document if you
+want one; the document is not kept in the repo, because a second copy of the bible drifted
+within a day the last time there was one.
 
 **The in-world Architect is a dead founder, not the author.** Say "the author".
 
 ---
 
-## → IF YOU ARE PICKING THIS UP COLD, START HERE
+## THE LESSONS THE FINISHED PASSES LEFT BEHIND
 
-**PASS 4 IS FINISHED (v5.83.0).** Every night is at or over the 35% floor except the two
-excluded on purpose: **`a2-chassis`, which pass 5 takes past 50% anyway, and `a3-stone`,
-which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine releases**,
-book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
+*The passes themselves are gone from this file. These outlived them.*
 
-**PASS 5 IS FINISHED (v5.86.0 – v5.89.0). BOTH PINNED NIGHTS ARE DONE.** `a2-door` 44.1% →
-**50.5%** (68 blocks); `a2-chassis` 20.6% → **49.8%** (448 blocks). Spoken unmoved on both
-the whole way, and the book floor unmoved at 4,656 across all four releases.
+**A WORD LIST FINDS FEAR THAT IS SPELLED, NOT FEAR THAT IS FELT.** Two nights the nerve
+audit called dry already had the work in them, in language no census could see. **Read the
+cards before believing a count about them.** The same finding arrived twice more: a keyword
+tool could not tell a press line breaking its beat's rule from one implementing it, and
+`costs.js` could not tell *filing a memory* from *filing a person*. **When a tool has to
+judge meaning, it does recall and a human does the judging.**
 
-**`a2-chassis` LANDED AT 49.8% ON PASS 5 AND CROSSED 50% ON PASS 6** — landing lines count
-toward the share, and pass 6 put twelve of them on the night. Both pinned nights are over.
-The pass-5 reasoning still stands and is the rule for any future night: The last twelve blocks were
-left on purpose: every remaining place a breath could go is either an anchor that appears
-twice in the file — `"...What?"`, `"...Right."`, `"You are on the rota."`, a bare `"No."` —
-or a comic snap the breath would break. **Write one block fewer rather than force an
-ambiguous home.** Two tenths of a percent is not worth four jokes.
-
-**PASS 6 IS FINISHED (v5.90.0 + v5.91.0).**
-
-**THE AUDIT FOUND NO BROKEN CLOSING.** Every landing on all 33 nights, both roads, reads
-against what its night was for; not one closes a scene that did not happen; every landing
-rail in the book is wired. **What it found instead is SIZE.** Twenty of thirty-three nights
-land on exactly five lines — the shape a landing gets when nobody decided otherwise — and
-the nights that break it are the ones that *felt* big while being written, not the ones
-that *are* big. `a2-chassis` is 1,220 blocks and landed on five. `a3-stone` is 63, the
-smallest night in the book on purpose, and lands on nine.
-
-**RULED BY THE AUTHOR, 2026-08-18:** six nights get longer endings — the two pinned, the two
-season finales' weak halves, the two season premieres. **Both roads grow, the hard road
-stays visibly leaner.** The seven nights that end both roads on the same line **keep the
-shared line** — it is the hook into the next night and has to land the same way either way.
-
-**DONE — ALL SIX, v5.90.0 and v5.91.0, 60 landing lines.** `a2-door` 5/5 → 12/8 ·
-`a2-chassis` 5/5 → 13/9 · `a1-hum` 15/5 → 15/9 · `a1-turn` 18/8/8/8 → 18/12/11/11 ·
-`a2-turn` 8/9/8/8 → 13/12/11/11 · `a3-evict` 5/7/5 → 9/10/8. **No night in the book now
-ends smaller than the night it is ending.**
-
-**PASS 7 IS DONE (v5.93.0 + v5.94.0), WHOLE BOOK BY THE AUTHOR'S RULING.** 1,485 swaps.
-**Book-wide 19% → 37%**, from the 9% the diagnosis measured. Every speaker on band: Vic 59
-(60), Pia 58 (65), Hesta 44 (45), Marek 60 (55), Seven 28 (30), Three 16 (15), Nine 9 (10).
-Machine and Principal untouched at 0%. **Mirren untouched at 35% — her alternation between
-the law and the intimacy is a deliberate spread and `band-pass.js` is told to leave her
-alone by name.** 294 swaps remain and are not worth taking: they are the residue of
-per-card rounding, and a budget does not have to be spent to the penny.
+**A RATE FAR FROM TARGET IS A PLACE TO LOOK, NEVER A FAULT ON ITS OWN.** Of three flagged
+contraction cards, two were real and one was the tool being wrong about a card where the
+speaker is shouting throughout. The refusals do editorial work; a card full of capitals is
+supposed to come out low.
 
 **USE `band.js` TO PRICE AND `band-pass.js` TO APPLY — NEVER `contract-pass.js`,** which
-converts every available instance and lands Hesta near 100% against a target of 45%.
-**Read the diff by eye after every night.** No law here reads English; all three faults in
-the new tool were found that way, two of them shipped grammar.
-
-**THE PER-CARD LIST IS BUILT — `node scratchpad/flagcards.js`.** 104 cards sit 28 points or
-more from their speaker's target with enough instances to mean anything, and **the list
-mostly CONFIRMS the author's shape rather than contradicting it.** The cards that came out
-at 0% are `pia-afraid`, `what-being-kept-actually-costs`, `what-vic-owes-her`,
-`who-vic-can-still-call`, `taking-turns` — every one of them a card where the character is
-working, frightened, or on the record. The refusals bite hardest exactly where the writing
-is most formal, so the tool arrived at the right shape by accident. The +55s are all night
-33, the epilogue, where the whole cast is off duty for the first time in the book.
-
-**THE THREE FLAGGED CARDS ARE RULED AND DONE (v5.95.0) — AND ONE OF THE THREE FLAGS WAS
-WRONG.** `a2-door/the-rolling` was not a fault: nearly every Pia line on that card is
-shouting, and the tool's emphasis rule refused them all because a line already shouting is
-doing its emphasis another way. Her 17% is right. Two clauses outside the shout were taken.
-`a3-seize/why-they-picked-him` (Three, 80% against 15) and `a2-annul/taking-turns` (Marek,
-0% on the night he first speaks in nine years) both stood and are fixed.
-
-**THE LESSON IS ABOUT THE FLAG, NOT THE CARDS: a rate far from target is a place to LOOK,
-never a fault on its own.** The refusals are doing editorial work; a card full of capitals
-is supposed to come out low. Read the lines before flagging them. The other 101 rows in
-`flagcards.js` have not been read and most of them are probably the same story.
-
----
-
-## PASS 8 — NOT STARTED. FOUR SEPARATE JOBS, EACH WANTING ITS OWN SESSION.
-
-| § | job | shape |
-|---|---|---|
-| §C | **the nerve pass** — nobody in this book is ever frightened | the big one; changes prose, not mechanics |
-| §D | the plausibility pass — the Choir behaves like scenery, eight people take a city | six holes, three the author ruled to honour NOW |
-| §E | the Principal as prime mover — the whole plan is her eviction | a fold through the whole book |
-| §F | the founding lock — the Architect keyed it with his own blood | a fold; and where "Granny" comes from |
-
-### §C — THE NERVE AUDIT IS TAKEN. The note measures true, and harder than it was put.
-
-**THE INSTRUMENT IS `scratchpad/nerve.js`**, and it separates the four things the note
-separates, over all 7,724 prose blocks in all 33 nights — evening deck, room deck, second
-takes, openings, both landing roads and the closings.
-
-| | what it looks for | book total | share of blocks |
-|---|---|---|---|
-| **NAMED** | a person says they are frightened | **52** | 0.7% |
-| **SHOWN** | the prose shows a body doing it | **24** | 0.3% |
-| **ODDS** | somebody says the chances, or what happens if it goes wrong | **27** | 0.3% |
-| **no-GO** | somebody says they do not want to do it | **44 → effectively 0** | — |
-
-**THE LAST ROW IS THE FINDING AND IT SURVIVED BEING DOUBTED.** The first count said 88
-refusals and the book looked full of people saying no. Reading all 88 showed nearly every
-one is somebody declining to *answer* — *"ask me something else"*, *"I am not going to
-soften the arithmetic"*. Partitioning those out left 44, and reading all 44 by hand left
-**two** that are anywhere near declining to *act*: Nine at night 10 (*"I cannot do any of
-tonight"*) and Vic at night 25 (*"me being braver than I currently am"*). **Neither is
-about a plan. Across the whole book nobody ever says they do not want to go.**
-
-**18 of 33 nights never put fear in a body. 17 of 33 never speak the odds. 12 of 33 never
-name fear at all.**
-
-**NIGHT 29 IS THE WORST CASE AND IT IS THE WORST NIGHT TO BE THE WORST CASE.** `a3-descent`
-— down the cable, into the enemy's vault, the machine close — scores **zero on all four**
-across 124 blocks. Its seven evening cards are *what the racks are*, *how far down it goes*,
-*what Marek makes of the iron*: seven questions about the place, none about the people
-being in it. A deliberately over-wide control (`scratchpad/wide.js`, any unease word at
-all, narration included) agrees — 8 of 86 blocks, and every one of them is a *tactical*
-worry. **Marek does not say he is afraid; he offers "a different worry" about the ironwork.**
-
-**WHERE IT ALREADY WORKS, and these are the models to copy.** Night 22 carries 9 of the
-book's 52 named-fear lines on its own. Night 28 has a card called *what could go wrong* and
-another called *if somebody does not come up*, and Hesta answering *"I am not going to stand
-at a hatch and tell six people a comfort I've not checked"* — that is craft law 2 already
-written, once. And night 29's one working card is Pia's rope joke, because it ends *"then
-the dark wins by MORE"*: the fear is on the page under the joke, which is the whole law.
-
-**ONE THING THE AUDIT WAS NOT LOOKING FOR.** *"I am not going to pretend"* and its variants
-run **19 times across 13 nights and 7 of the 8 speakers** (`scratchpad/pretend.js`). It is a
-brave, good line, and it has stopped being characterisation and become the house voice.
-Night 18 has it twice in near-identical words from two different people — Nine: *"I am fine.
-I am saying that before anybody asks it kindly and I have to be brave in front of people"*
-and Seven: *"I'm well. I say it first, before somebody asks kindly and I have to be brave in
-front of people."*
-
-### THE RULINGS, AND WHAT WAS DONE WITH THEM (v5.96.0)
-
-The author ruled four ways: **the dry big-move nights** (not the whole book), **rewrite what
-is there** (not new cards), **Pia breaks and the other seven crack once each**, and **fold
-the "I am not going to pretend" habit into the same pass**.
-
-**EIGHT NIGHTS, TWENTY-TWO BLOCKS REWRITTEN. Nothing added, nothing cut.** Every swap is
-same-speaker, so the spoken count is **4687 before and 4687 after** and the block count is
-7724 on both sides - the banter floor cannot move under a same-speaker swap, and that is
-checkable rather than promised.
-
-| night | what changed |
-|---|---|
-| 12 `a2-hand` | a heel going under the table, and nobody has noticed whose |
-| 14 `a2-seven` | Vic says out loud that if the frame quits mid-extraction there is no second attempt and no him |
-| 18 `a2-manual` | the Choir would not want him for a night - they would want him for life, warm and now, on a schedule; and Seven's "I will not pretend" is gone |
-| 23 `a3-evict` | Three says the other half: two hours standing still on a street the Choir holds the paperwork to |
-| 26 `a3-vic` | Vic rehearsed shutting the door on the last of it and finds he cannot |
-| 27 `a3-stone` | Hesta will not make peace with waiting at the hatch · Three is frightened of the down and says so once · **Pia's system has a range** · Seven stops inflating four weeks |
-| 29 `a3-descent` | **ten blocks.** Marek does not want to go under the patched iron and goes · Three spends one unprofessional sentence · Seven's clerk register breaks · Hesta comes down the cable · Pia pre-files her own failure |
-| 31 `a3-principal` | Hesta knows she can be filed before a kettle boils and knocks · her hands have been going since the stairs |
-
-**HESTA ARCS ACROSS 27 AND 29 and that was not planned - it fell out of the pass.** She
-refuses to make peace with standing at the hatch on night 27, and on night 29 she is forty
-rungs down the cable. Two nights apart, and the second now pays the first.
-
-**TWO NIGHTS THE AUDIT CALLED DRY WERE NOT.** `a3-vic` already had *"I could do this one in
-my sleep and I find that I cannot do it at all"* and a mug full and untouched all night;
-`a3-evict` already had *"Three's hands are shaking and she's doing sums at me so I say they
-aren't"*. Both got **one** edit instead of six. **A word list finds fear that is SPELLED,
-not fear that is FELT** - read the cards before believing the census about them.
-
-**THE CENSUS STILL CANNOT SEE MOST OF THIS PASS.** NAMED went 52 to 55 book-wide. That is
-not the size of the change; it is the size of the vocabulary the instrument knows. The
-proof is the prose and the drive.
-
-**THE INSTRUMENT HAD TWO BUGS AND THE PROSE FOUND BOTH.** The refusal partition read the
-whole block instead of the refusal's own clause, so Marek's *"I don't want to go under that
-patch"* filed as a speech refusal because the word `say` appears thirty words later. And
-ODDS had only ever been taught the phrase "goes wrong", so it walked past *"if the cable
-goes... nobody up top hears about it for a day and a half"*. Both repaired. **SHOWN was
-left alone on purpose** - it missed a body tell I had just written, and widening a list
-because it did not applaud your own sentence is the invented-floor mistake.
-
-**`scratchpad/swap.js` IS NEW AND IT IS THE FIRST TOOL IN THE DRAWER THAT REPLACES.** Every
-other one only adds, which is a safety property. This one carries the discipline instead:
-address by card+layer+index, read the needle out of the corpus, refuse on a `was` mismatch,
-refuse to change the speaker, refuse a `holder`/`relay` gated block, and **refuse a
-duplicated needle unless the spec declares `n:`**. That last one earned itself immediately:
-`whether-anyone-slept` and `whether-anyone-slept-nine` are a FORK PAIR carrying Pia's answer
-word for word, and changing one would have given half the players the old line.
-
-**WHAT §C DID NOT TOUCH.** The other 25 nights, by the author's ruling. If the pass is ever
-widened, the audit tools are `scratchpad/nerve.js` (census, `--dry`, or one beat),
-`scratchpad/wide.js` (the over-wide control) and `scratchpad/pretend.js` (the house-voice
-tic, still 17 instances across the untouched nights).
-
----
-
-## §D — THE PRESSURE AUDIT IS TAKEN. Nine collisions, not two, plus a structural one.
-
-**`press` reaches a player ONLY THROUGH THE WILD TABLE.** In the novel nothing reads it
-(index.html ~7239-7362 is the storyteller wire and it is the only reader). So the collisions
-below are wild-table defects — real, but they cannot reach a novel run.
-
-**A KEYWORD TOOL CANNOT DO THIS JOB AND IT PROVED IT.** `scratchpad/press.js` ranks every
-press line against its own beat's `never` by shared rare vocabulary. Its whole top of list is
-the press *implementing* the never — nights 6, 30 and 31 restate their rule almost word for
-word, which is good design. **The real collisions share almost no vocabulary with the rule
-they break.** So all 33 were read by hand, which is what the note asked for.
-
-### THREE ARE OUTRIGHT CONTRADICTIONS
-
-| night | the press says | the never says |
-|---|---|---|
-| **13** `a2-mirren` | "The Choir sends a polite retrieval notice… **It arrives mid-burial.**" | "**nobody has a wire go off, a message arrive, or a caller ring here**" — and "nobody who was not at the undercroft arrives at this grave" |
-| **17** `a2-housing` | "**The housed mind** can suddenly do something it should not be able to do" | "**nobody is seated in the housing in this scene**" — there is no housed mind to act |
-| **18** `a2-manual` | "**Something tests the lock** while they are still reading" | "**the lock is the founders' lock and it is somewhere else** — the manual is paper, not a door" |
-
-### SIX MORE ARE UNDER-SPECIFIED IN A WAY THAT INVITES THE FORBIDDEN MOVE
-
-**3** `a1-vic` — "Pia says the thing Vic did not want said in front of the courier", when the
-only such thing on that night is what `never[0]` and `never[1]` outlaw · **4** `a1-pack` — a
-packmate collects a debt "exactly now", against "the pack does not arrive in person" · **5**
-`a1-fare` — the recipient "recognizes his face", against "an ordinary person with an ordinary
-errand — not the Choir, not a contact" · **21** `a2-law` — "the meal is interrupted", against
-"nothing interrupts except the thing the board sends" · **23** `a3-evict` — "somebody could
-leave a door open for him", against "nobody knocks on a neighbour's door and goes inside" ·
-**30** `a3-dreamers` — the housekeeping "asks, gently", against "she does not appear".
-
-### TWO THINGS THE READ TURNED UP THAT NOBODY WAS LOOKING FOR
-
-**Night 9 `a1-turn` has NO press at all** — an empty array, the only one of thirty-three.
-**Night 33's press[1] is engine instructions in a prose field**: *"Land it now. Epilogue in
-chronicle voice, then set the_end true."* That string goes to a language model.
-
-### AND THE STRUCTURAL ONE, WHICH IS HOLE 3 MEASURED
-
-**In THE NOVEL the other side can only cost this family something on the ten nights that
-carry `teeth`, or when the player runs out of turns and takes a toll.** Teeth are on nights
-2, 8, 11, 12, 14, 19, 23, 29, 30, 33. **The other twenty-three nights have no mechanism at
-all by which last night costs anything** — `canon` and `scar` are carried forward and read
-back on the board, in the endgame and by the storyteller, but nothing in a novel night ever
-reads them AS PRESSURE. That is hole 3 exactly, and it is an engine fact, not a prose one.
-
-### THE RULINGS, AND WHAT WAS DONE (v5.97.0)
-
-Ruled: **fix all nine**, **make the record push back in prose** rather than in the engine,
-and **Seven says what the Choir actually is**, once he has defected.
-
-**ALL NINE PRESSURE LINES REWRITTEN** (`scratchpad/pressfix.py` + `pressfix.json`, which
-carry the reason for each one next to the change). Night 13's retrieval notice now arrived
-this morning and is in somebody's pocket, so nothing arrives at the grave. Night 17 is Pia
-noticing that Vic knows the shape of that seat without measuring it, so no unoccupied
-housing has to grow a mind. Night 18's lock is tried on the other side of the city and the
-news reaches the table, so the lock stays where the beat says it is. Night 5's recipient is
-now entirely ordinary and the handoff curdles from the courier's side, which is better than
-what was there.
-
-**SEVEN SAYS IT ON NIGHT 18**, in `whether-anybody-can-take-it-off`, second take - the card
-where Three uses the word *attendance* and the narration notes that the clerk does not
-correct her. He takes the word off her: *"You have all been picturing a police force. What
-you are standing in front of is a TENANT with an apparatus - it rents its rooms, it files
-its residents, and in this whole city it has never once had to break a door, because until
-the six of you nobody had ever simply said no to a form."* Then he refuses to let it be a
-comfort. Three blocks; **the banter floor ROSE from 4687 to 4689**, which is allowed.
-
-**MY OWN FIRST DRAFT OF THAT SPEECH WAS THE TIC.** "The Choir is not a police force. It is a
-TENANT" is `X is not a Y, it is a Z` - the exact CONTRAST shape, and the book total went 31
-to 32 the moment it landed. Recast to name what they had been picturing instead of negating
-it, which is better writing anyway. Back to 31/28.
-
-### AND THE THIRD RULING IS NOT DONE, BECAUSE THE SURVEY FOR IT FAILED
-
-`scratchpad/costs.js` was built to find, per teeth-less night, whether the other side
-reacts in the DECK (visible in the novel) or only in the PRESS (invisible). It reported 21
-of 23 nights already covered in deck prose, which would have made the structural finding
-mostly wrong. **Reading its hits showed every thin one is a false positive.** The word
-`filed` does two jobs in this book - *"I filed the dodge"*, *"filed under nobody's
-business"*, *"I have filed that under nights that ended at home"* - and the emotional one
-is commoner than the bureaucratic one. `noticed` and `the clerk` fail the same way.
-
-**SO THE STRUCTURAL FINDING STANDS AND THE SURVEY FOR IT DOES NOT EXIST YET.** Whatever
-comes next has to tell *filing a memory* from *filing a person*, and a word list cannot -
-which is the same conclusion the press audit reached about the same kind of tool. Expect to
-read all 23 nights by hand.
-
-**ONE THING costs.js FOUND THAT IS REAL: night 4 `a1-pack` is the only night whose
-consequence lives entirely in the press.** Both its pressure lines are the Choir asking the
-stalls about a courier by description, and a debt being called in - and a novel player
-meets neither. That is the one clear case of authored consequence the novel cannot serve.
-
-### THE 23 NIGHTS ARE NOW READ BY HAND (v5.98.0), and the diagnosis is sharper than the note
-
-`scratchpad/enemy.js` does RECALL and decides nothing: it prints every authored block on a
-teeth-less night that names anything on the Choir's side of the world - 135 of them - and
-leaves the judgement to the read. That is the division of labour costs.js got wrong.
-
-**THE ENEMY IS A SUBJECT OF EXPLANATION AND ALMOST NEVER A SUBJECT OF VERBS.** Nearly all
-135 are a character explaining it: Vic on debts (*"a leash with a nicer name"*), Seven on
-intake columns (*"a thing does not exist to me because I've seen it, it exists because it
-has a column"*), Three on lock classes, Hesta on how the city files its dead. **It is
-described with more precision than almost anything else in the book, and it hardly ever
-does anything.**
-
-**WHERE IT DOES ACT THE BOOK IS AT ITS BEST, AND THERE ARE FOUR PLACES.** Night 22, Hesta
-reading the record out: *"Intake conducted on the row at eleven-twenty. One subject.
-Voluntary conscription paperwork lodged and countersigned"* and *"they took him regardless,
-because he was standing nearest and he was on their list"* · night 28, *"it came to Seven
-off a fish porter before six this morning. No van, no uniform, no threats. A clerk doing a
-list"* · night 32, the Machine: *"the small one is filed for salvage. I have read it. It is
-a bad file and it will be actioned, because files are"* · and nights 3 and 5, where it is
-the CITY rather than the Choir - the causeway watched by morning, the noodle man making
-change without touching his hand. **Night 24 has it conspicuously not reacting, on purpose,
-and says so: *"she hasn't said one word about yesterday. Not the nine, not the van, not
-us."***
-
-**THE HOLE HAS A LOCATION: NIGHTS 9 TO 21.** Of the nine teeth-less nights in that stretch
-- 9, 10, 13, 15, 16, 17, 18, 20, 21 - not one has the other side doing anything about what
-this family did. That is the middle of Book Two, and it is exactly where the book gets
-talky.
-
-**AND SEVERAL OF THOSE NIGHTS FORBID IT ON PURPOSE, WHICH CHANGES THE FIX.** Night 10's own
-`never` says nobody knocks at Hesta's door in a stall - *"that is the world's move and it
-belongs to the pressure"*. Night 13 forbids any message arriving at the grave. Night 21
-allows exactly one interrupter. **The quiet on those nights is authored, not accidental.**
-So the fix cannot be "give the Choir a verb here". It has to be **the family saying what
-last night cost**, which is what a deck is for and which breaks no rule on any night.
-
-**NIGHT 17 IS WRITTEN AS THE MODEL.** On `anybody-else`, second take, straight after Seven
-says he has stopped protecting his own answer: his desk at the west intake has been empty
-for eleven days and somebody has filed that. He countersigned four hundred of those forms
-and knows almost to the hour how one travels. Three asks how long. *"It went days ago.
-Eleven days is a staffing note for the first four and a name for the rest. I am not
-forecasting weather at you. I am telling you what it is doing outside."* Nobody at that
-table had thought about what it cost the Choir to lose a clerk, because nobody had thought
-of him as a thing the Choir had lost. Four blocks; **the floor rose 4689 to 4692**.
-
-### AND THEY ARE WRITTEN (v5.99.0). §D's PROSE WORK IS DONE.
-
-**NIGHT 20 WAS NEVER ON THE LIST.** Five already says it: *"the convoy reports its officer
-missing at eight, and I know exactly how that paperwork moves, because I have moved it."*
-The enemy.js read walked past it because it reads as Five offering himself, and it is both.
-**Eight was really seven.**
-
-| night | what the family now says it cost |
-|---|---|
-| 9 `a1-turn` | Pia: the chit with his description on it has been getting quietly more correct for eleven weeks, and nobody had to touch it once. *Nobody asks how she knows. She does doors, and a door is a thing that people bring paper to.* |
-| 10 `a2-door` | Hesta: this building was the least interesting address on the row for thirty years and that stopped at about eight o'clock tonight — *"I want you to know what it costs, so that when it turns up nobody at this table has to stand there being surprised at it."* |
-| 13 `a2-mirren` | Hesta at the grave: something of theirs stopped moving out there and gets a line in a register whether anybody says a word or not. Vic: *"It'll be a query first. Nobody looks at a query. A form asks a form."* |
-| 15 `a2-chassis` | Vic over the sheeted frame: it went out on a Tuesday with a number on it, and there is a man whose entire job is the difference between what went out and what came back |
-| 16 `a2-three` | Three, in her first hour: *"Taking me into a household takes in what is attached to me."* Hesta: *"Noted. Eat something."* |
-| 18 `a2-manual` | Three: the lock keeps a log. **The key is not only a way in, it is a signature, and this family has been carrying a pen.** |
-| 21 `a2-law` | Three while the ink is wet: does the law hold for a thing the Choir will come looking for. Hesta: *"Yes. Next question."* |
-
-**TWENTY-ONE BLOCKS ADDED, none cut; the floor rose 4692 to 4713.** Sweep green, nobody
-speaks out of a scene they are not in (4,690 nameplates), no canon leaks, mannerism at the
-28/28 baseline, drift 10,941 lines and none moved.
-
-**`a2-chassis`'s `does-anybody-owe` was left alone as ruled** - the cost went on
-`the-frame-in-the-corner` instead, which is the same night and does not spoil the contrast.
-
-*(superseded) WHAT WAS LEFT: EIGHT NIGHTS - 9, 10, 13, 15, 16, 18, 20, 21* - each wanting one exchange
-in the family's own mouths about what the night before has cost. **`a2-chassis`'s
-`does-anybody-owe` MUST NOT BE ONE OF THEM.** It is eighteen closed blocks setting the
-family's debt economy against the Choir's - *"there is no bill in this building"*, *"in
-about four hundred small ways over about thirty years and not one of us will notice it
-happening"* - and a cost dropped into it would spoil the contrast it exists to draw. Find
-another card on that night.
-
-**THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
-the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
-read the anchor out of the corpus, refuse on a duplicated anchor.
-
-**TWO THINGS THIS WAVE LEARNED THE HARD WAY.** (1) **Landing lines count toward the night's
-narration share** — `floors.js` has always scanned them and I had never used it. `a2-chassis`
-went 49.8% → 50.1% on this wave alone, so both pinned nights are over 50% now, which pass 5
-did not quite manage. (2) **A tool that only ever ADDS can still add in the wrong ORDER** —
-several lines sharing one anchor came out reversed and put three blocks in front of the
-lines they were commenting on. Caught by dumping the result, not by trusting the APPLIED
-count. `landline.js` now groups by anchor.
-
-**THE SECOND PASS NEEDED A SECOND TOOL, AND THIS IS THE REUSABLE PART.** `layers.js` aims
-at the longest unbroken run, which is right for a FIRST pass and useless for a second — once
-every layer has breath in it the fault is no longer *where the talking runs on* but *which
-layers are still thin*. Two new tools live in the scratchpad:
-
-| tool | what it does |
-|---|---|
-| `thin.js <beat> [pct]` | every layer sorted by narration share, with the blocks each still owes |
-| `gaps.js <beat> [pct]` | for the layers that owe, every spoken block followed by another spoken block — the list of places a breath can go without splitting a call-and-response that already has ground under it |
-
-The first pass on `a2-chassis` took 273 blocks with `layers.js`; the second took 175 with
-these, and would not have been findable with the first pass's instrument. **Still re-dump
-between batches on the same layer** — every insert shifts the indices behind it.
-
-**AND THE REAL LESSON OF v5.86.0: READING THE TRAP LIST IS NOT A GUARD.** Four of my own
-new blocks tripped a detector in that one wave — `death` on "Pia has gone red", `named:Three`
-on "Three decades" at a sentence head, `shard:hand` on "the shard into the number", and
-`boardleak` on "the same pan", which is the literal title of night 22 and which fired on
-THIS EXACT CARD in an earlier wave too. I had read all four warnings before writing. The
-machines caught all four. **Run the guards after every batch, not at the end of the wave.**
-
-**THE AUTHOR'S SEAM BUG IS FIXED (v5.92.0).** No seam in the game had ever revealed —
-`playAuthored` added `shown` inside its own loop, which is the class the walk *arrives* at.
-It gets the same paced walk now, and **the rail waits for it**. Sweep row (6g8) drives the
-real function and is proved against the shipped shape.
-
-Then pass 6, the closings audit, **which is a REPORT before it is a wave** — the author
-rules the mismatches before a word is written.
-
-**AND `floors.js` PRINTS TWO NUMBERS NOW. THE FIRST ONE GOVERNS.** It used to count the
-TEETH — peril stages and death scenes, almost pure narration, which most players never
-see — and every night with teeth read up to three points high. **Four nights were called
-done that were not.** Found by making it disagree with a second reader. A night whose deck
-runs dry does not become fine because its death scene is narration.
-
-**A pass-4 night takes about twenty minutes and needs nothing in context but this block.**
-
-```
-node scratchpad/floors.js                 # pick the lowest night not yet done
-node scratchpad/layers.js <beat> 4        # its layers by longest unbroken spoken run
-node scratchpad/dumplayer.js <beat> <id> <layer> …    # dump them WHOLE, with indices
-# write a spec: [{id, layer:"plays"|0|1…, after:<index>, narr:"…"}]
-node scratchpad/breathe.js <beat> spec.json
-node scratchpad/floors.js | grep <beat>   # repeat until 35%+
-```
-
-**THE RULES THAT MAKE IT GO WRONG IF IGNORED:**
-- **RE-DUMP BETWEEN BATCHES ON THE SAME LAYER.** Every insert shifts the indices behind it.
-  `breathe.js` refuses rather than guessing, but only after you have wasted the batch.
-- **An ambiguous anchor means write one block fewer.** Pia's bare *"No."* appears five times.
-- **Two to three blocks per layer, aimed at the longest runs.** Do not spread evenly.
-- **Check `debts.js | grep FLOOR` after every batch.** Spoken must stay at **4,656**.
-- **Then: `grammar.js`, browser `?selftest`, fixture by delta + ledger, stamp, drive, push.**
-
-**THE FOUR WAYS MY OWN NEW NARRATION HAS FIRED A PREDICATE**, all of them this pass:
-a number at a sentence head (*"Nine years…"*, *"Three clauses…"*) · a DURATION, which is a
-number too (*"he spent nine years…"* fired `breach`) · **`closed hand` / `in your pocket`,
-which MOVE THE SHARD** · and narration doing a character's own reveal (*"a hundred and
-thirty years"* — twice, both the Principal). **Read that list before writing, not after.**
-
-**NOT EVERY NEW FIRE IS A FAULT.** Narration naming Three on Three's own card is honest.
-The test is whether the sentence meant to do it.
+converts every available instance and lands a speaker near 100% against a target of 45.
+**Read the diff by eye after every night.** No law here reads English.
+
+**WRITE ONE BLOCK FEWER RATHER THAN FORCE AN AMBIGUOUS HOME.** When every remaining place a
+breath could go is either an anchor that appears twice in the file or a comic snap the
+breath would break, stop. Two tenths of a percent is not worth four jokes.
+
+**LANDING LINES COUNT TOWARD A NIGHT'S NARRATION SHARE**, and `floors.js` has always scanned
+them.
+
+**A TOOL THAT ONLY EVER ADDS CAN STILL ADD IN THE WRONG ORDER.** Several lines sharing one
+anchor came out reversed and put three blocks in front of the lines they were commenting on.
+**Caught by dumping the result, not by trusting the APPLIED count.**
+
+**READING THE TRAP LIST IS NOT A GUARD.** Four new blocks tripped four different detectors in
+one wave and every warning had been read before writing. **Run the guards after every batch,
+not at the end of the wave.**
+
+**A UNIQUENESS CHECK OVER A FILE IS NOT A SCOPE CHECK.** An edit anchored on a string that
+appeared exactly once in `index.html` landed in the wrong keyed array. **Locate the container
+first — key, then slice, then edit inside the slice.**
+
+**AN AUDIT HAS READERS TOO.** `lines_n2.js` read only cards, so nine waves of "every choice
+line names its addressee" were claims about part of the book. `allrails.js` reads all of
+them — and it had its own hole, found only because a second instrument disagreed with it.
+
+**BLOCKED IS A CLAIM, AND IT DECAYS.** The capture beat sat unwritten for months under a note
+saying a spine insert would strand live saves. Every word of the mechanism was true and the
+conclusion was false. **Drive the block before believing it.**
+
+**A NEW NIGHT IS A NEW READER OF THE ENGINE.** Writing `a2-take` surfaced a stale peril
+countdown nothing had caught. Adding one field to the corpus — `graze:true` — needed three
+readers hunted and two of them fired. **Expect one.**
 
 ---
 
@@ -573,9 +117,14 @@ and was right every time.
    before and after anyway.
 2. **NEVER READ OR WRITE `localStorage["mud-settings"]`.** The author's API key lives in it.
    Setting `settings.key=""` and saving destroyed it once. He pastes keys himself.
-3. **SAVES ARE BACKWARD COMPATIBLE.** Real players are mid-run. `topicSpent`, `railDeal`,
-   `beatIdx` and every counter store **positions**. **Append cards at the end; never insert,
-   reorder or delete.** An off-branch card stays where it is and is treated as spent.
+3. **SAVES ARE BACKWARD COMPATIBLE — AND THE CARD RULE IS NOT THE BEAT RULE.**
+   **CARDS: append at the end; never insert, reorder or delete.** `topicSpent` and `railDeal`
+   store **positions inside a deck**, so moving a card silently spends or un-spends whatever
+   now sits at that index. An off-branch card stays where it is and is treated as spent.
+   **BEATS: inserting into `SPINE` is safe, and `a2-take` proved it at v6.3.0.** A save writes
+   the beat's **name** beside its number and `beatPointerFrom` prefers the name; foldedBeats,
+   quests and season records are all name-keyed already. Sweep row **(4a5)** drives it.
+   **The old note here said the opposite and cost the book its missing night for months.**
 4. **A WAVE DOES NOT GET ITS OWN FILE.** No `REPORT-vX.md`, no `AUDIT-vX.md`, no briefs. The
    write-up goes in the commit message, in this file and in `OUTSTANDING.md`, and is spoken
    in chat. Twenty-one such files once accumulated in the repo root and nothing referenced
@@ -970,177 +519,3 @@ to end in**, so it is the state this file is in whenever you read this sentence.
 
 **Say so before starting, not after failing**, if a wave will involve more than about six
 splices or a new field with readers to hunt and the context is already long.
-
----
-
-## §E AND §F ARE WRITTEN (v6.0.0). They were the same fold from two directions.
-
-**MOST OF §E WAS ALREADY ON THE PAGE and nobody had noticed.** Night 31 has said since it
-shipped: *"I hold the freehold. They hold a lease. Every terrible thing they run down there,
-they run as TENANTS"* - which is §D's biggest hole answered in her own mouth. And
-*"There is a man I have been sending parts to for a very long time and he has stopped
-acknowledging them"* … *"How is my tissue man?"* … *"...Ah."* **She already supplied Vic.**
-What was missing was smaller than the note thought.
-
-**THE FOUR RULINGS AND WHAT THEY BOUGHT:**
-
-**§F, night 25, in the record.** `who-made-her`, second take, already had the estrangement
-structurally - *"Two voices for the first forty minutes. One voice for the last nine"* and
-*"somebody edited a woman out of her own recording"*. What it lacked was the content of the
-last nine minutes. Now the Architect describes a lock he has just finished and says **he has
-made it so that she cannot open it either** - not triumphant, *"a man who has thought for a
-long time and has decided to be sorry later"*. Then Hesta's existing *"Long dead, love"*
-lands on top of it, and the narration's existing verdict - *"the only deliberately false
-thing anybody says in this book"* - is now false twice over.
-
-**IT DOES NOT SAY THE LOCK ANSWERS BLOOD, AND THAT IS DELIBERATE.** `founding-lock` is
-planted a beat later on `a3-vic` and paid at `a3-seize`; stating the mechanism on 25 would
-spend a3-vic's own reveal five nights early. The reader assembles blood plus her exclusion
-themselves, which is the shape the book already uses.
-
-**§E, night 31, conditions and never the man.** *"I can hold that door. I have never once
-been able to knock on it. He saw to that in the year we were not speaking, and then he died
-before I could ask him whether it was a punishment or a kindness."* Then the prime mover, in
-her own words: *"I spent a century arranging the CONDITIONS. A line that goes on. A man in a
-chair who scans everyone who sits in it and has never been told why. Parts that arrive from
-nowhere and are never invoiced. Conditions, courier - not people. Which body walked into
-that shop was never mine to choose, and I do not know why you fit."* **The ruling that no
-night may imply she picked him is kept in the same breath that makes the claim.**
-
-**THE SUIT, said flatly by her**, on `how-she-has-lived-this-long`, straight after
-*"replaced tissue on a schedule"*. She is wearing one of them, the same pattern as the ones
-at her door, worn longer than any of them have been alive. And her existing closer - *"then
-six strangers carry crockery down a cable and fry bread in my corridor. Do you see the
-methodological insult? I had it SOLVED"* - is a better joke now it follows the reveal.
-
-**THE PLANT WENT ON NIGHT ONE'S DECK, not the cold open.** Pia, second take, closing a card
-about why Vic picked him, on something that is *not* about him: his shop takes deliveries
-nobody ever bills him for, and in two years of doing his doors she has never seen a docket.
-*Nobody has any use for it tonight. It goes in anyway, and that is the whole of her method.*
-**Thirty nights later the Principal says "parts that arrive from nowhere and are never
-invoiced."**
-
-**TWO NEW ROWS IN `REVEAL_LEDGER`** - `she-is-locked-out` (plant a3-founding, pay
-a3-principal) and `unbilled-parts` (plant a1-hum, pay a3-principal). The sweep now reports
-**8 plant/pay pairs, every plant earlier in the spine than its payoff**, and 9 facts checked
-against every earlier night with no leaks. A fact that travels thirty nights and is not in
-the ledger is a fact nothing is watching.
-
-**THE PEAK JOKE IS UNTOUCHED.** The sweep still reports the granny name in exactly one night
-and explained in none. The fold lays the pieces - the bloodline, the lock keyed to it, the
-child they built after losing one - and never once connects them out loud.
-
-### TWO THINGS THE GUARDS CAUGHT IN MY OWN NEW PROSE
-
-**`breach` fired on a narration line and it was right.** I wrote *"become relatives in the
-space of a sentence"*, and the bare word **space** is a place-breach term - what it means in
-a player's typed line is not what it meant in mine. **The prose was changed, not the
-fixture.** That is the only correct direction for that mechanism to be pushed.
-
-**The `tell` delta was three entries and every one is accounted for** in a ledger paragraph
-above `VERDICT_FIXTURE`: one matched renumbering pair (Hesta's line moved three indices, word
-for word) and two new lines that are *supposed* to fire, because they are the principal
-reveal and a detector that stayed quiet on them would be the thing worth investigating.
-
----
-
-## §G IS CLOSED (v6.1.0) — and the tool §G named as the meter had a hole in it.
-
-**THE STALE NUMBER FIRST.** OUTSTANDING says 123 lines remain. `allrails.js` reported **one**,
-because §G predicted correctly that this work rides the narration pass, and eight passes have
-been quietly naming addressees for months. That one line - a3-dreamers' peril tempt, *"She is
-right there - take her tray tonight"* - is now **"Mirren is right there"**.
-
-**THEN THE SECOND INSTRUMENT DISAGREED WITH THE FIRST, AND THE FIRST WAS WRONG.**
-`scratchpad/badgemeter.js` replicates `rowBadge`'s own rule - chip the card's answerer onto
-any row whose sentence does not mention them - over every rail and railTake, and split the
-result by whether the line names somebody ELSE. Twelve rows came back. Four of them were
-lines `allrails.js` called clean.
-
-**THE HOLE: `allrails.js` only flagged a bare pronoun when the line named NOBODY AT ALL.**
-So *"Ask her what Vic is actually like"* passed - a bare HER being asked about a named man,
-which is precisely the ambiguity §G is about - because the sentence names Vic. Nine waves of
-"all lines named" were claims about a predicate with an exception in it that §G's own rule
-does not have.
-
-**WIDENING IT TO "any bare pronoun in the addressing position" THEN OVER-FIRED**, on eighteen
-rows, and fourteen of those are correct English: *"Pia - jam her. Cut the signal. Make her
-stop"* names its addressee and then uses a pronoun for somebody else, which is what pronouns
-are for. **THE ACTUAL RULE IS ANAPHORA: a pronoun in the addressing position is a fault only
-if no cast name appears EARLIER IN THE SAME LINE.** A name after it does not help; the reader
-has already had to guess. Eight self-tests now pin all three shapes.
-
-**FIVE LINES WERE REAL AND ARE NAMED**, and rewriting them is safe for live runs because
-index.html:2692 says the index is the identity - `topicSpent`, `railDeal` and every deck
-counter store POSITIONS, and the line string is only used inside a turn to map a click:
-
-| night | was | now |
-|---|---|---|
-| 2 `vic-the-man` | Ask **her** what Vic is actually like. | Ask **Pia** what Vic is actually like. |
-| 11 `her-door` | Ask **her** what she is not saying in front of Pia. | Ask **Hesta** … |
-| 16 `opens0` | Ask **her** what she wants, before Pia gets to the chair. | Ask **Three** … |
-| 20 `whether-marek-will-survive-it` | Ask **her** straight: will Marek survive this. | Ask **Three** straight … |
-| 21 `when-it-first-costs` | Ask **him** what Five makes of a law like this one. | Ask **Marek** … |
-
-**AND THE OTHER TRAP §G NAMES, FOUND AS A CLASS RATHER THAN AN INSTANCE.** `t.who` is set
-from whoever OPENS a card, so when a take hands the card to somebody else the badge still
-says the opener. Twenty cards in the book do that. Most are fine - the opener does answer
-first. **Three actively contradict their own line** and now carry `hideWho:true`:
-`a1-turn/what-to-call-her` (*"Ask Nine what her name has come to mean"* → chip PIA, over a
-take that is five blocks of Nine and none of Pia), `a2-law/the-tin-at-the-full-table` and
-`a2-door/the-rolling` (both tin-round-the-table cards whose takes belong to Pia, Vic and
-Marek). All three are the shape §G nominates `hideWho` for.
-
-**WHAT WAS PROVED AND WHAT WAS NOT.** allrails 0/0, badge clashes 12 → 5 and all five are
-lines where the chip is doing its job. `hideWho` was **already carried by eight cards before
-these three**, so it is a shipped mechanism and this change is data, not code - but **the
-three cards' second takes were not driven by hand to watch the chip go quiet.** Read
-`rowBadge` at index.html:3488 if that needs settling; the field is the second term in the
-condition.
-
-### AND A FIXTURE EDIT WENT INTO THE WRONG ARRAY
-
-Naming two lines made `named:Three` fire on them, which is the change working. Taking that
-by delta, the first attempt anchored on `"a2-annul/scar",` and asserted it was unique **in
-the file**. It was - and it lives in `named:Five`. **A UNIQUENESS CHECK OVER A FILE IS NOT A
-SCOPE CHECK.** The drift net reported `named:Five` losing a line on the very next run, which
-is exactly its job. The repair finds the array by its KEY and edits inside that slice only,
-and the lesson is written above `VERDICT_FIXTURE`.
-
----
-
-## THE SAVE TERM IS LIFTED (2026-08-18), AND THE ELLIPSIS IS BACK (v6.2.0)
-
-**RULED: "Don't worry about the saves, nobody's playing the game right now."** The standing
-term *nothing breaks a current run* is lifted. **That was the only thing blocking THE CAPTURE
-BEAT** - inserting into `SPINE` shifts every `beatIdx` at or after it, and `beatIdx` is a
-position live saves hold. It is now allowed. **Ask again if a new run starts.**
-**`settings.key` is NOT covered by that lift.** It is a credential, it was destroyed once,
-and the rule does not move.
-
-**THE LEADING ELLIPSIS: 285 authored blocks, and the fix is one guard.** `showScene` scrubbed
-leading punctuation off every block. The scrub exists for a model that opens a block with the
-tail of the punctuation it meant to put somewhere else - and it ate *"...Not have it."*,
-*"...Walking on."*, *"...Ah."*, all 285 of them, which are the beat of hesitation the lines
-are written for.
-
-**PROVED BEFORE IT WAS TOUCHED, WITH A CONTROL.** `renderBlock` and `playAuthored` both keep
-the ellipsis; `showScene` strips it. After the fix, `showScene` keeps it on an authored block
-and still scrubs a `__composed` one. And the same Pia line on night 27, driven the same way
-through the drawer before and after, came back with its ellipsis.
-
-**THE STRIP IS A NAMED FUNCTION NOW - `leadPunctStrip` - for exactly the reason `blockCapFor`
-is one:** so the sweep can restore the shipped shape and watch the claim fail. Row **(4a1b)**
-asserts BOTH halves together, because a fix that just deleted the scrub would sail through an
-authored-only assertion and hand the storyteller's stray punctuation back to the page.
-**Sweep is 78 PROVED of 103.**
-
-### WHAT IS LEFT ON THE BOARD
-
-| item | shape |
-|---|---|
-| **the capture beat** | **NOW UNBLOCKED.** A whole new night between `a2-choir` and `a2-annul`: the ambush, what it costs, a Choir officer in a shack with a recovery team already looking. SPINE insert + SCENEBOOK entry + both decks. The big one. |
-| the Mirren Doctrine | *machines serve, never harvest*, on night 19 - a REOPENING of a finished night, and it must read as the family reaching back to her grave for the name |
-| the fate-one rhyme | "taking turns" rhymes with fate one and nobody has ever said it out loud. Night 20's room walks close and turns round. Probably Three, possibly Five |
-| Five and the vault | after night 20 he appears twice and never becomes the way in; the descent has Marek instead |
-| Vic's file | load-bearing on night 20 and still a document rather than a voice - whether it gets a nameplate of its own is an open question for the author |
