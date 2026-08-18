@@ -93,10 +93,21 @@ converts every available instance and lands Hesta near 100% against a target of 
 **Read the diff by eye after every night.** No law here reads English; all three faults in
 the new tool were found that way, two of them shipped grammar.
 
-**STILL OWED TO THE AUTHOR: the per-card list.** He ruled that the mechanical spread
-(room high, evening low) is not the finished shape, and asked for a list of the cards where
-a character's rate looks wrong for what they are doing in it — formal, frightened, on the
-record — to rule card by card.
+**THE PER-CARD LIST IS BUILT — `node scratchpad/flagcards.js`.** 104 cards sit 28 points or
+more from their speaker's target with enough instances to mean anything, and **the list
+mostly CONFIRMS the author's shape rather than contradicting it.** The cards that came out
+at 0% are `pia-afraid`, `what-being-kept-actually-costs`, `what-vic-owes-her`,
+`who-vic-can-still-call`, `taking-turns` — every one of them a card where the character is
+working, frightened, or on the record. The refusals bite hardest exactly where the writing
+is most formal, so the tool arrived at the right shape by accident. The +55s are all night
+33, the epilogue, where the whole cast is off duty for the first time in the book.
+
+**AWAITING THE AUTHOR ON THE HANDFUL THAT LOOK WRONG,** not on all 104: night 10
+`the-rolling` has Pia at 17% in the family's own time with the tin going round; night 33
+has Three at 80% against a target of 15%, which is a long way for the most formal person in
+the book to travel even in an epilogue; and night 20 `taking-turns` has Marek at 0% on the
+night he speaks for the first time in nine years, which is either exactly right or the tool
+missing him.
 
 After that pass 8: the nerve pass, the plausibility pass, and the two lore folds.
 
