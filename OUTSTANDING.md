@@ -7,6 +7,29 @@ Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
 ---
 
+## 0. FIRST: TWO THINGS THE PLAYTHROUGH TURNED UP
+
+**THE RECORD SWEEP — do this before more writing.** Night 3's `exit` and its `canon[2]` both
+asserted "Vic dodged one question" **unconditionally**, on every clean close — so a player who
+never drew that card was told about a scene that did not happen. Fixed there at v6.13.0.
+**Night 3 is very unlikely to be the only one.**
+
+**THE RULE:** a night's `exit` (the player reads it on the close) and any unconditional `canon`
+line may only claim what happens on **every** road through that night. Anything that depends
+on a card being drawn belongs to the card.
+
+Sweep all 34: read each `exit` and each `canon` entry and ask *"is this true if the player
+asked nothing?"* Where it is not, either move the claim to the card or rewrite it as a fact
+about the world rather than a report of a scene — which is what night 3's became.
+
+**AND `a1-chase/vic-the-man` IS UNCONFIRMED.** The author reported its second take answering
+with the banter pool instead of its own written take — *"Again? Fine. You want the part I left
+out…"* — but he was on a stale bundle at the time and reloaded before we could re-test. **Ask
+him whether it still happens before chasing it.** If it does, it is the same shape as the walk
+hole: a click that reaches nothing falls through to the pool.
+
+---
+
 ## 1. THIRTY-THREE WALK ANSWERS ARE STILL TO WRITE — *authoring, mechanical, and the shape is set*
 
 **RULED: one per night, all 34, and the first walk costs nothing but is remembered.**

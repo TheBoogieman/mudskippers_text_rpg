@@ -8,7 +8,23 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.8.0. THIRTY-FOUR nights written. Sweep 88 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+**v6.13.0. THIRTY-FOUR nights written. Sweep 88 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+
+**THE AUTHOR IS PLAYING IT NOW, AND THAT IS WHERE THE FAULTS ARE COMING FROM.** Four in one
+sitting, none of which any instrument in this repo could have found: a badge welded into a
+line by a build from months ago, a service worker serving a new page with an old skin, a walk
+answered by a joke, and a record claiming a scene the player never saw. **The sweep proves the
+book against its own laws. It cannot tell you the game feels wrong.**
+
+**THE WALK HAS AN ANSWER NOW, ON ONE NIGHT OF 34.** `walkAnswer` on the beat, played by
+`playWalkAnswer()`, remembered with one canon line and charged nothing - the author's ruling.
+`a1-hum` is written and is the template; the other 33 are mechanical and listed in
+`OUTSTANDING.md`. **A night with no answer falls back to the old behaviour on purpose**, so an
+unwritten one reads as "not written yet" rather than crashing the button that ends the run.
+
+**AND THE RULE THE RECORD FAULT LEFT BEHIND: an `exit` and an unconditional `canon` line may
+only claim what happens on EVERY road through the night.** Anything that depends on a card
+being drawn belongs to the card. Night 3 broke it; the other 33 are unswept.
 
 **THE SWEEP CARRIES NO UNDECLARED DEBT.** Its own headline: *every case either proves it
 would have caught its own defect, or says why it cannot.* Getting there found the trap living
