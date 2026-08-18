@@ -3,7 +3,7 @@
 // BYTES changed, so a cache name left behind keeps serving the shell it was named
 // for: this said v4-36-0 while the game inside it was six releases further on, and
 // every offline player was reading the old build.
-var CACHE = "mudskippers-v6-23-1";
+var CACHE = "mudskippers-v6-24-0";
 /* THE SKIN IS PART OF THE SHELL (v5.34.0). The fetch handler below is cache-first
    then network and caches what it fetches, so these two would eventually cache
    themselves - but only after one successful online load. A fresh install that goes
@@ -56,15 +56,31 @@ self.addEventListener("fetch", function(e){
     );
     return;
   }
+  /* ---- THE SHELL GOES NETWORK-FIRST TOO (v6.24.0) ----
+     index.html was network-first so updates flow, and EVERY OTHER FILE was cache-first so
+     the game opens offline. Both are right alone and together they open a window where the
+     PAGE is new and the stylesheet, the corpus and the skin beside it are whatever the
+     outgoing worker still had. v6.10.2 met this as a title screen drawing a cast that the
+     same build had already fixed, and answered it by reloading once when the new worker
+     claims - which works, and shows the player one stale render first. Six releases in an
+     hour turned that one render into the only thing the author could see: he was reading a
+     brand new index.html through the previous release's CSS and reporting fixes as broken.
+
+     THE HALF-UPDATED BUILD IS THE BUG, so this closes it rather than papering it. The game
+     is five small files that always change together; fetching them costs a moment on a live
+     connection and buys a build that is never a mixture. OFFLINE IS UNTOUCHED: a failed
+     fetch still falls back to the cache, which is the whole of what cache-first was for. */
   e.respondWith(
-    caches.match(e.request).then(function(m){
-      return m || fetch(e.request).then(function(r){
-        if(r.ok){
-          var copy = r.clone();
-          caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
-        }
+    fetch(e.request).then(function(r){
+      if(r.ok){
+        var copy = r.clone();
+        caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
         return r;
-      });
+      }
+      /* a bad reply is never served over a good cached one, and never cached */
+      return caches.match(e.request).then(function(m){ return m || r; });
+    }).catch(function(){
+      return caches.match(e.request);      /* offline: the shell is still here */
     })
   );
 });
