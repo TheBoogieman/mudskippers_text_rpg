@@ -1806,7 +1806,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.25.0 "Back Where You Left It"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.26.0 "Who Is In It With You"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2508,7 +2508,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.25.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.26.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4358,6 +4358,37 @@ function mergeRoster(r){
   });
   return n;
 }
+/* ---- THE FAMILY IS WHOEVER THE BOOK HAS PUT ON STAGE (v6.26.0) ----
+   `mergeRoster` had exactly two callers and both of them were the wild table: the
+   DM's absorber and restore. So in the written game nothing ever added a living
+   person to the roster, and the wrist's own "who is in it with you" said
+   THE COURIER, SO FAR on night one and STILL said it in the Heart Room on night
+   thirty-four - where the whole list was the courier and two dead people. Deaths
+   landed because `falls` is a beat field; joining was not anybody's field at all.
+   THE FENCE IS THE FOUND FAMILY, NOT THE NAMED CAST. SPINE_CAST is who the book
+   may say out loud, and it holds the Principal, the Machine, the Architect and
+   The File. All of them are on stage; none of them is at the table. A list that
+   derives itself has to be told where the table ends. */
+var FAMILY_NAMES = ["Pia","Nine","Vic","Hesta","Seven","Three","Marek","Five","Mirren"];
+function familyName(nm){
+  var t = String(nm || "").trim(), i;
+  if(!t) return "";
+  for(i = 0; i < FAMILY_NAMES.length; i++){
+    if(FAMILY_NAMES[i].toLowerCase() === t.toLowerCase()) return FAMILY_NAMES[i];
+  }
+  return "";
+}
+/* ...AND IT GOES IN THROUGH mergeRoster, WHICH ALREADY KNOWS THE TWO HARD RULES.
+   The dead do not rejoin, so Mirren - who is in `fallen` before she is ever on a
+   stage the courier shares - never lands on the living list however often the
+   vault recording plays her. And a name moving to `fallen` leaves the family on
+   its own, so Vic walks off this list on his own night without one word written
+   anywhere to make him. */
+function familyOnStage(nm){
+  if(wildRun()) return 0;        /* the roster is the DM's at the wild table, unchanged */
+  var n = familyName(nm);
+  return n ? mergeRoster({family:[n]}) : 0;
+}
 /* ---- QUESTS (client-owned, like the cast) ----
    The DM proposes transitions; the client keeps the book of jobs. The settled
    are served back every turn so the DM finally SEES what is finished - that is
@@ -4586,6 +4617,7 @@ function deriveFromScene(data, skip){
     if(!nm) return;                     /* narration and strangers keep no sheet */
     var sheet = castSheet(nm);          /* a sheet exists the moment someone speaks */
     sheet.seen = stamp;
+    familyOnStage(nm);                  /* ...and so does a place on the family list */
     present.forEach(function(raw2){
       var other = castName(raw2);
       if(other && other !== nm) learned += mergeList(sheet.met, [other], MET_CAP, false);
@@ -4672,6 +4704,29 @@ function canonIsBoard(line){
     }
   }
   for(var q = 0; q < OPENING_CANON.length; q++){ if(String(OPENING_CANON[q]).trim() === t) return true; }
+  /* ...AND THE REVEAL TURN, WHICH IS THE COLD OPEN'S SECOND HALF (v6.26.0). The
+     first click of every run serves OPENING2, and its five canon lines - Pia is a
+     Mudskipper, Mirren was the receiver, Vic went into hiding, the shard is Nine,
+     Vic is in a safehouse - are the board's own words, identical in every run.
+     This walked OPENING_CANON and stopped, so five of the first twelve lines on a
+     player's wrist were stamped THIS TABLE in a mode that has no table. Exactly
+     the v6.14 shape: the reader was silent about being left out. */
+  var oc = (typeof OPENING2 !== "undefined" && OPENING2.canon) || [];
+  for(var r = 0; r < oc.length; r++){ if(String(oc[r]).trim() === t) return true; }
+  /* ...AND THE TEETH, WHICH A DRIVEN RUN FOUND AND NO AMOUNT OF READING DID
+     (v6.26.0). Eleven nights carry a peril, and however it lands - dead, grazed,
+     survived - it writes a line into the record. All three are authored, on the
+     beat, and none of the five keys above is called any of them, so the most
+     dramatic sentence a struggling player ever earns arrived stamped THIS TABLE:
+     "The courier put two rungs between himself and a flooded shaft before the
+     family talked sense." A form has readers, and this one had six. */
+  for(var w = 0; w < SPINE.length; w++){
+    var th = SPINE[w].teeth;
+    if(!th) continue;
+    if(String(th.death || "").trim() === t) return true;
+    if(String(th.grazeCanon || "").trim() === t) return true;
+    if(String(th.surviveCanon || "").trim() === t) return true;
+  }
   return false;
 }
 function mergeCanon(list){
@@ -7906,10 +7961,20 @@ function closeBeat(mode, note){
      runs in a real game - so in a real game he walked into his own cairn still on
      the cast list, still able to speak, with the beat's own anchor putting him
      back ON STAGE. It is a field now, and every path through here reads it. */
-  (b.falls || []).forEach(function(nm){
-    if(roster.fallen.indexOf(nm) === -1) roster.fallen.push(nm);
-  });
+  /* ...AND IT GOES THROUGH mergeRoster NOW (v6.26.0). This pushed straight onto
+     `fallen` and left `family` alone, which cost nothing while nothing in the
+     written game ever put a living name on `family` - and became a double entry
+     the moment something did: Vic on the family row and Vic on the fallen row of
+     the same wrist, on the night he dies. mergeRoster has owned the "a name moving
+     to fallen leaves the family" rule since it was written. Use the door. */
+  if((b.falls || []).length) mergeRoster({fallen: b.falls});
   if(b.stone) mergeMilestones([b.stone]);
+  /* THE JOB THE NIGHT DISCHARGES (v6.26.0). The written game opens exactly one job
+     - the cold open's "the whole story", which is Pia walking him to the safehouse
+     - and had no way at all to close one, so OPEN JOBS carried it as live work for
+     thirty-one nights after Vic had told him the whole story to his face. The beat
+     that settles a job says so, in the corpus, because the plot is data. */
+  if(b.settles) mergeQuests([{title:b.settles, status:"done"}], false, "");
   /* the hunt ends here on every path, forced or chosen, and the client knew it by
      construction and never wrote it down - so nothing stopped the DM giving her a
      line at her own burial the following night. One push turns on two mechanisms
@@ -9094,6 +9159,12 @@ function playAuthored(V, salt){
       var sh = castSheet(sp);
       sh.seen = "Day " + $("hud-day").textContent + ", " + $("hud-loc").textContent;
     }
+    /* OUTSIDE THE SHEET GUARD ON PURPOSE. That guard fires once, on a face the run
+       has never seen; the family list has to survive a save written before it
+       existed, where every sheet is already there and nobody is on the roster.
+       mergeRoster refuses a name it is holding, so saying it every turn costs
+       nothing and repairs an old run on its next authored passage. */
+    if(sp !== "Narration" && !isAnonSpeaker(sp)) familyOnStage(sp);
     lines.push((sp === "Narration" ? "" : sp.toUpperCase() + ": ") + tx);
   });
   if(lines.length){
@@ -14826,6 +14897,7 @@ function dbgReport(){
     R(s, "anchors", b.anchors || []);
     R(s, "reveals", b.reveals || []);
     R(s, "stone", b.stone);
+    R(s, "settles (the job this night discharges)", b.settles);
     B(s, "SCAR (recorded on a forced close)", b.scar);
     B(s, "CANON MERGED ON CLOSE", (b.canon || []).join("\n"));
     if(b.canonAlt) B(s, "CANON (Nine branch, replaces)", b.canonAlt.join("\n"));
@@ -15573,6 +15645,30 @@ function turnDots(b){
   return dots;
 }
 
+/* ---- WHAT TONIGHT IS ABOUT, IN THE WRITTEN GAME (v6.26.0) ----
+   `agendaText` is the DM's sentence and in a novel run it has exactly one writer:
+   the cold open's reveal turn. So the wrist said "Follow Pia through the rain to
+   Vic's safehouse" while the courier was standing in that safehouse on night
+   three, and went on saying it for thirty-one nights after that. Every night in
+   the book already carries a goal, and the written game reads that instead - so
+   the line moves when the night does, and nobody has to write a second one.
+   AND IT IS THE EXIT, NOT THE GOAL, AND DRIVING IS WHAT SETTLED THAT. The goal is
+   the DM's brief and it narrates the night's EVENTS: night two's says "his room is
+   burned, and walking away stops being an option he owns", and the finale's opens
+   "SERIES FINALE. The courier takes custody. The Choir falls." On the wrist that
+   is not a job, it is the end of the chapter printed at the top of it. The exit
+   states a CONDITION and no events - "the courier has accepted out loud that he
+   cannot go back to his old life" - and it is already the sentence this pane shows
+   the moment the night closes, and the one the chronicle keeps. Same words, one
+   phase earlier, so the wrist stops contradicting itself.
+   AND NOT IN THE ROOM. Slack is the far side of the gate: the night is settled,
+   and each pane's own fallback - "nothing owed tonight", "still deciding what it
+   is" - is the true sentence there. Empty on purpose. */
+function headingNow(){
+  if(wildRun()) return agendaText;
+  if(runOver || beatDone() || phase !== "live") return "";
+  return String(beatNow().exit || "").trim() || agendaText;
+}
 function renderTermStatus(){
   var amb = AMBIENCE[currentAmbience] || AMBIENCE["rain-neon"];
   $("term-fix").innerHTML =
@@ -15617,7 +15713,7 @@ function renderTermStatus(){
   } else if(phase === "slack"){
     tb.innerHTML = seasonLine
       + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
-      + esc(agendaText || "Nothing owed tonight. The night is the family's.") + '</div>'
+      + esc(headingNow() || "Nothing owed tonight. The night is the family's.") + '</div>'
       + '<div class="board-turns">THE FAMILY&rsquo;S OWN TIME — ' + slackTurns + ' turn' + (slackTurns === 1 ? "" : "s") + ' in the room</div>'
       + '<div class="hint" style="margin-top:5px">' + shut + ' beat' + (shut === 1 ? "" : "s")
       + ' of the season closed. No clock, no gate, nothing owed. The night moves on when you say so.</div>';
@@ -15628,7 +15724,7 @@ function renderTermStatus(){
     tb.innerHTML = seasonLine
       + '<div class="term-tonight">TONIGHT — ' + esc(TEASES[b.id] || "") + '</div>'
       + '<div style="font-family:Georgia,serif;font-size:var(--tt-body);line-height:1.55;color:var(--ink)">'
-      + esc(agendaText || "Work tonight out as you go. That is the job.") + '</div>'
+      + esc(headingNow() || "Work tonight out as you go. That is the job.") + '</div>'
       + '<div class="board-turns">' + turnDots(b) + ' <span style="color:'
       + (perilTurns > 0 || t >= 3 ? "#ff9d9d" : "#6d5c44") + '">' + esc(mood) + '</span></div>'
       + '<div class="hint" style="margin-top:5px">' + shut + ' beat' + (shut === 1 ? "" : "s")
@@ -15695,7 +15791,7 @@ function renderTermStatus(){
 }
 
 function renderTermJobs(){
-  $("term-agenda").textContent = agendaText
+  $("term-agenda").textContent = headingNow()
     || "No heading on file. Tonight is still deciding what it is.";
 
   var th = $("term-threads"); th.innerHTML = "";
@@ -16137,10 +16233,18 @@ function termBootLines(){
   var mem = runCanon.length + canonArchive.length;
   var link = String(settings.provider || "none").toUpperCase();
   var keyed = !PRESETS[settings.provider] || !PRESETS[settings.provider].needsKey || settings.key;
+  /* THE WRIST DOES NOT ANNOUNCE A LINK IT WILL NEVER USE (v6.26.0). A novel run
+     never reaches the wire - that is the whole promise of the mode - and the boot
+     screen was still reporting OPENROUTER / OK on every cold start of it, which is
+     the same species of untruth as the tolls row the author suspected. The written
+     game says what it actually is. */
+  var linkLine = wildRun() || !runSlug
+    ? "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY")
+    : "LINK ........ NONE / THE BOOK IS ON BOARD";
   return [
     "MUD//OS  " + VERSION_TAG + "   COLD START",
     "CELL ........ 61%   TEMP 31C",
-    "LINK ........ " + link + " / " + (keyed ? "OK" : "NO KEY"),
+    linkLine,
     "STRAP ....... INTACT",
     "GLASS ....... CRACKED (COSMETIC)",
     "MEMORY ...... " + mem + " LINE" + (mem === 1 ? "" : "S") + " RECOVERED",
@@ -18493,7 +18597,8 @@ function rehExtractOne(beatId, store){
       budget: b.budget, floor: beatFloor(b), anchors: b.anchors || [], reveals: b.reveals || [],
       press: b.press || [], canon: b.canon || [], canonAlt: b.canonAlt || null,
       canonA: b.canonA || null, canonB: b.canonB || null,
-      scar: b.scar || "", stone: b.stone || "", tease: TEASES[beatId] || ""
+      scar: b.scar || "", stone: b.stone || "", settles: b.settles || "",
+      tease: TEASES[beatId] || ""
     },
     tempo: tempoLineFor(b.season),
     takes: takes,
@@ -19311,6 +19416,10 @@ function stCorpus(){
   OPENING_CANON.forEach(function(l, i){ add("open/canon" + i, l); });
   (OPENING.scene || []).forEach(function(b, i){ add("open/s" + i, b && b.text); });
   (OPENING2.scene || []).forEach(function(b, i){ add("open2/s" + i, b && b.text); });
+  /* the reveal turn's OWN record lines, which this walker read the prose of and
+     not the canon of - five authored lines outside every predicate since the day
+     they were written (v6.26.0) */
+  (OPENING2.canon || []).forEach(function(l, i){ add("open2/canon" + i, l); });
   return out;
 }
 var ST_DP_NAMES = ["Nine","Pia","Vic","Hesta","Seven","Three","Granny","Five","Mirren","Marek"];
@@ -21407,11 +21516,27 @@ function verdictMap(){
    list, the verb hiding inside the noun, exactly as "will not burn a laundry down" did. Two
    torches became lamps. FIX THE SENTENCE, NOT THE RULE - and note that a fortnight ago this
    walker could not see walkAnswer at all, so that line would have shipped unseen. */
+/* THE v6.26.0 DELTA - ONE ADD, AND IT IS A HOLE CLOSING RATHER THAN PROSE MOVING.
+   `named:Nine` NOW FIRES ON open2/canon3. Not a word of the book changed: the line is
+   "The shard is Nine: a mind Vic was smuggling out of Choir hands before they caught the
+   smell", it has been in the cold open's reveal turn since the beginning, and stCorpus
+   read OPENING2.scene while never reading OPENING2.canon. So five authored record lines
+   sat outside every predicate in this net for the life of the project, and this is the
+   first release in which one of them is visible enough to fire. The fire is CORRECT -
+   the line names Nine, on the turn where Pia tells the courier her name, which is the
+   meeting - and the other four are quiet, which is also correct.
+   THE SAME HOLE HAD TWO MORE ROOMS IN IT, both found the same hour and both by driving
+   rather than reading: canonIsBoard was blind to the same five lines AND to all thirty-
+   three peril outcomes, so a player who nearly drowned in a flooded shaft was told the
+   sentence about it came from a model, in a mode that has no model. Thirty-eight
+   authored lines wearing THIS TABLE. Row (4b2) now asks the whole book at once.
+   AND THE OLD LESSON, AGAIN, WORD FOR WORD: the reader that is silent about being left
+   out cannot report its own hole. It took a run driven with the wrist open. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-take/t4T1p4","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
   "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon5","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
   "named:Five":["a2-annul/Rt3T1r","a2-annul/Rt3r","a2-annul/Rt4p3","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4c0","a2-annul/t4r","a2-annul/t5r","a2-law/Rt4T1r","a2-take/Rt1T1r","a2-take/Rt1c0","a2-take/Rt1p1","a2-take/Rt1r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","a3-for/Rt1T1r","a3-for/Rt1r","a3-for/landsHard0/r0","a3-seize/Rt3p6","want19"],
-  "named:Nine":["a1-carried/Rt0T1r","a1-carried/Rt0r","a1-carried/Rt10T1r","a1-carried/Rt10r","a1-carried/Rt4T1r","a1-carried/Rt4r","a1-carried/Rt7T1r","a1-carried/Rt7r","a1-carried/Rt8T1r","a1-carried/Rt8r","a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/lands0/r1","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/landsHard0/r0","a1-carried/never0","a1-carried/opens0/now","a1-carried/opens0/r0","a1-carried/opens0/r1","a1-carried/scar","a1-carried/t0T1r","a1-carried/t0r","a1-carried/t1T1r","a1-carried/t1r","a1-carried/t2T1r","a1-carried/t2c0","a1-carried/t2r","a1-carried/t4T1r","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt3T1r","a1-chase/Rt3r","a1-chase/Rt7T1r","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/Rt7r","a1-chase/lands0/r0","a1-chase/t4T1r","a1-chase/t4r","a1-exit/Rt1T1r","a1-exit/Rt1r","a1-exit/Rt6T1r","a1-exit/Rt6r","a1-exit/Rt9T1r","a1-exit/Rt9r","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/exits2","a1-exit/landsHard0/r1","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-exit/t0T1p8","a1-exit/t1T1p7","a1-exit/t2T1p4","a1-exit/t2T1r","a1-exit/t2r","a1-exit/t3T1p9","a1-exit/t6p4","a1-exit/walkAns4","a1-fare/Rt1T1r","a1-fare/Rt1r","a1-fare/Rt7T1r","a1-fare/Rt7r","a1-fare/before","a1-fare/t5T1p7","a1-fare/t5T1r","a1-fare/t5r","a1-fare/t6T1p7","a1-hum/Rt2T1r","a1-hum/Rt2r","a1-hum/Rt3T1r","a1-hum/Rt3r","a1-hum/Rt7T1r","a1-hum/Rt7r","a1-hum/Rt8T1r","a1-hum/Rt8r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/lands0/r0","a1-hum/landsHard0/l6","a1-hum/landsHard0/now","a1-hum/landsHard0/r0","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1T1r","a1-hum/t1p4","a1-hum/t1r","a1-hum/t2T1r","a1-hum/t2p1","a1-hum/t2r","a1-late/Rt1T1r","a1-late/Rt1r","a1-late/Rt6T1r","a1-late/Rt6r","a1-late/Rt7T1r","a1-late/Rt7r","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-late/t4T1p5","a1-pack/Rt4T1r","a1-pack/Rt4r","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-pack/t3T1r","a1-pack/t3r","a1-turn/Rt1T1r","a1-turn/Rt1r","a1-turn/Rt3T1r","a1-turn/Rt3r","a1-turn/Rt8T1r","a1-turn/Rt8p3","a1-turn/Rt8r","a1-turn/before","a1-turn/canon0","a1-turn/exits2","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard0/r0","a1-turn/landsHard0/r1","a1-turn/landsHard1/l8","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2T1r","a1-turn/t2r","a1-turn/t6T1r","a1-turn/t6r","a1-turn/walk","a1-turn/walkAns4","a1-vic/Rt3T1r","a1-vic/Rt3r","a1-vic/t2T1p4","a1-vic/t2g","a1-vic/t2p0","a1-vic/t5T1p5","a2-annul/Rt5T1r","a2-annul/Rt5p6","a2-annul/Rt5r","a2-chassis/Rt11T1p11","a2-chassis/Rt11r","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p10","a2-chassis/Rt7r","a2-chassis/Rt8r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t1r","a2-chassis/t2p0","a2-chassis/t5g","a2-chassis/walkAns4","a2-choir/Rt4T1r","a2-choir/Rt4r","a2-door/Rt11T1r","a2-door/Rt11p12","a2-door/Rt11r","a2-door/before","a2-door/opens0/r1","a2-door/t2p5","a2-door/t5T1p1","a2-door/t5T1r","a2-door/t5r","a2-ground/Rt1T1r","a2-ground/t4r","a2-hand/Rt2T1r","a2-hand/t6r","a2-housing/Rt5T1r","a2-housing/Rt5r","a2-housing/Rt9T1r","a2-housing/Rt9r","a2-housing/canonA0","a2-housing/landsHard0/r1","a2-law/Rt6T1r","a2-manual/Rt3T1r","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4T1r","a2-mirren/Rt4p6","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/Rt2T1r","a2-seven/Rt5T1r","a2-seven/Rt5r","a2-seven/canon2","a2-seven/lands0/r2","a2-seven/landsHard0/r2","a2-seven/t2p1","a2-take/Rt6T1r","a2-take/Rt6p1","a2-take/Rt6r","a2-take/t5T1r","a2-take/t5p0","a2-take/t5r","a2-three/Rt4T1p5","a2-three/Rt5p3","a2-turn/Rt5T1r","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1T1r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r1","a3-dreamers/Rt2T1r","a3-dreamers/Rt2r","a3-dreamers/canon8","a3-dreamers/lands0/r2","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/lands1/r0","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/Rt4T1r","a3-for/Rt4r","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2T1r","a3-for/t2r","a3-founding/Rt5T1r","a3-founding/Rt5r","a3-founding/t1T1r","a3-founding/t1r","a3-granny/Rt3T1r","a3-granny/Rt3r","a3-granny/landsHard0/r1","a3-principal/canon6","a3-principal/t5h","a3-principal/t5r","a3-seize/Rt8T1r","a3-seize/Rt8r","a3-seize/canonA0","a3-seize/canonB0","a3-seize/teeth0/r0","a3-stone/Rt2g","a3-stone/Rt2p0","a3-stone/Rt3T1r","a3-stone/Rt3r","a3-stone/lands0/r1","a3-vic/Rt4T1p3","a3-vic/Rt4T1r","a3-vic/Rt4r","a3-vic/landsHard0/r2","a3-vic/opens0/l3","a3-vic/t4c1","a3-vic/t4p3","a3-voice/t4T1r","a3-voice/t4r","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Nine":["a1-carried/Rt0T1r","a1-carried/Rt0r","a1-carried/Rt10T1r","a1-carried/Rt10r","a1-carried/Rt4T1r","a1-carried/Rt4r","a1-carried/Rt7T1r","a1-carried/Rt7r","a1-carried/Rt8T1r","a1-carried/Rt8r","a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/lands0/r1","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/landsHard0/r0","a1-carried/never0","a1-carried/opens0/now","a1-carried/opens0/r0","a1-carried/opens0/r1","a1-carried/scar","a1-carried/t0T1r","a1-carried/t0r","a1-carried/t1T1r","a1-carried/t1r","a1-carried/t2T1r","a1-carried/t2c0","a1-carried/t2r","a1-carried/t4T1r","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt3T1r","a1-chase/Rt3r","a1-chase/Rt7T1r","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/Rt7r","a1-chase/lands0/r0","a1-chase/t4T1r","a1-chase/t4r","a1-exit/Rt1T1r","a1-exit/Rt1r","a1-exit/Rt6T1r","a1-exit/Rt6r","a1-exit/Rt9T1r","a1-exit/Rt9r","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/exits2","a1-exit/landsHard0/r1","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-exit/t0T1p8","a1-exit/t1T1p7","a1-exit/t2T1p4","a1-exit/t2T1r","a1-exit/t2r","a1-exit/t3T1p9","a1-exit/t6p4","a1-exit/walkAns4","a1-fare/Rt1T1r","a1-fare/Rt1r","a1-fare/Rt7T1r","a1-fare/Rt7r","a1-fare/before","a1-fare/t5T1p7","a1-fare/t5T1r","a1-fare/t5r","a1-fare/t6T1p7","a1-hum/Rt2T1r","a1-hum/Rt2r","a1-hum/Rt3T1r","a1-hum/Rt3r","a1-hum/Rt7T1r","a1-hum/Rt7r","a1-hum/Rt8T1r","a1-hum/Rt8r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/lands0/r0","a1-hum/landsHard0/l6","a1-hum/landsHard0/now","a1-hum/landsHard0/r0","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1T1r","a1-hum/t1p4","a1-hum/t1r","a1-hum/t2T1r","a1-hum/t2p1","a1-hum/t2r","a1-late/Rt1T1r","a1-late/Rt1r","a1-late/Rt6T1r","a1-late/Rt6r","a1-late/Rt7T1r","a1-late/Rt7r","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-late/t4T1p5","a1-pack/Rt4T1r","a1-pack/Rt4r","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-pack/t3T1r","a1-pack/t3r","a1-turn/Rt1T1r","a1-turn/Rt1r","a1-turn/Rt3T1r","a1-turn/Rt3r","a1-turn/Rt8T1r","a1-turn/Rt8p3","a1-turn/Rt8r","a1-turn/before","a1-turn/canon0","a1-turn/exits2","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard0/r0","a1-turn/landsHard0/r1","a1-turn/landsHard1/l8","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2T1r","a1-turn/t2r","a1-turn/t6T1r","a1-turn/t6r","a1-turn/walk","a1-turn/walkAns4","a1-vic/Rt3T1r","a1-vic/Rt3r","a1-vic/t2T1p4","a1-vic/t2g","a1-vic/t2p0","a1-vic/t5T1p5","a2-annul/Rt5T1r","a2-annul/Rt5p6","a2-annul/Rt5r","a2-chassis/Rt11T1p11","a2-chassis/Rt11r","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p10","a2-chassis/Rt7r","a2-chassis/Rt8r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t1r","a2-chassis/t2p0","a2-chassis/t5g","a2-chassis/walkAns4","a2-choir/Rt4T1r","a2-choir/Rt4r","a2-door/Rt11T1r","a2-door/Rt11p12","a2-door/Rt11r","a2-door/before","a2-door/opens0/r1","a2-door/t2p5","a2-door/t5T1p1","a2-door/t5T1r","a2-door/t5r","a2-ground/Rt1T1r","a2-ground/t4r","a2-hand/Rt2T1r","a2-hand/t6r","a2-housing/Rt5T1r","a2-housing/Rt5r","a2-housing/Rt9T1r","a2-housing/Rt9r","a2-housing/canonA0","a2-housing/landsHard0/r1","a2-law/Rt6T1r","a2-manual/Rt3T1r","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4T1r","a2-mirren/Rt4p6","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/Rt2T1r","a2-seven/Rt5T1r","a2-seven/Rt5r","a2-seven/canon2","a2-seven/lands0/r2","a2-seven/landsHard0/r2","a2-seven/t2p1","a2-take/Rt6T1r","a2-take/Rt6p1","a2-take/Rt6r","a2-take/t5T1r","a2-take/t5p0","a2-take/t5r","a2-three/Rt4T1p5","a2-three/Rt5p3","a2-turn/Rt5T1r","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1T1r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r1","a3-dreamers/Rt2T1r","a3-dreamers/Rt2r","a3-dreamers/canon8","a3-dreamers/lands0/r2","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/lands1/r0","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/Rt4T1r","a3-for/Rt4r","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2T1r","a3-for/t2r","a3-founding/Rt5T1r","a3-founding/Rt5r","a3-founding/t1T1r","a3-founding/t1r","a3-granny/Rt3T1r","a3-granny/Rt3r","a3-granny/landsHard0/r1","a3-principal/canon6","a3-principal/t5h","a3-principal/t5r","a3-seize/Rt8T1r","a3-seize/Rt8r","a3-seize/canonA0","a3-seize/canonB0","a3-seize/teeth0/r0","a3-stone/Rt2g","a3-stone/Rt2p0","a3-stone/Rt3T1r","a3-stone/Rt3r","a3-stone/lands0/r1","a3-vic/Rt4T1p3","a3-vic/Rt4T1r","a3-vic/Rt4r","a3-vic/landsHard0/r2","a3-vic/opens0/l3","a3-vic/t4c1","a3-vic/t4p3","a3-voice/t4T1r","a3-voice/t4r","open2/canon3","open2/s3","want0","want1","want2","want3","want4"],
   "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt4r","a2-chassis/Rt6r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/landsHard0/r0","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4T1r","a2-chassis/t4r","a2-choir/Rt0T1r","a2-choir/Rt0r","a2-choir/Rt1T1r","a2-choir/Rt1r","a2-choir/t4T1r","a2-choir/t4r","a2-housing/Rt1T1r","a2-housing/Rt1r","a2-housing/Rt8T1r","a2-housing/Rt8r","a2-housing/canonB0","a2-law/Rt5T1r","a2-law/Rt5r","a2-law/Rt7T1r","a2-law/t5r","a2-manual/Rt4T1r","a2-manual/Rt4r","a2-manual/Rt9T1r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/Rt0T1r","a2-seven/Rt0r","a2-seven/Rt1T1r","a2-seven/Rt1r","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/t1r","a2-seven/t4r","a2-seven/teeth/c2","a2-take/Rt3p2","a2-take/Rt4T1r","a2-take/Rt4r","a2-take/before","a2-take/opens0/r0","a2-take/t1T1r","a2-take/t1r","a2-take/t3T1p0","a2-take/t4T1p4","a2-take/teeth/graze","a2-take/teeth0/r2","a2-take/teeth0/s0","a2-turn/Rt0p0","a2-turn/Rt6T1r","a2-turn/Rt6r","a2-turn/lands1/r1","a2-turn/t4r","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1T1r","a3-descent/t1r","a3-descent/t6T1r","a3-descent/t6r","a3-dreamers/Rt2T1p1","a3-dreamers/canon5","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-dreamers/t4T1r","a3-dreamers/t4r","a3-evict/lands1/l6","a3-evict/t3T1r","a3-evict/t3r","a3-evict/t4T1r","a3-evict/t4r","a3-for/goal","a3-for/t4T1r","a3-for/t4r","a3-for/t5T1r","a3-for/t5r","a3-for/t6p1","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-founding/t4T1r","a3-founding/t4r","a3-granny/t6T1r","a3-granny/t6c0","a3-granny/t6p0","a3-granny/t6r","a3-granny/t7T1r","a3-seize/Rt9T1r","a3-seize/Rt9r","a3-seize/landsHard0/r2","a3-seize/t3r","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2T1r","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-vic/t5T1r","a3-vic/t5c0","a3-voice/Rt1T1r","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1T1r","a3-voice/t1r","a3-voice/walkAns0","a3-voice/walkAns7","want14","want15","want16"],
   "named:Three":["a2-annul/Rt0T2p0","a2-annul/Rt0T2r","a2-annul/Rt1T1r","a2-annul/Rt1T2r","a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t1r","a2-annul/t4p0","a2-annul/walkAns0","a2-choir/Rt3T1r","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/lands0/r0","a2-choir/landsHard0/l4","a2-choir/landsHard0/r0","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/t1r","a2-choir/t3r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0T1r","a2-housing/Rt0r","a2-housing/Rt3T1r","a2-housing/Rt3r","a2-housing/Rt4T1p10","a2-housing/Rt6T1r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/opens0/r1","a2-housing/t0r","a2-housing/t2r","a2-housing/t4T1r","a2-housing/t4r","a2-housing/t5T1r","a2-housing/t5r","a2-law/Rt1T1r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p10","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/Rt6p3","a2-law/Rt7p3","a2-law/Rt8T1p5","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1T1r","a2-manual/Rt1r","a2-manual/Rt5T1r","a2-manual/Rt5r","a2-manual/Rt8T1r","a2-manual/Rt8r","a2-manual/lands0/r0","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t2r","a2-manual/t4T1r","a2-manual/t4r","a2-manual/t5T1r","a2-manual/t5r","a2-seven/never0","a2-take/Rnever0","a2-take/Rt2p2","a2-take/Rt3T1r","a2-take/Rt3r","a2-take/Rt6p4","a2-take/aim","a2-take/lands0/r1","a2-take/landsHard0/r2","a2-take/never2","a2-take/opens0/r1","a2-take/t0T1r","a2-take/t0p0","a2-take/t0r","a2-take/t5p6","a2-take/teeth/c0","a2-take/teeth0/r0","a2-three/Rt0r","a2-three/Rt1r","a2-three/Rt2T1r","a2-three/Rt2r","a2-three/Rt3T1r","a2-three/Rt3r","a2-three/Rt4T2r","a2-three/Rt4p2","a2-three/Rt4r","a2-three/Rt5T1r","a2-three/Rt5r","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/exits1","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/lands0/r0","a2-three/lands0/r1","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/landsHard0/r0","a2-three/landsHard0/r1","a2-three/opens0/l0","a2-three/opens0/now","a2-three/opens0/r1","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/t0r","a2-three/t1r","a2-three/t2r","a2-three/t4r","a2-three/walk","a2-three/walkAns0","a2-three/walkAns6","a2-turn/Rt3T1r","a2-turn/Rt3r","a2-turn/Rt5p10","a2-turn/Rt8T1r","a2-turn/Rt8p18","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1p5","a2-turn/t1r","a3-descent/Rt0T1r","a3-descent/Rt0T2p5","a3-descent/Rt0T2r","a3-descent/Rt0r","a3-descent/lands0/r0","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0T1r","a3-descent/t0r","a3-descent/t2T1r","a3-descent/t2r","a3-descent/t5T1r","a3-descent/t5p0","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/Rt0T1r","a3-dreamers/Rt0r","a3-dreamers/Rt3T1r","a3-dreamers/Rt3r","a3-dreamers/lands0/r0","a3-dreamers/landsHard0/r1","a3-dreamers/landsHard0/r2","a3-dreamers/t0T1r","a3-dreamers/t0r","a3-dreamers/t3T1p5","a3-dreamers/t3T1r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/Rt4T1r","a3-evict/Rt4r","a3-evict/lands1/r2","a3-evict/landsHard0/r2","a3-evict/t0r","a3-evict/t2T1r","a3-evict/t2r","a3-evict/t3T1p3","a3-evict/teeth0/s0","a3-for/goal","a3-for/opens0/r0","a3-for/t0T1r","a3-for/t0r","a3-for/t1T1r","a3-for/t1r","a3-for/t2T1p3","a3-for/t2T1p5","a3-founding/Rt0T1r","a3-founding/Rt0r","a3-founding/Rt5p1","a3-founding/lands0/r2","a3-founding/landsHard0/r2","a3-founding/t0T1r","a3-founding/t0r","a3-founding/t2T1r","a3-founding/t2r","a3-granny/Rt0T1r","a3-granny/Rt0p2","a3-granny/Rt0p3","a3-granny/Rt0r","a3-granny/Rt1T1p4","a3-granny/lands0/r1","a3-granny/landsHard0/r2","a3-granny/t2T1p3","a3-principal/t2T1r","a3-principal/t2r","a3-seize/Rt2T1r","a3-seize/Rt2r","a3-seize/Rt7T1r","a3-seize/Rt7r","a3-seize/canon7","a3-seize/landsHard0/r0","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1T1r","a3-stone/Rt1r","a3-stone/Rt2p0","a3-stone/lands0/r0","a3-stone/landsHard0/r2","a3-stone/t1T1r","a3-stone/t1r","a3-vic/Rt1T1p3","a3-vic/Rt2T1r","a3-vic/Rt2r","a3-vic/lands0/r2","a3-vic/t4p3","a3-vic/t4r","a3-voice/t0T1r","a3-voice/t0r","a3-voice/t2T1r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p2","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-carried/walkAns0","a1-chase/t4T1p3","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p3","a1-fare/t5T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1T1p0","a1-hum/t1T1p3","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p3","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-pack/t3r","a1-pack/walkAns5","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2T1p2","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-manual/walkAns2","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
@@ -21859,6 +21984,7 @@ function selfTest(){
     OPENING_CANON.forEach(function(l){ extra.push(l); });
     (OPENING.scene || []).forEach(function(b){ extra.push(b.text); });
     (OPENING2.scene || []).forEach(function(b){ extra.push(b.text); });
+    (OPENING2.canon || []).forEach(function(l){ extra.push(l); });   /* v6.26.0 */
     Object.keys(SCENEBOOK).forEach(function(k){
       var e = SCENEBOOK[k], bi = beatById(k);
       [e, e && e.room].forEach(function(sc){
@@ -22846,6 +22972,168 @@ function selfTest(){
              try{ if(keep2 === null) localStorage.removeItem(TYPE_KEY); else localStorage.setItem(TYPE_KEY, keep2); }catch(e){}
              applyFeedScale();
            }
+         }});
+    })();
+
+    /* ---- (4b2) EVERY AUTHORED RECORD LINE READS AS THE BOARD'S ----
+       THE FAULT: canonIsBoard is what puts BOARD or THIS TABLE beside every line on the
+       wrist and in the archive, and it walked five keys on a beat plus the cold open's
+       canon. It missed the reveal turn's own five lines and all thirty-three peril
+       outcomes - so a player who nearly died was told the sentence about it was model
+       improv, in a mode with no model. Thirty-eight authored lines, and the author found
+       the first five by opening the wrist on a phone.
+       THE ROW ASKS THE WHOLE BOOK AT ONCE, which is what nobody had done: every string
+       in the corpus that can reach runCanon, gathered independently of the predicate and
+       then handed to the real one. */
+    (function(){
+      var lines = [], miss = [];
+      function add(where, v){
+        (Object.prototype.toString.call(v) === "[object Array]" ? v : (v ? [v] : []))
+          .forEach(function(l){ if(typeof l === "string" && l.trim()) lines.push({w:where, t:l.trim()}); });
+      }
+      SPINE.forEach(function(b){
+        ["canon","canonAlt","canonA","canonB","canonSoft"].forEach(function(k){ add(b.id + "/" + k, b[k]); });
+        add(b.id + "/scar", b.scar);
+        add(b.id + "/stone", b.stone);
+        if(b.teeth){
+          add(b.id + "/teeth.death", b.teeth.death);
+          add(b.id + "/teeth.grazeCanon", b.teeth.grazeCanon);
+          add(b.id + "/teeth.surviveCanon", b.teeth.surviveCanon);
+        }
+        var e = SCENEBOOK[b.id];
+        if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+          add(b.id + "/card:" + (t.id || "?"), t.canon);
+        });
+      });
+      add("OPENING_CANON", OPENING_CANON);
+      add("OPENING2.canon", OPENING2.canon);
+      lines.forEach(function(x){ if(!canonIsBoard(x.t)) miss.push(x.w); });
+      /* A PREDICATE THAT SAYS YES TO EVERYTHING SWEEPS CLEAN AND MEANS NOTHING. */
+      var invented = ["The model made this sentence up just now.",
+                      "Vic ordered a pizza and it went fine."];
+      var bites = !invented.some(function(t){ return canonIsBoard(t); });
+      T("every authored record line is stamped BOARD, and invented ones are not",
+        !miss.length && bites,
+        !bites ? "WRONG: canonIsBoard answered BOARD to an invented sentence - it does not bite"
+          : miss.length ? ("WRONG: " + miss.length + " authored line(s) read THIS TABLE - "
+                           + miss.slice(0,6).join(", "))
+          : (lines.length + " authored lines across beat canon, the soft and forked sets, the "
+             + "scars, the stones, the card lines, both halves of the cold open and all "
+             + "thirty-three peril outcomes, every one of them read as the board's - and two "
+             + "invented sentences correctly read THIS TABLE"),
+        {label:"the reveal turn and the peril outcomes outside the walk, as shipped to v6.25.0",
+         was:true,
+         check:function(){
+           /* THE SHIPPED SHAPE, ASKED OF THE REAL FUNCTION. OPENING2.canon and the teeth
+              are hidden from it exactly as the old build hid them, and the real predicate
+              is then asked about a line it used to get wrong. No second copy of the
+              reader: a break that swaps the predicate proves only that two differ. */
+           var keepO = OPENING2.canon, hidden = [], bad = 0;
+           SPINE.forEach(function(b){ if(b.teeth){ hidden.push([b, b.teeth]); b.teeth = null; } });
+           OPENING2.canon = [];
+           try{
+             if(keepO && keepO.length && !canonIsBoard(keepO[0])) bad++;
+             hidden.some(function(p){
+               var t = p[1].surviveCanon || p[1].death;
+               if(t && !canonIsBoard(t)){ bad++; return true; }
+               return false;
+             });
+           } finally {
+             OPENING2.canon = keepO;
+             hidden.forEach(function(p){ p[0].teeth = p[1]; });
+           }
+           /* RETURN THE ROW'S OWN VERDICT, NOT A TALLY OF HITS. The harness reads
+              `caught = ran && !value` - the break must answer what the assertion
+              would say under the defect, and the assertion says "nothing is
+              mislabelled". Written the other way round first, and row (4b3) went
+              GREEN on the inverted value while proving nothing at all. */
+           return bad === 0;
+         }});
+    })();
+
+    /* ---- (4b3) THE WRITTEN GAME FILLS ITS OWN FAMILY LIST AND ITS OWN JOB ----
+       THE FAULT, found by the author opening the wrist on a phone and then driven: the
+       roster had exactly two writers and both of them were the wild table, so THE FAMILY -
+       "who is in it with you" - said THE COURIER, SO FAR on night one and still said it in
+       the Heart Room on night thirty-four, with the only names on it the dead. And THE JOB
+       had one writer, the cold open, so it said "follow Pia to Vic's safehouse" while the
+       courier stood in that safehouse and for thirty-one nights after.
+       THE ROW DRIVES THE REAL FUNCTIONS: familyOnStage over the whole named cast, and
+       headingNow over every beat in the book. */
+    (function(){
+      var keepFam = roster.family.slice(), keepFallen = roster.fallen.slice();
+      var ok = true, why = "", joined = 0;
+      try{
+        roster.family = []; roster.fallen = [];
+        FAMILY_NAMES.forEach(function(n){ familyOnStage(n); });
+        joined = roster.family.length;
+        if(joined !== FAMILY_NAMES.length){ ok = false; why = "the found family did not all land: " + joined + " of " + FAMILY_NAMES.length; }
+        /* the fence: on stage is not the same as at the table */
+        ["Principal","Machine","Architect","The File","The Clerk","Courier"].forEach(function(n){
+          familyOnStage(n);
+          if(ok && roster.family.indexOf(n) !== -1){ ok = false; why = n + " joined the family"; }
+        });
+        /* the dead do not rejoin, and a death takes the name off the living list */
+        roster.family = ["Vic"]; roster.fallen = [];
+        mergeRoster({fallen:["Vic"]});
+        if(ok && roster.family.indexOf("Vic") !== -1){ ok = false; why = "a fallen name stayed on the family row"; }
+        familyOnStage("Vic");
+        if(ok && roster.family.indexOf("Vic") !== -1){ ok = false; why = "the dead rejoined the family"; }
+      } catch(e){ ok = false; why = "familyOnStage threw: " + e; }
+      finally { roster.family = keepFam; roster.fallen = keepFallen; }
+
+      /* and the job: every night has one, and it is never the previous night's */
+      var noHeading = [], stale = 0;
+      if(ok){
+        var keepIdx = beatIdx, keepPhase = phase, keepOver = runOver, seen = {};
+        try{
+          phase = "live"; runOver = "";
+          for(var i = 0; i < SPINE.length; i++){
+            beatIdx = i;
+            var h = headingNow();
+            if(!h){ noHeading.push(SPINE[i].id); continue; }
+            if(seen[h]) stale++;
+            seen[h] = 1;
+          }
+        } finally { beatIdx = keepIdx; phase = keepPhase; runOver = keepOver; }
+        if(noHeading.length){ ok = false; why = noHeading.length + " night(s) with no heading: " + noHeading.slice(0,4).join(", "); }
+        else if(stale){ ok = false; why = stale + " night(s) share a heading with an earlier one"; }
+      }
+
+      T("the written game fills its own family list, and its job moves with the night",
+        ok,
+        ok ? (FAMILY_NAMES.length + " of the found family join by walking on stage, six named "
+              + "outsiders are refused the table, a death takes its name off the living row and "
+              + "will not let it back - and all " + SPINE.length + " nights answer with a "
+              + "heading of their own, none of them repeated")
+           : ("WRONG: " + why),
+        {label:"the roster and the heading left to the wild table's writers, as shipped to v6.25.0",
+         was:true,
+         check:function(){
+           /* THE SHIPPED SHAPE: familyOnStage refused the way wildRun() refused it, and
+              headingNow falling back to agendaText the way it did when no beat field fed
+              it. Both enter the real functions. */
+           var keepMode = runMode, keepAgenda = agendaText, keepFam2 = roster.family.slice();
+           var keepIdx2 = beatIdx, keepPhase2 = phase, keepSlug = runSlug, caught = 0;
+           try{
+             /* AND THE SLUG WITH IT. wildRun() is `runSlug && runMode === "wild"`, and
+                the sweep page has no run on it - so setting the mode alone left both
+                functions on their NEW branch and the break quietly proved nothing.
+                That is the third way a row goes green while asserting air. */
+             runSlug = runSlug || "sweep-break";
+             runMode = "wild";                       /* the branch that used to be the only one */
+             roster.family = [];
+             familyOnStage("Pia");
+             if(!roster.family.length) caught++;      /* nobody ever joined */
+             agendaText = "Follow Pia through the rain to Vic's safehouse.";
+             phase = "live"; beatIdx = 0;
+             var a = headingNow(); beatIdx = Math.min(20, SPINE.length - 1);
+             if(a === headingNow()) caught++;         /* night 21 wearing night one's sentence */
+           } finally {
+             runMode = keepMode; agendaText = keepAgenda; roster.family = keepFam2;
+             beatIdx = keepIdx2; phase = keepPhase2; runSlug = keepSlug;
+           }
+           return caught === 0;    /* the assertion's verdict, not a tally - see (4b2) */
          }});
     })();
 

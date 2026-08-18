@@ -555,6 +555,11 @@ var SPINE = [
  scar:"He learned the door was shut by finding it shut - the Choir chose the moment, not him."},
 
 {id:"a1-vic", season:1, act:1, title:"the safehouse door",
+ /* THE ONE JOB THE COLD OPEN OPENS IS THE ONE THIS NIGHT PAYS OFF. Pia's errand -
+    "Follow Pia to Vic's safehouse, Vic owes the courier the whole story of the
+    personal run, face to face" - is discharged the moment Vic finishes talking,
+    and until v6.26.0 nothing in the written game could say so. */
+ settles:"the whole story",
  goal:"They reach Vic's safehouse. Vic is warm, guilty, and finally talking: Mirren, the smuggle, why he went dark - the whole story of the job, freely given. He answers everything about the run and dodges exactly one question: why this courier, of all couriers.",
  exit:"they are inside the safehouse and Vic has told the story of the job",
  aim:"get them through Vic's door and make Vic talk - all of it except why this courier",
