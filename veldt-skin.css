@@ -394,6 +394,28 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   .title{font-size:calc(12.5px * var(--feed-scale));letter-spacing:.2em}
   header .meta > span{font-size:calc(10px * var(--feed-scale));letter-spacing:.04em}
   header button.small{font-size:calc(10px * var(--feed-scale));padding:3px 8px;margin-left:0}
+  /* THE LEDGER GOES ON A PHONE. It says where saves are written, which is a fact you check
+     once and then never again, and it was rendering LARGER than the day and the place beside
+     it because #ledger is an ID selector and beat the class rule styling its neighbours.
+     It is still on the desktop bar and still in SETTINGS. */
+  #ledger{display:none}
+
+  /* ---- ONE LINE AT TINY (v6.23.0) ----
+     Wrapping is right at every other size: the header takes two rows and nobody minds. TINY
+     is a reader asking for the maximum, so the bar is pinned to a single row and the PLACE
+     NAME is the part allowed to give - it ellipses, because it is the one item here that is
+     both long and re-readable in the scene line four inches below. The wordmark, the day,
+     the clock and the two buttons never shrink and never truncate. */
+  html.read-tiny header{flex-wrap:nowrap;overflow:hidden}
+  html.read-tiny header .meta > span{white-space:nowrap;flex:0 0 auto}
+  /* THE PLACE AND THE DRAWER CHIP ARE THE TWO THAT GIVE. A clipped button is an
+     UNREACHABLE button, and SETTINGS is where the reader size lives - so everything
+     that can be long shrinks and ellipses before a control is allowed to leave the
+     screen. Measured in the drawer, whose take chip is the longest thing this bar
+     ever carries: without this, SETTINGS ended at 419px on a 375px screen. */
+  html.read-tiny #hud-loc,
+  html.read-tiny #rehchip{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  html.read-tiny header button.small{flex:0 0 auto}
   /* NO AUTO MARGIN ON MENU. It pushed MENU to the far right and left SETTINGS to wrap
      ALONE onto a row of its own, which spends a whole line to right-align one button.
      Flowing them together after the text keeps the pair on one row. */
