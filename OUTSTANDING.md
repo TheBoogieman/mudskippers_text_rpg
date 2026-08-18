@@ -60,7 +60,7 @@ nine separate waves reaching them.
 | ~~4~~ | ~~the narration floor~~ | | **DONE v5.78.0 – v5.83.0, ~470 blocks** |
 | ~~5~~ | ~~the two pinned nights past 50%~~ | | **DONE v5.86.0 – v5.89.0, 516 blocks** |
 | ~~6~~ | ~~the closings audit~~ | | **DONE v5.90.0 + v5.91.0, 60 landing lines** |
-| 7 | the contraction band | `band.js`, `band-pass.js` | **STARTED v5.93.0 — 354 of 1,425 swaps** |
+| ~~7~~ | ~~the contraction band~~ | | **DONE v5.93.0 + v5.94.0 — 1,485 swaps, 9% → 37%** |
 | 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
 
 **PASS 3 IS THE CHEAPEST HIGH-VALUE ONE AND IT PAYS THREE DEBTS AT ONCE.** The author's note

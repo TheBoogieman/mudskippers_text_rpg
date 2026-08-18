@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.93.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
+**v5.94.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -80,17 +80,23 @@ shared line** — it is the hook into the next night and has to land the same wa
 `a2-turn` 8/9/8/8 → 13/12/11/11 · `a3-evict` 5/7/5 → 9/10/8. **No night in the book now
 ends smaller than the night it is ending.**
 
-**PASS 7 IS STARTED AND PRICED. 1,425 SWAPS ACROSS THE BOOK; 354 DONE at v5.93.0.**
-`a2-chassis` and `a2-door` are on band for every speaker. **The plan said nights 11-22 and
-the measurement says otherwise:** season 1 is largely done already (33-49%), nights 10-22
-are the untouched block, and Book Three is mixed - `a3-seize` is at 71% and most of the
-rest are at 3-16%. `node scratchpad/band.js` prints the per-night bill, worst first.
+**PASS 7 IS DONE (v5.93.0 + v5.94.0), WHOLE BOOK BY THE AUTHOR'S RULING.** 1,485 swaps.
+**Book-wide 19% → 37%**, from the 9% the diagnosis measured. Every speaker on band: Vic 59
+(60), Pia 58 (65), Hesta 44 (45), Marek 60 (55), Seven 28 (30), Three 16 (15), Nine 9 (10).
+Machine and Principal untouched at 0%. **Mirren untouched at 35% — her alternation between
+the law and the intimacy is a deliberate spread and `band-pass.js` is told to leave her
+alone by name.** 294 swaps remain and are not worth taking: they are the residue of
+per-card rounding, and a budget does not have to be spent to the penny.
 
-**USE `band-pass.js`, NOT `contract-pass.js`.** The old tool converts EVERY available
-instance, which lands Hesta near 100% against a target of 45%. The new one spends to the
-target and splits the budget room-high / evening-low, per card. **Read the diff by eye
-afterwards every time** - no law in this project reads English, and all three faults in
+**USE `band.js` TO PRICE AND `band-pass.js` TO APPLY — NEVER `contract-pass.js`,** which
+converts every available instance and lands Hesta near 100% against a target of 45%.
+**Read the diff by eye after every night.** No law here reads English; all three faults in
 the new tool were found that way, two of them shipped grammar.
+
+**STILL OWED TO THE AUTHOR: the per-card list.** He ruled that the mechanical spread
+(room high, evening low) is not the finished shape, and asked for a list of the cards where
+a character's rate looks wrong for what they are doing in it — formal, frightened, on the
+record — to rule card by card.
 
 After that pass 8: the nerve pass, the plausibility pass, and the two lore folds.
 
