@@ -148,6 +148,11 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
 .choice .again{
   border:1px solid #26303f;background:#0f151e;border-radius:2px;
   padding:2px 6px;font-size:10px;color:#6d7789;opacity:1;line-height:1.6;
+  /* the floor sets the layout (own line, right margin); this keeps the chip look. The
+     two must agree about the box or the skinned badge floats and the unskinned one does
+     not, which is two behaviours nobody is testing. */
+  display:block;float:none;clear:both;width:-moz-fit-content;width:fit-content;
+  margin:7px 0 0 auto;
 }
 .choice:hover .again{border-color:#3c3320;color:var(--sodium)}
 /* stall: the house style, deliberately the quietest of the three */

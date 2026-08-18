@@ -81,9 +81,16 @@
   /* THE ROW THAT IS ASKING AGAIN says who and which time, quietly, to the right of the
      sentence. Quiet on purpose: it is a signpost, not a second voice - it must never
      compete with the line it is labelling. The skin restyles it; this is the floor. */
+  /* ITS OWN LINE (v6.11.0). This floated right, and a float lands where it is
+     ENCOUNTERED - after the text, so on a wrapped question it tucked in behind the last
+     full stop and read as a tail on the sentence rather than a label on the row. Measured
+     at 375px: a three-line question put the badge 59px down a 93px row. It is a block on
+     its own line now, at the right margin, so a choice of any length reads to its own end
+     before the label appears. */
   .choice .again{
-    float:right;margin-left:12px;font-family:ui-monospace,Menlo,monospace;font-size:10px;
-    letter-spacing:.12em;color:var(--ink-dim);opacity:.72;line-height:1.9;white-space:nowrap;
+    display:block;float:none;clear:both;width:-moz-fit-content;width:fit-content;
+    margin:7px 0 0 auto;font-family:ui-monospace,Menlo,monospace;font-size:10px;
+    letter-spacing:.12em;color:var(--ink-dim);opacity:.72;line-height:1.6;white-space:nowrap;
   }
   .choice:hover .again{opacity:1;color:var(--sodium)}
   .mudrow{display:flex;gap:8px}
@@ -1741,7 +1748,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.10.2 "Half An Update Is A Bug"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.11.0 "A Label, Not A Tail"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2443,7 +2450,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.10.2";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.11.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
