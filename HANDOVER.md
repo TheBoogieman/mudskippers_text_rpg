@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.96.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
+**v6.2.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -1039,3 +1039,41 @@ the file**. It was - and it lives in `named:Five`. **A UNIQUENESS CHECK OVER A F
 SCOPE CHECK.** The drift net reported `named:Five` losing a line on the very next run, which
 is exactly its job. The repair finds the array by its KEY and edits inside that slice only,
 and the lesson is written above `VERDICT_FIXTURE`.
+
+---
+
+## THE SAVE TERM IS LIFTED (2026-08-18), AND THE ELLIPSIS IS BACK (v6.2.0)
+
+**RULED: "Don't worry about the saves, nobody's playing the game right now."** The standing
+term *nothing breaks a current run* is lifted. **That was the only thing blocking THE CAPTURE
+BEAT** - inserting into `SPINE` shifts every `beatIdx` at or after it, and `beatIdx` is a
+position live saves hold. It is now allowed. **Ask again if a new run starts.**
+**`settings.key` is NOT covered by that lift.** It is a credential, it was destroyed once,
+and the rule does not move.
+
+**THE LEADING ELLIPSIS: 285 authored blocks, and the fix is one guard.** `showScene` scrubbed
+leading punctuation off every block. The scrub exists for a model that opens a block with the
+tail of the punctuation it meant to put somewhere else - and it ate *"...Not have it."*,
+*"...Walking on."*, *"...Ah."*, all 285 of them, which are the beat of hesitation the lines
+are written for.
+
+**PROVED BEFORE IT WAS TOUCHED, WITH A CONTROL.** `renderBlock` and `playAuthored` both keep
+the ellipsis; `showScene` strips it. After the fix, `showScene` keeps it on an authored block
+and still scrubs a `__composed` one. And the same Pia line on night 27, driven the same way
+through the drawer before and after, came back with its ellipsis.
+
+**THE STRIP IS A NAMED FUNCTION NOW - `leadPunctStrip` - for exactly the reason `blockCapFor`
+is one:** so the sweep can restore the shipped shape and watch the claim fail. Row **(4a1b)**
+asserts BOTH halves together, because a fix that just deleted the scrub would sail through an
+authored-only assertion and hand the storyteller's stray punctuation back to the page.
+**Sweep is 78 PROVED of 103.**
+
+### WHAT IS LEFT ON THE BOARD
+
+| item | shape |
+|---|---|
+| **the capture beat** | **NOW UNBLOCKED.** A whole new night between `a2-choir` and `a2-annul`: the ambush, what it costs, a Choir officer in a shack with a recovery team already looking. SPINE insert + SCENEBOOK entry + both decks. The big one. |
+| the Mirren Doctrine | *machines serve, never harvest*, on night 19 - a REOPENING of a finished night, and it must read as the family reaching back to her grave for the name |
+| the fate-one rhyme | "taking turns" rhymes with fate one and nobody has ever said it out loud. Night 20's room walks close and turns round. Probably Three, possibly Five |
+| Five and the vault | after night 20 he appears twice and never becomes the way in; the descent has Marek instead |
+| Vic's file | load-bearing on night 20 and still a document rather than a voice - whether it gets a nameplate of its own is an open question for the author |

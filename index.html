@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.1.0 "Ask Pia What Vic Is Actually Like"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.2.0 "...Not Have It."
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.1.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.2.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4587,6 +4587,17 @@ function mergeCanon(list){
    skeleton - prints what it was written with. Zero means no cap. */
 var BLOCK_CAP = 9;
 function blockCapFor(data){ return (data && data.__composed) ? BLOCK_CAP : 0; }
+/* A STRAY LEADING FULL STOP IS THE STORYTELLER'S SLIP, NOT THE BOOK'S HABIT (v6.2.0).
+   The scrub inside showScene existed because a model opens a block with the tail of the
+   punctuation it meant to put somewhere else. It also ate every authored ellipsis that
+   reached the page through showScene, and the book opens 285 blocks with one ON PURPOSE -
+   "...Not have it.", "...Walking on.", "...Ah." - because that is the beat of hesitation
+   before a line, which is the whole reason those lines are written that way.
+   IT IS A NAMED FUNCTION SO THE SWEEP CAN PUT THE BROKEN SHAPE BACK and watch the claim
+   fail, which is the only reason blockCapFor above is a function too. */
+function leadPunctStrip(data, text){
+  return (data && data.__composed) ? String(text).replace(/^[\s.,;:]+/, "") : text;
+}
 function showScene(data, logIt, instant){
   sceneCollapsed = false;
   /* a block with no word in it is not a line. A Narration block whose entire text
@@ -4690,8 +4701,15 @@ function showScene(data, logIt, instant){
          because everything downstream reads the scene after this. */
       b.speaker = speakerName(b.speaker);
       /* a stray leading full stop: the storyteller opens a block with the tail of
-         the punctuation it meant to put somewhere else */
-      b.text = b.text.replace(/^[\s.,;:]+/, "");
+         the punctuation it meant to put somewhere else.
+         ...AND IT IS THE STORYTELLER'S SLIP, NOT THE BOOK'S HABIT (v6.2.0). The book
+         opens 285 authored blocks with an ellipsis on purpose - "...Not have it.",
+         "...Walking on.", "...Ah." - and it is the beat of hesitation before a line,
+         which is exactly what those lines are for. This scrub ate every one of them
+         that reached the page through showScene. Guarded on __composed, which is the
+         same discriminator blockCapFor already uses one screen up and for the same
+         reason: a card that plays itself is not a model that needs correcting. */
+      b.text = leadPunctStrip(data, b.text);
       /* ...and the backtick. The format rules forbid unescaped double quotes inside
          a JSON string, so the storyteller reaches for the next thing on the keyboard
          and the player gets `There are enough chairs for all of you` in the prose. */
@@ -20511,6 +20529,24 @@ function verdictMap(){
    ONE NEW CONTRAST APPEARED AND IT IS IN DIALOGUE. Narration is unchanged at 28 of a ceiling
    of 28 - the before-and-after lists of narration contrasts are identical, line for line.
    A contraction cannot make narration worse; it can only shorten a character.
+   v6.2.0 - THE BEAT OF HESITATION COMES BACK: 285 AUTHORED ELLIPSES.
+   The book opens 285 blocks with a leading ellipsis on purpose - "...Not have it.",
+   "...Walking on.", "...Ah." - and showScene ate every one that reached the page through
+   it. The scrub was written for a model that opens a block with the tail of the
+   punctuation it meant to put somewhere else; it was never meant for the author.
+   PROVED BEFORE IT WAS CHANGED, with a control: renderBlock and playAuthored both keep
+   the ellipsis, showScene strips it, and the same line driven through a rehearsal on
+   night 27 came back without it. After the fix the same line on the same route keeps it.
+   THE STRIP IS A NAMED FUNCTION NOW, leadPunctStrip, for the reason blockCapFor is one:
+   so the sweep can put the shipped shape back and watch the claim fail. New row (4a1b)
+   asserts BOTH halves in one row - an authored ellipsis reaches the page AND a composed
+   reply is still scrubbed - because a fix that merely deleted the scrub would have
+   passed an authored-only assertion and handed the storyteller's stray punctuation back.
+   Sweep 78 PROVED of 103.
+   AND THE SAVE TERM IS LIFTED. The author ruled that nobody is mid-run, so the standing
+   "nothing breaks a current run" no longer blocks the SPINE insert - which is the one
+   thing the capture beat was waiting on. settings.key is not covered by that lift and
+   never will be.
    v6.1.0 - SECTION G IS CLOSED, AND THE TOOL IT NAMED AS THE METER HAD A HOLE IN IT.
    OUTSTANDING says 123 lines remain; allrails.js reported ONE, because section G predicted
    correctly that this work rides the narration pass. That one is named now.
@@ -20902,7 +20938,7 @@ function selfTest(){
     /* ...and the block cap (v5.64.0), which is a different cap from replyCap above:
        replyCap is the model's token budget, blockCapFor is how many blocks reach
        the page - and until this release the second one was applied to the book. */
-    "blockCapFor", "showScene",
+    "blockCapFor", "leadPunctStrip", "showScene",
     /* ...and the mannerism scan (v5.72.0). It is production code rather than a scratch
        script for one reason: the scratch script read SPOKEN blocks only, so the narration
        pass spent three releases writing the exact habit it had been ruled to remove and
@@ -23445,6 +23481,38 @@ function selfTest(){
              /* the claim: an authored card arrives whole. Under the break it cannot have. */
              return d.scene.length === 12;
            } finally { window.blockCapFor = keep; }
+         }});
+    })();
+
+    /* ---- (4a1b) THE BEAT OF HESITATION ----
+       285 authored blocks in this book open with an ellipsis, and showScene ate every one
+       of them that reached the page through it. The scrub is for a model that opens a
+       block with the tail of somebody else's punctuation; it is not for the author. */
+    (function(){
+      var L = "...I arranged a night. Tea.";
+      var authored = {scene:[{speaker:"Vic", text:L}], choices:[]};
+      var composed = {scene:[{speaker:"Vic", text:L}], choices:[], __composed:true};
+      showScene(authored, false, true);
+      showScene(composed, false, true);
+      var keptAuthored = authored.scene[0].text === L;
+      var scrubbedModel = composed.scene[0].text === "I arranged a night. Tea.";
+      T("an authored ellipsis reaches the page, and a model's stray punctuation does not",
+        keptAuthored && scrubbedModel,
+        keptAuthored
+          ? (scrubbedModel ? "the authored block keeps its leading ellipsis and the composed one is still scrubbed"
+                           : "WRONG: the scrub no longer bites on a composed reply")
+          : "WRONG: the authored block still lost its ellipsis",
+        {label:"the scrub applied to every block, which is every build up to v6.1.0 - the shape that ate 285 authored ellipses",
+         was:true,
+         check:function(){
+           var keep = window.leadPunctStrip;
+           try{
+             /* the shipped shape, restored exactly: everybody gets scrubbed */
+             window.leadPunctStrip = function(d, t){ return String(t).replace(/^[\s.,;:]+/, ""); };
+             var d = {scene:[{speaker:"Vic", text:L}], choices:[]};
+             showScene(d, false, true);
+             return d.scene[0].text === L;   /* the claim. Under the break it cannot hold. */
+           } finally { window.leadPunctStrip = keep; }
          }});
     })();
 
