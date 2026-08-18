@@ -33,9 +33,13 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
 /* ---- the feed: this is a text game, so reading is the product ---- */
 #feed{padding:26px 0 34px}
 .inner{max-width:730px;padding:0 24px}
-.block{font-size:16.5px;line-height:1.72;margin-bottom:18px;text-wrap:pretty}
-.narr{color:#b6c0cf;font-size:18px;line-height:1.68}
-.sys{font-size:13.5px;line-height:1.75;color:#9aa6b6}
+/* EVERY SIZE IN THE FEED HANGS OFF ONE NUMBER (v6.20.0), so that the reader control in
+   SETTINGS is a single property set on <html> rather than a sweep through a stylesheet.
+   The ladder lives in the game; this is only the multiplier it turns. */
+:root{--feed-scale:1}
+.block{font-size:calc(16.5px * var(--feed-scale));line-height:1.72;margin-bottom:18px;text-wrap:pretty}
+.narr{color:#b6c0cf;font-size:calc(18px * var(--feed-scale));line-height:1.68}
+.sys{font-size:calc(13.5px * var(--feed-scale));line-height:1.75;color:#9aa6b6}
 .divider{color:#39465a;margin:30px 0}
 
 /* the premise line. It is the one green thing on the screen; give it a
@@ -47,12 +51,15 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
 }
 .block.beatcard .tag{display:block;margin-bottom:5px;color:#8fc98a;font-size:9.5px;letter-spacing:.22em;text-shadow:0 0 10px rgba(143,201,138,.35)}
 .block.beatcard .sum{color:#cfe0cb}
+/* the premise card and the aside ride the reader scale too - the SETTINGS hint says the
+   feed moves TOGETHER, and a block that sat the change out would make that a lie. */
+.block.beatcard{font-size:calc(11px * var(--feed-scale))}
 
 /* the DM's asides: amber, with a lamp instead of a border */
 .block.dmaside{
   border:1px solid #5c4a1e;border-radius:3px;padding:11px 14px 11px 30px;
   background:linear-gradient(90deg,rgba(242,193,78,.06),rgba(242,193,78,.015));
-  position:relative;font-size:14.5px;line-height:1.62;
+  position:relative;font-size:calc(14.5px * var(--feed-scale));line-height:1.62;
 }
 .block.dmaside:before{
   content:"";position:absolute;left:13px;top:18px;width:6px;height:6px;border-radius:50%;
@@ -335,6 +342,21 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
             mask-image:linear-gradient(180deg,#000 62%,transparent 98%)}
   #pressure{padding:4px 10px;margin-bottom:6px;font-size:9.5px;letter-spacing:.14em}
   #pressure .ticks{width:74px}
+
+  /* ---- THE CARD WAS HALF THE WINDOW (v6.20.0) ----
+     Measured at 375x812 after the rail was fixed: an 87-CHARACTER LINE OF DIALOGUE stood
+     139px tall in a 288px feed. One sentence, half the reading area, and the author said so.
+     Three things were doing it and only one of them was the font. Line-height was 28.38px
+     on 16.5px text - a ratio of 1.72, which is a generous DESKTOP measure and airy on a
+     phone. The card's side padding was 22px, which does not merely add width, it NARROWS
+     THE COLUMN and buys extra wraps. And the type ran a notch above what a 375px screen
+     wants. All three move; the prose is untouched. */
+  :root{--feed-scale:.92}
+  .block{line-height:1.5;margin-bottom:13px}
+  .narr{line-height:1.52}
+  .sys{line-height:1.55}
+  .block:has(> .tag + span){padding:10px 13px 11px 13px}
+  .block.beatcard,.block.dmaside{padding-left:13px;padding-right:13px}
 
   /* the rows themselves: same words, less frame. 15.5px is kept - this is the text the
      player reads to decide, and shrinking it would be paying with the wrong thing. */

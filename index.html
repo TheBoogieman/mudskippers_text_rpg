@@ -746,10 +746,10 @@
     header{padding:8px 12px 7px;gap:8px}
     .title{font-size:12.5px;letter-spacing:.22em}
     .meta{gap:7px;font-size:10px;letter-spacing:.05em;margin-left:0;width:100%}
-    /* and the small print stops being small print: these carry the night's state and
-       the room's own voice, and were shipping at 13.5px against prose at 18px. */
-    .block.sys{font-size:14.5px;line-height:1.6}
-    .block.dmaside{font-size:15px;line-height:1.6}
+    /* v6.18.0 RAISED .sys AND .dmaside HERE AND THE AUTHOR SAID THEY WERE TOO BIG.
+       Withdrawn: the skin's own 13.5px stands, and everything in the feed now rides the
+       one --feed-scale multiplier that SETTINGS turns, so a reader who wants them larger
+       raises the whole feed together instead of getting one hardcoded exception. */
 
     /* ---- ONE TURN, ONE SCREEN, ONE SCROLL (v6.19.0) ----
        THE AUTHOR PLAYS IN DESKTOP MODE ON A PHONE, and the reason he gave is the whole
@@ -1763,6 +1763,16 @@
       </select>
       <div class="hint">FULL adds live rain, wind, lightning, firelight, embers, dust and drifting motes on a canvas <i>behind</i> every word — twelve skies, each painted differently. CALM is the classic soft wash. OFF turns the atmosphere off entirely. Reduced-motion settings always win. The pressure signals — the strip and the closing walls — stay visible in every mode.</div>
     </div>
+    <div class="fld">
+      <label>READER SIZE</label>
+      <select id="s-type">
+        <option value="0.82">COMPACT — most words on screen</option>
+        <option value="0.92">SMALL</option>
+        <option value="1">NORMAL</option>
+        <option value="1.12">LARGE</option>
+      </select>
+      <div class="hint">Scales every word in the feed together — dialogue, narration and the small print — so the balance between them never changes. It takes effect the moment you pick it and does not wait for SAVE, because it is kept on this device rather than with your table settings. <b>On a phone the game starts at SMALL</b>, which is where a line of dialogue stops taking half the screen; COMPACT goes further if you would rather scroll less than read large.</div>
+    </div>
     <div class="btnrow">
       <button class="btn" id="s-test">TEST CONNECTION</button>
       <button class="btn" id="s-save">SAVE</button>
@@ -1795,7 +1805,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.19.0 "One Turn, One Screen"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.20.0 "The Reader Decides"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2497,7 +2507,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.19.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.20.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -14054,6 +14064,36 @@ $("s-visuals").onchange = function(){
   saveSettings();
   applyVisuals();
 };
+/* ---- THE READER SIZE (v6.20.0) ----
+   IT IS DELIBERATELY NOT PART OF `settings`, AND THAT IS THE WHOLE DESIGN NOTE. Everything
+   in that object goes through saveSettings(), which writes localStorage["mud-settings"] -
+   the object the author's API key lives in, and the one thing in this project that must
+   never be written by anything doing an unrelated job. A reading preference has no business
+   anywhere near a credential, so it gets its own key and its own two functions, and SAVE
+   never touches it. It applies on pick rather than on save for the same reason.
+   ONE PROPERTY ON <html>, because every size in the feed is calc(px * var(--feed-scale)) -
+   see veldt-skin.css. An inline property set here beats the stylesheet, including the phone
+   default, so choosing NORMAL on a phone genuinely gives you NORMAL. */
+var TYPE_KEY = "mud-type";
+function feedScaleSaved(){
+  try{
+    var v = parseFloat(localStorage.getItem(TYPE_KEY) || "");
+    return (v >= 0.7 && v <= 1.4) ? v : null;      /* a corrupt value reads as "unset" */
+  }catch(e){ return null; }
+}
+function applyFeedScale(){
+  var v = feedScaleSaved();
+  /* unset means "let the stylesheet decide", which is how the phone default survives */
+  if(v === null) document.documentElement.style.removeProperty("--feed-scale");
+  else document.documentElement.style.setProperty("--feed-scale", String(v));
+  var sel = $("s-type");
+  if(sel) sel.value = v === null ? "" : String(v);
+}
+if($("s-type")) $("s-type").onchange = function(){
+  try{ localStorage.setItem(TYPE_KEY, $("s-type").value); }catch(e){}
+  applyFeedScale();
+};
+applyFeedScale();
 /* Browsers DO let an https page reach http://localhost - localhost is a
    potentially-trustworthy origin and is exempt from mixed-content blocking, so
    the published build talks to a local model perfectly well. Some embedded
@@ -21471,7 +21511,7 @@ function selfTest(){
      Credit is observed now, not read: every named function is wrapped for the
      duration of the check and the check is credited only if one of them was actually
      ENTERED. Nothing about this can be satisfied by writing a name down. */
-  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "walkAnswerFor", "playWalkAnswer", "walkSpeakerFaults", "cardCanon", "beatPointerFrom", "attemptClose", "applyTension",
+  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "walkAnswerFor", "playWalkAnswer", "walkSpeakerFaults", "cardCanon", "feedScaleSaved", "applyFeedScale", "beatPointerFrom", "attemptClose", "applyTension",
     "namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
     "sceneContract", "relaySpeaker", "relayCard", "cardIsMuted", "revealLeak", "tellHit", "tellHay",
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
@@ -22702,6 +22742,65 @@ function selfTest(){
            var keep = host.t.canon;
            try{ delete host.t.canon; var r = drive(); return !r.err && r.after !== -1; }
            finally { host.t.canon = keep; }
+         }});
+    })();
+
+    /* ---- (4b1) THE READER SIZE NEVER TOUCHES THE KEY STORE ----
+       localStorage["mud-settings"] holds the author's API key, and the one standing rule of
+       this repo is that nothing writes it while doing an unrelated job - a run was destroyed
+       once by a save that set key:"" on the way past. A reading preference is exactly the
+       kind of small convenience that gets bolted onto the settings object because the object
+       is already there, so the separation is asserted rather than remembered.
+       DRIVEN, NOT READ: the real applyFeedScale is run over a corrupt value, an out-of-range
+       value and an absent one, and mud-settings is weighed before and after. */
+    (function(){
+      var before = (function(){ try{ return localStorage.getItem("mud-settings"); }catch(e){ return null; } })();
+      var keep = null, ok = true, why = "";
+      try{ keep = localStorage.getItem(TYPE_KEY); }catch(e){}
+      try{
+        if(TYPE_KEY === "mud-settings"){ ok = false; why = "the reader size is stored IN the key store"; }
+        /* a corrupt or out-of-range value must read as "unset" rather than reach the page */
+        try{ localStorage.setItem(TYPE_KEY, "garbage"); }catch(e){}
+        if(ok && feedScaleSaved() !== null){ ok = false; why = "a corrupt value was accepted"; }
+        try{ localStorage.setItem(TYPE_KEY, "99"); }catch(e){}
+        if(ok && feedScaleSaved() !== null){ ok = false; why = "an out-of-range value was accepted"; }
+        try{ localStorage.setItem(TYPE_KEY, "1.12"); }catch(e){}
+        if(ok && feedScaleSaved() !== 1.12){ ok = false; why = "a good value did not survive the round trip"; }
+        applyFeedScale();
+      } catch(e){ ok = false; why = "applyFeedScale threw: " + e; }
+      finally {
+        try{ if(keep === null) localStorage.removeItem(TYPE_KEY); else localStorage.setItem(TYPE_KEY, keep); }catch(e){}
+        applyFeedScale();
+      }
+      var after = (function(){ try{ return localStorage.getItem("mud-settings"); }catch(e){ return null; } })();
+      if(ok && after !== before){ ok = false; why = "mud-settings CHANGED while setting a reading size"; }
+
+      T("the reader size is kept away from the key store",
+        ok,
+        ok ? ("stored under \"" + TYPE_KEY + "\", clamped to a sane range, corrupt and "
+              + "out-of-range values read as unset, and mud-settings came through the whole "
+              + "exercise byte-identical"
+             + " · DECLARED, NOT FAKED: the only true broken form of this row is a build"
+             + " that stores the reading size in mud-settings, and PROVING it would mean this"
+             + " harness writing the file the API key lives in. It will not. A tautology was"
+             + " written here first, passed, and was correctly reported as a restatement.")
+           : ("WRONG: " + why),
+        {label:"no clamp on the stored size, so any number on disk reached the page",
+         was:true,
+         check:function(){
+           /* THE STORE PUT INTO THE FAULTY SHAPE, ASKED OF THE REAL READER. This enters
+              feedScaleSaved, which is the whole point - a check that touches no production
+              code proves nothing, and the tautology written here first said so out loud. */
+           var keep2 = null;
+           try{ keep2 = localStorage.getItem(TYPE_KEY); }catch(e){}
+           try{
+             localStorage.setItem(TYPE_KEY, "99");
+             return feedScaleSaved() !== null;      /* the claim. A clamped reader says no. */
+           } catch(e){ return false; }
+           finally {
+             try{ if(keep2 === null) localStorage.removeItem(TYPE_KEY); else localStorage.setItem(TYPE_KEY, keep2); }catch(e){}
+             applyFeedScale();
+           }
          }});
     })();
 
