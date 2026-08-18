@@ -63,15 +63,23 @@ random beat and the last one.
 
 ---
 
-## 4. A REAL SAVE ACROSS THE SPINE INSERT — *verification, and it needs the author*
+## 4. A REAL SAVE ACROSS THE SPINE INSERT — **DONE, and it found a defect**
 
-Inserting `a2-take` into the middle of `SPINE` shifted every night index after it. Saves
-resolve by **name** and sweep row **(4a5)** proves it with a save carrying a deliberately
-wrong number.
+**It did not need the author's machine.** The rehearsal drawer can build the exact case: take
+a live save at a night after the insert, put the index it would have carried *before* the
+insert back into it, and hand it to the real `restoreFromBlob`.
 
-**What has not happened is opening an actual saved run.** If there is a run parked in Book
-Two on the author's machine, opening it is the last piece — it should land exactly where it
-was left.
+**Name plus stale number came back perfectly** — right night, and the whole run identical
+down to the canon count, the chassis holder and the run slug. The number it carried now
+points at the night before, so without the name it would have resumed a night early.
+
+**AND THE NAMELESS CONTROL LANDED ON THE SERIES FINALE.** A save too old to carry a name fell
+to the frozen v3.4 order, where the lookup was `Math.min(s.beat, list.length - 1)` — so every
+numeric-only pointer past the end of that list clamped to its last entry, which is
+`a3-seize`. A nameless save parked at day thirty resumed on the last night of the book with
+the whole descent unplayed. **Fixed: a number that cannot be honestly placed now falls
+through to the season's first beat**, which is what the restore's own comment always claimed
+it did. Re-driven: that case lands on `a3-evict` now. Sweep row **(4a5)** covers all three.
 
 ---
 

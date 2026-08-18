@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.7.0 "I Am Sorry About The Rest"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.7.3 "Somewhere Defensible"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.7.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.7.3";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5247,9 +5247,20 @@ function beatPointerFrom(s, season){
   var savedBeatId = (typeof s.beatId === "string" && s.beatId) ? (LEGACY_BEATS[s.beatId] || s.beatId) : "";
   var byId = savedBeatId ? beatById(savedBeatId) : -1;
   var hasPointer = (byId !== -1) || (typeof s.beat === "number");
+  /* A NUMBER OFF THE END OF THE FROZEN LIST IS NOT A POINTER, AND CLAMPING IT HANDED THE
+     PLAYER THE ENDING (v6.7.3). This used to be Math.min(s.beat, SPINE_V34.length - 1),
+     so every numeric-only save with a pointer past the v3.4 book resolved to the LAST
+     entry of that list - a3-seize, the series finale. A save with no name, parked at day
+     thirty, resumed on the last night of the story with the whole descent unplayed.
+     Found by simulating the author's own save in the rehearsal drawer rather than asking
+     him to open it: name-plus-stale-number came back perfectly, and the nameless control
+     landed on the finale.
+     A number we cannot honestly place now falls through to the season's first beat, which
+     is what the comment above always claimed happened - placed somewhere defensible and
+     offered a repair, rather than silently dropped somewhere wrong. */
   var byNum = -1;
-  if(byId === -1 && typeof s.beat === "number" && s.beat >= 0){
-    byNum = beatById(SPINE_V34[Math.min(s.beat, SPINE_V34.length - 1)]);
+  if(byId === -1 && typeof s.beat === "number" && s.beat >= 0 && s.beat < SPINE_V34.length){
+    byNum = beatById(SPINE_V34[s.beat]);
   }
   return {hasPointer:hasPointer,
           idx:(byId !== -1) ? byId : (byNum !== -1) ? byNum : beatSeasonFirst(season)};
@@ -23735,13 +23746,25 @@ function selfTest(){
       /* and a save too old to carry a name still lands somewhere sane */
       var oldSave = beatPointerFrom({beat:4}, 2);
       var legacyOk = oldSave.hasPointer && oldSave.idx === beatById("a2-door");
+      /* ...AND A NUMBER OFF THE END OF THAT LIST IS NOT A POINTER AT ALL. It used to clamp
+         to the list's last entry, which is the series finale, so a nameless save parked at
+         day thirty resumed on the last night of the book. It falls to the season's first
+         beat now - placed somewhere defensible, which is what the restore always claimed
+         to do for a save it could not read. */
+      var offEnd = beatPointerFrom({beat:29}, 3);
+      var finale = beatById("a3-seize");
+      var offEndOk = offEnd.hasPointer && offEnd.idx !== finale
+                     && offEnd.idx === beatSeasonFirst(3);
       T("a save comes back to the night it names, even when its stored number has moved",
-        writerOk && nameWins && legacyOk,
+        writerOk && nameWins && legacyOk && offEndOk,
         !writerOk ? ("WRONG: saveBlob did not write the current beat's name (wrote " + wrote + ")")
         : !nameWins ? ("WRONG: the pointer resolved to " + got + " and the name says " + want)
         : !legacyOk ? "WRONG: a number-only save no longer maps through the frozen v3.4 order"
+        : !offEndOk ? ("WRONG: a number off the end of the v3.4 list resolved to " + offEnd.idx
+                       + (offEnd.idx === finale ? ", which is the FINALE" : ""))
         : ("the blob carries \"" + wrote + "\"; a save naming a2-annul with a stale number 0 "
-           + "resolves to " + got + ", so a mid-book insert strands nobody"),
+           + "resolves to " + got + ", so a mid-book insert strands nobody; and a number past "
+           + "the end of the frozen list goes to the season's first beat rather than the finale"),
         {label:"the pointer read the stored NUMBER first, which is the shape the ban on inserting a night assumed",
          was:true,
          check:function(){
