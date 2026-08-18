@@ -125,12 +125,54 @@ is supposed to come out low. Read the lines before flagging them. The other 101 
 | §E | the Principal as prime mover — the whole plan is her eviction | a fold through the whole book |
 | §F | the founding lock — the Architect keyed it with his own blood | a fold; and where "Granny" comes from |
 
-**§C IS THE ONE TO DO FIRST and it needs an audit before a word is written**, the same way
-pass 6 did: measure where fear is *stated* versus where it is *behaved*, take the list to
-the author, get a ruling, then author. Do not start it in a session that cannot finish the
-audit and hold the answer.
+### §C — THE NERVE AUDIT IS TAKEN. The note measures true, and harder than it was put.
 
-After that pass 8: the nerve pass, the plausibility pass, and the two lore folds.
+**THE INSTRUMENT IS `scratchpad/nerve.js`**, and it separates the four things the note
+separates, over all 7,724 prose blocks in all 33 nights — evening deck, room deck, second
+takes, openings, both landing roads and the closings.
+
+| | what it looks for | book total | share of blocks |
+|---|---|---|---|
+| **NAMED** | a person says they are frightened | **52** | 0.7% |
+| **SHOWN** | the prose shows a body doing it | **24** | 0.3% |
+| **ODDS** | somebody says the chances, or what happens if it goes wrong | **27** | 0.3% |
+| **no-GO** | somebody says they do not want to do it | **44 → effectively 0** | — |
+
+**THE LAST ROW IS THE FINDING AND IT SURVIVED BEING DOUBTED.** The first count said 88
+refusals and the book looked full of people saying no. Reading all 88 showed nearly every
+one is somebody declining to *answer* — *"ask me something else"*, *"I am not going to
+soften the arithmetic"*. Partitioning those out left 44, and reading all 44 by hand left
+**two** that are anywhere near declining to *act*: Nine at night 10 (*"I cannot do any of
+tonight"*) and Vic at night 25 (*"me being braver than I currently am"*). **Neither is
+about a plan. Across the whole book nobody ever says they do not want to go.**
+
+**18 of 33 nights never put fear in a body. 17 of 33 never speak the odds. 12 of 33 never
+name fear at all.**
+
+**NIGHT 29 IS THE WORST CASE AND IT IS THE WORST NIGHT TO BE THE WORST CASE.** `a3-descent`
+— down the cable, into the enemy's vault, the machine close — scores **zero on all four**
+across 124 blocks. Its seven evening cards are *what the racks are*, *how far down it goes*,
+*what Marek makes of the iron*: seven questions about the place, none about the people
+being in it. A deliberately over-wide control (`scratchpad/wide.js`, any unease word at
+all, narration included) agrees — 8 of 86 blocks, and every one of them is a *tactical*
+worry. **Marek does not say he is afraid; he offers "a different worry" about the ironwork.**
+
+**WHERE IT ALREADY WORKS, and these are the models to copy.** Night 22 carries 9 of the
+book's 52 named-fear lines on its own. Night 28 has a card called *what could go wrong* and
+another called *if somebody does not come up*, and Hesta answering *"I am not going to stand
+at a hatch and tell six people a comfort I've not checked"* — that is craft law 2 already
+written, once. And night 29's one working card is Pia's rope joke, because it ends *"then
+the dark wins by MORE"*: the fear is on the page under the joke, which is the whole law.
+
+**ONE THING THE AUDIT WAS NOT LOOKING FOR.** *"I am not going to pretend"* and its variants
+run **19 times across 13 nights and 7 of the 8 speakers** (`scratchpad/pretend.js`). It is a
+brave, good line, and it has stopped being characterisation and become the house voice.
+Night 18 has it twice in near-identical words from two different people — Nine: *"I am fine.
+I am saying that before anybody asks it kindly and I have to be brave in front of people"*
+and Seven: *"I'm well. I say it first, before somebody asks kindly and I have to be brave in
+front of people."*
+
+**AWAITING A RULING ON SCOPE AND ON WHO ELSE BREAKS. Not a word of prose is written yet.**
 
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
