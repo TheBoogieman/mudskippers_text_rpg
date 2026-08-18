@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.94.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
+**v5.95.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -102,12 +102,33 @@ working, frightened, or on the record. The refusals bite hardest exactly where t
 is most formal, so the tool arrived at the right shape by accident. The +55s are all night
 33, the epilogue, where the whole cast is off duty for the first time in the book.
 
-**AWAITING THE AUTHOR ON THE HANDFUL THAT LOOK WRONG,** not on all 104: night 10
-`the-rolling` has Pia at 17% in the family's own time with the tin going round; night 33
-has Three at 80% against a target of 15%, which is a long way for the most formal person in
-the book to travel even in an epilogue; and night 20 `taking-turns` has Marek at 0% on the
-night he speaks for the first time in nine years, which is either exactly right or the tool
-missing him.
+**THE THREE FLAGGED CARDS ARE RULED AND DONE (v5.95.0) — AND ONE OF THE THREE FLAGS WAS
+WRONG.** `a2-door/the-rolling` was not a fault: nearly every Pia line on that card is
+shouting, and the tool's emphasis rule refused them all because a line already shouting is
+doing its emphasis another way. Her 17% is right. Two clauses outside the shout were taken.
+`a3-seize/why-they-picked-him` (Three, 80% against 15) and `a2-annul/taking-turns` (Marek,
+0% on the night he first speaks in nine years) both stood and are fixed.
+
+**THE LESSON IS ABOUT THE FLAG, NOT THE CARDS: a rate far from target is a place to LOOK,
+never a fault on its own.** The refusals are doing editorial work; a card full of capitals
+is supposed to come out low. Read the lines before flagging them. The other 101 rows in
+`flagcards.js` have not been read and most of them are probably the same story.
+
+---
+
+## PASS 8 — NOT STARTED. FOUR SEPARATE JOBS, EACH WANTING ITS OWN SESSION.
+
+| § | job | shape |
+|---|---|---|
+| §C | **the nerve pass** — nobody in this book is ever frightened | the big one; changes prose, not mechanics |
+| §D | the plausibility pass — the Choir behaves like scenery, eight people take a city | six holes, three the author ruled to honour NOW |
+| §E | the Principal as prime mover — the whole plan is her eviction | a fold through the whole book |
+| §F | the founding lock — the Architect keyed it with his own blood | a fold; and where "Granny" comes from |
+
+**§C IS THE ONE TO DO FIRST and it needs an audit before a word is written**, the same way
+pass 6 did: measure where fear is *stated* versus where it is *behaved*, take the list to
+the author, get a ruling, then author. Do not start it in a session that cannot finish the
+audit and hold the answer.
 
 After that pass 8: the nerve pass, the plausibility pass, and the two lore folds.
 
