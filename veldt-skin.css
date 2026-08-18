@@ -426,7 +426,14 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   .narr{line-height:1.52}
   .sys{line-height:1.55}
   .block:has(> .tag + span){padding:10px 13px 11px 13px}
-  .block.beatcard,.block.dmaside{padding-left:13px;padding-right:13px}
+  .block.beatcard{padding-left:13px;padding-right:13px}
+  /* THE ASIDE KEEPS ITS LAMP'S ROOM. Its left padding is 30px for a REASON: the amber lamp
+     is an absolutely positioned ::before at left:13px, and the padding is what the text uses
+     to walk around it. v6.20 trimmed both sides of this card to 13px along with the premise
+     card beside it - which slid the first letter of every aside directly on top of its own
+     lamp. The premise card has no lamp and is trimmed freely; this one gives back only the
+     side that is empty. A fixed offset and a padding are ONE measurement in two places. */
+  .block.dmaside{padding-left:26px;padding-right:12px}
 
   /* the rows themselves: same words, less frame. 15.5px is kept - this is the text the
      player reads to decide, and shrinking it would be paying with the wrong thing. */
