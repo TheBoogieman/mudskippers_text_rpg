@@ -3,23 +3,10 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.14.0 · 34 nights written · sweep 89 PROVED of 107, 0 FAILED.**
+**v6.15.0 · 34 nights written · sweep 89 PROVED of 107, 0 FAILED.**
 
----
-
-## 0. THE ONE THING THE RECORD SWEEP LEFT BEHIND
-
-**THE HARD-LANDING SWEEP — the same question, asked of the other road.** The record sweep
-closed at v6.14.0, and the last thing it turned up was a different shape of the same fault:
-a3-principal's canon said *"Food opened a door iron couldn't"* on **every** close, while its
-own `landsHard` says *"Hesta's food stays on the table untouched — the only point scored all
-evening."* Half the runs that lost that evening were told they had won it. Both lines moved to
-`canonSoft`, which merges only on a clean close and has existed for releases.
-
-**Nobody has read the other 33 nights' `landsHard` against their canon.** The question is
-narrow and answerable: *does this night's record contradict the prose a hesitating player
-actually reads?* Only two beats in the whole book use `canonSoft`, which is either correct or
-the size of the hole. `scratchpad/staged.js <beat>` prints every road side by side.
+*The record sweep is closed. Both halves of it - the card-dependent claims and the
+road-dependent ones - are done, and the rule they left behind is in `HANDOVER.md`.*
 
 ---
 
@@ -50,7 +37,7 @@ who may answer and what they cannot say. Add `walkAnswer` beside `walkLine`. The
 
 ---
 
-## 1. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
+## 2. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
 
 **THE TWO READERS ARE RECONCILED AND `band.js` WAS RIGHT.** `flagshape.js` disagreed with it
 by up to ten points and the cause was entirely in the reader, not the book: it carried 18
@@ -77,7 +64,7 @@ is Pia and Seven book-wide, and that is the ruling already made about the 294.
 
 ---
 
-## 2. 294 RESIDUAL CONTRACTION SWAPS — *ruled not worth taking, and still is*
+## 3. 294 RESIDUAL CONTRACTION SWAPS — *ruled not worth taking, and still is*
 
 Every speaker is on band. These are the residue of per-card rounding. **A budget does not
 have to be spent to the penny.** Listed so nobody rediscovers them and thinks they are a
@@ -85,7 +72,7 @@ debt.
 
 ---
 
-## 3. `band-pass.js` CANNOT REACH `a3-seize` — **FIXED**
+## 4. `band-pass.js` CANNOT REACH `a3-seize` — **FIXED**
 
 **The last beat has no next beat, and that was the whole bug.** Both of the tool's regions
 were bounded by the *next* entry of their kind; `a3-seize` is last in both `SPINE` and
@@ -106,7 +93,7 @@ random beat and the last one.
 
 ---
 
-## 4. A REAL SAVE ACROSS THE SPINE INSERT — **DONE, and it found a defect**
+## 5. A REAL SAVE ACROSS THE SPINE INSERT — **DONE, and it found a defect**
 
 **It did not need the author's machine.** The rehearsal drawer can build the exact case: take
 a live save at a night after the insert, put the index it would have carried *before* the
@@ -126,11 +113,11 @@ it did. Re-driven: that case lands on `a3-evict` now. Sweep row **(4a5)** covers
 
 ---
 
-## 5. THE SWEEP'S UNDECLARED DEBT — **ZERO**
+## 6. THE SWEEP'S UNDECLARED DEBT — **ZERO**
 
 The harness credits a broken form only when the check **enters** a function it can watch. Its
 headline now reads: *every case either proves it would have caught its own defect, or says
-why it cannot.* **88 PROVED of 106, 0 FAILED, nothing undeclared.**
+why it cannot.* **89 PROVED of 107, 0 FAILED, nothing undeclared.**
 
 **Two of the original nine were the instrument's own fault.** `hasWord` and `revealText` are
 named in the credit roster and were both declared *inside* the sweep, so the names referred

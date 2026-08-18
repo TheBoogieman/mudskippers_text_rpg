@@ -8,7 +8,21 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.14.0. THIRTY-FOUR nights written. Sweep 89 PROVED of 107, 0 FAILED. Tree clean, pushed.**
+**v6.15.0. THIRTY-FOUR nights written. Sweep 89 PROVED of 107, 0 FAILED. Tree clean, pushed.**
+
+**THE RECORD SWEEP IS CLOSED, BOTH HALVES.** The second half asked the same question of the
+OTHER road: does a night's record contradict the prose a HESITATING player reads? Across 34
+nights it is **two lines** - a3-evict claiming the family took the street while its own hard
+landing has the street freeing itself and the family arriving to an aftermath, and a3-for
+claiming everyone carries a named part while its hard landing goes down with parts
+unassigned. Both moved to `canonSoft`.
+
+**AND THE REASON IT WAS ONLY TWO IS WORTH KEEPING.** On a forced close the record already
+uses the SCAR rather than the exit - `rec = hard ? (b.scar || b.exit) : (note || b.exit)` -
+so no night ever claims an exit it did not earn. And **the hard road is written as the same
+events, worse, not as different events**: the law still gets written, Mirren is still found,
+Seven is still saved. A canon line is only wrong where the hard prose NEGATES it. That is the
+test to apply to any new night.
 
 **THE AUTHOR IS PLAYING IT NOW, AND THAT IS WHERE THE FAULTS ARE COMING FROM.** Four in one
 sitting, none of which any instrument in this repo could have found: a badge welded into a
@@ -53,7 +67,8 @@ unwritten one reads as "not written yet" rather than crashing the button that en
 
 **AND THE RULE THE RECORD FAULT LEFT BEHIND: an `exit` and an unconditional `canon` line may
 only claim what happens on EVERY road through the night.** Anything that depends on a card
-being drawn belongs to the card. Night 3 broke it; the other 33 are unswept.
+being drawn belongs to the card; anything that depends on the ROAD belongs in `canonSoft`.
+All 34 nights are swept against both halves of it.
 
 **THE SWEEP CARRIES NO UNDECLARED DEBT.** Its own headline: *every case either proves it
 would have caught its own defect, or says why it cannot.* Getting there found the trap living

@@ -2153,11 +2153,17 @@ var SPINE = [
  press:["On the turning street: Menu Man, demoted and unarmed, holding the Choir's paperwork like a man deciding. Somebody could say something to him from where they are standing. Nobody goes indoors for it - the street is the room, and he has to decide in it, in front of the windows.",
         "A freed convergent civilian, voice suddenly silent, asks the family what happens to them now. There is no good answer yet.",
         "The Choir stops defending the street all at once - which is not a victory, it is a consolidation."],
- canon:["The family took the street. The Choir's topside power is broken and the city saw who broke it.",
-        "The stilled were handled kindly wherever kindness worked. The vow was visible from the pavement.",
+ canon:["The Choir's topside power is broken. Cannery Row is out from under it.",
+        "The stilled were handled kindly wherever kindness worked.",
         "The chandler on the corner was never one of the nine, and nothing the family owns can reach what was done to him. His shop opened at the usual hour.",
         "Nothing holds Cannery Row but the fact that nobody has come for it. The family knows this and has said it out loud.",
         "Only the deep remains: the Exchange, and what lives under it."],
+ /* THE CREDIT IS ROAD-DEPENDENT (v6.15.0). The hard landing has the street freeing
+    ITSELF while the family arrive to an aftermath wearing their name - so on that road
+    nobody watched them do it, and the record said they did. That the Choir lost topside
+    is true either way and stays above; who the city saw doing it is not. */
+ canonSoft:["The family took the street, and the city saw who broke it.",
+        "The vow was visible from the pavement."],
  scar:"The street freed itself messily; the family arrived to an aftermath wearing their name.",
  teeth:{when:{turnMin:0}, threat:"the ninth body's errand",
   stages:[
@@ -2480,12 +2486,16 @@ var SPINE = [
  press:["Somebody's part is too dangerous and the argument about it has to end tonight.",
         "A polite man with a notebook is working down Cannery Row asking who helped with the eviction. No van, no uniform, no hurry - the enemy is a clerk, and the clerk has started.",
         "The window moves up. The plan they have is the plan they take."],
- canon:["The plan is everyone: each member of the family carries a named part of it.",
+ canon:["The plan needs every one of them, and all of them know it.",
         "Pia cannot be converged, guided, or written. Where the voice reaches, she can simply walk.",
         "What the Choir listed as salvage, the family carries as a key.",
         "Pia named the trade herself, at the hatch head: the only reason she is useful down there is the reason they filed her. Nobody offered her a better sentence.",
         "The window closed because one clerk started a list on Cannery Row - polite, unhurried, four days late. That is what the Choir looks like when it finally moves.",
         "The clerk bought his candle from Toller. He would not have known."],
+ /* THE HARD ROAD GOES DOWN WITH PARTS UNASSIGNED (v6.15.0) - "the plan they had, not the
+    one they meant" - so the named parts belong to the clean close. That the plan needs
+    everybody is true on both roads and stays in canon. */
+ canonSoft:["The plan is everyone: each member of the family carries a named part of it."],
         
  scar:"They went down with parts unassigned; the plan is the plan they had, not the one they meant."},
 
