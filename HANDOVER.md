@@ -277,7 +277,52 @@ all by which last night costs anything** — `canon` and `scar` are carried forw
 back on the board, in the endgame and by the storyteller, but nothing in a novel night ever
 reads them AS PRESSURE. That is hole 3 exactly, and it is an engine fact, not a prose one.
 
-**AWAITING RULINGS. No prose and no engine work started.**
+### THE RULINGS, AND WHAT WAS DONE (v5.97.0)
+
+Ruled: **fix all nine**, **make the record push back in prose** rather than in the engine,
+and **Seven says what the Choir actually is**, once he has defected.
+
+**ALL NINE PRESSURE LINES REWRITTEN** (`scratchpad/pressfix.py` + `pressfix.json`, which
+carry the reason for each one next to the change). Night 13's retrieval notice now arrived
+this morning and is in somebody's pocket, so nothing arrives at the grave. Night 17 is Pia
+noticing that Vic knows the shape of that seat without measuring it, so no unoccupied
+housing has to grow a mind. Night 18's lock is tried on the other side of the city and the
+news reaches the table, so the lock stays where the beat says it is. Night 5's recipient is
+now entirely ordinary and the handoff curdles from the courier's side, which is better than
+what was there.
+
+**SEVEN SAYS IT ON NIGHT 18**, in `whether-anybody-can-take-it-off`, second take - the card
+where Three uses the word *attendance* and the narration notes that the clerk does not
+correct her. He takes the word off her: *"You have all been picturing a police force. What
+you are standing in front of is a TENANT with an apparatus - it rents its rooms, it files
+its residents, and in this whole city it has never once had to break a door, because until
+the six of you nobody had ever simply said no to a form."* Then he refuses to let it be a
+comfort. Three blocks; **the banter floor ROSE from 4687 to 4689**, which is allowed.
+
+**MY OWN FIRST DRAFT OF THAT SPEECH WAS THE TIC.** "The Choir is not a police force. It is a
+TENANT" is `X is not a Y, it is a Z` - the exact CONTRAST shape, and the book total went 31
+to 32 the moment it landed. Recast to name what they had been picturing instead of negating
+it, which is better writing anyway. Back to 31/28.
+
+### AND THE THIRD RULING IS NOT DONE, BECAUSE THE SURVEY FOR IT FAILED
+
+`scratchpad/costs.js` was built to find, per teeth-less night, whether the other side
+reacts in the DECK (visible in the novel) or only in the PRESS (invisible). It reported 21
+of 23 nights already covered in deck prose, which would have made the structural finding
+mostly wrong. **Reading its hits showed every thin one is a false positive.** The word
+`filed` does two jobs in this book - *"I filed the dodge"*, *"filed under nobody's
+business"*, *"I have filed that under nights that ended at home"* - and the emotional one
+is commoner than the bureaucratic one. `noticed` and `the clerk` fail the same way.
+
+**SO THE STRUCTURAL FINDING STANDS AND THE SURVEY FOR IT DOES NOT EXIST YET.** Whatever
+comes next has to tell *filing a memory* from *filing a person*, and a word list cannot -
+which is the same conclusion the press audit reached about the same kind of tool. Expect to
+read all 23 nights by hand.
+
+**ONE THING costs.js FOUND THAT IS REAL: night 4 `a1-pack` is the only night whose
+consequence lives entirely in the press.** Both its pressure lines are the Choir asking the
+stalls about a courier by description, and a debt being called in - and a novel player
+meets neither. That is the one clear case of authored consequence the novel cannot serve.
 
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
