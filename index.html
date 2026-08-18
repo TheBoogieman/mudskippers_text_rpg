@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.91.0 "The Ledger Has A Back Page"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.92.0 "A Door Offered Mid-Reveal"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2379,6 +2379,24 @@ var AMB_LIST = ["rain-neon","storm","neon-dry","marsh-fog","interior-warm","subs
 var revealToken = 0;
 var revealTimer = null;
 var skipReveal = null;
+/* ---- THE SEAM REVEAL (v5.92.0) ----
+   Reported by the author: beat and season seams appear all at once instead of
+   arriving a block at a time like everything else. They did not appear quickly -
+   THEY DID NOT REVEAL AT ALL. playAuthored rendered each block and added `shown`
+   in the same synchronous pass, which is the class the walk ARRIVES at, so every
+   opening, landing, hard landing, premiere, teeth scene and close in the game took
+   the branch showScene keeps for skip-and-replay, and READING PACE had never once
+   touched a seam in the history of the file.
+   playAuthored appends into a turn that is already on screen rather than composing
+   a reply, so it cannot simply be handed to showScene - that would re-run the
+   physics desk, the HUD, the roster, the rail and the ceremonies on a passage that
+   is none of those things. It gets the same paced walk instead, over its own
+   elements, at the same speed, with the same tap-to-skip.
+   AND THE RAIL WAITS FOR IT, which is a rule this file already had in writing
+   twenty lines below showChoices: "a door offered mid-reveal is a door the player
+   can take before the turn under it has finished happening". It was true of the
+   slack door and it was never true of a landing's own rail. */
+var seamEls = [], seamBlocks = [], seamThen = [], seamTimer = null;
 var castSheets = {};
 var runCanon = [];
 var canonArchive = [];     /* compressed older eras, oldest first */
@@ -2422,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.91.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.92.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4943,6 +4961,12 @@ function showScene(data, logIt, instant){
       return;
     }
     if(afterRevealHook){ var hook = afterRevealHook; afterRevealHook = null; hook(); }
+    /* AND IF THIS TURN GREW A SEAM, THE REST OF THE CEREMONY WAITS FOR IT (v5.92.0).
+       The landing, the opening and the premiere are all played from inside this
+       function, so their prose is appended after the reply's own reveal has ended -
+       and then the rail went up over the top of it. seamRevealThen runs its argument
+       immediately on every turn that has no seam, which is nearly all of them. */
+    seamRevealThen(function(){
     showChoices(choices);
     /* and only now the way out of the room, after the turn it belongs to has
        landed and its rail is on screen - a door offered mid-reveal is a door the
@@ -4956,6 +4980,7 @@ function showScene(data, logIt, instant){
        no-op for exactly the two behaviours it was written for.) */
     if(beatDone()){ runOver = "season"; endCard("season"); }
     persistAll(choices);
+    });
     /* ...AND THE SEAM THE CEREMONY JUST ORDERED, asked on its own turn. Deferred on
        purpose: this is the tail of a reply's own render, and re-entering callDM from
        inside it is how a ceremony ends up nested in itself. A tick later the turn is
@@ -8516,6 +8541,44 @@ function seamFire(){
   callDM();
   return true;
 }
+/* the walk drains its own queue and then runs whatever was waiting on it. Appending
+   to seamEls while it is running simply lengthens the walk, because step() reads the
+   length every time - so a caller that plays two passages in a row (the premiere and
+   its fallback opening) gets one continuous reveal rather than two racing ones. */
+function seamRevealDone(){
+  seamEls = []; seamBlocks = []; seamTimer = null;
+  if(skipReveal === seamRevealSkip) skipReveal = null;
+  var q = seamThen; seamThen = [];
+  for(var i = 0; i < q.length; i++){ try{ q[i](); }catch(e){} }
+}
+function seamRevealSkip(){
+  if(seamTimer){ clearTimeout(seamTimer); seamTimer = null; }
+  for(var i = 0; i < seamEls.length; i++){
+    seamEls[i].classList.remove("reveal"); seamEls[i].classList.add("shown");
+  }
+  seamRevealDone();
+}
+function seamRevealRun(){
+  if(seamTimer) return;                       /* already walking; it will pick up the rest */
+  if(!seamEls.length){ seamRevealDone(); return; }
+  /* skipReveal non-null is also what holds the slack door shut - see renderSlackDoor */
+  skipReveal = seamRevealSkip;
+  var i = 0;
+  function step(){
+    if(i >= seamEls.length){ seamRevealDone(); return; }
+    var el = seamEls[i], b = seamBlocks[i];
+    el.classList.remove("reveal"); el.classList.add("shown");
+    i++;
+    seamTimer = setTimeout(step, Math.min(2400, 500 + String((b && b.text) || "").length * 7) * revealPace());
+  }
+  step();
+}
+/* run fn now if no seam is revealing, otherwise the moment one finishes. Every
+   ordinary turn takes the first branch, so this is a no-op everywhere but a seam. */
+function seamRevealThen(fn){
+  if(!seamEls.length){ fn(); return; }
+  seamThen.push(fn);
+}
 function playAuthored(V, salt){
   if(!V) return null;
   var LN = pickLines(V, salt);
@@ -8584,7 +8647,9 @@ function playAuthored(V, salt){
     var blk = {speaker:sp, text:String(tx)};
     renderBlock(blk); feedLog.push(blk); blocks.push(blk);
     var el = $("feedinner").lastElementChild;
-    if(el) el.classList.add("shown");
+    /* `reveal` is where a block STARTS; `shown` is where the walk puts it. This line
+       used to say `shown` and that was the whole bug - see THE SEAM REVEAL above. */
+    if(el){ el.classList.add("reveal"); seamEls.push(el); seamBlocks.push(blk); }
     /* anyone the board puts on stage is met by definition - otherwise the cast
        gate would refuse the DM the very person we just had speak */
     if(sp !== "Narration" && !isAnonSpeaker(sp) && !castSheets[sp]){
@@ -8621,6 +8686,7 @@ function playAuthored(V, salt){
     })});
   }
   renderNow();
+  seamRevealRun();
   return (V.rail && V.rail.length) ? V.rail.slice(0, 3) : null;
 }
 /* THE LANDING, and the scar rides it. A beat the world took off them does not
@@ -20372,6 +20438,33 @@ function verdictMap(){
    THE DRIFT: THREE MATCHED PAIRS, ALL RENUMBERING, taken by delta.
    THE BANTER FLOOR IS 4,664. It has risen by eight across the whole of pass 6, every one of
    them a new spoken landing line. The floor is a FLOOR. It may never be cut; it may rise.
+   v5.92.0 - THE AUTHOR'S SEAM BUG IS FIXED. Reported as "seams render immediately rather
+   than appearing slowly like cards". They were not rendering quickly. THEY WERE NOT
+   REVEALING AT ALL: playAuthored added `shown` - the class the walk ARRIVES at - inside its
+   own synchronous render loop, so every opening, landing, hard landing, premiere, teeth
+   scene and close in the game took the branch showScene keeps for skip-and-replay, and the
+   READING PACE setting had never once touched a seam in the history of the file.
+   playAuthored appends into a turn already on screen rather than composing a reply, so it
+   cannot be handed to showScene - that would re-run the physics desk, the HUD, the roster,
+   the rail and the ceremonies over a passage that is none of those. It gets the same paced
+   walk instead, over its own elements, at the same speed, with the same tap-to-skip.
+   AND THE RAIL WAITS FOR IT, which is a rule this file already had in writing twenty lines
+   below showChoices - "a door offered mid-reveal is a door the player can take before the
+   turn under it has finished happening". That was true of the slack door and was never true
+   of a landing's own rail, because the landing is played from inside showScene's own done().
+   seamRevealThen runs its argument immediately on every turn without a seam, which is all
+   but a handful, so the control flow of an ordinary turn is byte-for-byte what it was.
+   PROVED, ROW (6g8): drives the real playAuthored over a three-line passage, checks the
+   blocks arrive on `reveal` and not `shown`, checks the ceremony is held behind the walk,
+   then skips it and checks every block lands on `shown` - because a reveal nobody can
+   finish is a worse bug than the one being fixed. Proved against the shipped shape, which
+   fails it. Everything the row touches is snapshotted and put back.
+   DRIVEN AT THREE PACES ON ALL THREE SURFACES, plus one real night in the drawer:
+   a 13-block landing took 9.2s brisk and 15.4s normal; the series close on slow was 4 of 13
+   after eight seconds and still walking; the season-two premiere on normal was 8 of 10.
+   AND THE ONE THAT MATTERS: a live landing sampled every 0.9s ran 11 unrevealed blocks down
+   to 0 one at a time, with the rail button count at ZERO the whole way and three rows up
+   afterwards. Before the fix that first sample reads 0 unrevealed and 4 buttons.
    */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
@@ -20586,6 +20679,7 @@ function selfTest(){
        pass spent three releases writing the exact habit it had been ruled to remove and
        nothing anywhere could see it. */
     "ticBlocks", "ticScan",
+    "seamRevealRun", "seamRevealSkip", "seamRevealThen",
     "dmThinking", "askOpenAI", "askAnthropic", "renderStable", "parseScene", "repairJSON",
     /* ...and the audit's rows (v4.72.1): the bit hold and the board itself */
     "holdTheDryPath", "boardTurn",
@@ -24219,6 +24313,67 @@ function selfTest(){
              /* the claim: the scan sees narration. Under the break it cannot have. */
              return ticScan().narrSeen > 0;
            } finally { window.ticBlocks = keep; }
+         }});
+    })();
+
+    /* ---- (6g8) THE SEAM REVEALS AT READING PACE — the author's bug, v5.92.0 ----
+       Drives the real playAuthored over a three-line passage and looks at what it
+       put on the page. The claim has two halves and both matter: the blocks arrive
+       wearing `reveal` and NOT `shown` (so a walk has something to do), and the rest
+       of the ceremony is deferred behind it (so the rail cannot go up over the top).
+       Then skip it and check they all land on `shown`, because a reveal nobody can
+       finish is a worse bug than the one being fixed.
+       Everything it touches is snapshotted and put back: the feed elements, feedLog,
+       the ledger, the chat log. It is a real drive of the shipped function, not a
+       re-implementation of it - see THE FOUR WAYS A ROW LOOKS GREEN. */
+    (function(){
+      function driveSeam(){
+        var feed = $("feedinner");
+        var kids0 = feed ? feed.children.length : -1;
+        var log0 = feedLog.length, chat0 = chatLog.length, led0 = ledgerText, skip0 = skipReveal;
+        var out = {ok:false, deferred:false, skipped:false, note:""};
+        try{
+          playAuthored({lines:["First line of a seam.","Second line of a seam.","Third."]}, "selftest|seam");
+          var kids = [], i;
+          for(i = kids0; i < feed.children.length; i++) kids.push(feed.children[i]);
+          var prose = kids.filter(function(el){ return el.className.indexOf("reveal") !== -1
+                                                     || el.className.indexOf("shown") !== -1; });
+          out.ok = prose.length === 3 && prose.every(function(el){
+            return el.className.indexOf("reveal") !== -1 && el.className.indexOf("shown") === -1;
+          });
+          var ran = false;
+          seamRevealThen(function(){ ran = true; });
+          out.deferred = !ran;                       /* held, because a walk is in flight */
+          seamRevealSkip();
+          out.skipped = ran && prose.every(function(el){ return el.className.indexOf("shown") !== -1; });
+          out.note = prose.length + " block(s) rendered";
+        } finally {
+          if(seamTimer){ clearTimeout(seamTimer); seamTimer = null; }
+          seamEls = []; seamBlocks = []; seamThen = []; skipReveal = skip0;
+          while(feed && feed.children.length > kids0) feed.removeChild(feed.lastElementChild);
+          feedLog.length = log0; chatLog.length = chat0; ledgerText = led0;
+        }
+        return out;
+      }
+      var sr = driveSeam();
+      T("a seam reveals a block at a time, and the rail waits for it",
+        sr.ok && sr.deferred && sr.skipped,
+        sr.ok
+          ? (sr.deferred ? (sr.skipped ? sr.note + "; arrived on `reveal`, the ceremony was held behind"
+                                       + " the walk, and tap-to-skip lands every block on `shown`"
+                                     : "the walk armed and held, but skipping it did not finish the blocks")
+                         : "the blocks arrived unrevealed but the ceremony did not wait for them")
+          : "the blocks arrived already `shown` - " + sr.note + " - which is the instant branch",
+        {label:"the shipped shape up to v5.91.0: every seam block marked `shown` inside playAuthored's own loop",
+         was:true,
+         check:function(){
+           var keep = window.seamRevealRun;
+           try{
+             /* what the file did before the fix, restored exactly: no walk, everything
+                already arrived, and nothing left for reading pace to touch */
+             window.seamRevealRun = function(){ seamRevealSkip(); };
+             return driveSeam().ok;
+           } finally { window.seamRevealRun = keep; }
          }});
     })();
 

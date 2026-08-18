@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.91.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.92.0. All 33 nights written. Sweep 77 PROVED of 102, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -116,12 +116,10 @@ on "Three decades" at a sentence head, `shard:hand` on "the shard into the numbe
 THIS EXACT CARD in an earlier wave too. I had read all four warnings before writing. The
 machines caught all four. **Run the guards after every batch, not at the end of the wave.**
 
-**AND THE AUTHOR'S SEAM BUG IS CONFIRMED AND WRITTEN UP IN `OUTSTANDING.md`, NOT FIXED.**
-Every seam takes `showScene`'s INSTANT branch — `playAuthored` adds the `shown` class inside
-its own render loop at `index.html:8587`, so READING PACE has never touched a seam. The fix
-is small and the write-up carries its shape and the three things to check first, **but it is
-the render path of every opening, landing, close and premiere in the game** — give it a
-session with room to drive all three at three paces.
+**THE AUTHOR'S SEAM BUG IS FIXED (v5.92.0).** No seam in the game had ever revealed —
+`playAuthored` added `shown` inside its own loop, which is the class the walk *arrives* at.
+It gets the same paced walk now, and **the rail waits for it**. Sweep row (6g8) drives the
+real function and is proved against the shipped shape.
 
 Then pass 6, the closings audit, **which is a REPORT before it is a wave** — the author
 rules the mismatches before a word is written.
