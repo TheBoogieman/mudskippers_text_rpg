@@ -560,24 +560,6 @@ answers is the surprise the card is built on.
 
 ## THE SMALL OPEN ITEMS
 
-**EVERY GRAZE SCENE IN THE BOOK IS DARK IN THE NOVEL — 33 blocks and 11 canon lines.**
-All eleven beats with teeth have a `grazeScene`, and no click can reach one. `attemptGraze`
-has a single caller, `attemptStall`, whose only caller is `attemptTyped` — **the wild table's
-route, and the novel has no typing box.** A novel player gets clear or death and nothing in
-between. Found by driving `a2-take`'s peril looking for the middle outcome and finding no
-door to it.
-
-**AND ONE ROW IS THE LADDER-SHAFT BUG AGAIN.** `a2-choir`'s *"Have Three close the channel
-now, ahead of schedule, and keep what we have"* resolves as a CLEAR and plays the scene for
-having NOT closed early — while its own `grazeScene`, *"Three kills the channel early... the
-cable takes her glove"*, is the scene that row was written for. The v5.58.0 fix added
-`out:true` for exactly this shape on `a1-chase` and said explicitly that no other peril was
-swept. `a2-hand` and `a3-dreamers` were checked and are fine.
-
-**THE FIX IS A `graze:true` ROW FLAG, mirroring `out:true`** — but which row earns it on each
-of the other ten cards is an authoring call, and imposing a graze changes an outcome on a
-finished night. **AWAITING A RULING.**
-
 **THE MIRREN DOCTRINE STILL WAITS FOR NIGHT 19.** *Machines serve, never harvest* is in the
 bible as a law the family may write, and her grave is where it comes from. It is deliberately
 **not** at the cairn — it belongs on `a2-choir`, once they know what the harvesting actually

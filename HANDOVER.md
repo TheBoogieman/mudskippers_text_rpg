@@ -8,7 +8,39 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.4.0. THIRTY-FOUR nights written. Sweep 80 PROVED of 105, 0 FAILED. Tree clean, pushed.**
+**v6.5.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+
+**EVERY PERIL HAS A MIDDLE OUTCOME NOW, AND IT IS REACHABLE.** All eleven beats with teeth
+had a `grazeScene` written and no click could reach one: `attemptGraze`'s only caller was
+`attemptStall`, whose only caller is `attemptTyped` - the wild table's route, and the novel
+has no typing box. **RULED BY THE AUTHOR 2026-08-18: the novel is not to be limited by a
+mechanism only the AI side can reach.** `graze:true` on a row is the door.
+
+**AND ON TEN OF THE ELEVEN IT WAS NOT AN AUTHORING DECISION.** Every peril is built the
+same way - row 0 is the plan executed, row 1 is the tempting one that kills, row 2 is the
+improvised third way - and on ten cards the `grazeScene` already DESCRIBES row 2: the tarp
+drag, the counter ledge, the drain mouth, the re-rigged drop, the gren on the rail. The
+author wrote the outcome and the engine never asked for it.
+
+**THREE READERS HAD TO BE HUNTED FOR ONE NEW FIELD, and two of them caught me.** The
+way-out guard called `a1-carried`'s drain an *undeclared* early exit - it was written for
+`out:true` and had never been told another word could end a peril, and it was right to
+fire. And the desk caught `bodyBreak(Seven)` on *"Seven steps into its light"*: from night
+17 one of Nine and Seven is in the courier's skull, so on one road Seven has no feet - and
+the ROW had the same fault, since "put Seven in front of it" is not a thing that road can
+do. **Rewritten so the cadence does the work and the courier's mouth says it**, which plays
+on both roads and is colder than what it replaced.
+
+**THE BADGE READS THE LAYER NOW, NOT THE CARD.** `rowBadge` used `card.who` - the card's
+OWNER - so the fifteen cards whose second take changes speaker chipped the wrong name over
+somebody else's line, eight of them on night 15. `answererFor` reads the take's own first
+mouth and falls back to `who`. **`hideWho:true` was the workaround and it is the wrong
+instrument**: it silences the name on both takes, including the first, where it was right.
+
+**AND A ROW WAS DELETED FOR BEING A RESTATEMENT.** A standalone sweep row for `answererFor`
+could only break by swapping the function and calling the swap, which enters no game code.
+The fixture row above it drives the real `rowBadge` over a real dealt deck. **One driven
+claim beats two assertions**, and the undeclared-debt count went back to 9 rather than 10.
 
 **a2-take IS DRIVEN ON ALL FOUR ROADS** — the clean landing, the hard landing (stall it out;
 the world takes the beat and charges a toll), the death (the tempting move at the peril), and
