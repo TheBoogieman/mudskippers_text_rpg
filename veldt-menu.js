@@ -1615,6 +1615,7 @@ class Component extends DCLogic {
       lb.textContent = v.lowLabel;
     };
     lb.addEventListener('click', inst.toggleLow);
+    art.__inst = inst;          /* so a history event can find the live one to re-sync */
 
     /* HOLD THE DOOR OPEN LONG ENOUGH TO SEE IT (v5.38.0). The game's handler is an
        onclick PROPERTY on the button, which runs in the target phase - so a capture
@@ -1743,6 +1744,23 @@ class Component extends DCLogic {
     let ft = 0;
     const fiv = setInterval(function(){ if (watchFeed() || ++ft > 60) clearInterval(fiv); }, 200);
   }
+
+  /* THE BACK BUTTON, WHICH NOTHING WAS LISTENING FOR (v6.10.0). The app pushes no history
+     entries of its own, so a back is a real navigation and lands one of two ways. A fresh
+     load runs mount() below like any other load. A BFCACHE RESTORE runs nothing at all -
+     the DOM is handed back exactly as it was left and no script executes - and that is the
+     one that showed a stale screen. pageshow with persisted:true is the only event fired
+     there, so it is the only place the view can be re-asserted. popstate is listened for
+     too: it costs nothing and it covers any future in-page history. */
+  function reassert(){
+    try{
+      mount();
+      const a = document.querySelector('.veldt-art');
+      if (a && a.__inst && a.__inst.sync) a.__inst.sync();
+    }catch(e){}
+  }
+  window.addEventListener('pageshow', function(e){ if (e && e.persisted) reassert(); });
+  window.addEventListener('popstate', reassert);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
   else mount();

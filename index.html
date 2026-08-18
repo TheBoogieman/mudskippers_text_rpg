@@ -1215,11 +1215,14 @@
 </div></div>
 
 <!-- TITLE SCREEN -->
+<!-- ONE TITLE SCREEN (v6.10.0). This div used to carry its own rain, sky, wordmark and
+     tagline, and veldt-menu.js inserted .veldt-art in front of them and borrowed only the
+     button column - two title screens stacked, held apart by four display:none rules. Any
+     moment the skin was not mounted showed half of each. RULED BY THE AUTHOR: merge them,
+     the skin is superior. The four layers are deleted rather than hidden, so there is
+     nothing left to fall through to. The buttons and the foot stay: they were never
+     duplicated, and the skin has always borrowed them where they stand. -->
 <div id="titlescreen">
-  <div class="rain"></div>
-  <div class="t-sky" aria-hidden="true"></div>
-  <div class="t-wordmark">MUDSKIPPERS</div>
-  <div class="t-tag">The Courier's Run — a story game with your AI at the table</div>
   <div class="t-menu">
     <button class="menu-btn primary" id="t-continue" style="display:none">CONTINUE<small id="t-continue-sub"></small></button>
     <button class="menu-btn" id="t-new">NEW GAME<small>Day 1. The rain. The humming shard.</small></button>
@@ -1738,7 +1741,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.9.0 "Flush With The Road"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.10.0 "One Title Screen"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2443,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.9.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.10.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -18592,7 +18595,15 @@ function finishBoot(orConnected){
   applyModeUI();                 /* the tray matches whatever the restore found, or none */
   openTitle();
   if(orConnected){
-    document.querySelector(".t-tag").textContent = "OpenRouter connected \u2713 \u2014 your AI is at the table";
+    /* THE ONE LIVE READER OF THE DELETED TAGLINE (v6.10.0). The title screen used to carry
+       its own .t-tag under the skin's; merging them deleted it, and this line would have
+       called .textContent on null and thrown in the middle of the OpenRouter handshake -
+       the one flow where a player is already unsure whether it worked. It writes to the
+       skin's tagline now, and it is guarded, because a confirmation message is never worth
+       an exception. Found by grepping for every reader of the four deleted layers rather
+       than by trusting that hiding them for a year meant nothing used them. */
+    var tagEl = document.querySelector(".veldt-tag") || document.querySelector(".t-tag");
+    if(tagEl) tagEl.textContent = "OpenRouter connected \u2713 \u2014 your AI is at the table";
   }
   maybeWelcome();
 }

@@ -197,11 +197,9 @@ button.small{border-color:#26303f;color:#8d99aa;border-radius:2px}
   justify-content:flex-start !important;
   padding:0 0 44px !important;
 }
-#titlescreen .rain,
-#titlescreen .t-sky,
-#titlescreen .t-wordmark,
-#titlescreen .t-h1,
-#titlescreen .t-tag{display:none !important}
+/* the four legacy title layers are DELETED as of v6.10.0, not hidden - the rules
+   that used to suppress them lived here and have nothing left to suppress. */
+
 
 .veldt-art{
   position:relative;width:100%;aspect-ratio:720/280;overflow:hidden;

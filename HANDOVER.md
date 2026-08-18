@@ -58,6 +58,25 @@ must too, or the probe is measuring its own parser.
 **AND THE TYPED ROUTE ONTO A GRAZE ROW IS DRIVEN**: typing toward the costly row grazes,
 toward the careful row clears, and typing something irrelevant stalls, which is survivable.
 
+**THERE IS ONE TITLE SCREEN NOW (v6.10.0), ruled by the author: merge them, the skin is
+superior.** `#titlescreen` used to carry its own rain, sky, wordmark and tagline, and
+`veldt-menu.js` inserted `.veldt-art` IN FRONT of them, borrowing only the button column -
+two title screens stacked, kept apart by four `display:none !important` rules. **The four
+layers are DELETED, not hidden**, so there is nothing left to fall through to. The buttons
+and the foot stay; the skin has always borrowed them where they stand.
+
+**AND THE BACK BUTTON IS LISTENED FOR.** The app pushes no history of its own, so a back is
+a real navigation: a fresh load runs mount() like any other, but **a BFCACHE RESTORE runs
+nothing at all** - the DOM is handed back as it was and no script executes. `pageshow` with
+`persisted:true` is the only event fired there and nothing was listening. It re-asserts the
+screen now; `popstate` too, which costs nothing.
+
+**ONE LIVE READER OF A DELETED LAYER, and it would have thrown.** The OpenRouter handshake
+wrote its confirmation into `.t-tag` - `querySelector` on a deleted node returns null, and
+`.textContent` on null throws, in the one flow where a player is already unsure whether it
+worked. **Grep for every reader before deleting a layer that has been hidden for a year;
+hidden is not unused.**
+
 **The game is five files.**
 
 | file | what it is |
