@@ -994,9 +994,16 @@ var SPINE = [
  lands:[{day:"9", time:"10:40pm", place:"THE OPEN DOOR, BACK BOOTH", amb:"interior-warm",
        now:"Evening, in the back booth of The Open Door. Hesta has fed them and is pretending not to watch.",
        lines:["The plates go back empty, which in Hesta's language is the entire conversation.",
+      "The fifth setting is still laid. There is nothing on it that anybody could eat and it has been there since before any of them sat down.",
               ["Hesta","Nobody leaves with their coat still wet. That's the rule. I didn't make it, I just enforce it."],
+      "She did not make the rule. She has enforced it every night for thirty years and has never once told anybody who she made it for.",
+      ["Vic","Give her the coat. Arguing about it costs more than the coat does."],
               "She clears the table without a word afterwards and leaves the pot. It means stay as long as you like. It also means she has noticed everything.",
               ["Pia","She's noticed everything."],
+      ["Nine","I would like it noted that I was introduced. By name, in the middle of a sentence, the way you would introduce a person. That is the whole of the report."],
+      "It cost the room nothing, and it is the largest thing that has happened to her since the market, and she has already worked out that saying so would spend it.",
+      "They stay a long time. Nobody asks them to go, the pot stays on the stove, and somewhere in the second hour somebody stops sitting on the edge of the seat.",
+      "This is the room the rest of it happens in. Not one of them knows that yet. They are simply warm, and fed, and arguing about a chair.",
               "The booth is warm and the window is cold, and out past it somebody is going door to door in the rain with a list."],
        /* wired v4.95.0 */
        rail:[{line:"Watch the window a while longer.", cards:["the-street"]},
@@ -1007,7 +1014,10 @@ var SPINE = [
        lines:["You get fed. Standing, mostly, and an hour after the food was ready, because the street would not let go of you until it had.",
               ["Hesta","Sit down. I'm not asking as a favour, I'm asking because I made it sitting-down food."],
               "Nobody sits. She watches that happen and does not say the second thing.",
+      "She has watched four hundred people not sit down. She has never once said the second thing to any of them, and she does not say it tonight.",
               ["Pia","Next time. We'll do it properly next time."],
+      "There is a next time. There are a great many next times, and every one of them starts with somebody standing in that doorway with their coat still on.",
+      "The fifth setting is laid anyway. Nobody comments on it, and it goes back to the kitchen at the end of the night with everybody else's.",
               "Out past the window somebody is going door to door in the rain with a list, and the pot goes back on the stove barely touched."],
        rail:[{line:"Sit down. Late is not nothing.", cards:["what-she-cooked"]},
              {line:"Ask Hesta who has been asking after us.", cards:["the-street"]},
@@ -1368,9 +1378,17 @@ var SPINE = [
  lands:[{day:"15", time:"2:30am", place:"THE OPEN DOOR, BACK ROOM", amb:"interior-warm",
        now:"The small hours, in Hesta's back room with the floorboards still up. The chassis has an owner by Nine's own choice, and something has been cooked in it and eaten.",
        lines:["Somebody eats something they chose themselves for the first time, and the kitchen has the sense to make it an enormous deal quietly.",
+      "There is a hole in the floor with nothing left in it, a sheet over something in the corner, and a fifth setting nobody is sitting at, and the eating happens in the middle of all three.",
               ["Pia","Verdict?"],
               ["Seven","It's terrible. It's genuinely terrible. Can we do it again next week."],
+      ["Nine","Say the verdict again. I want it said twice. I have no way of tasting any of it and I intend to have a very complete file."],
+      "She has spent the whole evening building a file out of other people's mouths, and she is going to go on doing it for years, and nobody at this table has worked out yet that it is how she eats.",
+      ["Hesta","Sit down, all of you. There is enough. There is always enough, and I will thank everybody to stop being surprised about it."],
+      "Nobody is surprised. Every person in that room is astonished, which is a different thing, and she knows the difference and lets it go past.",
               "The pan goes in the sink and the window goes grey at the edges and the argument everybody expected does not happen tonight.",
+      "Upstairs the boards are still up. Vic said he would put the floor back in the morning and everybody agreed to that, and everybody knows he will be down there at half five with a lamp, on his own, doing it quietly.",
+      "In the corner, under a sheet, the thing that walked a man across a city on its own failing legs is going out in the morning, properly, and there is going to be an argument about where.",
+      "A body came up out of a floor tonight, built for one person, and went onto another one at her word, and she is still sitting at the table being rude about the cooking. Nobody says any of that out loud. It would be like reading the minutes back at people who were in the room.",
               "Out past the shutters something crosses the end of the street without lights on, slowly, the way you drive when you already know the way."],
        /* WIRED v5.7.0, CUT TO THREE v5.9.0. playAuthored does rail.slice(0, 3) before
           wireRail is ever called, so a fourth and fifth row are not "spare" - they do not
@@ -1389,6 +1407,9 @@ var SPINE = [
        lines:["It gets done fast, because fast was what there was, and the part where somebody asks how it feels gets postponed to a later that has not arrived.",
               ["Seven","I'm — yes. Fine. That's the word, isn't it. Fine."],
               "He says it a half-beat late, the way you do when you have looked the word up first.",
+      "Nobody asks the second question. There is a hole in the floor, a sheet in the corner, and a clock nobody set, and the second question goes on the pile with the rest of them.",
+      ["Nine","Do not tell him I said this. He was asked in a hurry and he answered in a hurry, and neither of those was his doing."],
+      "She is not going to say it again, and there is nobody else in the room she would say it to once.",
               /* AND THE SAME FAULT ONE NIGHT LATER (v5.33.0). Three is not in this
                  cast either - she arrives on night 16 - and she was speaking here on
                  the hesitation road, which is why two waves of sweeps walked past it.
@@ -1397,6 +1418,7 @@ var SPINE = [
                  room on both roads of the fork, and unlike Nine she carries no shard
                  physics into a scene where who is holding what is the whole question. */
               ["Hesta","Ask him again tomorrow. Not tonight. Tomorrow, and properly."],
+      "He is asked again tomorrow. It goes better than tonight, and worse than it would have gone if anybody had had an hour, and that is going to be true of a great many things this family does.",
               "There is a knock at the outer door at half past two in the morning, and the entire point of this building is that nobody knocks."],
        /* Same shape, same reason. "Ask him now anyway" keeps its text - it is the line
           Three just told you not to use, and the room answers it either way. */

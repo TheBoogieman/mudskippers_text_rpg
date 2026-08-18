@@ -59,7 +59,7 @@ nine separate waves reaching them.
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
 | ~~4~~ | ~~the narration floor~~ | | **DONE v5.78.0 – v5.83.0, ~470 blocks** |
 | ~~5~~ | ~~the two pinned nights past 50%~~ | | **DONE v5.86.0 – v5.89.0, 516 blocks** |
-| 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
+| 6 | **the closings audit** | `closings.js`, `landline.js` | **AUDIT DONE + RULED. 2 of 6 nights fixed at v5.90.0.** |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
 | 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
 

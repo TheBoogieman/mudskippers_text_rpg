@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v5.89.0 "He Is Not Sitting Up"
+   MUDSKIPPERS — THE COURIER'S RUN · v5.90.0 "This Is The Room The Rest Of It Happens In"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2422,7 +2422,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v5.89.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v5.90.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -20333,6 +20333,28 @@ function verdictMap(){
    Both are in the scratchpad. The first pass took 273 blocks and the second took 175, and
    the second would not have been findable with the first pass's instrument.
    THE DRIFT: TWO MATCHED PAIRS, BOTH RENUMBERING.
+   v5.90.0 - PASS 6 OPENS. THE CLOSINGS AUDIT FOUND NO BROKEN CLOSING AND ONE REAL FAULT.
+   Every landing on all 33 nights, both roads, was read against what its night was for. Not
+   one of them closes a scene that did not happen, and every landing rail in the book is
+   wired - no cardless non-knock row anywhere. What the audit found instead is SIZE:
+   twenty of the thirty-three nights land on exactly five lines, which is the shape a
+   landing gets when nobody decided otherwise, and the nights that break it are the ones
+   that FELT big while they were written rather than the ones that ARE big.
+   a2-chassis is 1,220 blocks of deck and landed on five lines. a2-door is 609 and landed
+   on five. a3-stone is 63 - the smallest night in the book, deliberately - and lands on
+   nine. The funeral had nearly twice the ending of the largest night in the book.
+   FIXED HERE FOR THE TWO PINNED NIGHTS: a2-door 5/5 -> 12/8, a2-chassis 5/5 -> 13/9.
+   THE BANTER FLOOR RISES TO 4,661 AND THAT IS CORRECT. Five of the twenty-two new landing
+   lines are spoken. The floor is a FLOOR - it may never be cut and it is allowed to rise.
+   AND THE LANDING LINES COUNT TOWARD THE NIGHT'S NARRATION SHARE, which floors.js has
+   always known and I had not used: a2-chassis went 49.8% -> 50.1% on the strength of this
+   wave alone. Both pinned nights are now over 50%, which pass 5 did not quite manage.
+   THE TOOL PUT THREE BLOCKS IN FRONT OF THE LINES THEY WERE COMMENTING ON. landline.js
+   inserts after an anchor by replacing the anchor's own source text, so several lines
+   sharing one anchor came out in REVERSE spec order - "Nobody is surprised" landed before
+   the thing nobody was surprised by. Caught by dumping the result rather than trusting the
+   APPLIED count, reverted with git, and the tool now groups jobs by anchor and writes each
+   run at once. A tool that only ever adds can still add in the wrong order.
    */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],

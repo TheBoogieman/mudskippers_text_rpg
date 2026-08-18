@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.89.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.90.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -58,7 +58,43 @@ twice in the file — `"...What?"`, `"...Right."`, `"You are on the rota."`, a b
 or a comic snap the breath would break. **Write one block fewer rather than force an
 ambiguous home.** Two tenths of a percent is not worth four jokes.
 
-**NEXT IS PASS 6, THE CLOSINGS AUDIT, AND IT IS A REPORT BEFORE IT IS A WAVE.**
+**PASS 6 IS STARTED. THE AUDIT IS DONE AND THE AUTHOR HAS RULED.**
+
+**THE AUDIT FOUND NO BROKEN CLOSING.** Every landing on all 33 nights, both roads, reads
+against what its night was for; not one closes a scene that did not happen; every landing
+rail in the book is wired. **What it found instead is SIZE.** Twenty of thirty-three nights
+land on exactly five lines — the shape a landing gets when nobody decided otherwise — and
+the nights that break it are the ones that *felt* big while being written, not the ones
+that *are* big. `a2-chassis` is 1,220 blocks and landed on five. `a3-stone` is 63, the
+smallest night in the book on purpose, and lands on nine.
+
+**RULED BY THE AUTHOR, 2026-08-18:** six nights get longer endings — the two pinned, the two
+season finales' weak halves, the two season premieres. **Both roads grow, the hard road
+stays visibly leaner.** The seven nights that end both roads on the same line **keep the
+shared line** — it is the hook into the next night and has to land the same way either way.
+
+**DONE (v5.90.0):** `a2-door` 5/5 → 12/8, `a2-chassis` 5/5 → 13/9.
+
+**STILL OWED, WITH TARGETS:**
+
+| night | now | target |
+|---|---|---|
+| `a1-hum` — series premiere | 15 / **5** | 15 / **9** |
+| `a1-turn` — season-1 finale | 18 / 8 / 8 / 8 | 18 / **12** / **11** / **11** |
+| `a2-turn` — season-2 finale | 8 / 9 / 8 / 8 | **13** / **12** / **11** / **11** |
+| `a3-evict` — season-3 premiere | 5 / 6 / 5 | **9** / **10** / **8** |
+
+**THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
+the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
+read the anchor out of the corpus, refuse on a duplicated anchor.
+
+**TWO THINGS THIS WAVE LEARNED THE HARD WAY.** (1) **Landing lines count toward the night's
+narration share** — `floors.js` has always scanned them and I had never used it. `a2-chassis`
+went 49.8% → 50.1% on this wave alone, so both pinned nights are over 50% now, which pass 5
+did not quite manage. (2) **A tool that only ever ADDS can still add in the wrong ORDER** —
+several lines sharing one anchor came out reversed and put three blocks in front of the
+lines they were commenting on. Caught by dumping the result, not by trusting the APPLIED
+count. `landline.js` now groups by anchor.
 
 **THE SECOND PASS NEEDED A SECOND TOOL, AND THIS IS THE REUSABLE PART.** `layers.js` aims
 at the longest unbroken run, which is right for a FIRST pass and useless for a second — once
