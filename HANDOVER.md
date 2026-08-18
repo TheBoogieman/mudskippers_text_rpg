@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.90.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.91.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -52,13 +52,15 @@ book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 **50.5%** (68 blocks); `a2-chassis` 20.6% → **49.8%** (448 blocks). Spoken unmoved on both
 the whole way, and the book floor unmoved at 4,656 across all four releases.
 
-**`a2-chassis` LANDS AT 49.8% AND THAT IS THE HONEST NUMBER.** The last twelve blocks were
+**`a2-chassis` LANDED AT 49.8% ON PASS 5 AND CROSSED 50% ON PASS 6** — landing lines count
+toward the share, and pass 6 put twelve of them on the night. Both pinned nights are over.
+The pass-5 reasoning still stands and is the rule for any future night: The last twelve blocks were
 left on purpose: every remaining place a breath could go is either an anchor that appears
 twice in the file — `"...What?"`, `"...Right."`, `"You are on the rota."`, a bare `"No."` —
 or a comic snap the breath would break. **Write one block fewer rather than force an
 ambiguous home.** Two tenths of a percent is not worth four jokes.
 
-**PASS 6 IS STARTED. THE AUDIT IS DONE AND THE AUTHOR HAS RULED.**
+**PASS 6 IS FINISHED (v5.90.0 + v5.91.0).**
 
 **THE AUDIT FOUND NO BROKEN CLOSING.** Every landing on all 33 nights, both roads, reads
 against what its night was for; not one closes a scene that did not happen; every landing
@@ -73,16 +75,13 @@ season finales' weak halves, the two season premieres. **Both roads grow, the ha
 stays visibly leaner.** The seven nights that end both roads on the same line **keep the
 shared line** — it is the hook into the next night and has to land the same way either way.
 
-**DONE (v5.90.0):** `a2-door` 5/5 → 12/8, `a2-chassis` 5/5 → 13/9.
+**DONE — ALL SIX, v5.90.0 and v5.91.0, 60 landing lines.** `a2-door` 5/5 → 12/8 ·
+`a2-chassis` 5/5 → 13/9 · `a1-hum` 15/5 → 15/9 · `a1-turn` 18/8/8/8 → 18/12/11/11 ·
+`a2-turn` 8/9/8/8 → 13/12/11/11 · `a3-evict` 5/7/5 → 9/10/8. **No night in the book now
+ends smaller than the night it is ending.**
 
-**STILL OWED, WITH TARGETS:**
-
-| night | now | target |
-|---|---|---|
-| `a1-hum` — series premiere | 15 / **5** | 15 / **9** |
-| `a1-turn` — season-1 finale | 18 / 8 / 8 / 8 | 18 / **12** / **11** / **11** |
-| `a2-turn` — season-2 finale | 8 / 9 / 8 / 8 | **13** / **12** / **11** / **11** |
-| `a3-evict` — season-3 premiere | 5 / 6 / 5 | **9** / **10** / **8** |
+**NEXT IS PASS 7, THE CONTRACTION BAND, NIGHTS 11-22** — `contract-pass.js`, `spread.js`.
+After that pass 8: the nerve pass, the plausibility pass, and the two lore folds.
 
 **THE TOOL IS `scratchpad/landline.js`** — landings live on `SPINE[].lands[].lines[]`, not in
 the SCENEBOOK deck, so `breathe.js` cannot reach them. Same discipline: address by index,
