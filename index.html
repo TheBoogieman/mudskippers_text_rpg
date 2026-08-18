@@ -1806,7 +1806,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.24.0 "No More Mixed Builds"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.25.0 "Back Where You Left It"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2508,7 +2508,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.24.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.25.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -18904,6 +18904,17 @@ function finishBoot(orConnected){
   setLedgerStatus();
   applyModeUI();                 /* the tray matches whatever the restore found, or none */
   openTitle();
+  /* ---- A REFRESH GOES BACK TO THE RUN, NOT TO THE FRONT DOOR (v6.25.0) ----
+     The author's ask, from a phone, where browsers reload tabs on their own and every one
+     of those was landing him on the title screen with his night one click away.
+     THE CONDITION IS THE CONTINUE BUTTON'S, DELIBERATELY, rather than a second rule that
+     could drift from it: a run was actually RESTORED from the drawer, it has a slug, and it
+     is not over. A dead or finished courier still stops at the title screen, because that is
+     where the subtitle explains what happened and offers a new game - dropping somebody
+     straight back into a run they cannot play would be worse than the click.
+     The title screen is still one tap away on MENU; this only skips it when there is
+     something live to skip it FOR. */
+  if(restored && runSlug && !runOver) closeTitle();
   if(orConnected){
     /* THE ONE LIVE READER OF THE DELETED TAGLINE (v6.10.0). The title screen used to carry
        its own .t-tag under the skin's; merging them deleted it, and this line would have
