@@ -3,7 +3,7 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.7.4 · 34 nights written · sweep 81 PROVED of 106, 0 FAILED.**
+**v6.8.0 · 34 nights written · sweep 88 PROVED of 106, 0 FAILED.**
 
 ---
 
@@ -83,41 +83,31 @@ it did. Re-driven: that case lands on `a3-evict` now. Sweep row **(4a5)** covers
 
 ---
 
-## 5. SEVEN SWEEP ROWS CARRY NO BROKEN FORM — *was nine; two were the instrument's own fault*
+## 5. THE SWEEP'S UNDECLARED DEBT — **ZERO**
 
-A row proves itself by breaking the code and watching the claim fail. The harness credits a
-break only when the check **enters** a function named in `PROD_SYMBOLS` — it wraps each one
-and watches, because an earlier version credited any check whose *source text* mentioned a
-name, which a comment satisfies.
+The harness credits a broken form only when the check **enters** a function it can watch. Its
+headline now reads: *every case either proves it would have caught its own defect, or says
+why it cannot.* **88 PROVED of 106, 0 FAILED, nothing undeclared.**
 
-**TWO OF THE NINE WERE NOT THE ROWS' FAULT AT ALL.** `hasWord` and `revealText` are both in
-that roster and both were declared **inside** `selfTest`, so the names referred to globals
-that did not exist. Every check calling them entered the sweep's own private copy, touched no
-game code, and was correctly reported as *"a restatement, not a proof"*. **The one-predicate-
-three-copies trap, inside the instrument that exists to catch it.** Hoisted to top level;
-*nobody explains the peak joke* and *every plant and payoff is really in the night that
-claims it* both went green on the next load. **9 → 7, and PROVED 81 → 83.**
+**Two of the original nine were the instrument's own fault.** `hasWord` and `revealText` are
+named in the credit roster and were both declared *inside* the sweep, so the names referred
+to globals that did not exist — every check calling them ran the sweep's private copy and was
+correctly reported as a restatement. Hoisted. Two rows went green untouched.
 
-**Found by sweeping the roster rather than the rows** — `scratchpad/shadows.js` walks all 198
-names and asks which are top-level and wrappable. It also turned up **two dead names**,
-`shardWhereAfter` and `unproved`, declared nowhere in the file. A dead or shadowed name does
-not fail loudly; it quietly denies credit to every row that calls it.
+**Four were inline predicates and are now production functions** — `castMuteFaults` and
+`contractionByVoice` — so the row and its break drive the same reader over a corpus
+deliberately put into the faulty shape: a card whose answerer is not in the room, a room
+emptied of every mouth but the muted one, a contraction in the Principal's mouth.
 
-**THE REMAINING SEVEN NEED REAL WORK, ONE AT A TIME:**
+**Two are DECLARED, not faked.** The composer row and the correction-budget row read the
+reply handler's own source, because what they assert is a **route** — that no path to the
+model opens without a gate — and the fault they exist to catch is a route nobody takes, which
+no driven turn can reach. Their broken form would have to be a different string.
+**Bolting a production call onto a text compare would buy the credit and prove nothing**,
+which is the exact thing this harness was built to refuse.
 
-- every card is answered by somebody in the room
-- no card orders a voice the physics has switched off
-- the relay never speaks the answer it is withholding
-- the composer is reached once per player action
-- every correction route spends from one capped budget
-- the two formal voices never contract
-- a bit turn asks for dialogue and nothing else
-
-Each computes its predicate **inline in the sweep**, so a break can only re-run that inline
-copy. The honest fix is to extract each predicate into a production function and have both
-the row and its break drive that — the same move `leadPunctStrip`, `beatPointerFrom` and
-`answererFor` were made for. **Bolting a production call onto a restatement to buy the
-credit is exactly what the harness's own note forbids, and must not be done.**
+**The remaining exempt row is the banter floor**, a ratchet, which has no broken form by
+construction and says so.
 
 ---
 

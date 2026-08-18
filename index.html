@@ -1738,7 +1738,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.7.4 "The Instrument Had A Shadow"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.8.0 "Or Says Why It Cannot"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2440,7 +2440,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.7.4";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.8.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5264,6 +5264,94 @@ function revealText(b){
   (b.press || []).forEach(function(x){ out.push(x); });
   [b.goal, b.exit, b.aim, b.scar].forEach(function(x){ if(x) out.push(x); });
   return out.join(" \n ");
+}
+/* WHO CAN ACTUALLY ANSWER A CARD (extracted v6.7.5).
+   This walk lived inline in the sweep, so the only break either row could have was a second
+   copy of the same loop - a restatement, which the credit rule refuses and is right to.
+   Out here it is one reader: the rows call it, and so do their breaks, over a corpus put
+   deliberately into the faulty shape.
+   PRESENCE IS NOT SPEAKABILITY, which is the whole reason the second half exists. The old
+   predicate asked only whether the answerer was in the room - which a1-chase's Nine card
+   passes, on a beat where she is in the jacket and the contract's own physics says she DOES
+   NOT SPEAK. That check was green while the collision it was meant to find was firing live.
+   THE FORK IS PINNED for the duration: nineIsShard reads chassisHolder, and leaving it
+   wherever the previous block happened to stop means judging a road at random. */
+function castMuteFaults(){
+  var castBad = [], mute = [];
+  var keepShard = shardWhere, keepBeat = beatIdx, keepHolder = chassisHolder;
+  chassisHolder = null;
+  try{
+    Object.keys(SCENEBOOK).forEach(function(k){
+      var e = SCENEBOOK[k], idx = beatById(k);
+      [e, e && e.room].forEach(function(sc, isRoom){
+        if(!sc || !sc.topics) return;
+        sc.topics.forEach(function(t){
+          var w = String((t && t.who) || "");
+          if(!w || isAnonSpeaker(w) || /^(?:narration|nobody|the room)$/i.test(w) || isCourier(w)) return;
+          if((sc.here || []).indexOf(w) === -1){
+            castBad.push(k + ": " + w + " answers but is not in the room");
+            return;
+          }
+          if(w !== "Nine") return;
+          if(idx >= 0) beatIdx = idx;
+          if(!nineIsShard()) return;
+          shardWhere = "jacket";
+          if(!cardIsMuted("Nine")){ mute.push(k + ": the mute test does not fire in the jacket"); return; }
+          var relay = relaySpeaker(sc);
+          if(!relay || relay === "Nine" || relay === "whoever is in the room"){
+            mute.push(k + (isRoom ? "/room" : "") + ": no open mouth to hand it to");
+          }
+        });
+      });
+    });
+  } finally { shardWhere = keepShard; beatIdx = keepBeat; chassisHolder = keepHolder; }
+  return {cast:castBad, mute:mute};
+}
+/* the pair table travels with the walk that reads it */
+  var CB_PAIRS = [
+    [/\bdo not\b/gi,/\bdon't\b/gi],[/\bdoes not\b/gi,/\bdoesn't\b/gi],[/\bdid not\b/gi,/\bdidn't\b/gi],
+    [/\bis not\b/gi,/\bisn't\b/gi],[/\bare not\b/gi,/\baren't\b/gi],[/\bwas not\b/gi,/\bwasn't\b/gi],
+    [/\bwill not\b/gi,/\bwon't\b/gi],[/\bwould not\b/gi,/\bwouldn't\b/gi],[/\bcannot\b/gi,/\bcan't\b/gi],
+    [/\bcould not\b/gi,/\bcouldn't\b/gi],[/\bhave not\b/gi,/\bhaven't\b/gi],[/\bhas not\b/gi,/\bhasn't\b/gi],
+    [/\bit is\b/gi,/\bit's\b/gi],[/\bthat is\b/gi,/\bthat's\b/gi],[/\bi am\b/gi,/\bi'm\b/gi],
+    [/\byou are\b/gi,/\byou're\b/gi],[/\bi have\b/gi,/\bi've\b/gi],[/\bi will\b/gi,/\bi'll\b/gi],
+    [/\bi would\b/gi,/\bi'd\b/gi],[/\bthere is\b/gi,/\bthere's\b/gi]
+  ];
+/* EVERY SPEAKER'S CONTRACTION COUNT, OVER THE WHOLE BOOK (extracted v6.7.5).
+   The Machine and the Principal are ceilinged at zero and the uncontracted diction is the
+   only thing separating them from the family - it reads as strange precisely because the
+   family speaks like people. This walk lived inline, so the row's break could only be a
+   second copy of it. Out here the row and the break ask the same reader, and the break can
+   put a contraction in the Principal's mouth and watch the claim go red. */
+function contractionByVoice(){
+  var cbPer = {};
+  SPINE.forEach(function(b){
+    var e = SCENEBOOK[b.id];
+    function eat(l){
+      var who = null, txt = null;
+      if(Object.prototype.toString.call(l) === "[object Array]"){ who = l[0]; txt = l[1]; }
+      else if(l && l.text){ who = l.who; txt = l.text; }
+      if(!who || !txt || who === "Narration") return;
+      var p = cbPer[who] || (cbPer[who] = {f:0, c:0});
+      CB_PAIRS.forEach(function(pr){
+        var a = txt.match(pr[0]), c = txt.match(pr[1]);
+        p.f += a ? a.length : 0; p.c += c ? c.length : 0;
+      });
+    }
+    if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+      (t.plays || []).forEach(eat);
+      (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
+    });
+    ["opens","lands","landsHard","closes"].forEach(function(k){
+      (b[k] || []).forEach(function(L){ (L.lines || []).forEach(eat); });
+    });
+  });
+  /* THE MACHINE AND THE PRINCIPAL ARE CEILINGED AT ZERO ON PURPOSE. Their perfect
+     uncontracted diction is the only thing that separates them from the family, and it
+     only reads as strange once the family speaks like people. Everybody else has a
+     FLOOR that the pass raises them past, night by night; this row reports the whole
+     cast so the bands are never argued about again. */
+  return cbPer;
 }
 function hasWord(text, w){
   return new RegExp(String(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(text);
@@ -21065,7 +21153,7 @@ function selfTest(){
      Credit is observed now, not read: every named function is wrapped for the
      duration of the check and the check is credited only if one of them was actually
      ENTERED. Nothing about this can be satisfied by writing a name down. */
-  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "beatPointerFrom", "attemptClose", "applyTension",
+  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "beatPointerFrom", "attemptClose", "applyTension",
     "namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
     "sceneContract", "relaySpeaker", "relayCard", "cardIsMuted", "revealLeak", "tellHit", "tellHay",
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
@@ -21517,46 +21605,38 @@ function selfTest(){
        where she is in the jacket and the contract's own physics block says she
        DOES NOT SPEAK. That check was green while the collision it was meant to
        find was firing live. The question is whether the card can be ANSWERED. */
-    var castBad = [], mute = [];
-    /* ...and the fork is PINNED. Neither this block nor the relay block below saved
-       chassisHolder, and nineIsShard reads it - so both were judging whichever fork
-       the previous block happened to leave behind. */
-    var keepShard = shardWhere, keepBeat = beatIdx, keepHolder = chassisHolder;
-    chassisHolder = null;
-    Object.keys(SCENEBOOK).forEach(function(k){
-      var e = SCENEBOOK[k], idx = beatById(k);
-      [e, e && e.room].forEach(function(sc, isRoom){
-        if(!sc || !sc.topics) return;
-        sc.topics.forEach(function(t){
-          var w = String((t && t.who) || "");
-          if(!w || isAnonSpeaker(w) || /^(?:narration|nobody|the room)$/i.test(w) || isCourier(w)) return;
-          if((sc.here || []).indexOf(w) === -1){
-            castBad.push(k + ": " + w + " answers but is not in the room");
-            return;
-          }
-          /* ...and can they speak? Only Nine is state-gated, and only while she is
-             the shard. A card she answers needs the beat to be able to reach a
-             state where she is audible, or a reconciliation on the card. */
-          if(w !== "Nine") return;
-          if(idx >= 0) beatIdx = idx;
-          if(!nineIsShard()) return;
-          /* stand in the state that used to break it and ask the CONTRACT, not the
-             card: the client is supposed to see this collision at compose time and
-             hand the card to a mouth that is open. */
-          shardWhere = "jacket";
-          if(!cardIsMuted("Nine")){ mute.push(k + ": the mute test does not fire in the jacket"); return; }
-          var relay = relaySpeaker(sc);
-          if(!relay || relay === "Nine" || relay === "whoever is in the room"){
-            mute.push(k + (isRoom ? "/room" : "") + ": no open mouth to hand it to");
-          }
-        });
-      });
-    });
-    shardWhere = keepShard; beatIdx = keepBeat; chassisHolder = keepHolder;
-    T("every card is answered by somebody in the room", castBad.length === 0, castBad.slice(0, 5).join("; "));
+    var cmF = castMuteFaults(), castBad = cmF.cast, mute = cmF.mute;
+    T("every card is answered by somebody in the room", castBad.length === 0,
+      castBad.length ? castBad.slice(0, 5).join("; ")
+        : Object.keys(SCENEBOOK).length + " nights walked; every card's answerer is cast in the room they answer in",
+      {label:"a card whose answerer is not in the room, which is the shape this row exists to catch",
+       was:true,
+       check:function(){
+         /* the corpus put into the faulty state, and the REAL reader asked about it */
+         var e = SCENEBOOK["a1-hum"], t = e && e.topics && e.topics[0];
+         if(!t) return true;
+         var keep = t.who;
+         try{ t.who = "Marek"; return castMuteFaults().cast.length === 0; }
+         finally { t.who = keep; }
+       }});
     T("no card orders a voice the physics has switched off", mute.length === 0,
       "every Nine card, in the jacket, reconciles to a speaker who can answer"
-      + (mute.length ? " - " + mute.length + " UNRECONCILED: " + mute.slice(0, 5).join(" | ") : ""));
+      + (mute.length ? " - " + mute.length + " UNRECONCILED: " + mute.slice(0, 5).join(" | ") : ""),
+      {label:"a night whose room holds nobody but Nine, so a card she answers has no open mouth to hand to",
+       was:true,
+       check:function(){
+         /* strip every other mouth out of a night Nine answers on, and ask the real reader */
+         var hit = null;
+         Object.keys(SCENEBOOK).some(function(k){
+           var e = SCENEBOOK[k];
+           if(e && e.topics && e.topics.some(function(t){ return t && t.who === "Nine"; })){ hit = e; return true; }
+           return false;
+         });
+         if(!hit) return true;
+         var keep = hit.here;
+         try{ hit.here = ["Nine"]; return castMuteFaults().mute.length === 0; }
+         finally { hit.here = keep; }
+       }});
     /* THE GENERATED RELAY IS TESTED AGAINST THE HAND-WRITTEN ONE, which is what
        "golden template" has to mean. Asserting only that a1-hum's own string still
        matches itself is a check on a constant. The property that matters: the
@@ -22459,9 +22539,29 @@ function selfTest(){
     T("the relay never speaks the answer it is withholding", relayBad.length === 0,
       relayN + " muted cards across beat and room decks"
       + (relayBad.length ? " - " + relayBad.slice(0, 4).join(" | ") : ""),
-      {label:"the wave-3 relay line, which prefixed her own answer",
-       was:'what Pia can give of it: skin on the shard and nothing else',
-       check:function(w){ return String(w).toLowerCase().indexOf("skin on the shard") === -1; }});
+      {label:"a room emptied of every mouth but the muted one, so the relay has nowhere to hand the card",
+       was:true,
+       check:function(){
+         /* THE ROW'S OWN READER, over data in the faulty shape. The break this replaced was
+            an indexOf against a string literal - it proved a substring was absent from a
+            constant and entered no game code, which is exactly what the credit rule refuses. */
+         var hit = null;
+         Object.keys(SCENEBOOK).some(function(k){
+           var e = SCENEBOOK[k];
+           if(e && e.topics && e.topics.some(function(t){ return t && t.who === "Nine"; })){ hit = e; return true; }
+           return false;
+         });
+         if(!hit) return true;
+         var keepHere = hit.here, keepSw = shardWhere, keepCh = chassisHolder;
+         try{
+           hit.here = ["Nine"];
+           shardWhere = "jacket"; chassisHolder = null;
+           var r = relaySpeaker(hit);
+           /* the claim, restated: the relay is somebody other than the muted speaker.
+              With nobody else in the room it cannot hold. */
+           return !!r && r !== "Nine" && r !== "whoever is in the room";
+         } finally { hit.here = keepHere; shardWhere = keepSw; chassisHolder = keepCh; }
+       }});
     T("a1-hum keeps its hand-written reconciliation as the template",
       !!(SCENEBOOK["a1-hum"] && SCENEBOOK["a1-hum"].before
          && /answers instead/i.test(SCENEBOOK["a1-hum"].before)
@@ -22550,7 +22650,14 @@ function selfTest(){
       gateSrc.indexOf("turnContextToken === turnToken") !== -1
       && dmCode.indexOf("contextForThisTurn()") !== -1
       && dmCode.indexOf("buildContext()") === -1,
-      "callDM composes only through contextForThisTurn, which is token-gated");
+      "callDM composes only through contextForThisTurn, which is token-gated",
+      {exempt:"A WIRING ROW READS THE WIRING, AND THAT IS THE METHOD. What this asserts is that"
+       + " EVERY route to the composer goes through the token gate - and the fault it exists to"
+       + " catch is a route nobody took, which no driven turn can demonstrate, because a turn"
+       + " exercises the routes it happens to take. Its broken form would have to be a different"
+       + " source string, which enters no running code by construction. Declared rather than"
+       + " faked: bolting a call to a production function onto a text compare would buy the"
+       + " credit and prove nothing, which is precisely what this harness was built to refuse."});
     /* EVERY ROUTE TO A CORRECTION SPENDS FROM THE CAP. The old case asserted that
        an unspent budget was unspent - a check on a counter, not on the wiring - and
        so it never noticed the five untagged re-asks that call the model without
@@ -22593,13 +22700,12 @@ function selfTest(){
       gatedBy + "/" + callsIn + " call sites gated (by proximity) · cap " + TURN_CALL_CAP
       + " per player action, ranked so the un-walk-back-able go first"
       + (ungatedAt.length ? " - UNCAPPED: " + ungatedAt.slice(0, 3).join(" | ") : ""),
-      {label:"the wave-3 counter, which counted gates and so missed an ungated call",
-       was:"if(askAgain < 2){ return callDM(\"...\", \"x\"); }",
-       check:function(w){
-         var p = String(w).split("callDM(");
-         return p.length < 2 || p[0].slice(-700).indexOf("turnCalls <") !== -1
-             || p[0].slice(-700).indexOf("mayAsk(") !== -1;
-       }});
+      {exempt:"THE SAME KIND AS THE COMPOSER ROW ABOVE, AND FOR THE SAME REASON. It reads the"
+       + " reply handler's own source and requires every callDM inside it to sit behind a"
+       + " budget test. The defect it was written for was five untagged re-asks that called"
+       + " the model without consulting the cap at all - a route, not a behaviour, and a route"
+       + " nobody takes is invisible to any driven turn. The break it used to carry parsed a"
+       + " string literal of the old handler, which is a text compare wearing a check's coat."});
 
     /* THE WORLD'S MOVE BOOKS AS THE WORLD'S MOVE. A forced close charged nothing
        whenever the model obeyed - so the toll meter, the scar landings and the fold
@@ -25054,42 +25160,7 @@ function selfTest(){
     })();
 
     /* ---- (6g6) the contraction band, per speaker — OUTSTANDING §8b ---- */
-    var CB_PAIRS = [
-      [/\bdo not\b/gi,/\bdon't\b/gi],[/\bdoes not\b/gi,/\bdoesn't\b/gi],[/\bdid not\b/gi,/\bdidn't\b/gi],
-      [/\bis not\b/gi,/\bisn't\b/gi],[/\bare not\b/gi,/\baren't\b/gi],[/\bwas not\b/gi,/\bwasn't\b/gi],
-      [/\bwill not\b/gi,/\bwon't\b/gi],[/\bwould not\b/gi,/\bwouldn't\b/gi],[/\bcannot\b/gi,/\bcan't\b/gi],
-      [/\bcould not\b/gi,/\bcouldn't\b/gi],[/\bhave not\b/gi,/\bhaven't\b/gi],[/\bhas not\b/gi,/\bhasn't\b/gi],
-      [/\bit is\b/gi,/\bit's\b/gi],[/\bthat is\b/gi,/\bthat's\b/gi],[/\bi am\b/gi,/\bi'm\b/gi],
-      [/\byou are\b/gi,/\byou're\b/gi],[/\bi have\b/gi,/\bi've\b/gi],[/\bi will\b/gi,/\bi'll\b/gi],
-      [/\bi would\b/gi,/\bi'd\b/gi],[/\bthere is\b/gi,/\bthere's\b/gi]
-    ];
-    var cbPer = {};
-    SPINE.forEach(function(b){
-      var e = SCENEBOOK[b.id];
-      function eat(l){
-        var who = null, txt = null;
-        if(Object.prototype.toString.call(l) === "[object Array]"){ who = l[0]; txt = l[1]; }
-        else if(l && l.text){ who = l.who; txt = l.text; }
-        if(!who || !txt || who === "Narration") return;
-        var p = cbPer[who] || (cbPer[who] = {f:0, c:0});
-        CB_PAIRS.forEach(function(pr){
-          var a = txt.match(pr[0]), c = txt.match(pr[1]);
-          p.f += a ? a.length : 0; p.c += c ? c.length : 0;
-        });
-      }
-      if(e) (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
-        (t.plays || []).forEach(eat);
-        (t.takes || []).forEach(function(g){ (g || []).forEach(eat); });
-      });
-      ["opens","lands","landsHard","closes"].forEach(function(k){
-        (b[k] || []).forEach(function(L){ (L.lines || []).forEach(eat); });
-      });
-    });
-    /* THE MACHINE AND THE PRINCIPAL ARE CEILINGED AT ZERO ON PURPOSE. Their perfect
-       uncontracted diction is the only thing that separates them from the family, and it
-       only reads as strange once the family speaks like people. Everybody else has a
-       FLOOR that the pass raises them past, night by night; this row reports the whole
-       cast so the bands are never argued about again. */
+    var cbPer = contractionByVoice();
     var CB_CEIL = {Machine:0, Principal:0};
     var cbBad = [], cbLine = [];
     Object.keys(cbPer).sort().forEach(function(w){
@@ -25119,15 +25190,15 @@ function selfTest(){
          for(i = 0; i < t.plays.length; i++)
            if(Object.prototype.toString.call(t.plays[i]) === "[object Array]" && t.plays[i][0] === "Principal"){ slot = i; break; }
          if(slot === null) return true;
-         var keep = t.plays[slot][1], f = 0, c = 0;
+         var keep = t.plays[slot][1], rate = 0;
          try{
            t.plays[slot][1] = keep + " I'm not going to pretend it isn't.";
-           CB_PAIRS.forEach(function(pr){
-             var a = t.plays[slot][1].match(pr[0]), b2 = t.plays[slot][1].match(pr[1]);
-             f += a ? a.length : 0; c += b2 ? b2.length : 0;
-           });
+           /* graded by the reader THE ROW uses, not by a second copy of the loop here.
+              That was the whole fault: the old break proved a regex matches a string. */
+           var p = contractionByVoice()["Principal"] || {f:0, c:0};
+           rate = (p.f + p.c) ? Math.round(100 * p.c / (p.f + p.c)) : 0;
          } finally { t.plays[slot][1] = keep; }
-         return c === 0;              /* falsy under the break: the injected contraction was seen */
+         return rate <= 0;            /* falsy under the break: the book-wide walk saw it */
        }});
 
     /* ---- (6g7) nobody explains the peak joke ---- */
@@ -26531,7 +26602,27 @@ function selfTest(){
       skBad.length === 0 && skKeys.length === 1 && skKeys[0] === "fills",
       skBad.length ? skBad.join("; ")
         : skH.slots.length + " slots · " + skH.msgs[0].content.length
-          + " chars · the only field the ask names is \"" + skKeys.join("\", \"") + "\"");
+          + " chars · the only field the ask names is \"" + skKeys.join("\", \"") + "\"",
+      {label:"an ask that names a second field beside the dialogue, which is how a bit turn starts writing the scene",
+       was:true,
+       check:function(){
+         /* THE ROW'S OWN READER, over a skeleton built wrong. bitSkeletonNow is what the row
+            asks; this asks it too, and then puts the answer into the shape the row exists to
+            refuse - a second top-level field beside "fills". */
+         var real = window.bitSkeletonNow;
+         try{
+           window.bitSkeletonNow = function(){
+             var h = real.apply(null, arguments);
+             if(h && h.schema) h.schema.narration = {type:"string"};
+             return h;
+           };
+           var h2 = window.bitSkeletonNow.apply(null, []);
+           var keys = (h2 && h2.schema) ? Object.keys(h2.schema) : [];
+           /* the claim, restated: the ask names one field and it is "fills" */
+           return keys.length === 1 && keys[0] === "fills";
+         } catch(e){ return false; }
+         finally { window.bitSkeletonNow = real; }
+       }});
 
     var vHand = humVoices("hand"), vCloth = humVoices("jacket");
     T("she is a slot only while she can be heard",

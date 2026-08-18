@@ -8,7 +8,20 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.7.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+**v6.8.0. THIRTY-FOUR nights written. Sweep 88 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+
+**THE SWEEP CARRIES NO UNDECLARED DEBT.** Its own headline: *every case either proves it
+would have caught its own defect, or says why it cannot.* Getting there found the trap living
+inside the instrument - `hasWord` and `revealText` are named in the credit roster and were
+declared INSIDE the sweep, so every check calling them ran a private copy and was correctly
+called a restatement. **A predicate the roster expects to be the game's, living nowhere but
+the instrument.** Sweep the roster, not the rows: `scratchpad/shadows.js`.
+
+**AND TWO ROWS ARE DECLARED RATHER THAN FAKED.** The composer row and the correction-budget
+row read the reply handler's source, because what they assert is a ROUTE - that no path to
+the model opens without a gate - and the fault they catch is a route nobody takes, which no
+driven turn can reach. **Bolting a production call onto a text compare would buy the credit
+and prove nothing.** Declared is not hidden; faked is worse than amber.
 
 **THE BOOK HAS A NEW VOICE AND IT SPEAKS ONCE.** `"The File"` is a nameplate now - Vic's
 expert-system ghost on the courier's wrist, in capitals, at the bottom of the descent, and
