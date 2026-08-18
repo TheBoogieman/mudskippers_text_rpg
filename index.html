@@ -725,6 +725,32 @@
   .w-unread{width:6px;height:6px;border-radius:50%;background:#3a2c14;position:relative}
   #watch.updated .w-unread{background:#f2c14e;box-shadow:0 0 8px #f2c14e;animation:led-warn 1.6s ease-in-out infinite}
   @media (max-width:700px){ #watch{padding:9px 6px 9px 8px} .w-face{width:40px} .w-line{font-size:8px} }
+  /* ---- THE PHONE (v6.18.0). Measured, not guessed: at a 375px viewport the wrist tab
+     starts at x=320 and the feed's blocks reach x=341, so twenty-one pixels of every line
+     in its band were being read through a CRT. The tab is the ONLY way into the terminal,
+     so it cannot be hidden - it is slimmed, and the column reserves exactly its width.
+     .w-face STAYS DISPLAYED at every size: termBuzz() runs its shake animation on that
+     element, and a display:none node runs no animation, so hiding it would have killed the
+     haptic silently. The day and the time inside it are hidden instead - the header says
+     both in larger type two inches above, and textContent writes to a hidden node are
+     harmless. Hidden is not unused; check which of the two you are doing. */
+  @media (max-width:760px){
+    #watch{padding:8px 4px 8px 6px;border-radius:7px 0 0 7px}
+    .w-face{width:22px;gap:5px;padding:8px 3px}
+    .w-day,.w-time,.w-strap{display:none}          /* the header already says day and time */
+    .w-line{font-size:7.5px;letter-spacing:.1em}
+    #feed{padding-right:36px}                       /* the gutter the tab lives in */
+    #controls .inner{padding-right:36px}
+    /* the header was taking 129px of an 812px screen - a sixth of the page, above the
+       story, saying what the wrist says. Tightened to about eighty. */
+    header{padding:8px 12px 7px;gap:8px}
+    .title{font-size:12.5px;letter-spacing:.22em}
+    .meta{gap:7px;font-size:10px;letter-spacing:.05em;margin-left:0;width:100%}
+    /* and the small print stops being small print: these carry the night's state and
+       the room's own voice, and were shipping at 13.5px against prose at 18px. */
+    .block.sys{font-size:14.5px;line-height:1.6}
+    .block.dmaside{font-size:15px;line-height:1.6}
+  }
 
   /* terminal glass content */
   .term-wrap{font-family:ui-monospace,Menlo,monospace}
@@ -1748,7 +1774,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.17.0 "Nobody Stops You, And That Is The Point"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.18.0 "Read It On A Phone"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2450,7 +2476,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.17.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.18.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
