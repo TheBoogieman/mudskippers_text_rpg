@@ -588,6 +588,9 @@
     display:inline-block;width:11px;height:11px;border-radius:50%;
     border:1px solid #5a4a3a;margin:0 3px;vertical-align:middle;background:transparent;
   }
+  /* the warning goes UNDER the pips, never alongside them: on a phone it wrapped into
+     the row and the meter stopped reading as a meter */
+  .toll-row span{display:block;margin-top:5px;letter-spacing:.04em}
   .toll-row i.paid{background:#e08b8b;border-color:#8d3a3a}
   .toll-row i.grave{border-color:#e04a4a;border-width:2px;box-shadow:0 0 8px rgba(224,58,58,.55)}
   /* the three doors: the exit is lit, the stall is the house style, the walk is
@@ -795,16 +798,33 @@
   }
   .fix-v.amb{display:flex;align-items:center;gap:6px}
   .fix-v i{width:8px;height:8px;border-radius:2px;box-shadow:0 0 6px currentColor;flex:none}
+  /* EVERY SECTION HEADER GETS AIR ABOVE IT (v6.28.0). These had no top margin at all,
+     so THE FAMILY sat flush against the tolls and THE RECORD against the roster - four
+     unrelated things reading as one column. The pane's own first header needs none. */
   .term-h{
     font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-h2);letter-spacing:.2em;
-    color:var(--sodium);margin:0 0 6px;display:flex;align-items:baseline;gap:8px;
+    color:var(--sodium);margin:18px 0 6px;display:flex;align-items:baseline;gap:2px 8px;
+    flex-wrap:wrap;
   }
+  /* THE HEADER NAME NEVER BREAKS; THE GLOSS DROPS INSTEAD. Unwrapped, the flex row
+     squeezed the name and put THE FAMILY on two lines with its italic explainer beside
+     it - the header reading as the smaller thing on its own row. */
+  .term-h span{flex:1 1 auto;min-width:0}
+  .term-pane > .term-h:first-child{margin-top:0}
+  /* ...AND THE JOB'S FOOTER IS ONE CLUSTER RATHER THAN THREE LOOSE ROWS. The turn meter,
+     the count of closed beats and the tolls all measure TONIGHT, and they were stacked on
+     the same gap as everything else - so they drifted off the job they belong to and
+     crowded the section underneath. Hairline above, tight inside, air after. */
+  #term-board .board-turns{margin-top:13px;padding-top:9px;border-top:1px solid #26301f}
+  #term-board .hint{margin-top:5px}
+  #term-board .toll-row{margin-top:7px}
+  #term-board{margin-bottom:4px}
   .term-h span{color:var(--ink-dim);letter-spacing:.06em;font-size:var(--tt-label);font-style:italic;font-family:Georgia,serif}
   /* the screen scrolls as one page, so the lists no longer scroll inside it */
   #term-canon,#term-threads,#term-stones{
     font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);line-height:1.6;
     color:var(--ink-dim);background:#141a15;border:1px solid #26301f;border-radius:3px;
-    padding:9px 11px;list-style:none;margin-bottom:16px;
+    padding:9px 11px;list-style:none;margin-bottom:8px;
   }
   #term-canon li{margin-bottom:4px}
   #term-canon li b{color:var(--seven);font-weight:600;margin-right:6px}
@@ -956,7 +976,7 @@
   .term-pane.on{display:block}
   .term-glyph{display:inline-block;vertical-align:-3px;margin-right:7px}
   .term-glyph svg{display:block}
-  #term-roster{margin-bottom:16px}
+  #term-roster{margin-bottom:8px}
   .term-chip{
     display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:var(--tt-data);letter-spacing:.08em;
     border:1px solid;border-radius:2px;padding:3px 8px;margin:0 6px 6px 0;background:#10150f;
@@ -1806,7 +1826,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.27.0 "A Card Each"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.28.0 "Room To Read It"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2508,7 +2528,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.27.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.28.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -18871,6 +18891,19 @@ function restoreFromBlob(s){
   mapEdges = s.map||[]; placeNotes = s.places||{};
   roster = (s.roster && s.roster.family) ? {family:s.roster.family||[], fallen:s.roster.fallen||[]} : {family:[], fallen:[]};
   bits = s.bits||[];
+  /* A SAVE OLDER THAN v6.26.0 CARRIES AN EMPTY FAMILY, AND IT LOOKS LIKE THE BUG IT WAS
+     (v6.28.0). Nothing in the written game ever filled the roster before that release, so
+     every existing run restores with nobody on it and stays that way until its next
+     authored passage - the author opened the wrist on a day-two save and read THE COURIER,
+     SO FAR under a fix that had shipped. A sheet exists because that person was on a stage
+     this run played, so the sheets ARE the record of who has walked on, and the backfill is
+     honest rather than a guess. mergeRoster still refuses the dead, so a run that has
+     already buried somebody does not raise them on load. */
+  /* ...AND THE DOSSIERS WITH IT, for the same reason: a run in flight has met these people
+     already and would otherwise carry blank cards for the rest of the book, because a sheet
+     is only written on the turn a face first appears. dossierFill touches empty fields
+     only, so a sheet the wild table has written stays the DM's. */
+  Object.keys(castSheets).forEach(function(nm){ familyOnStage(nm); dossierFill(nm); });
   prevLocation = s.prevLoc||""; lastRoute = s.lastRoute||"";
   lastPresent = [];              /* repopulates on the first live turn */
   maintIndex = s.maint||0; actCheckpointDue = s.arcDue||0;
