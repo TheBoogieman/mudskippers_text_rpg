@@ -8,7 +8,7 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.15.0. THIRTY-FOUR nights written. Sweep 89 PROVED of 107, 0 FAILED. Tree clean, pushed.**
+**v6.16.0. THIRTY-FOUR nights written. Sweep 90 PROVED of 108, 0 FAILED. Tree clean, pushed.**
 
 **THE RECORD SWEEP IS CLOSED, BOTH HALVES.** The second half asked the same question of the
 OTHER road: does a night's record contradict the prose a HESITATING player reads? Across 34
@@ -59,11 +59,26 @@ predicate since the day they were written. It surfaced by accident: two lines we
 `canonSoft` and the net went quiet about them. Nine already-written lines arrived in the
 fixture. **The reader that is silent about being left out, caught being silent.**
 
-**THE WALK HAS AN ANSWER NOW, ON ONE NIGHT OF 34.** `walkAnswer` on the beat, played by
+**THE WALK HAS AN ANSWER ON ALL NINE NIGHTS OF ACT ONE.** `walkAnswer` on the beat, played by
 `playWalkAnswer()`, remembered with one canon line and charged nothing - the author's ruling.
-`a1-hum` is written and is the template; the other 33 are mechanical and listed in
-`OUTSTANDING.md`. **A night with no answer falls back to the old behaviour on purpose**, so an
-unwritten one reads as "not written yet" rather than crashing the button that ends the run.
+25 to go, listed in `OUTSTANDING.md`. **A night with no answer falls back to the old behaviour
+on purpose**, so an unwritten one reads as "not written yet" rather than crashing the button
+that ends the run. **THE WALK ASKS TWICE** - the first click arms it, the second plays the
+answer - which is worth knowing before driving one and concluding it is broken.
+
+**AND `walkAnswer` WAS READ BY NOTHING BUT THE TWO FUNCTIONS THAT PLAY IT.** It shipped at
+v6.12.0 under a note in THIS FILE claiming the drift net, the mannerism scan and the speaker
+fence "already read it, because it uses the corpus's own block shape". They did not. **Being
+in the right SHAPE is not being in the walker** - every one of those functions visits fields
+BY NAME, and none of them named this one. A grep for the field is what found it, and the note
+that was wrong was written by the same hand that built the form. **Grep for the field name
+before writing the sentence that says the readers have it.**
+
+**AND THE NET CAUGHT SOMETHING THE INSTANT IT COULD SEE.** Night one's own walk answer ended
+on "a courier with his hand in his jacket" - the POCKET TRAP in reverse, because this engine
+reads a hand phrase as a shard POSITION. Night one's walk had been quietly asserting Nine was
+in his palm on the one night whose entire point is that she is not. It sat there for a release
+and nothing in the project could have reported it.
 
 **AND THE RULE THE RECORD FAULT LEFT BEHIND: an `exit` and an unconditional `canon` line may
 only claim what happens on EVERY road through the night.** Anything that depends on a card
