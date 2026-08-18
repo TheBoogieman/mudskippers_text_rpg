@@ -3,51 +3,14 @@
 *Live list only. A finished thing leaves this file — the commit that did it is the record.
 Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
-**v6.16.0 · 34 nights written · sweep 90 PROVED of 108, 0 FAILED.**
+**v6.17.0 · 34 nights written · sweep 90 PROVED of 108, 0 FAILED.**
 
-*The record sweep is closed. Both halves of it - the card-dependent claims and the
-road-dependent ones - are done, and the rule they left behind is in `HANDOVER.md`.*
-
----
-
-## 1. TWENTY-FIVE WALK ANSWERS ARE STILL TO WRITE — *authoring, mechanical, and the shape is set*
-
-**RULED: one per night, all 34, and the first walk costs nothing but is remembered.**
-
-The hole the author found by playing: every night authors what the courier SAYS to walk out,
-and the ending he reaches on the second press — but nothing answered the FIRST press, so the
-room fell through to the banter pool and the most consequential button in the game was met
-with a joke about filing.
-
-**THE FORM IS BUILT, PROVED AND DRIVEN.** `walkAnswer` on the beat, in the corpus's own block
-shape, so the mannerism scan, the drift net and the speaker fence already read it.
-`playWalkAnswer()` plays it and merges one canon line once per run — no toll, no scar.
-**A night with no `walkAnswer` falls back to exactly what it did before**, so the 33 unwritten
-ones read as "not written yet" and never as a crash on the button that ends the run.
-
-**`a1-hum` IS WRITTEN AND IS THE TEMPLATE.** What the scene has to do is NOT talk him out of
-it — the ruling is that it costs nothing — but to decline to make it easy. Night one's own
-`never` list wrote most of it: only Pia and Nine may speak, and **Nine cannot hear through
-cloth**, so she does not answer, because he has not touched her. He is offering to hand over
-somebody who cannot hear him offer it, and Pia having to point that out is the scene.
-
-**ACT ONE IS WRITTEN - all nine of its nights.** Act Two (a2-door through a2-turn, 13
-nights) and Act Three (a3-evict through a3-seize, 12 nights) are left.
-
-**Read the night's `never` and its `here` first** - between them they decide who may answer
-and what they cannot say, and they are what make these different scenes rather than one scene
-nine times. Night 5's Nine is in the JACKET and cannot hear a word of it; night 8's is on the
-table being discussed in the third person; night 9's reaches only the hand that holds her, so
-it goes through the relay and the courier under-reports it.
-
-Add `walkAnswer` beside `walkLine`. Then the guards, and **they can see it now** - `walkAnswer`
-was invisible to every instrument in the project until v6.16.0. Sweep row **(4a9)** fences the
-speakers, the drift net reads the prose, and the walk gets pressed once in the drawer.
-**The walk asks twice**: the first click arms it, the second plays the answer.
+*The record sweep is closed, both halves. **THE WALK IS ANSWERED ON ALL 34 NIGHTS.** What is
+left below is measurement and declared debt - there is no unwritten prose in this book.*
 
 ---
 
-## 2. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
+## 1. THE 101 UNREAD CARD ROWS — *the blocker is cleared; the list is spread, not faults*
 
 **THE TWO READERS ARE RECONCILED AND `band.js` WAS RIGHT.** `flagshape.js` disagreed with it
 by up to ten points and the cause was entirely in the reader, not the book: it carried 18
@@ -74,7 +37,7 @@ is Pia and Seven book-wide, and that is the ruling already made about the 294.
 
 ---
 
-## 3. 294 RESIDUAL CONTRACTION SWAPS — *ruled not worth taking, and still is*
+## 2. 294 RESIDUAL CONTRACTION SWAPS — *ruled not worth taking, and still is*
 
 Every speaker is on band. These are the residue of per-card rounding. **A budget does not
 have to be spent to the penny.** Listed so nobody rediscovers them and thinks they are a
@@ -82,7 +45,7 @@ debt.
 
 ---
 
-## 4. `band-pass.js` CANNOT REACH `a3-seize` — **FIXED**
+## 3. `band-pass.js` CANNOT REACH `a3-seize` — **FIXED**
 
 **The last beat has no next beat, and that was the whole bug.** Both of the tool's regions
 were bounded by the *next* entry of their kind; `a3-seize` is last in both `SPINE` and
@@ -103,7 +66,7 @@ random beat and the last one.
 
 ---
 
-## 5. A REAL SAVE ACROSS THE SPINE INSERT — **DONE, and it found a defect**
+## 4. A REAL SAVE ACROSS THE SPINE INSERT — **DONE, and it found a defect**
 
 **It did not need the author's machine.** The rehearsal drawer can build the exact case: take
 a live save at a night after the insert, put the index it would have carried *before* the
@@ -123,7 +86,7 @@ it did. Re-driven: that case lands on `a3-evict` now. Sweep row **(4a5)** covers
 
 ---
 
-## 6. THE SWEEP'S UNDECLARED DEBT — **ZERO**
+## 5. THE SWEEP'S UNDECLARED DEBT — **ZERO**
 
 The harness credits a broken form only when the check **enters** a function it can watch. Its
 headline now reads: *every case either proves it would have caught its own defect, or says

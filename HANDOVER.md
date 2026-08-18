@@ -8,7 +8,12 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.16.0. THIRTY-FOUR nights written. Sweep 90 PROVED of 108, 0 FAILED. Tree clean, pushed.**
+**v6.17.0. THIRTY-FOUR nights written. Sweep 90 PROVED of 108, 0 FAILED. Tree clean, pushed.**
+
+**THE WALK IS ANSWERED ON ALL THIRTY-FOUR NIGHTS, AND THERE IS NO UNWRITTEN PROSE LEFT IN
+THIS BOOK.** Every night now says something back when the courier announces he is done, and
+none of them argues him out of it or charges him for it - the ruling was that a walk costs
+nothing and is remembered, so what the room does is decline to make it easy.
 
 **THE RECORD SWEEP IS CLOSED, BOTH HALVES.** The second half asked the same question of the
 OTHER road: does a night's record contradict the prose a HESITATING player reads? Across 34
@@ -59,12 +64,16 @@ predicate since the day they were written. It surfaced by accident: two lines we
 `canonSoft` and the net went quiet about them. Nine already-written lines arrived in the
 fixture. **The reader that is silent about being left out, caught being silent.**
 
-**THE WALK HAS AN ANSWER ON ALL NINE NIGHTS OF ACT ONE.** `walkAnswer` on the beat, played by
-`playWalkAnswer()`, remembered with one canon line and charged nothing - the author's ruling.
-25 to go, listed in `OUTSTANDING.md`. **A night with no answer falls back to the old behaviour
-on purpose**, so an unwritten one reads as "not written yet" rather than crashing the button
-that ends the run. **THE WALK ASKS TWICE** - the first click arms it, the second plays the
-answer - which is worth knowing before driving one and concluding it is broken.
+**WHAT MADE THEM THIRTY-FOUR SCENES RATHER THAN ONE SCENE THIRTY-FOUR TIMES was reading each
+night's `never` and `here` before writing a word of it.** Night 5's Nine is in the JACKET and
+hears none of it. Night 8's is on the table being discussed in the third person. Night 9's
+reaches only the hand that holds her, so it goes through the relay and the courier
+under-reports it. Night 17 forbids Vic confessing, so he finds something to do with his hands.
+Night 34 forbids anybody deciding for him, so nobody does. **The constraint list is the brief;
+a night that forbids the obvious move is telling you what its scene is.**
+
+**THE WALK ASKS TWICE** - the first click arms it, the second plays the answer - which is
+worth knowing before driving one and concluding it is broken.
 
 **AND `walkAnswer` WAS READ BY NOTHING BUT THE TWO FUNCTIONS THAT PLAY IT.** It shipped at
 v6.12.0 under a note in THIS FILE claiming the drift net, the mannerism scan and the speaker
