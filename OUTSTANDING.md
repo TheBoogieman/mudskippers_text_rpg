@@ -5,8 +5,10 @@ Standing rules, traps and tools live in `HANDOVER.md`, not here.*
 
 **v6.25.0 · 34 nights written · sweep 91 PROVED of 109, 0 FAILED.**
 
-**ONE THING IS OWED: the terminal, below.** The record sweep is closed, both halves, and the walk is answered on all
-34 nights. There is no unwritten prose in this book and no known defect in it.
+**ONE THING IS OWED: THE TERMINAL — and it has now been AUDITED BY PLAYING IT.** Four faults,
+driven and written up below, awaiting a ruling on three questions. The record sweep is closed,
+both halves, and the walk is answered on all 34 nights. **There is no unwritten prose in this
+book. The defects that are left are all on the glass.**
 
 *The two entries below are not tasks. They are MEASUREMENTS THAT CAME OUT FINE, written down
 so that nobody finds the numbers again in six months and mistakes them for a debt. Everything
@@ -17,28 +19,64 @@ and where the next one will come from too.
 
 ---
 
-## 0. THE TERMINAL HAS NOT BEEN AUDITED AGAINST THE FINISHED BOOK
+## 0. THE TERMINAL — DRIVEN, AND IT IS FOUR FAULTS AND SOME FURNITURE
 
-**The author, playing on a phone: "the terminal needs some love too... I'm not sure if
-anything on this screen is up to date with the story."** Not yet checked, and it should be
-done as its own wave with a fresh head.
+**AUDITED BY PLAYING IT, v6.25.0.** Two cold-open novel runs routed to the drawer, plus a
+seeded night 34. `mud-runs` 24,386 and `mud-settings` 239 before and after. **Awaiting the
+author's ruling on the three questions below; nothing is written yet.**
 
-**FIRST, A CORRECTION THAT MUST NOT BE ACTED ON BACKWARDS. He believed the TOLLS row shows a
-removed mechanic. IT IS NOT REMOVED.** `payToll()` is called on a forced close
-(`index.html:7928`) and on a walkback (`index.html:8433`), and at `TOLL_MAX` the season FOLDS
-- `tolls >= TOLL_MAX && !isFinaleBeat()`, gated `!wildRun()`, so **novel runs only**. What was
-removed at v6.10 is the pressure STRIP AT THE WILD TABLE, which is a different thing in a
-different mode. **Deleting the TOLLS row would hide a live mechanic that can end a season.**
-The likely truth is that he has never SEEN one charged, because they only land on forced
-closes and walkbacks.
+**THE TOLL CORRECTION IS NOW PROVED, NOT ARGUED.** Driving badly picked up **three tolls in
+three nights** and the wrist said *"one more folds the table"* by night three. `payToll()`
+fires on a forced close (`index.html:7928`) and a walkback (`index.html:8433`); at `TOLL_MAX`
+the season FOLDS, `!wildRun()`, novel only. **Do not delete the TOLLS row.** What went at
+v6.10 was the pressure STRIP AT THE WILD TABLE.
 
-**WHAT THE AUDIT IS.** The STATUS pane renders THE JOB, TONIGHT, the season-beats line, the
-turn meter, TOLLS, THE FAMILY, THE COURIER SO FAR and THE RECORD, and there are five more
-panes behind it - JOBS, CAST, MAP, ARCHIVE. Each has its own source. The question for every
-one of them is the question this week has been asking everywhere else: **does it still say
-something true about a book that is now finished, or is it describing a game from before the
-34 nights landed?** Read each pane against the run it claims to describe, and drive the
-screen rather than reading the renderer.
+### The four faults, each driven
+
+1. **THE FAMILY IS EMPTY FOR THE WHOLE BOOK.** The pane headed *who is in it with you* reads
+   `THE COURIER, SO FAR` on night 1 and still reads it in the Heart Room on night 34 - where
+   the entire list is *the courier, so far · MIRREN · VIC*. **`mergeRoster` has exactly two
+   callers: the DM absorber (4866) and restore (15354).** Nothing in the novel ever adds a
+   living person. Deaths land because `falls` is a beat field; joining is not.
+2. **THE JOB AND OPEN JOBS ARE FROZEN ON NIGHT ONE.** `agendaText` is written once, by
+   `OPENING2.agenda`, and never again in a novel run - so the wrist says *"Follow Pia through
+   the rain to Vic's safehouse"* while the courier stands in the safehouse kitchen on night 3,
+   and says it for 31 more nights. **`OPENING2.quests` is the ONLY quest in the corpus** and
+   its status never moves off `active`.
+3. **`OPENING2.canon` IS STAMPED THIS TABLE.** Five authored lines - Pia, Mirren, Vic in
+   hiding, the shard is Nine, the safehouse - are the game's own words and the wrist labels
+   them as model improv, in a mode with no model. `canonIsBoard` walks SPINE, card canon and
+   `OPENING_CANON`; **the reveal turn's own array was never added.** A one-line fix, but hunt
+   the readers first.
+4. **THE DOSSIERS ARE THIN FOR EVERYONE BUT PIA.** `OPENING2.cast` is the only cast data in
+   the corpus. `playAuthored` sets `.seen` on a speaker and nothing else, so Vic's card on the
+   night he confesses is a name, a want and a met-list. **`WANTS` is the one part that keeps
+   pace**, because it is served per season.
+
+### Smaller, and cheap
+
+- **The map is fine and `placeNotes` is always empty.** `noteMove` builds routes correctly
+  (five places by night 3); nothing in the novel ever writes a marker a note.
+- **The wrist boots `LINK ........ OPENROUTER / OK` on a run that never calls anything.**
+
+### What came out clean, so nobody re-audits it
+
+**THE SEASON SO FAR is the best pane on the device** - every closed night in order under its
+season and act with what it settled. THE STONES fills (14 by the end). Location, day, time,
+weather and the strip line all move. **SENT and REPLY are honest in novel mode** - *"the novel
+never asks"*, *"zero calls"*.
+
+### What was NOT driven, and one non-finding
+
+**A real run was played to night 3 only.** Nights 4-34 were read in the rehearsal drawer,
+which seeds the record, the cast and the stones artificially - so the claims above about late
+nights are limited to the four registers the drawer does not touch: the family, the job, the
+open jobs and the map.
+
+**AND A HARNESS LIED, AGAIN.** A driver clicking every 420ms reached `a1-pack` at budget+2
+with no clickable anything. **At 3,000ms the same night closed cleanly in nine steps.** It was
+the harness outrunning the reveal, not the game. Not a defect, and it is written down here so
+nobody re-finds it and believes it.
 
 ---
 
