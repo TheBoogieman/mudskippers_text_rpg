@@ -58,7 +58,7 @@ nine separate waves reaching them.
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
 | ~~4~~ | ~~the narration floor~~ | | **DONE v5.78.0 – v5.83.0, ~470 blocks** |
-| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | 2 nights |
+| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | **`a2-door` DONE v5.86.0. `a2-chassis` owes 460.** |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
 | 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
@@ -221,6 +221,19 @@ stays in the epilogue is what they COST.** The model for a late payoff is the gr
 ---
 
 ## §B. THE NARRATION PASS — the prose stops agreeing with the room. RUNNING.
+
+**PASS 5, NIGHT ONE OF TWO, IS DONE (v5.86.0).** `a2-door` 44.1% → 50.5%, 68 blocks,
+spoken unmoved at 310 and the book floor unmoved at 4,656. Every one of its layers now has
+breath in it and the longest unbroken run of talking on the night is three blocks.
+
+**WHAT IS LEFT OF PASS 5 IS `a2-chassis` ALONE: 20.6%, owing 460 blocks to clear 50%.**
+That is larger than the whole of pass 4. It needs its own session, probably two.
+
+**AND A REAL DEFECT FELL OUT OF THE PASS RATHER THAN OUT OF AN AUDIT.**
+`what-is-safe-to-say-in-here`'s second take ended with **the same narration block printed
+twice, verbatim**, from an old splice. Players were reading it twice. No audit in this
+project looks for a repeated block inside one layer; it was found by dumping the layer
+WHOLE in order to write breaths into it. **Dump layers whole.**
 
 **The author's note:** *Hesta's open door and the smoke session in "the cook" are the last
 normal and most sincere moments of normalcy they have. That night should be the peak: cosy,

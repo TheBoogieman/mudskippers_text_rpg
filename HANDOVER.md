@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.85.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.86.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -48,11 +48,22 @@ excluded on purpose: **`a2-chassis`, which pass 5 takes past 50% anyway, and `a3
 which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine releases**,
 book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 
-**PASS 5 IS STARTED AND IT IS THE BIGGEST THING LEFT IN THE BOOK. PRICED: 586 blocks.**
-`a2-door` is **44.1%** and owes **66**; `a2-chassis` is 20.6% and owes **461**, which is more
-than the whole of pass 4. **It is a multi-session job — do not start `a2-chassis` in a
-session that cannot give it a few hundred blocks.** Same method as pass 4: `layers.js`,
-`dumplayer.js`, `breathe.js`, re-dump between batches.
+**PASS 5 IS HALF DONE. `a2-door` IS FINISHED at v5.86.0 — 44.1% → 50.5%, 68 blocks, spoken
+unmoved at 310.** Every layer on that night now has breath in it and the longest unbroken
+run of talking left on it is three blocks.
+
+**WHAT IS LEFT OF PASS 5 IS `a2-chassis`: 20.6%, and it owes 460 blocks to clear 50%** —
+more than the whole of pass 4, which took six releases. **It is a multi-session job — do not
+start it in a session that cannot give it a few hundred blocks.** Same method: `layers.js`,
+`dumplayer.js`, `breathe.js`, **re-dump between batches on the same layer** because every
+insert shifts the indices behind it.
+
+**AND THE REAL LESSON OF v5.86.0: READING THE TRAP LIST IS NOT A GUARD.** Four of my own
+new blocks tripped a detector in that one wave — `death` on "Pia has gone red", `named:Three`
+on "Three decades" at a sentence head, `shard:hand` on "the shard into the number", and
+`boardleak` on "the same pan", which is the literal title of night 22 and which fired on
+THIS EXACT CARD in an earlier wave too. I had read all four warnings before writing. The
+machines caught all four. **Run the guards after every batch, not at the end of the wave.**
 
 **AND THE AUTHOR'S SEAM BUG IS CONFIRMED AND WRITTEN UP IN `OUTSTANDING.md`, NOT FIXED.**
 Every seam takes `showScene`'s INSTANT branch — `playAuthored` adds the `shown` class inside
