@@ -77,6 +77,20 @@ wrote its confirmation into `.t-tag` - `querySelector` on a deleted node returns
 worked. **Grep for every reader before deleting a layer that has been hidden for a year;
 hidden is not unused.**
 
+**A HALF-UPDATED BUILD IS A BUG AND THE WORKER SHIPPED ONE (fixed v6.10.2).** `sw.js` serves
+`index.html` NETWORK-FIRST so updates flow, and every other shipped asset CACHE-FIRST so the
+game opens offline. Both are right alone; together they open a window where the PAGE is new
+and the skin, corpus and stylesheet beside it are whatever the OUTGOING worker still had.
+**It showed as a title screen stamped v6.10.1 drawing a cast v6.10.1 had just fixed.** The
+new worker does install, skipWaiting and claim - but claiming lands after this page has loaded
+its scripts, so the fix arrives for the NEXT load. The page reloads itself once on
+`controllerchange` now, guarded by whether there was a controller to begin with: a first-ever
+visit has none, and reloading there would reload every player's first visit.
+
+**AND THE LESSON IS ABOUT WHERE TO LOOK.** The fix was correct, committed, pushed and live -
+`curl` on the deployed file proved it - and it still was not reaching the player. **When a
+verified fix does not show up, check delivery before you re-open the code.**
+
 **The game is five files.**
 
 | file | what it is |

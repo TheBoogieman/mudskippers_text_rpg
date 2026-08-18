@@ -1741,7 +1741,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.10.1 "Day One Is One Man"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.10.2 "Half An Update Is A Bug"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2443,7 +2443,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.10.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.10.2";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -16836,9 +16836,34 @@ $("t-install").onclick = function(){
       "In Chrome: click the install icon at the right end of the address bar \u2014 or \u22ee menu \u2192 Cast, save and share \u2192 Install MUDSKIPPERS.";
   }
 };
+/* ---- A HALF-UPDATED BUILD IS A BUG, AND IT SHIPPED ONE (v6.10.2) ----
+   The worker serves index.html NETWORK-FIRST so updates flow, and every other shipped
+   asset CACHE-FIRST so the game opens offline. Both are right on their own and together
+   they open a window: the page you are reading is the new one, and the skin, the corpus
+   and the stylesheet beside it are whatever the OUTGOING worker still had. The author saw
+   it as a title screen stamped v6.10.1 drawing a cast that v6.10.1 had just fixed.
+
+   THE NEW WORKER DOES INSTALL - it skipWaiting()s, re-caches the shell and claims the open
+   clients - but claiming happens AFTER this page has already loaded its scripts, so the
+   fix arrives for the NEXT load and the player is looking at a mismatch now.
+
+   So the page reloads itself, once, the moment a new worker takes over. Guarded against a
+   loop by a flag: controllerchange fires on the very first install too, when there was no
+   controller at all and nothing is stale, and reloading there would be a reload on every
+   player's first ever visit. */
+/* Read FIRST: did this page load begin under a worker's control at all? A first-ever visit
+   has no controller, so the controllerchange that follows its install is not an update and
+   must not reload - that would be a reload on every player's first visit. */
+var swWasControlled = !!(("serviceWorker" in navigator) && navigator.serviceWorker.controller);
+var swSwapped = false;
 if("serviceWorker" in navigator && location.protocol === "https:"){
   window.addEventListener("load", function(){
     navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+  navigator.serviceWorker.addEventListener("controllerchange", function(){
+    if(swSwapped || !swWasControlled) return;
+    swSwapped = true;
+    location.reload();
   });
 }
 
