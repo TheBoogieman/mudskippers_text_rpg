@@ -976,7 +976,7 @@ var SPINE = [
              {line:"Ask Nine what she would have wanted to hear.", cards:["being-asked"]},
              {line:"Pack. We can talk on the road.", cards:["tomorrow-gutter"]}]}],
  budget:5, floor:3, reveals:[], anchors:["Nine"],
- press:[],
+ press:["The night puts a price on carrying her that nobody has mentioned yet - a checkpoint, a queue, a question asked twice - and it happens in front of everybody.","Somebody who has been kind all evening says a thing about her that would be completely unremarkable said about a parcel."],
  canon:["The courier has chosen to keep Nine rather than deliver her.",
         "He is no longer running a job. He is protecting a person."],
  stone:"SEASON 1 ended: the courier chose to keep Nine.",
@@ -2775,7 +2775,7 @@ var SPINE = [
     explains that nobody can say the eviction for him. Four authored, four reachable. */
  budget:3, floor:1, reveals:[],
  press:["The seizure works and the silence afterwards is the problem.",
-        "Land it now. Epilogue in chronicle voice, then set the_end true."],
+        "A convergent citizen's gentle voice stops mid-sentence in front of them, and the person it had been speaking to has to be told by strangers what has just happened to them."],
  canon:["The courier took custody of the machine. The Choir fell.",
         "Every Hollow in the city went still at once. Every convergent voice stopped mid-sentence.",
         "The victory arrived owning both. The work of teaching her to let go begins.",

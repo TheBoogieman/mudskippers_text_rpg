@@ -8,7 +8,22 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.3.0. THIRTY-FOUR nights written. Sweep 80 PROVED of 105, 0 FAILED. Tree clean, pushed.**
+**v6.4.0. THIRTY-FOUR nights written. Sweep 80 PROVED of 105, 0 FAILED. Tree clean, pushed.**
+
+**a2-take IS DRIVEN ON ALL FOUR ROADS** — the clean landing, the hard landing (stall it out;
+the world takes the beat and charges a toll), the death (the tempting move at the peril), and
+the walk-out (**twice, across two turns** — one walk is a warning, the family lets it be).
+Room cards driven including Five's first appearance. `mud-runs` 24,386 and `mud-settings` 239
+unchanged throughout.
+
+**THE TWO PRESS DEFECTS §D FOUND AND LEFT ARE CLOSED.** `a1-turn` had an empty `press` array,
+the only one of thirty-four, on a season finale. `a3-seize`'s `press[1]` was *"Land it now.
+Epilogue in chronicle voice, then set the_end true."* — engine instructions in a prose field
+that gets handed to a language model. Both rewritten against their own beat's `never`.
+**Both are wild-table only, so no novel drive could ever have shown them.**
+
+**AND THE GRAZE ROAD DOES NOT EXIST IN THE NOVEL — see `OUTSTANDING.md`.** 33 blocks and 11
+canon lines of authored middle-outcome that no click can reach. Awaiting a ruling.
 
 **THE CAPTURE BEAT EXISTS — `a2-take`, "one of them, alive", between a2-choir and a2-annul.**
 The book had a whole day and a violent thing happening between two nights with nobody
