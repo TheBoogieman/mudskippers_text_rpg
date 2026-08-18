@@ -8,7 +8,7 @@ in the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v5.88.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
+**v5.89.0. All 33 nights written. Sweep 76 PROVED of 101, 0 FAILED. Tree clean, pushed.**
 
 The authoring phase is over. **We are in the polishing pass**, and since 2026-08-17 it runs
 as **book-wide passes rather than night-waves** — one fault, one tool, one release. The
@@ -48,16 +48,31 @@ excluded on purpose: **`a2-chassis`, which pass 5 takes past 50% anyway, and `a3
 which is the funeral.** ~470 blocks, **spoken 4,656 unchanged across all nine releases**,
 book-wide narration 29.3% → 34.2%, median night 31% → 35.6%.
 
-**PASS 5 IS HALF DONE. `a2-door` IS FINISHED at v5.86.0 — 44.1% → 50.5%, 68 blocks, spoken
-unmoved at 310.** Every layer on that night now has breath in it and the longest unbroken
-run of talking left on it is three blocks.
+**PASS 5 IS FINISHED (v5.86.0 – v5.89.0). BOTH PINNED NIGHTS ARE DONE.** `a2-door` 44.1% →
+**50.5%** (68 blocks); `a2-chassis` 20.6% → **49.8%** (448 blocks). Spoken unmoved on both
+the whole way, and the book floor unmoved at 4,656 across all four releases.
 
-**`a2-chassis` IS AT 41.2% AS OF v5.88.0** — 273 blocks in, spoken unmoved at 621. **It owes
-about 200 more to clear 50%.** Every card on the night now has breath in every layer. The night had the longest unbroken run of
-talking left anywhere in the book — twenty-nine blocks, in Pia's cross-examination — and
-that run is five now. **It is still a multi-session job.** Same method: `layers.js`,
-`dumplayer.js`, `breathe.js`, **re-dump between batches on the same layer** because every
-insert shifts the indices behind it.
+**`a2-chassis` LANDS AT 49.8% AND THAT IS THE HONEST NUMBER.** The last twelve blocks were
+left on purpose: every remaining place a breath could go is either an anchor that appears
+twice in the file — `"...What?"`, `"...Right."`, `"You are on the rota."`, a bare `"No."` —
+or a comic snap the breath would break. **Write one block fewer rather than force an
+ambiguous home.** Two tenths of a percent is not worth four jokes.
+
+**NEXT IS PASS 6, THE CLOSINGS AUDIT, AND IT IS A REPORT BEFORE IT IS A WAVE.**
+
+**THE SECOND PASS NEEDED A SECOND TOOL, AND THIS IS THE REUSABLE PART.** `layers.js` aims
+at the longest unbroken run, which is right for a FIRST pass and useless for a second — once
+every layer has breath in it the fault is no longer *where the talking runs on* but *which
+layers are still thin*. Two new tools live in the scratchpad:
+
+| tool | what it does |
+|---|---|
+| `thin.js <beat> [pct]` | every layer sorted by narration share, with the blocks each still owes |
+| `gaps.js <beat> [pct]` | for the layers that owe, every spoken block followed by another spoken block — the list of places a breath can go without splitting a call-and-response that already has ground under it |
+
+The first pass on `a2-chassis` took 273 blocks with `layers.js`; the second took 175 with
+these, and would not have been findable with the first pass's instrument. **Still re-dump
+between batches on the same layer** — every insert shifts the indices behind it.
 
 **AND THE REAL LESSON OF v5.86.0: READING THE TRAP LIST IS NOT A GUARD.** Four of my own
 new blocks tripped a detector in that one wave — `death` on "Pia has gone red", `named:Three`

@@ -58,7 +58,7 @@ nine separate waves reaching them.
 | ~~2~~ | ~~every choice line names its addressee~~ | | **DONE v5.75.0 + v5.76.0** |
 | ~~3~~ | ~~the scold: a narration beat before anyone speaks~~ | | **DONE v5.77.0** |
 | ~~4~~ | ~~the narration floor~~ | | **DONE v5.78.0 – v5.83.0, ~470 blocks** |
-| 5 | **the two pinned nights past 50%** | `layers.js`, `breathe.js` | **`a2-door` DONE v5.86.0. `a2-chassis` 41.2%, owes ~200.** |
+| ~~5~~ | ~~the two pinned nights past 50%~~ | | **DONE v5.86.0 – v5.89.0, 516 blocks** |
 | 6 | **the closings audit** — REPORT FIRST, see below | new | 33 nights + 5 seams |
 | 7 | the contraction band, nights 11–22 | `contract-pass.js`, `spread.js` | 12 nights |
 | 8 | the nerve pass, the plausibility pass, the two lore folds | — | §C §D §E §F |
@@ -226,10 +226,10 @@ stays in the epilogue is what they COST.** The model for a late payoff is the gr
 spoken unmoved at 310 and the book floor unmoved at 4,656. Every one of its layers now has
 breath in it and the longest unbroken run of talking on the night is three blocks.
 
-**`a2-chassis`: 20.6% -> 41.2% across v5.87.0 and v5.88.0, 273 blocks, spoken unmoved at
-621.** It owes about 200 more to clear 50%. **Every card on the night now has breath in
-every layer** — what is left is a second pass over the layers that are breathed but still
-thin, not a first pass over bare ones. **The longest unbroken run of talking left anywhere in
+**PASS 5 IS CLOSED. `a2-chassis` 20.6% -> 49.8% across v5.87.0, v5.88.0 and v5.89.0 — 448
+blocks, spoken unmoved at 621 the whole way.** It lands at 49.8% rather than 50.0% on
+purpose: the last twelve places a breath could go are all either duplicated anchors or
+comic snaps, and the rule is to write one block fewer rather than force a home. **The longest unbroken run of talking left anywhere in
 the book was on this night** — twenty-nine blocks inside Pia's cross-examination, a
 forty-one-block layer carrying five narration blocks. That run is five now.
 
