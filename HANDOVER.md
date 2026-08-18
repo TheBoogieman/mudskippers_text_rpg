@@ -8,13 +8,42 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.13.0. THIRTY-FOUR nights written. Sweep 88 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+**v6.14.0. THIRTY-FOUR nights written. Sweep 89 PROVED of 107, 0 FAILED. Tree clean, pushed.**
 
 **THE AUTHOR IS PLAYING IT NOW, AND THAT IS WHERE THE FAULTS ARE COMING FROM.** Four in one
 sitting, none of which any instrument in this repo could have found: a badge welded into a
 line by a build from months ago, a service worker serving a new page with an old skin, a walk
 answered by a joke, and a record claiming a scene the player never saw. **The sweep proves the
 book against its own laws. It cannot tell you the game feels wrong.**
+
+**THE RECORD SWEEP IS DONE, AND IT WAS SEVENTEEN LINES ACROSS ELEVEN NIGHTS.** Night 3 was
+never the only one. Canon is player-facing - the wrist shows the last three lines after every
+close - and a beat's canon merges on EVERY clean close, so any record line whose scene lived
+inside a card was the game telling a player about something they never reached. Driven before
+it was believed: a real run of night two played 31 blocks containing no Hollow, no signal, no
+idle and no throat, and the wrist still said *"Hollows drop to idle when cut from signal."*
+
+**A CARD CAN NOW WRITE ITS OWN RECORD LINE — `canon` on a topic, merged only when the card is
+actually played.** The author's ruling was SPLIT: the big moments keep their vividness and move
+onto the card that delivers them (Five's consent, the machine's offer for Pia, Hesta going
+down the ladder); the smaller ones are reworded as facts about the world, which is what night
+3's became. Fourteen lines on thirteen cards, three reworded, two moved to `canonSoft`.
+
+**AND IT MERGES AT THE RENDER, NOT AT THE MARK.** `advanceCard` is the one place a card
+advances, which makes it the obvious home and the wrong one - a framed card with nobody in the
+body is marked and refused three lines later, and the sweep peeks at a deck by dealing a card
+and restoring it. The merge sits in `callSceneTurn` after `blocks.length` is known, which is
+the first instant the game is committed to putting the card on the screen. **Five readers
+hunted: the merge site, `canonIsBoard` (or the archive stamps THIS TABLE on the book's own
+words), `sealedLeaks`, `stCorpus`, and the writers' board. `ticBlocks` is declared out - beat
+canon is not scanned either, because a record line is a telegraphic fact and not prose.**
+
+**AND HUNTING THEM FOUND A HOLE THAT WAS ALREADY THERE.** `stCorpus` read `canon` and
+`canonAlt` and had NEVER read `canonSoft`, `canonA` or `canonB` - so the half of the record
+only a clean close writes, and **both sides of the season's fork**, have been outside every
+predicate since the day they were written. It surfaced by accident: two lines were moved INTO
+`canonSoft` and the net went quiet about them. Nine already-written lines arrived in the
+fixture. **The reader that is silent about being left out, caught being silent.**
 
 **THE WALK HAS AN ANSWER NOW, ON ONE NIGHT OF 34.** `walkAnswer` on the beat, played by
 `playWalkAnswer()`, remembered with one canon line and charged nothing - the author's ruling.
@@ -171,6 +200,20 @@ first — key, then slice, then edit inside the slice.**
 **AN AUDIT HAS READERS TOO.** `lines_n2.js` read only cards, so nine waves of "every choice
 line names its addressee" were claims about part of the book. `allrails.js` reads all of
 them — and it had its own hole, found only because a second instrument disagreed with it.
+
+**A RECORD LINE MAY ONLY CLAIM WHAT HAPPENS ON EVERY ROAD.** A night's `exit` and any
+unconditional `canon` line are read by the player on the close. The test is not "is this true
+in the fiction" - it is **"does this presuppose something the player may not have done?"**
+*"Marek had the panel off to the end"* is fine; Marek did that whether or not you watched.
+*"Vic dodged one question"* is not, because if nobody asked, he did not dodge. Where the claim
+is card-dependent it goes on the card; where it is ROAD-dependent - true on the clean landing
+and false on the hard one - it goes in `canonSoft`.
+
+**AND CHECK THE REPLACEMENT AS HARD AS THE ORIGINAL.** Two of the rewordings in that pass were
+drafted, checked against the staged prose, and thrown away: a3-for never stages Hesta at the
+top of the shaft at all, so "Hesta's named part is the top" would have been a **fresh unearned
+claim wearing the fix's clothes** - the worst possible outcome, because nobody would be
+watching for it a second time. `scratchpad/staged.js <beat>` prints every road, whole.
 
 **BLOCKED IS A CLAIM, AND IT DECAYS.** The capture beat sat unwritten for months under a note
 saying a spine insert would strand live saves. Every word of the mechanism was true and the

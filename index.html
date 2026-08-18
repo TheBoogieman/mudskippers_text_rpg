@@ -1748,7 +1748,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.13.0 "Six Days, Vic"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.14.0 "A Scene You Never Saw"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2450,7 +2450,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.13.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.14.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -4600,6 +4600,18 @@ function canonIsBoard(line){
        canon at all, so the two were exactly the wrong way round. */
     if(String(b.scar || "").trim() === t) return true;
     if(String(b.stone || "").trim() === t) return true;
+    /* ...AND THE LINES A CARD WRITES (v6.14.0). These are the board's own words as much
+       as a beat's are - authored, identical in every run, merged by the game and not by
+       any model. Left out, the archive would stamp THIS TABLE on the most carefully
+       written record lines in the book. */
+    var e = SCENEBOOK[b.id];
+    if(e){
+      var decks = (e.topics || []).concat((e.room && e.room.topics) || []);
+      for(var d = 0; d < decks.length; d++){
+        var cc = cardCanon(decks[d]);
+        for(var c2 = 0; c2 < cc.length; c2++){ if(String(cc[c2]).trim() === t) return true; }
+      }
+    }
   }
   for(var q = 0; q < OPENING_CANON.length; q++){ if(String(OPENING_CANON[q]).trim() === t) return true; }
   return false;
@@ -6204,6 +6216,37 @@ function sceneBlocksFor(t, key){
   });
   return out;
 }
+/* ---- WHAT A CARD WRITES INTO THE RECORD (v6.14.0) ----
+
+   THE FAULT THIS EXISTS TO FIX, found by the author playing night three and then swept
+   across all thirty-four: canon is PLAYER-FACING - the wrist shows the last three lines
+   after every close - and a beat's canon merges on EVERY clean close. So a night whose
+   record reported a scene that lives inside a card told the player about something they
+   may never have reached. Fifteen lines across ten nights did it. Night two's record
+   announced that Hollows drop to idle when cut from signal on a run where those words were
+   never once on the screen.
+
+   THE AUTHOR'S RULING: the big moments keep their vividness and move onto the card that
+   delivers them; the smaller ones get reworded as facts about the world. This is the first
+   half. A card carries `canon` - one string or several - and it reaches the record ONLY
+   when the card is actually played to the player.
+
+   AND IT MERGES AT THE RENDER, NOT AT THE MARK. advanceCard is the one place a card
+   advances, which makes it the obvious home and the wrong one: a framed card with nobody
+   in the body is marked and then refused three lines later, and the sweep peeks at the
+   deck by dealing a card and restoring. Either would have written a record line for a
+   scene that never played. The merge sits after `blocks.length` is known, which is the
+   first instant the game is committed to putting the card on the screen.
+
+   THE LINE MUST BE EARNED BY THE CARD'S FIRST TAKE. Every layer of a card runs through
+   here and mergeCanon dedupes, so a second take cannot add a line the first take did not
+   already justify - and a claim that only becomes true on take two would be written down
+   by take one. Write the line against `plays`. */
+function cardCanon(t){
+  var c = t && t.canon;
+  if(typeof c === "string") return c.replace(/\s/g, "") ? [c] : [];
+  return (Object.prototype.toString.call(c) === "[object Array]") ? c : [];
+}
 /* Returns false when it cannot serve, so the one door in callDM can fall through to
    the wire rather than swallow a turn. pickTopic MARKS, so it is called exactly once. */
 function callSceneTurn(){
@@ -6223,6 +6266,7 @@ function callSceneTurn(){
   lastSent = {text:"[template] " + t.ask, chars:0, trim:trimFlagsText(), msgs:0, wire:0, bible:0};
   lastReceived = "[template] " + blocks.length + " authored block(s) from the scene book";
   lastReplyVerdict = "template: the card played itself, zero calls";
+  mergeCanon(cardCanon(t));   /* the record only ever says what this run actually saw */
   serveSceneTurn(blocks);
   return true;
 }
@@ -9819,6 +9863,27 @@ function ticScan(){
 function sealedLeaks(){
   var out = [], i, j, k, f, v, arr, seal, at;
   for(i = 0; i < SPINE.length; i++){
+    /* A CARD'S RECORD LINE IS CANON AND IS LINTED LIKE CANON (v6.14.0). It is written by
+       the game, it lands on the wrist, and it is exactly the kind of terse summary that
+       states a locked fact in one clause without noticing. The field arrived with three
+       readers hunted; this is the fourth, and leaving it out would have made the new form
+       the one place in the book a sealed fact could be said early with nothing watching. */
+    var e = SCENEBOOK[SPINE[i].id];
+    if(e){
+      var decks = (e.topics || []).concat((e.room && e.room.topics) || []);
+      for(j = 0; j < decks.length; j++){
+        var cc = cardCanon(decks[j]);
+        for(k = 0; k < cc.length; k++){
+          for(f = 0; f < SEALED_FACTS.length; f++){
+            at = beatById(SEALED_FACTS[f].at);
+            if(at < 0 || i >= at) continue;
+            if(SEALED_FACTS[f].re.test(String(cc[k])))
+              out.push(SPINE[i].id + "/" + (decks[j].id || "?") + "/canon" + k
+                       + " states \"" + SEALED_FACTS[f].fact + "\", sealed until " + SEALED_FACTS[f].at);
+          }
+        }
+      }
+    }
     for(j = 0; j < SEALED_FIELDS.length; j++){
       v = SPINE[i][SEALED_FIELDS[j]];
       if(!v) continue;
@@ -16369,8 +16434,15 @@ function wbCard(t, offers){
     + '<span class="wb-lb">What they give up</span>'
     + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.gives) + "</div>"
     + '<span class="wb-lb">What they will not say tonight</span>'
-    + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.holds) + "</div>"
-    + '<span class="wb-lb">Asked once</span>' + wbLines(t.plays);
+    + '<div class="wb-pass" style="margin-bottom:7px">' + esc(t.holds) + "</div>";
+  /* WHAT THIS CARD PUTS ON THE WRIST (v6.14.0), and only if it is actually drawn. The
+     board is where an author checks that a night's record is earned, so the lines that
+     depend on a card have to be visible from the card. */
+  cardCanon(t).forEach(function(cl, ci){
+    h += '<span class="wb-lb">' + (ci ? "&hellip;and" : "Written into the record &mdash; only if this card is drawn") + "</span>"
+       + '<div class="wb-pass" style="margin-bottom:7px;color:var(--gold)">' + esc(cl) + "</div>";
+  });
+  h += '<span class="wb-lb">Asked once</span>' + wbLines(t.plays);
   (t.takes || []).forEach(function(L, k){
     var rl = (t.railTakes || [])[k];
     h += '<span class="wb-lb">Asked again &mdash; take ' + (k + 2) + "</span>"
@@ -18992,8 +19064,15 @@ function stCorpus(){
         (p.rail || []).forEach(function(r, ri){ add(b.id + "/" + k + j + "/r" + ri, choiceLine(r)); });
       });
     });
-    (b.canon || []).forEach(function(c, i){ add(b.id + "/canon" + i, c); });
-    (b.canonAlt || []).forEach(function(c, i){ add(b.id + "/canonAlt" + i, c); });
+    /* ...AND THE THREE CONDITIONAL SETS, WHICH THIS WALKER HAS NEVER READ (v6.14.0).
+       canon and canonAlt were swept; canonSoft, canonA and canonB were not, so the half
+       of the record that only a clean close writes, and both sides of the season's fork,
+       have been outside every predicate since they were written. Found by moving two
+       lines INTO canonSoft and watching the drift net go quiet about them - which is the
+       reader that is silent about being left out, caught being silent. */
+    ["canon", "canonAlt", "canonSoft", "canonA", "canonB"].forEach(function(k){
+      (b[k] || []).forEach(function(c, i){ add(b.id + "/" + k + i, c); });
+    });
     (b.press || []).forEach(function(c, i){ add(b.id + "/press" + i, c); });
     (b.exits || []).forEach(function(c, i){ add(b.id + "/exits" + i, c); });
     add(b.id + "/scar", b.scar); add(b.id + "/goal", b.goal);
@@ -19019,6 +19098,12 @@ function stCorpus(){
         ((t && t.railTakes) || []).forEach(function(rt, ri){
           add(k + "/" + q + "t" + i + "T" + (ri + 1) + "r", rt);
         });
+        /* ...AND THE LINE THE CARD WRITES INTO THE RECORD (v6.14.0). Teeth canon has
+           been swept here for releases; a card's is the same kind of authored sentence
+           landing in the same place, and the drift net is the reader that is SILENT
+           about being left out - a net with a hole reports the number of a net without
+           one. Taught it in the commit that created the field. */
+        cardCanon(t).forEach(function(cl, ci){ add(k + "/" + q + "t" + i + "c" + ci, cl); });
         /* ...and the blocks the rail leads into. Corpus from the commit that writes
            them: every predicate is swept over this prose before it ships, and the
            fixture diff is the only review a thousand new lines can actually get. */
@@ -21107,16 +21192,38 @@ function verdictMap(){
    fork states, and unmetCast never objected. A form with readers was added and the readers
    agreed with it, which is the outcome this net exists to make checkable rather than hoped
    for. */
+/* THE v6.14.0 DELTA - THE RECORD SWEEP, AND A HOLE IN THIS WALKER ITSELF. Twenty-one
+   entries move and every one of them is accounted for, in four kinds.
+   (1) MOVED, and these are the point of the release: fourteen record lines that reported
+   scenes living inside a card have gone onto the card that delivers them, so the ids change
+   from a beat's canonN to a card's tNcN - a3-vic/canon7 to a3-vic/t4c1, a3-granny/canon5 to
+   a3-granny/t6c0, a3-vic/canon9 to a3-vic/t5c0, a3-vic/canon10 to the room's Rt3c0, and
+   a2-take/canon3's Five to a2-take/Rt1c0. Same sentences, earned addresses.
+   (2) RENUMBERED, and this is the trap: a3-principal lost two canon lines to canonSoft and
+   a3-vic lost one, so every line behind them shifted and reports as an add and a drop for
+   prose that has not changed a character - canon7 to canon5, canon8 to canon6, canon4 to
+   canon3. CHECK THAT THE PAIRS REALLY PAIR; a single genuine fire hiding among renumberings
+   is the easiest thing in this project to wave through.
+   (3) NEWLY VISIBLE, AND THE FINDING OF THE WAVE. This walker read `canon` and `canonAlt`
+   and had never once read `canonSoft`, `canonA` or `canonB` - so the half of the record that
+   only a clean close writes, and BOTH SIDES OF THE SEASON'S FORK, have been outside every
+   predicate since the day they were written. It surfaced by accident: two lines were moved
+   INTO canonSoft and the net went quiet about them. Nine lines arrive already-written -
+   a2-housing/canonA0 and canonB0, a3-seize/canonA0 and canonB0, a3-principal/canonSoft1.
+   The reader that is silent about being left out, caught being silent.
+   (4) GENUINELY NEW: a1-carried/t2c0 names Nine and a2-annul/t4c0 names Five, both correct
+   for lines that did not exist yesterday; a2-take/canon3's replacement touches `tell` on
+   "fate-two", which a2-choir revealed two nights earlier and is licensed to say. */
 var VERDICT_FIXTURE = {
   "breach":["a1-chase/t1p0","a1-fare/t4T1p0","a1-pack/t1p2","a1-turn/never0","a2-annul/opens0/now","a2-ground/never1","a2-housing/Rt1p3","a2-seven/Rt4T1p1","a2-seven/never0","a2-take/t4T1p4","a2-three/goal","a3-descent/Rt3p1","a3-descent/never0","a3-descent/opens0/l6","a3-dreamers/exits1","a3-evict/t2p0","a3-evict/teeth/d0","a3-granny/opens0/now","a3-seize/teeth1/r2"],
-  "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon7","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
-  "named:Five":["a2-annul/Rt3T1r","a2-annul/Rt3r","a2-annul/Rt4p3","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4r","a2-annul/t5r","a2-law/Rt4T1r","a2-take/Rt1T1r","a2-take/Rt1p1","a2-take/Rt1r","a2-take/canon3","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","a3-for/Rt1T1r","a3-for/Rt1r","a3-for/landsHard0/r0","a3-seize/Rt3p6","want19"],
-  "named:Nine":["a1-carried/Rt0T1r","a1-carried/Rt0r","a1-carried/Rt10T1r","a1-carried/Rt10r","a1-carried/Rt4T1r","a1-carried/Rt4r","a1-carried/Rt7T1r","a1-carried/Rt7r","a1-carried/Rt8T1r","a1-carried/Rt8r","a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/lands0/r1","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/landsHard0/r0","a1-carried/never0","a1-carried/opens0/now","a1-carried/opens0/r0","a1-carried/opens0/r1","a1-carried/scar","a1-carried/t0T1r","a1-carried/t0r","a1-carried/t1T1r","a1-carried/t1r","a1-carried/t2T1r","a1-carried/t2r","a1-carried/t4T1r","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt3T1r","a1-chase/Rt3r","a1-chase/Rt7T1r","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/Rt7r","a1-chase/lands0/r0","a1-chase/t4T1r","a1-chase/t4r","a1-exit/Rt1T1r","a1-exit/Rt1r","a1-exit/Rt6T1r","a1-exit/Rt6r","a1-exit/Rt9T1r","a1-exit/Rt9r","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/exits2","a1-exit/landsHard0/r1","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-exit/t0T1p8","a1-exit/t1T1p7","a1-exit/t2T1p4","a1-exit/t2T1r","a1-exit/t2r","a1-exit/t3T1p9","a1-exit/t6p4","a1-fare/Rt1T1r","a1-fare/Rt1r","a1-fare/Rt7T1r","a1-fare/Rt7r","a1-fare/before","a1-fare/t5T1p7","a1-fare/t5T1r","a1-fare/t5r","a1-fare/t6T1p7","a1-hum/Rt2T1r","a1-hum/Rt2r","a1-hum/Rt3T1r","a1-hum/Rt3r","a1-hum/Rt7T1r","a1-hum/Rt7r","a1-hum/Rt8T1r","a1-hum/Rt8r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/lands0/r0","a1-hum/landsHard0/l6","a1-hum/landsHard0/now","a1-hum/landsHard0/r0","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1T1r","a1-hum/t1p4","a1-hum/t1r","a1-hum/t2T1r","a1-hum/t2p1","a1-hum/t2r","a1-late/Rt1T1r","a1-late/Rt1r","a1-late/Rt6T1r","a1-late/Rt6r","a1-late/Rt7T1r","a1-late/Rt7r","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-late/t4T1p5","a1-pack/Rt4T1r","a1-pack/Rt4r","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-pack/t3T1r","a1-pack/t3r","a1-turn/Rt1T1r","a1-turn/Rt1r","a1-turn/Rt3T1r","a1-turn/Rt3r","a1-turn/Rt8T1r","a1-turn/Rt8p3","a1-turn/Rt8r","a1-turn/before","a1-turn/canon0","a1-turn/exits2","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard0/r0","a1-turn/landsHard0/r1","a1-turn/landsHard1/l8","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2T1r","a1-turn/t2r","a1-turn/t6T1r","a1-turn/t6r","a1-turn/walk","a1-vic/Rt3T1r","a1-vic/Rt3r","a1-vic/t2T1p4","a1-vic/t2g","a1-vic/t2p0","a1-vic/t5T1p5","a2-annul/Rt5T1r","a2-annul/Rt5p6","a2-annul/Rt5r","a2-chassis/Rt11T1p11","a2-chassis/Rt11r","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p10","a2-chassis/Rt7r","a2-chassis/Rt8r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t1r","a2-chassis/t2p0","a2-chassis/t5g","a2-choir/Rt4T1r","a2-choir/Rt4r","a2-door/Rt11T1r","a2-door/Rt11p12","a2-door/Rt11r","a2-door/before","a2-door/opens0/r1","a2-door/t2p5","a2-door/t5T1p1","a2-door/t5T1r","a2-door/t5r","a2-ground/Rt1T1r","a2-ground/t4r","a2-hand/Rt2T1r","a2-hand/t6r","a2-housing/Rt5T1r","a2-housing/Rt5r","a2-housing/Rt9T1r","a2-housing/Rt9r","a2-housing/landsHard0/r1","a2-law/Rt6T1r","a2-manual/Rt3T1r","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4T1r","a2-mirren/Rt4p6","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/Rt2T1r","a2-seven/Rt5T1r","a2-seven/Rt5r","a2-seven/canon2","a2-seven/lands0/r2","a2-seven/landsHard0/r2","a2-seven/t2p1","a2-take/Rt6T1r","a2-take/Rt6p1","a2-take/Rt6r","a2-take/t5T1r","a2-take/t5p0","a2-take/t5r","a2-three/Rt4T1p5","a2-three/Rt5p3","a2-turn/Rt5T1r","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1T1r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r1","a3-dreamers/Rt2T1r","a3-dreamers/Rt2r","a3-dreamers/canon8","a3-dreamers/lands0/r2","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/lands1/r0","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/Rt4T1r","a3-for/Rt4r","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2T1r","a3-for/t2r","a3-founding/Rt5T1r","a3-founding/Rt5r","a3-founding/t1T1r","a3-founding/t1r","a3-granny/Rt3T1r","a3-granny/Rt3r","a3-granny/landsHard0/r1","a3-principal/canon8","a3-principal/t5h","a3-principal/t5r","a3-seize/Rt8T1r","a3-seize/Rt8r","a3-seize/teeth0/r0","a3-stone/Rt2g","a3-stone/Rt2p0","a3-stone/Rt3T1r","a3-stone/Rt3r","a3-stone/lands0/r1","a3-vic/Rt4T1p3","a3-vic/Rt4T1r","a3-vic/Rt4r","a3-vic/canon7","a3-vic/landsHard0/r2","a3-vic/opens0/l3","a3-vic/t4p3","a3-voice/t4T1r","a3-voice/t4r","open2/s3","want0","want1","want2","want3","want4"],
-  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt4r","a2-chassis/Rt6r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/landsHard0/r0","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4T1r","a2-chassis/t4r","a2-choir/Rt0T1r","a2-choir/Rt0r","a2-choir/Rt1T1r","a2-choir/Rt1r","a2-choir/t4T1r","a2-choir/t4r","a2-housing/Rt1T1r","a2-housing/Rt1r","a2-housing/Rt8T1r","a2-housing/Rt8r","a2-law/Rt5T1r","a2-law/Rt5r","a2-law/Rt7T1r","a2-law/t5r","a2-manual/Rt4T1r","a2-manual/Rt4r","a2-manual/Rt9T1r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/Rt0T1r","a2-seven/Rt0r","a2-seven/Rt1T1r","a2-seven/Rt1r","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/t1r","a2-seven/t4r","a2-seven/teeth/c2","a2-take/Rt3p2","a2-take/Rt4T1r","a2-take/Rt4r","a2-take/before","a2-take/opens0/r0","a2-take/t1T1r","a2-take/t1r","a2-take/t3T1p0","a2-take/t4T1p4","a2-take/teeth/graze","a2-take/teeth0/r2","a2-take/teeth0/s0","a2-turn/Rt0p0","a2-turn/Rt6T1r","a2-turn/Rt6r","a2-turn/lands1/r1","a2-turn/t4r","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1T1r","a3-descent/t1r","a3-descent/t6T1r","a3-descent/t6r","a3-dreamers/Rt2T1p1","a3-dreamers/canon5","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-dreamers/t4T1r","a3-dreamers/t4r","a3-evict/lands1/l6","a3-evict/t3T1r","a3-evict/t3r","a3-evict/t4T1r","a3-evict/t4r","a3-for/goal","a3-for/t4T1r","a3-for/t4r","a3-for/t5T1r","a3-for/t5r","a3-for/t6p1","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-founding/t4T1r","a3-founding/t4r","a3-granny/canon5","a3-granny/t6T1r","a3-granny/t6p0","a3-granny/t6r","a3-granny/t7T1r","a3-seize/Rt9T1r","a3-seize/Rt9r","a3-seize/landsHard0/r2","a3-seize/t3r","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2T1r","a3-stone/t2p4","a3-stone/t2r","a3-vic/canon9","a3-vic/opens0/l4","a3-vic/t5T1r","a3-voice/Rt1T1r","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1T1r","a3-voice/t1r","want14","want15","want16"],
+  "death":["a1-hum/t5r","a2-choir/teeth/g0","a2-ground/teeth0/s2","a3-principal/canon5","a3-principal/t4g","a3-vic/before","open/canon6","open/s3"],
+  "named:Five":["a2-annul/Rt3T1r","a2-annul/Rt3r","a2-annul/Rt4p3","a2-annul/aim","a2-annul/before","a2-annul/canon0","a2-annul/canon2","a2-annul/canon3","a2-annul/exits0","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/now","a2-annul/landsHard0/now","a2-annul/never0","a2-annul/opens0/l4","a2-annul/opens0/now","a2-annul/scar","a2-annul/t2r","a2-annul/t3h","a2-annul/t3p2","a2-annul/t4c0","a2-annul/t4r","a2-annul/t5r","a2-law/Rt4T1r","a2-take/Rt1T1r","a2-take/Rt1c0","a2-take/Rt1p1","a2-take/Rt1r","a2-three/never1","a3-dreamers/teeth/g0","a3-dreamers/teeth0/r2","a3-for/Rt1T1r","a3-for/Rt1r","a3-for/landsHard0/r0","a3-seize/Rt3p6","want19"],
+  "named:Nine":["a1-carried/Rt0T1r","a1-carried/Rt0r","a1-carried/Rt10T1r","a1-carried/Rt10r","a1-carried/Rt4T1r","a1-carried/Rt4r","a1-carried/Rt7T1r","a1-carried/Rt7r","a1-carried/Rt8T1r","a1-carried/Rt8r","a1-carried/aim","a1-carried/before","a1-carried/canon0","a1-carried/canon1","a1-carried/exits0","a1-carried/goal","a1-carried/lands0/now","a1-carried/lands0/r1","a1-carried/landsHard0/l1","a1-carried/landsHard0/now","a1-carried/landsHard0/r0","a1-carried/never0","a1-carried/opens0/now","a1-carried/opens0/r0","a1-carried/opens0/r1","a1-carried/scar","a1-carried/t0T1r","a1-carried/t0r","a1-carried/t1T1r","a1-carried/t1r","a1-carried/t2T1r","a1-carried/t2c0","a1-carried/t2r","a1-carried/t4T1r","a1-carried/t4r","a1-carried/teeth/survive","a1-carried/walk","a1-chase/Rt3T1r","a1-chase/Rt3r","a1-chase/Rt7T1r","a1-chase/Rt7g","a1-chase/Rt7p1","a1-chase/Rt7p4","a1-chase/Rt7r","a1-chase/lands0/r0","a1-chase/t4T1r","a1-chase/t4r","a1-exit/Rt1T1r","a1-exit/Rt1r","a1-exit/Rt6T1r","a1-exit/Rt6r","a1-exit/Rt9T1r","a1-exit/Rt9r","a1-exit/aim","a1-exit/before","a1-exit/canon0","a1-exit/exits0","a1-exit/exits2","a1-exit/landsHard0/r1","a1-exit/never2","a1-exit/opens0/l4","a1-exit/opens0/now","a1-exit/press1","a1-exit/t0T1p8","a1-exit/t1T1p7","a1-exit/t2T1p4","a1-exit/t2T1r","a1-exit/t2r","a1-exit/t3T1p9","a1-exit/t6p4","a1-fare/Rt1T1r","a1-fare/Rt1r","a1-fare/Rt7T1r","a1-fare/Rt7r","a1-fare/before","a1-fare/t5T1p7","a1-fare/t5T1r","a1-fare/t5r","a1-fare/t6T1p7","a1-hum/Rt2T1r","a1-hum/Rt2r","a1-hum/Rt3T1r","a1-hum/Rt3r","a1-hum/Rt7T1r","a1-hum/Rt7r","a1-hum/Rt8T1r","a1-hum/Rt8r","a1-hum/before","a1-hum/canon0","a1-hum/canon1","a1-hum/canon2","a1-hum/exits1","a1-hum/goal","a1-hum/lands0/now","a1-hum/lands0/r0","a1-hum/landsHard0/l6","a1-hum/landsHard0/now","a1-hum/landsHard0/r0","a1-hum/landsHard0/r1","a1-hum/never0","a1-hum/never1","a1-hum/scar","a1-hum/t1T1r","a1-hum/t1p4","a1-hum/t1r","a1-hum/t2T1r","a1-hum/t2p1","a1-hum/t2r","a1-late/Rt1T1r","a1-late/Rt1r","a1-late/Rt6T1r","a1-late/Rt6r","a1-late/Rt7T1r","a1-late/Rt7r","a1-late/lands0/r0","a1-late/landsHard0/r0","a1-late/t4T1p5","a1-pack/Rt4T1r","a1-pack/Rt4r","a1-pack/before","a1-pack/lands0/r2","a1-pack/opens0/r0","a1-pack/t3T1r","a1-pack/t3r","a1-turn/Rt1T1r","a1-turn/Rt1r","a1-turn/Rt3T1r","a1-turn/Rt3r","a1-turn/Rt8T1r","a1-turn/Rt8p3","a1-turn/Rt8r","a1-turn/before","a1-turn/canon0","a1-turn/exits2","a1-turn/goal","a1-turn/lands0/r1","a1-turn/landsHard0/r0","a1-turn/landsHard0/r1","a1-turn/landsHard1/l8","a1-turn/landsHard1/r1","a1-turn/opens0/now","a1-turn/scar","a1-turn/t2T1r","a1-turn/t2r","a1-turn/t6T1r","a1-turn/t6r","a1-turn/walk","a1-vic/Rt3T1r","a1-vic/Rt3r","a1-vic/t2T1p4","a1-vic/t2g","a1-vic/t2p0","a1-vic/t5T1p5","a2-annul/Rt5T1r","a2-annul/Rt5p6","a2-annul/Rt5r","a2-chassis/Rt11T1p11","a2-chassis/Rt11r","a2-chassis/Rt14r","a2-chassis/Rt23r","a2-chassis/Rt24r","a2-chassis/Rt7p10","a2-chassis/Rt7r","a2-chassis/Rt8r","a2-chassis/aim","a2-chassis/before","a2-chassis/canon0","a2-chassis/canon1","a2-chassis/canonAlt0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/lands0/now","a2-chassis/opens0/r0","a2-chassis/t0g","a2-chassis/t0p0","a2-chassis/t1r","a2-chassis/t2p0","a2-chassis/t5g","a2-choir/Rt4T1r","a2-choir/Rt4r","a2-door/Rt11T1r","a2-door/Rt11p12","a2-door/Rt11r","a2-door/before","a2-door/opens0/r1","a2-door/t2p5","a2-door/t5T1p1","a2-door/t5T1r","a2-door/t5r","a2-ground/Rt1T1r","a2-ground/t4r","a2-hand/Rt2T1r","a2-hand/t6r","a2-housing/Rt5T1r","a2-housing/Rt5r","a2-housing/Rt9T1r","a2-housing/Rt9r","a2-housing/canonA0","a2-housing/landsHard0/r1","a2-law/Rt6T1r","a2-manual/Rt3T1r","a2-manual/Rt3r","a2-manual/t0p0","a2-mirren/Rt4T1r","a2-mirren/Rt4p6","a2-mirren/Rt4r","a2-mirren/lands0/r2","a2-seven/Rt1g","a2-seven/Rt1p1","a2-seven/Rt2T1r","a2-seven/Rt5T1r","a2-seven/Rt5r","a2-seven/canon2","a2-seven/lands0/r2","a2-seven/landsHard0/r2","a2-seven/t2p1","a2-take/Rt6T1r","a2-take/Rt6p1","a2-take/Rt6r","a2-take/t5T1r","a2-take/t5p0","a2-take/t5r","a2-three/Rt4T1p5","a2-three/Rt5p3","a2-turn/Rt5T1r","a2-turn/Rt5r","a2-turn/lands1/r0","a2-turn/t6r","a3-descent/Rt1T1r","a3-descent/Rt1r","a3-descent/lands0/l3","a3-descent/lands0/r1","a3-dreamers/Rt2T1r","a3-dreamers/Rt2r","a3-dreamers/canon8","a3-dreamers/lands0/r2","a3-dreamers/teeth0/s0","a3-evict/lands1/l3","a3-evict/lands1/r0","a3-evict/t2p2","a3-evict/teeth/c2","a3-for/Rt4T1r","a3-for/Rt4r","a3-for/goal","a3-for/lands0/r2","a3-for/landsHard0/r2","a3-for/t2T1r","a3-for/t2r","a3-founding/Rt5T1r","a3-founding/Rt5r","a3-founding/t1T1r","a3-founding/t1r","a3-granny/Rt3T1r","a3-granny/Rt3r","a3-granny/landsHard0/r1","a3-principal/canon6","a3-principal/t5h","a3-principal/t5r","a3-seize/Rt8T1r","a3-seize/Rt8r","a3-seize/canonA0","a3-seize/canonB0","a3-seize/teeth0/r0","a3-stone/Rt2g","a3-stone/Rt2p0","a3-stone/Rt3T1r","a3-stone/Rt3r","a3-stone/lands0/r1","a3-vic/Rt4T1p3","a3-vic/Rt4T1r","a3-vic/Rt4r","a3-vic/landsHard0/r2","a3-vic/opens0/l3","a3-vic/t4c1","a3-vic/t4p3","a3-voice/t4T1r","a3-voice/t4r","open2/s3","want0","want1","want2","want3","want4"],
+  "named:Seven":["a2-annul/t5r","a2-chassis/Rt0r","a2-chassis/Rt10p0","a2-chassis/Rt10r","a2-chassis/Rt2r","a2-chassis/Rt3r","a2-chassis/Rt4r","a2-chassis/Rt6r","a2-chassis/Rt9g","a2-chassis/canon2","a2-chassis/canon3","a2-chassis/canonAlt1","a2-chassis/exits0","a2-chassis/exits1","a2-chassis/goal","a2-chassis/landsHard0/now","a2-chassis/landsHard0/r0","a2-chassis/scar","a2-chassis/t2p0","a2-chassis/t4T1r","a2-chassis/t4r","a2-choir/Rt0T1r","a2-choir/Rt0r","a2-choir/Rt1T1r","a2-choir/Rt1r","a2-choir/t4T1r","a2-choir/t4r","a2-housing/Rt1T1r","a2-housing/Rt1r","a2-housing/Rt8T1r","a2-housing/Rt8r","a2-housing/canonB0","a2-law/Rt5T1r","a2-law/Rt5r","a2-law/Rt7T1r","a2-law/t5r","a2-manual/Rt4T1r","a2-manual/Rt4r","a2-manual/Rt9T1r","a2-manual/Rt9r","a2-manual/landsHard0/r0","a2-seven/Rt0T1r","a2-seven/Rt0r","a2-seven/Rt1T1r","a2-seven/Rt1r","a2-seven/before","a2-seven/canon0","a2-seven/goal","a2-seven/lands0/now","a2-seven/landsHard0/now","a2-seven/landsHard0/r0","a2-seven/opens0/r0","a2-seven/press0","a2-seven/scar","a2-seven/t1r","a2-seven/t4r","a2-seven/teeth/c2","a2-take/Rt3p2","a2-take/Rt4T1r","a2-take/Rt4r","a2-take/before","a2-take/opens0/r0","a2-take/t1T1r","a2-take/t1r","a2-take/t3T1p0","a2-take/t4T1p4","a2-take/teeth/graze","a2-take/teeth0/r2","a2-take/teeth0/s0","a2-turn/Rt0p0","a2-turn/Rt6T1r","a2-turn/Rt6r","a2-turn/lands1/r1","a2-turn/t4r","a3-descent/Rt2p1","a3-descent/lands0/l7","a3-descent/opens0/l2","a3-descent/t1T1r","a3-descent/t1r","a3-descent/t6T1r","a3-descent/t6r","a3-dreamers/Rt2T1p1","a3-dreamers/canon5","a3-dreamers/lands0/l4","a3-dreamers/t3p0","a3-dreamers/t4T1r","a3-dreamers/t4r","a3-evict/lands1/l6","a3-evict/t3T1r","a3-evict/t3r","a3-evict/t4T1r","a3-evict/t4r","a3-for/goal","a3-for/t4T1r","a3-for/t4r","a3-for/t5T1r","a3-for/t5r","a3-for/t6p1","a3-founding/landsHard0/l4","a3-founding/opens0/l0","a3-founding/t4T1r","a3-founding/t4r","a3-granny/t6T1r","a3-granny/t6c0","a3-granny/t6p0","a3-granny/t6r","a3-granny/t7T1r","a3-seize/Rt9T1r","a3-seize/Rt9r","a3-seize/landsHard0/r2","a3-seize/t3r","a3-stone/Rt0p0","a3-stone/lands0/l2","a3-stone/t2T1r","a3-stone/t2p4","a3-stone/t2r","a3-vic/opens0/l4","a3-vic/t5T1r","a3-vic/t5c0","a3-voice/Rt1T1r","a3-voice/Rt1r","a3-voice/lands0/l3","a3-voice/lands0/r1","a3-voice/landsHard0/l3","a3-voice/landsHard0/r2","a3-voice/t1T1r","a3-voice/t1r","want14","want15","want16"],
   "named:Three":["a2-annul/Rt0T2p0","a2-annul/Rt0T2r","a2-annul/Rt1T1r","a2-annul/Rt1T2r","a2-annul/Rt1r","a2-annul/canon4","a2-annul/exits1","a2-annul/goal","a2-annul/lands0/r2","a2-annul/landsHard0/r1","a2-annul/never2","a2-annul/opens0/l0","a2-annul/opens0/now","a2-annul/opens0/r1","a2-annul/press0","a2-annul/t0r","a2-annul/t1p2","a2-annul/t1r","a2-annul/t4p0","a2-choir/Rt3T1r","a2-choir/Rt3r","a2-choir/lands0/l2","a2-choir/lands0/l3","a2-choir/lands0/l4","a2-choir/lands0/r0","a2-choir/landsHard0/l4","a2-choir/landsHard0/r0","a2-choir/never0","a2-choir/opens0/r0","a2-choir/t0r","a2-choir/t1r","a2-choir/t3r","a2-choir/teeth/g0","a2-choir/teeth/graze","a2-choir/teeth0/r2","a2-ground/never1","a2-hand/goal","a2-hand/never2","a2-hand/teeth/c0","a2-hand/teeth0/r0","a2-hand/teeth1/r0","a2-housing/Rt0T1r","a2-housing/Rt0r","a2-housing/Rt3T1r","a2-housing/Rt3r","a2-housing/Rt4T1p10","a2-housing/Rt6T1r","a2-housing/Rt6r","a2-housing/lands0/l4","a2-housing/lands0/r0","a2-housing/landsHard0/l4","a2-housing/landsHard0/r0","a2-housing/opens0/l4","a2-housing/opens0/r0","a2-housing/opens0/r1","a2-housing/t0r","a2-housing/t2r","a2-housing/t4T1r","a2-housing/t4r","a2-housing/t5T1r","a2-housing/t5r","a2-law/Rt1T1r","a2-law/Rt1p2","a2-law/Rt1r","a2-law/Rt2p1","a2-law/Rt3T1p10","a2-law/Rt3T2p3","a2-law/Rt3p4","a2-law/Rt6p3","a2-law/Rt7p3","a2-law/Rt8T1p5","a2-law/before","a2-law/press0","a2-law/t1r","a2-manual/Rt1T1r","a2-manual/Rt1r","a2-manual/Rt5T1r","a2-manual/Rt5r","a2-manual/Rt8T1r","a2-manual/Rt8r","a2-manual/lands0/r0","a2-manual/lands0/r1","a2-manual/t1p2","a2-manual/t1r","a2-manual/t2r","a2-manual/t4T1r","a2-manual/t4r","a2-manual/t5T1r","a2-manual/t5r","a2-seven/never0","a2-take/Rnever0","a2-take/Rt2p2","a2-take/Rt3T1r","a2-take/Rt3r","a2-take/Rt6p4","a2-take/aim","a2-take/lands0/r1","a2-take/landsHard0/r2","a2-take/never2","a2-take/opens0/r1","a2-take/t0T1r","a2-take/t0p0","a2-take/t0r","a2-take/t5p6","a2-take/teeth/c0","a2-take/teeth0/r0","a2-three/Rt0r","a2-three/Rt1r","a2-three/Rt2T1r","a2-three/Rt2r","a2-three/Rt3T1r","a2-three/Rt3r","a2-three/Rt4T2r","a2-three/Rt4p2","a2-three/Rt4r","a2-three/Rt5T1r","a2-three/Rt5r","a2-three/before","a2-three/canon0","a2-three/canon1","a2-three/canon2","a2-three/canon3","a2-three/exits0","a2-three/exits1","a2-three/goal","a2-three/lands0/l4","a2-three/lands0/now","a2-three/lands0/r0","a2-three/lands0/r1","a2-three/landsHard0/l4","a2-three/landsHard0/now","a2-three/landsHard0/r0","a2-three/landsHard0/r1","a2-three/opens0/l0","a2-three/opens0/now","a2-three/opens0/r1","a2-three/press0","a2-three/scar","a2-three/t0p0","a2-three/t0r","a2-three/t1r","a2-three/t2r","a2-three/t4r","a2-three/walk","a2-turn/Rt3T1r","a2-turn/Rt3r","a2-turn/Rt5p10","a2-turn/Rt8T1r","a2-turn/Rt8p18","a2-turn/lands0/r0","a2-turn/t0r","a2-turn/t1p5","a2-turn/t1r","a3-descent/Rt0T1r","a3-descent/Rt0T2p5","a3-descent/Rt0T2r","a3-descent/Rt0r","a3-descent/lands0/r0","a3-descent/landsHard0/r1","a3-descent/opens0/r0","a3-descent/t0T1r","a3-descent/t0r","a3-descent/t2T1r","a3-descent/t2r","a3-descent/t5T1r","a3-descent/t5p0","a3-descent/teeth/survive","a3-descent/teeth0/r0","a3-descent/teeth0/s0","a3-descent/teeth1/r2","a3-descent/teeth1/s0","a3-dreamers/Rt0T1r","a3-dreamers/Rt0r","a3-dreamers/Rt3T1r","a3-dreamers/Rt3r","a3-dreamers/lands0/r0","a3-dreamers/landsHard0/r1","a3-dreamers/landsHard0/r2","a3-dreamers/t0T1r","a3-dreamers/t0r","a3-dreamers/t3T1p5","a3-dreamers/t3T1r","a3-dreamers/t3r","a3-evict/Rt2p0","a3-evict/Rt4T1r","a3-evict/Rt4r","a3-evict/lands1/r2","a3-evict/landsHard0/r2","a3-evict/t0r","a3-evict/t2T1r","a3-evict/t2r","a3-evict/t3T1p3","a3-evict/teeth0/s0","a3-for/goal","a3-for/opens0/r0","a3-for/t0T1r","a3-for/t0r","a3-for/t1T1r","a3-for/t1r","a3-for/t2T1p3","a3-for/t2T1p5","a3-founding/Rt0T1r","a3-founding/Rt0r","a3-founding/Rt5p1","a3-founding/lands0/r2","a3-founding/landsHard0/r2","a3-founding/t0T1r","a3-founding/t0r","a3-founding/t2T1r","a3-founding/t2r","a3-granny/Rt0T1r","a3-granny/Rt0p2","a3-granny/Rt0p3","a3-granny/Rt0r","a3-granny/Rt1T1p4","a3-granny/lands0/r1","a3-granny/landsHard0/r2","a3-granny/t2T1p3","a3-principal/t2T1r","a3-principal/t2r","a3-seize/Rt2T1r","a3-seize/Rt2r","a3-seize/Rt7T1r","a3-seize/Rt7r","a3-seize/canon7","a3-seize/landsHard0/r0","a3-seize/t0r","a3-stone/Rt0p0","a3-stone/Rt1T1r","a3-stone/Rt1r","a3-stone/Rt2p0","a3-stone/lands0/r0","a3-stone/landsHard0/r2","a3-stone/t1T1r","a3-stone/t1r","a3-vic/Rt1T1p3","a3-vic/Rt2T1r","a3-vic/Rt2r","a3-vic/lands0/r2","a3-vic/t4p3","a3-vic/t4r","a3-voice/t0T1r","a3-voice/t0r","a3-voice/t2T1r","a3-voice/t2r","want17","want18"],
   "shard:hand":["a1-carried/Rt7p0","a1-carried/Rt8T1p2","a1-carried/before","a1-carried/exits2","a1-carried/teeth/d2","a1-carried/teeth1/s0","a1-chase/t4T1p3","a1-chase/t4p0","a1-exit/Rt1p4","a1-exit/Rt6p0","a1-exit/opens0/l4","a1-fare/Rt1p4","a1-fare/Rt1r","a1-fare/Rt7T1p3","a1-fare/t5T1p2","a1-hum/Rt7p4","a1-hum/aim","a1-hum/before","a1-hum/exits0","a1-hum/exits1","a1-hum/lands0/now","a1-hum/t1T1p0","a1-hum/t1T1p3","a1-hum/t1g","a1-hum/t1p0","a1-hum/t1r","a1-late/Rt1p1","a1-late/Rt1r","a1-late/Rt6T1p3","a1-pack/Rt4T1p2","a1-pack/before","a1-pack/opens0/l4","a1-pack/t3r","a1-turn/Rt1p4","a1-turn/scar","a1-turn/t2T1p2","a1-turn/t2p2","a2-chassis/Rt2r","a2-chassis/before","a2-ground/Rt1p3","a2-ground/t4p1","a2-seven/Rt1p1","a2-seven/teeth/death","a3-dreamers/teeth/survive","a3-seize/t2p3"],
   "shard:stow":["a1-chase/landsHard0/l7","a1-chase/teeth0/s2","a1-fare/t5T1p9","a1-hum/Rt5p4","a1-hum/lands0/l1","a1-hum/t5T1p2","a1-hum/t5p2","a2-ground/teeth/g2","a3-dreamers/t2p2","open/s1","open2/s4"],
-  "tell":["a1-carried/never2","a2-annul/Rt0T2p3","a2-annul/Rt0T2p4","a2-annul/Rt0T2p5","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p4","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p4","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-take/before","a2-take/canon0","a2-take/canon2","a2-take/goal","a2-take/scar","a2-take/teeth/death","a2-take/teeth/threat","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/opens0/r0","a3-founding/press0","a3-founding/t0T1p7","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt0T1p0","a3-principal/Rt0T1r","a3-principal/Rt0p4","a3-principal/Rt0r","a3-principal/Rt1T1r","a3-principal/Rt1p4","a3-principal/Rt1r","a3-principal/Rt2T1r","a3-principal/Rt2r","a3-principal/Rt3T1r","a3-principal/Rt3p0","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/canon4","a3-principal/canon5","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/lands0/r0","a3-principal/lands0/r1","a3-principal/landsHard0/now","a3-principal/landsHard0/r0","a3-principal/landsHard0/r1","a3-principal/press1","a3-principal/scar","a3-principal/t0T1r","a3-principal/t0g","a3-principal/t0p0","a3-principal/t0r","a3-principal/t1T1r","a3-principal/t1r","a3-principal/t3p3","a3-principal/t4T1r","a3-principal/t4p2","a3-principal/t4r","a3-principal/t5T1p2","a3-principal/t5T1r","a3-principal/t5r","a3-principal/walk","a3-seize/Rt6T1p3","a3-seize/Rt6T1r","a3-seize/Rt6g","a3-seize/Rt6p2","a3-seize/Rt6r","a3-seize/before","a3-seize/canon14","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/lands0/l5","a3-seize/lands0/r2","a3-seize/t2r","a3-seize/t4g","a3-seize/t4p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-vic/Rt3g","a3-vic/canon10","a3-voice/t0p0","want24"]
+  "tell":["a1-carried/never2","a2-annul/Rt0T2p3","a2-annul/Rt0T2p4","a2-annul/Rt0T2p5","a2-annul/before","a2-annul/canon0","a2-annul/goal","a2-choir/Rt1p0","a2-choir/aim","a2-choir/canon0","a2-choir/canon1","a2-choir/canon2","a2-choir/canon3","a2-choir/canon5","a2-choir/canon6","a2-choir/exits0","a2-choir/goal","a2-choir/lands0/now","a2-choir/landsHard0/now","a2-choir/never0","a2-choir/scar","a2-choir/t1p0","a2-choir/t1p1","a2-choir/t1p2","a2-choir/t1p4","a2-choir/t3g","a2-choir/t3p0","a2-choir/t3p1","a2-choir/t3p2","a2-choir/walk","a2-housing/Rt1T1p4","a2-housing/canon0","a2-housing/canon1","a2-housing/goal","a2-housing/landsHard0/l0","a2-housing/never1","a2-housing/t0g","a2-manual/canon1","a2-manual/goal","a2-manual/never0","a2-manual/t5r","a2-take/before","a2-take/canon0","a2-take/canon2","a2-take/canon3","a2-take/goal","a2-take/scar","a2-take/teeth/death","a2-take/teeth/threat","a2-three/before","a2-three/canon0","a2-three/goal","a2-three/t0p0","a2-turn/before","a2-turn/canon0","a2-turn/goal","a2-turn/press0","a2-turn/t1p0","a2-turn/t1r","a3-for/goal","a3-for/never2","a3-founding/before","a3-founding/canon0","a3-founding/canon3","a3-founding/goal","a3-founding/never0","a3-founding/never2","a3-founding/opens0/l1","a3-founding/opens0/r0","a3-founding/press0","a3-founding/t0T1p7","a3-founding/t0p0","a3-founding/t1p2","a3-founding/t3g","a3-founding/t3p0","a3-founding/t3p3","a3-principal/Rt0T1p0","a3-principal/Rt0T1r","a3-principal/Rt0p4","a3-principal/Rt0r","a3-principal/Rt1T1r","a3-principal/Rt1p4","a3-principal/Rt1r","a3-principal/Rt2T1r","a3-principal/Rt2r","a3-principal/Rt3T1r","a3-principal/Rt3p0","a3-principal/before","a3-principal/canon0","a3-principal/canon1","a3-principal/canon2","a3-principal/canon3","a3-principal/canonSoft1","a3-principal/exits0","a3-principal/goal","a3-principal/lands0/l4","a3-principal/lands0/now","a3-principal/lands0/r0","a3-principal/lands0/r1","a3-principal/landsHard0/now","a3-principal/landsHard0/r0","a3-principal/landsHard0/r1","a3-principal/press1","a3-principal/scar","a3-principal/t0T1r","a3-principal/t0g","a3-principal/t0p0","a3-principal/t0r","a3-principal/t1T1r","a3-principal/t1r","a3-principal/t3p3","a3-principal/t4T1r","a3-principal/t4p2","a3-principal/t4r","a3-principal/t5T1p2","a3-principal/t5T1r","a3-principal/t5r","a3-principal/walk","a3-seize/Rt6T1p3","a3-seize/Rt6T1r","a3-seize/Rt6g","a3-seize/Rt6p2","a3-seize/Rt6r","a3-seize/before","a3-seize/canon14","a3-seize/canon8","a3-seize/canon9","a3-seize/goal","a3-seize/lands0/l5","a3-seize/lands0/r2","a3-seize/t2r","a3-seize/t4g","a3-seize/t4p0","a3-seize/teeth/graze","a3-seize/teeth0/r0","a3-seize/teeth1/r2","a3-stone/goal","a3-vic/Rt3g","a3-vic/Rt3c0","a3-vic/canon9","a3-voice/t0p0","want24"]
 };
 /* v5.3: a1-chase/teeth0/s2 - "Against your ribs the shard's hum climbs half a note"
    is the jacket, and at a1-chase she is in the jacket. Correct, and the reason the
@@ -21256,7 +21363,7 @@ function selfTest(){
      Credit is observed now, not read: every named function is wrapped for the
      duration of the check and the check is credited only if one of them was actually
      ENTERED. Nothing about this can be satisfied by writing a name down. */
-  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "walkAnswerFor", "playWalkAnswer", "beatPointerFrom", "attemptClose", "applyTension",
+  var PROD_SYMBOLS = ["revealText", "hasWord", "beatById", "castMuteFaults", "contractionByVoice", "walkAnswerFor", "playWalkAnswer", "cardCanon", "beatPointerFrom", "attemptClose", "applyTension",
     "namedUse", "deathPredicated", "shardAfter", "reachNotStow", "lastHit",
     "sceneContract", "relaySpeaker", "relayCard", "cardIsMuted", "revealLeak", "tellHit", "tellHay",
     "breachIn", "breachMore", "mayAsk", "bookFor", "boardTurn", "boardDirective", "takeAction",
@@ -22388,6 +22495,105 @@ function selfTest(){
              delete FXCARD.stages[0].rail[2].graze;
              return drive(2) === "graze";      /* the claim. Without the flag it cannot hold. */
            } finally { FXCARD.stages[0].rail[2].graze = keep; }
+         }});
+    })();
+
+    /* ---- (4a8) A CARD'S RECORD LINE REACHES THE RECORD ONLY IF THE CARD IS PLAYED ----
+       THE FAULT, found by the author playing night three and then swept across all 34:
+       canon is player-facing, a beat's canon merges on EVERY clean close, and seventeen
+       record lines across eleven nights reported scenes that live inside a card. Driven
+       before it was believed - a real run of night two played 31 blocks with no Hollow,
+       no signal, no idle and no throat anywhere in them, and the wrist still said
+       "Hollows drop to idle when cut from signal."
+       THE ROW DRIVES THE REAL callSceneTurn over a real deck, and asserts BOTH halves:
+       the line is absent from the record before the card is dealt and present after.
+       AND THE BREAK IS THE CORPUS, NOT THE FUNCTION - the field is stripped from the card
+       that carries it, which is the shipped shape of every build before v6.14.0. A break
+       that swaps the reader for an older reader proves only that two functions differ. */
+    (function(){
+      /* the first card in the book that carries one, whatever it turns out to be */
+      var host = null;
+      SPINE.some(function(b){
+        var e = SCENEBOOK[b.id];
+        if(!e) return false;
+        return (e.topics || []).some(function(t, ti){
+          if(!cardCanon(t).length) return false;
+          host = {beat:b.id, t:t, ti:ti, sc:e, key:b.id};
+          return true;
+        });
+      });
+      var lines = 0, cards = 0, unswept = [], mislabelled = [], dup = [];
+      var swept = {};
+      stCorpus().forEach(function(r){ swept[String(r.t).trim()] = 1; });
+      SPINE.forEach(function(b){
+        var e = SCENEBOOK[b.id];
+        if(!e) return;
+        var beatSet = {};
+        ["canon", "canonAlt", "canonA", "canonB", "canonSoft"].forEach(function(k){
+          (b[k] || []).forEach(function(c){ beatSet[String(c).trim()] = 1; });
+        });
+        (e.topics || []).concat((e.room && e.room.topics) || []).forEach(function(t){
+          var cc = cardCanon(t);
+          if(cc.length) cards++;
+          cc.forEach(function(c){
+            lines++;
+            var key = String(c).trim();
+            if(!swept[key]) unswept.push(b.id + "/" + t.id);          /* the drift net is blind to it */
+            if(!canonIsBoard(c)) mislabelled.push(b.id + "/" + t.id);  /* the archive calls it THIS TABLE */
+            if(beatSet[key]) dup.push(b.id + "/" + t.id);              /* written twice, one unearned */
+          });
+        });
+      });
+
+      /* ---- and the engine actually does it, driven over the real deck ---- */
+      function drive(){
+        var K = {bi:beatIdx, ph:phase, ov:runOver, fp:foldPending, wb:walkbackNow,
+                 canon:runCanon.slice(), spent:topicSpent[host.key], layer:topicLayer[host.key],
+                 serve:window.serveSceneTurn, ls:lastSent, lr:lastReceived, lv:lastReplyVerdict};
+        var line = cardCanon(host.t)[0], before = null, after = null;
+        try{
+          beatIdx = beatById(host.beat); phase = "live";
+          runOver = ""; foldPending = false; walkbackNow = false;
+          window.serveSceneTurn = function(){};       /* no rendering; the merge is the claim */
+          /* every other card spent, so the deck has exactly one fresh card to deal */
+          var spend = [];
+          (host.sc.topics || []).forEach(function(x, i){ if(i !== host.ti) spend.push(i); });
+          topicSpent[host.key] = spend; topicLayer[host.key] = {};
+          runCanon = [];
+          before = runCanon.indexOf(line);
+          callSceneTurn();
+          after = runCanon.indexOf(line);
+        } catch(e){ return {err:String(e)}; }
+        finally {
+          beatIdx = K.bi; phase = K.ph; runOver = K.ov; foldPending = K.fp; walkbackNow = K.wb;
+          runCanon = K.canon; window.serveSceneTurn = K.serve;
+          lastSent = K.ls; lastReceived = K.lr; lastReplyVerdict = K.lv;
+          if(K.spent === undefined) delete topicSpent[host.key]; else topicSpent[host.key] = K.spent;
+          if(K.layer === undefined) delete topicLayer[host.key]; else topicLayer[host.key] = K.layer;
+        }
+        return {before:before, after:after};
+      }
+      var d = host ? drive() : {err:"no card in the book carries a record line"};
+      var drove = !d.err && d.before === -1 && d.after !== -1;
+
+      T("a card's record line reaches the record only when the card is played",
+        !!host && drove && !unswept.length && !mislabelled.length && !dup.length,
+        !host ? "WRONG: no card in the book carries a record line"
+        : d.err ? ("WRONG: the drive threw - " + d.err)
+        : d.before !== -1 ? "WRONG: the line was in the record before the card was dealt"
+        : d.after === -1 ? "WRONG: the card played and wrote nothing"
+        : unswept.length ? ("WRONG: the drift net cannot see " + unswept.join(", "))
+        : mislabelled.length ? ("WRONG: the archive calls the board's own words THIS TABLE - " + mislabelled.join(", "))
+        : dup.length ? ("WRONG: written on the beat AND on the card, so the unearned copy still merges - " + dup.join(", "))
+        : (lines + " record lines on " + cards + " cards - absent before the card is dealt, "
+           + "present after, swept by the drift net, and labelled BOARD"),
+        {label:"the record lines sat on the beat, where they merged on every close whether the scene was reached or not - every build up to v6.14.0",
+         was:true,
+         check:function(){
+           /* the shipped shape: the card carries nothing, so playing it writes nothing */
+           var keep = host.t.canon;
+           try{ delete host.t.canon; var r = drive(); return !r.err && r.after !== -1; }
+           finally { host.t.canon = keep; }
          }});
     })();
 
