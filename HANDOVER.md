@@ -370,7 +370,31 @@ forecasting weather at you. I am telling you what it is doing outside."* Nobody 
 table had thought about what it cost the Choir to lose a clerk, because nobody had thought
 of him as a thing the Choir had lost. Four blocks; **the floor rose 4689 to 4692**.
 
-**WHAT IS LEFT: EIGHT NIGHTS - 9, 10, 13, 15, 16, 18, 20, 21** - each wanting one exchange
+### AND THEY ARE WRITTEN (v5.99.0). §D's PROSE WORK IS DONE.
+
+**NIGHT 20 WAS NEVER ON THE LIST.** Five already says it: *"the convoy reports its officer
+missing at eight, and I know exactly how that paperwork moves, because I have moved it."*
+The enemy.js read walked past it because it reads as Five offering himself, and it is both.
+**Eight was really seven.**
+
+| night | what the family now says it cost |
+|---|---|
+| 9 `a1-turn` | Pia: the chit with his description on it has been getting quietly more correct for eleven weeks, and nobody had to touch it once. *Nobody asks how she knows. She does doors, and a door is a thing that people bring paper to.* |
+| 10 `a2-door` | Hesta: this building was the least interesting address on the row for thirty years and that stopped at about eight o'clock tonight — *"I want you to know what it costs, so that when it turns up nobody at this table has to stand there being surprised at it."* |
+| 13 `a2-mirren` | Hesta at the grave: something of theirs stopped moving out there and gets a line in a register whether anybody says a word or not. Vic: *"It'll be a query first. Nobody looks at a query. A form asks a form."* |
+| 15 `a2-chassis` | Vic over the sheeted frame: it went out on a Tuesday with a number on it, and there is a man whose entire job is the difference between what went out and what came back |
+| 16 `a2-three` | Three, in her first hour: *"Taking me into a household takes in what is attached to me."* Hesta: *"Noted. Eat something."* |
+| 18 `a2-manual` | Three: the lock keeps a log. **The key is not only a way in, it is a signature, and this family has been carrying a pen.** |
+| 21 `a2-law` | Three while the ink is wet: does the law hold for a thing the Choir will come looking for. Hesta: *"Yes. Next question."* |
+
+**TWENTY-ONE BLOCKS ADDED, none cut; the floor rose 4692 to 4713.** Sweep green, nobody
+speaks out of a scene they are not in (4,690 nameplates), no canon leaks, mannerism at the
+28/28 baseline, drift 10,941 lines and none moved.
+
+**`a2-chassis`'s `does-anybody-owe` was left alone as ruled** - the cost went on
+`the-frame-in-the-corner` instead, which is the same night and does not spoil the contrast.
+
+*(superseded) WHAT WAS LEFT: EIGHT NIGHTS - 9, 10, 13, 15, 16, 18, 20, 21* - each wanting one exchange
 in the family's own mouths about what the night before has cost. **`a2-chassis`'s
 `does-anybody-owe` MUST NOT BE ONE OF THEM.** It is eighteen closed blocks setting the
 family's debt economy against the Choir's - *"there is no bill in this building"*, *"in

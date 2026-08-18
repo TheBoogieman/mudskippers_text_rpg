@@ -5739,7 +5739,9 @@ var SCENEBOOK = {
       ["Vic","The manifest."],
       ["Pia","The manifest. Yes. Thank you. The manifest, which we have all been very carefully not saying since the soup."],
       "She sets her spoon down at right angles to the bowl, which is what she does instead of raising her voice.",
-      ["Pia","What happens is that the paperwork goes looking before the people do. That's the good news, because paper is slow. The bad news is that paper does not get tired, and it does not get bored, and it never once decides it was probably the weather."]
+      ["Pia","What happens is that the paperwork goes looking before the people do. That's the good news, because paper is slow. The bad news is that paper does not get tired, and it does not get bored, and it never once decides it was probably the weather."],
+      ["Pia","And since we are being grown-ups about admin: it has started. Not tonight. The Tuesday you typed the thing. Somewhere there is a chit with a description on it that has been getting quietly more correct for eleven weeks, and nobody has had to touch it once to make that happen."],
+      "Nobody asks her how she knows. She does doors, and a door is a thing that people bring paper to."
      ]]},
     {id:"vic-responsibility", railTakes:["Ask Vic for the truer version of why he took Pia in."], ask:"how Vic decided to take Pia in", key:"vic responsibility took pia in decide decision keep raise why",
      who:"Vic", gives:"the least romantic answer available, which turns out to be the useful one",
@@ -6237,7 +6239,10 @@ var SCENEBOOK = {
       ["Pia","...Everything is safe to say. Nothing is safe to repeat."],
       "The child has the rule by heart after a single evening. It is going to be tested, and not gently, and not for a long while yet - and she will hold, and it will cost her more than she currently has to spend.",
       ["Hesta","Good girl. Eat your bread."],
-      "Somewhere above the ceiling a room full of borrowed light goes on quietly committing the most patient act of sabotage in the district."
+      "Somewhere above the ceiling a room full of borrowed light goes on quietly committing the most patient act of sabotage in the district.",
+      ["Hesta","And while I am handing out things nobody asked for: this building has been the least interesting address on this row for thirty years, and that stopped at about eight o'clock tonight. Not your fault and not a complaint. Somebody wanted feeding and I fed them. But who eats here is not a thing I get to keep to myself any more."],
+      ["Pia","...Do you want us to go?"],
+      ["Hesta","Don't be daft. I want you to know what it costs, so that when it turns up nobody at this table has to stand there being surprised at it."]
      ]]},
     {id:"pan-stove-knife", ask:"the pan, the stove, the one good knife", key:"pan stove knife tools kit iron griddle",
      who:"Hesta", gives:"the stove nobody ever asks about, one knife on principle, and the bag she keeps packed",
@@ -7225,7 +7230,10 @@ var SCENEBOOK = {
     plays:[["Hesta","A cairn is what you build when you have no paperwork and no permission. The city files its dead. Out here we stack ours toward the sky and dare the weather to argue."],
      ["Hesta","Stones because they stay. Dawn because it was nearest. The marsh because it does not ask what she died of."],
      "Somewhere in that, without being named, is a rule older than anyone standing here - the shape of it visible, like a wreck under shallow water.",
-     ["Hesta","Nobody made it a custom. It is just what keeps happening when people mean it."]]},
+     ["Hesta","Nobody made it a custom. It is just what keeps happening when people mean it."],
+      ["Hesta","And you can all hear the other half of it, because it is the half nobody says at a grave. She was on their books. Something of theirs stopped moving out there and has not moved since, and a thing like that gets itself a line in a register whether anybody out here says a word about it or not."],
+      ["Vic","It'll be a query first. Nobody looks at a query. A form asks a form."],
+      ["Hesta","That's right. And then somebody looks. Not this morning. Stones first."]]},
    {id:"what-pia-makes-of-it", ask:"what Pia makes of it",
     key:"pia you ok think first funeral seen",
     who:"Pia",
@@ -8994,7 +9002,11 @@ var SCENEBOOK = {
       ["Vic","He did that to himself, and then he walked, and every hour since then that frame has been paying for it."],
       "He puts the sheet back down carefully, the way you cover a thing that did its job.",
       ["Hesta","It stays in that corner tonight. It goes out in the morning, and it goes out properly, and I'll not have it in a skip."],
-      "It goes out properly. It takes four of them and most of the morning, and there is an argument about where, and the argument is the most respectful thing that happens all week."],
+      "It goes out properly. It takes four of them and most of the morning, and there is an argument about where, and the argument is the most respectful thing that happens all week.",
+      ["Vic","And the part nobody has said. That frame belonged to somebody. Not him - the outfit. It went out on a Tuesday with a number on it and it has not come back, and there'll be a man somewhere whose entire job is the difference between what went out and what came back."],
+      ["Hesta","Then he can have a puzzle."],
+      ["Vic","He'll have a puzzle for about a fortnight. After that he'll have a place, because a frame stops being a puzzle the moment somebody asks where it stopped."],
+      "Nobody asks what comes after that. The sheet is back down, and the argument about where to take it in the morning is a considerably better argument than the one they would otherwise be having."],
      /* THE SECOND TAKE. This card's hold is that it is NOT discussed twice - so the
         second take is the refusal, and the room gives something else instead. Caving
         here would spend the one thing anybody in this building was firm about. */
@@ -9366,7 +9378,11 @@ var SCENEBOOK = {
     plays:[["Hesta","Because she can strip a Choir frame to its seat with her eyes shut, she reads their traffic like a menu, and nobody in this family can do either."],
      ["Hesta","That's the whole case. Work. She does not want your warmth and I am not selling it to her."],
      ["Three","Correct on all points. This is the first accurate description of me I have received in years. I will stay for the winter."],
-     "No feelings were exchanged in the making of this arrangement, and both parties look genuinely relieved about it."]},
+     "No feelings were exchanged in the making of this arrangement, and both parties look genuinely relieved about it.",
+      ["Three","One correction to the terms, since we are being accurate with each other. I have been off their books for eleven years and off nobody's list for a single one of them. Taking me into a household takes in what is attached to me. I would rather that was said in the first hour than discovered in the ninth month."],
+      ["Hesta","Noted. Eat something."],
+      ["Three","That is not an answer to what I said."],
+      ["Hesta","It's the only answer this house gives. You will get used to it or you will not, and either way the plate is going in front of you."]]},
    {id:"how-she-found-them-at-all", ask:"how she found them at all",
     key:"how found us here came track follow watching knew where",
     who:"Three",
@@ -9903,7 +9919,11 @@ var SCENEBOOK = {
       "Depths she can name, and depths she can only measure the dark of. Nobody asks her to try the second kind.",
      "Roughly is all anyone has, and she hands it over unwrapped: the family is holding a key that outranks its map.",
      ["Three","What I will say: locks this old are not guarding money. Money moves. You build a forty-year lock for something you intend to still be there."],
-      "Something they intend to still be there. Forty years is a long time to intend anything, and the people who intended it are dead, and the thing is still there."]},
+      "Something they intend to still be there. Forty years is a long time to intend anything, and the people who intended it are dead, and the thing is still there.",
+      ["Three","One thing about the map before anybody starts enjoying it. A lock this old keeps a log, because everything those people built keeps a log. The first time that hash goes against a door, a column nobody has read in forty years gets a line in it."],
+      ["Seven","Somebody reads it."],
+      ["Three","Somebody is PAID to read it. A column nobody has read since before I was born is precisely the kind somebody has been paid to read the whole time."],
+      "Nobody at that table had thought of the key as a thing that writes. It has been a way in all evening. It turns out to be a signature as well, and it turns out this family has been carrying a pen."]},
    {id:"who-put-a-manual-in-his-head", ask:"who put a manual in a man's head",
     key:"who why hidden manual inside shipped put deliberate",
     who:"Vic",
@@ -10811,7 +10831,12 @@ var SCENEBOOK = {
      plays:[["Three","Conditional yes. The condition, exactly: it binds the room to me the same weight it binds me to the room. I have been INSIDE arrangements where the law pointed one direction. Never again - that is not negotiable and never will be."],
       ["Three","If the table votes it symmetric, I'll keep it on the expensive nights, which are the only nights I count."],
       "It is - by a wide margin - the most anyone has ever heard Three promise.",
-      ["Hesta","Symmetric. Obviously. It was always going to be symmetric - but thank you for making us say it out loud. That one goes on the frame too."]],
+      ["Hesta","Symmetric. Obviously. It was always going to be symmetric - but thank you for making us say it out loud. That one goes on the frame too."],
+      ["Three","One more thing said out loud while the ink is wet, because it is the part this table has been walking around since the pan went on. Last night we took something off their books that they are going to notice is missing. The law we have just made covers that as well. I would like the room to hear itself agree to it rather than drift into it."],
+      ["Hesta","Put it as a question and I will answer it as one."],
+      ["Three","Does the law hold for a thing the Choir will come looking for."],
+      ["Hesta","Yes. Next question."],
+      "Four seconds, and the most expensive clause of the evening goes in without a vote, because every person at that table had already decided it and not one of them had wanted to be the one to write it down."],
      /* THE QUESTION UNDER THE CONDITIONAL YES. She gave the condition exactly, the way
         she gives everything; what she did not say is that being ASKED is the novelty.
         An instrument is not asked whether it will keep a rule. It is calibrated. */
