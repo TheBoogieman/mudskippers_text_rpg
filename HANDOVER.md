@@ -8,7 +8,19 @@ the commit that did it, and this file forgets it.*
 
 ## WHERE WE ARE
 
-**v6.6.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+**v6.7.0. THIRTY-FOUR nights written. Sweep 81 PROVED of 106, 0 FAILED. Tree clean, pushed.**
+
+**THE BOOK HAS A NEW VOICE AND IT SPEAKS ONCE.** `"The File"` is a nameplate now - Vic's
+expert-system ghost on the courier's wrist, in capitals, at the bottom of the descent, and
+never again on any night. **Ruled by the author: once, at the worst moment.** Adding a
+speaker means adding it to the beat's `here`, which is the speaker fence; nothing else was
+needed and no predicate moved.
+
+**FIVE IS THE WAY IN NOW, across three beats as ruled** - the agreement on `a3-for`, the door
+on `a3-descent`, and what it costs him on `a3-dreamers`, where he reads a vault aisle like a
+rota and has to be told to stop. **Five had never been listed in `here` on the vault nights;
+the BODY was, because Marek is.** They share it, so letting Five take a turn there is the
+established mechanic rather than a new person in the room.
 
 **The authoring phase and the polishing passes are over.** What is left is in
 `OUTSTANDING.md` and it is short: one real authoring thread (Five and the vault), one open
