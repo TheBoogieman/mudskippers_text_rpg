@@ -1826,7 +1826,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.30.1 "The Leaving, Underground Too"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.31.0 "Thirty-Four Ways Out"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2528,7 +2528,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.30.1";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.31.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -19510,6 +19510,11 @@ function stCorpus(){
        readers, both of which play it. Thirty-four scenes on the most consequential button
        in the game, invisible to every instrument in the project. */
     (b.walkAnswer || []).forEach(function(l, i){ add(b.id + "/walkAns" + i, playText(l)); });
+    /* AND THE LEAVING, WHICH IS THE SAME LESSON A THIRD TIME (v6.31.0). The first patch for
+       this landed in the OTHER walker that reads walkAnswer - the one at the payload end -
+       and the net stayed blind while a comment said it did not. 170 authored blocks. Caught
+       by counting the rows this function actually returns instead of reading the diff. */
+    (b.walkFinal || []).forEach(function(l, i){ add(b.id + "/walkFin" + i, playText(l)); });
   });
   Object.keys(SCENEBOOK).forEach(function(k){
     var e = SCENEBOOK[k];
@@ -22176,7 +22181,10 @@ function selfTest(){
       extra.push(d.voice);
       (d.notes || []).forEach(function(t){ extra.push(t); });
     });
-    SPINE.forEach(function(b, bi){ extra.push({t:b.goal, at:bi}); extra.push({t:b.aim, at:bi}); });
+    SPINE.forEach(function(b, bi){ extra.push({t:b.goal, at:bi}); extra.push({t:b.aim, at:bi});
+      (b.walkFinal || []).forEach(function(l){
+        extra.push({t:(Object.prototype.toString.call(l) === "[object Array]" ? l[1] : l), at:bi}); });
+    });
     /* the stall pins, which nobody had swept. The walk lines ride the spine loop below,
        where they are already pushed into prose - counting them here counted them twice. */
     (typeof PIN_STALLS !== "undefined" ? PIN_STALLS : []).forEach(function(x){ extra.push(x); });
