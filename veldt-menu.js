@@ -1612,9 +1612,18 @@ class Component extends DCLogic {
 }
 
   // --- mount onto the real title screen -------------------------------
+  let mountWaits = 0;
   function mount(){
     const ts = document.getElementById('titlescreen');
     if (!ts || ts.querySelector('.veldt-art')) return;
+    /* THE POSTER IS BUILT ONCE, WITH A LOADED SAVE (v6.34.0). This ran at DOMContentLoaded,
+       which is before the game has read anything, so the city was drawn for a courier on his
+       own and then redrawn the moment the run came back - two builds on every single page
+       load, the second one landing on a title screen that was already visible. That is the
+       jitter. Wait for the game to say it has booted; the retry below comes back every 150ms.
+       AND IT GIVES UP WAITING, because a poster that never draws is worse than one that
+       draws twice: after about a second and a half it builds with whatever there is. */
+    if (!window.__mudBooted && ++mountWaits < 10) return;
 
     const art = document.createElement('div');
     art.className = 'veldt-art';

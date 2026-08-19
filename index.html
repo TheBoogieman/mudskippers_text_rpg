@@ -1832,7 +1832,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.33.0 "One Poster, Once"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.34.0 "Built Once, Where You Left It"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2473,6 +2473,15 @@ var AMB_LIST = ["rain-neon","storm","neon-dry","marsh-fog","interior-warm","subs
 var revealToken = 0;
 var revealTimer = null;
 var skipReveal = null;
+/* WHICH SCREEN THE PLAYER WAS ON WHEN THE PAGE WENT AWAY (v6.34.0), READ ONCE AND READ
+   FIRST. openTitle writes this note and the boot sequence opens the title screen on its way
+   past, so asking sessionStorage down in finishBoot asked a question this very load had
+   already answered "yes" to - and the resume stopped working entirely. Captured up here,
+   before any of that can run, which is the only moment the note still says what the PREVIOUS
+   page did. */
+var bootAtMenu = (function(){
+  try{ return sessionStorage.getItem("mud-at-menu") === "1"; }catch(e){ return false; }
+})();
 /* ---- THE SEAM REVEAL (v5.92.0) ----
    Reported by the author: beat and season seams appear all at once instead of
    arriving a block at a time like everything else. They did not appear quickly -
@@ -2534,7 +2543,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.33.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.34.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -17320,11 +17329,13 @@ function openTitle(){
      opening the menu mid-run flashed an empty city and then the real one - which is what
      "it loads twice" is. Only when something actually changed: an unchanged screen opens
      immediately, which is every open after the first. */
+  try{ sessionStorage.setItem("mud-at-menu", "1"); }catch(e){}
   function reveal(){ $("titlescreen").classList.add("open"); try{ shardHide(); }catch(e){} }
   if(repainted && window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(reveal); });
   else reveal();
 }
 function closeTitle(){
+  try{ sessionStorage.removeItem("mud-at-menu"); }catch(e){}
   $("titlescreen").classList.remove("open");
   try{ shardShow(); }catch(e){}     /* it only comes out once there is a room to be in */
 }
@@ -19207,7 +19218,15 @@ function finishBoot(orConnected){
      straight back into a run they cannot play would be worse than the click.
      The title screen is still one tap away on MENU; this only skips it when there is
      something live to skip it FOR. */
-  if(restored && runSlug && !runOver) closeTitle();
+  /* ...AND IT HONOURS WHERE THE PLAYER ACTUALLY WAS (v6.34.0). "Restored, has a slug, not
+     over" describes the SAVE and not the screen, so refreshing while deliberately sitting on
+     the main menu threw the player into the run they had just stepped out of. The title
+     screen writes down whether it is up, in sessionStorage, so it survives a refresh and
+     dies with the tab: a fresh visit has no note and resumes as before. */
+  if(restored && runSlug && !runOver && !bootAtMenu) closeTitle();
+  /* the poster may build once now, with a loaded save, rather than twice - see mount() */
+  window.__mudBooted = true;
+  try{ if(window.veldtRefresh) window.veldtRefresh(); }catch(e){}
   if(orConnected){
     /* THE ONE LIVE READER OF THE DELETED TAGLINE (v6.10.0). The title screen used to carry
        its own .t-tag under the skin's; merging them deleted it, and this line would have
