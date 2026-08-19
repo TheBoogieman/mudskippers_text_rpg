@@ -281,11 +281,11 @@ var DOSSIERS = {
 var WALK_FINAL = [
  "Nobody stands up. Nobody puts a hand out. The not-standing is worse than being stopped would have been, and everyone in the room knows it while it is happening.",
  ["Pia","Right. Okay. Off you go, then, before somebody says something clever."],
- "She says it to the middle of the room, and she does not turn round to watch him take it.",
+ "She says it to the middle distance, and she does not turn round to watch him take it.",
  ["Pia","You do not have to say anything. Everybody wants to say something at this bit and it has never once helped."],
- "There is a version of this where somebody talks him round. The whole room can feel it going past, unused.",
- ["Pia","Go while it is still raining. It is easier in the rain. I have done it."],
- "Then the door, which does what doors do. Then the rain, which has been out there the whole time, waiting to be somebody's weather again."
+ "There is a version of this where somebody talks him round. Everybody there can feel it going past, unused.",
+ ["Pia","Go on, then. Quickly is kinder. I have done it quickly and I have done it slowly."],
+ "Then the way out, which does what a way out does. Then whatever is on the other side of it, which has been there the whole time and was never going to be the difficult part."
 ];
 var OPENING2 = {
   day: 1, time: "11:52pm", location: "Lower Veldt Market", ambience: "rain-neon",
