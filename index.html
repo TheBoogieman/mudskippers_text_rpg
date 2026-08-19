@@ -842,6 +842,12 @@
   /* reading-pace reveal */
   .block.reveal{opacity:0;transform:translateY(8px)}
   .block.shown{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+  /* A SKIP IS NOT A FASTER REVEAL, IT IS NO REVEAL (v6.32.0). Clicking the feed took the
+     whole passage off the timer correctly and then handed every block to the SAME .55s
+     fade, all starting from invisible at the same instant - so the player who asked for
+     the text NOW watched one more animation and, because the feed scrolls while it runs,
+     saw the last block arrive and assumed the rest had been eaten. */
+  .block.shown.nofade{transition:none}
   /* present-scene strip */
   #nowstrip{display:none;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim);border-left:2px solid var(--line);padding:6px 10px;margin-bottom:10px;font-style:italic;line-height:1.5}
 
@@ -1826,7 +1832,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.31.0 "Thirty-Four Ways Out"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.32.0 "Now Means Now"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2528,7 +2534,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.31.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.32.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -5282,7 +5288,16 @@ function showScene(data, logIt, instant){
   skipReveal = function(){
     if(token !== revealToken) return;
     if(revealTimer) clearTimeout(revealTimer);
-    while(i < els.length){ els[i].classList.remove("reveal"); els[i].classList.add("shown"); i++; }
+    /* EVERY BLOCK IN THE PASSAGE, NOT JUST THE ONES STILL QUEUED. The block that was
+       mid-fade when the click landed already had .shown and kept running its half
+       second, so a skip still ended on one thing visibly arriving - which is exactly
+       the animation the player clicked to stop. */
+    for(var k = 0; k < els.length; k++) els[k].classList.add("nofade");
+    while(i < els.length){
+      els[i].classList.remove("reveal");
+      els[i].classList.add("shown");
+      i++;
+    }
     done();
     settle();
   };
@@ -9182,7 +9197,9 @@ function seamRevealDone(){
 function seamRevealSkip(){
   if(seamTimer){ clearTimeout(seamTimer); seamTimer = null; }
   for(var i = 0; i < seamEls.length; i++){
-    seamEls[i].classList.remove("reveal"); seamEls[i].classList.add("shown");
+    seamEls[i].classList.remove("reveal");
+    seamEls[i].classList.add("nofade");        /* asked for now: give it now (v6.32.0) */
+    seamEls[i].classList.add("shown");
   }
   seamRevealDone();
 }
