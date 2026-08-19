@@ -1832,7 +1832,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.32.0 "Now Means Now"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.33.0 "One Poster, Once"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2534,7 +2534,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.32.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.33.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -17312,9 +17312,17 @@ function openTitle(){
      `refreshTitle` next door has always brought the BUTTONS up to date; the picture
      behind them was never asked. Guarded, because the skin is a separate file and the
      game has to open its own front door without it. */
-  try{ if(window.veldtRefresh) window.veldtRefresh(); }catch(e){}
-  $("titlescreen").classList.add("open");
-  try{ shardHide(); }catch(e){}
+  var repainted = false;
+  try{ if(window.veldtRefresh) repainted = window.veldtRefresh(); }catch(e){}
+  /* THE POSTER GETS A FRAME TO DRAW ITSELF BEFORE THE SCREEN ARRIVES (v6.33.0). Re-reading
+     the game on open was right and cheap; showing the result in the same tick was not. A
+     repaint swaps the canvas for a blank one and fills it on the next animation frame, so
+     opening the menu mid-run flashed an empty city and then the real one - which is what
+     "it loads twice" is. Only when something actually changed: an unchanged screen opens
+     immediately, which is every open after the first. */
+  function reveal(){ $("titlescreen").classList.add("open"); try{ shardHide(); }catch(e){} }
+  if(repainted && window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(reveal); });
+  else reveal();
 }
 function closeTitle(){
   $("titlescreen").classList.remove("open");

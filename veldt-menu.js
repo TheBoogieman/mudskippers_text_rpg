@@ -1667,7 +1667,12 @@ class Component extends DCLogic {
         inst.props.weather = w; inst.props.castStage = c;
         if(!same) inst.build();
         if(inst.sync) inst.sync();
-      }catch(e){}
+        /* ...AND IT SAYS WHETHER IT REPAINTED (v6.33.0). A rebuild swaps the canvas and the
+           replacement is blank until the animation loop gets a frame, so a repaint landing in
+           the same tick as the screen becoming visible reads as the menu loading twice. The
+           caller holds the reveal for one frame when this comes back true. */
+        return !same;
+      }catch(e){ return false; }
     };
 
     /* HOLD THE DOOR OPEN LONG ENOUGH TO SEE IT (v5.38.0). The game's handler is an
