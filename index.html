@@ -1832,7 +1832,7 @@
 <script>
 "use strict";
 /* =====================================================================
-   MUDSKIPPERS — THE COURIER'S RUN · v6.34.0 "Built Once, Where You Left It"
+   MUDSKIPPERS — THE COURIER'S RUN · v6.35.0 "The Board Counts The Ways Out"
    SEASON ONE ACT TWO, HALF DONE - and shipped half-done on purpose rather than claimed
    whole. Nights 5, 6 and 7 have their contraction pass, their dial-back and all 59 of their
    choice lines named and dealing correctly. THE 20 EVENING SECOND TAKES AND THE THREE
@@ -2543,7 +2543,7 @@ var seasonBreakDue = false;  /* the break card renders after the scene that earn
 var epilogueNow = false;     /* the finale has landed; the door stands until CONTINUE.
                                 The card announces once - the banner and the wrist ARE
                                 the door, and both re-arm on reload. Persisted. */
-var VERSION_TAG = "v6.34.0";   /* the board prints the build it was read from */
+var VERSION_TAG = "v6.35.0";   /* the board prints the build it was read from */
 
 /* ==================== THE TWO TABLES (v4.72.0) ====================
    One game, two masters, and a hard wall between them.
@@ -16659,7 +16659,8 @@ function wbStats(){
   if(wbStatCache) return wbStatCache;
   var rows = [], t = {cards:0, room:0, takes:0, forks:0, lines:0, pass:0, doors:0, walks:0,
                       wired:0, dark:0, short:0, noTakes:0, bare:0, done:0, live:0, slack:0,
-                      broken:0, cutRows:0, badAfter:0, turns:0, folds:0, mute:0, holes:0};
+                      broken:0, cutRows:0, badAfter:0, turns:0, folds:0, mute:0, holes:0,
+                      walkAns:0, walkAnsLines:0, walkFin:0, walkFinLines:0};
   SPINE.forEach(function(b, i){
     var sb = SCENEBOOK[b.id] || {};
     var tp = sb.topics || [], rp = (sb.room && sb.room.topics) || [];
@@ -16689,6 +16690,13 @@ function wbStats(){
     t.lines += lines; t.pass += pass;
     t.doors += (b.exits || []).length;
     t.walks += (b.walks || []).length + (b.walkLine ? 1 : 0);
+    /* THE WAY OUT IS THREE AUTHORED THINGS AND THE BOARD COUNTED ONE (v6.35.0). It has
+       always tallied the WORDING on the button and never the two scenes behind it: what
+       the room says the first time he means it, and the leaving itself. That is 34 walk
+       answers and 34 leavings, and a page whose whole claim is "the numbers below are the
+       writing" was quietly leaving them out. */
+    if((b.walkAnswer || []).length){ t.walkAns++; t.walkAnsLines += b.walkAnswer.length; }
+    if((b.walkFinal || []).length){ t.walkFin++; t.walkFinLines += b.walkFinal.length; }
     t.live += (b.budget || 4);
     /* ...and the last night has a room too now (v5.42.0). This subtracted one room
        from the book's own estimate of itself on the reasoning that the finale ended
@@ -16924,12 +16932,33 @@ function wbDrawBook(){
     + " enough cards to outlast its own pressure block, a second take on them, a landing that leads"
     + " somewhere, and a room with more than the three it was born with.</p>";
 
+  var dossN = (typeof DOSSIERS !== "undefined") ? Object.keys(DOSSIERS).length : 0;
+  var dossL = 0;
+  if(typeof DOSSIERS !== "undefined") Object.keys(DOSSIERS).forEach(function(k){
+    dossL += (DOSSIERS[k].voice ? 1 : 0) + (DOSSIERS[k].notes || []).length; });
+  h += '<div class="wb-sh">The way out, and the people</div><div class="wb-g3">'
+    + '<div class="wb-stat"><b style="color:var(--gold)">' + t.walkAns + "</b><span>of "
+      + SPINE.length + " nights answer the first walk (" + t.walkAnsLines + " blocks)</span></div>"
+    + '<div class="wb-stat"><b style="color:var(--gold)">' + t.walkFin + "</b><span>of "
+      + SPINE.length + " nights write their own leaving (" + t.walkFinLines + " blocks)</span></div>"
+    + '<div class="wb-stat"><b style="color:var(--gold)">' + dossN + "</b><span>dossiers on the wrist ("
+      + dossL + " lines)</span></div></div>";
+  h += '<p class="wb-p">The way out is three authored things and this page used to count one of'
+    + " them. The button has its wording, the room has an answer the first time he means it, and"
+    + " the second time has a leaving of its own. A night with no leaving of its own falls back to"
+    + " the book's, which is written to play in any room.</p>";
+
   h += '<div class="wb-sh">What is missing, in the order it bites</div><div class="wb-g3">'
     + '<div class="wb-stat"><b class="s">' + t.short + "</b><span>nights run out of cards before the night ends</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.noTakes + "</b><span>nights repeat themselves if asked twice</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.dark + "</b><span>nights land on nothing to click</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.bare + "</b><span>rooms still on their first three cards</span></div>"
     + '<div class="wb-stat"><b class="s">' + t.mute + "</b><span>takes with no choice line of their own</span></div></div>";
+  h += '<p class="wb-p">That last one is not a walk-out and not a hole. A card can hold two or'
+    + " three takes, and a take with no <b>railTakes</b> line of its own comes back round under the"
+    + " wording that opened the card, so the row asks the same question and answers a different"
+    + " one. The author has ruled twice that not every take needs its own line, so this is a"
+    + " measurement rather than a debt.</p>";
   if(t.broken || t.cutRows || t.badAfter || t.holes){
     h += '<div class="wb-note" style="color:#e08b8b"><b>Wiring faults: ' + t.broken
       + " rail row(s) name a card that is not in the deck"
