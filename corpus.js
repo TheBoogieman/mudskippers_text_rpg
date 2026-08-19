@@ -264,6 +264,29 @@ var DOSSIERS = {
    notes:["A Mudskipper. Broke, quick, and considerably better at keeping people than at keeping money.",
             "Carries what he is asked to carry. That has recently stopped being a small sentence."]}
 };
+/* ---- THE LEAVING (v6.30.0) - THE SECOND WALK, WHICH HAD NOTHING WRITTEN FOR IT ----
+   The way out asks twice IN A RUN, not twice in a click: the first time he says it the
+   room talks him round and that is `walkAnswer`, authored on all thirty-four nights. The
+   SECOND time is the one that counts, and in the written game it had no scene at all - the
+   router fell through to the deck, dealt whatever card was next, and ended the run under
+   it. The author, playing: the second choice to affirm quitting just deals a random story
+   card. It did.
+   WRITTEN TO THE BOARD'S OWN BRIEF, which already existed for the wild table and is quoted
+   here because it is the spec: he puts the job down and goes, the family watches him do it,
+   their real reactions with Pia's first and no speeches, nobody talks him round because
+   nobody gets to this time, and it ends on the door and the rain.
+   PIA CARRIES IT BECAUSE PIA IS THE ONLY PERSON IN EVERY ROOM - checked against all
+   thirty-four `here` lists, not assumed. A beat may write its own `walkFinal` and this
+   stands in until one does. */
+var WALK_FINAL = [
+ "Nobody stands up. Nobody puts a hand out. The not-standing is worse than being stopped would have been, and everyone in the room knows it while it is happening.",
+ ["Pia","Right. Okay. Off you go, then, before somebody says something clever."],
+ "She says it to the middle of the room, and she does not turn round to watch him take it.",
+ ["Pia","You do not have to say anything. Everybody wants to say something at this bit and it has never once helped."],
+ "There is a version of this where somebody talks him round. The whole room can feel it going past, unused.",
+ ["Pia","Go while it is still raining. It is easier in the rain. I have done it."],
+ "Then the door, which does what doors do. Then the rain, which has been out there the whole time, waiting to be somebody's weather again."
+];
 var OPENING2 = {
   day: 1, time: "11:52pm", location: "Lower Veldt Market", ambience: "rain-neon",
   now: "Day 1, near midnight, moving through Lower Veldt Market in the rain. Pia is leading; the Choir's watcher has lost the coin toss; Vic's safehouse is the destination.",
